@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Comment, Tooltip, Avatar, Card, Button } from 'antd';
 import { MethodParameters } from '../method-parameters';
 import { MethodMetadata } from '../../rest';
+import { ResponseValues } from '../response-values';
 
 export const RestMethod = ({
   author,
@@ -60,6 +61,7 @@ export const RestMethod = ({
       />
       {/* @ts-ignore */}
       {showParameters && <MethodParameters data={parameters}/>}
+      { data && <ResponseValues data={data}/>}
     </Card>
   );
 };
