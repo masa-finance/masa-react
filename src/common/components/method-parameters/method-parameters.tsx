@@ -140,6 +140,11 @@ export class MethodParameters extends React.Component {
         //@ts-ignore
         ...this.getColumnSearchProps('address'),
       },
+      {
+        title: 'Value',
+        dataIndex: 'value',
+        key: 'value',
+      },
     ];
     //@ts-ignore
     return <Table columns={columns as any} dataSource={this.props.data} />;

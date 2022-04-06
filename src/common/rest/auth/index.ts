@@ -1,5 +1,6 @@
 import { useLazyAxios } from 'use-axios-client';
 import { MethodMetadata, Parameter } from '..';
+import { Table, Input, Button, Space } from 'antd';
 import { URL } from '../../helpers/axios';
 
 const path = 'users';
