@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Comment, Tooltip, Avatar, Card, Button } from 'antd';
+import { Comment, Tooltip, Avatar, Card } from 'antd';
 import { MethodParameters } from '../method-parameters';
 import { MethodMetadata } from '../../rest';
 import { ResponseValues } from '../response-values';
@@ -16,7 +16,7 @@ export const RestMethod = ({
 }: MethodMetadata & { useMethod: any }) => {
   const [showParameters, setShowParameters] = useState(false);
   const [showCustomParameters, setShowCustomParameters] = useState(false);
-  const { getData, data, loading, error } = useMethod();
+  const { getData, data } = useMethod();
 
   const handleCall = async () => {
     const dt = await getData(customParameters);
@@ -24,6 +24,7 @@ export const RestMethod = ({
   };
   const [customParameters, setCustomParameters] = useState(()=>{
     const customParameterObject={};
+    // @ts-ignore
     parameters.forEach((parameter)=> customParameterObject[parameter['name']]=parameter['default']);
     return customParameterObject}
     )
