@@ -1,18 +1,15 @@
 import { useLazyAxios } from 'use-axios-client';
 import { MethodMetadata, Parameter } from '..';
-import { Headers, URL } from '../../helpers/axios';
+import { URL } from '../../helpers/axios';
 
-const path = 'applications';
+const path = 'loans';
 
 export function useMethod() {
   const [getData, { data, error, loading }] = useLazyAxios({
     url: `${URL}${path}`,
-    headers: Headers
   });
   return { data, error, loading, getData };
 }
-
-
 
 const parameters: Parameter[] = [
   {
@@ -27,8 +24,8 @@ const parameters: Parameter[] = [
 export const metadata: MethodMetadata = {
   author: 'Hide on bush',
   authorPicture: '',
-  description: 'Call for getting applications',
-  name: '/applications',
+  description: 'This is our accounts endpoint',
+  name: '/loans',
   method: 'GET',
   parameters,
 };

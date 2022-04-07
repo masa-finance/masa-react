@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Comment, Tooltip, Avatar, Card, Button } from 'antd';
+import { Comment, Tooltip, Avatar, Card } from 'antd';
 import { MethodParameters } from '../method-parameters';
 import { MethodMetadata } from '../../rest';
 import { ResponseValues } from '../response-values';
+import { CustomParameters } from '../custom-parameters';
 
 export const RestMethod = ({
   author,
@@ -14,14 +15,23 @@ export const RestMethod = ({
   useMethod,
 }: MethodMetadata & { useMethod: any }) => {
   const [showParameters, setShowParameters] = useState(false);
-  const { getData, data, loading, error } = useMethod();
+  const [showCustomParameters, setShowCustomParameters] = useState(false);
+  const { getData, data } = useMethod();
 
   const handleCall = async () => {
-    const dt = await getData();
+    const dt = await getData(customParameters);
     console.log(dt);
   };
+  const [customParameters, setCustomParameters] = useState(()=>{
+    const customParameterObject={};
+    // @ts-ignore
+    parameters.forEach((parameter)=> customParameterObject[parameter['name']]=parameter['default']);
+    return customParameterObject}
+    )
 
-  console.log('DATA', data, loading, error);
+  const onValueChange = (key: string, value: string) => {
+    setCustomParameters({...customParameters, [key]: value})
+  }
 
   const actions = [
     <span
@@ -33,6 +43,12 @@ export const RestMethod = ({
     <span key="comment-basic-reply-to" onClick={handleCall}>
       Run
     </span>,
+    <span
+      key="comment-basic-reply-to"
+      onClick={() => setShowCustomParameters(!showCustomParameters)}
+    >
+      Set custom parameters
+    </span>,   
   ];
 
   return (
@@ -61,7 +77,9 @@ export const RestMethod = ({
       />
       {/* @ts-ignore */}
       {showParameters && <MethodParameters data={parameters}/>}
-      { data && <ResponseValues data={data}/>}
+      {data && <ResponseValues data={data}/>}
+      {/* @ts-ignore */}
+      {showCustomParameters && <CustomParameters data={customParameters} onValueChange={onValueChange}/>}
     </Card>
   );
 };
