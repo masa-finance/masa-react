@@ -16,9 +16,18 @@ export const RestMethod = ({
   const [showParameters, setShowParameters] = useState(false);
   const { getData, data, loading, error } = useMethod();
 
+//   const getData = async () => {
+//     const d = await fetch('http://localhost:3000/products');
+//     const s = await d.json();
+
+//     return s
+//   };
+
   const handleCall = async () => {
     const dt = await getData();
-    console.log(dt);
+    console.log(dt)
+    // const ss = await dt.json();
+    // console.log(ss);
   };
 
   console.log('DATA', data, loading, error);
@@ -60,8 +69,8 @@ export const RestMethod = ({
         }
       />
       {/* @ts-ignore */}
-      {showParameters && <MethodParameters data={parameters}/>}
-      { data && <ResponseValues data={data}/>}
+      {showParameters && <MethodParameters data={parameters} />}
+      {data && <ResponseValues data={data} />}
     </Card>
   );
 };
