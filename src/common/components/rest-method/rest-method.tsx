@@ -14,23 +14,12 @@ export const RestMethod = ({
   useMethod,
 }: MethodMetadata & { useMethod: any }) => {
   const [showParameters, setShowParameters] = useState(false);
-  const { getData, data, loading, error } = useMethod();
-
-//   const getData = async () => {
-//     const d = await fetch('http://localhost:3000/products');
-//     const s = await d.json();
-
-//     return s
-//   };
+  const { getData, data } = useMethod();
 
   const handleCall = async () => {
-    const dt = await getData();
-    console.log(dt)
-    // const ss = await dt.json();
-    // console.log(ss);
+    const call = await getData();
+    console.log(call)
   };
-
-  console.log('DATA', data, loading, error);
 
   const actions = [
     <span
