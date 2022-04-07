@@ -1,4 +1,6 @@
 import * as auth from './auth';
+import * as accounts from './accounts';
+
 
 export interface Parameter {
   key: number;
@@ -16,4 +18,4 @@ export interface MethodMetadata {
   parameters: Parameter[];
 }
 
-export const masaRestClient = { auth };
+export const masaRestClient = { auth, accounts };

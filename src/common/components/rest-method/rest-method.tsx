@@ -14,14 +14,12 @@ export const RestMethod = ({
   useMethod,
 }: MethodMetadata & { useMethod: any }) => {
   const [showParameters, setShowParameters] = useState(false);
-  const { getData, data, loading, error } = useMethod();
+  const { getData, data } = useMethod();
 
   const handleCall = async () => {
-    const dt = await getData();
-    console.log(dt);
+    const call = await getData();
+    console.log(call)
   };
-
-  console.log('DATA', data, loading, error);
 
   const actions = [
     <span
@@ -60,8 +58,8 @@ export const RestMethod = ({
         }
       />
       {/* @ts-ignore */}
-      {showParameters && <MethodParameters data={parameters}/>}
-      { data && <ResponseValues data={data}/>}
+      {showParameters && <MethodParameters data={parameters} />}
+      {data && <ResponseValues data={data} />}
     </Card>
   );
 };
