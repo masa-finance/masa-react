@@ -135,10 +135,15 @@ export class MethodParameters extends React.Component {
       },
       {
         title: 'Description',
-        dataIndex: 'address',
-        key: 'address',
+        dataIndex: 'description',
+        key: 'description',
         //@ts-ignore
-        ...this.getColumnSearchProps('address'),
+        ...this.getColumnSearchProps('description'),
+      },
+      {
+        title: 'Type of the data',
+        dataIndex: 'dataType',
+        key: 'dataType',
       },
     ];
     //@ts-ignore

@@ -11,21 +11,11 @@ export function useMethod() {
   return { data, error, loading, getData };
 }
 
-const parameters: Parameter[] = [
-  {
-    key: 1,
-    name: 'username',
-    description: '32',
-    required: 'yes',
-    default: 'test',
-  },
-];
-
 export const metadata: MethodMetadata = {
-  author: 'Hide on bush',
+  author: 'Gabriela Golmar',
   authorPicture: '',
-  description: 'Hey, this is our first rest call!',
-  name: '/users',
+  description: 'Retrieve user with id given in the URL',
+  name: '/user/:id',
   method: 'GET',
-  parameters,
+  parameters: [],
 };
