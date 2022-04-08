@@ -1,23 +1,15 @@
-import { useMemo } from 'react';
-import { useLazyAxios } from 'use-axios-client';
 import { MethodMetadata, Parameter } from '..';
 import { Headers, URL } from '../../helpers/axios';
+import { useRestCall } from '../../helpers/rest-calls';
 
 const path = 'applications';
 
-export function useMethod({pathParameters}: any) {
-  const fullPath = useMemo(() => {
-    let newPath = path
-    if (pathParameters) {
-      Object.keys(pathParameters).forEach((key) => { 
-        newPath = newPath.replace(':' + key, [pathParameters[key]])
-      })
-    }
-    return newPath
-  },[pathParameters])
-  const [getData, { data, error, loading }] = useLazyAxios({
-    url: `${URL}${fullPath}`,
-    headers: Headers
+export function useMethod({ pathParameters, body }: any) {
+  const { data, error, loading, getData } = useRestCall({
+    pathParameters,
+    headers: Headers,
+    body,
+    metadata,
   });
   return { data, error, loading, getData };
 }
@@ -37,6 +29,6 @@ export const metadata: MethodMetadata = {
   authorPicture: '',
   description: 'Call for getting applications',
   name: path,
-  method: 'GET',
+  method: 'POST',
   parameters,
 };

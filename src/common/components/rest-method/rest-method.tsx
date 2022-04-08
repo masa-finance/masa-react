@@ -18,36 +18,42 @@ export const RestMethod = ({
   const [showParameters, setShowParameters] = useState(false);
   const [showCustomParameters, setShowCustomParameters] = useState(false);
   const [showPathParameters, setShowPathParameters] = useState(false);
-  const [urlParams, seturlParams] = useState(null);
-  const [pathParameters, setPathParameters] = useState(()=>{
-    const customParameterObject={};
-    const pathParametersList = name.split(':')
-    pathParametersList.shift()
+
+  const [customParameters, setCustomParameters] = useState(() => {
+    const customParameterObject = {};
+    // @ts-ignore
+    parameters.forEach(
+      (parameter) =>
+        (customParameterObject[parameter['name']] = parameter['default'])
+    );
+    return customParameterObject;
+  });
+
+  const [pathParameters, setPathParameters] = useState(() => {
+    const customParameterObject = {};
+    const pathParametersList = name.split(':');
+    pathParametersList.shift();
     pathParametersList.forEach((pathParameter) => {
-      const pathParameterClean=pathParameter.split('/')
-      customParameterObject[pathParameterClean[0]]=''})
-    return customParameterObject}
-    )
-  const { getData, data } = useMethod({pathParameters});
+      const pathParameterClean = pathParameter.split('/');
+      //@ts-ignore
+      customParameterObject[pathParameterClean[0]] = '';
+    });
+    return customParameterObject;
+  });
+  const { getData, data } = useMethod({ pathParameters, body: customParameters });
 
   const handleCall = async () => {
     const dt = await getData(customParameters);
     console.log(dt);
   };
-  const [customParameters, setCustomParameters] = useState(()=>{
-    const customParameterObject={};
-    // @ts-ignore
-    parameters.forEach((parameter)=> customParameterObject[parameter['name']]=parameter['default']);
-    return customParameterObject}
-    )
 
   const onValueChange = (key: string, value: string) => {
-    setCustomParameters({...customParameters, [key]: value})
-  }
+    setCustomParameters({ ...customParameters, [key]: value });
+  };
 
   const onValuePathChange = (key: string, value: string) => {
-    setPathParameters({...pathParameters, [key]: value})
-  }
+    setPathParameters({ ...pathParameters, [key]: value });
+  };
 
   const actions = [
     <span
@@ -65,12 +71,12 @@ export const RestMethod = ({
     >
       Set custom parameters
     </span>,
-        <span
-        key="comment-basic-reply-to"
-        onClick={() => setShowPathParameters(!showPathParameters)}
-      >
-        Set path parameters
-      </span>,   
+    <span
+      key="comment-basic-reply-to"
+      onClick={() => setShowPathParameters(!showPathParameters)}
+    >
+      Set path parameters
+    </span>,
   ];
 
   return (
@@ -98,11 +104,21 @@ export const RestMethod = ({
         }
       />
       {/* @ts-ignore */}
-      {showParameters && <MethodParameters data={parameters}/>}
-      {data && <ResponseValues data={data}/>}
+      {showParameters && <MethodParameters data={parameters} />}
+      {data && <ResponseValues data={data} />}
       {/* @ts-ignore */}
-      {showCustomParameters && <CustomParameters data={customParameters} onValueChange={onValueChange}/>}
-      {showPathParameters && <PathParameters data={pathParameters} onValueChange={onValuePathChange}/>}
+      {showCustomParameters && (
+        <CustomParameters
+          data={customParameters}
+          onValueChange={onValueChange}
+        />
+      )}
+      {showPathParameters && (
+        <PathParameters
+          data={pathParameters}
+          onValueChange={onValuePathChange}
+        />
+      )}
     </Card>
   );
 };
