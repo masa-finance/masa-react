@@ -1,18 +1,18 @@
-import { useLazyAxios } from 'use-axios-client';
 import { MethodMetadata, Parameter } from '..';
 import { Headers, URL } from '../../helpers/axios';
+import { useRestCall } from '../../helpers/rest-calls';
 
 const path = 'applications';
 
-export function useMethod() {
-  const [getData, { data, error, loading }] = useLazyAxios({
-    url: `${URL}${path}`,
-    headers: Headers
+export function useMethod({ pathParameters, body }: any) {
+  const { data, error, loading, getData } = useRestCall({
+    pathParameters,
+    headers: Headers,
+    body,
+    metadata,
   });
   return { data, error, loading, getData };
 }
-
-
 
 const parameters: Parameter[] = [
   {
@@ -28,7 +28,7 @@ export const metadata: MethodMetadata = {
   author: 'Hide on bush',
   authorPicture: '',
   description: 'Call for getting applications',
-  name: '/applications',
-  method: 'GET',
+  name: path,
+  method: 'POST',
   parameters,
 };
