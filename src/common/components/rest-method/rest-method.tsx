@@ -4,6 +4,7 @@ import { MethodParameters } from '../method-parameters';
 import { MethodMetadata } from '../../rest';
 import { ResponseValues } from '../response-values';
 import { CustomParameters } from '../custom-parameters';
+import { PathParameters } from '../path-parameters';
 
 export const RestMethod = ({
   author,
@@ -16,7 +17,18 @@ export const RestMethod = ({
 }: MethodMetadata & { useMethod: any }) => {
   const [showParameters, setShowParameters] = useState(false);
   const [showCustomParameters, setShowCustomParameters] = useState(false);
-  const { getData, data } = useMethod();
+  const [showPathParameters, setShowPathParameters] = useState(false);
+  const [urlParams, seturlParams] = useState(null);
+  const [pathParameters, setPathParameters] = useState(()=>{
+    const customParameterObject={};
+    const pathParametersList = name.split(':')
+    pathParametersList.shift()
+    pathParametersList.forEach((pathParameter) => {
+      const pathParameterClean=pathParameter.split('/')
+      customParameterObject[pathParameterClean[0]]=''})
+    return customParameterObject}
+    )
+  const { getData, data } = useMethod({pathParameters});
 
   const handleCall = async () => {
     const dt = await getData(customParameters);
@@ -31,6 +43,10 @@ export const RestMethod = ({
 
   const onValueChange = (key: string, value: string) => {
     setCustomParameters({...customParameters, [key]: value})
+  }
+
+  const onValuePathChange = (key: string, value: string) => {
+    setPathParameters({...pathParameters, [key]: value})
   }
 
   const actions = [
@@ -48,7 +64,13 @@ export const RestMethod = ({
       onClick={() => setShowCustomParameters(!showCustomParameters)}
     >
       Set custom parameters
-    </span>,   
+    </span>,
+        <span
+        key="comment-basic-reply-to"
+        onClick={() => setShowPathParameters(!showPathParameters)}
+      >
+        Set path parameters
+      </span>,   
   ];
 
   return (
@@ -80,6 +102,7 @@ export const RestMethod = ({
       {data && <ResponseValues data={data}/>}
       {/* @ts-ignore */}
       {showCustomParameters && <CustomParameters data={customParameters} onValueChange={onValueChange}/>}
+      {showPathParameters && <PathParameters data={pathParameters} onValueChange={onValuePathChange}/>}
     </Card>
   );
 };

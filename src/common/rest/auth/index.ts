@@ -1,18 +1,26 @@
+import { useMemo } from 'react';
 import { useLazyAxios } from 'use-axios-client';
 import { MethodMetadata, Parameter } from '..';
 import { Headers, URL } from '../../helpers/axios';
 
 const path = 'applications';
 
-export function useMethod() {
+export function useMethod({pathParameters}: any) {
+  const fullPath = useMemo(() => {
+    let newPath = path
+    if (pathParameters) {
+      Object.keys(pathParameters).forEach((key) => { 
+        newPath = newPath.replace(':' + key, [pathParameters[key]])
+      })
+    }
+    return newPath
+  },[pathParameters])
   const [getData, { data, error, loading }] = useLazyAxios({
-    url: `${URL}${path}`,
+    url: `${URL}${fullPath}`,
     headers: Headers
   });
   return { data, error, loading, getData };
 }
-
-
 
 const parameters: Parameter[] = [
   {
@@ -28,7 +36,7 @@ export const metadata: MethodMetadata = {
   author: 'Hide on bush',
   authorPicture: '',
   description: 'Call for getting applications',
-  name: '/applications',
+  name: path,
   method: 'GET',
   parameters,
 };
