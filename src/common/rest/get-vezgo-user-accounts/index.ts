@@ -1,7 +1,8 @@
 import { MethodMetadata } from '..';
+import { Headers } from '../../helpers/axios';
 import { useRestCall } from '../../helpers/rest-calls';
 
-const path = 'vezgo-accounts/:userProfileId';
+const path = 'vesgo-accounts/:userProfileId';
 
 export function useMethod({ pathParameters, body }: any) {
     const { data, error, loading, getData } = useRestCall({

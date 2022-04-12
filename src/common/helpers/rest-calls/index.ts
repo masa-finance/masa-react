@@ -24,6 +24,7 @@ export const useRestCall = ({
     }
     return newPath;
   }, [pathParameters]);
+  console.log(fullPath)
   const [getData, { data, error, loading }] = useLazyAxios({
     url: `${URL}${fullPath}`,
     headers,
