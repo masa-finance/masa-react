@@ -1,4 +1,5 @@
 {
+  "name": "@masa-finance/tools",
   "version": "0.1.0",
   "license": "MIT",
   "main": "dist/index.js",
@@ -35,7 +36,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "masa-tools",
   "author": "matintosh",
   "module": "dist/masa-tools.esm.js",
   "size-limit": [
