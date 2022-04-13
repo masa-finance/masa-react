@@ -19,6 +19,7 @@ export const useRestCall = ({
     let newPath = metadata.name;
     if (pathParameters) {
       Object.keys(pathParameters).forEach((key) => {
+        //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
     }

@@ -1,5 +1,5 @@
 import { MethodMetadata, Parameter } from '..';
-import { Headers, URL } from '../../helpers/axios';
+import { Headers } from '../../helpers/axios';
 import { useRestCall } from '../../helpers/rest-calls';
 
 const path = 'applications';
@@ -29,6 +29,6 @@ export const metadata: MethodMetadata = {
   authorPicture: '',
   description: 'Call for getting applications',
   name: path,
-  method: 'POST',
+  method: 'GET',
   parameters,
 };
