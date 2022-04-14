@@ -1,7 +1,7 @@
 import { MethodMetadata, Parameter } from '..';
 import { useRestCall } from '../../../helpers/rest-calls';
 
-const path = '/plaid-accounts/:userId';
+const path = 'plaid-accounts/:userId';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({

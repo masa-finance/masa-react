@@ -1,7 +1,7 @@
 import { MethodMetadata, Parameter } from '..';
 import { useRestCall } from '../../../helpers/rest-calls';
 
-const path = '/plaid-access-token/:publicToken';
+const path = 'plaid-access-token/:publicToken';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({
