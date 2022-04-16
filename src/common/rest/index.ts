@@ -17,7 +17,7 @@ export interface Parameter {
   required: 'yes' | 'no';
   description: string;
   default: string;
-  dataType?: string;
+  dataType: 'string' | 'number';
 }
 
 export interface MethodMetadata {

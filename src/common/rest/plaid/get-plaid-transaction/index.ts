@@ -1,4 +1,4 @@
-import { MethodMetadata, Parameter } from '..';
+import { MethodMetadata, Parameter } from '../..';
 import { useRestCall } from '../../../helpers/rest-calls';
 import { Headers } from '../../../helpers/axios';
 
