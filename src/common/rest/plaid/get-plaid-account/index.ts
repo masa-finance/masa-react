@@ -21,6 +21,7 @@ const parameters: Parameter[] = [
     description: 'Account ID',
     required: 'yes',
     default: '',
+    dataType: 'string'
   },
 ];
 

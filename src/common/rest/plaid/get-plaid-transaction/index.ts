@@ -21,6 +21,7 @@ const parameters: Parameter[] = [
     description: 'Transaction ID',
     required: 'yes',
     default: '',
+    dataType: 'string'
   },
 ];
 

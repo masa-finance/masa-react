@@ -21,6 +21,7 @@ const parameters: Parameter[] = [
     description: 'User ID',
     required: 'yes',
     default: '',
+    dataType: 'string'
   },
 ];
 

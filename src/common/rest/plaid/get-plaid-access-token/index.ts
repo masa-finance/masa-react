@@ -21,6 +21,7 @@ const parameters: Parameter[] = [
     description: 'User ID',
     required: 'yes',
     default: '',
+    dataType: 'string'
   },
   {
     key: 2,
@@ -28,6 +29,7 @@ const parameters: Parameter[] = [
     description: 'Public Token',
     required: 'yes',
     default: '',
+    dataType: 'string'
   },
 ];
 
