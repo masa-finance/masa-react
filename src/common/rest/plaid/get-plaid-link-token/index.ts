@@ -1,4 +1,4 @@
-import { MethodMetadata, Parameter } from '..';
+import { MethodMetadata, Parameter } from '../..';
 import { Headers } from '../../../helpers/axios';
 import { useRestCall } from '../../../helpers/rest-calls';
 
@@ -21,6 +21,7 @@ const parameters: Parameter[] = [
     description: 'User ID',
     required: 'yes',
     default: '',
+    dataType: 'string'
   },
 ];
 
