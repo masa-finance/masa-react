@@ -1,8 +1,8 @@
-import React, { FC, HTMLAttributes, ReactChild } from 'react';
+import { masaRestClient } from './common/rest';
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface Props {
   /** custom content, defaults to 'the snozzberries taste like snozzberries' */
-  children?: ReactChild;
+  test?: string;
 }
 
 // Please do not use types off of a default export module or else Storybook Docs will suffer.
@@ -10,6 +10,4 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
 /**
  * A custom Thing component. Neat!
  */
-export const Thing: FC<Props> = ({ children }) => {
-  return <div>{children || `the snozzberries taste like snozzberries`}</div>;
-};
+export const rest = masaRestClient;
