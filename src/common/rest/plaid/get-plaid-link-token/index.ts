@@ -1,8 +1,8 @@
-import { MethodMetadata, Parameter } from '..';
-import { Headers } from '../../helpers/axios';
-import { useRestCall } from '../../helpers/rest-calls';
+import { MethodMetadata, Parameter } from '../..';
+import { Headers } from '../../../helpers/axios';
+import { useRestCall } from '../../../helpers/rest-calls';
 
-const path = 'applications';
+const path = 'plaid-link-token/:clientId';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({
@@ -17,17 +17,18 @@ export function useMethod({ pathParameters, body }: any) {
 const parameters: Parameter[] = [
   {
     key: 1,
-    name: 'username',
-    description: '32',
+    name: 'clientId',
+    description: 'User ID',
     required: 'yes',
-    default: 'test',
+    default: '',
+    dataType: 'string'
   },
 ];
 
 export const metadata: MethodMetadata = {
-  author: 'Hide on bush',
+  author: 'Aaron Knott',
   authorPicture: '',
-  description: 'Call for getting applications',
+  description: 'Get a link token from Plaid',
   name: path,
   method: 'GET',
   parameters,

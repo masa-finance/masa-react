@@ -1,5 +1,5 @@
 import { useLazyAxios } from 'use-axios-client';
-import { MethodMetadata, Parameter } from '..';
+import { MethodMetadata } from '..';
 import { URL } from '../../helpers/axios';
 
 const path = 'users';

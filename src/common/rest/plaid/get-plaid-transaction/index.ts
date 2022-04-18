@@ -1,8 +1,8 @@
-import { MethodMetadata, Parameter } from '..';
-import { Headers } from '../../helpers/axios';
-import { useRestCall } from '../../helpers/rest-calls';
+import { MethodMetadata, Parameter } from '../..';
+import { useRestCall } from '../../../helpers/rest-calls';
+import { Headers } from '../../../helpers/axios';
 
-const path = 'applications';
+const path = 'plaid-transaction/:txId';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({
@@ -17,17 +17,18 @@ export function useMethod({ pathParameters, body }: any) {
 const parameters: Parameter[] = [
   {
     key: 1,
-    name: 'username',
-    description: '32',
+    name: 'txId',
+    description: 'Transaction ID',
     required: 'yes',
-    default: 'test',
+    default: '',
+    dataType: 'string'
   },
 ];
 
 export const metadata: MethodMetadata = {
-  author: 'Hide on bush',
+  author: 'Aaron Knott',
   authorPicture: '',
-  description: 'Call for getting applications',
+  description: 'Get a plaid transaction by ID',
   name: path,
   method: 'GET',
   parameters,

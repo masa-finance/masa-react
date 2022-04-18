@@ -26,7 +26,7 @@ const parameters: Parameter[] = [
         description: '',
         required: 'yes',
         default: '',
-        dataType: 'string[]'
+        dataType: 'string'
     },
     {
         key: 3,
@@ -66,7 +66,7 @@ const parameters: Parameter[] = [
         description: 'Last time user logged in',
         required: 'yes',
         default: '',
-        dataType: 'timestamp'
+        dataType: 'string'
     },
     {
         key: 8,
@@ -82,7 +82,7 @@ const parameters: Parameter[] = [
         description: 'User\'s date of birth',
         required: 'yes',
         default: '',
-        dataType: 'timestamp'
+        dataType: 'string'
     },
     {
         key: 10,

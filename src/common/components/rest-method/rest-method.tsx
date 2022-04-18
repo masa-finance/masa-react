@@ -43,12 +43,13 @@ export const RestMethod = ({
   const { getData, data } = useMethod({ pathParameters, body: customParameters });
 
   const handleCall = async () => {
-    const dt = await getData(customParameters);
+    const dt = await getData();
     console.log(dt);
   };
 
   const onValueChange = (key: string, value: string) => {
-    setCustomParameters({ ...customParameters, [key]: value });
+    const parameter = parameters.filter(parameter => parameter['name'] = key)
+    setCustomParameters({ ...customParameters, [key]: parameter.dataType == 'string' ? value : Number(value)});
   };
 
   const onValuePathChange = (key: string, value: string) => {

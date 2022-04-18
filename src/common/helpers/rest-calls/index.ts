@@ -19,11 +19,13 @@ export const useRestCall = ({
     let newPath = metadata.name;
     if (pathParameters) {
       Object.keys(pathParameters).forEach((key) => {
+        //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
     }
     return newPath;
   }, [pathParameters]);
+  console.log(fullPath)
   const [getData, { data, error, loading }] = useLazyAxios({
     url: `${URL}${fullPath}`,
     headers,

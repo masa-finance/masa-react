@@ -1,8 +1,8 @@
-import { MethodMetadata, Parameter } from '..';
+import { MethodMetadata } from '..';
 import { Headers } from '../../helpers/axios';
 import { useRestCall } from '../../helpers/rest-calls';
 
-const path = 'applications';
+const path = 'vesgo-account/:accountId';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({
@@ -14,21 +14,11 @@ export function useMethod({ pathParameters, body }: any) {
   return { data, error, loading, getData };
 }
 
-const parameters: Parameter[] = [
-  {
-    key: 1,
-    name: 'username',
-    description: '32',
-    required: 'yes',
-    default: 'test',
-  },
-];
-
 export const metadata: MethodMetadata = {
-  author: 'Hide on bush',
-  authorPicture: '',
-  description: 'Call for getting applications',
-  name: path,
-  method: 'GET',
-  parameters,
+    author: 'Gabriela Golmar',
+    authorPicture: '',
+    description: 'This is our get vezgo account',
+    name: path,
+    method: 'GET',
+    parameters: [],
 };
