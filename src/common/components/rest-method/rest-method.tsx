@@ -43,7 +43,7 @@ export const RestMethod = ({
   const { getData, data } = useMethod({ pathParameters, body: customParameters });
 
   const handleCall = async () => {
-    const dt = await getData(customParameters);
+    const dt = await getData();
     console.log(dt);
   };
 
