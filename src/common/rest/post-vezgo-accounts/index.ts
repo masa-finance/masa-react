@@ -21,6 +21,7 @@ const parameters: Parameter[] = [
       description: 'accounts list',
       required: 'yes',
       default: '',
+      dataType: 'string',
     },
   ];
 

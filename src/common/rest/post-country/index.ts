@@ -21,6 +21,7 @@ const parameters: Parameter[] = [
     description: '',
     required: 'yes',
     default: '',
+    dataType: 'string',
   },
   {
     key: 2,
@@ -28,6 +29,7 @@ const parameters: Parameter[] = [
     description: '',
     required: 'yes',
     default: '',
+    dataType: 'string',
   },
   {
     key: 3,
@@ -35,6 +37,7 @@ const parameters: Parameter[] = [
     description: '',
     required: 'yes',
     default: '',
+    dataType: 'string',
   },
   {
     key: 4,
@@ -42,6 +45,7 @@ const parameters: Parameter[] = [
     description: '',
     required: 'yes',
     default: '',
+    dataType: 'string',
   },
   {
     key: 5,
@@ -49,6 +53,7 @@ const parameters: Parameter[] = [
     description: '',
     required: 'yes',
     default: '',
+    dataType: 'string',
   },
   {
     key: 6,
@@ -56,6 +61,7 @@ const parameters: Parameter[] = [
     description: '',
     required: 'yes',
     default: '',
+    dataType: 'string',
   },
   {
     key: 7,
@@ -63,6 +69,7 @@ const parameters: Parameter[] = [
     description: '',
     required: 'yes',
     default: '',
+    dataType: 'number',
   },
 ];
 
