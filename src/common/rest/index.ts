@@ -2,16 +2,16 @@ import * as auth from './auth';
 import * as getClient from './getUser';
 import * as postClient from './post-user';
 import * as accounts from './accounts';
-import * as getCountries from './get-countries'
-import * as postCountry from './post-country'
-import * as getVezgoInsight from './get-vezgo-insight'
-import * as postVezgoInsight from './post-vezgo-insight'
-import * as postVezgoAccounts from './post-vezgo-accounts'
-import * as getVezgoAccount from './get-vezgo-account'
-import * as getVezgoUserAccounts from './get-vezgo-user-accounts'
-import * as postVezgoTransactions from './post-vezgo-transactions'
-import * as getVezgoUserTransactions from './get-vezgo-user-transactions'
-import * as getVezgoTransaction from './get-vezgo-transaction'
+import * as getCountries from './get-countries';
+import * as postCountry from './post-country';
+import * as getVezgoInsight from './get-vezgo-insight';
+import * as postVezgoInsight from './post-vezgo-insight';
+import * as postVezgoAccounts from './post-vezgo-accounts';
+import * as getVezgoAccount from './get-vezgo-account';
+import * as getVezgoUserAccounts from './get-vezgo-user-accounts';
+import * as postVezgoTransactions from './post-vezgo-transactions';
+import * as getVezgoUserTransactions from './get-vezgo-user-transactions';
+import * as getVezgoTransaction from './get-vezgo-transaction';
 import * as getPlaidAccount from './plaid/get-plaid-account';
 import * as getPlaidLinkToken from './plaid/get-plaid-link-token';
 import * as getPlaidTransaction from './plaid/get-plaid-transaction';
@@ -20,6 +20,7 @@ import * as listPlaidTransaction from './plaid/list-plaid-transactions';
 import * as getPlaidAccessToken from './plaid/get-plaid-access-token';
 import * as savePlaidAccounts from './plaid/save-plaid-accounts';
 import * as savePlaidTransaction from './plaid/save-plaid-transactions';
+import * as postUser from './post-user';
 
 export interface Parameter {
   key: number;
@@ -38,14 +39,14 @@ export interface MethodMetadata {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS';
   parameters: Parameter[];
 }
-export const masaRestClient = { 
-  auth, 
-  accounts, 
-  getClient, 
-  postClient, 
-  getVezgoInsight, 
-  postVezgoInsight, 
-  postVezgoAccounts, 
+export const masaRestClient = {
+  auth,
+  accounts,
+  getClient,
+  postClient,
+  getVezgoInsight,
+  postVezgoInsight,
+  postVezgoAccounts,
   getVezgoAccount,
   getVezgoUserAccounts,
   postVezgoTransactions,
@@ -60,5 +61,6 @@ export const masaRestClient = {
   savePlaidAccounts,
   savePlaidTransaction,
   getCountries,
-  postCountry
+  postUser,
+  postCountry,
 };

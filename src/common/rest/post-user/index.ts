@@ -1,6 +1,4 @@
-import { useLazyAxios } from 'use-axios-client';
 import { MethodMetadata, Parameter } from '..';
-import { URL } from '../../helpers/axios';
 import { useRestCall } from '../../helpers/rest-calls';
 
 const path = 'me';
