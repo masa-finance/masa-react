@@ -7,7 +7,10 @@ export function AuthProvider({ children }: Props) {
     <Auth0Provider
       domain="dev-1m10in4i.us.auth0.com"
       clientId="Xg2CKYKqJTmDPerMPb5iJLARjhHO3qIM"
+      audience="https://auth.masa.finance"
       redirectUri={window.location.origin}
+      useRefreshTokens
+      cacheLocation="localstorage"
     >
       <Auth />
       {children}

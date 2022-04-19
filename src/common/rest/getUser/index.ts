@@ -1,12 +1,13 @@
-import { useLazyAxios } from 'use-axios-client';
 import { MethodMetadata } from '..';
-import { URL } from '../../helpers/axios';
+import { Headers } from '../../helpers/axios';
+import { useRestCall } from '../../helpers/rest-calls';
 
-const path = 'users';
+const path = 'me';
 
 export function useMethod() {
-  const [getData, { data, error, loading }] = useLazyAxios({
-    url: `${URL}${path}/1`,
+  const { data, error, loading, getData } = useRestCall({
+    headers: Headers,
+    metadata,
   });
   return { data, error, loading, getData };
 }
@@ -15,7 +16,7 @@ export const metadata: MethodMetadata = {
   author: 'Gabriela Golmar',
   authorPicture: '',
   description: 'Retrieve user with id given in the URL',
-  name: '/user/:id',
+  name: path,
   method: 'GET',
   parameters: [],
 };

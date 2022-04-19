@@ -1,5 +1,5 @@
 import * as auth from './auth';
-import * as getClient from './get-user';
+import * as getClient from './getUser';
 import * as postClient from './post-user';
 import * as accounts from './accounts';
 import * as getCountries from './get-countries'
