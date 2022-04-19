@@ -49,7 +49,7 @@ export const RestMethod = ({
 
   const onValueChange = (key: string, value: string) => {
     const parameter = parameters.filter(parameter => parameter['name'] = key)
-    setCustomParameters({ ...customParameters, [key]: parameter.dataType == 'string' ? value : Number(value)});
+    setCustomParameters({ ...customParameters, [key]: parameter[0].dataType == 'string' ? value : Number(value)});
   };
 
   const onValuePathChange = (key: string, value: string) => {
