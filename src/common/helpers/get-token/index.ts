@@ -1,24 +1,11 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useAccessToken } from '../provider/access-token-provider';
 
 const envToken = process.env.REACT_APP_MASA_TOOLS_USER_ACCESS_TOKEN;
 
 export function useToken() {
-  const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useState<undefined | string>(undefined);
+  const { accessToken } = useAccessToken();
 
-  const getToken = useCallback(async () => {
-    if (!isLoading && isAuthenticated) {
-      const t = await getAccessTokenSilently();
-      setToken(t);
-    }
-  }, [setToken, isAuthenticated, isLoading]);
+  if (envToken) return { token: envToken, isLoading: false };
 
-  useEffect(() => {
-    getToken();
-  }, [getToken]);
-
-  if (envToken) return { envToken, isLoading: false };
-
-  return { token, isLoading };
+  return { token: accessToken, isLoading: false };
 }
