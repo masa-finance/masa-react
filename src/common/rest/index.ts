@@ -21,6 +21,7 @@ import * as getPlaidAccessToken from './plaid/get-plaid-access-token';
 import * as savePlaidAccounts from './plaid/save-plaid-accounts';
 import * as savePlaidTransaction from './plaid/save-plaid-transactions';
 import * as postUser from './post-user';
+import * as getProductInterests from './get-product-interests'
 
 export interface Parameter {
   key: number;
@@ -63,4 +64,5 @@ export const masaRestClient = {
   getCountries,
   postUser,
   postCountry,
+  getProductInterests,
 };
