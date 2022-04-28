@@ -5,11 +5,11 @@ import { useRestCall } from '../../helpers/rest-calls';
 const path = 'me';
 
 export function useMethod() {
-  const { data, error, loading, getData } = useRestCall({
+  const { data, error, loading, getData, refetch } = useRestCall({
     headers: Headers,
     metadata,
   });
-  return { data, error, loading, getData };
+  return { data, error, loading, getData, refetch };
 }
 
 export const metadata: MethodMetadata = {

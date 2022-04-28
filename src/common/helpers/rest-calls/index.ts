@@ -27,9 +27,9 @@ export const useRestCall = ({
     return newPath;
   }, [pathParameters]);
 
-  const {token, isLoading } = useToken()
+  const { token, isLoading } = useToken();
 
-  const [getData, { data, error, loading }] = useLazyAxios({
+  const [getData, { data, error, loading, refetch }] = useLazyAxios({
     url: token ? `${URL}${fullPath}` : undefined,
     headers: {
       ...headers,
@@ -38,5 +38,5 @@ export const useRestCall = ({
     method: metadata.method,
     data: body,
   });
-  return { data, error, loading: loading || isLoading, getData };
+  return { data, error, loading: loading || isLoading, getData, refetch };
 };
