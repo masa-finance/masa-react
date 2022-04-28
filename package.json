@@ -1,13 +1,10 @@
 {
   "name": "@masa-finance/tools",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "engines": {
     "node": ">=10"
   },
