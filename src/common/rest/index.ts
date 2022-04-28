@@ -4,14 +4,11 @@ import * as postClient from './post-user';
 import * as accounts from './accounts';
 import * as getCountries from './get-countries';
 import * as postCountry from './post-country';
-import * as getVezgoInsight from './get-vezgo-insight';
-import * as postVezgoInsight from './post-vezgo-insight';
-import * as postVezgoAccounts from './post-vezgo-accounts';
-import * as getVezgoAccount from './get-vezgo-account';
-import * as getVezgoUserAccounts from './get-vezgo-user-accounts';
-import * as postVezgoTransactions from './post-vezgo-transactions';
-import * as getVezgoUserTransactions from './get-vezgo-user-transactions';
-import * as getVezgoTransaction from './get-vezgo-transaction';
+
+import * as getVezgoProviders from './vezgo/get-providers';
+import * as getVezgoLink from './vezgo/get-link';
+import * as storeVezgoAccount from './vezgo/store-account';
+
 import * as getPlaidAccount from './plaid/get-plaid-account';
 import * as getPlaidLinkToken from './plaid/get-plaid-link-token';
 import * as getPlaidTransaction from './plaid/get-plaid-transaction';
@@ -20,8 +17,9 @@ import * as listPlaidTransaction from './plaid/list-plaid-transactions';
 import * as getPlaidAccessToken from './plaid/get-plaid-access-token';
 import * as savePlaidAccounts from './plaid/save-plaid-accounts';
 import * as savePlaidTransaction from './plaid/save-plaid-transactions';
+
 import * as postUser from './post-user';
-import * as getProductInterests from './get-product-interests'
+import * as getProductInterests from './get-product-interests';
 
 export interface Parameter {
   key: number;
@@ -45,14 +43,9 @@ export const masaRestClient = {
   accounts,
   getClient,
   postClient,
-  getVezgoInsight,
-  postVezgoInsight,
-  postVezgoAccounts,
-  getVezgoAccount,
-  getVezgoUserAccounts,
-  postVezgoTransactions,
-  getVezgoUserTransactions,
-  getVezgoTransaction,
+  getVezgoProviders,
+  getVezgoLink,
+  storeVezgoAccount,
   getPlaidAccount,
   getPlaidLinkToken,
   getPlaidTransaction,
