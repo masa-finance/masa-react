@@ -4,13 +4,12 @@ import { useRestCall } from '../../helpers/rest-calls';
 
 const path = 'countries';
 
-export function useMethod({ pathParameters, body }: any) {
+export function useMethod() {
     const { data, error, loading, getData } = useRestCall({
-      pathParameters,
       headers: Headers,
-      body,
       metadata,
     });
+
     return { data, error, loading, getData };
   }
 

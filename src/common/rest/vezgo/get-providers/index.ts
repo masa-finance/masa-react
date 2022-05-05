@@ -1,6 +1,7 @@
-import { MethodMetadata } from '..';
-import { Headers } from '../../helpers/axios';
-import { useRestCall } from '../../helpers/rest-calls';
+
+import { MethodMetadata } from '../..';
+import { Headers } from '../../../helpers/axios';
+import { useRestCall } from '../../../helpers/rest-calls';
 
 const path = 'vezgo-providers/';
 
