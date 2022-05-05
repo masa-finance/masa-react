@@ -1,9 +1,9 @@
-import { MethodMetadata, Parameter } from '../..';
-import { useRestCall } from '../../../helpers/rest-calls';
-import { Headers } from '../../../helpers/axios';
+import { MethodMetadata } from '..';
+import { Headers } from '../../helpers/axios';
+import { useRestCall } from '../../helpers/rest-calls';
 
 const path =
-  'plaid-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize';
+  'vezgo-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({
@@ -45,7 +45,7 @@ const parameters: Parameter[] = [
 export const metadata: MethodMetadata = {
   author: 'Aaron Knott',
   authorPicture: '',
-  description: 'Get a list of Plaid transactions for a given account',
+  description: 'Get list of Vezgo Transactions for a given account',
   name: path,
   method: 'GET',
   parameters,

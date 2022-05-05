@@ -2,8 +2,7 @@ import { MethodMetadata, Parameter } from '../..';
 import { useRestCall } from '../../../helpers/rest-calls';
 import { Headers } from '../../../helpers/axios';
 
-const path =
-  'plaid-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize';
+const path = 'sync-plaid/:userId/?publicToken=:publicToken';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({
@@ -18,34 +17,27 @@ export function useMethod({ pathParameters, body }: any) {
 const parameters: Parameter[] = [
   {
     key: 1,
-    name: 'accountId',
-    description: 'Account ID',
+    name: 'userId',
+    description: 'User ID',
     required: 'yes',
     default: '',
     dataType: 'string',
   },
   {
     key: 2,
-    name: 'pageNbr',
-    description: 'Pagination page number',
-    required: 'no',
+    name: 'publicToken',
+    description: 'Public Token',
+    required: 'yes',
     default: '',
-    dataType: 'number',
-  },
-  {
-    key: 3,
-    name: 'pageSize',
-    description: 'pageSize',
-    required: 'no',
-    default: '',
-    dataType: 'number',
+    dataType: 'string',
   },
 ];
 
 export const metadata: MethodMetadata = {
   author: 'Aaron Knott',
   authorPicture: '',
-  description: 'Get a list of Plaid transactions for a given account',
+  description:
+    'Send Public Token to be exchanged for access token and to sync plaid data with user accounts',
   name: path,
   method: 'GET',
   parameters,

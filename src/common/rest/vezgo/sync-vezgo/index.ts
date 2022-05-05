@@ -2,7 +2,7 @@ import { MethodMetadata, Parameter } from "../..";
 import { useRestCall } from "../../../helpers/rest-calls";
 
 
-const path = 'store-account/';
+const path = 'sync-vezgo/:userId';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({
@@ -17,16 +17,8 @@ export function useMethod({ pathParameters, body }: any) {
 const parameters: Parameter[] = [
   {
     key: 1,
-    name: 'code',
-    description: 'Vezgo Account ID',
-    required: 'yes',
-    default: '',
-    dataType: 'string',
-  },
-  {
-    key: 2,
-    name: 'institution',
-    description: 'Vezgo Account Name',
+    name: 'userId',
+    description: 'User ID',
     required: 'yes',
     default: '',
     dataType: 'string',
@@ -36,7 +28,7 @@ const parameters: Parameter[] = [
 export const metadata: MethodMetadata = {
   author: 'Aaron Knott',
   authorPicture: '',
-  description: 'Store account credentials ',
+  description: 'Initialize BE sync of Vezgo data',
   name: path,
   method: 'POST',
   parameters,

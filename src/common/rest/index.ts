@@ -5,9 +5,11 @@ import * as accounts from './accounts';
 import * as getCountries from './get-countries';
 import * as postCountry from './post-country';
 
-import * as getVezgoProviders from './vezgo/get-providers';
 import * as getVezgoLink from './vezgo/get-link';
-import * as storeVezgoAccount from './vezgo/store-account';
+import * as listVezgoProviders from './vezgo/list-providers';
+import * as listVezgoAccounts from './vezgo/list-accounts';
+import * as listVezgoTransactions from './vezgo/list-transactions';
+import * as syncVezgo from './vezgo/sync-vezgo';
 
 import * as getPlaidAccount from './plaid/get-plaid-account';
 import * as getPlaidLinkToken from './plaid/get-plaid-link-token';
@@ -17,6 +19,7 @@ import * as listPlaidTransaction from './plaid/list-plaid-transactions';
 import * as getPlaidAccessToken from './plaid/get-plaid-access-token';
 import * as savePlaidAccounts from './plaid/save-plaid-accounts';
 import * as savePlaidTransaction from './plaid/save-plaid-transactions';
+import * as syncPlaid from './plaid/sync-plaid';
 
 import * as postUser from './post-user';
 import * as getProductInterests from './get-product-interests';
@@ -43,17 +46,20 @@ export const masaRestClient = {
   accounts,
   getClient,
   postClient,
-  getVezgoProviders,
   getVezgoLink,
-  storeVezgoAccount,
+  listVezgoProviders,
+  listVezgoAccounts,
+  listVezgoTransactions,
+  syncVezgo,
   getPlaidAccount,
   getPlaidLinkToken,
   getPlaidTransaction,
+  getPlaidAccessToken,
   listPlaidAccounts,
   listPlaidTransaction,
-  getPlaidAccessToken,
   savePlaidAccounts,
   savePlaidTransaction,
+  syncPlaid,
   getCountries,
   postUser,
   postCountry,
