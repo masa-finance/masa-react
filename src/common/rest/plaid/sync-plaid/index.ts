@@ -2,9 +2,10 @@ import { MethodMetadata, Parameter } from '../..';
 import { useRestCall } from '../../../helpers/rest-calls';
 import { Headers } from '../../../helpers/axios';
 
-const path = 'sync-plaid/:userId/?publicToken=:publicToken';
+const path = 'sync-plaid/:userId?publicToken=:publicToken';
 
 export function useMethod({ pathParameters, body }: any) {
+  console.log(pathParameters);
   const { data, error, loading, getData } = useRestCall({
     pathParameters,
     headers: Headers,

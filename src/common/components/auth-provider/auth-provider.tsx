@@ -5,7 +5,7 @@ import { Auth } from '../auth/auth';
 export function AuthProvider({ children }: Props) {
   return (
     <Auth0Provider
-      domain="dev-1m10in4i.us.auth0.com"
+      domain="auth.masa.finance"
       clientId="Xg2CKYKqJTmDPerMPb5iJLARjhHO3qIM"
       audience="https://auth.masa.finance"
       redirectUri={window.location.origin}

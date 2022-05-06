@@ -34,7 +34,12 @@ export const RestMethod = ({
     const pathParametersList = name.split(':');
     pathParametersList.shift();
     pathParametersList.forEach((pathParameter) => {
-      const pathParameterClean = pathParameter.split('/');
+      const pathParameterClean = pathParameter.split('?');
+      //@ts-ignore
+      customParameterObject[pathParameterClean[0]] = '';
+    });
+    pathParametersList.forEach((pathParameter) => {
+      const pathParameterClean = pathParameter.split('&');
       //@ts-ignore
       customParameterObject[pathParameterClean[0]] = '';
     });
