@@ -5,13 +5,14 @@ import { Headers } from '../../../helpers/axios';
 const path = 'plaid-accounts/:userId';
 
 export function useMethod({ pathParameters, body }: any) {
-  const { data, error, loading, getData } = useRestCall({
-    pathParameters,
-    headers: Headers,
-    body,
-    metadata,
-  });
-  return { data, error, loading, getData };
+  const { data, error, loading, getData, simpleData, simpleLoading } =
+    useRestCall({
+      pathParameters,
+      headers: Headers,
+      body,
+      metadata,
+    });
+  return { data, error, loading, getData, simpleData, simpleLoading };
 }
 
 const parameters: Parameter[] = [
@@ -21,7 +22,7 @@ const parameters: Parameter[] = [
     description: 'User ID',
     required: 'yes',
     default: '',
-    dataType: 'string'
+    dataType: 'string',
   },
 ];
 

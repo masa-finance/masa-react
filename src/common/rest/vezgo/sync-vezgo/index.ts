@@ -30,6 +30,6 @@ export const metadata: MethodMetadata = {
   authorPicture: '',
   description: 'Initialize BE sync of Vezgo data',
   name: path,
-  method: 'POST',
+  method: 'GET',
   parameters,
 };

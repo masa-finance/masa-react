@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useLazyAxios } from 'use-axios-client';
+import { useAxios, useLazyAxios } from 'use-axios-client';
 import { MethodMetadata } from '../../rest';
 import { URL } from '../axios';
 import { useToken } from '../get-token';
@@ -27,7 +27,7 @@ export const useRestCall = ({
     return newPath;
   }, [pathParameters]);
 
-  const {token, isLoading } = useToken()
+  const { token, isLoading } = useToken();
 
   const [getData, { data, error, loading }] = useLazyAxios({
     url: token ? `${URL}${fullPath}` : undefined,
@@ -38,5 +38,27 @@ export const useRestCall = ({
     method: metadata.method,
     data: body,
   });
-  return { data, error, loading: loading || isLoading, getData };
+
+  const {
+    data: simpleData,
+    error: simpleError,
+    loading: simpleLoading,
+  } = useAxios({
+    url: token ? `${URL}${fullPath}` : undefined,
+    headers: {
+      ...headers,
+      Authorization: token ? `Bearer ${token}` : undefined,
+    },
+    method: metadata.method,
+    data: body,
+  });
+  return {
+    data,
+    error,
+    loading: loading || isLoading,
+    getData,
+    simpleData,
+    simpleLoading,
+    simpleError,
+  };
 };

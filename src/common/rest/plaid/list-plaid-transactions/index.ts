@@ -6,13 +6,13 @@ const path =
   'plaid-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize';
 
 export function useMethod({ pathParameters, body }: any) {
-  const { data, error, loading, getData } = useRestCall({
+  const { data, error, loading, getData, simpleData, simpleLoading } = useRestCall({
     pathParameters,
     headers: Headers,
     body,
     metadata,
   });
-  return { data, error, loading, getData };
+  return { data, error, loading, getData, simpleLoading, simpleData };
 }
 
 const parameters: Parameter[] = [
