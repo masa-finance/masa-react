@@ -1,18 +1,29 @@
 import { MethodMetadata, Parameter } from '../..';
-import { useRestCall } from '../../../helpers/rest-calls';
+import { useRestCall, useSimpleRestCall } from '../../../helpers/rest-calls';
 import { Headers } from '../../../helpers/axios';
 
 const path = 'plaid-accounts/:userId';
 
 export function useMethod({ pathParameters, body }: any) {
-  const { data, error, loading, getData, simpleData, simpleLoading } =
-    useRestCall({
-      pathParameters,
-      headers: Headers,
-      body,
-      metadata,
-    });
-  return { data, error, loading, getData, simpleData, simpleLoading };
+  const { data, error, loading, getData } = useRestCall({
+    pathParameters,
+    headers: Headers,
+    body,
+    metadata,
+  });
+
+  return { data, error, loading, getData };
+}
+
+export function useSimpleMethod({ pathParameters, body }: any) {
+  const simpleCall = useSimpleRestCall({
+    pathParameters,
+    headers: Headers,
+    body,
+    metadata,
+  });
+
+  return simpleCall;
 }
 
 const parameters: Parameter[] = [

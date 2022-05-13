@@ -39,11 +39,34 @@ export const useRestCall = ({
     data: body,
   });
 
-  const {
-    data: simpleData,
-    error: simpleError,
-    loading: simpleLoading,
-  } = useAxios({
+  return {
+    data,
+    error,
+    loading: loading || isLoading,
+    getData,
+  };
+};
+
+export const useSimpleRestCall = ({
+  pathParameters,
+  metadata,
+  headers,
+  body,
+}: RestCallProps) => {
+  const fullPath = useMemo(() => {
+    let newPath = metadata.name;
+    if (pathParameters) {
+      Object.keys(pathParameters).forEach((key) => {
+        //@ts-ignore
+        newPath = newPath.replace(':' + key, [pathParameters[key]]);
+      });
+    }
+    return newPath;
+  }, [pathParameters]);
+
+  const { token, isLoading } = useToken();
+
+  const axiosData = useAxios({
     url: token ? `${URL}${fullPath}` : undefined,
     headers: {
       ...headers,
@@ -52,13 +75,6 @@ export const useRestCall = ({
     method: metadata.method,
     data: body,
   });
-  return {
-    data,
-    error,
-    loading: loading || isLoading,
-    getData,
-    simpleData,
-    simpleLoading,
-    simpleError,
-  };
+
+  return { ...axiosData, loading: axiosData.loading || isLoading};
 };
