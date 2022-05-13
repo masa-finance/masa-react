@@ -31,7 +31,8 @@ export const RestMethod = ({
 
   const [pathParameters, setPathParameters] = useState(() => {
     const customParameterObject = {};
-    const pathParametersList = name.split(':');
+    const cleanPath = name.split('?')
+    const pathParametersList = cleanPath[0].split(':');
     pathParametersList.shift();
     pathParametersList.forEach((pathParameter) => {
       const pathParameterClean = pathParameter.split('?');
@@ -43,6 +44,14 @@ export const RestMethod = ({
       //@ts-ignore
       customParameterObject[pathParameterClean[0]] = '';
     });
+    if (cleanPath.length>1) {
+      const pathParameters = cleanPath[1].split('&')
+      pathParameters.forEach((pathParameter) => {
+        const parameter = pathParameter.split(':')[1]
+        // @ts-ignore
+        customParameterObject[parameter] = '';
+      })
+    }
     return customParameterObject;
   });
   const { getData, data } = useMethod({ pathParameters, body: customParameters });
