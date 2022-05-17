@@ -4,6 +4,7 @@ import * as postClient from './post-user';
 import * as accounts from './accounts';
 import * as getCountries from './get-countries';
 import * as postCountry from './post-country';
+import * as farming from './farming';
 
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
@@ -44,6 +45,7 @@ export interface MethodMetadata {
 export const masaRestClient = {
   auth,
   accounts,
+  farming,
   getClient,
   postClient,
   getVezgoLink,
