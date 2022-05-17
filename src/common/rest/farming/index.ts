@@ -1,4 +1,4 @@
-import { MethodMetadata } from '..';
+import { MethodMetadata, Parameter } from '..';
 import { Headers } from '../../helpers/axios';
 import { useRestCall, useSimpleRestCall } from '../../helpers/rest-calls';
 
@@ -42,5 +42,5 @@ export const metadata: MethodMetadata = {
   description: 'Retrieve farming data and rewards for user',
   name: path,
   method: 'GET',
-  parameters: [],
+  parameters,
 };
