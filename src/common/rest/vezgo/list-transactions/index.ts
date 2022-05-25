@@ -1,6 +1,6 @@
 import { MethodMetadata, Parameter } from '../..';
 import { Headers } from '../../../helpers/axios';
-import { useRestCall } from '../../../helpers/rest-calls';
+import { useRestCall, useSimpleRestCall } from '../../../helpers/rest-calls';
 
 const path =
   'vezgo-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize';
@@ -14,6 +14,19 @@ export function useMethod({ pathParameters, body }: any) {
   });
   return { data, error, loading, getData };
 }
+
+
+export function useSimpleMethod({ pathParameters, body }: any) {
+  const simpleCall = useSimpleRestCall({
+    pathParameters,
+    headers: Headers,
+    body,
+    metadata,
+  });
+
+  return simpleCall;
+}
+
 
 const parameters: Parameter[] = [
   {
