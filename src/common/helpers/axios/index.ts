@@ -1,8 +1,9 @@
 
 const env = process.env.REACT_APP_MASA_TOOLS_ENV;
 const backendPort = process.env.REACT_APP_MASA_TOOLS_BACKEND_PORT;
+const backendApiUrl = process.env.REACT_APP_MASA_TOOLS_BACKEND_API_URL;
 
-export const URL = env === "local" ? `http://localhost:${backendPort ? backendPort : "4000"}/` :'https://middleware.masa.finance/';
+export const URL = env === "local" ? `http://localhost:${backendPort ? backendPort : "4000"}/` : backendApiUrl ? backendApiUrl : 'https://middleware.masa.finance/';
 
 export const Headers = {
   'x-api-key': 'NN7ARbtuBy68bM78xQHFy3YDmLbUIPl676COm6Qa',
