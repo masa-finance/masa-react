@@ -1,6 +1,6 @@
 import { MethodMetadata } from '..';
 import { Headers } from '../../helpers/axios';
-import { useRestCall } from '../../helpers/rest-calls';
+import { useMasaQuery, useRestCall } from '../../helpers/rest-calls';
 
 const path = 'me';
 
@@ -10,6 +10,20 @@ export function useMethod() {
     metadata,
   });
   return { data, error, loading, getData };
+}
+
+export function useSimpleMethod({ pathParameters, body, settings }: any) {
+  const masaQuery = useMasaQuery(
+    'get-user',
+    {
+      pathParameters,
+      headers: Headers,
+      body,
+      metadata,
+    },
+    settings
+  );
+  return masaQuery;
 }
 
 export const metadata: MethodMetadata = {

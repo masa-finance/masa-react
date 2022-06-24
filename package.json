@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/tools",
-  "version": "0.1.25",
+  "version": "0.1.39",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -75,6 +75,7 @@
     "antd": "^4.19.5",
     "axios": "^0.26.1",
     "react-highlight-words": "^0.17.0",
+    "react-query": "^3.39.1",
     "shards-react": "^1.0.3",
     "use-axios-client": "^2.0.0"
   }

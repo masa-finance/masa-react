@@ -1,29 +1,38 @@
 import React, { createContext } from 'react';
 import { masaRestClient } from '../../rest';
 import { AccessTokenProvider } from './access-token-provider';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 export const MASA_TOOLS_CONTEXT =
-  createContext<MasaToolsShape | undefined>(undefined);
+  createContext<MasaToolsShape>({});
 
 export interface MasaToolsProviderProps {
   children: React.ReactNode;
   accessToken: string | undefined;
+  apiURL?: string
 }
 
-export interface MasaToolsShape {}
+export interface MasaToolsShape {
+  apiURL?: string
+}
 
 export function masaToolsProvider({
   children,
   accessToken,
+  apiURL
 }: MasaToolsProviderProps) {
   const rest = masaRestClient;
-  const context = { rest };
+  const context = { rest, apiURL };
 
   return (
     <AccessTokenProvider accessToken={accessToken}>
-      <MASA_TOOLS_CONTEXT.Provider value={context}>
-        {children}
-      </MASA_TOOLS_CONTEXT.Provider>
+      <QueryClientProvider client={queryClient}>
+        <MASA_TOOLS_CONTEXT.Provider value={context}>
+          {children}
+        </MASA_TOOLS_CONTEXT.Provider>
+      </QueryClientProvider>
     </AccessTokenProvider>
   );
 }

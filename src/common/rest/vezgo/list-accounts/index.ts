@@ -1,6 +1,6 @@
 import { MethodMetadata, Parameter } from '../..';
 import { Headers } from '../../../helpers/axios';
-import { useRestCall, useSimpleRestCall } from '../../../helpers/rest-calls';
+import { useMasaQuery, useRestCall } from '../../../helpers/rest-calls';
 
 const path = 'vezgo-accounts/:userId';
 
@@ -14,13 +14,17 @@ export function useMethod({ pathParameters, body }: any) {
   return { data, error, loading, getData };
 }
 
-export function useSimpleMethod({ pathParameters, body }: any) {
-  const simpleCall = useSimpleRestCall({
-    pathParameters,
-    headers: Headers,
-    body,
-    metadata,
-  });
+export function useSimpleMethod({ pathParameters, body, settings }: any) {
+  const simpleCall = useMasaQuery(
+    'vezgo-accounts',
+    {
+      pathParameters,
+      headers: Headers,
+      body,
+      metadata,
+    },
+    settings
+  );
 
   return simpleCall;
 }

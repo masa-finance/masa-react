@@ -5,6 +5,7 @@ import { MethodMetadata } from '../../rest';
 import { ResponseValues } from '../response-values';
 import { CustomParameters } from '../custom-parameters';
 import { PathParameters } from '../path-parameters';
+import { UseQueryResult } from 'react-query';
 
 export const RestMethod = ({
   author,
@@ -14,7 +15,15 @@ export const RestMethod = ({
   method,
   parameters,
   useMethod,
-}: MethodMetadata & { useMethod: any }) => {
+  useSimpleMethod,
+}: MethodMetadata & {
+  useMethod: any;
+  useSimpleMethod?: (params: {
+    pathParameters?: any;
+    body?: any;
+    settings?: any;
+  }) => UseQueryResult;
+}) => {
   const [showParameters, setShowParameters] = useState(false);
   const [showCustomParameters, setShowCustomParameters] = useState(false);
   const [showPathParameters, setShowPathParameters] = useState(false);
@@ -31,7 +40,7 @@ export const RestMethod = ({
 
   const [pathParameters, setPathParameters] = useState(() => {
     const customParameterObject = {};
-    const cleanPath = name.split('?')
+    const cleanPath = name.split('?');
     const pathParametersList = cleanPath[0].split(':');
     pathParametersList.shift();
     pathParametersList.forEach((pathParameter) => {
@@ -44,26 +53,42 @@ export const RestMethod = ({
       //@ts-ignore
       customParameterObject[pathParameterClean[0]] = '';
     });
-    if (cleanPath.length>1) {
-      const pathParameters = cleanPath[1].split('&')
+    if (cleanPath.length > 1) {
+      const pathParameters = cleanPath[1].split('&');
       pathParameters.forEach((pathParameter) => {
-        const parameter = pathParameter.split(':')[1]
+        const parameter = pathParameter.split(':')[1];
         // @ts-ignore
         customParameterObject[parameter] = '';
-      })
+      });
     }
     return customParameterObject;
   });
-  const { getData, data } = useMethod({ pathParameters, body: customParameters });
+  const { getData, data } = useMethod({
+    pathParameters,
+    body: customParameters,
+  });
 
+  const [runQuery, setRunQuery] = useState(false);
+  const masaQuery = useSimpleMethod?.({
+    settings: { enabled: runQuery },
+  });
+
+  // if (runQuery) {
+  //   console.log('SIMPLE DATA', masaQuery);
+  // }
   const handleCall = async () => {
     const dt = await getData();
     console.log(dt);
   };
 
   const onValueChange = (key: string, value: string) => {
-    const parameter = parameters.filter(parameter => parameter['name'] = key)
-    setCustomParameters({ ...customParameters, [key]: parameter[0].dataType == 'string' ? value : Number(value)});
+    const parameter = parameters.filter(
+      (parameter) => (parameter['name'] = key)
+    );
+    setCustomParameters({
+      ...customParameters,
+      [key]: parameter[0].dataType == 'string' ? value : Number(value),
+    });
   };
 
   const onValuePathChange = (key: string, value: string) => {
@@ -91,6 +116,13 @@ export const RestMethod = ({
       onClick={() => setShowPathParameters(!showPathParameters)}
     >
       Set path parameters
+    </span>,
+    useSimpleMethod && <span
+      className="text-red"
+      key="comment-basic-reply-to"
+      onClick={() => setRunQuery(!runQuery)}
+    >
+      Run query: {runQuery ? 'ON' : 'OFF'}
     </span>,
   ];
 

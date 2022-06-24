@@ -23,7 +23,7 @@ export function RestTester() {
           itemLayout="horizontal"
           dataSource={methods}
           renderItem={(item) => (
-            <RestMethod {...item.metadata} useMethod={item.useMethod} />
+            <RestMethod {...item.metadata} useMethod={item.useMethod} useSimpleMethod={item.useSimpleMethod} />
           )}
         ></List>
       </MasaToolsWrapper>

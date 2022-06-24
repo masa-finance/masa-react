@@ -3,7 +3,7 @@ import { useRestCall, useSimpleRestCall } from '../../../helpers/rest-calls';
 import { Headers } from '../../../helpers/axios';
 
 const path =
-  'plaid-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize';
+  'plaid-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize&startDate=:startDate&endDate=:endDate';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({
@@ -46,6 +46,14 @@ const parameters: Parameter[] = [
   {
     key: 3,
     name: 'pageSize',
+    description: 'pageSize',
+    required: 'no',
+    default: '',
+    dataType: 'number',
+  },
+  {
+    key: 4,
+    name: 'startDate',
     description: 'pageSize',
     required: 'no',
     default: '',

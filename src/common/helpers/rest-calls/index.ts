@@ -1,8 +1,10 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { useAxios, useLazyAxios } from 'use-axios-client';
 import { MethodMetadata } from '../../rest';
 import { URL } from '../axios';
 import { useToken } from '../get-token';
+import { useQuery } from 'react-query';
+import { MASA_TOOLS_CONTEXT } from '../provider';
 
 export interface RestCallProps {
   pathParameters?: string[];
@@ -28,9 +30,10 @@ export const useRestCall = ({
   }, [pathParameters]);
 
   const { token, isLoading } = useToken();
+  const { apiURL } = useContext(MASA_TOOLS_CONTEXT);
 
   const [getData, { data, error, loading }] = useLazyAxios({
-    url: token ? `${URL}${fullPath}` : undefined,
+    url: token ? `${URL(apiURL)}${fullPath}` : undefined,
     headers: {
       ...headers,
       Authorization: token ? `Bearer ${token}` : undefined,
@@ -53,6 +56,8 @@ export const useSimpleRestCall = ({
   headers,
   body,
 }: RestCallProps) => {
+  const { apiURL } = useContext(MASA_TOOLS_CONTEXT);
+
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
@@ -67,7 +72,7 @@ export const useSimpleRestCall = ({
   const { token, isLoading } = useToken();
 
   const axiosData = useAxios({
-    url: token ? `${URL}${fullPath}` : undefined,
+    url: token ? `${URL(apiURL)}${fullPath}` : undefined,
     headers: {
       ...headers,
       Authorization: token ? `Bearer ${token}` : undefined,
@@ -76,5 +81,43 @@ export const useSimpleRestCall = ({
     data: body,
   });
 
-  return { ...axiosData, loading: axiosData.loading || isLoading};
+  return { ...axiosData, loading: axiosData.loading || isLoading };
+};
+
+export const useMasaQuery = (
+  name: string,
+  { pathParameters, metadata, headers, body }: RestCallProps,
+  settings?: any
+) => {
+  const { apiURL } = useContext(MASA_TOOLS_CONTEXT);
+
+  const fullPath = useMemo(() => {
+    let newPath = metadata.name;
+    if (pathParameters) {
+      Object.keys(pathParameters).forEach((key) => {
+        //@ts-ignore
+        newPath = newPath.replace(':' + key, [pathParameters[key]]);
+      });
+    }
+    return newPath;
+  }, [pathParameters]);
+
+  const { token } = useToken();
+
+  const query = useQuery(
+    name,
+    () =>
+      fetch(`${URL(apiURL)}${fullPath}`, {
+        headers: {
+          ...headers,
+          Authorization: token ? `Bearer ${token}` : undefined,
+        },
+        method: metadata.method,
+        mode: 'cors',
+        body: JSON.stringify(body),
+      }).then((res) => res.json()),
+    { ...settings, enabled: !token ? false : !!settings?.enabled }
+  );
+
+  return query;
 };

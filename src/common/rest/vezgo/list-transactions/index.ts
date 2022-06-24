@@ -3,7 +3,7 @@ import { Headers } from '../../../helpers/axios';
 import { useRestCall, useSimpleRestCall } from '../../../helpers/rest-calls';
 
 const path =
-  'vezgo-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize';
+  'vezgo-transactions/:accountId/?pageNbr=:pageNbr&pageSize=:pageSize&startDate=:startDate&endDate=:endDate';
 
 export function useMethod({ pathParameters, body }: any) {
   const { data, error, loading, getData } = useRestCall({

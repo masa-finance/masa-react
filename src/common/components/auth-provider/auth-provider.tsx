@@ -5,9 +5,9 @@ import { Auth } from '../auth/auth';
 export function AuthProvider({ children }: Props) {
   return (
     <Auth0Provider
-      domain="auth.masa.finance"
-      clientId="Xg2CKYKqJTmDPerMPb5iJLARjhHO3qIM"
-      audience="https://auth.masa.finance"
+      domain="masa-development.us.auth0.com"
+      clientId="tgdMG3ecxLEwnXPcbR7CMF8SvJndtyWU"
+      audience="https://auth.masa.finance/dev"
       redirectUri={window.location.origin}
       useRefreshTokens
       cacheLocation="localstorage"
