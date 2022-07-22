@@ -5,6 +5,8 @@ import * as accounts from './accounts';
 import * as getCountries from './get-countries';
 import * as postCountry from './post-country';
 import * as farming from './farming';
+import * as getNodeOperators from './get-node-operators';
+import * as postNodeOperators from './post-node-operators';
 
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
@@ -69,5 +71,7 @@ export const masaRestClient = {
   postUser,
   postCountry,
   getProductInterests,
-  balances
+  balances,
+  getNodeOperators,
+  postNodeOperators
 };
