@@ -11,6 +11,10 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
 
     steps:
+      - name: Fix Windows
+        if: matrix.os == 'windows-latest'
+        run: yarn global install windows-build-tools
+
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
