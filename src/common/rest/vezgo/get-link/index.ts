@@ -1,8 +1,6 @@
-
 import { MethodMetadata, Parameter } from '../..';
 import { Headers } from '../../../helpers/axios';
 import { useRestCall } from '../../../helpers/rest-calls';
-
 
 const path = 'vezgo-url/:userProfileId/?provider=:provider';
 

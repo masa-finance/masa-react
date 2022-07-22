@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { masaToolsProvider } from '../../helpers/provider';
-const XMasaToolsProvider = masaToolsProvider
+const XMasaToolsProvider = masaToolsProvider;
 export interface MasaToolsWrapperProps {
   children: React.ReactNode;
 }
@@ -21,6 +21,7 @@ export function MasaToolsWrapper({ children }: MasaToolsWrapperProps) {
     handleToken();
   }, [handleToken]);
 
-
-  return <XMasaToolsProvider accessToken={token}>{children}</XMasaToolsProvider>;
+  return (
+    <XMasaToolsProvider accessToken={token}>{children}</XMasaToolsProvider>
+  );
 }

@@ -21,7 +21,7 @@ const parameters: Parameter[] = [
     description: 'User ID',
     required: 'yes',
     default: '',
-    dataType: 'string'
+    dataType: 'string',
   },
   {
     key: 3,
@@ -29,7 +29,7 @@ const parameters: Parameter[] = [
     description: 'Accounts',
     required: 'yes',
     default: '',
-    dataType: 'string'
+    dataType: 'string',
   },
 ];
 

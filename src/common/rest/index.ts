@@ -8,6 +8,8 @@ import * as farming from './farming';
 import * as getNodeOperators from './get-node-operators';
 import * as postNodeOperators from './post-node-operators';
 
+import * as contractsMint from './contracts-mint';
+
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
 import * as listVezgoAccounts from './vezgo/list-accounts';
@@ -28,7 +30,6 @@ import * as postUser from './post-user';
 import * as getProductInterests from './get-product-interests';
 
 import * as balances from './balances';
-
 
 export interface Parameter {
   key: number;
@@ -53,6 +54,7 @@ export const masaRestClient = {
   farming,
   getClient,
   postClient,
+  contractsMint,
   getVezgoLink,
   listVezgoProviders,
   listVezgoAccounts,
@@ -73,5 +75,5 @@ export const masaRestClient = {
   getProductInterests,
   balances,
   getNodeOperators,
-  postNodeOperators
+  postNodeOperators,
 };

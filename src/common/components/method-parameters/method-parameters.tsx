@@ -19,13 +19,13 @@ export class MethodParameters extends React.Component {
     }: any) => (
       <div style={{ padding: 8 }}>
         <Input
-          ref={(node) => {
+          ref={node => {
             //@ts-ignore
             this.searchInput = node;
           }}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) =>
+          onChange={e =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() =>

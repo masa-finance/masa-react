@@ -1,1 +1,1 @@
-export { ResponseValues } from "./response-values";
+export { ResponseValues } from './response-values';

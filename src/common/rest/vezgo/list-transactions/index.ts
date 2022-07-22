@@ -15,7 +15,6 @@ export function useMethod({ pathParameters, body }: any) {
   return { data, error, loading, getData };
 }
 
-
 export function useSimpleMethod({ pathParameters, body }: any) {
   const simpleCall = useSimpleRestCall({
     pathParameters,
@@ -26,7 +25,6 @@ export function useSimpleMethod({ pathParameters, body }: any) {
 
   return simpleCall;
 }
-
 
 const parameters: Parameter[] = [
   {

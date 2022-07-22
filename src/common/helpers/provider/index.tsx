@@ -5,23 +5,22 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 const queryClient = new QueryClient();
 
-export const MASA_TOOLS_CONTEXT =
-  createContext<MasaToolsShape>({});
+export const MASA_TOOLS_CONTEXT = createContext<MasaToolsShape>({});
 
 export interface MasaToolsProviderProps {
   children: React.ReactNode;
   accessToken: string | undefined;
-  apiURL?: string
+  apiURL?: string;
 }
 
 export interface MasaToolsShape {
-  apiURL?: string
+  apiURL?: string;
 }
 
 export function masaToolsProvider({
   children,
   accessToken,
-  apiURL
+  apiURL,
 }: MasaToolsProviderProps) {
   const rest = masaRestClient;
   const context = { rest, apiURL };

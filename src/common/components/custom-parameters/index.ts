@@ -1,1 +1,1 @@
-export { CustomParameters } from "./custom-parameters";
+export { CustomParameters } from './custom-parameters';

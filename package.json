@@ -40,12 +40,12 @@
   "module": "dist/masa-tools.esm.js",
   "size-limit": [
     {
-      "path": "dist/masa-tools.cjs.production.min.js",
-      "limit": "10 KB"
+      "path": "dist/tools.cjs.production.min.js",
+      "limit": "100 KB"
     },
     {
-      "path": "dist/masa-tools.esm.js",
-      "limit": "10 KB"
+      "path": "dist/tools.esm.js",
+      "limit": "100 KB"
     }
   ],
   "devDependencies": {
@@ -56,13 +56,15 @@
     "@storybook/addon-links": "^6.4.20",
     "@storybook/addons": "^6.4.20",
     "@storybook/react": "^6.4.20",
-    "@types/react": "^17.0.43",
-    "@types/react-dom": "^17.0.14",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
     "babel-loader": "^8.2.4",
     "husky": "^7.0.4",
+    "node-gyp": "^9.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-is": "^18.0.0",
+    "react-test-renderer": "^18.2.0",
     "size-limit": "^7.0.8",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
@@ -74,7 +76,7 @@
     "@types/auth0": "^2.34.17",
     "antd": "^4.19.5",
     "axios": "^0.26.1",
-    "react-highlight-words": "^0.17.0",
+    "react-highlight-words": "^0.18.0",
     "react-query": "^3.39.1",
     "shards-react": "^1.0.3",
     "use-axios-client": "^2.0.0"

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Skeleton, Switch, Card, Avatar } from 'antd';
-import { Popconfirm, message } from 'antd';
+import React from 'react';
+import { Skeleton, Card, Avatar } from 'antd';
+import { Popconfirm } from 'antd';
 
 import {
   EditOutlined,
@@ -35,9 +35,8 @@ export function UserCard({ user, loading }: UserCardProps) {
           okText="Yes"
           cancelText="No"
         >
-          <LogoutOutlined key="logout" color='#DEDEDE'/>
+          <LogoutOutlined key="logout" color="#DEDEDE" />
         </Popconfirm>,
-        ,
       ]}
     >
       <Skeleton loading={loading} avatar active>

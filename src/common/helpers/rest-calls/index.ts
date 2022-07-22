@@ -21,13 +21,13 @@ export const useRestCall = ({
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach((key) => {
+      Object.keys(pathParameters).forEach(key => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
     }
     return newPath;
-  }, [pathParameters]);
+  }, [pathParameters, metadata]);
 
   const { token, isLoading } = useToken();
   const { apiURL } = useContext(MASA_TOOLS_CONTEXT);
@@ -61,13 +61,13 @@ export const useSimpleRestCall = ({
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach((key) => {
+      Object.keys(pathParameters).forEach(key => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
     }
     return newPath;
-  }, [pathParameters]);
+  }, [pathParameters, metadata]);
 
   const { token, isLoading } = useToken();
 
@@ -94,13 +94,13 @@ export const useMasaQuery = (
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach((key) => {
+      Object.keys(pathParameters).forEach(key => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
     }
     return newPath;
-  }, [pathParameters]);
+  }, [pathParameters, metadata]);
 
   const { token } = useToken();
 
@@ -115,7 +115,7 @@ export const useMasaQuery = (
         method: metadata.method,
         mode: 'cors',
         body: JSON.stringify(body),
-      }).then((res) => res.json()),
+      }).then(res => res.json()),
     { ...settings, enabled: !token ? false : !!settings?.enabled }
   );
 

@@ -1,7 +1,8 @@
 import React, { createContext } from 'react';
 
-export const ACCESS_TOKEN_CONTEXT =
-  createContext<AccessTokenShape | undefined>(undefined);
+export const ACCESS_TOKEN_CONTEXT = createContext<AccessTokenShape | undefined>(
+  undefined
+);
 
 export interface AccessTokenProps {
   children: React.ReactNode;

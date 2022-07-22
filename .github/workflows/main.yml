@@ -1,26 +1,31 @@
-name: CI
-on: [push]
+name: Build and Test
+
+on: [ push ]
+
 jobs:
   build:
     name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
 
     runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
-        node: ['10.x', '12.x', '14.x']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        node: [ '12.x', '14.x', '16.x' ]
+        os: [ ubuntu-latest, windows-latest, macOS-latest ]
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      - name: Fix Windows
+        if: matrix.os == 'windows-latest'
+        run: npm config set msvs_version 2017
 
-      - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
+          cache: 'yarn'
           node-version: ${{ matrix.node }}
 
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+      - name: Install deps
+        run: yarn --frozen-lockfile
 
       - name: Lint
         run: yarn lint

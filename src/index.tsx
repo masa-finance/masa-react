@@ -12,5 +12,5 @@ export interface Props {
  * A custom Thing component. Neat!
  */
 export const rest = masaRestClient;
-export const MasaToolsProvider = masaToolsProvider
-export const useMasaTools = useMasaToolsHook
+export const MasaToolsProvider = masaToolsProvider;
+export const useMasaTools = useMasaToolsHook;
