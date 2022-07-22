@@ -22,8 +22,15 @@ export function RestTester() {
         <List
           itemLayout="horizontal"
           dataSource={methods}
-          renderItem={(item) => (
-            <RestMethod {...item.metadata} useMethod={item.useMethod} useSimpleMethod={item.useSimpleMethod} />
+          renderItem={item => (
+            <RestMethod
+              // @ts-ignore
+              {...item.metadata}
+              // @ts-ignore
+              useMethod={item.useMethod}
+              // @ts-ignore
+              useSimpleMethod={item.useSimpleMethod}
+            />
           )}
         ></List>
       </MasaToolsWrapper>

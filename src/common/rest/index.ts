@@ -29,7 +29,6 @@ import * as getProductInterests from './get-product-interests';
 
 import * as balances from './balances';
 
-
 export interface Parameter {
   key: number;
   name: string;
@@ -72,5 +71,5 @@ export const masaRestClient = {
   postUser,
   postCountry,
   getProductInterests,
-  balances
+  balances,
 };

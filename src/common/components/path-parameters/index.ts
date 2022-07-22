@@ -1,1 +1,1 @@
-export { PathParameters } from "./path-parameters";
+export { PathParameters } from './path-parameters';

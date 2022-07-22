@@ -14,7 +14,13 @@ export function Auth(): JSX.Element {
   return (
     <div>
       {!user && (
-        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
           <Title level={3}>
             Unauthenticated{' '}
             <Button onClick={loginWithPopup}>Log In using Auth0</Button>{' '}

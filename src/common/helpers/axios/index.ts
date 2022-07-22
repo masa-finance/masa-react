@@ -1,4 +1,4 @@
-const env = process.env.REACT_APP_MASA_TOOLS_ENV;
+const env = process.env.REACT_APP_MASA_TOOLS_ENV || 'local';
 const backendPort = process.env.REACT_APP_MASA_TOOLS_BACKEND_PORT;
 const backendApiUrl = process.env.REACT_APP_MASA_TOOLS_BACKEND_API_URL;
 

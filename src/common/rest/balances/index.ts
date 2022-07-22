@@ -40,7 +40,8 @@ const parameters: Parameter[] = [
 export const metadata: MethodMetadata = {
   author: 'Hide on bush',
   authorPicture: '',
-  description: "Get needed data for display the graph, different balances from banka nd crypto",
+  description:
+    'Get needed data for display the graph, different balances from banka nd crypto',
   name: path,
   method: 'GET',
   parameters,

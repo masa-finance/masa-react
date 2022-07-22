@@ -5,13 +5,13 @@ import { useRestCall } from '../../helpers/rest-calls';
 const path = 'countries';
 
 export function useMethod() {
-    const { data, error, loading, getData } = useRestCall({
-      headers: Headers,
-      metadata,
-    });
+  const { data, error, loading, getData } = useRestCall({
+    headers: Headers,
+    metadata,
+  });
 
-    return { data, error, loading, getData };
-  }
+  return { data, error, loading, getData };
+}
 
 export const metadata: MethodMetadata = {
   author: 'Gabriela Golmar',

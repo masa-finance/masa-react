@@ -21,7 +21,7 @@ const parameters: Parameter[] = [
     description: '32',
     required: 'yes',
     default: 'test',
-    dataType: 'string'
+    dataType: 'string',
   },
 ];
 

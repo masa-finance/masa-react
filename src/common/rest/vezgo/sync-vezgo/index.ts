@@ -1,6 +1,5 @@
-import { MethodMetadata, Parameter } from "../..";
-import { useRestCall } from "../../../helpers/rest-calls";
-
+import { MethodMetadata, Parameter } from '../..';
+import { useRestCall } from '../../../helpers/rest-calls';
 
 const path = 'sync-vezgo/:userId';
 

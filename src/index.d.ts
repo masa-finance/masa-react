@@ -1,2 +1,2 @@
-declare module 'shards-react'
-declare module 'react-highlight-words'
+declare module 'shards-react';
+declare module 'react-highlight-words';
