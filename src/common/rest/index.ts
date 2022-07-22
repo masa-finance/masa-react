@@ -6,6 +6,8 @@ import * as getCountries from './get-countries';
 import * as postCountry from './post-country';
 import * as farming from './farming';
 
+import * as contractsMint from './contracts-mint';
+
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
 import * as listVezgoAccounts from './vezgo/list-accounts';
@@ -51,6 +53,7 @@ export const masaRestClient = {
   farming,
   getClient,
   postClient,
+  contractsMint,
   getVezgoLink,
   listVezgoProviders,
   listVezgoAccounts,
