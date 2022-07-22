@@ -1,23 +1,26 @@
-name: CI
+name: Build and Test
+
 on: [ push ]
+
 jobs:
   build:
     name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
 
     runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         node: [ '12.x', '14.x', '16.x' ]
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
+          cache: 'yarn'
           node-version: ${{ matrix.node }}
-      - uses: bahmutov/npm-install@v1
 
-      - name: Install deps and build (with cache)
+      - name: Install deps
         run: yarn --frozen-lockfile
 
       - name: Lint
