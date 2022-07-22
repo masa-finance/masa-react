@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Fix Windows
         if: matrix.os == 'windows-latest'
-        run: yarn global add windows-build-tools
+        run: yarn global add node-gyp@9
 
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
