@@ -1,11 +1,18 @@
 import React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Default as Thing } from '../stories/Thing.stories';
+import renderer from 'react-test-renderer';
+import { Default as Thing } from '../stories/auth.stories';
+
+Object.defineProperty(global.self, 'crypto', {
+  value: {
+    getRandomValues: () => Math.random(),
+  },
+});
+// @ts-ignore
+global.crypto.subtle = {};
 
 describe('Thing', () => {
   it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Thing />, div);
-    ReactDOM.unmountComponentAtNode(div);
+    const component = renderer.create(<Thing />);
+    component.unmount();
   });
 });
