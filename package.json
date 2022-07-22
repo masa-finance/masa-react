@@ -40,12 +40,12 @@
   "module": "dist/masa-tools.esm.js",
   "size-limit": [
     {
-      "path": "dist/masa-tools.cjs.production.min.js",
-      "limit": "10 KB"
+      "path": "dist/tools.cjs.production.min.js",
+      "limit": "100 KB"
     },
     {
-      "path": "dist/masa-tools.esm.js",
-      "limit": "10 KB"
+      "path": "dist/tools.esm.js",
+      "limit": "100 KB"
     }
   ],
   "devDependencies": {
