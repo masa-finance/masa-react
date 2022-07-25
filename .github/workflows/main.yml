@@ -8,17 +8,22 @@ jobs:
 
     runs-on: ${{ matrix.os }}
 
+    timeout-minutes: 30
+
     strategy:
       matrix:
         node: [ '12.x', '14.x', '16.x' ]
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
 
     steps:
+      - name: Add msbuild to PATH
+        if: matrix.os == 'windows-latest'
+        uses: microsoft/setup-msbuild@v1
+
       - name: Fix Windows
         if: matrix.os == 'windows-latest'
         run: |
           npm config set msvs_version 2017
-          npm install --global --production windows-build-tools@4.0.0
 
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
