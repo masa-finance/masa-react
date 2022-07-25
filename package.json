@@ -75,6 +75,7 @@
     "@types/auth0": "^2.34.17",
     "antd": "^4.19.5",
     "axios": "^0.26.1",
+    "node-gyp": "^9.1.0",
     "react-highlight-words": "^0.18.0",
     "react-query": "^3.39.1",
     "shards-react": "^1.0.3",
