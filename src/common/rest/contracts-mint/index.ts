@@ -24,6 +24,14 @@ const parameters: Parameter[] = [
   },
   {
     key: 2,
+    name: 'name',
+    description: 'The name of the Soul Bound Identity',
+    required: 'yes',
+    default: 'MyName',
+    dataType: 'string',
+  },
+  {
+    key: 3,
     name: 'address',
     description: 'The receiver address of the Soul Bound Token',
     required: 'yes',
@@ -31,7 +39,7 @@ const parameters: Parameter[] = [
     dataType: 'string',
   },
   {
-    key: 3,
+    key: 4,
     name: 'signature',
     description: 'The signature of the Users wallet',
     required: 'yes',
