@@ -13,16 +13,11 @@ jobs:
     strategy:
       matrix:
         node: [ '12.x', '14.x', '16.x' ]
-        os: [ ubuntu-latest, windows-latest, macOS-latest ]
+        os: [ ubuntu-latest, windows-2019, macOS-latest ]
 
     steps:
-      - name: 'Windows: Set MSVS Version'
-        if: matrix.os == 'windows-latest'
-        run: |
-          npm config set msvs_version 2022
-
-      - uses: actions/checkout@v3.0.2
-      - uses: actions/setup-node@v3.4.1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
           node-version: ${{ matrix.node }}
