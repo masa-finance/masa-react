@@ -60,7 +60,6 @@
     "@types/react-dom": "^18.0.0",
     "babel-loader": "^8.2.4",
     "husky": "^7.0.4",
-    "node-gyp": "^9.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-is": "^18.0.0",
