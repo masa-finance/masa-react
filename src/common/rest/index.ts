@@ -31,6 +31,8 @@ import * as getProductInterests from './get-product-interests';
 
 import * as balances from './balances';
 
+import * as getIdentity from './get-identity';
+
 export interface Parameter {
   key: number;
   name: string;
@@ -76,4 +78,5 @@ export const masaRestClient = {
   balances,
   getNodeOperators,
   postNodeOperators,
+  getIdentity,
 };

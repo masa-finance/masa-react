@@ -1,5 +1,5 @@
 import { MethodMetadata, Parameter } from '..';
-import { useRestCall } from '../../helpers/rest-calls';
+import { useMasaMutation, useRestCall } from '../../helpers/rest-calls';
 
 const path = 'contracts/mint';
 
@@ -11,6 +11,20 @@ export function useMethod({ body }: any) {
   });
 
   return { data, error, loading, getData };
+}
+
+export function useSimpleMethod({ pathParameters, body, settings }: any) {
+  const masaQuery = useMasaMutation(
+    'mint-soulname',
+    {
+      pathParameters,
+      headers: Headers,
+      body,
+      metadata,
+    },
+    settings
+  );
+  return masaQuery;
 }
 
 const parameters: Parameter[] = [

@@ -3,7 +3,7 @@ import { useAxios, useLazyAxios } from 'use-axios-client';
 import { MethodMetadata } from '../../rest';
 import { URL } from '../axios';
 import { useToken } from '../get-token';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { MASA_TOOLS_CONTEXT } from '../provider';
 
 export interface RestCallProps {
@@ -21,7 +21,7 @@ export const useRestCall = ({
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach(key => {
+      Object.keys(pathParameters).forEach((key) => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
@@ -61,7 +61,7 @@ export const useSimpleRestCall = ({
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach(key => {
+      Object.keys(pathParameters).forEach((key) => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
@@ -94,7 +94,7 @@ export const useMasaQuery = (
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach(key => {
+      Object.keys(pathParameters).forEach((key) => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
@@ -115,7 +115,46 @@ export const useMasaQuery = (
         method: metadata.method,
         mode: 'cors',
         body: JSON.stringify(body),
-      }).then(res => res.json()),
+      }).then((res) => res.json()),
+    { ...settings, enabled: !token ? false : !!settings?.enabled }
+  );
+
+  return query;
+};
+
+export const useMasaMutation = (
+  name: string,
+  { pathParameters, metadata, headers, body }: RestCallProps,
+  settings?: any
+) => {
+  const { apiURL } = useContext(MASA_TOOLS_CONTEXT);
+
+  const fullPath = useMemo(() => {
+    let newPath = metadata.name;
+    if (pathParameters) {
+      Object.keys(pathParameters).forEach((key) => {
+        //@ts-ignore
+        newPath = newPath.replace(':' + key, [pathParameters[key]]);
+      });
+    }
+    return newPath;
+  }, [pathParameters, metadata]);
+
+  const { token } = useToken();
+
+  const query = useMutation(
+    name,
+    (newBody: any) =>
+      fetch(`${URL(apiURL)}${fullPath}`, {
+        headers: {
+          ...headers,
+          Authorization: token ? `Bearer ${token}` : undefined,
+          'Content-Type': 'application/json',
+        },
+        method: metadata.method,
+        mode: 'cors',
+        body: JSON.stringify(newBody ? newBody : body),
+      }).then((res) => res.json()),
     { ...settings, enabled: !token ? false : !!settings?.enabled }
   );
 
