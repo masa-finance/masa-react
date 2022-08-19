@@ -9,6 +9,7 @@ import * as getNodeOperators from './get-node-operators';
 import * as postNodeOperators from './post-node-operators';
 
 import * as contractsMint from './contracts-mint';
+import * as getCreditScore from './get-credit-score';
 
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
@@ -57,6 +58,7 @@ export const masaRestClient = {
   getClient,
   postClient,
   contractsMint,
+  getCreditScore,
   getVezgoLink,
   listVezgoProviders,
   listVezgoAccounts,
