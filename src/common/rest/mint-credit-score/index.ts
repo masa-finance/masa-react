@@ -4,6 +4,7 @@ import { Headers } from '../../helpers/axios';
 import { useMasaMutation, useRestCall } from '../../helpers/rest-calls';
 
 const path = 'contracts/credit-score/mint';
+
 export function useMethod({ body }: any) {
   const { data, error, loading, getData } = useRestCall({
     headers: Headers,
@@ -27,7 +28,6 @@ export function useSimpleMethod({ pathParameters, body, settings }: any) {
   );
   return masaQuery;
 }
-
 
 const parameters: Parameter[] = [
   {
