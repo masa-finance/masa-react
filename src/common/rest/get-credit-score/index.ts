@@ -3,7 +3,7 @@ import { MethodMetadata, Parameter } from '..';
 import { Headers } from '../../helpers/axios';
 import { useMasaQuery } from '../../helpers/rest-calls';
 
-const path = 'sbt/credit-score';
+const path = 'sbt/credit-score/:userProfileId/:wallet';
 
 /* PAYLOAD
  * {
@@ -27,7 +27,7 @@ export function useSimpleMethod({ body, settings }: any) {
 const parameters: Parameter[] = [];
 
 export const metadata: MethodMetadata = {
-  author: 'Aaron Knott',
+  author: 'Hide on bush',
   authorPicture: '',
   description: 'Get the credit score of a user',
   name: path,
