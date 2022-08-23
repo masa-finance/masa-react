@@ -10,6 +10,8 @@ import * as postNodeOperators from './post-node-operators';
 
 import * as contractsMint from './contracts-mint';
 import * as mintCreditScore from './mint-credit-score';
+import * as getCreditScore from './get-credit-score';
+
 
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
@@ -74,6 +76,7 @@ export const masaRestClient = {
   savePlaidTransaction,
   syncPlaid,
   getCountries,
+  getCreditScore,
   postUser,
   postCountry,
   getProductInterests,
