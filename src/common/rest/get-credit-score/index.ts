@@ -11,10 +11,11 @@ const path = 'sbt/credit-score/:userProfileId/:wallet';
  *     "wallet": "0xeB76146E58F0224Accab28Cb9535C769723BE185"
  * } */
 
-export function useSimpleMethod({ body, settings }: any) {
+export function useSimpleMethod({ body, pathParameters, settings }: any) {
   const masaQuery = useMasaQuery(
     'get-credit-score',
     {
+      pathParameters,
       headers: Headers,
       body,
       metadata,
