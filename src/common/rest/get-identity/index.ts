@@ -1,7 +1,7 @@
 import { MethodMetadata, Parameter } from '..';
 import { useMasaQuery } from '../../helpers/rest-calls';
 
-const path = '/sbt/:profileId';
+const path = 'sbt/:profileId';
 
 export function useSimpleMethod({ pathParameters, body, settings }: any) {
   const masaQuery = useMasaQuery(
