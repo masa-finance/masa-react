@@ -57,16 +57,16 @@
   "size-limit": [
     {
       "path": "dist/tools.cjs.production.min.js",
-      "limit": "100 KB"
+      "limit": "500 KB"
     },
     {
       "path": "dist/tools.esm.js",
-      "limit": "100 KB"
+      "limit": "300 KB"
     }
   ],
   "devDependencies": {
     "@babel/core": "^7.17.8",
-    "@size-limit/file": "^8.0.1",
+    "@size-limit/preset-big-lib": "^7.0.8",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^6.4.20",
