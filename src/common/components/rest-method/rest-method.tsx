@@ -32,7 +32,7 @@ export const RestMethod = ({
     const customParameterObject = {};
     // @ts-ignore
     parameters.forEach(
-      parameter =>
+      (parameter) =>
         (customParameterObject[parameter['name']] = parameter['default'])
     );
     return customParameterObject;
@@ -43,19 +43,19 @@ export const RestMethod = ({
     const cleanPath = name.split('?');
     const pathParametersList = cleanPath[0].split(':');
     pathParametersList.shift();
-    pathParametersList.forEach(pathParameter => {
+    pathParametersList.forEach((pathParameter) => {
       const pathParameterClean = pathParameter.split('?');
       //@ts-ignore
       customParameterObject[pathParameterClean[0]] = '';
     });
-    pathParametersList.forEach(pathParameter => {
+    pathParametersList.forEach((pathParameter) => {
       const pathParameterClean = pathParameter.split('&');
       //@ts-ignore
       customParameterObject[pathParameterClean[0]] = '';
     });
     if (cleanPath.length > 1) {
       const pathParameters = cleanPath[1].split('&');
-      pathParameters.forEach(pathParameter => {
+      pathParameters.forEach((pathParameter) => {
         const parameter = pathParameter.split(':')[1];
         // @ts-ignore
         customParameterObject[parameter] = '';
@@ -82,7 +82,9 @@ export const RestMethod = ({
   };
 
   const onValueChange = (key: string, value: string) => {
-    const parameter = parameters.filter(parameter => (parameter['name'] = key));
+    const parameter = parameters.filter(
+      (parameter) => (parameter['name'] = key)
+    );
     setCustomParameters({
       ...customParameters,
       [key]: parameter[0].dataType === 'string' ? value : Number(value),

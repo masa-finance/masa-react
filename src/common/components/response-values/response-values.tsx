@@ -19,7 +19,7 @@ export const ResponseValues = ({ data }: { data: JSON }) => {
         <Input
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={e =>
+          onChange={(e) =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -110,7 +110,7 @@ export const ResponseValues = ({ data }: { data: JSON }) => {
   return (
     <Table
       columns={columns}
-      dataSource={Object.keys(data).map(key => ({
+      dataSource={Object.keys(data).map((key) => ({
         key,
         value: JSON.stringify(data[key]),
       }))}

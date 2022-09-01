@@ -20,12 +20,12 @@ export const PathParameters = ({ data, onValueChange }) => {
   return (
     <Table
       columns={columns}
-      dataSource={Object.keys(data).map(key => ({
+      dataSource={Object.keys(data).map((key) => ({
         key,
         value: (
           <Input
             value={data[key]}
-            onChange={e => onValueChange(key, e.target.value)}
+            onChange={(e) => onValueChange(key, e.target.value)}
           />
         ),
       }))}
