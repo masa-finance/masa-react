@@ -1,18 +1,20 @@
+// @ts-ignore
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { Default as Thing } from '../stories/auth.stories';
+import { Default as AuthStories } from '../stories/auth.stories';
 
 Object.defineProperty(global.self, 'crypto', {
   value: {
     getRandomValues: () => Math.random(),
   },
 });
+
 // @ts-ignore
 global.crypto.subtle = {};
 
-describe('Thing', () => {
+describe('AuthStories', () => {
   it('renders without crashing', () => {
-    const component = renderer.create(<Thing />);
+    const component = renderer.create(<AuthStories />);
     component.unmount();
   });
 });
