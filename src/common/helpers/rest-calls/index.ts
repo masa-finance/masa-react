@@ -21,7 +21,7 @@ export const useRestCall = ({
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach((key) => {
+      Object.keys(pathParameters).forEach(key => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
@@ -61,7 +61,7 @@ export const useSimpleRestCall = ({
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach((key) => {
+      Object.keys(pathParameters).forEach(key => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
@@ -94,7 +94,7 @@ export const useMasaQuery = (
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach((key) => {
+      Object.keys(pathParameters).forEach(key => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
@@ -115,7 +115,7 @@ export const useMasaQuery = (
         method: metadata.method,
         mode: 'cors',
         body: JSON.stringify(body),
-      }).then((res) => res.json()),
+      }).then(res => res.json()),
     { ...settings, enabled: !token ? false : !!settings?.enabled }
   );
 
@@ -132,7 +132,7 @@ export const useMasaMutation = (
   const fullPath = useMemo(() => {
     let newPath = metadata.name;
     if (pathParameters) {
-      Object.keys(pathParameters).forEach((key) => {
+      Object.keys(pathParameters).forEach(key => {
         //@ts-ignore
         newPath = newPath.replace(':' + key, [pathParameters[key]]);
       });
@@ -154,7 +154,7 @@ export const useMasaMutation = (
         method: metadata.method,
         mode: 'cors',
         body: JSON.stringify(newBody ? newBody : body),
-      }).then((res) => res.json()),
+      }).then(res => res.json()),
     { ...settings, enabled: !token ? false : !!settings?.enabled }
   );
 

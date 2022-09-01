@@ -12,7 +12,6 @@ import * as contractsMint from './contracts-mint';
 import * as mintCreditScore from './mint-credit-score';
 import * as getCreditScore from './get-credit-score';
 
-
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
 import * as listVezgoAccounts from './vezgo/list-accounts';
@@ -53,6 +52,7 @@ export interface MethodMetadata {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS';
   parameters: Parameter[];
 }
+
 export const masaRestClient = {
   auth,
   accounts,
