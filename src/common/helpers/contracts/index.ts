@@ -4,12 +4,15 @@ import {
   SoulName__factory,
 } from '@masa-finance/masa-contracts-identity';
 import { ethers } from 'ethers';
+import * as rinkeby from './rinkeby';
+import * as alfajores from './alfajores';
 
-import SoulboundIdentity from '@masa-finance/masa-contracts-identity/deployments/alfajores/SoulboundIdentity.json';
-import SoulboundCreditReport from '@masa-finance/masa-contracts-identity/deployments/alfajores/SoulboundCreditReport.json';
-import SoulName from '@masa-finance/masa-contracts-identity/deployments/alfajores/SoulName.json';
+const addresses = {
+  rinkeby,
+  alfajores,
+};
 
-export const loadContracts = async (provider?: any) => {
+export const loadContracts = async (provider?: any, network = 'alfajores') => {
   const p =
     // take provider as is if supplied
     provider ||
@@ -20,30 +23,33 @@ export const loadContracts = async (provider?: any) => {
     );
 
   const SoulboundIdentityContract = SoulboundIdentity__factory.connect(
-    SoulboundIdentity.address,
+    addresses[network].SoulboundIdentityAddress,
     p
   );
 
   console.log(
     'Total supply of SoulboundIdentity at',
-    SoulboundIdentity.address,
+    addresses[network].SoulboundIdentityAddress,
     'is',
     (await SoulboundIdentityContract.totalSupply()).toString()
   );
 
   const SoulboundCreditReportContract = SoulboundCreditReport__factory.connect(
-    SoulboundCreditReport.address,
+    addresses[network].SoulboundCreditReportAddress,
     p
   );
 
   console.log(
     'Total supply of SoulboundCreditReport at',
-    SoulboundCreditReport.address,
+    addresses[network].SoulboundCreditReportAddress,
     'is',
     (await SoulboundCreditReportContract.totalSupply()).toString()
   );
 
-  const SoulNameContract = SoulName__factory.connect(SoulName.address, p);
+  const SoulNameContract = SoulName__factory.connect(
+    addresses[network].SoulNameAddress,
+    p
+  );
 
   return {
     SoulboundIdentityContract,
