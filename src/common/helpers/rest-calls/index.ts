@@ -116,7 +116,16 @@ export const useMasaQuery = (
         mode: 'cors',
         body: JSON.stringify(body),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          console.log("LAS RESPONSE", res);
+          if (!res.ok) {
+            console.log('NOT OK');
+          }
+          if (res.status > 399) {
+            throw new Error("ERR");
+          }
+          return res.json();
+        })
         .catch((err) => {
           console.log('CALL ERROR', err);
           throw new Error(err);
