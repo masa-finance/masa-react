@@ -116,8 +116,9 @@ export const useMasaQuery = (
         mode: 'cors',
         body: JSON.stringify(body),
       })
-        .then((res) => {
-          console.log("LAS RESPONSE", res);
+        .then(async (res) => {
+          //@ts-ignore
+          console.log("LAS RESPONSE", await res.body());
           if (!res.ok) {
             console.log('NOT OK');
           }
@@ -127,7 +128,6 @@ export const useMasaQuery = (
           return res.json();
         })
         .catch((err) => {
-          console.log('CALL ERROR', err);
           throw new Error(err);
         }),
     {
