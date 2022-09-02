@@ -118,7 +118,6 @@ export const useMasaQuery = (
       })
         .then(async (res) => {
           //@ts-ignore
-          console.log("LAS RESPONSE", await res.body());
           if (!res.ok) {
             console.log('NOT OK');
           }
