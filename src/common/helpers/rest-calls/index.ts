@@ -118,6 +118,7 @@ export const useMasaQuery = (
       })
         .then((res) => res.json())
         .catch((err) => {
+          console.log('CALL ERROR', err);
           throw new Error(err);
         }),
     {
@@ -166,7 +167,14 @@ export const useMasaMutation = (
         mode: 'cors',
         body: JSON.stringify(newBody ? newBody : body),
       }).then((res) => res.json()),
-    { ...settings, enabled: !token ? false : !!settings?.enabled }
+    {
+      ...settings,
+      enabled: process.env.REACT_APP_SOULBOUND
+        ? !!settings?.enabled
+        : !token
+        ? false
+        : !!settings?.enabled,
+    }
   );
 
   return query;
