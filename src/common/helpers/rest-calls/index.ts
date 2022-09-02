@@ -115,7 +115,11 @@ export const useMasaQuery = (
         method: metadata.method,
         mode: 'cors',
         body: JSON.stringify(body),
-      }).then((res) => res.json()),
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          throw new Error(err);
+        }),
     {
       ...settings,
       enabled: process.env.REACT_APP_SOULBOUND
