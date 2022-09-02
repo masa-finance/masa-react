@@ -116,7 +116,14 @@ export const useMasaQuery = (
         mode: 'cors',
         body: JSON.stringify(body),
       }).then((res) => res.json()),
-    { ...settings, enabled: !token ? false : !!settings?.enabled }
+    {
+      ...settings,
+      enabled: process.env.REACT_APP_SOULBOUND
+        ? !!settings?.enabled
+        : !token
+        ? false
+        : !!settings?.enabled,
+    }
   );
 
   return query;
