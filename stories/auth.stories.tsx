@@ -1,3 +1,4 @@
+// @ts-ignore
 import React from 'react';
 import { AuthProvider } from '../src/common/components/auth-provider';
 

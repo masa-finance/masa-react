@@ -22,7 +22,7 @@ export function RestTester() {
         <List
           itemLayout="horizontal"
           dataSource={methods}
-          renderItem={item => (
+          renderItem={(item) => (
             <RestMethod
               // @ts-ignore
               {...item.metadata}

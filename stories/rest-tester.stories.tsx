@@ -1,3 +1,4 @@
+// @ts-ignore
 import React from 'react';
 import { RestTester } from '../src/common/components/rest-tester';
 
