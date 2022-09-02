@@ -112,6 +112,7 @@ export const useMasaQuery = (
           ...headers,
           Authorization: token ? `Bearer ${token}` : undefined,
         },
+        credentials: "include",
         method: metadata.method,
         mode: 'cors',
         body: JSON.stringify(body),
