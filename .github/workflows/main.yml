@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node: [ '12.x', '14.x', '16.x' ]
+        node: [ '14.x', '16.x', '18.x' ]
         os: [ ubuntu-latest, windows-2019, macOS-latest ]
 
     steps:

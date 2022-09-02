@@ -57,6 +57,7 @@ export interface MethodMetadata {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS';
   parameters: Parameter[];
 }
+
 export const masaRestClient = {
   auth,
   accounts,

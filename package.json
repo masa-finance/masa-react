@@ -15,7 +15,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
+    "lint": "tsdx lint src test stories",
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
@@ -30,27 +30,43 @@
       "pre-commit": "tsdx lint"
     }
   },
+  "eslint": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint/eslint-plugin",
+      "eslint-plugin-prettier"
+    ],
+    "extends": [
+      "plugin:prettier/recommended"
+    ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    }
+  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
     "singleQuote": true,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "endOfLine": "auto"
   },
   "author": "matintosh",
   "module": "dist/masa-tools.esm.js",
   "size-limit": [
     {
       "path": "dist/tools.cjs.production.min.js",
-      "limit": "100 KB"
+      "limit": "500 KB"
     },
     {
       "path": "dist/tools.esm.js",
-      "limit": "100 KB"
+      "limit": "300 KB"
     }
   ],
   "devDependencies": {
     "@babel/core": "^7.17.8",
-    "@size-limit/preset-small-lib": "^7.0.8",
+    "@size-limit/preset-big-lib": "^7.0.8",
     "@storybook/addon-essentials": "^6.4.20",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^6.4.20",
@@ -58,13 +74,19 @@
     "@storybook/react": "^6.4.20",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "babel-loader": "^8.2.4",
-    "husky": "^7.0.4",
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-is": "^18.0.0",
     "react-test-renderer": "^18.2.0",
-    "size-limit": "^7.0.8",
+    "size-limit": "^8.0.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.6.3"
@@ -72,9 +94,11 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@auth0/auth0-react": "^1.9.0",
+    "@masa-finance/masa-contracts-identity": "^0.1.6",
     "@types/auth0": "^2.34.17",
     "antd": "^4.19.5",
-    "axios": "^0.26.1",
+    "axios": "^0.27.2",
+    "ethers": "^5.7.0",
     "react-highlight-words": "^0.18.0",
     "react-query": "^3.39.1",
     "shards-react": "^1.0.3",
