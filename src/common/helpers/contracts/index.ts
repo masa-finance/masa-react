@@ -27,23 +27,9 @@ export const loadContracts = async (provider?: any, network = 'alfajores') => {
     p
   );
 
-  console.log(
-    'Total supply of SoulboundIdentity at',
-    addresses[network].SoulboundIdentityAddress,
-    'is',
-    (await SoulboundIdentityContract.totalSupply()).toString()
-  );
-
   const SoulboundCreditReportContract = SoulboundCreditReport__factory.connect(
     addresses[network].SoulboundCreditReportAddress,
     p
-  );
-
-  console.log(
-    'Total supply of SoulboundCreditReport at',
-    addresses[network].SoulboundCreditReportAddress,
-    'is',
-    (await SoulboundCreditReportContract.totalSupply()).toString()
   );
 
   const SoulNameContract = SoulName__factory.connect(
