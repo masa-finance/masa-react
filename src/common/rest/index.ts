@@ -12,7 +12,6 @@ import * as contractsMint from './contracts-mint';
 import * as mintCreditScore from './mint-credit-score';
 import * as getCreditScore from './get-credit-score';
 
-
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
 import * as listVezgoAccounts from './vezgo/list-accounts';
@@ -35,6 +34,11 @@ import * as getProductInterests from './get-product-interests';
 import * as balances from './balances';
 
 import * as getIdentity from './get-identity';
+
+import * as getChallenge from './get-challenge';
+import * as getSession from './get-session';
+import * as checkSignatureChallenge from './check-challenge-signature';
+import * as sessionLogout from './session-logout';
 
 export interface Parameter {
   key: number;
@@ -84,4 +88,8 @@ export const masaRestClient = {
   getNodeOperators,
   postNodeOperators,
   getIdentity,
+  getChallenge,
+  checkSignatureChallenge,
+  getSession,
+  sessionLogout,
 };
