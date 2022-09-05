@@ -112,7 +112,7 @@ export const useMasaQuery = (
           ...headers,
           Authorization: token ? `Bearer ${token}` : undefined,
         },
-        credentials: "same-origin",
+        credentials: 'same-origin',
         method: metadata.method,
         mode: 'cors',
         body: JSON.stringify(body),
@@ -123,7 +123,7 @@ export const useMasaQuery = (
             console.log('NOT OK');
           }
           if (res.status > 399) {
-            throw new Error("ERR");
+            throw new Error('ERR');
           }
           return res.json();
         })
@@ -172,7 +172,7 @@ export const useMasaMutation = (
           Authorization: token ? `Bearer ${token}` : undefined,
           'Content-Type': 'application/json',
         },
-        credentials: "same-origin",
+        credentials: 'same-origin',
         method: metadata.method,
         mode: 'cors',
         body: JSON.stringify(newBody ? newBody : body),
