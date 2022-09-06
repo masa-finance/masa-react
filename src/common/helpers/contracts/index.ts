@@ -12,7 +12,13 @@ const addresses = {
   alfajores,
 };
 
-export const loadContracts = async (provider?: any, network = 'alfajores') => {
+export const loadContracts = async ({
+  provider,
+  network = 'alfajores',
+}: {
+  provider?: any;
+  network?: string;
+}) => {
   const p =
     // take provider as is if supplied
     provider ||

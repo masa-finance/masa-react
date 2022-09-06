@@ -123,7 +123,7 @@ export const useMasaQuery = (
             console.log('NOT OK');
           }
           if (res.status > 399) {
-            throw new Error("ERR");
+            throw new Error('ERR');
           }
           return res.json();
         })
