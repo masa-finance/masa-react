@@ -1987,10 +1987,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@masa-finance/masa-contracts-identity@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-0.1.9.tgz#fe40535a37aaa960a4c1c6cf0b0915d5b32a8518"
-  integrity sha512-t13BAVsUYmuTY/f81f+CbtjvyX/AmDfwTSx3/RXsPgq8iZiExBZLlQL82x/2Nn7mmY80NziL+xxe+7VK1glZxw==
+"@masa-finance/masa-contracts-identity@^0.1.11":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-0.1.11.tgz#23b916f2a144aa532b1c034b6da2aea77168fb79"
+  integrity sha512-mdu4Yqld9QYzgFHWxrFQl2hM+YI6lrcN/CQUA7ElxYABEGcwOh6czlCS1G5s7K1AUb8W74L46J8oBqmo29rr5Q==
   dependencies:
     "@nomiclabs/hardhat-ethers" "^2.1.0"
     "@types/node" "^18.7.1"
