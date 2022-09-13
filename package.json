@@ -94,7 +94,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@auth0/auth0-react": "^1.9.0",
-    "@masa-finance/masa-contracts-identity": "^0.1.6",
+    "@masa-finance/masa-contracts-identity": "^0.1.9",
     "@types/auth0": "^2.34.17",
     "antd": "^4.19.5",
     "axios": "^0.27.2",

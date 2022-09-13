@@ -2,14 +2,16 @@ import {
   SoulboundIdentity__factory,
   SoulboundCreditReport__factory,
   SoulName__factory,
+  SoulLinker__factory,
+  SoulFactory__factory,
 } from '@masa-finance/masa-contracts-identity';
 import { ethers } from 'ethers';
-import * as rinkeby from './rinkeby';
 import * as alfajores from './alfajores';
+import * as goerli from './goerli';
 
 const addresses = {
-  rinkeby,
   alfajores,
+  goerli,
 };
 
 export const loadContracts = async ({
@@ -43,10 +45,22 @@ export const loadContracts = async ({
     p
   );
 
+  const SoulLinkerContract = SoulLinker__factory.connect(
+    addresses[network].SoulLinkerAddress,
+    p
+  );
+
+  const SoulFactoryContract = SoulFactory__factory.connect(
+    addresses[network].SoulFactoryAddress,
+    p
+  );
+
   return {
     SoulboundIdentityContract,
     SoulboundCreditReportContract,
     SoulNameContract,
+    SoulLinkerContract,
+    SoulFactoryContract,
   };
 };
 
