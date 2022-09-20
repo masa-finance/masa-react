@@ -6,17 +6,15 @@ import {
   SoulFactory__factory,
 } from '@masa-finance/masa-contracts-identity';
 import { ethers } from 'ethers';
-import * as alfajores from './alfajores';
 import * as goerli from './goerli';
 
 const addresses = {
-  alfajores,
   goerli,
 };
 
 export const loadContracts = async ({
   provider,
-  network = 'alfajores',
+  network = 'goerli',
 }: {
   provider?: any;
   network?: string;
