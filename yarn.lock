@@ -1988,7 +1988,7 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@masa-finance/masa-contracts-identity@^0.1.12":
+"@masa-finance/masa-contracts-identity@0.1.12":
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-0.1.12.tgz#4e6801b88413e4f6623ddd611d8071d81a41ed87"
   integrity sha512-N539Xhw0dGTubzIiR9TFmzYDAqrp1tZYXbM8wtMVRVlvRRfGPR782XNCQP8ikXBPM4AkIieXlTwgVKGpneLY7A==
