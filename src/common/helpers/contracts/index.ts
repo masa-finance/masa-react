@@ -1,26 +1,39 @@
 import {
+  SoulboundIdentity,
   SoulboundIdentity__factory,
+  SoulboundCreditReport,
   SoulboundCreditReport__factory,
+  SoulName,
   SoulName__factory,
+  SoulLinker,
   SoulLinker__factory,
+  SoulFactory,
   SoulFactory__factory,
 } from '@masa-finance/masa-contracts-identity';
 import { ethers } from 'ethers';
-import * as alfajores from './alfajores';
 import * as goerli from './goerli';
 
 const addresses = {
-  alfajores,
   goerli,
 };
 
-export const loadContracts = async ({
-  provider,
-  network = 'alfajores',
-}: {
+export interface IIdentityContracts {
+  SoulboundIdentityContract: SoulboundIdentity;
+  SoulboundCreditReportContract: SoulboundCreditReport;
+  SoulNameContract: SoulName;
+  SoulLinkerContract: SoulLinker;
+  SoulFactoryContract: SoulFactory;
+}
+
+interface LoadContractArgs {
   provider?: any;
   network?: string;
-}) => {
+}
+
+export const loadContracts = async ({
+  provider,
+  network = 'goerli',
+}: LoadContractArgs): Promise<IIdentityContracts> => {
   const p =
     // take provider as is if supplied
     provider ||

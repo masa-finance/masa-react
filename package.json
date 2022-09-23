@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/tools",
-  "version": "0.3.3",
+  "version": "0.4.5",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -64,7 +64,16 @@
       "limit": "300 KB"
     }
   ],
+  "dependencies": {
+    "@masa-finance/masa-contracts-identity": "0.1.12",
+    "ethers": "^5.7.0",
+    "react": "^17.0.2",
+    "react-query": "^3.39.1",
+    "use-axios-client": "^2.0.0"
+  },
   "devDependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@auth0/auth0-react": "^1.9.0",
     "@babel/core": "^7.17.8",
     "@size-limit/preset-big-lib": "^7.0.8",
     "@storybook/addon-essentials": "^6.4.20",
@@ -72,36 +81,27 @@
     "@storybook/addon-links": "^6.4.20",
     "@storybook/addons": "^6.4.20",
     "@storybook/react": "^6.4.20",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
+    "@types/auth0": "^2.34.17",
+    "@types/react": "^17.0.50",
+    "@types/react-dom": "^17.0.17",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
+    "antd": "^4.19.5",
+    "axios": "^0.27.2",
     "babel-loader": "^8.2.4",
     "eslint": "8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^3.4.1",
     "husky": "^8.0.1",
     "prettier": "^2.7.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-is": "^18.0.0",
-    "react-test-renderer": "^18.2.0",
+    "react-dom": "^17.0.2",
+    "react-highlight-words": "^0.17.0",
+    "react-is": "^17.0.2",
+    "react-test-renderer": "^17.0.2",
+    "shards-react": "^1.0.3",
     "size-limit": "^8.0.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.3.1",
     "typescript": "^4.6.3"
-  },
-  "dependencies": {
-    "@ant-design/icons": "^4.7.0",
-    "@auth0/auth0-react": "^1.9.0",
-    "@masa-finance/masa-contracts-identity": "^0.1.6",
-    "@types/auth0": "^2.34.17",
-    "antd": "^4.19.5",
-    "axios": "^0.27.2",
-    "ethers": "^5.7.0",
-    "react-highlight-words": "^0.18.0",
-    "react-query": "^3.39.1",
-    "shards-react": "^1.0.3",
-    "use-axios-client": "^2.0.0"
   }
 }
