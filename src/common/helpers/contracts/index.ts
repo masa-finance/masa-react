@@ -64,7 +64,7 @@ export const loadContracts = async ({
   );
 
   const SoulStoreContract = SoulStore__factory.connect(
-    addresses[network].SoulFactoryAddress,
+    addresses[network].SoulStoreAddress,
     p
   );
 
