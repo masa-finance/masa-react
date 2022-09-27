@@ -7,8 +7,8 @@ import {
   SoulName__factory,
   SoulLinker,
   SoulLinker__factory,
-  SoulFactory,
-  SoulFactory__factory,
+  SoulStore,
+  SoulStore__factory,
 } from '@masa-finance/masa-contracts-identity';
 import { ethers } from 'ethers';
 import * as goerli from './goerli';
@@ -22,7 +22,7 @@ export interface IIdentityContracts {
   SoulboundCreditReportContract: SoulboundCreditReport;
   SoulNameContract: SoulName;
   SoulLinkerContract: SoulLinker;
-  SoulFactoryContract: SoulFactory;
+  SoulStoreContract: SoulStore;
 }
 
 interface LoadContractArgs {
@@ -63,7 +63,7 @@ export const loadContracts = async ({
     p
   );
 
-  const SoulFactoryContract = SoulFactory__factory.connect(
+  const SoulStoreContract = SoulStore__factory.connect(
     addresses[network].SoulFactoryAddress,
     p
   );
@@ -73,7 +73,7 @@ export const loadContracts = async ({
     SoulboundCreditReportContract,
     SoulNameContract,
     SoulLinkerContract,
-    SoulFactoryContract,
+    SoulStoreContract,
   };
 };
 
