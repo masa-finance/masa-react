@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/tools",
-  "version": "0.4.5",
+  "version": "0.5.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -65,7 +65,7 @@
     }
   ],
   "dependencies": {
-    "@masa-finance/masa-contracts-identity": "0.1.12",
+    "@masa-finance/masa-contracts-identity": "0.2.0",
     "ethers": "^5.7.0",
     "react": "^17.0.2",
     "react-query": "^3.39.1",
