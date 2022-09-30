@@ -4,8 +4,6 @@ import { useMasaMutation, useRestCall } from '../../helpers/rest-calls';
 
 const path = 'contracts/transaction';
 
-const queryClient = useQueryClient();
-
 export function useMethod({ body }: any) {
   const { data, error, loading, getData } = useRestCall({
     headers: Headers,
@@ -17,6 +15,8 @@ export function useMethod({ body }: any) {
 }
 
 export function useSimpleMethod({ pathParameters, body, settings }: any) {
+  const queryClient = useQueryClient();
+
   const masaQuery = useMasaMutation(
     'create-transaction',
     {
