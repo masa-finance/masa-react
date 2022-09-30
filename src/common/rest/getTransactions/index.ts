@@ -2,7 +2,7 @@ import { MethodMetadata } from '..';
 import { Headers } from '../../helpers/axios';
 import { useMasaQuery, useRestCall } from '../../helpers/rest-calls';
 
-const path = '/contracts/transactions';
+const path = 'contracts/transactions';
 
 export function useMethod() {
   const { data, error, loading, getData } = useRestCall({
