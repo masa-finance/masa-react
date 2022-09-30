@@ -4,8 +4,7 @@ import { useMasaMutation, useRestCall } from '../../helpers/rest-calls';
 
 const path = 'contracts/transaction';
 
-const queryClient = useQueryClient()
-
+const queryClient = useQueryClient();
 
 export function useMethod({ body }: any) {
   const { data, error, loading, getData } = useRestCall({
@@ -26,10 +25,12 @@ export function useSimpleMethod({ pathParameters, body, settings }: any) {
       body,
       metadata,
     },
-    { ...settings, onSuccess: () => {
-      queryClient.invalidateQueries(['get-transactions'])
-
-    }}
+    {
+      ...settings,
+      onSuccess: () => {
+        queryClient.invalidateQueries(['get-transactions']);
+      },
+    }
   );
   return masaQuery;
 }
