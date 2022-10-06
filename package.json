@@ -65,7 +65,7 @@
     }
   ],
   "dependencies": {
-    "@masa-finance/masa-contracts-identity": "0.2.0",
+    "@masa-finance/masa-contracts-identity": "0.2.1",
     "ethers": "^5.7.0",
     "react": "^17.0.2",
     "react-query": "^3.39.1",
