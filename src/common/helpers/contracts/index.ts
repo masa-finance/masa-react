@@ -13,7 +13,7 @@ import {
 import { ethers } from 'ethers';
 import * as goerli from './goerli';
 
-const addresses = {
+export const addresses = {
   goerli,
 };
 
