@@ -2,11 +2,18 @@ const env = process.env.REACT_APP_MASA_TOOLS_ENV || 'local';
 const backendPort = process.env.REACT_APP_MASA_TOOLS_BACKEND_PORT;
 const backendApiUrl = process.env.REACT_APP_MASA_TOOLS_BACKEND_API_URL;
 
-console.log('INITIALIZING API', {
-  env,
-  backendPort,
-  backendApiUrl,
-});
+console.log(
+  'INITIALIZING API',
+  JSON.stringify(
+    {
+      env,
+      backendPort,
+      backendApiUrl,
+    },
+    null,
+    2
+  )
+);
 
 export const URL = (apiURL?: string) =>
   apiURL
