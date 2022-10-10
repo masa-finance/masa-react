@@ -41,7 +41,6 @@ import * as checkSignatureChallenge from './check-challenge-signature';
 import * as sessionLogout from './session-logout';
 
 import * as getTransactions from './getTransactions';
-import * as createTransaction from './createTransaction';
 
 export interface Parameter {
   key: number;
@@ -97,5 +96,4 @@ export const masaRestClient = {
   getSession,
   sessionLogout,
   getTransactions,
-  createTransaction,
 };
