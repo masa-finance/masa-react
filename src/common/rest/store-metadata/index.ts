@@ -35,7 +35,7 @@ const parameters: Parameter[] = [
     required: 'yes',
     default: 'Identity',
     dataType: 'string',
-  }
+  },
 ];
 
 export const metadata: MethodMetadata = {

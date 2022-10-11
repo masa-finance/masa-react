@@ -97,5 +97,5 @@ export const masaRestClient = {
   getSession,
   sessionLogout,
   getTransactions,
-  storeMetadata
+  storeMetadata,
 };
