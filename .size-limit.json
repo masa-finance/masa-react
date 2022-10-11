@@ -1,0 +1,10 @@
+[
+  {
+    "path": "dist/tools.cjs.production.min.js",
+    "limit": "500kB"
+  },
+  {
+    "path": "dist/tools.esm.js",
+    "limit": "300kB"
+  }
+]
