@@ -1,7 +1,11 @@
 import { masaToolsProvider, useMasaToolsHook } from './common/helpers/provider';
 import { masaRestClient } from './common/rest';
 
-export { useContractCall, loadContracts } from './common/helpers/contracts';
+export {
+  useContractCall,
+  loadContracts,
+  addresses,
+} from './common/helpers/contracts';
 
 export interface Props {
   /** custom content, defaults to 'the snozzberries taste like snozzberries' */
