@@ -8,9 +8,7 @@ import * as farming from './farming';
 import * as getNodeOperators from './get-node-operators';
 import * as postNodeOperators from './post-node-operators';
 
-import * as contractsMint from './contracts-mint';
 import * as mintCreditScore from './mint-credit-score';
-import * as getCreditScore from './get-credit-score';
 
 import * as getVezgoLink from './vezgo/get-link';
 import * as listVezgoProviders from './vezgo/list-providers';
@@ -33,14 +31,11 @@ import * as getProductInterests from './get-product-interests';
 
 import * as balances from './balances';
 
-import * as getIdentity from './get-identity';
-
 import * as getChallenge from './get-challenge';
 import * as getSession from './get-session';
 import * as checkSignatureChallenge from './check-challenge-signature';
 import * as sessionLogout from './session-logout';
 
-import * as getTransactions from './getTransactions';
 import * as storeMetadata from './store-metadata';
 
 export interface Parameter {
@@ -67,7 +62,6 @@ export const masaRestClient = {
   farming,
   getClient,
   postClient,
-  contractsMint,
   mintCreditScore,
   getVezgoLink,
   listVezgoProviders,
@@ -84,18 +78,15 @@ export const masaRestClient = {
   savePlaidTransaction,
   syncPlaid,
   getCountries,
-  getCreditScore,
   postUser,
   postCountry,
   getProductInterests,
   balances,
   getNodeOperators,
   postNodeOperators,
-  getIdentity,
   getChallenge,
   checkSignatureChallenge,
   getSession,
   sessionLogout,
-  getTransactions,
   storeMetadata,
 };
