@@ -1,19 +1,17 @@
-import React, { createContext } from 'react';
-import { masaRestClient } from '../../rest';
+import React from 'react';
 import { AccessTokenProvider } from './access-token-provider';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import {
+  MASA_TOOLS_CONTEXT,
+  MasaContextProvider,
+} from './masa-context-provider';
+import { masaRestClient } from '../../rest';
 
 const queryClient = new QueryClient();
-
-export const MASA_TOOLS_CONTEXT = createContext<MasaToolsShape>({});
 
 export interface MasaToolsProviderProps {
   children: React.ReactNode;
   accessToken: string | undefined;
-  apiURL?: string;
-}
-
-export interface MasaToolsShape {
   apiURL?: string;
 }
 
@@ -22,15 +20,12 @@ export function masaToolsProvider({
   accessToken,
   apiURL,
 }: MasaToolsProviderProps) {
-  const rest = masaRestClient;
-  const context = { rest, apiURL };
-
   return (
     <AccessTokenProvider accessToken={accessToken}>
       <QueryClientProvider client={queryClient}>
-        <MASA_TOOLS_CONTEXT.Provider value={context}>
+        <MasaContextProvider apiURL={apiURL} rest={masaRestClient}>
           {children}
-        </MASA_TOOLS_CONTEXT.Provider>
+        </MasaContextProvider>
       </QueryClientProvider>
     </AccessTokenProvider>
   );
