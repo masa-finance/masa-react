@@ -29,6 +29,7 @@
   "author": "matintosh",
   "module": "dist/masa-tools.esm.js",
   "dependencies": {
+    "@auth0/auth0-react": "^1.9.0",
     "@masa-finance/masa-contracts-identity": "0.2.1",
     "ethers": "^5.7.0",
     "react": "^17.0.2",
@@ -37,7 +38,6 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@auth0/auth0-react": "^1.9.0",
     "@babel/core": "^7.17.8",
     "@size-limit/preset-big-lib": "^8.1.0",
     "@size-limit/webpack-why": "^8.1.0",
