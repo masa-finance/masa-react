@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 
 export interface MasaToolsProviderProps {
   children: React.ReactNode;
-  accessToken: string | undefined;
+  accessToken?: string;
   apiURL?: string;
 }
 

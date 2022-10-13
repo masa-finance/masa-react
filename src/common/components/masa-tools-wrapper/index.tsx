@@ -11,7 +11,7 @@ export interface MasaToolsWrapperProps {
 
 export function MasaToolsWrapper({ children }: MasaToolsWrapperProps) {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useState<undefined | string>(undefined);
+  const [token, setToken] = useState<string | undefined>(undefined);
 
   const handleToken = useCallback(async () => {
     if (isAuthenticated && !isLoading) {

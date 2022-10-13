@@ -4,13 +4,12 @@ export const ACCESS_TOKEN_CONTEXT = createContext<AccessTokenShape | undefined>(
   undefined
 );
 
-export interface AccessTokenProps {
+export interface AccessTokenProps extends AccessTokenShape {
   children: React.ReactNode;
-  accessToken: string | undefined;
 }
 
 export interface AccessTokenShape {
-  accessToken: string | undefined;
+  accessToken?: string;
 }
 
 export function AccessTokenProvider({
