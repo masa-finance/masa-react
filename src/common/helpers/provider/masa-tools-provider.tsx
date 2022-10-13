@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { AccessTokenProvider } from './access-token-provider';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import {
@@ -15,11 +15,11 @@ export interface MasaToolsProviderProps {
   apiURL?: string;
 }
 
-export function masaToolsProvider({
+export const MasaToolsProvider = ({
   children,
   accessToken,
   apiURL,
-}: MasaToolsProviderProps) {
+}: MasaToolsProviderProps) => {
   return (
     <AccessTokenProvider accessToken={accessToken}>
       <QueryClientProvider client={queryClient}>
@@ -29,14 +29,14 @@ export function masaToolsProvider({
       </QueryClientProvider>
     </AccessTokenProvider>
   );
-}
+};
 
-export function useMasaToolsHook() {
-  const context = React.useContext(MASA_TOOLS_CONTEXT);
+export const useMasaToolsHook = () => {
+  const context = useContext(MASA_TOOLS_CONTEXT);
   if (context === undefined) {
     throw new Error(
       'useMasaTools must be used inside MasaToolsProvider; e.g import { MasaToolsProvider } from `"@masa-finance/tools";` '
     );
   }
   return context;
-}
+};

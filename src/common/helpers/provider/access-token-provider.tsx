@@ -1,4 +1,6 @@
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
+
+const envToken = process.env.REACT_APP_MASA_TOOLS_USER_ACCESS_TOKEN;
 
 export const ACCESS_TOKEN_CONTEXT = createContext<AccessTokenShape | undefined>(
   undefined
@@ -12,10 +14,10 @@ export interface AccessTokenShape {
   accessToken?: string;
 }
 
-export function AccessTokenProvider({
+export const AccessTokenProvider = ({
   children,
   accessToken,
-}: AccessTokenProps) {
+}: AccessTokenProps) => {
   const context = { accessToken };
 
   return (
@@ -23,12 +25,18 @@ export function AccessTokenProvider({
       {children}
     </ACCESS_TOKEN_CONTEXT.Provider>
   );
-}
+};
 
-export function useAccessToken() {
-  const context = React.useContext(ACCESS_TOKEN_CONTEXT);
-  if (context === undefined) {
-    throw new Error('useAccessToken must be used inside AccessTokenProvider;');
+export const useAccessToken = () => {
+  const accessContext = useContext(ACCESS_TOKEN_CONTEXT);
+
+  if (envToken) return { token: envToken, isLoading: false };
+
+  if (accessContext) {
+    return { token: accessContext.accessToken, isLoading: false };
   }
-  return context;
-}
+
+  return {
+    isLoading: false,
+  };
+};

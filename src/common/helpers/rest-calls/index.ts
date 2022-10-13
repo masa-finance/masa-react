@@ -2,9 +2,9 @@ import { useContext, useMemo } from 'react';
 import { useAxios, useLazyAxios } from 'use-axios-client';
 import { MethodMetadata } from '../../rest';
 import { URL } from '../axios';
-import { useToken } from '../get-token';
 import { useMutation, useQuery } from 'react-query';
 import { MASA_TOOLS_CONTEXT } from '../provider/masa-context-provider';
+import { useAccessToken } from '../provider/access-token-provider';
 
 export interface RestCallProps {
   pathParameters?: string[];
@@ -30,7 +30,7 @@ export const useRestCall = ({
     return newPath;
   }, [pathParameters, metadata]);
 
-  const { token, isLoading } = useToken();
+  const { token, isLoading } = useAccessToken();
   const { apiURL } = useContext(MASA_TOOLS_CONTEXT);
 
   const [getData, { data, error, loading }] = useLazyAxios({
@@ -70,7 +70,7 @@ export const useSimpleRestCall = ({
     return newPath;
   }, [pathParameters, metadata]);
 
-  const { token, isLoading } = useToken();
+  const { token, isLoading } = useAccessToken();
 
   const axiosData = useAxios({
     url: token ? `${URL(apiURL)}${fullPath}` : undefined,
@@ -103,7 +103,7 @@ export const useMasaQuery = (
     return newPath;
   }, [pathParameters, metadata]);
 
-  const { token } = useToken();
+  const { token } = useAccessToken();
 
   const query = useQuery(
     name,
@@ -162,7 +162,7 @@ export const useMasaMutation = (
     return newPath;
   }, [pathParameters, metadata]);
 
-  const { token } = useToken();
+  const { token } = useAccessToken();
 
   const query = useMutation(
     name,

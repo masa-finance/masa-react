@@ -1,8 +1,9 @@
 {
   "name": "@masa-finance/tools",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "license": "MIT",
   "main": "dist/index.js",
+  "module": "dist/tools.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
@@ -23,18 +24,19 @@
     "storybook": "start-storybook -p 6006 -h masatools.finance --https --ssl-cert masatools.finance.pem --ssl-key masatools.finance-key.pem",
     "build-storybook": "build-storybook"
   },
-  "peerDependencies": {
-    "react": ">=16"
-  },
   "author": "matintosh",
-  "module": "dist/masa-tools.esm.js",
   "dependencies": {
-    "@auth0/auth0-react": "^1.9.0",
+    "@auth0/auth0-react": "^1.12.0",
     "@masa-finance/masa-contracts-identity": "0.2.1",
     "ethers": "^5.7.0",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-query": "^3.39.1",
     "use-axios-client": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -47,18 +49,18 @@
     "@storybook/addons": "^6.4.20",
     "@storybook/react": "^6.4.20",
     "@types/auth0": "^2.34.17",
-    "@types/react": "^17.0.50",
-    "@types/react-dom": "^17.0.17",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
     "antd": "^4.19.5",
     "axios": "^1.1.2",
     "babel-loader": "^8.2.4",
     "eslint-plugin-prettier": "3.4.1",
     "husky": "^8.0.1",
     "prettier": "^2.7.1",
-    "react-dom": "^17.0.2",
-    "react-highlight-words": "^0.17.0",
-    "react-is": "^17.0.2",
-    "react-test-renderer": "^17.0.2",
+    "react-dom": "^18.2.0",
+    "react-highlight-words": "^0.18.0",
+    "react-is": "^18.2.0",
+    "react-test-renderer": "^18.2.0",
     "shards-react": "^1.0.3",
     "size-limit": "^8.0.1",
     "tsdx": "^0.14.1",

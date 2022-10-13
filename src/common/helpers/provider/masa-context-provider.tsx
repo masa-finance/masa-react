@@ -2,21 +2,20 @@ import React, { createContext } from 'react';
 
 export const MASA_TOOLS_CONTEXT = createContext<MasaToolsShape>({});
 
-export interface MasaToolsShape {
-  apiURL?: string;
-}
-
-export interface MasaContextProviderProps {
+interface MasaContextProviderProps extends MasaToolsShape {
   children: React.ReactNode;
-  apiURL?: string;
-  rest?: any;
 }
 
-export function MasaContextProvider({
+export interface MasaToolsShape {
+  rest?: any;
+  apiURL?: string;
+}
+
+export const MasaContextProvider = ({
   children,
   apiURL,
   rest,
-}: MasaContextProviderProps) {
+}: MasaContextProviderProps) => {
   const context = { rest, apiURL };
 
   return (
@@ -24,4 +23,4 @@ export function MasaContextProvider({
       {children}
     </MASA_TOOLS_CONTEXT.Provider>
   );
-}
+};
