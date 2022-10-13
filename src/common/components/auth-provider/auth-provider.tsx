@@ -1,6 +1,6 @@
 import React from 'react';
 import { Auth0Provider } from '@auth0/auth0-react';
-import { Auth } from '../auth/auth';
+import { Auth } from '../auth';
 
 export function AuthProvider({ children }: Props) {
   return (

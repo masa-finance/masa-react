@@ -1,14 +1,17 @@
 import { useAuth0 } from '@auth0/auth0-react';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { masaToolsProvider } from '../../helpers/provider';
+import { masaToolsProvider } from '../../helpers/provider/masa-tools-provider';
+
 const XMasaToolsProvider = masaToolsProvider;
+
 export interface MasaToolsWrapperProps {
   children: React.ReactNode;
 }
+
 export function MasaToolsWrapper({ children }: MasaToolsWrapperProps) {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
-  const [token, setToken] = useState<undefined | string>(undefined);
+  const [token, setToken] = useState<string | undefined>(undefined);
 
   const handleToken = useCallback(async () => {
     if (isAuthenticated && !isLoading) {
@@ -18,7 +21,7 @@ export function MasaToolsWrapper({ children }: MasaToolsWrapperProps) {
   }, [isAuthenticated, isLoading, getAccessTokenSilently]);
 
   useEffect(() => {
-    handleToken();
+    void handleToken();
   }, [handleToken]);
 
   return (

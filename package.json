@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/tools",
-  "version": "0.7.2",
+  "version": "0.8.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -16,13 +16,12 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint src test stories",
-    "prepare": "tsdx build",
+    "prepare": "husky install && tsdx build",
     "size": "size-limit",
     "prettier": "prettier ./src --write",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006 -h masatools.finance --https --ssl-cert masatools.finance.pem --ssl-key masatools.finance-key.pem",
-    "build-storybook": "build-storybook",
-    "postinstall": "husky install"
+    "build-storybook": "build-storybook"
   },
   "peerDependencies": {
     "react": ">=16"
@@ -30,6 +29,7 @@
   "author": "matintosh",
   "module": "dist/masa-tools.esm.js",
   "dependencies": {
+    "@auth0/auth0-react": "^1.9.0",
     "@masa-finance/masa-contracts-identity": "0.2.1",
     "ethers": "^5.7.0",
     "react": "^17.0.2",
@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@auth0/auth0-react": "^1.9.0",
     "@babel/core": "^7.17.8",
     "@size-limit/preset-big-lib": "^8.1.0",
     "@size-limit/webpack-why": "^8.1.0",

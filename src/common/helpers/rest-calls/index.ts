@@ -4,7 +4,7 @@ import { MethodMetadata } from '../../rest';
 import { URL } from '../axios';
 import { useToken } from '../get-token';
 import { useMutation, useQuery } from 'react-query';
-import { MASA_TOOLS_CONTEXT } from '../provider';
+import { MASA_TOOLS_CONTEXT } from '../provider/masa-context-provider';
 
 export interface RestCallProps {
   pathParameters?: string[];
@@ -12,6 +12,7 @@ export interface RestCallProps {
   headers?: any;
   body?: any;
 }
+
 export const useRestCall = ({
   pathParameters,
   metadata,

@@ -1,5 +1,10 @@
-import { masaToolsProvider, useMasaToolsHook } from './common/helpers/provider';
 import { masaRestClient } from './common/rest';
+import {
+  masaToolsProvider,
+  useMasaToolsHook,
+} from './common/helpers/provider/masa-tools-provider';
+
+export { MasaToolsWrapper } from './common/components/masa-tools-wrapper';
 
 export {
   useContractCall,
