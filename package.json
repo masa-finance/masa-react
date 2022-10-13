@@ -16,13 +16,12 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint src test stories",
-    "prepare": "tsdx build",
+    "prepare": "husky install && tsdx build",
     "size": "size-limit",
     "prettier": "prettier ./src --write",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006 -h masatools.finance --https --ssl-cert masatools.finance.pem --ssl-key masatools.finance-key.pem",
-    "build-storybook": "build-storybook",
-    "postinstall": "husky install"
+    "build-storybook": "build-storybook"
   },
   "peerDependencies": {
     "react": ">=16"
@@ -32,7 +31,6 @@
   "dependencies": {
     "@masa-finance/masa-contracts-identity": "0.2.1",
     "ethers": "^5.7.0",
-    "husky": "^8.0.1",
     "react": "^17.0.2",
     "react-query": "^3.39.1",
     "use-axios-client": "^2.0.0"
@@ -55,6 +53,7 @@
     "axios": "^1.1.2",
     "babel-loader": "^8.2.4",
     "eslint-plugin-prettier": "3.4.1",
+    "husky": "^8.0.1",
     "prettier": "^2.7.1",
     "react-dom": "^17.0.2",
     "react-highlight-words": "^0.17.0",
