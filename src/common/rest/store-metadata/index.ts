@@ -30,7 +30,7 @@ export function useSimpleMethod({ pathParameters, body, settings }: any) {
 const parameters: Parameter[] = [
   {
     key: 1,
-    name: 'soulname',
+    name: 'soulName',
     description: 'Soulname',
     required: 'yes',
     default: 'Identity',
