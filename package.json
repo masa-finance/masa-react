@@ -1,5 +1,5 @@
 {
-  "name": "@masa-finance/tools",
+  "name": "@masa-finance/masa-react",
   "version": "0.9.1",
   "license": "MIT",
   "main": "dist/index.js",
