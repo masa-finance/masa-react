@@ -1,10 +1,10 @@
 [
   {
-    "path": "dist/tools.cjs.production.min.js",
+    "path": "dist/asa-react.cjs.production.min.js",
     "limit": "500kB"
   },
   {
-    "path": "dist/tools.esm.js",
+    "path": "dist/masa-react.esm.js",
     "limit": "300kB"
   }
 ]
