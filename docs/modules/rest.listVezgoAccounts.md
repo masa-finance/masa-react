@@ -22,10 +22,6 @@
 
 • `Const` **metadata**: [`MethodMetadata`](../interfaces/rest.MethodMetadata.md)
 
-#### Defined in
-
-[masa-react/src/common/rest/vezgo/list-accounts/index.ts:42](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/vezgo/list-accounts/index.ts#L42)
-
 ## Functions
 
 ### useMethod
@@ -49,10 +45,6 @@
 | `getData` | (`lazyData?`: `any`) => `Promise`<`void`\> |
 | `loading` | `boolean` |
 
-#### Defined in
-
-[masa-react/src/common/rest/vezgo/list-accounts/index.ts:7](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/vezgo/list-accounts/index.ts#L7)
-
 ___
 
 ### useSimpleMethod
@@ -68,7 +60,3 @@ ___
 #### Returns
 
 `UseQueryResult`<`any`, `unknown`\>
-
-#### Defined in
-
-[masa-react/src/common/rest/vezgo/list-accounts/index.ts:17](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/vezgo/list-accounts/index.ts#L17)

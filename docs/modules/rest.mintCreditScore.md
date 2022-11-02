@@ -22,10 +22,6 @@
 
 • `Const` **metadata**: [`MethodMetadata`](../interfaces/rest.MethodMetadata.md)
 
-#### Defined in
-
-[masa-react/src/common/rest/mint-credit-score/index.ts:67](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/mint-credit-score/index.ts#L67)
-
 ## Functions
 
 ### useMethod
@@ -49,10 +45,6 @@
 | `getData` | (`lazyData?`: `any`) => `Promise`<`void`\> |
 | `loading` | `boolean` |
 
-#### Defined in
-
-[masa-react/src/common/rest/mint-credit-score/index.ts:8](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/mint-credit-score/index.ts#L8)
-
 ___
 
 ### useSimpleMethod
@@ -68,7 +60,3 @@ ___
 #### Returns
 
 `UseMutationResult`<`any`, `unknown`, `any`, `unknown`\>
-
-#### Defined in
-
-[masa-react/src/common/rest/mint-credit-score/index.ts:18](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/mint-credit-score/index.ts#L18)

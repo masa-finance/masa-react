@@ -22,19 +22,11 @@
 
 • **dataType**: ``"string"`` \| ``"number"``
 
-#### Defined in
-
-[masa-react/src/common/rest/interfaces.ts:7](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/interfaces.ts#L7)
-
 ___
 
 ### default
 
 • **default**: `string`
-
-#### Defined in
-
-[masa-react/src/common/rest/interfaces.ts:6](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/interfaces.ts#L6)
 
 ___
 
@@ -42,19 +34,11 @@ ___
 
 • **description**: `string`
 
-#### Defined in
-
-[masa-react/src/common/rest/interfaces.ts:5](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/interfaces.ts#L5)
-
 ___
 
 ### key
 
 • **key**: `number`
-
-#### Defined in
-
-[masa-react/src/common/rest/interfaces.ts:2](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/interfaces.ts#L2)
 
 ___
 
@@ -62,16 +46,8 @@ ___
 
 • **name**: `string`
 
-#### Defined in
-
-[masa-react/src/common/rest/interfaces.ts:3](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/interfaces.ts#L3)
-
 ___
 
 ### required
 
 • **required**: ``"yes"`` \| ``"no"``
-
-#### Defined in
-
-[masa-react/src/common/rest/interfaces.ts:4](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/interfaces.ts#L4)

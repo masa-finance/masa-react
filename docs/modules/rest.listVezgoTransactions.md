@@ -22,10 +22,6 @@
 
 • `Const` **metadata**: [`MethodMetadata`](../interfaces/rest.MethodMetadata.md)
 
-#### Defined in
-
-[masa-react/src/common/rest/vezgo/list-transactions/index.ts:56](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/vezgo/list-transactions/index.ts#L56)
-
 ## Functions
 
 ### useMethod
@@ -48,10 +44,6 @@
 | `error` | `undefined` \| `Error` |
 | `getData` | (`lazyData?`: `any`) => `Promise`<`void`\> |
 | `loading` | `boolean` |
-
-#### Defined in
-
-[masa-react/src/common/rest/vezgo/list-transactions/index.ts:8](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/vezgo/list-transactions/index.ts#L8)
 
 ___
 
@@ -76,7 +68,3 @@ ___
 | `error` | `undefined` \| `Error` |
 | `loading` | `boolean` |
 | `refetch` | () => `Promise`<`void`\> |
-
-#### Defined in
-
-[masa-react/src/common/rest/vezgo/list-transactions/index.ts:18](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/vezgo/list-transactions/index.ts#L18)

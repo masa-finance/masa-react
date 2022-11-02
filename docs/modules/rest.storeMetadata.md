@@ -22,10 +22,6 @@
 
 • `Const` **metadata**: [`MethodMetadata`](../interfaces/rest.MethodMetadata.md)
 
-#### Defined in
-
-[masa-react/src/common/rest/store-metadata/index.ts:41](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/store-metadata/index.ts#L41)
-
 ## Functions
 
 ### useMethod
@@ -49,10 +45,6 @@
 | `getData` | (`lazyData?`: `any`) => `Promise`<`void`\> |
 | `loading` | `boolean` |
 
-#### Defined in
-
-[masa-react/src/common/rest/store-metadata/index.ts:6](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/store-metadata/index.ts#L6)
-
 ___
 
 ### useSimpleMethod
@@ -68,7 +60,3 @@ ___
 #### Returns
 
 `UseMutationResult`<`any`, `unknown`, `any`, `unknown`\>
-
-#### Defined in
-
-[masa-react/src/common/rest/store-metadata/index.ts:16](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/store-metadata/index.ts#L16)

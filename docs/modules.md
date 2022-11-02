@@ -28,10 +28,6 @@
 
 • `Const` **addresses**: `Addresses`
 
-#### Defined in
-
-masa-sdk/dist/src/contracts/addresses.d.ts:13
-
 ## Functions
 
 ### AccessTokenProvider
@@ -47,10 +43,6 @@ masa-sdk/dist/src/contracts/addresses.d.ts:13
 #### Returns
 
 `Element`
-
-#### Defined in
-
-[masa-react/src/common/helpers/provider/access-token-provider.tsx:17](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/helpers/provider/access-token-provider.tsx#L17)
 
 ___
 
@@ -68,10 +60,6 @@ ___
 
 `Element`
 
-#### Defined in
-
-[masa-react/src/common/helpers/provider/masa-tools-provider.tsx:18](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/helpers/provider/masa-tools-provider.tsx#L18)
-
 ___
 
 ### MasaToolsWrapper
@@ -88,10 +76,6 @@ ___
 
 `Element`
 
-#### Defined in
-
-[masa-react/src/common/components/masa-tools-wrapper/index.tsx:9](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/components/masa-tools-wrapper/index.tsx#L9)
-
 ___
 
 ### loadIdentityContracts
@@ -107,10 +91,6 @@ ___
 #### Returns
 
 `Promise`<`IIdentityContracts`\>
-
-#### Defined in
-
-masa-sdk/dist/src/contracts/loadIdentityContracts.d.ts:7
 
 ___
 
@@ -136,10 +116,6 @@ ___
 | `getData` | () => `any` |
 | `loading` | `boolean` |
 
-#### Defined in
-
-[masa-react/src/common/helpers/contracts/index.ts:1](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/helpers/contracts/index.ts#L1)
-
 ___
 
 ### useMasaTools
@@ -149,7 +125,3 @@ ___
 #### Returns
 
 `MasaToolsShape`
-
-#### Defined in
-
-[masa-react/src/common/helpers/provider/masa-tools-provider.tsx:34](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/helpers/provider/masa-tools-provider.tsx#L34)

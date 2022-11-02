@@ -21,10 +21,6 @@
 
 • `Const` **metadata**: [`MethodMetadata`](../interfaces/rest.MethodMetadata.md)
 
-#### Defined in
-
-[masa-react/src/common/rest/get-countries/index.ts:16](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/get-countries/index.ts#L16)
-
 ## Functions
 
 ### useMethod
@@ -41,7 +37,3 @@
 | `error` | `undefined` \| `Error` |
 | `getData` | (`lazyData?`: `any`) => `Promise`<`void`\> |
 | `loading` | `boolean` |
-
-#### Defined in
-
-[masa-react/src/common/rest/get-countries/index.ts:7](https://github.com/masa-finance/masa-react/blob/9cffd5b/src/common/rest/get-countries/index.ts#L7)

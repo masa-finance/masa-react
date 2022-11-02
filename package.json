@@ -15,7 +15,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "doc": "typedoc --plugin typedoc-plugin-markdown --out docs ./src/index.tsx --name '# Masa React\n'",
+    "doc": "typedoc",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint src test stories",
     "prepare": "husky install && tsdx build",

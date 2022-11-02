@@ -1,4 +1,5 @@
-# Masa React / [Exports](modules.md)
+# Masa React
+ / [Exports](modules.md)
 
 ## Setup
 
