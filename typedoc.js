@@ -4,4 +4,5 @@ module.exports = {
   name: '# Masa React\n',
   out: 'docs',
   disableSources: true,
+  includeVersion: true,
 };
