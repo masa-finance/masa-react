@@ -5,7 +5,7 @@ import {
   MASA_TOOLS_CONTEXT,
   MasaContextProvider,
 } from './masa-context-provider';
-import { masaRestClient } from '../../rest';
+import * as masaRestClient from '../../rest';
 
 const queryClient = new QueryClient();
 

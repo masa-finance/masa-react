@@ -1,4 +1,4 @@
-export { masaRestClient as rest } from './common/rest';
+export * as rest from './common/rest';
 
 export {
   MasaToolsProvider,
