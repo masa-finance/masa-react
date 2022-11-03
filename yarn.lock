@@ -1956,19 +1956,19 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@masa-finance/masa-contracts-identity@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-0.3.1.tgz#10a5b30a8ca24094ae5386d692ce6edbb6f8020d"
-  integrity sha512-9YjS79oSZlelDCHNwOwnuSBcvqZvvrxwarmTfAqygV8DWqHB1xfIwfmOuFzg3WOBEWMX3lD0V7kNAyPPY42K+A==
+"@masa-finance/masa-contracts-identity@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-0.4.1.tgz#ec1acded1e20851c5df511070dc6a9b2dbfbf6b7"
+  integrity sha512-hqtcu1AaI3yTPiRk9q7fkQRJgme5Qxb29FRmdtOsJuHHDdAoBJp/L6bGeNqcBDkzhJIB8GcFzlIzSvT7mpnx5w==
   dependencies:
     ethers "^5.6.9"
 
-"@masa-finance/masa-sdk@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-0.0.6.tgz#dff0d9349157d86d3fd043096800af9a65a1d93f"
-  integrity sha512-9AH1N9e0USIYKyYEzNd+LWD9hghCe3ukSrOnT//+Mk24qzAXrpMwO1aC6yGE/Y8SxmqhEFjP/kDK5FhvOT0+Sg==
+"@masa-finance/masa-sdk@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-0.2.0.tgz#30cc4f7baf80c176cf6d6a416d1a144c86298000"
+  integrity sha512-gamSnFaLa1DCAPdUohbgQjgLQSbfjpXFwmV33on997vrOKMPE0COHZnKZ/MNHPDnyrQ5wPpMe1JmBsXAuC3YhQ==
   dependencies:
-    "@masa-finance/masa-contracts-identity" "^0.3.1"
+    "@masa-finance/masa-contracts-identity" "^0.4.1"
     arweave "^1.11.6"
     axios "^1.1.3"
     ethers "^5.7.2"
