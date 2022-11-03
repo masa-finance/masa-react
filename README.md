@@ -4,6 +4,12 @@
 
 ---
 
+<!-- TOC -->
+
+* [Setup](#setup)
+
+<!-- TOC -->
+
 ## Setup
 
 ```
