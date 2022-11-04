@@ -1,0 +1,47 @@
+.masa-soulname-picker {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2em;
+
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.masa-soulname-picker-container {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  width: 100%;
+}
+
+.masa-soulname-picker-input-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5em;
+}
+
+.masa-soulname-picker-title {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  align-items: flex-start;
+}
+
+.masa-soulname-row-form {
+  display: flex;
+  flex-direction: row;
+
+  gap: 1em;
+}
+
+.masa-soulname-row-form div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.5em;
+}

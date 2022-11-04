@@ -21,13 +21,14 @@
     "size": "size-limit",
     "prettier": "prettier ./src --write",
     "analyze": "size-limit --why",
-    "storybook": "start-storybook -p 6006 -h masatools.finance --https --ssl-cert masatools.finance.pem --ssl-key masatools.finance-key.pem",
+    "storybook": "start-storybook -p 3000",
     "build-storybook": "build-storybook"
   },
-  "author": "matintosh",
+  "author": "hide-on-bush",
   "dependencies": {
     "@auth0/auth0-react": "^1.12.0",
     "@masa-finance/masa-contracts-identity": "0.3.0",
+    "@masa-finance/masa-sdk": "^0.2.3",
     "ethers": "^5.7.0",
     "react": "^18.2.0",
     "react-query": "^3.39.1",
