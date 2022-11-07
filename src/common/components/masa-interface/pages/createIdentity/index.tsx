@@ -1,9 +1,7 @@
 import { Input } from 'antd';
 import { Button } from 'antd/lib/radio';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  useMasa,
-} from '../../../../helpers/provider/masa-provider';
+import { useMasa } from '../../../../helpers/provider/masa-provider';
 
 import './styles.css';
 
