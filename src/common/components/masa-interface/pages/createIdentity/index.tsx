@@ -1,9 +1,8 @@
 import { Input } from 'antd';
 import { Button } from 'antd/lib/radio';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   useMasa,
-  useMetamask,
 } from '../../../../helpers/provider/masa-provider';
 
 import './styles.css';
@@ -21,10 +20,10 @@ export const InterfaceCreateIdentity = () => {
   const [price, setPrice] = useState<any>(0);
   useEffect(() => {
     (async () => {
-      setLoading?.(true)
+      setLoading?.(true);
       const p = await masa?.soulNames.getRegistrationPrice(soulName, 1, 'eth');
       setPrice(p);
-      setLoading?.(false)
+      setLoading?.(false);
     })();
   }, [masa, soulName]);
 
