@@ -10,6 +10,7 @@ export * as getNodeOperators from './get-node-operators';
 export * as postNodeOperators from './post-node-operators';
 
 export * as mintCreditScore from './mint-credit-score';
+export * as mint2FA from './mint-2fa';
 
 export * as getVezgoLink from './vezgo/get-link';
 export * as listVezgoProviders from './vezgo/list-providers';
@@ -36,6 +37,9 @@ export * as getChallenge from './get-challenge';
 export * as getSession from './get-session';
 export * as checkSignatureChallenge from './check-challenge-signature';
 export * as sessionLogout from './session-logout';
+
+export * as confirm2FA from './confirm-2fa';
+export * as verify2FA from './verify-2fa';
 
 export * as storeMetadata from './store-metadata';
 
