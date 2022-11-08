@@ -43,8 +43,7 @@ const parameters: Parameter[] = [
 export const metadata: MethodMetadata = {
   author: 'Aaron Knott',
   authorPicture: '',
-  description:
-    'Confirm 2FA using a phonenumber',
+  description: 'Confirm 2FA using a phonenumber',
   name: path,
   method: 'POST',
   parameters,
