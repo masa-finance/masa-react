@@ -1,9 +1,10 @@
 import { List } from 'antd';
 import React, { useMemo } from 'react';
 import { RestMethod } from '../rest-method';
-import { masaRestClient } from '../../rest';
+import * as masaRestClient from '../../rest';
 import { AuthProvider } from '../auth-provider';
 import { MasaToolsWrapper } from '../masa-tools-wrapper';
+
 export function RestTester() {
   console.log(masaRestClient);
 

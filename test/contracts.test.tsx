@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { loadContracts } from '../src/index';
+import { loadIdentityContracts } from '../src/index';
 
 describe('Contracts', () => {
   let provider;
@@ -11,13 +11,13 @@ describe('Contracts', () => {
   });
 
   it('should load contracts', async () => {
-    const contracts = await loadContracts({ provider });
+    const contracts = await loadIdentityContracts({ provider });
     expect(contracts.SoulboundIdentityContract).toBeDefined();
     expect(contracts.SoulboundCreditReportContract).toBeDefined();
   });
 
   it('should display contracts addresses properly', async () => {
-    const contracts = await loadContracts({ provider });
+    const contracts = await loadIdentityContracts({ provider });
     console.log(
       'SoulboundIdentityContract Address',
       contracts.SoulboundIdentityContract.address
