@@ -1,92 +1,42 @@
-import * as auth from './auth';
-import * as getClient from './getUser';
-import * as postClient from './post-user';
-import * as accounts from './accounts';
-import * as getCountries from './get-countries';
-import * as postCountry from './post-country';
-import * as farming from './farming';
-import * as getNodeOperators from './get-node-operators';
-import * as postNodeOperators from './post-node-operators';
+export * as auth from './auth';
+export * as getClient from './getUser';
+export * as postClient from './post-user';
+export * as accounts from './accounts';
+export * as getCountries from './get-countries';
+export * as postCountry from './post-country';
+export * as farming from './farming';
 
-import * as mintCreditScore from './mint-credit-score';
+export * as getNodeOperators from './get-node-operators';
+export * as postNodeOperators from './post-node-operators';
 
-import * as getVezgoLink from './vezgo/get-link';
-import * as listVezgoProviders from './vezgo/list-providers';
-import * as listVezgoAccounts from './vezgo/list-accounts';
-import * as listVezgoTransactions from './vezgo/list-transactions';
-import * as syncVezgo from './vezgo/sync-vezgo';
+export * as mintCreditScore from './mint-credit-score';
 
-import * as getPlaidAccount from './plaid/get-plaid-account';
-import * as getPlaidLinkToken from './plaid/get-plaid-link-token';
-import * as getPlaidTransaction from './plaid/get-plaid-transaction';
-import * as listPlaidAccounts from './plaid/list-plaid-accounts';
-import * as listPlaidTransaction from './plaid/list-plaid-transactions';
-import * as getPlaidAccessToken from './plaid/get-plaid-access-token';
-import * as savePlaidAccounts from './plaid/save-plaid-accounts';
-import * as savePlaidTransaction from './plaid/save-plaid-transactions';
-import * as syncPlaid from './plaid/sync-plaid';
+export * as getVezgoLink from './vezgo/get-link';
+export * as listVezgoProviders from './vezgo/list-providers';
+export * as listVezgoAccounts from './vezgo/list-accounts';
+export * as listVezgoTransactions from './vezgo/list-transactions';
+export * as syncVezgo from './vezgo/sync-vezgo';
 
-import * as postUser from './post-user';
-import * as getProductInterests from './get-product-interests';
+export * as getPlaidAccount from './plaid/get-plaid-account';
+export * as getPlaidLinkToken from './plaid/get-plaid-link-token';
+export * as getPlaidTransaction from './plaid/get-plaid-transaction';
+export * as listPlaidAccounts from './plaid/list-plaid-accounts';
+export * as listPlaidTransaction from './plaid/list-plaid-transactions';
+export * as getPlaidAccessToken from './plaid/get-plaid-access-token';
+export * as savePlaidAccounts from './plaid/save-plaid-accounts';
+export * as savePlaidTransaction from './plaid/save-plaid-transactions';
+export * as syncPlaid from './plaid/sync-plaid';
 
-import * as balances from './balances';
+export * as postUser from './post-user';
+export * as getProductInterests from './get-product-interests';
 
-import * as getChallenge from './get-challenge';
-import * as getSession from './get-session';
-import * as checkSignatureChallenge from './check-challenge-signature';
-import * as sessionLogout from './session-logout';
+export * as balances from './balances';
 
-import * as storeMetadata from './store-metadata';
+export * as getChallenge from './get-challenge';
+export * as getSession from './get-session';
+export * as checkSignatureChallenge from './check-challenge-signature';
+export * as sessionLogout from './session-logout';
 
-export interface Parameter {
-  key: number;
-  name: string;
-  required: 'yes' | 'no';
-  description: string;
-  default: string;
-  dataType: 'string' | 'number';
-}
+export * as storeMetadata from './store-metadata';
 
-export interface MethodMetadata {
-  author: string;
-  authorPicture: string;
-  description: string;
-  name: string;
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'OPTIONS';
-  parameters: Parameter[];
-}
-
-export const masaRestClient = {
-  auth,
-  accounts,
-  farming,
-  getClient,
-  postClient,
-  mintCreditScore,
-  getVezgoLink,
-  listVezgoProviders,
-  listVezgoAccounts,
-  listVezgoTransactions,
-  syncVezgo,
-  getPlaidAccount,
-  getPlaidLinkToken,
-  getPlaidTransaction,
-  getPlaidAccessToken,
-  listPlaidAccounts,
-  listPlaidTransaction,
-  savePlaidAccounts,
-  savePlaidTransaction,
-  syncPlaid,
-  getCountries,
-  postUser,
-  postCountry,
-  getProductInterests,
-  balances,
-  getNodeOperators,
-  postNodeOperators,
-  getChallenge,
-  checkSignatureChallenge,
-  getSession,
-  sessionLogout,
-  storeMetadata,
-};
+export * from './interfaces';

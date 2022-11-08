@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useMasa } from '../../../../helpers/provider/masa-provider';
 import { MasaLoading } from '../../../masa-loading';
 
@@ -23,6 +23,8 @@ export const InterfaceConnected = () => {
       }
     })();
   }, [masa, setSoulnames, setLoading]);
+
+  console.log({ soulnames });
 
   const name = useMemo(() => {
     if (soulnames?.length) {
