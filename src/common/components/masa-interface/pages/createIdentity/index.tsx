@@ -24,10 +24,8 @@ export const InterfaceCreateIdentity = () => {
 
   useEffect(() => {
     (async () => {
-      setLoading?.(true);
       const p = await masa?.soulNames.getRegistrationPrice(soulName, 1, 'eth');
       setPrice(p);
-      setLoading?.(false);
     })();
   }, [masa, soulName]);
 
