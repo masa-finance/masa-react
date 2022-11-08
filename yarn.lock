@@ -1963,10 +1963,10 @@
   dependencies:
     ethers "^5.6.9"
 
-"@masa-finance/masa-sdk@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-0.3.0.tgz#a36a119e9c9816e32a0a75fa34d0d878b87f79fb"
-  integrity sha512-d2fxOYvcZZFItjBxQ0WTPFcQp0TZvThcUxqnJnUh6ZYQX4QfOIoElLoxmwlLQrUhZoz4xYJEwKdOQBlm8ZPNqg==
+"@masa-finance/masa-sdk@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-0.3.7.tgz#186666c40fc013db1269d1ff6c6f60e7d639a3b0"
+  integrity sha512-pKKKR8PVUHCImW89V3GCmAAonktHByCn1hQ5L5497R5LZDx31YwWTVmwpm2aNdp6nAxemP43RFkYmn++FjwJ3A==
   dependencies:
     "@masa-finance/masa-contracts-identity" "^0.4.2"
     arweave "^1.11.6"
