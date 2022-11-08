@@ -28,8 +28,8 @@ const Component = () => {
   const { masa, connect } = useMasa();
 
   const handleConect = useCallback(() => {
-    connect?.(function() {
-      alert("hello hello connected")
+    connect?.(function () {
+      alert('hello hello connected');
     });
   }, [connect]);
 

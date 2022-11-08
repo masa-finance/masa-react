@@ -125,7 +125,7 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
       modalCallback();
     }
   }, [modalCallback, setModalOpen, loggedIn, isConnected]);
-  
+
   useEffect(() => {
     (async () => {
       setLoading(true);

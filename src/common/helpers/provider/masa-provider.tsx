@@ -51,8 +51,6 @@ export const useMetamask = () => {
     });
   }, []);
 
-
-  
   const connect = () => {
     //@ts-ignore
     if (window.ethereum) {

@@ -22,7 +22,7 @@ export const MasaInterface = () => {
     loading,
     identity,
     loggedIn,
-    closeModal
+    closeModal,
   } = useMasa();
 
   const page = useMemo(() => {
