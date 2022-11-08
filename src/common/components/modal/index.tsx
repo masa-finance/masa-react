@@ -8,11 +8,12 @@ export interface ModalProps {
   children: React.ReactNode;
   open: boolean;
   setOpen: (val: boolean) => void;
+  close: Function;
 }
 
-export const ModalComponent = ({ children, open, setOpen }: ModalProps) => {
+export const ModalComponent = ({ children, open, close }: ModalProps) => {
   return (
-    <Modal footer={false} open={open} onCancel={() => setOpen(false)}>
+    <Modal footer={false} open={open} onCancel={close}>
       <div className="masa-modal">
         <img src={Logo} className="logo" alt="logo" />
 

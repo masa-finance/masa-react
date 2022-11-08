@@ -25,51 +25,19 @@ const meta: Meta = {
 export default meta;
 
 const Component = () => {
-  const { masa, setModalOpen } = useMasa();
+  const { masa, connect } = useMasa();
 
-  const handleLogin = useCallback(async () => {
-    const result = await masa?.session.login();
-    console.log({ result });
-  }, [masa]);
+  const handleConect = useCallback(() => {
+    connect?.(function() {
+      alert("hello hello connected")
+    });
+  }, [connect]);
 
-  const handleLogout = useCallback(async () => {
-    const result = await masa?.session.logout();
-    console.log({ result });
-  }, [masa]);
-
-  const test = useCallback(async () => {
-    const address = await masa?.config.wallet.getAddress();
-
-    const balance = await masa?.account.getBalances(address as string);
-    console.log({ balance });
-
-    // identity id
-    const identityId = await masa?.identity.load(address);
-    console.log(`Identity ID: '${identityId}'`);
-
-    console.log('ACC', await masa?.soulNames.list(address));
-  }, [masa]);
-
-  const handleCreateIdentity = useCallback(async () => {
-    console.log('IDENTITY', masa?.identity);
-    const result = await masa?.soulNames.create(
-      'NewTestForSDK2.soul',
-      1,
-      'eth'
-    );
-    console.log({ result });
-  }, [masa]);
   return (
     <>
       <h1>SDK Tester!</h1>
 
-      <Button onClick={() => setModalOpen?.(true)}>Use Masa!</Button>
-      <br />
-      <Button onClick={handleLogin}>Login</Button>
-      <Button onClick={handleLogout}>Logout</Button>
-
-      <Button onClick={test}>test</Button>
-      <Button onClick={handleCreateIdentity}>createIdentity</Button>
+      <Button onClick={handleConect}>Use Masa!</Button>
     </>
   );
 };

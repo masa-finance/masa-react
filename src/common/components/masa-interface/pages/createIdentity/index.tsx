@@ -5,28 +5,31 @@ import {
   useMasa,
   useMetamask,
 } from '../../../../helpers/provider/masa-provider';
+import { MasaLoading } from '../../../masa-loading';
 
 import './styles.css';
 
 export const InterfaceCreateIdentity = () => {
-  const { masa, setLoading } = useMasa();
+  const { masa, handlePurchaseSoulname } = useMasa();
+  const [loading, setLoading] = useState(false);
   const [soulName, setSoulName] = useState('');
 
-  const purchaseSoulname = useCallback(async () => {
-    const a = await masa?.identity.create(soulName, 1, 'eth');
-    console.log(a);
-    return 0;
-  }, [masa]);
-
   const [price, setPrice] = useState<any>(0);
+
+  const purchaseName = useCallback(async () => {
+    setLoading(true);
+    await handlePurchaseSoulname?.(soulName, 1, 'eth');
+    setLoading(false);
+  }, [handlePurchaseSoulname, soulName, setLoading]);
+
   useEffect(() => {
     (async () => {
-      setLoading?.(true)
       const p = await masa?.soulNames.getRegistrationPrice(soulName, 1, 'eth');
       setPrice(p);
-      setLoading?.(false)
     })();
   }, [masa, soulName]);
+
+  if (loading) return <MasaLoading />;
 
   return (
     <div className="masa-soulname-picker-container">
@@ -56,7 +59,7 @@ export const InterfaceCreateIdentity = () => {
             />
           </div>
         </div>
-        <Button className="masa-button" onClick={purchaseSoulname}>
+        <Button className="masa-button" onClick={purchaseName}>
           Claim your soul
         </Button>
       </div>

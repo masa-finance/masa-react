@@ -4,7 +4,7 @@ import { useMasa } from '../../../../helpers/provider/masa-provider';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceConnected = () => {
-  const { masa, handleLogout } = useMasa();
+  const { masa, handleLogout, closeModal } = useMasa();
   const [loading, setLoading] = useState(false);
 
   const [soulnames, setSoulnames] = useState<any[] | undefined | null>(null);
@@ -24,10 +24,6 @@ export const InterfaceConnected = () => {
     })();
   }, [masa, setSoulnames, setLoading]);
 
-  console.log({ soulnames });
-
-
-
   const name = useMemo(() => {
     if (soulnames?.length) {
       return soulnames[0].tokenDetails.sbtName;
@@ -45,6 +41,9 @@ export const InterfaceConnected = () => {
         web3 soulbound identity!
       </p>
 
+      <Button className="masa-button" onClick={() => closeModal?.()}>
+        Continue with Teller
+      </Button>
       <div className="dont-have-a-wallet" onClick={handleLogout}>
         <a>
           <p>I don't want to use this wallet</p>

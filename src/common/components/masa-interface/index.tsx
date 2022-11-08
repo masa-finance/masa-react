@@ -22,6 +22,7 @@ export const MasaInterface = () => {
     loading,
     identity,
     loggedIn,
+    closeModal
   } = useMasa();
 
   const page = useMemo(() => {
@@ -52,6 +53,7 @@ export const MasaInterface = () => {
     <>
       <ModalComponent
         open={isModalOpen as boolean}
+        close={closeModal}
         setOpen={setModalOpen as (val: boolean) => void}
       >
         {pages[page]}

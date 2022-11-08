@@ -6,7 +6,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { useDebounce, useDebounceIfValue } from '../hooks/useDebounce';
 import { createNewMasa } from '../masa';
 
 export const MASA_CONTEXT = createContext<MasaShape>({});
@@ -28,6 +27,13 @@ export interface MasaShape {
   loggedIn?: boolean;
   handleLogin?: () => void;
   handleLogout?: () => void;
+  handlePurchaseSoulname?: (
+    soulname: string,
+    duration: number,
+    paymentMethod: string
+  ) => void;
+  connect?: (callback?: Function) => void;
+  closeModal: Function;
 }
 
 export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
@@ -43,6 +49,17 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
   const [identity, setIdentity] = useState<any>(null);
 
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [modalCallback, setModalCallback] = useState<any>(null);
+
+  const connect = useCallback(
+    (callback?: () => void) => {
+      setModalOpen(true);
+      if (typeof callback === 'function') {
+        setModalCallback(() => callback);
+      }
+    },
+    [setModalOpen, setModalCallback]
+  );
 
   useEffect(() => {
     (async () => {
@@ -102,6 +119,13 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
     return !!walletAddress;
   }, [walletAddress]);
 
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+    if (modalCallback && loggedIn && isConnected) {
+      modalCallback();
+    }
+  }, [modalCallback, setModalOpen, loggedIn, isConnected]);
+  
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -116,20 +140,37 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
     })();
   }, [masaInstance]);
 
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
+  const loadIdentity = useCallback(async () => {
+    setLoading(true);
 
-      if (masaInstance && walletAddress) {
-        //@ts-ignore
-        const identityResult = await masaInstance.identity.load(walletAddress);
-        setIdentity(identityResult);
-      } else {
-        setIdentity(null);
-      }
-      setLoading(false);
-    })();
+    console.log('Loading identity...');
+    if (masaInstance && walletAddress) {
+      //@ts-ignore
+      const identityResult = await masaInstance.identity.load(walletAddress);
+      console.log('Setting identity', identityResult);
+      setIdentity(identityResult);
+    } else {
+      setIdentity(null);
+    }
+    setLoading(false);
   }, [masaInstance, walletAddress, setIdentity]);
+
+  const handlePurchaseSoulname = useCallback(
+    async (soulname, duration, paymentMethod) => {
+      const tx = await masaInstance?.identity.create(
+        soulname,
+        duration,
+        paymentMethod
+      );
+
+      await loadIdentity();
+    },
+    [masaInstance, loadIdentity]
+  );
+
+  useEffect(() => {
+    loadIdentity();
+  }, [loadIdentity]);
 
   useEffect(() => {
     if (provider) {
@@ -152,6 +193,9 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
     loggedIn,
     handleLogin,
     handleLogout,
+    handlePurchaseSoulname,
+    connect,
+    closeModal,
   };
 
   return (

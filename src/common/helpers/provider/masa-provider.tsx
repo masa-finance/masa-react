@@ -51,8 +51,9 @@ export const useMetamask = () => {
     });
   }, []);
 
+
+  
   const connect = () => {
-    console.log('CONNECT');
     //@ts-ignore
     if (window.ethereum) {
       provider.send('eth_requestAccounts', []).then(async () => {
