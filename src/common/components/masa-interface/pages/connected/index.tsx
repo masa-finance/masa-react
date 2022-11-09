@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useMasa } from '../../../../helpers/provider/masa-provider';
+import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceConnected = () => {

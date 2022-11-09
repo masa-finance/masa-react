@@ -2,10 +2,10 @@
 import React, { useCallback, useState } from 'react';
 import {
   MasaProvider,
-  useMasa,
 } from '../src/common/helpers/provider/masa-provider';
 import { Meta, Story } from '@storybook/react';
 import { Button } from 'antd';
+import { useMasa } from '../src/common/helpers/provider/use-masa';
 
 const meta: Meta = {
   title: 'SDK Test',
@@ -25,7 +25,7 @@ const meta: Meta = {
 export default meta;
 
 const Component = () => {
-  const { masa, connect } = useMasa();
+  const { connect } = useMasa();
 
   const handleConect = useCallback(() => {
     connect?.(function () {

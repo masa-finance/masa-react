@@ -1,13 +1,10 @@
 import { Input } from 'antd';
 import { Button } from 'antd/lib/radio';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  useMasa,
-  useMetamask,
-} from '../../../../helpers/provider/masa-provider';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
 
-import './styles.css';
+// import './styles.css';
 
 export const InterfaceCreateIdentity = () => {
   const { masa, handlePurchaseSoulname } = useMasa();

@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 import React from 'react';
-import Logo from './logo.svg';
+
 
 import './styles.css';
 
@@ -13,9 +13,9 @@ export interface ModalProps {
 
 export const ModalComponent = ({ children, open, close }: ModalProps) => {
   return (
-    <Modal footer={false} open={open} onCancel={close}>
+    <Modal footer={false} open={open} onCancel={() => close()}>
       <div className="masa-modal">
-        <img src={Logo} className="logo" alt="logo" />
+        {/* <img src={Logo} className="logo" alt="logo" /> */}
 
         <div className="masa-modal-container">{children}</div>
       </div>

@@ -1,5 +1,4 @@
 import { Masa } from '@masa-finance/masa-sdk';
-import { ethers } from 'ethers';
 
 const config = {
   ...process.env,

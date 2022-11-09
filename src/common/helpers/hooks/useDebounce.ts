@@ -37,6 +37,8 @@ export function useDebounceIfValue(value, target, delay) {
       };
     } else {
       setDebouncedValue(value);
+
+      return () => {};
     }
   }, [value, delay, target]);
   return debouncedValue;

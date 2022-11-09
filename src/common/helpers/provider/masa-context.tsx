@@ -16,6 +16,7 @@ interface MasaContextProviderProps extends MasaShape {
 
 export interface MasaShape {
   setProvider?: (provider: any) => void;
+  provider?: any;
   isModalOpen?: boolean;
   setModalOpen?: (val: boolean) => void;
   masa?: Masa;
@@ -33,7 +34,7 @@ export interface MasaShape {
     paymentMethod: string
   ) => void;
   connect?: (callback?: Function) => void;
-  closeModal: Function;
+  closeModal?: Function;
 }
 
 export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
@@ -52,7 +53,7 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
   const [modalCallback, setModalCallback] = useState<any>(null);
 
   const connect = useCallback(
-    (callback?: () => void) => {
+    (callback?: Function) => {
       setModalOpen(true);
       if (typeof callback === 'function') {
         setModalCallback(() => callback);
@@ -157,7 +158,7 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
 
   const handlePurchaseSoulname = useCallback(
     async (soulname, duration, paymentMethod) => {
-      const tx = await masaInstance?.identity.create(
+      await masaInstance?.identity.create(
         soulname,
         duration,
         paymentMethod
@@ -180,11 +181,11 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
     }
   }, [provider]);
   const context = {
-    provider,
     setProvider,
-    masa: masaInstance as Masa,
+    provider,
     isModalOpen,
     setModalOpen,
+    masa: masaInstance as Masa,
     isConnected,
     loading,
     setLoading,

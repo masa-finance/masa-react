@@ -1,5 +1,6 @@
 import React from 'react';
-import { useMetamask } from '../../../../helpers/provider/masa-provider';
+import { useMetamask } from '../../../../helpers/provider/use-metamask';
+
 export const InterfaceConnector = () => {
   const { connect } = useMetamask();
 

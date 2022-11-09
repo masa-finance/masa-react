@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useMasa, useMetamask } from '../../helpers/provider/masa-provider';
-import { MasaLoading } from '../masa-loading';
+import React, { useMemo } from 'react';
+import { useMasa } from '../../helpers/provider/use-masa';
 import { ModalComponent } from '../modal';
 import { InterfaceAuthenticate } from './pages/authenticate';
 import { InterfaceConnected } from './pages/connected';
@@ -53,7 +52,7 @@ export const MasaInterface = () => {
     <>
       <ModalComponent
         open={isModalOpen as boolean}
-        close={closeModal}
+        close={() => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
       >
         {pages[page]}

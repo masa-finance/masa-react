@@ -1,6 +1,6 @@
+import React from 'react';
 import { Button } from 'antd';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useMasa } from '../../../../helpers/provider/masa-provider';
+import { useMasa } from '../../../../helpers/provider/use-masa';
 
 export const InterfaceAuthenticate = () => {
   const { handleLogin } = useMasa();
