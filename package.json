@@ -63,7 +63,7 @@
     "@types/auth0": "^2.34.17",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
-    "antd": "^4.19.5",
+    "antd": "^4.24.1",
     "autoprefixer": "^10.4.13",
     "axios": "^1.1.0",
     "eslint-plugin-prettier": "3.4.1",
