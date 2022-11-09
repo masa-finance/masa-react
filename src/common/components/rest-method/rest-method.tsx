@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Comment, Tooltip, Avatar, Card } from 'antd';
+
 import { MethodParameters } from '../method-parameters';
 import { MethodMetadata } from '../../rest';
 import { ResponseValues } from '../response-values';
@@ -129,29 +129,9 @@ export const RestMethod = ({
   ];
 
   return (
-    <Card style={{ margin: '8px 0' }}>
-      <Comment
-        actions={actions}
-        author={<a>{name}</a>}
-        avatar={
-          <Tooltip title={'Author Name'}>
-            <Avatar
-              src={
-                authorPicture
-                  ? authorPicture
-                  : 'https://joeschmoe.io/api/v1/random'
-              }
-              alt={author}
-            />
-          </Tooltip>
-        }
-        content={<p>{description}</p>}
-        datetime={
-          <Tooltip title={'test'}>
-            <span>{method}</span>
-          </Tooltip>
-        }
-      />
+    <div style={{ margin: '8px 0' }}>
+      <div></div>
+
       {/* @ts-ignore */}
       {showParameters && <MethodParameters data={parameters} />}
       {data && <ResponseValues data={data} />}
@@ -168,6 +148,6 @@ export const RestMethod = ({
           onValueChange={onValuePathChange}
         />
       )}
-    </Card>
+    </div>
   );
 };

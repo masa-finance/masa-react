@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Table, Input, Button, Space } from 'antd';
 //@ts-ignore
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined } from '@ant-design/icons';
 
 export const ResponseValues = ({ data }: { data: JSON }) => {
   const [searchText, setSearchText] = useState('');
@@ -16,49 +14,36 @@ export const ResponseValues = ({ data }: { data: JSON }) => {
       clearFilters,
     }: any) => (
       <div style={{ padding: 8 }}>
-        <Input
+        <input
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
           onChange={(e) =>
             setSelectedKeys(e.target.value ? [e.target.value] : [])
           }
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
         />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-        </Space>
+
+        <button
+          onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 90 }}
+        >
+          Search
+        </button>
+        <button onClick={() => handleReset(clearFilters)} style={{ width: 90 }}>
+          Reset
+        </button>
+        <button
+          onClick={() => {
+            confirm({ closeDropdown: false });
+            setSearchText(selectedKeys[0]);
+            setSearchedColumn(dataIndex);
+          }}
+        >
+          Filter
+        </button>
       </div>
     ),
-    filterIcon: (filtered: any) => (
-      <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
-    ),
+    filterIcon: (filtered: any) => <>a</>,
     onFilter: (value: any, record: any) =>
       record[dataIndex]
         ? record[dataIndex]
@@ -107,13 +92,5 @@ export const ResponseValues = ({ data }: { data: JSON }) => {
       ...getColumnSearchProps('value'),
     },
   ];
-  return (
-    <Table
-      columns={columns}
-      dataSource={Object.keys(data).map((key) => ({
-        key,
-        value: JSON.stringify(data[key]),
-      }))}
-    />
-  );
+  return <>table</>;
 };

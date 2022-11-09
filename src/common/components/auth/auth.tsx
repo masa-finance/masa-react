@@ -1,12 +1,7 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import { Typography } from 'antd';
-
-import { Button } from 'antd';
 import { UserCard } from '../user-card';
-
-const { Title } = Typography;
 
 export function Auth(): JSX.Element {
   const { loginWithPopup, user, isLoading } = useAuth0();
@@ -21,13 +16,13 @@ export function Auth(): JSX.Element {
             alignItems: 'center',
           }}
         >
-          <Title level={3}>
+          <>
             Unauthenticated{' '}
-            <Button onClick={loginWithPopup}>Log In using Auth0</Button>{' '}
-          </Title>
+            <button onClick={loginWithPopup}>Log In using Auth0</button>{' '}
+          </>
         </div>
       )}
-      {!!user && <Title level={3}>Hello! Welcome to masa tools! </Title>}
+      {!!user && <p>Hello! Welcome to masa tools! </p>}
       {(!!user || isLoading) && <UserCard loading={isLoading} user={user} />}
     </div>
   );
