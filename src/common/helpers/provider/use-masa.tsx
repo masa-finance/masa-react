@@ -1,7 +1,6 @@
-import { useContext } from "react";
-import { MASA_CONTEXT } from "./masa-context";
+import { useContext } from 'react';
+import { MASA_CONTEXT } from './masa-context';
 
 export const useMasa = () => {
-    return useContext(MASA_CONTEXT);
-  };
-  
+  return useContext(MASA_CONTEXT);
+};

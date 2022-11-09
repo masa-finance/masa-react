@@ -1,7 +1,6 @@
 import { Modal } from 'antd';
 import React from 'react';
 
-
 import './styles.css';
 
 export interface ModalProps {
