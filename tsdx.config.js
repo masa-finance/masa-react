@@ -6,17 +6,18 @@ module.exports = {
   rollup(config, options) {
     (config.plugins = [
       ...config.plugins,
-      postcss({ plugins: [] }),
       babel({
         babelrc: false,
-        plugins: [
-          [
-            'import',
-            { libraryName: 'antd', libraryDirectory: 'es', style: true },
-          ],
-        ],
+        plugins: [['import', { libraryName: 'antd', style: true }]],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
         exclude: 'node_modules/**',
+      }),
+      postcss({
+        extensions: ['.css', '.scss', '.less'],
+        use: [
+          'sass',
+          ['less', { javascriptEnabled: true }],
+        ],
       }),
     ]),
       (config.plugins = config.plugins.map((plugin) =>
