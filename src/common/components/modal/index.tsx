@@ -1,7 +1,8 @@
-import { Modal } from 'antd';
+import Rodal from 'rodal';
 import React from 'react';
 
 import './styles.css';
+import 'rodal/lib/rodal.css';
 
 export interface ModalProps {
   children: React.ReactNode;
@@ -12,12 +13,12 @@ export interface ModalProps {
 
 export const ModalComponent = ({ children, open, close }: ModalProps) => {
   return (
-    <Modal footer={false} open={open} onCancel={() => close()}>
+    <Rodal visible={open} onClose={() => close()}>
       <div className="masa-modal">
         {/* <img src={Logo} className="logo" alt="logo" /> */}
 
         <div className="masa-modal-container">{children}</div>
       </div>
-    </Modal>
+    </Rodal>
   );
 };

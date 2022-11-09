@@ -2,7 +2,6 @@
 import React, { useCallback, useState } from 'react';
 import { MasaProvider } from '../src/common/helpers/provider/masa-provider';
 import { Meta, Story } from '@storybook/react';
-import { Button } from 'antd';
 import { useMasa } from '../src/common/helpers/provider/use-masa';
 
 const meta: Meta = {
@@ -35,7 +34,7 @@ const Component = () => {
     <>
       <h1>SDK Tester!</h1>
 
-      <Button onClick={handleConect}>Use Masa!</Button>
+      <button onClick={handleConect}>Use Masa!</button>
     </>
   );
 };

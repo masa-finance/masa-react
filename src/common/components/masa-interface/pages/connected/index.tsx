@@ -1,4 +1,3 @@
-import { Button } from 'antd';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
@@ -43,9 +42,9 @@ export const InterfaceConnected = () => {
         web3 soulbound identity!
       </p>
 
-      <Button className="masa-button" onClick={() => closeModal?.()}>
+      <button className="masa-button" onClick={() => closeModal?.()}>
         Continue with Teller
-      </Button>
+      </button>
       <div className="dont-have-a-wallet" onClick={handleLogout}>
         <a>
           <p>I don't want to use this wallet</p>

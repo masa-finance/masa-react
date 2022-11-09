@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'antd';
 import { useMasa } from '../../../../helpers/provider/use-masa';
 
 export const InterfaceAuthenticate = () => {
@@ -13,9 +12,9 @@ export const InterfaceAuthenticate = () => {
         authentication process, it wont take much and only needs a signature
       </p>
 
-      <Button className="masa-button" onClick={handleLogin}>
+      <button className="masa-button" onClick={handleLogin}>
         Authenticate with Masa servers
-      </Button>
+      </button>
       <div className="dont-have-a-wallet">
         <a>
           <p>I don't want to use this wallet</p>

@@ -1,5 +1,3 @@
-import { Input } from 'antd';
-import { Button } from 'antd/lib/radio';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
@@ -37,7 +35,7 @@ export const InterfaceCreateIdentity = () => {
       <div className="masa-soulname-picker">
         <div className="masa-soulname-picker-input-container">
           <label>Soul name*</label>
-          <Input
+          <input
             placeholder="Soulname"
             value={soulName}
             className="masa-input"
@@ -48,7 +46,7 @@ export const InterfaceCreateIdentity = () => {
         <div className="masa-soulname-row-form">
           <div>
             <label>Registration price</label>
-            <Input
+            <input
               placeholder="0.006 ETH"
               value={price.toString()}
               className="masa-input"
@@ -56,9 +54,9 @@ export const InterfaceCreateIdentity = () => {
             />
           </div>
         </div>
-        <Button className="masa-button" onClick={purchaseName}>
+        <button className="masa-button" onClick={purchaseName}>
           Claim your soul
-        </Button>
+        </button>
       </div>
     </div>
   );

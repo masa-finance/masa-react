@@ -1,4 +1,3 @@
-import { List } from 'antd';
 import React, { useMemo } from 'react';
 import { RestMethod } from '../rest-method';
 import * as masaRestClient from '../../rest';
@@ -20,20 +19,7 @@ export function RestTester() {
   return (
     <AuthProvider>
       <MasaToolsWrapper>
-        <List
-          itemLayout="horizontal"
-          dataSource={methods}
-          renderItem={(item) => (
-            <RestMethod
-              // @ts-ignore
-              {...item.metadata}
-              // @ts-ignore
-              useMethod={item.useMethod}
-              // @ts-ignore
-              useSimpleMethod={item.useSimpleMethod}
-            />
-          )}
-        ></List>
+        <p>Unavailable</p>
       </MasaToolsWrapper>
     </AuthProvider>
   );
