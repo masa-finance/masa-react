@@ -3,7 +3,10 @@ import { useCallback, useEffect } from 'react';
 import { useMasa } from './use-masa';
 
 //@ts-ignore
-const provider = new ethers.providers.Web3Provider(window?.ethereum);
+const provider = window?.ethereum
+  ? //@ts-ignore
+    new ethers.providers.Web3Provider(window?.ethereum)
+  : new ethers.providers.JsonRpcProvider();
 
 export const useMetamask = () => {
   const { setProvider, masa } = useMasa();

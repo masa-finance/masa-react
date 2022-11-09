@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAuth0, User } from '@auth0/auth0-react';
+import { User } from '@auth0/auth0-react';
 
 export interface UserCardProps {
   loading?: boolean;
