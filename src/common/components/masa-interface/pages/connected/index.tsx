@@ -23,7 +23,6 @@ export const InterfaceConnected = () => {
     })();
   }, [masa, setSoulnames, setLoading]);
 
-
   const name = useMemo(() => {
     if (soulnames?.length) {
       return soulnames[0].tokenDetails.sbtName;
@@ -36,10 +35,12 @@ export const InterfaceConnected = () => {
   return (
     <div className="interface-connected">
       <div>
-        <h3>Hello{name ? ", " : "!"} {name}</h3>
+        <h3>
+          Hello{name ? ', ' : '!'} {name}
+        </h3>
         <p>
-          Now you that are using your identity, you can unlock all the power of your
-          web3 soulbound identity!
+          Now you that are using your identity, you can unlock all the power of
+          your web3 soulbound identity!
         </p>
       </div>
       <div>

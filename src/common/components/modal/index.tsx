@@ -13,7 +13,12 @@ export interface ModalProps {
 
 export const ModalComponent = ({ children, open, close }: ModalProps) => {
   return (
-    <Rodal height="450" visible={open} onClose={() => close()} className="masa-rodal-container">
+    <Rodal
+      height="450"
+      visible={open}
+      onClose={() => close()}
+      className="masa-rodal-container"
+    >
       <div className="masa-modal">
         <div className="masa-modal-container">{children}</div>
       </div>

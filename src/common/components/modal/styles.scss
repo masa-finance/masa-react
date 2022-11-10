@@ -89,7 +89,10 @@
     justify-content: center;
     align-items: center;
   }
-  .interface-authenticate, .interface-connected, .interface-connect, .interface-create-identity {
+  .interface-authenticate,
+  .interface-connected,
+  .interface-connect,
+  .interface-create-identity {
     display: flex;
     height: 100%;
     flex-direction: column;
@@ -99,7 +102,6 @@
       text-align: left;
     }
 
-    
     .dont-have-a-wallet {
       padding-top: 0;
     }
