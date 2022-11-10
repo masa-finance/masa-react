@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { RestMethod } from '../rest-method';
 import * as masaRestClient from '../../rest';
 import { AuthProvider } from '../auth-provider';
 import { MasaToolsWrapper } from '../masa-tools-wrapper';
@@ -7,6 +6,7 @@ import { MasaToolsWrapper } from '../masa-tools-wrapper';
 export function RestTester() {
   console.log(masaRestClient);
 
+  // @ts-ignore
   const methods = useMemo(() => {
     const methodList = [];
     for (const key in masaRestClient) {

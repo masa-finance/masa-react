@@ -8,11 +8,7 @@ import { PathParameters } from '../path-parameters';
 import { UseQueryResult } from 'react-query';
 
 export const RestMethod = ({
-  author,
-  authorPicture,
-  description,
   name,
-  method,
   parameters,
   useMethod,
   useSimpleMethod,
@@ -95,6 +91,7 @@ export const RestMethod = ({
     setPathParameters({ ...pathParameters, [key]: value });
   };
 
+  // @ts-ignore
   const actions = [
     <span
       key="comment-basic-reply-to"

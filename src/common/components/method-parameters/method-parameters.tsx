@@ -55,6 +55,7 @@ export class MethodParameters extends React.Component {
         </button>
       </div>
     ),
+    // @ts-ignore
     filterIcon: (filtered: any) => (
       <>a</>
       // <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
@@ -100,6 +101,7 @@ export class MethodParameters extends React.Component {
   };
 
   render() {
+    // @ts-ignore
     const columns = [
       {
         title: 'Name',
