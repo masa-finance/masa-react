@@ -158,7 +158,11 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
 
   const handlePurchaseSoulname = useCallback(
     async (soulname, duration, paymentMethod) => {
-      await masaInstance?.identity.create(soulname, duration, paymentMethod);
+      await masaInstance?.identity.createWithSoulName(
+        soulname,
+        duration,
+        paymentMethod
+      );
 
       await loadIdentity();
     },
