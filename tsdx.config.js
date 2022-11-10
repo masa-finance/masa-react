@@ -8,7 +8,7 @@ module.exports = {
       ...config.plugins,
       sass({
         sass: require('node-sass'),
-        watch: 'src/',
+        watch: './',
       }),
       postcss({
         extensions: ['.css', '.scss', '.less'],
