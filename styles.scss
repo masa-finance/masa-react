@@ -1,0 +1,92 @@
+@font-face {
+  font-family: 'Proxima Nova';
+  font-weight: 500;
+  src: url('./assets/fonts/proximanova-bold-webfont.woff') format('woff');
+  src: url('./assets/fonts/proximanova-bold-webfont.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ezra';
+  src: url('./fonts/Ezra-Light.otf');
+
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ezra';
+  src: url('./fonts/Ezra-Bold.otf');
+
+  font-weight: 700;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: 'Ezra';
+  src: url('./fonts/Ezra-Medium.otf');
+
+  font-weight: 500;
+  font-style: Medium;
+}
+
+@font-face {
+  font-family: 'Ezra';
+  src: url('./fonts/Ezra-Italic.otf');
+
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter-Light.ttf');
+
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter-Bold.ttf');
+
+  font-weight: 700;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter-Medium.ttf');
+
+  font-weight: 500;
+}
+.masa-modal {
+  h1,
+  h2,
+  h3 {
+    font-family: Inter;
+    font-weight: 500;
+  }
+  p,
+  button {
+    font-family: 'Inter';
+    font-size: 14px;
+  }
+
+  .masa-button {
+    width: 100%;
+    background: black;
+
+    color: white;
+    text-align: center;
+    padding: 1em 1.2em;
+    height: auto;
+
+    border: none;
+
+    transition: background 120ms ease-in-out;
+
+
+    &:hover {
+      background: #000000CC;
+    }
+  }
+}

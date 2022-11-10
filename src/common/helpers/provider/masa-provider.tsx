@@ -4,7 +4,7 @@ import React from 'react';
 import { MasaInterface } from '../../components/masa-interface';
 import { useMetamask } from './use-metamask';
 
-import '../../../../tailwind.css';
+import '../../../../styles.scss';
 
 export const MasaProvider = ({ children }: any) => {
   useMetamask();

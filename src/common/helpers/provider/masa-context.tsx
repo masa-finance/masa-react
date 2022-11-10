@@ -28,11 +28,7 @@ export interface MasaShape {
   loggedIn?: boolean;
   handleLogin?: () => void;
   handleLogout?: () => void;
-  handlePurchaseSoulname?: (
-    soulname: string,
-    duration: number,
-    paymentMethod: string
-  ) => void;
+  handlePurchaseIdentity?: () => void;
   connect?: (callback?: Function) => void;
   closeModal?: Function;
 }
@@ -156,14 +152,13 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
     setLoading(false);
   }, [masaInstance, walletAddress, setIdentity]);
 
-  const handlePurchaseSoulname = useCallback(
-    async (soulname, duration, paymentMethod) => {
-      await masaInstance?.identity.create(soulname, duration, paymentMethod);
+  const handlePurchaseIdentity = useCallback(async () => {
+    setLoading(true);
+    await masaInstance?.identity.create();
 
-      await loadIdentity();
-    },
-    [masaInstance, loadIdentity]
-  );
+    await loadIdentity();
+    setLoading(false);
+  }, [masaInstance, loadIdentity]);
 
   useEffect(() => {
     loadIdentity();
@@ -190,7 +185,7 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
     loggedIn,
     handleLogin,
     handleLogout,
-    handlePurchaseSoulname,
+    handlePurchaseIdentity,
     connect,
     closeModal,
   };

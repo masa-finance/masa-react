@@ -4,6 +4,18 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     {
+      name: 'storybook-addon-sass-postcss',
+      options: {
+        loadSassAfterPostCSS: true,
+        postcssLoaderOptions: {
+          implementation: require('postcss'),
+        },
+        rule: {
+          test: /\.(scss|sass)$/i,
+        },
+      },
+    },
+    {
       name: '@storybook/addon-postcss',
       options: {
         postcssLoaderOptions: {

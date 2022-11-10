@@ -1,0 +1,107 @@
+.masa-rodal-container {
+  height: auto;
+}
+.masa-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding-top: 1em;
+
+  width: 100%;
+  height: 100%;
+
+  .masa-modal-container {
+    width: 100%;
+    height: 100%;
+    padding: 1em 2em;
+
+    box-sizing: border-box;
+  }
+
+  .masa-modal .logo {
+    height: 24px;
+  }
+
+  .masa-connectors {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.5em;
+  }
+
+  .masa-connectors .connector {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.75em 1em;
+
+    background-color: #f5f5f4;
+    border-radius: 12px;
+
+    cursor: pointer;
+  }
+
+  .masa-connectors .connector.disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .connector p {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .connector .connector-image {
+    height: 40px;
+  }
+
+  .dont-have-a-wallet {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    padding-top: 2em;
+  }
+
+  .masa-input {
+    width: 100%;
+
+    border-radius: 4px;
+
+    padding: 1em 1.2em;
+  }
+
+  .input-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  label {
+    font-weight: 600;
+  }
+
+  .spinner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .interface-authenticate, .interface-connected, .interface-connect, .interface-create-identity {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
+    justify-content: space-between;
+    .connected-paragraph {
+      text-align: left;
+    }
+
+    
+    .dont-have-a-wallet {
+      padding-top: 0;
+    }
+  }
+}

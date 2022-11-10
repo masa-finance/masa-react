@@ -1,16 +1,18 @@
 const postcss = require('rollup-plugin-postcss');
 const replace = require('@rollup/plugin-replace');
+const sass = require('rollup-plugin-scss');
 
 module.exports = {
   rollup(config, options) {
     (config.plugins = [
       ...config.plugins,
+      sass({
+        sass: require('node-sass'),
+        watch: 'src/',
+      }),
       postcss({
         extensions: ['.css', '.scss', '.less'],
-        use: [
-          'sass',
-          ['less', { javascriptEnabled: true }],
-        ],
+        use: ['sass', ['less', { javascriptEnabled: true }]],
       }),
     ]),
       (config.plugins = config.plugins.map((plugin) =>
