@@ -25,8 +25,11 @@ const Component = (props) => {
   const { connect } = useMasa();
 
   const handleConect = useCallback(() => {
-    connect?.({ scope: [] }, function () {
-      alert('hello hello connected');
+    connect?.({
+      scope: [],
+      callback: function () {
+        alert('hello hello connected');
+      },
     });
   }, [connect]);
 
