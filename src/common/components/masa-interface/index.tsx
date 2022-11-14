@@ -38,6 +38,8 @@ export const MasaInterface = () => {
       // @ts-ignore
       case !identity:
         if (scope?.includes('identity')) return 'createIdentity';
+        // todo this cant be correct, but otherwise i will get a typescript error
+        return '';
 
       case isConnected && loggedIn:
         return 'connectedState';
@@ -45,7 +47,7 @@ export const MasaInterface = () => {
       default:
         return 'connector';
     }
-  }, [loading, isConnected, identity, loggedIn, isModalOpen, scope]);
+  }, [loading, isConnected, identity, loggedIn, scope]);
 
   return (
     <>
