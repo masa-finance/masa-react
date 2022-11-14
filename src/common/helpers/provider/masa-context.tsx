@@ -113,7 +113,7 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
   }, [masaInstance, walletAddress, setLoggedIn]);
 
   useEffect(() => {
-    checkSession();
+    void checkSession();
   }, [masaInstance, walletAddress]);
 
   const isConnected = useMemo(() => {
@@ -180,6 +180,7 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
       setMasaInstance(null);
     }
   }, [provider]);
+
   const context = {
     setProvider,
     provider,
