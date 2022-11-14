@@ -1,7 +1,7 @@
 import Rodal from 'rodal';
 import React from 'react';
 
-import './styles.css';
+import './styles.scss';
 import 'rodal/lib/rodal.css';
 
 export interface ModalProps {
@@ -13,10 +13,13 @@ export interface ModalProps {
 
 export const ModalComponent = ({ children, open, close }: ModalProps) => {
   return (
-    <Rodal visible={open} onClose={() => close()}>
+    <Rodal
+      height="450"
+      visible={open}
+      onClose={() => close()}
+      className="masa-rodal-container"
+    >
       <div className="masa-modal">
-        {/* <img src={Logo} className="logo" alt="logo" /> */}
-
         <div className="masa-modal-container">{children}</div>
       </div>
     </Rodal>

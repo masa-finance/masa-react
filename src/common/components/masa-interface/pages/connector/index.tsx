@@ -5,12 +5,14 @@ export const InterfaceConnector = () => {
   const { connect } = useMetamask();
 
   return (
-    <>
-      <h3>Select a wallet</h3>
-      <p>
-        By connecting your wallet, you agree to our <a>Terms of Service</a> and{' '}
-        <a>Privacy Policy</a>
-      </p>
+    <div className="interface-connect">
+      <div>
+        <h3>Select a wallet</h3>
+        <p>
+          By connecting your wallet, you agree to our <a>Terms of Service</a>{' '}
+          and <a>Privacy Policy</a>
+        </p>
+      </div>
       <div className="masa-connectors">
         <div className="connector" onClick={connect}>
           <p>MetaMask</p>
@@ -41,6 +43,6 @@ export const InterfaceConnector = () => {
           <p>I don't have a Wallet</p>
         </a>
       </div>
-    </>
+    </div>
   );
 };

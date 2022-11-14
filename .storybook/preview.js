@@ -1,4 +1,4 @@
-import '../tailwind.css';
+import '../styles.scss';
 
 // https://storybook.js.org/docs/react/writing-stories/parameters#global-parameters
 export const parameters = {

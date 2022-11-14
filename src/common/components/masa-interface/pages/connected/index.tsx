@@ -23,33 +23,36 @@ export const InterfaceConnected = () => {
     })();
   }, [masa, setSoulnames, setLoading]);
 
-  console.log({ soulnames });
-
   const name = useMemo(() => {
     if (soulnames?.length) {
       return soulnames[0].tokenDetails.sbtName;
     } else {
-      return '';
+      return null;
     }
   }, [soulnames]);
 
   if (loading) return <MasaLoading />;
   return (
-    <>
-      <h3>Hello, {name}</h3>
-      <p>
-        Now you that are using your soul, you can unlock all the power of your
-        web3 soulbound identity!
-      </p>
-
-      <button className="masa-button" onClick={() => closeModal?.()}>
-        Continue with Teller
-      </button>
-      <div className="dont-have-a-wallet" onClick={handleLogout}>
-        <a>
-          <p>I don't want to use this wallet</p>
-        </a>
+    <div className="interface-connected">
+      <div>
+        <h3>
+          Hello{name ? ', ' : '!'} {name}
+        </h3>
+        <p>
+          Now you that are using your identity, you can unlock all the power of
+          your web3 soulbound identity!
+        </p>
       </div>
-    </>
+      <div>
+        <button className="masa-button" onClick={() => closeModal?.()}>
+          Continue with Teller
+        </button>
+        <div className="dont-have-a-wallet" onClick={() => handleLogout?.()}>
+          <a>
+            <p>I don't want to use this wallet</p>
+          </a>
+        </div>
+      </div>
+    </div>
   );
 };

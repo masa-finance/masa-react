@@ -44,10 +44,6 @@ export const MasaInterface = () => {
     }
   }, [loading, isConnected, identity, loggedIn]);
 
-  console.log(page);
-
-  console.log({ isConnected });
-
   return (
     <>
       <ModalComponent
