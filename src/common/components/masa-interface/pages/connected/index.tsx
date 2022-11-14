@@ -19,6 +19,7 @@ export const InterfaceConnected = () => {
         setSoulnames(soulnameList);
       } catch (e) {
         console.log(e);
+        setLoading?.(false);
       }
     })();
   }, [masa, setSoulnames, setLoading]);
@@ -39,8 +40,8 @@ export const InterfaceConnected = () => {
           Hello{name ? ', ' : '!'} {name}
         </h3>
         <p>
-          Now you that are using your identity, you can unlock all the power of
-          your web3 soulbound identity!
+          Woo hoo!
+          <br /> you have successfully connected your wallet.
         </p>
       </div>
       <div>

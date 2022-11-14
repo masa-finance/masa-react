@@ -34,11 +34,12 @@ export const MasaInterface = () => {
 
       case !loggedIn:
         return 'authenticate';
+
       // @ts-ignore
       case !identity:
         if (scope?.includes('identity')) return 'createIdentity';
 
-      case !!identity:
+      case isConnected && loggedIn:
         return 'connectedState';
 
       default:
