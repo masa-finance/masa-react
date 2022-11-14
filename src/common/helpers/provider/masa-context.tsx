@@ -170,7 +170,7 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
   );
 
   useEffect(() => {
-    loadIdentity();
+    void loadIdentity();
   }, [loadIdentity]);
 
   useEffect(() => {
