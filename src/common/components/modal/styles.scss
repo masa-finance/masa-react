@@ -1,5 +1,9 @@
 .masa-rodal-container {
-  height: auto;
+  display: flex;
+  flex-direction: column;
+
+  justify-content:center;
+  align-items:center;
 }
 .masa-modal {
   display: flex;
