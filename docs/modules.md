@@ -1,8 +1,8 @@
 [# Masa React
- - v0.14.6](README.md) / Exports
+ - v0.14.10](README.md) / Exports
 
 # # Masa React
- - v0.14.6
+ - v0.14.10
 
 ## Table of contents
 
@@ -99,7 +99,7 @@ ___
 
 ### loadIdentityContracts
 
-▸ **loadIdentityContracts**(`__namedParameters`): `Promise`<`IIdentityContracts`\>
+▸ **loadIdentityContracts**(`__namedParameters`): `IIdentityContracts`
 
 #### Parameters
 
@@ -109,7 +109,7 @@ ___
 
 #### Returns
 
-`Promise`<`IIdentityContracts`\>
+`IIdentityContracts`
 
 ___
 

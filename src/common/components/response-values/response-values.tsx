@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 //@ts-ignore
 import Highlighter from 'react-highlight-words';
+// @ts-ignore
 
 export const ResponseValues = ({ data }: { data: JSON }) => {
   const [searchText, setSearchText] = useState('');
@@ -43,6 +44,7 @@ export const ResponseValues = ({ data }: { data: JSON }) => {
         </button>
       </div>
     ),
+    // @ts-ignore
     filterIcon: (filtered: any) => <>a</>,
     onFilter: (value: any, record: any) =>
       record[dataIndex]
@@ -75,7 +77,7 @@ export const ResponseValues = ({ data }: { data: JSON }) => {
     clearFilters();
     setSearchText('');
   };
-
+  // @ts-ignore
   const columns = [
     {
       title: 'Key',
