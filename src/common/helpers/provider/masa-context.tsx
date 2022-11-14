@@ -30,7 +30,7 @@ export interface MasaShape {
   handleLogin?: () => void;
   handleLogout?: () => void;
   handlePurchaseIdentity?: () => void;
-  connect?: (options?: { scope?: string[] }, callback?: Function) => void;
+  connect?: (options?: { scope?: string[], callback?: Function }) => void;
   closeModal?: Function;
   scope?: string[];
   company?: string;
@@ -57,11 +57,11 @@ export const MasaContextProvider = ({
   const [scope, setScope] = useState<string[]>([]);
 
   const connect = useCallback(
-    (options?: { scope?: string[] }, callback?: Function) => {
+    (options?: { scope?: string[]; callback?: Function }) => {
       setModalOpen(true);
       if (options?.scope) setScope(options.scope);
-      if (typeof callback === 'function') {
-        setModalCallback(() => callback);
+      if (typeof options?.callback === 'function') {
+        setModalCallback(() => options?.callback);
       }
     },
     [setModalOpen, setModalCallback]
