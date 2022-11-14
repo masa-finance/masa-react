@@ -42,7 +42,7 @@ export const MasaInterface = () => {
       default:
         return 'connector';
     }
-  }, [loading, isConnected, identity, loggedIn, isModalOpen]);
+  }, [loading, isConnected, identity, loggedIn]);
 
   console.log(page);
 

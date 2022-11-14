@@ -7,6 +7,7 @@ export function RestTester() {
   console.log(masaRestClient);
 
   // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const methods = useMemo(() => {
     const methodList = [];
     for (const key in masaRestClient) {
@@ -16,6 +17,7 @@ export function RestTester() {
 
     return methodList;
   }, []);
+
   return (
     <AuthProvider>
       <MasaToolsWrapper>
