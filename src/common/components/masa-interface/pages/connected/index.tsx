@@ -3,7 +3,7 @@ import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceConnected = () => {
-  const { masa, handleLogout, closeModal } = useMasa();
+  const { masa, handleLogout, closeModal, company } = useMasa();
   const [loading, setLoading] = useState(false);
 
   const [soulnames, setSoulnames] = useState<any[] | undefined | null>(null);
@@ -19,6 +19,7 @@ export const InterfaceConnected = () => {
         setSoulnames(soulnameList);
       } catch (e) {
         console.log(e);
+        setLoading?.(false);
       }
     })();
   }, [masa, setSoulnames, setLoading]);
@@ -39,13 +40,13 @@ export const InterfaceConnected = () => {
           Hello{name ? ', ' : '!'} {name}
         </h3>
         <p>
-          Now you that are using your identity, you can unlock all the power of
-          your web3 soulbound identity!
+          Woo hoo!
+          <br /> you have successfully connected your wallet.
         </p>
       </div>
       <div>
         <button className="masa-button" onClick={() => closeModal?.()}>
-          Continue with Teller
+          Continue with {company ?? 'Masa'}
         </button>
         <div className="dont-have-a-wallet" onClick={() => handleLogout?.()}>
           <a>

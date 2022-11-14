@@ -12,6 +12,7 @@ export const MASA_CONTEXT = createContext<MasaShape>({});
 
 interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
+  company?: string;
 }
 
 export interface MasaShape {
@@ -29,11 +30,16 @@ export interface MasaShape {
   handleLogin?: () => void;
   handleLogout?: () => void;
   handlePurchaseIdentity?: () => void;
-  connect?: (callback?: Function) => void;
+  connect?: (options?: { scope?: string[]; callback?: Function }) => void;
   closeModal?: Function;
+  scope?: string[];
+  company?: string;
 }
 
-export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
+export const MasaContextProvider = ({
+  children,
+  company,
+}: MasaContextProviderProps) => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
   const [provider, setProvider] = useState<any>(null);
 
@@ -48,11 +54,14 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [modalCallback, setModalCallback] = useState<any>(null);
 
+  const [scope, setScope] = useState<string[]>([]);
+
   const connect = useCallback(
-    (callback?: Function) => {
+    (options?: { scope?: string[]; callback?: Function }) => {
       setModalOpen(true);
-      if (typeof callback === 'function') {
-        setModalCallback(() => callback);
+      if (options?.scope) setScope(options.scope);
+      if (typeof options?.callback === 'function') {
+        setModalCallback(() => options?.callback);
       }
     },
     [setModalOpen, setModalCallback]
@@ -189,6 +198,8 @@ export const MasaContextProvider = ({ children }: MasaContextProviderProps) => {
     handlePurchaseIdentity,
     connect,
     closeModal,
+    scope,
+    company,
   };
 
   return (
