@@ -30,7 +30,7 @@ export interface MasaShape {
   handleLogin?: () => void;
   handleLogout?: () => void;
   handlePurchaseIdentity?: () => void;
-  connect?: (options?: { scope?: string[], callback?: Function }) => void;
+  connect?: (options?: { scope?: string[]; callback?: Function }) => void;
   closeModal?: Function;
   scope?: string[];
   company?: string;
