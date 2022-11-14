@@ -22,19 +22,21 @@ export const MasaInterface = () => {
     identity,
     loggedIn,
     closeModal,
+    scope,
   } = useMasa();
 
   const page = useMemo(() => {
     console.log({ loading, isConnected, identity, loggedIn });
+
     switch (true) {
       case !isConnected:
         return 'connector';
 
       case !loggedIn:
         return 'authenticate';
-
+      // @ts-ignore
       case !identity:
-        return 'createIdentity';
+        if (scope?.includes('identity')) return 'createIdentity';
 
       case !!identity:
         return 'connectedState';
@@ -42,7 +44,7 @@ export const MasaInterface = () => {
       default:
         return 'connector';
     }
-  }, [loading, isConnected, identity, loggedIn, isModalOpen]);
+  }, [loading, isConnected, identity, loggedIn, isModalOpen, scope]);
 
   return (
     <>

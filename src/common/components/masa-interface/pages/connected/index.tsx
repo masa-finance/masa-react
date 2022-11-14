@@ -3,7 +3,7 @@ import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceConnected = () => {
-  const { masa, handleLogout, closeModal } = useMasa();
+  const { masa, handleLogout, closeModal, company } = useMasa();
   const [loading, setLoading] = useState(false);
 
   const [soulnames, setSoulnames] = useState<any[] | undefined | null>(null);
@@ -45,7 +45,7 @@ export const InterfaceConnected = () => {
       </div>
       <div>
         <button className="masa-button" onClick={() => closeModal?.()}>
-          Continue with Teller
+          Continue with {company ?? 'Masa'}
         </button>
         <div className="dont-have-a-wallet" onClick={() => handleLogout?.()}>
           <a>
