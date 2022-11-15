@@ -92,6 +92,7 @@ export const RestMethod = ({
   };
 
   // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const actions = [
     <span
       key="comment-basic-reply-to"

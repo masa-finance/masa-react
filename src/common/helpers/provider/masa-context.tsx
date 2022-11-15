@@ -93,7 +93,7 @@ export const MasaContextProvider = ({
     } else {
       setLoggedIn(false);
     }
-  }, [masaInstance, walletAddress]);
+  }, [masaInstance]);
 
   const handleLogin = useCallback(async () => {
     if (masaInstance) {
@@ -104,7 +104,7 @@ export const MasaContextProvider = ({
     } else {
       setLoggedIn(false);
     }
-  }, [masaInstance, walletAddress]);
+  }, [masaInstance]);
 
   const handleLogout = useCallback(async () => {
     if (masaInstance) {
@@ -115,11 +115,11 @@ export const MasaContextProvider = ({
     } else {
       setLoggedIn(false);
     }
-  }, [masaInstance, walletAddress, setLoggedIn]);
+  }, [masaInstance, setLoggedIn]);
 
   useEffect(() => {
     void checkSession();
-  }, [masaInstance, walletAddress]);
+  }, [masaInstance, walletAddress, checkSession]);
 
   const isConnected = useMemo(() => {
     return !!walletAddress;

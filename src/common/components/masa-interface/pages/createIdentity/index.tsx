@@ -7,7 +7,7 @@ export const InterfaceCreateIdentity = () => {
 
   const createIdentity = useCallback(async () => {
     await handlePurchaseIdentity?.();
-  }, []);
+  }, [handlePurchaseIdentity]);
 
   if (loading) return <MasaLoading />;
 

@@ -11,18 +11,39 @@ const provider = window?.ethereum
 export const useMetamask = () => {
   const { setProvider, masa } = useMasa();
 
+  const accountChangedHandler = useCallback(
+    async (newAccount) => {
+      if (setProvider) setProvider(newAccount);
+    },
+    [setProvider]
+  );
+
+  const connect = useCallback(async () => {
+    //@ts-ignore
+    if (window.ethereum) {
+      await provider.send('eth_requestAccounts', []);
+
+      console.log('ETH ACCOUNT');
+      await accountChangedHandler(provider.getSigner(0));
+      if (provider && setProvider) {
+        setProvider(provider.getSigner(0));
+        onConnect();
+      }
+    }
+  }, [accountChangedHandler, setProvider]);
+
   useEffect(() => {
     const connectWalletOnPageLoad = async () => {
       if (localStorage?.getItem('isWalletConnected') === 'true') {
         try {
-          connect();
+          await connect();
         } catch (ex) {
           console.log(ex);
         }
       }
     };
-    connectWalletOnPageLoad();
-  }, []);
+    void connectWalletOnPageLoad();
+  }, [connect]);
 
   const onConnect = () => {
     localStorage.setItem('isWalletConnected', 'true');
@@ -36,34 +57,17 @@ export const useMetamask = () => {
     await handleLogout();
     localStorage.setItem('isWalletConnected', 'false');
     setProvider?.(null);
-  }, [masa]);
+  }, [handleLogout, setProvider]);
 
   useEffect(() => {
     //@ts-ignore
-    window?.ethereum?.on('accountsChanged', async function (accounts) {
+    window?.ethereum?.on('accountsChanged', async (accounts) => {
       if (accounts.length === 0) {
         await handleLogout();
-        disconnect();
+        await disconnect();
       }
     });
-  }, []);
-
-  const connect = () => {
-    //@ts-ignore
-    if (window.ethereum) {
-      provider.send('eth_requestAccounts', []).then(async () => {
-        console.log('ETH ACCOUNT');
-        await accountChangedHandler(provider.getSigner(0));
-        if (provider && setProvider) {
-          setProvider(provider.getSigner(0));
-          onConnect();
-        }
-      });
-    }
-  };
-  const accountChangedHandler = async (newAccount) => {
-    if (setProvider) setProvider(newAccount);
-  };
+  }, [handleLogout, disconnect]);
 
   return { connect };
 };
