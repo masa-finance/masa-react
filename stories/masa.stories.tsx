@@ -22,22 +22,28 @@ const meta: Meta = {
 export default meta;
 
 const Component = (props) => {
-  const { connect } = useMasa();
+  const { masa, connect } = useMasa();
 
   const handleConect = useCallback(() => {
     connect?.({
-      scope: [],
+      scope: ['identity'],
       callback: function () {
         alert('hello hello connected');
       },
     });
   }, [connect]);
 
+  const loadCR = async () => {
+    const cr = await masa?.creditScore.list();
+    console.log({ cr });
+  };
+
   return (
     <>
       <h1>SDK Tester!</h1>
 
       <button onClick={handleConect}>Use Masa!</button>
+      <button onClick={loadCR}>Load CR</button>
     </>
   );
 };
