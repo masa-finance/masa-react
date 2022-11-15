@@ -28,25 +28,12 @@ export const MasaInterface = () => {
   const page = useMemo(() => {
     console.log({ loading, isConnected, identity, loggedIn });
 
-    switch (true) {
-      case !isConnected:
-        return 'connector';
+    if (!isConnected) return 'connector';
+    if (!loggedIn) return 'authenticate';
+    if (!identity && scope?.includes('identity')) return 'createIdentity';
+    if (isConnected && loggedIn) return 'connectedState';
 
-      case !loggedIn:
-        return 'authenticate';
-
-      // @ts-ignore
-      case !identity:
-        if (scope?.includes('identity')) return 'createIdentity';
-        // todo this cant be correct, but otherwise i will get a typescript error
-        return '';
-
-      case isConnected && loggedIn:
-        return 'connectedState';
-
-      default:
-        return 'connector';
-    }
+    return 'connector';
   }, [loading, isConnected, identity, loggedIn, scope]);
 
   return (
