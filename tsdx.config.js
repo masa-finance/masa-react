@@ -3,6 +3,9 @@ const replace = require('@rollup/plugin-replace');
 const sass = require('rollup-plugin-scss');
 const copy = require('rollup-plugin-copy');
 
+// make sure copy is only added once
+let copyAdded = false;
+
 module.exports = {
   rollup(config, options) {
     config.plugins = [
@@ -19,15 +22,8 @@ module.exports = {
         extensions: ['.css', '.scss', '.less'],
         use: ['sass', ['less', { javascriptEnabled: true }]],
       }),
-      copy({
-        targets: [
-          {
-            src: 'fonts/**/*',
-            dest: 'dist/fonts',
-          },
-        ],
-      }),
     ];
+
     config.plugins = config.plugins.map((plugin) =>
       plugin.name === 'replace'
         ? replace({
@@ -36,6 +32,25 @@ module.exports = {
           })
         : plugin
     );
+
+    config.plugins = [
+      ...config.plugins,
+      !copyAdded
+        ? copy({
+            targets: [
+              {
+                src: 'fonts/**/*',
+                dest: 'dist/fonts',
+              },
+            ],
+            verbose: true,
+            copyOnce: true,
+          })
+        : false,
+    ];
+
+    copyAdded = true;
+
     return config;
   },
 };
