@@ -5,7 +5,7 @@ const copy = require('rollup-plugin-copy');
 
 module.exports = {
   rollup(config, options) {
-    (config.plugins = [
+    config.plugins = [
       ...config.plugins,
       sass({
         sass: require('node-sass'),
@@ -22,15 +22,15 @@ module.exports = {
       copy({
         targets: [{ src: 'fonts/**/*', dest: 'dist/fonts' }],
       }),
-    ]),
-      (config.plugins = config.plugins.map((plugin) =>
-        plugin.name === 'replace'
-          ? replace({
-              'process.env.NODE_ENV': JSON.stringify(options.env),
-              preventAssignment: true,
-            })
-          : plugin
-      ));
+    ];
+    config.plugins = config.plugins.map((plugin) =>
+      plugin.name === 'replace'
+        ? replace({
+            'process.env.NODE_ENV': JSON.stringify(options.env),
+            preventAssignment: true,
+          })
+        : plugin
+    );
     return config;
   },
 };
