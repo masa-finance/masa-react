@@ -22,8 +22,8 @@ module.exports = {
       copy({
         targets: [
           {
-            src: './fonts/*',
-            dest: './dist/fonts',
+            src: 'fonts/**/*',
+            dest: 'dist/fonts',
           },
         ],
       }),
