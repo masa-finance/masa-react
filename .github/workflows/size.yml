@@ -16,3 +16,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           skip_step: build
           clean_script: clean
+          script: yarn size
