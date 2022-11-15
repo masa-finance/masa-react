@@ -20,7 +20,7 @@ module.exports = {
         use: ['sass', ['less', { javascriptEnabled: true }]],
       }),
       copy({
-        targets: [{ src: 'fonts/*', dest: 'dist/fonts' }],
+        targets: [{ src: './fonts/*', dest: './dist/fonts' }],
       }),
     ];
     config.plugins = config.plugins.map((plugin) =>
