@@ -20,6 +20,7 @@
     "lint": "tsdx lint src test stories",
     "prepare": "husky install && tsdx build",
     "size": "size-limit",
+    "clean": "rm -rf ./dist",
     "prettier": "prettier ./src ./stories ./test --write",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 3000",
