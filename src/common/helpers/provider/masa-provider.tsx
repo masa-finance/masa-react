@@ -6,10 +6,10 @@ import { useMetamask } from './use-metamask';
 
 import '../../../../styles.scss';
 
-export const MasaProvider = ({ children }: any) => {
+export const MasaProvider = ({ children, ...rest }: any) => {
   useMetamask();
   return (
-    <MasaContextProvider>
+    <MasaContextProvider {...rest}>
       <MasaInterface />
       {children}
     </MasaContextProvider>

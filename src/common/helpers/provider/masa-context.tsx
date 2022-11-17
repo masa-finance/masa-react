@@ -13,6 +13,7 @@ export const MASA_CONTEXT = createContext<MasaShape>({});
 interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
+  environment?: 'local' | 'dev' | 'beta' | 'test';
 }
 
 export interface MasaShape {
@@ -34,11 +35,13 @@ export interface MasaShape {
   closeModal?: Function;
   scope?: string[];
   company?: string;
+  handleCreateCreditReport?: () => void;
 }
 
 export const MasaContextProvider = ({
   children,
   company,
+  environment = 'dev',
 }: MasaContextProviderProps) => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
   const [provider, setProvider] = useState<any>(null);
@@ -117,6 +120,14 @@ export const MasaContextProvider = ({
     }
   }, [masaInstance, setLoggedIn]);
 
+  const handleCreateCreditReport = useCallback(async () => {
+    setLoading(true);
+
+    const response = await masaInstance?.creditScore.create();
+    setLoading(false);
+
+    return response?.success;
+  }, [masaInstance, setLoading]);
   useEffect(() => {
     void checkSession();
   }, [masaInstance, walletAddress, checkSession]);
@@ -175,7 +186,7 @@ export const MasaContextProvider = ({
 
   useEffect(() => {
     if (provider) {
-      setMasaInstance(createNewMasa(provider));
+      setMasaInstance(createNewMasa(provider, environment));
     } else {
       setMasaInstance(null);
     }
@@ -200,6 +211,7 @@ export const MasaContextProvider = ({
     closeModal,
     scope,
     company,
+    handleCreateCreditReport,
   };
 
   return (

@@ -26,7 +26,7 @@ const Component = (props) => {
 
   const handleConect = useCallback(() => {
     connect?.({
-      scope: ['identity'],
+      scope: ['identity', 'credit-report'],
       callback: function () {
         alert('hello hello connected');
       },
@@ -51,7 +51,7 @@ const Component = (props) => {
 const Template: Story = (props) => {
   return (
     <>
-      <MasaProvider>
+      <MasaProvider environment="local">
         <Component {...props} />
       </MasaProvider>
     </>
