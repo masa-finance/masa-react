@@ -4,6 +4,7 @@ import { ModalComponent } from '../modal';
 import { InterfaceAuthenticate } from './pages/authenticate';
 import { InterfaceConnected } from './pages/connected';
 import { InterfaceConnector } from './pages/connector';
+import { InterfaceCreateCreditReport } from './pages/create-credit-report';
 import { InterfaceCreateIdentity } from './pages/createIdentity';
 
 const pages = {
@@ -11,6 +12,7 @@ const pages = {
   createIdentity: <InterfaceCreateIdentity />,
   connectedState: <InterfaceConnected />,
   authenticate: <InterfaceAuthenticate />,
+  createCreditReport: <InterfaceCreateCreditReport />,
 };
 
 export const MasaInterface = () => {
@@ -31,6 +33,8 @@ export const MasaInterface = () => {
     if (!isConnected) return 'connector';
     if (!loggedIn) return 'authenticate';
     if (!identity && scope?.includes('identity')) return 'createIdentity';
+    if (identity && scope?.includes('credit-report'))
+      return 'createCreditReport';
     if (isConnected && loggedIn) return 'connectedState';
 
     return 'connector';
