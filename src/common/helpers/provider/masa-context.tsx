@@ -36,6 +36,8 @@ export interface MasaShape {
   scope?: string[];
   company?: string;
   handleCreateCreditReport?: () => void;
+  creditReports: any[] | null,
+  loadCreditReports: () => void;
 }
 
 export const MasaContextProvider = ({
@@ -57,8 +59,24 @@ export const MasaContextProvider = ({
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [modalCallback, setModalCallback] = useState<any>(null);
 
+  const [creditReports, setCreditReports] = useState<any>(null);
+
   const [scope, setScope] = useState<string[]>([]);
 
+  const loadCreditReports = async () => {
+    setLoading(true);
+    const cr = await masaInstance?.creditScore.list();
+    if (cr?.length) {
+      setCreditReports(cr);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (masaInstance) {
+      loadCreditReports();
+    }
+  }, [masaInstance]);
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: Function }) => {
       setModalOpen(true);
@@ -212,6 +230,8 @@ export const MasaContextProvider = ({
     scope,
     company,
     handleCreateCreditReport,
+    creditReports,
+    loadCreditReports
   };
 
   return (
