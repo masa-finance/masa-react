@@ -25,7 +25,7 @@ export const MasaInterface = () => {
     loggedIn,
     closeModal,
     scope,
-    creditReports
+    creditReports,
   } = useMasa();
 
   const page = useMemo(() => {
