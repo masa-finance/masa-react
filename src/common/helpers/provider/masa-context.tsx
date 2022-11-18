@@ -36,7 +36,7 @@ export interface MasaShape {
   scope?: string[];
   company?: string;
   handleCreateCreditReport?: () => void;
-  creditReports: any[] | null,
+  creditReports: any[] | null;
   loadCreditReports: () => void;
 }
 
@@ -231,7 +231,7 @@ export const MasaContextProvider = ({
     company,
     handleCreateCreditReport,
     creditReports,
-    loadCreditReports
+    loadCreditReports,
   };
 
   return (
