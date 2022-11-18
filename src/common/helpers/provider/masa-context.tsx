@@ -74,9 +74,9 @@ export const MasaContextProvider = ({
     (async () => {
       if (masaInstance && walletAddress) {
         setLoading(true);
-        const sessionResponse = await masaInstance.session.getSession();
+        const session = await masaInstance.session.getSession();
 
-        if (sessionResponse.session.user.address !== walletAddress) {
+        if (session?.user.address !== walletAddress) {
           await masaInstance.session.logout();
           setLoggedIn(false);
         }
