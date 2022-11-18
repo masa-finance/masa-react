@@ -29,12 +29,12 @@ export const MasaInterface = () => {
   } = useMasa();
 
   const page = useMemo(() => {
-    console.log({ loading, isConnected, identity, loggedIn });
+    console.log({ loading, isConnected, identity, loggedIn, creditReports });
 
     if (!isConnected) return 'connector';
     if (!loggedIn) return 'authenticate';
     if (!identity && scope?.includes('identity')) return 'createIdentity';
-    if (identity && creditReports?.length && scope?.includes('credit-report'))
+    if (identity && !creditReports?.length && scope?.includes('credit-report'))
       return 'createCreditReport';
     if (isConnected && loggedIn) return 'connectedState';
 
