@@ -25,6 +25,7 @@ export const MasaInterface = () => {
     loggedIn,
     closeModal,
     scope,
+    creditReports
   } = useMasa();
 
   const page = useMemo(() => {
@@ -33,12 +34,12 @@ export const MasaInterface = () => {
     if (!isConnected) return 'connector';
     if (!loggedIn) return 'authenticate';
     if (!identity && scope?.includes('identity')) return 'createIdentity';
-    if (identity && scope?.includes('credit-report'))
+    if (identity && creditReports?.length && scope?.includes('credit-report'))
       return 'createCreditReport';
     if (isConnected && loggedIn) return 'connectedState';
 
     return 'connector';
-  }, [loading, isConnected, identity, loggedIn, scope]);
+  }, [loading, isConnected, identity, loggedIn, scope, creditReports]);
 
   return (
     <>
