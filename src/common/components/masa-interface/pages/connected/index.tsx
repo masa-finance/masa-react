@@ -3,26 +3,18 @@ import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceConnected = () => {
-  const { masa, handleLogout, closeModal, company } = useMasa();
-  const [loading, setLoading] = useState(false);
-
-  const [soulnames, setSoulnames] = useState<any[] | undefined | null>(null);
+  const {
+    handleLogout,
+    closeModal,
+    company,
+    soulnames,
+    loadSoulnames,
+    loading,
+  } = useMasa();
 
   useEffect(() => {
-    (async () => {
-      try {
-        setLoading?.(true);
-
-        const soulnameList = await masa?.soulNames.list();
-        setLoading?.(false);
-
-        setSoulnames(soulnameList);
-      } catch (e) {
-        console.log(e);
-        setLoading?.(false);
-      }
-    })();
-  }, [masa, setSoulnames, setLoading]);
+    loadSoulnames?.();
+  }, [loadSoulnames]);
 
   const name = useMemo(() => {
     if (soulnames?.length) {

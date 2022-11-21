@@ -40,6 +40,8 @@ export interface MasaShape {
   handleCreateCreditReport?: () => void;
   creditReports?: any[] | null;
   loadCreditReports?: () => void;
+  soulnames?: any[] | null;
+  loadSoulnames?: () => void;
 }
 
 export const MasaContextProvider = ({
@@ -63,8 +65,27 @@ export const MasaContextProvider = ({
   const [modalCallback, setModalCallback] = useState<any>(null);
 
   const [creditReports, setCreditReports] = useState<any>(null);
+  const [soulnames, setSoulnames] = useState<any[] | null>(null);
 
   const [scope, setScope] = useState<string[]>([]);
+
+  const loadSoulnames = useCallback(async () => {
+    try {
+      setLoading?.(true);
+
+      const soulnameList = await masaInstance?.soulNames.list();
+      setLoading?.(false);
+
+      setSoulnames(soulnameList ?? null);
+    } catch (e) {
+      console.log(e);
+      setLoading?.(false);
+    }
+  }, [masaInstance, setSoulnames, setLoading]);
+
+  useEffect(() => {
+    loadSoulnames();
+  }, [loadSoulnames]);
 
   useEffect(() => {
     if (externalSigner) {
@@ -241,6 +262,8 @@ export const MasaContextProvider = ({
     handleCreateCreditReport,
     creditReports,
     loadCreditReports,
+    soulnames,
+    loadSoulnames,
   };
 
   return (
