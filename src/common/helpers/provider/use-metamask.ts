@@ -23,7 +23,6 @@ export const useMetamask = () => {
     if (window.ethereum) {
       await provider.send('eth_requestAccounts', []);
 
-      console.log('ETH ACCOUNT');
       await accountChangedHandler(provider.getSigner(0));
       if (provider && setProvider) {
         setProvider(provider.getSigner(0));
