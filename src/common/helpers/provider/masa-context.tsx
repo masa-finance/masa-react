@@ -10,13 +10,15 @@ import { createNewMasa } from '../masa';
 
 export const MASA_CONTEXT = createContext<MasaShape>({});
 
-interface MasaContextProviderProps extends MasaShape {
+export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
   environment?: 'local' | 'dev' | 'beta' | 'test';
+  signer?: any;
 }
 
 export interface MasaShape {
+  children?: React.ReactNode;
   setProvider?: (provider: any) => void;
   provider?: any;
   isModalOpen?: boolean;
@@ -44,6 +46,7 @@ export const MasaContextProvider = ({
   children,
   company,
   environment = 'dev',
+  signer: externalSigner,
 }: MasaContextProviderProps) => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
   const [provider, setProvider] = useState<any>(null);
@@ -62,6 +65,12 @@ export const MasaContextProvider = ({
   const [creditReports, setCreditReports] = useState<any>(null);
 
   const [scope, setScope] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (externalSigner) {
+      setProvider(externalSigner);
+    }
+  }, [externalSigner]);
 
   const loadCreditReports = async () => {
     setLoading(true);
