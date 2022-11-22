@@ -105,10 +105,11 @@ export const useMasaQuery = (
 
   const { token } = useAccessToken();
 
+  const url = `${URL(apiURL)}${fullPath}`;
   const query = useQuery(
     name,
     () =>
-      fetch(`${URL(apiURL)}${fullPath}`, {
+      fetch(url, {
         headers: {
           ...headers,
           Authorization: token ? `Bearer ${token}` : undefined,
@@ -124,11 +125,14 @@ export const useMasaQuery = (
             console.log('NOT OK');
           }
           if (res.status > 399) {
-            throw new Error('ERR');
+            throw new Error(
+              `Received Error Code during fetch: ${res.status} at ${url}`
+            );
           }
           return res.json();
         })
         .catch((err) => {
+          console.error('Query failed!:', err.message, url);
           throw new Error(err);
         }),
     {
