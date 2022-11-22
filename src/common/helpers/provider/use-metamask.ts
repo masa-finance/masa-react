@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useCallback, useEffect } from 'react';
 import { useMasa } from './use-masa';
 
-const DEFAULT_RPC = 'https://rpc.ankr.com/eth_goerli'
+const DEFAULT_RPC = 'https://rpc.ankr.com/eth_goerli';
 
 //@ts-ignore
 const provider = window?.ethereum
