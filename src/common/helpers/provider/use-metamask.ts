@@ -2,11 +2,13 @@ import { ethers } from 'ethers';
 import { useCallback, useEffect } from 'react';
 import { useMasa } from './use-masa';
 
+const DEFAULT_RPC = 'https://rpc.ankr.com/eth_goerli'
+
 //@ts-ignore
 const provider = window?.ethereum
   ? //@ts-ignore
     new ethers.providers.Web3Provider(window?.ethereum)
-  : new ethers.providers.JsonRpcProvider();
+  : new ethers.providers.JsonRpcProvider(DEFAULT_RPC);
 
 export const useMetamask = () => {
   const { setProvider, masa } = useMasa();
