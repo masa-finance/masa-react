@@ -22,7 +22,7 @@ export const useMetamask = () => {
 
   const connect = useCallback(async () => {
     //@ts-ignore
-    if (window.ethereum) {
+    if (typeof window !== "undefined" && window?.ethereum) {
       await provider.send('eth_requestAccounts', []);
 
       await accountChangedHandler(provider.getSigner(0));
@@ -31,7 +31,7 @@ export const useMetamask = () => {
         onConnect();
       }
     }
-  }, [accountChangedHandler, setProvider]);
+  }, [accountChangedHandler, setProvider, window]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async () => {
