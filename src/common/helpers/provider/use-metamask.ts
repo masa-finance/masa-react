@@ -22,7 +22,7 @@ export const useMetamask = () => {
 
   const connect = useCallback(async () => {
     //@ts-ignore
-    if (typeof window !== "undefined" && window?.ethereum) {
+    if (typeof window !== 'undefined' && window?.ethereum) {
       await provider.send('eth_requestAccounts', []);
 
       await accountChangedHandler(provider.getSigner(0));
