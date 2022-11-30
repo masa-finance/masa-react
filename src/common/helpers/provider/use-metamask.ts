@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useMasa } from './use-masa';
 
 const DEFAULT_RPC = 'https://rpc.ankr.com/eth_goerli';
