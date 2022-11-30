@@ -2,7 +2,6 @@ import Rodal from 'rodal';
 import React from 'react';
 
 import './styles.scss';
-import 'rodal/lib/rodal.css';
 
 export interface ModalProps {
   children: React.ReactNode;
