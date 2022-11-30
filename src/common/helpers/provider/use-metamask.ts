@@ -4,14 +4,19 @@ import { useMasa } from './use-masa';
 
 const DEFAULT_RPC = 'https://rpc.ankr.com/eth_goerli';
 
-//@ts-ignore
-const provider = window?.ethereum
-  ? //@ts-ignore
-    new ethers.providers.Web3Provider(window?.ethereum)
-  : new ethers.providers.JsonRpcProvider(DEFAULT_RPC);
-
 export const useMetamask = () => {
   const { setProvider, masa } = useMasa();
+
+  //@ts-ignore
+  const provider = useMemo(() => {
+    return typeof window !== 'undefined'
+      ? //@ts-ignore
+        window?.ethereum
+        ? //@ts-ignore
+          new ethers.providers.Web3Provider(window?.ethereum)
+        : new ethers.providers.JsonRpcProvider(DEFAULT_RPC)
+      : null;
+  }, []);
 
   const accountChangedHandler = useCallback(
     async (newAccount) => {
@@ -22,7 +27,7 @@ export const useMetamask = () => {
 
   const connect = useCallback(async () => {
     //@ts-ignore
-    if (typeof window !== 'undefined' && window?.ethereum) {
+    if (provider && window?.ethereum) {
       await provider.send('eth_requestAccounts', []);
 
       await accountChangedHandler(provider.getSigner(0));
@@ -31,7 +36,7 @@ export const useMetamask = () => {
         onConnect();
       }
     }
-  }, [accountChangedHandler, setProvider, window]);
+  }, [accountChangedHandler, setProvider, provider]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async () => {
@@ -61,13 +66,15 @@ export const useMetamask = () => {
   }, [handleLogout, setProvider]);
 
   useEffect(() => {
-    //@ts-ignore
-    window?.ethereum?.on('accountsChanged', async (accounts) => {
-      if (accounts.length === 0) {
-        await handleLogout();
-        await disconnect();
-      }
-    });
+    if (typeof window !== 'undefined') {
+      //@ts-ignore
+      window?.ethereum?.on('accountsChanged', async (accounts) => {
+        if (accounts.length === 0) {
+          await handleLogout();
+          await disconnect();
+        }
+      });
+    }
   }, [handleLogout, disconnect]);
 
   return { connect };
