@@ -42,6 +42,7 @@ export interface MasaShape {
   loadCreditReports?: () => void;
   soulnames?: any[] | null;
   loadSoulnames?: () => void;
+  logginLoading?: boolean
 }
 
 export const MasaContextProvider = ({
@@ -56,6 +57,7 @@ export const MasaContextProvider = ({
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [loading, setLoading] = useState(true);
+  const [logginLoading, setLogginLoading] = useState(true)
 
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
@@ -138,9 +140,12 @@ export const MasaContextProvider = ({
   const checkSession = useCallback(async () => {
     if (masaInstance) {
       setLoading(true);
+      setLogginLoading(true);
+
       const logged = await masaInstance.session.checkLogin();
       setLoggedIn(logged);
       setLoading(false);
+      setLogginLoading(false);
     } else {
       setLoggedIn(false);
     }
@@ -148,10 +153,12 @@ export const MasaContextProvider = ({
 
   const handleLogin = useCallback(async () => {
     if (masaInstance) {
+      setLogginLoading(true);
       setLoading(true);
       const logged = await masaInstance.session.login();
       setLoggedIn(!!logged);
       setLoading(false);
+      setLogginLoading(false);
     } else {
       setLoggedIn(false);
     }
@@ -160,9 +167,11 @@ export const MasaContextProvider = ({
   const handleLogout = useCallback(async () => {
     if (masaInstance) {
       setLoading(true);
+      setLogginLoading(true);
       await masaInstance.session.logout();
       setLoggedIn(false);
       setLoading(false);
+      setLogginLoading(false);
     } else {
       setLoggedIn(false);
     }
@@ -206,6 +215,7 @@ export const MasaContextProvider = ({
   }, [masaInstance]);
 
   const loadIdentity = useCallback(async () => {
+    setLogginLoading(true);
     setLoading(true);
 
     console.log('Loading identity...');
@@ -218,6 +228,7 @@ export const MasaContextProvider = ({
       setIdentity(null);
     }
     setLoading(false);
+    setLogginLoading(false);
   }, [masaInstance, walletAddress, setIdentity]);
 
   const handlePurchaseIdentity = useCallback(async () => {
@@ -264,6 +275,7 @@ export const MasaContextProvider = ({
     loadCreditReports,
     soulnames,
     loadSoulnames,
+    logginLoading
   };
 
   return (
