@@ -55,7 +55,7 @@ export const MasaContextProvider = ({
 
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
