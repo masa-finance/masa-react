@@ -42,7 +42,7 @@ export interface MasaShape {
   loadCreditReports?: () => void;
   soulnames?: any[] | null;
   loadSoulnames?: () => void;
-  logginLoading?: boolean
+  logginLoading?: boolean;
 }
 
 export const MasaContextProvider = ({
@@ -57,7 +57,7 @@ export const MasaContextProvider = ({
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [loading, setLoading] = useState(true);
-  const [logginLoading, setLogginLoading] = useState(true)
+  const [logginLoading, setLogginLoading] = useState(true);
 
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
@@ -275,7 +275,7 @@ export const MasaContextProvider = ({
     loadCreditReports,
     soulnames,
     loadSoulnames,
-    logginLoading
+    logginLoading,
   };
 
   return (
