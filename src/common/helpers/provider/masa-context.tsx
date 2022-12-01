@@ -140,7 +140,6 @@ export const MasaContextProvider = ({
   const checkSession = useCallback(async () => {
     if (masaInstance) {
       setLoading(true);
-      setLogginLoading(true);
 
       const logged = await masaInstance.session.checkLogin();
       setLoggedIn(logged);
@@ -153,12 +152,10 @@ export const MasaContextProvider = ({
 
   const handleLogin = useCallback(async () => {
     if (masaInstance) {
-      setLogginLoading(true);
       setLoading(true);
       const logged = await masaInstance.session.login();
       setLoggedIn(!!logged);
       setLoading(false);
-      setLogginLoading(false);
     } else {
       setLoggedIn(false);
     }
@@ -167,11 +164,9 @@ export const MasaContextProvider = ({
   const handleLogout = useCallback(async () => {
     if (masaInstance) {
       setLoading(true);
-      setLogginLoading(true);
       await masaInstance.session.logout();
       setLoggedIn(false);
       setLoading(false);
-      setLogginLoading(false);
     } else {
       setLoggedIn(false);
     }
@@ -215,7 +210,6 @@ export const MasaContextProvider = ({
   }, [masaInstance]);
 
   const loadIdentity = useCallback(async () => {
-    setLogginLoading(true);
     setLoading(true);
 
     console.log('Loading identity...');
@@ -224,11 +218,11 @@ export const MasaContextProvider = ({
       const identityResult = await masaInstance.identity.load(walletAddress);
       console.log('Setting identity', identityResult);
       setIdentity(identityResult);
+      setLogginLoading(false);
     } else {
       setIdentity(null);
     }
     setLoading(false);
-    setLogginLoading(false);
   }, [masaInstance, walletAddress, setIdentity]);
 
   const handlePurchaseIdentity = useCallback(async () => {
