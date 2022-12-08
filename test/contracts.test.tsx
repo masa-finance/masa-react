@@ -13,7 +13,7 @@ describe('Contracts', () => {
   it('should load contracts', async () => {
     const contracts = await loadIdentityContracts({ provider });
     expect(contracts.SoulboundIdentityContract).toBeDefined();
-    expect(contracts.SoulboundCreditReportContract).toBeDefined();
+    expect(contracts.SoulboundCreditScoreContract).toBeDefined();
   });
 
   it('should display contracts addresses properly', async () => {
@@ -24,7 +24,7 @@ describe('Contracts', () => {
     );
     console.log(
       'SoulboundCreditReportContract Address',
-      contracts.SoulboundCreditReportContract.address
+      contracts.SoulboundCreditScoreContract.address
     );
   });
 });
