@@ -26,7 +26,7 @@ const Component = (props) => {
 
   const handleConect = useCallback(() => {
     connect?.({
-      scope: ['identity'],
+      scope: ['identity', 'credit-score'],
       callback: function () {
         alert('hello hello connected');
       },
@@ -34,7 +34,7 @@ const Component = (props) => {
   }, [connect]);
 
   const loadCR = async () => {
-    const cr = await masa?.creditScore.create();
+    const cr = await masa?.creditScore.list();
     console.log({ cr });
   };
 

@@ -98,6 +98,7 @@ export const MasaContextProvider = ({
   const loadCreditReports = async () => {
     setLoading(true);
     const cr = await masaInstance?.creditScore.list();
+    console.log("Getting credit scores", cr)
     if (cr?.length) {
       setCreditReports(cr);
     }
@@ -177,7 +178,7 @@ export const MasaContextProvider = ({
 
     const response = await masaInstance?.creditScore.create();
     setLoading(false);
-
+    //@ts-ignore
     return response?.success;
   }, [masaInstance, setLoading]);
   useEffect(() => {
