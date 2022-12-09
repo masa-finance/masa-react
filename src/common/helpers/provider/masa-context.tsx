@@ -98,7 +98,7 @@ export const MasaContextProvider = ({
   const loadCreditReports = async () => {
     setLoading(true);
     const cr = await masaInstance?.creditScore.list();
-    console.log("Getting credit scores", cr)
+    console.log('Getting credit scores', cr);
     if (cr?.length) {
       setCreditReports(cr);
     }
