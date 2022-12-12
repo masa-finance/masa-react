@@ -34,7 +34,7 @@ const Component = (props) => {
   }, [connect]);
 
   const loadCR = async () => {
-    const cr = await masa?.creditScore.list();
+    const cr = await masa?.creditScore.create();
     console.log({ cr });
   };
 
