@@ -37,9 +37,9 @@ export interface MasaShape {
   closeModal?: Function;
   scope?: string[];
   company?: string;
-  handleCreateCreditReport?: () => void;
-  creditReports?: any[] | null;
-  loadCreditReports?: () => void;
+  handleCreateCreditScore?: () => void;
+  creditScores?: any[] | null;
+  loadCreditScores?: () => void;
   soulnames?: any[] | null;
   loadSoulnames?: () => void;
   logginLoading?: boolean;
@@ -66,7 +66,7 @@ export const MasaContextProvider = ({
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [modalCallback, setModalCallback] = useState<any>(null);
 
-  const [creditReports, setCreditReports] = useState<any>(null);
+  const [creditScores, setCreditScores] = useState<any>(null);
   const [soulnames, setSoulnames] = useState<any[] | null>(null);
 
   const [scope, setScope] = useState<string[]>([]);
@@ -95,19 +95,19 @@ export const MasaContextProvider = ({
     }
   }, [externalSigner]);
 
-  const loadCreditReports = async () => {
+  const loadCreditScores = async () => {
     setLoading(true);
     const cr = await masaInstance?.creditScore.list();
     console.log('Getting credit scores', cr);
     if (cr?.length) {
-      setCreditReports(cr);
+      setCreditScores(cr);
     }
     setLoading(false);
   };
 
   useEffect(() => {
     if (masaInstance) {
-      loadCreditReports();
+      loadCreditScores();
     }
   }, [masaInstance]);
   const connect = useCallback(
@@ -173,7 +173,7 @@ export const MasaContextProvider = ({
     }
   }, [masaInstance, setLoggedIn]);
 
-  const handleCreateCreditReport = useCallback(async () => {
+  const handleCreateCreditScore = useCallback(async () => {
     setLoading(true);
 
     const response = await masaInstance?.creditScore.create();
@@ -265,9 +265,9 @@ export const MasaContextProvider = ({
     closeModal,
     scope,
     company,
-    handleCreateCreditReport,
-    creditReports,
-    loadCreditReports,
+    handleCreateCreditScore,
+    creditScores,
+    loadCreditScores,
     soulnames,
     loadSoulnames,
     logginLoading,

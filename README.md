@@ -93,13 +93,13 @@ import {
 
 const { masa } = useMasa();
 
-const askForCreditReports = useCallback(async () => {
-  const creditReports = await masa?.creditScore.list();
-  console.log({ creditReports })
+const askForCreditScores = useCallback(async () => {
+  const creditScores = await masa?.creditScore.list();
+  console.log({ creditScores })
 }, [masa]);
 
 <Button
-  onClick={askForCreditReports}>
+  onClick={askForCreditScores}>
   Show credit reports
 </Button>
 
