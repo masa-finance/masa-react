@@ -2,17 +2,17 @@ import React, { useCallback, useState } from 'react';
 import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
 
-export const InterfaceCreateCreditReport = () => {
-  const { handleCreateCreditReport, loading } = useMasa();
+export const InterfaceCreateCreditScore = () => {
+  const { handleCreateCreditScore, loading } = useMasa();
   const [error, setError] = useState<string | null>(null);
 
-  const createCreditReport = useCallback(async () => {
+  const createCreditScore = useCallback(async () => {
     setError(null);
-    const minted = await handleCreateCreditReport?.();
+    const minted = await handleCreateCreditScore?.();
 
     if (!minted)
       setError('There is not enough data for generating a credit report');
-  }, [handleCreateCreditReport]);
+  }, [handleCreateCreditScore]);
 
   if (loading) return <MasaLoading />;
 
@@ -27,7 +27,7 @@ export const InterfaceCreateCreditReport = () => {
         )}
       </div>
       <div>
-        <button className="masa-button" onClick={createCreditReport}>
+        <button className="masa-button" onClick={createCreditScore}>
           Create now!
         </button>
         <div className="dont-have-a-wallet">
