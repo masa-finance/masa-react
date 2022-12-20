@@ -43,6 +43,7 @@ export interface MasaShape {
   soulnames?: any[] | null;
   loadSoulnames?: () => void;
   logginLoading?: boolean;
+  allowedForAllowlist?: boolean
 }
 
 export const MasaContextProvider = ({
@@ -69,6 +70,8 @@ export const MasaContextProvider = ({
   const [creditScores, setCreditScores] = useState<any>(null);
   const [soulnames, setSoulnames] = useState<any[] | null>(null);
 
+  const [allowedForAllowlist, setAllowedForAllowlist] = useState(false);
+
   const [scope, setScope] = useState<string[]>([]);
 
   const loadSoulnames = useCallback(async () => {
@@ -84,6 +87,15 @@ export const MasaContextProvider = ({
       setLoading?.(false);
     }
   }, [masaInstance, setSoulnames, setLoading]);
+
+  useEffect(() => {
+    (async () => {
+      if (masaInstance) {
+        const allowed = await masaInstance?.session.checkAllowlist();
+        setAllowedForAllowlist(allowed);
+      }
+    })();
+  }, [masaInstance]);
 
   useEffect(() => {
     loadSoulnames();
@@ -271,6 +283,7 @@ export const MasaContextProvider = ({
     soulnames,
     loadSoulnames,
     logginLoading,
+    allowedForAllowlist
   };
 
   return (

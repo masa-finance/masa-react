@@ -22,7 +22,7 @@ const meta: Meta = {
 export default meta;
 
 const Component = (props) => {
-  const { masa, connect } = useMasa();
+  const { masa, connect, allowedForAllowlist } = useMasa();
 
   const handleConect = useCallback(() => {
     connect?.({
@@ -38,12 +38,18 @@ const Component = (props) => {
     console.log({ cr });
   };
 
+  const checkAllowlist = async () => {
+    console.log({ allowedForAllowlist });
+  };
+
   return (
     <>
       <h1>SDK Tester!</h1>
 
       <button onClick={handleConect}>Use Masa!</button>
       <button onClick={loadCR}>Load CR</button>
+
+      <button onClick={checkAllowlist}>Check Allowlist</button>
     </>
   );
 };
