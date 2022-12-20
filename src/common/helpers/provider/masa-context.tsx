@@ -43,7 +43,7 @@ export interface MasaShape {
   soulnames?: any[] | null;
   loadSoulnames?: () => void;
   logginLoading?: boolean;
-  allowedForAllowlist?: boolean
+  allowedForAllowlist?: boolean;
 }
 
 export const MasaContextProvider = ({
@@ -283,7 +283,7 @@ export const MasaContextProvider = ({
     soulnames,
     loadSoulnames,
     logginLoading,
-    allowedForAllowlist
+    allowedForAllowlist,
   };
 
   return (
