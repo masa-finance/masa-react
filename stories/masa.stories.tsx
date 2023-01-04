@@ -22,7 +22,7 @@ const meta: Meta = {
 export default meta;
 
 const Component = (props) => {
-  const { masa, connect, allowedForAllowlist } = useMasa();
+  const { masa, connect, allowedForAllowlist, allowlistInfo } = useMasa();
 
   const handleConect = useCallback(() => {
     connect?.({
@@ -39,7 +39,7 @@ const Component = (props) => {
   };
 
   const checkAllowlist = async () => {
-    console.log({ allowedForAllowlist });
+    console.log({ allowedForAllowlist, allowlistInfo });
   };
 
   return (

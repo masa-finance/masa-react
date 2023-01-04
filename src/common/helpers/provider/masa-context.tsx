@@ -44,6 +44,12 @@ export interface MasaShape {
   loadSoulnames?: () => void;
   logginLoading?: boolean;
   allowedForAllowlist?: boolean;
+  allowlistInfo?: {
+    isActive: boolean;
+    success: boolean;
+    wallet: string;
+    endDate: string;
+  } | null;
 }
 
 export const MasaContextProvider = ({
@@ -71,6 +77,7 @@ export const MasaContextProvider = ({
   const [soulnames, setSoulnames] = useState<any[] | null>(null);
 
   const [allowedForAllowlist, setAllowedForAllowlist] = useState(false);
+  const [allowlistInfo, setAllowlistInfo] = useState(null);
 
   const [scope, setScope] = useState<string[]>([]);
 
@@ -91,8 +98,9 @@ export const MasaContextProvider = ({
   useEffect(() => {
     (async () => {
       if (masaInstance) {
-        const allowed = await masaInstance?.session.checkAllowlist();
-        setAllowedForAllowlist(allowed);
+        const allowlistInfo = await masaInstance?.session.checkAllowlist();
+        setAllowedForAllowlist(allowlistInfo.success);
+        setAllowlistInfo(allowlistInfo);
       }
     })();
   }, [masaInstance]);
@@ -284,6 +292,7 @@ export const MasaContextProvider = ({
     loadSoulnames,
     logginLoading,
     allowedForAllowlist,
+    allowlistInfo,
   };
 
   return (
