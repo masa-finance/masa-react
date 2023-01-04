@@ -2179,20 +2179,20 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@masa-finance/masa-contracts-identity@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-0.5.0.tgz#3d680b255d9ea9af4acad766e97e2e9c3f6f9196"
-  integrity sha512-u/Hd3sQhCwsKo4v1b632wjU6NABPVvp4JySOzQ7f6mEBLtN4WjcFW4Nybb5G7NsD6Z4TeDjxxvzMgyY30y90bQ==
+"@masa-finance/masa-contracts-identity@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-0.6.1.tgz#f9f7bb2e469f58b8c39b27e75299d4f36aeb0aa6"
+  integrity sha512-RVhQvGuPJxokjL6clMD0vofBaBpd0JQ//bSduqijVwtTL3CbP6Y6UDRmK+E5Mm0jZgOkmmMN5AhSoChtA+XOeA==
   dependencies:
     ethers "^5.6.9"
 
-"@masa-finance/masa-sdk@^0.7.11":
-  version "0.7.11"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-0.7.11.tgz#93c73becf229eb4178de671ab8588f3b12448b2b"
-  integrity sha512-ZW+KaPJkZt6zOtbJ3/G5D0ZcyWJQJdTdkFIPogtNOaTDYdszvi7oOsOvy3PyS/Bco7UYt6wctyRQq5OkHOgnag==
+"@masa-finance/masa-sdk@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-0.8.0.tgz#070440a30d7bb3057738d5a39794dc35640bd550"
+  integrity sha512-1ROXk0kpGVg4wzo847GGO71P/QkACLznBy1/ksuJjsn5nOeQIz5ElazAUnRzn+LC8hJMzY3bkg8yrZa/2KnTKQ==
   dependencies:
-    "@masa-finance/masa-contracts-identity" "^0.5.0"
-    arweave "^1.11.6"
+    "@masa-finance/masa-contracts-identity" "^0.6.1"
+    arweave "^1.11.8"
     axios "1.1.0"
     ethers "^5.7.2"
     typescript "^4.2.3"
@@ -4772,7 +4772,7 @@ arrify@^2.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-2.0.1.tgz#c9655e9331e0abcd588d2a7cad7e9956f66701fa"
   integrity sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==
 
-arweave@^1.10.13, arweave@^1.11.6:
+arweave@^1.10.13, arweave@^1.11.8:
   version "1.11.8"
   resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.11.8.tgz#09376e0c6cec40a661cbb27a306cb11c0a663cd8"
   integrity sha512-58ODeNPIC4OjaOCl2bXjKbOFGsiVZFs+DkQg3BvQGvFWNqw1zTJ4Jp01xGUz+GbdOaDyJcCC0g3l0HwdJfFPyw==
