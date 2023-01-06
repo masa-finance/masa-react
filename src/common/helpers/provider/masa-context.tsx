@@ -119,7 +119,7 @@ export const MasaContextProvider = ({
 
   useEffect(() => {
     if (masaInstance) {
-      loadCreditScores();
+      void loadCreditScores();
     }
   }, [masaInstance]);
   const connect = useCallback(
