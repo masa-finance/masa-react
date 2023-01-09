@@ -85,7 +85,7 @@ export const MasaContextProvider = ({
     try {
       setLoading?.(true);
 
-      const soulnameList = await masaInstance?.soulName.list();
+      const soulnameList = await masaInstance?.soulNames.list();
       setLoading?.(false);
 
       setSoulnames(soulnameList ?? null);
