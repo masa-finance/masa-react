@@ -85,7 +85,7 @@ export const MasaContextProvider = ({
     try {
       setLoading?.(true);
 
-      const soulnameList = await masaInstance?.soulNames.list();
+      const soulnameList = await masaInstance?.soulName.list();
       setLoading?.(false);
 
       setSoulnames(soulnameList ?? null);
@@ -127,7 +127,7 @@ export const MasaContextProvider = ({
 
   useEffect(() => {
     if (masaInstance) {
-      loadCreditScores();
+      void loadCreditScores();
     }
   }, [masaInstance]);
   const connect = useCallback(
