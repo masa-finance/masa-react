@@ -77,7 +77,7 @@ export const MasaContextProvider = ({
   const [soulnames, setSoulnames] = useState<any[] | null>(null);
 
   const [allowedForAllowlist, setAllowedForAllowlist] = useState(false);
-  const [allowlistInfo, setAllowlistInfo] = useState(null);
+  const [allowlistInfo] = useState(null);
 
   const [scope, setScope] = useState<string[]>([]);
 
@@ -98,9 +98,8 @@ export const MasaContextProvider = ({
   useEffect(() => {
     (async () => {
       if (masaInstance) {
-        const allowlistInfo = await masaInstance?.session.checkAllowlist();
-        setAllowedForAllowlist(allowlistInfo.success);
-        setAllowlistInfo(allowlistInfo);
+        const isAllowed = await masaInstance?.session.checkAllowlist();
+        setAllowedForAllowlist(isAllowed);
       }
     })();
   }, [masaInstance]);
