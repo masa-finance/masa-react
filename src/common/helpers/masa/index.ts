@@ -12,24 +12,21 @@ const envs = {
   local: 'http://localhost:4000/',
 };
 
-
 export const createRandomWallet = (): Wallet => {
-  console.info("Creating random wallet!");
+  console.info('Creating random wallet!');
   const wallet = ethers.Wallet.createRandom();
 
   wallet.connect(
-    new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/eth_goerli")
+    new ethers.providers.JsonRpcProvider('https://rpc.ankr.com/eth_goerli')
   );
   return wallet;
 };
-
 
 export const createNewMasa = (
   newWallet,
   env: 'dev' | 'beta' | 'test' | 'local' = 'dev'
 ) => {
-
-  const signer = newWallet ? newWallet : createRandomWallet()
+  const signer = newWallet ? newWallet : createRandomWallet();
   return new Masa({
     cookie: config.cookie || undefined,
     wallet: signer,
