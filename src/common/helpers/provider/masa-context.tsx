@@ -104,7 +104,7 @@ export const MasaContextProvider = ({
     (async () => {
       if (masaInstance) {
         const isAllowed = await masaInstance?.session.checkAllowlist();
-        if(isAllowed) {
+        if (isAllowed) {
           setAllowedForAllowlist(isAllowed.success);
           setAllowlistInfo(isAllowed);
         }
@@ -277,7 +277,6 @@ export const MasaContextProvider = ({
       }
     }
   }, [provider, noWallet]);
-  
 
   const context = {
     setProvider,
