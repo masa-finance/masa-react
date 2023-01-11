@@ -22,7 +22,10 @@ const meta: Meta = {
 export default meta;
 
 const Component = (props) => {
-  const { masa, connect, allowedForAllowlist, allowlistInfo } = useMasa();
+  const { masa, connect, allowedForAllowlist, allowlistInfo, missingProvider } =
+    useMasa();
+
+  console.log({ missingProvider });
 
   const handleConect = useCallback(() => {
     connect?.({
