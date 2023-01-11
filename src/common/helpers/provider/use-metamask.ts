@@ -5,9 +5,8 @@ import { useMasa } from './use-masa';
 const DEFAULT_RPC = 'https://rpc.ankr.com/eth_goerli';
 
 export const useMetamask = ({ disable }: { disable?: boolean }) => {
-  console.log("🚀 ~ file: use-metamask.ts:8 ~ useMetamask ~ disable", disable)
+  console.log('🚀 ~ file: use-metamask.ts:8 ~ useMetamask ~ disable', disable);
   const { setProvider, masa } = useMasa();
-
 
   //@ts-ignore
   const provider = useMemo(() => {
@@ -28,7 +27,7 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
   );
 
   const connect = useCallback(async () => {
-    console.log("DISABLE", disable)
+    console.log('DISABLE', disable);
     if (!disable) {
       //@ts-ignore
       if (provider && window?.ethereum) {

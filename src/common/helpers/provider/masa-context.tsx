@@ -102,7 +102,7 @@ export const MasaContextProvider = ({
       if (masaInstance) {
         const isAllowed = await masaInstance?.session.checkAllowlist();
         setAllowedForAllowlist(isAllowed.success);
-        setAllowlistInfo(isAllowed)
+        setAllowlistInfo(isAllowed);
       }
     })();
   }, [masaInstance]);
@@ -261,7 +261,7 @@ export const MasaContextProvider = ({
   }, [loadIdentity]);
 
   useEffect(() => {
-    console.log({noWallet})
+    console.log({ noWallet });
     if (noWallet) {
       setMasaInstance(createNewMasa(undefined, environment));
     } else {
