@@ -38,7 +38,7 @@ export const createNewMasa = (
   const signer = newWallet ? newWallet : createRandomWallet();
 
   if (!signer) return null;
-  
+
   return new Masa({
     cookie: config.cookie || undefined,
     wallet: signer,
