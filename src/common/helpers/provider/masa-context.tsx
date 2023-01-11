@@ -51,6 +51,8 @@ export interface MasaShape {
     wallet: string;
     endDate: string;
   } | null;
+  missingProvider?: boolean;
+  setMissingProvider?: (value: boolean) => void;
 }
 
 export const MasaContextProvider = ({
@@ -62,6 +64,7 @@ export const MasaContextProvider = ({
 }: MasaContextProviderProps) => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
   const [provider, setProvider] = useState<any>(null);
+  const [missingProvider, setMissingProvider] = useState<boolean>();
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -300,6 +303,8 @@ export const MasaContextProvider = ({
     logginLoading,
     allowedForAllowlist,
     allowlistInfo,
+    missingProvider,
+    setMissingProvider,
   };
 
   return (

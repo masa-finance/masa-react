@@ -2,21 +2,32 @@ import { ethers } from 'ethers';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useMasa } from './use-masa';
 
-const DEFAULT_RPC = 'https://rpc.ankr.com/eth_goerli';
-
 export const useMetamask = ({ disable }: { disable?: boolean }) => {
-  const { setProvider, masa } = useMasa();
+  const { setProvider, setMissingProvider, masa } = useMasa();
 
-  //@ts-ignore
   const provider = useMemo(() => {
-    return typeof window !== 'undefined'
-      ? //@ts-ignore
-        window?.ethereum
-        ? //@ts-ignore
-          new ethers.providers.Web3Provider(window?.ethereum)
-        : new ethers.providers.JsonRpcProvider(DEFAULT_RPC)
-      : null;
+    if (typeof window !== 'undefined') {
+      //@ts-ignore
+      if (typeof window?.ethereum !== 'undefined') {
+        //@ts-ignore
+        return new ethers.providers.Web3Provider(window?.ethereum);
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }, []);
+
+  useEffect(() => {
+    if (setMissingProvider) {
+      if (provider) {
+        setMissingProvider(false);
+      } else {
+        setMissingProvider(true);
+      }
+    }
+  }, [provider, setMissingProvider]);
 
   const accountChangedHandler = useCallback(
     async (newAccount) => {
