@@ -104,7 +104,10 @@ export const MasaContextProvider = ({
     (async () => {
       if (masaInstance) {
         const isAllowed = await masaInstance?.session.checkAllowlist();
-        console.log("🚀 ~ file: masa-context.tsx:107 ~ ALLOWLIST INFO", isAllowed)
+        console.log(
+          '🚀 ~ file: masa-context.tsx:107 ~ ALLOWLIST INFO',
+          isAllowed
+        );
         if (isAllowed) {
           setAllowedForAllowlist(isAllowed.success);
           setAllowlistInfo(isAllowed);
