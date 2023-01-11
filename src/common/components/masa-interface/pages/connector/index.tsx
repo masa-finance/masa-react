@@ -1,8 +1,8 @@
 import React from 'react';
 import { useMetamask } from '../../../../helpers/provider/use-metamask';
 
-export const InterfaceConnector = () => {
-  const { connect } = useMetamask();
+export const InterfaceConnector = ({ disable }: { disable?: boolean }) => {
+  const { connect } = useMetamask({ disable });
 
   return (
     <div className="interface-connect">

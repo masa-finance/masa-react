@@ -4,8 +4,10 @@ import { useMasa } from './use-masa';
 
 const DEFAULT_RPC = 'https://rpc.ankr.com/eth_goerli';
 
-export const useMetamask = () => {
+export const useMetamask = ({ disable }: { disable?: boolean }) => {
+  console.log("🚀 ~ file: use-metamask.ts:8 ~ useMetamask ~ disable", disable)
   const { setProvider, masa } = useMasa();
+
 
   //@ts-ignore
   const provider = useMemo(() => {
@@ -26,21 +28,25 @@ export const useMetamask = () => {
   );
 
   const connect = useCallback(async () => {
-    //@ts-ignore
-    if (provider && window?.ethereum) {
-      await provider.send('eth_requestAccounts', []);
+    console.log("DISABLE", disable)
+    if (!disable) {
+      //@ts-ignore
+      if (provider && window?.ethereum) {
+        await provider.send('eth_requestAccounts', []);
 
-      await accountChangedHandler(provider.getSigner(0));
-      if (provider && setProvider) {
-        setProvider(provider.getSigner(0));
-        onConnect();
+        await accountChangedHandler(provider.getSigner(0));
+        if (provider && setProvider) {
+          setProvider(provider.getSigner(0));
+          onConnect();
+        }
       }
     }
-  }, [accountChangedHandler, setProvider, provider]);
+  }, [accountChangedHandler, setProvider, provider, disable]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async () => {
       if (localStorage?.getItem('isWalletConnected') === 'true') {
+        console.log('CALLING RECONNECT');
         try {
           await connect();
         } catch (ex) {

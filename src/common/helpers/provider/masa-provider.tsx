@@ -10,10 +10,13 @@ export const MasaProvider = ({
   children,
   ...rest
 }: MasaContextProviderProps) => {
-  useMetamask();
+  console.log('REST NO WALLET', rest.noWallet);
+
+  useMetamask({ disable: rest.noWallet });
+
   return (
     <MasaContextProvider {...rest}>
-      <MasaInterface />
+      <MasaInterface disable={rest.noWallet} />
       {children}
     </MasaContextProvider>
   );

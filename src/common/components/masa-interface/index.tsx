@@ -8,14 +8,14 @@ import { InterfaceCreateCreditScore } from './pages/create-credit-score';
 import { InterfaceCreateIdentity } from './pages/createIdentity';
 
 const pages = {
-  connector: <InterfaceConnector />,
+  connector: ({ disable }) => <InterfaceConnector disable={disable} />,
   createIdentity: <InterfaceCreateIdentity />,
   connectedState: <InterfaceConnected />,
   authenticate: <InterfaceAuthenticate />,
   createCreditScore: <InterfaceCreateCreditScore />,
 };
 
-export const MasaInterface = () => {
+export const MasaInterface = ({ disable }: { disable?: boolean }) => {
   const {
     isModalOpen,
     setModalOpen,
@@ -48,7 +48,7 @@ export const MasaInterface = () => {
         close={() => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
       >
-        {pages[page]}
+        {page === 'connector' ? pages[page]({ disable }) : pages[page]}
       </ModalComponent>
     </>
   );

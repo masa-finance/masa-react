@@ -15,6 +15,7 @@ export interface MasaContextProviderProps extends MasaShape {
   company?: string;
   environment?: 'local' | 'dev' | 'beta' | 'test';
   signer?: any;
+  noWallet?: boolean;
 }
 
 export interface MasaShape {
@@ -57,6 +58,7 @@ export const MasaContextProvider = ({
   company,
   environment = 'dev',
   signer: externalSigner,
+  noWallet,
 }: MasaContextProviderProps) => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
   const [provider, setProvider] = useState<any>(null);
@@ -77,7 +79,7 @@ export const MasaContextProvider = ({
   const [soulnames, setSoulnames] = useState<any[] | null>(null);
 
   const [allowedForAllowlist, setAllowedForAllowlist] = useState(false);
-  const [allowlistInfo] = useState(null);
+  const [allowlistInfo, setAllowlistInfo] = useState(null);
 
   const [scope, setScope] = useState<string[]>([]);
 
@@ -99,7 +101,8 @@ export const MasaContextProvider = ({
     (async () => {
       if (masaInstance) {
         const isAllowed = await masaInstance?.session.checkAllowlist();
-        setAllowedForAllowlist(isAllowed);
+        setAllowedForAllowlist(isAllowed.success);
+        setAllowlistInfo(isAllowed)
       }
     })();
   }, [masaInstance]);
@@ -258,12 +261,17 @@ export const MasaContextProvider = ({
   }, [loadIdentity]);
 
   useEffect(() => {
-    if (provider) {
-      setMasaInstance(createNewMasa(provider, environment));
+    console.log({noWallet})
+    if (noWallet) {
+      setMasaInstance(createNewMasa(undefined, environment));
     } else {
-      setMasaInstance(null);
+      if (provider) {
+        setMasaInstance(createNewMasa(provider, environment));
+      } else {
+        setMasaInstance(null);
+      }
     }
-  }, [provider]);
+  }, [provider, noWallet]);
 
   const context = {
     setProvider,
