@@ -12,14 +12,23 @@ const envs = {
   local: 'http://localhost:4000/',
 };
 
-export const createRandomWallet = (): Wallet => {
+export const createRandomWallet = (): Wallet | null => {
   console.info('Creating random wallet!');
   const wallet = ethers.Wallet.createRandom();
 
-  wallet.connect(
-    new ethers.providers.JsonRpcProvider('https://rpc.ankr.com/eth_goerli')
-  );
-  return wallet;
+  if (typeof window !== 'undefined') {
+    //@ts-ignore
+    if (typeof window?.ethereum !== 'undefined') {
+      return wallet.connect(
+        //@ts-ignore
+        new ethers.providers.Web3Provider(window?.ethereum)
+      );
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
 };
 
 export const createNewMasa = (
@@ -27,6 +36,9 @@ export const createNewMasa = (
   env: 'dev' | 'beta' | 'test' | 'local' = 'dev'
 ) => {
   const signer = newWallet ? newWallet : createRandomWallet();
+
+  if (!signer) return null;
+  
   return new Masa({
     cookie: config.cookie || undefined,
     wallet: signer,
