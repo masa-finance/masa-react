@@ -1,4 +1,4 @@
-import { Masa } from '@masa-finance/masa-sdk';
+import { EnvironmentName, Masa } from '@masa-finance/masa-sdk';
 import React, {
   createContext,
   useCallback,
@@ -13,7 +13,7 @@ export const MASA_CONTEXT = createContext<MasaShape>({});
 export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
-  environment?: 'local' | 'dev' | 'beta' | 'test';
+  environment?: EnvironmentName;
   signer?: any;
   noWallet?: boolean;
 }
