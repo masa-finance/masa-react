@@ -37,7 +37,7 @@ const Component = (props) => {
   }, [connect]);
 
   const loadCR = async () => {
-    const cr = await masa?.creditScore.create();
+    const cr = await masa?.creditScore.list();
     console.log({ cr });
   };
 
@@ -60,7 +60,7 @@ const Component = (props) => {
 const Template: Story = (props) => {
   return (
     <>
-      <MasaProvider environment="local">
+      <MasaProvider environment="dev">
         <Component {...props} />
       </MasaProvider>
     </>
