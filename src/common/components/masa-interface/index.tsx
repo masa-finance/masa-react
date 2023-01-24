@@ -33,7 +33,8 @@ export const MasaInterface = ({ disable }: { disable?: boolean }) => {
 
     if (!isConnected) return 'connector';
     if (!loggedIn) return 'authenticate';
-    if (!identity.identityId && scope?.includes('identity')) return 'createIdentity';
+    if (!identity.identityId && scope?.includes('identity'))
+      return 'createIdentity';
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
       return 'createCreditScore';
     if (isConnected && loggedIn) return 'connectedState';

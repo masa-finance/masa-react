@@ -24,7 +24,7 @@ export interface MasaContextProviderProps extends MasaShape {
   signer?: any;
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
-  cookie?: string
+  cookie?: string;
 }
 
 export interface MasaShape {
@@ -71,7 +71,7 @@ export const MasaContextProvider = ({
   signer: externalSigner,
   noWallet,
   arweaveConfig,
-  cookie
+  cookie,
 }: MasaContextProviderProps) => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
   const [provider, setProvider] = useState<any>(null);
@@ -283,10 +283,14 @@ export const MasaContextProvider = ({
   useEffect(() => {
     console.log({ noWallet });
     if (noWallet) {
-      setMasaInstance(createNewMasa(undefined, environment, arweaveConfig, cookie));
+      setMasaInstance(
+        createNewMasa(undefined, environment, arweaveConfig, cookie)
+      );
     } else {
       if (provider) {
-        setMasaInstance(createNewMasa(provider, environment, arweaveConfig, cookie));
+        setMasaInstance(
+          createNewMasa(provider, environment, arweaveConfig, cookie)
+        );
       } else {
         setMasaInstance(null);
       }

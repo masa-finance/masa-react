@@ -29,7 +29,12 @@ export const createRandomWallet = (): Wallet | null => {
   }
 };
 
-export const createNewMasa = (newWallet, env: EnvironmentName, arweaveConfig?: ArweaveConfig, cookie?: string) => {
+export const createNewMasa = (
+  newWallet,
+  env: EnvironmentName,
+  arweaveConfig?: ArweaveConfig,
+  cookie?: string
+) => {
   const signer = newWallet ? newWallet : createRandomWallet();
 
   if (!signer) return null;
