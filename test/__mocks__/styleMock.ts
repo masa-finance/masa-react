@@ -1,3 +1,3 @@
-// eslint-disable-next-line no-lone-blocks
+// eslint-disable-next-line no-empty
 {
 }
