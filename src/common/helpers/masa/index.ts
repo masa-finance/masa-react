@@ -1,14 +1,12 @@
 import { EnvironmentName, Masa } from '@masa-finance/masa-sdk';
 import { ethers, Wallet } from 'ethers';
-
-const config = {
-  ...process.env,
-};
+import { ArweaveConfig } from '../provider/masa-context';
 
 const envs = {
   dev: 'https://dev.middleware.masa.finance/',
   beta: 'https://beta.middleware.masa.finance/',
   test: 'https://test.middleware.masa.finance/',
+  production: 'https://middleware.masa.finance/',
   local: 'http://localhost:4000/',
 };
 
@@ -31,21 +29,26 @@ export const createRandomWallet = (): Wallet | null => {
   }
 };
 
-export const createNewMasa = (newWallet, env: EnvironmentName) => {
+export const createNewMasa = (
+  newWallet,
+  env: EnvironmentName,
+  arweaveConfig?: ArweaveConfig,
+  cookie?: string
+) => {
   const signer = newWallet ? newWallet : createRandomWallet();
 
   if (!signer) return null;
 
   return new Masa({
-    cookie: config.cookie || undefined,
+    cookie: cookie || undefined,
     wallet: signer,
     apiUrl: envs[env],
-    environment: (config.environment as EnvironmentName) || 'dev',
+    environment: env,
     arweave: {
-      host: config['arweave-host'] || 'arweave.net',
-      port: parseInt(config?.['arweave-port'] || '443'),
-      protocol: config['arweave-protocol'] || 'https',
-      logging: (!!config['arweave-logging'] as boolean) || false,
+      host: arweaveConfig?.host || 'arweave.net',
+      port: parseInt(arweaveConfig?.port || '443'),
+      protocol: arweaveConfig?.protocol || 'https',
+      logging: (!!arweaveConfig?.logging as boolean) || false,
     },
   });
 };

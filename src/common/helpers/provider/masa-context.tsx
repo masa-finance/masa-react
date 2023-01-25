@@ -10,12 +10,21 @@ import { createNewMasa } from '../masa';
 
 export const MASA_CONTEXT = createContext<MasaShape>({});
 
+export interface ArweaveConfig {
+  port?: string;
+  host?: string;
+  protocol?: string;
+  logging?: boolean;
+}
+
 export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
   environment?: EnvironmentName;
   signer?: any;
   noWallet?: boolean;
+  arweaveConfig?: ArweaveConfig;
+  cookie?: string;
 }
 
 export interface MasaShape {
@@ -61,6 +70,8 @@ export const MasaContextProvider = ({
   environment = 'dev',
   signer: externalSigner,
   noWallet,
+  arweaveConfig,
+  cookie,
 }: MasaContextProviderProps) => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
   const [provider, setProvider] = useState<any>(null);
@@ -272,10 +283,14 @@ export const MasaContextProvider = ({
   useEffect(() => {
     console.log({ noWallet });
     if (noWallet) {
-      setMasaInstance(createNewMasa(undefined, environment));
+      setMasaInstance(
+        createNewMasa(undefined, environment, arweaveConfig, cookie)
+      );
     } else {
       if (provider) {
-        setMasaInstance(createNewMasa(provider, environment));
+        setMasaInstance(
+          createNewMasa(provider, environment, arweaveConfig, cookie)
+        );
       } else {
         setMasaInstance(null);
       }
