@@ -53,13 +53,6 @@ export interface MasaShape {
   soulnames?: any[] | null;
   loadSoulnames?: () => void;
   logginLoading?: boolean;
-  allowedForAllowlist?: boolean;
-  allowlistInfo?: {
-    isActive: boolean;
-    success: boolean;
-    wallet: string;
-    endDate: string;
-  } | null;
   missingProvider?: boolean;
   setMissingProvider?: (value: boolean) => void;
 }
@@ -92,16 +85,15 @@ export const MasaContextProvider = ({
   const [creditScores, setCreditScores] = useState<any>(null);
   const [soulnames, setSoulnames] = useState<any[] | null>(null);
 
-  const [allowedForAllowlist, setAllowedForAllowlist] = useState(false);
-  const [allowlistInfo, setAllowlistInfo] = useState(null);
-
   const [scope, setScope] = useState<string[]>([]);
 
   const loadSoulnames = useCallback(async () => {
     try {
       setLoading?.(true);
+      console.log("Getting soulname list...")
 
       const soulnameList = await masaInstance?.soulName.list();
+      console.log("Soulname list", soulnameList);
       setLoading?.(false);
 
       setSoulnames(soulnameList ?? null);
@@ -110,22 +102,6 @@ export const MasaContextProvider = ({
       setLoading?.(false);
     }
   }, [masaInstance, setSoulnames, setLoading]);
-
-  useEffect(() => {
-    (async () => {
-      if (masaInstance) {
-        const isAllowed = await masaInstance?.session.checkAllowlist();
-        console.log(
-          '🚀 ~ file: masa-context.tsx:107 ~ ALLOWLIST INFO',
-          isAllowed
-        );
-        if (isAllowed) {
-          setAllowedForAllowlist(isAllowed.success);
-          setAllowlistInfo(isAllowed);
-        }
-      }
-    })();
-  }, [masaInstance]);
 
   useEffect(() => {
     loadSoulnames();
@@ -322,8 +298,6 @@ export const MasaContextProvider = ({
     soulnames,
     loadSoulnames,
     logginLoading,
-    allowedForAllowlist,
-    allowlistInfo,
     missingProvider,
     setMissingProvider,
   };
