@@ -1,14 +1,6 @@
-import { EnvironmentName, Masa } from '@masa-finance/masa-sdk';
+import { environments, Masa } from '@masa-finance/masa-sdk';
 import { ethers, Wallet } from 'ethers';
 import { ArweaveConfig } from '../provider/masa-context';
-
-const envs = {
-  dev: 'https://dev.middleware.masa.finance/',
-  beta: 'https://beta.middleware.masa.finance/',
-  test: 'https://test.middleware.masa.finance/',
-  production: 'https://middleware.masa.finance/',
-  local: 'http://localhost:4000/',
-};
 
 export const createRandomWallet = (): Wallet | null => {
   console.info('Creating random wallet!');
@@ -31,19 +23,21 @@ export const createRandomWallet = (): Wallet | null => {
 
 export const createNewMasa = (
   newWallet,
-  env: EnvironmentName,
+  env: string,
   arweaveConfig?: ArweaveConfig,
   cookie?: string
 ) => {
   const signer = newWallet ? newWallet : createRandomWallet();
-
   if (!signer) return null;
+
+  const environment = environments.find((e) => e.name === env);
+  if (!environment) return null;
 
   return new Masa({
     cookie: cookie || undefined,
     wallet: signer,
-    apiUrl: envs[env],
-    environment: env,
+    apiUrl: environment.apiUrl,
+    environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
       port: parseInt(arweaveConfig?.port || '443'),
