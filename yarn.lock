@@ -2186,14 +2186,14 @@
   dependencies:
     ethers "^5.6.9"
 
-"@masa-finance/masa-sdk@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.0.4.tgz#b610a08904e6caf7b5aabf76cc6899842ec386bd"
-  integrity sha512-1bsozEzgpw+GQAVD1ffIpE3uqbVmLcrafZOycSWAkoUjT3HdFu44f9hzdJOtqJ8uNbwtWZI1LLFYLxijAnd7dQ==
+"@masa-finance/masa-sdk@^1.2.0-alpha.1":
+  version "1.2.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.2.0-alpha.1.tgz#15e779f427d6e0d5215b3b0b5db84b6d546a318b"
+  integrity sha512-U0RyiOv+0nsty2zezTl91FCmYQG4SJvx4BfPvFRJ1SJYSdYw7go/OZCa1jIxey+QPtY4SZ3XDF6uePymC7qO4g==
   dependencies:
     "@masa-finance/masa-contracts-identity" "^1.0.0"
-    arweave "^1.11.8"
-    axios "1.1.0"
+    arweave "^1.12.4"
+    axios "^1.2.5"
     ethers "^5.7.2"
     grapheme-splitter "^1.0.4"
     typescript "^4.2.3"
@@ -4773,7 +4773,7 @@ arrify@^2.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-2.0.1.tgz#c9655e9331e0abcd588d2a7cad7e9956f66701fa"
   integrity sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==
 
-arweave@^1.10.13, arweave@^1.11.8:
+arweave@^1.10.13:
   version "1.11.8"
   resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.11.8.tgz#09376e0c6cec40a661cbb27a306cb11c0a663cd8"
   integrity sha512-58ODeNPIC4OjaOCl2bXjKbOFGsiVZFs+DkQg3BvQGvFWNqw1zTJ4Jp01xGUz+GbdOaDyJcCC0g3l0HwdJfFPyw==
@@ -4784,6 +4784,16 @@ arweave@^1.10.13, arweave@^1.11.8:
     base64-js "^1.5.1"
     bignumber.js "^9.0.2"
     util "^0.12.4"
+
+arweave@^1.12.4:
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/arweave/-/arweave-1.12.4.tgz#08a4fcbda250c490150cb094ce57119eb1e46b3b"
+  integrity sha512-W5z7hb9/ZP2vy6BiYC+2obfGMhlhz/DaCkEXpkj/4hjaecWYUnvlUX5aCI2i0+lCrzbBUFbz+maDihUpBrdZpg==
+  dependencies:
+    arconnect "^0.4.2"
+    asn1.js "^5.4.1"
+    base64-js "^1.5.1"
+    bignumber.js "^9.0.2"
 
 asap@~2.0.3:
   version "2.0.6"
@@ -4924,15 +4934,6 @@ axios@0.21.3:
   dependencies:
     follow-redirects "^1.14.0"
 
-axios@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.1.0.tgz#94d25e6524743c7fc33954dd536687bbb957793a"
-  integrity sha512-hsJgcqz4JY7f+HZ4cWTrPZ6tZNCNFPTRx1MjRqu/hbpgpHdSCUpLVuplc+jE/h7dOvyANtw/ERA3HC2Rz/QoMg==
-  dependencies:
-    follow-redirects "^1.15.0"
-    form-data "^4.0.0"
-    proxy-from-env "^1.1.0"
-
 axios@^0.18.0:
   version "0.18.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
@@ -4953,6 +4954,15 @@ axios@^1.1.0:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.1.3.tgz#8274250dada2edf53814ed7db644b9c2866c1e35"
   integrity sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==
+  dependencies:
+    follow-redirects "^1.15.0"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
+axios@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.5.tgz#858c129d286e7ee3b1e970961cde410ba3ea3740"
+  integrity sha512-9pU/8mmjSSOb4CXVsvGIevN+MlO/t9OWtKadTaLuN85Gge3HGorUckgp8A/2FH4V4hJ7JuQ3LIeI7KAV9ITZrQ==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"

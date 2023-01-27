@@ -29,7 +29,7 @@
   "author": "hide-on-bush",
   "dependencies": {
     "@auth0/auth0-react": "^1.12.0",
-    "@masa-finance/masa-sdk": "^1.0.4",
+    "@masa-finance/masa-sdk": "^1.2.0-alpha.1",
     "@rollup/plugin-commonjs": "^23.0.2",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^9.0.2",
