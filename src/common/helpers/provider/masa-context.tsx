@@ -20,7 +20,7 @@ export interface ArweaveConfig {
 export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
-  environment?: "local" | "dev" | "test" | "stage" | "production";
+  environment?: 'local' | 'dev' | 'test' | 'stage' | 'production';
   signer?: any;
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
