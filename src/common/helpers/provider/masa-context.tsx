@@ -81,8 +81,10 @@ export const MasaContextProvider = ({
   const [scope, setScope] = useState<string[]>([]);
 
   // Modules
-  const { wallet: walletAddress, isLoading: walletLoading } =
-    useWallet(masaInstance, provider);
+  const { wallet: walletAddress, isLoading: walletLoading } = useWallet(
+    masaInstance,
+    provider
+  );
   const {
     identity,
     handlePurchaseIdentity,
@@ -101,7 +103,6 @@ export const MasaContextProvider = ({
     logout,
     isLoading: sessionLoading,
   } = useSession(masaInstance, walletAddress);
-
 
   // Logic
 

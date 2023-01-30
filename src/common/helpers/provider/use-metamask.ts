@@ -86,10 +86,10 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
       //@ts-ignore
       window?.ethereum?.on('accountsChanged', async (accounts) => {
         if (accounts.length === 0) {
-          setProvider?.(null)
+          setProvider?.(null);
           await handleLogout();
           await disconnect();
-          queryClient.invalidateQueries('wallet')
+          queryClient.invalidateQueries('wallet');
         }
       });
     }

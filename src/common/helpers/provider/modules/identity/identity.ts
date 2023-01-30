@@ -3,8 +3,6 @@ import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-provider';
 
 export const useIdentity = function (masa, walletAddress) {
-
-  
   const { data, status, isLoading, error } = useQuery(
     `identity-${walletAddress}`,
     () => masa.identity.load(walletAddress),
