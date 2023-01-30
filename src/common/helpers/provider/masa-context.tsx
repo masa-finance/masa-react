@@ -1,4 +1,4 @@
-import { EnvironmentName, Masa } from '@masa-finance/masa-sdk';
+import { Masa } from '@masa-finance/masa-sdk';
 import React, {
   createContext,
   useCallback,
@@ -25,7 +25,7 @@ export interface ArweaveConfig {
 export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
-  environment?: EnvironmentName;
+  environment?: 'local' | 'dev' | 'test' | 'stage' | 'production';
   signer?: any;
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
