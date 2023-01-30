@@ -7,6 +7,11 @@ import React, {
   useState,
 } from 'react';
 import { createNewMasa } from '../masa';
+import { useCreditScores } from './modules/creditScores/creditScores';
+import { useIdentity } from './modules/identity/identity';
+import { useSession } from './modules/session/session';
+import { useSoulnames } from './modules/soulnames/soulnames';
+import { useWallet } from './modules/wallet/wallet';
 
 export const MASA_CONTEXT = createContext<MasaShape>({});
 
@@ -36,12 +41,11 @@ export interface MasaShape {
   masa?: Masa;
   isConnected?: boolean;
   loading?: boolean;
-  setLoading?: (val: boolean) => void;
   walletAddress?: string | null;
   identity?: any;
   loggedIn?: boolean;
   handleLogin?: () => void;
-  handleLogout?: () => void;
+  handleLogout?: (callback?: () => void) => void;
   handlePurchaseIdentity?: () => void;
   connect?: (options?: { scope?: string[]; callback?: Function }) => void;
   closeModal?: Function;
@@ -67,45 +71,45 @@ export const MasaContextProvider = ({
   cookie,
 }: MasaContextProviderProps) => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
+
   const [provider, setProvider] = useState<any>(null);
   const [missingProvider, setMissingProvider] = useState<boolean>();
 
   const [isModalOpen, setModalOpen] = useState(false);
-
-  const [loading, setLoading] = useState(true);
-  const [logginLoading, setLogginLoading] = useState(true);
-
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
-
-  const [identity, setIdentity] = useState<any>(null);
-
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [modalCallback, setModalCallback] = useState<any>(null);
-
-  const [creditScores, setCreditScores] = useState<any>(null);
-  const [soulnames, setSoulnames] = useState<any[] | null>(null);
 
   const [scope, setScope] = useState<string[]>([]);
 
-  const loadSoulnames = useCallback(async () => {
-    try {
-      setLoading?.(true);
-      console.log("Getting soulname list...")
+  // Modules
+  const { wallet: walletAddress, isLoading: walletLoading } =
+    useWallet(masaInstance, provider);
+  const {
+    identity,
+    handlePurchaseIdentity,
+    isLoading: identityLoading,
+  } = useIdentity(masaInstance, walletAddress);
+  const { soulnames } = useSoulnames(masaInstance, walletAddress, identity);
+  const {
+    creditScores,
+    isLoading: creditScoreLoading,
+    handleCreateCreditScore,
+  } = useCreditScores(masaInstance, walletAddress, identity);
 
-      const soulnameList = await masaInstance?.soulName.list();
-      console.log("Soulname list", soulnameList);
-      setLoading?.(false);
+  const {
+    session: loggedIn,
+    login,
+    logout,
+    isLoading: sessionLoading,
+  } = useSession(masaInstance, walletAddress);
 
-      setSoulnames(soulnameList ?? null);
-    } catch (e) {
-      console.log(e);
-      setLoading?.(false);
-    }
-  }, [masaInstance, setSoulnames, setLoading]);
 
-  useEffect(() => {
-    loadSoulnames();
-  }, [loadSoulnames]);
+  // Logic
+
+  const loading = useMemo(() => {
+    return (
+      sessionLoading || creditScoreLoading || identityLoading || walletLoading
+    );
+  }, [sessionLoading, creditScoreLoading, identityLoading, walletLoading]);
 
   useEffect(() => {
     if (externalSigner) {
@@ -113,21 +117,6 @@ export const MasaContextProvider = ({
     }
   }, [externalSigner]);
 
-  const loadCreditScores = async () => {
-    setLoading(true);
-    const cr = await masaInstance?.creditScore.list();
-    console.log('Getting credit scores', cr);
-    if (cr?.length) {
-      setCreditScores(cr);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (masaInstance) {
-      void loadCreditScores();
-    }
-  }, [masaInstance]);
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: Function }) => {
       setModalOpen(true);
@@ -138,70 +127,6 @@ export const MasaContextProvider = ({
     },
     [setModalOpen, setModalCallback]
   );
-
-  useEffect(() => {
-    (async () => {
-      if (masaInstance && walletAddress) {
-        setLoading(true);
-        const session = await masaInstance.session.getSession();
-
-        if (session?.user.address !== walletAddress) {
-          await masaInstance.session.logout();
-          setLoggedIn(false);
-        }
-        setLoading(false);
-      } else {
-        setLoggedIn(false);
-      }
-    })();
-  }, [masaInstance, walletAddress]);
-
-  const checkSession = useCallback(async () => {
-    if (masaInstance) {
-      setLoading(true);
-
-      const logged = await masaInstance.session.checkLogin();
-      setLoggedIn(logged);
-      setLoading(false);
-      setLogginLoading(false);
-    } else {
-      setLoggedIn(false);
-    }
-  }, [masaInstance]);
-
-  const handleLogin = useCallback(async () => {
-    if (masaInstance) {
-      setLoading(true);
-      const logged = await masaInstance.session.login();
-      setLoggedIn(!!logged);
-      setLoading(false);
-    } else {
-      setLoggedIn(false);
-    }
-  }, [masaInstance]);
-
-  const handleLogout = useCallback(async () => {
-    if (masaInstance) {
-      setLoading(true);
-      await masaInstance.session.logout();
-      setLoggedIn(false);
-      setLoading(false);
-    } else {
-      setLoggedIn(false);
-    }
-  }, [masaInstance, setLoggedIn]);
-
-  const handleCreateCreditScore = useCallback(async () => {
-    setLoading(true);
-
-    const response = await masaInstance?.creditScore.create();
-    setLoading(false);
-    //@ts-ignore
-    return response?.success;
-  }, [masaInstance, setLoading]);
-  useEffect(() => {
-    void checkSession();
-  }, [masaInstance, walletAddress, checkSession]);
 
   const isConnected = useMemo(() => {
     return !!walletAddress;
@@ -215,49 +140,6 @@ export const MasaContextProvider = ({
   }, [modalCallback, setModalOpen, loggedIn, isConnected]);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-
-      if (masaInstance) {
-        const address = await masaInstance.config.wallet.getAddress();
-        setWalletAddress(typeof address === 'string' ? address : null);
-      } else {
-        setWalletAddress(null);
-      }
-      setLoading(false);
-    })();
-  }, [masaInstance]);
-
-  const loadIdentity = useCallback(async () => {
-    setLoading(true);
-
-    console.log('Loading identity...');
-    if (masaInstance && walletAddress) {
-      //@ts-ignore
-      const identityResult = await masaInstance.identity.load(walletAddress);
-      console.log('Setting identity', identityResult);
-      setIdentity(identityResult);
-      setLogginLoading(false);
-    } else {
-      setIdentity(null);
-    }
-    setLoading(false);
-  }, [masaInstance, walletAddress, setIdentity]);
-
-  const handlePurchaseIdentity = useCallback(async () => {
-    setLoading(true);
-    await masaInstance?.identity.create();
-
-    await loadIdentity();
-    setLoading(false);
-  }, [masaInstance, loadIdentity]);
-
-  useEffect(() => {
-    void loadIdentity();
-  }, [loadIdentity]);
-
-  useEffect(() => {
-    console.log({ noWallet });
     if (noWallet) {
       setMasaInstance(
         createNewMasa(undefined, environment, arweaveConfig, cookie)
@@ -281,12 +163,11 @@ export const MasaContextProvider = ({
     masa: masaInstance as Masa,
     isConnected,
     loading,
-    setLoading,
     walletAddress,
     identity,
     loggedIn,
-    handleLogin,
-    handleLogout,
+    handleLogin: login,
+    handleLogout: logout,
     handlePurchaseIdentity,
     connect,
     closeModal,
@@ -294,10 +175,8 @@ export const MasaContextProvider = ({
     company,
     handleCreateCreditScore,
     creditScores,
-    loadCreditScores,
     soulnames,
-    loadSoulnames,
-    logginLoading,
+    logginLoading: sessionLoading,
     missingProvider,
     setMissingProvider,
   };
