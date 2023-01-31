@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { createNewMasa } from '../masa';
 import { useCreditScores } from './modules/creditScores/creditScores';
+import { useGreen } from './modules/green/green';
 import { useIdentity } from './modules/identity/identity';
 import { useSession } from './modules/session/session';
 import { useSoulnames } from './modules/soulnames/soulnames';
@@ -59,6 +60,9 @@ export interface MasaShape {
   logginLoading?: boolean;
   missingProvider?: boolean;
   setMissingProvider?: (value: boolean) => void;
+  green?: any,
+  handleCreateMasaGreen?: (phoneNumber: string, code: string) => any
+  handleCreate2FA?: (phoneNumber: string) => any
 }
 
 export const MasaContextProvider = ({
@@ -96,6 +100,12 @@ export const MasaContextProvider = ({
     isLoading: creditScoreLoading,
     handleCreateCreditScore,
   } = useCreditScores(masaInstance, walletAddress, identity);
+  const {
+    green,
+    isLoading: greenLoading,
+    handleCreateMasaGreen,
+    handleCreate2FA,
+  } = useGreen(masaInstance, walletAddress, identity);
 
   const {
     session: loggedIn,
@@ -108,9 +118,9 @@ export const MasaContextProvider = ({
 
   const loading = useMemo(() => {
     return (
-      sessionLoading || creditScoreLoading || identityLoading || walletLoading
+      sessionLoading || creditScoreLoading || identityLoading || walletLoading || greenLoading
     );
-  }, [sessionLoading, creditScoreLoading, identityLoading, walletLoading]);
+  }, [sessionLoading, creditScoreLoading, identityLoading, walletLoading, greenLoading]);
 
   useEffect(() => {
     if (externalSigner) {
@@ -180,6 +190,9 @@ export const MasaContextProvider = ({
     logginLoading: sessionLoading,
     missingProvider,
     setMissingProvider,
+    green,
+    handleCreateMasaGreen,
+    handleCreate2FA
   };
 
   return (
