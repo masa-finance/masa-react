@@ -1,6 +1,9 @@
 // @ts-ignore
 import React, { useCallback } from 'react';
-import { MasaProvider } from '../src/common/helpers/provider/masa-provider';
+import {
+  MasaProvider,
+  queryClient,
+} from '../src/common/helpers/provider/masa-provider';
 import { Meta, Story } from '@storybook/react';
 import { useMasa } from '../src/common/helpers/provider/use-masa';
 
@@ -22,14 +25,13 @@ const meta: Meta = {
 export default meta;
 
 const Component = (props) => {
-  const { masa, connect, allowedForAllowlist, allowlistInfo, missingProvider } =
-    useMasa();
+  const { masa, connect, missingProvider } = useMasa();
 
   console.log({ missingProvider });
 
   const handleConect = useCallback(() => {
     connect?.({
-      scope: ['identity', 'credit-score'],
+      scope: ['identity'],
       callback: function () {
         alert('hello hello connected');
       },
@@ -37,12 +39,7 @@ const Component = (props) => {
   }, [connect]);
 
   const loadCR = async () => {
-    const cr = await masa?.creditScore.list();
-    console.log({ cr });
-  };
-
-  const checkAllowlist = async () => {
-    console.log({ allowedForAllowlist, allowlistInfo });
+    queryClient.invalidateQueries('wallet');
   };
 
   return (
@@ -50,9 +47,7 @@ const Component = (props) => {
       <h1>SDK Tester!</h1>
 
       <button onClick={handleConect}>Use Masa!</button>
-      <button onClick={loadCR}>Load CR</button>
-
-      <button onClick={checkAllowlist}>Check Allowlist</button>
+      <button onClick={loadCR}>Invalidate Wallet</button>
     </>
   );
 };

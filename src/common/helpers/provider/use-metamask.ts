@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import { useCallback, useEffect, useMemo } from 'react';
+import { queryClient } from './masa-provider';
 import { useMasa } from './use-masa';
 
 export const useMetamask = ({ disable }: { disable?: boolean }) => {
@@ -85,12 +86,14 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
       //@ts-ignore
       window?.ethereum?.on('accountsChanged', async (accounts) => {
         if (accounts.length === 0) {
+          setProvider?.(null);
           await handleLogout();
           await disconnect();
+          queryClient.invalidateQueries('wallet');
         }
       });
     }
-  }, [handleLogout, disconnect]);
+  }, [handleLogout, disconnect, setProvider]);
 
   return { connect };
 };
