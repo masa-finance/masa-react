@@ -60,9 +60,9 @@ export interface MasaShape {
   logginLoading?: boolean;
   missingProvider?: boolean;
   setMissingProvider?: (value: boolean) => void;
-  green?: any,
-  handleCreateMasaGreen?: (phoneNumber: string, code: string) => any
-  handleCreate2FA?: (phoneNumber: string) => any
+  green?: any;
+  handleCreateMasaGreen?: (phoneNumber: string, code: string) => any;
+  handleCreate2FA?: (phoneNumber: string) => any;
 }
 
 export const MasaContextProvider = ({
@@ -118,9 +118,19 @@ export const MasaContextProvider = ({
 
   const loading = useMemo(() => {
     return (
-      sessionLoading || creditScoreLoading || identityLoading || walletLoading || greenLoading
+      sessionLoading ||
+      creditScoreLoading ||
+      identityLoading ||
+      walletLoading ||
+      greenLoading
     );
-  }, [sessionLoading, creditScoreLoading, identityLoading, walletLoading, greenLoading]);
+  }, [
+    sessionLoading,
+    creditScoreLoading,
+    identityLoading,
+    walletLoading,
+    greenLoading,
+  ]);
 
   useEffect(() => {
     if (externalSigner) {
@@ -192,7 +202,7 @@ export const MasaContextProvider = ({
     setMissingProvider,
     green,
     handleCreateMasaGreen,
-    handleCreate2FA
+    handleCreate2FA,
   };
 
   return (

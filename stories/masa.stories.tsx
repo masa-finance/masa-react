@@ -25,7 +25,13 @@ const meta: Meta = {
 export default meta;
 
 const Component = (props) => {
-  const { masa, connect, missingProvider } = useMasa();
+  const {
+    connect,
+    missingProvider,
+    green,
+    handleCreateMasaGreen,
+    handleCreate2FA,
+  } = useMasa();
 
   console.log({ missingProvider });
 
@@ -42,12 +48,21 @@ const Component = (props) => {
     queryClient.invalidateQueries('wallet');
   };
 
+  const create2FACode = () => {
+    handleCreate2FA?.('+59895485057');
+  };
+  const mintGreen = async () => {
+    // handleCreateMasaGreen()
+  };
+
   return (
     <>
       <h1>SDK Tester!</h1>
 
       <button onClick={handleConect}>Use Masa!</button>
       <button onClick={loadCR}>Invalidate Wallet</button>
+      <button onClick={mintGreen}>Mint green</button>
+      <button onClick={create2FACode}>Send 2FA</button>
     </>
   );
 };
