@@ -26,7 +26,7 @@ export const useGreen = function (masa, walletAddress, identity) {
     },
     [masa]
   );
-  
+
   return {
     green: data,
     handleCreateMasaGreen,
