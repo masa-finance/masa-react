@@ -29,7 +29,7 @@ export const MasaInterface = ({ disable }: { disable?: boolean }) => {
   } = useMasa();
 
   const page = useMemo(() => {
-    console.log({ loading, isConnected, identity, loggedIn, creditScores });
+    console.log("INTERFACE DATA", { loading, isConnected, identity, loggedIn, creditScores });
 
     if (!isConnected) return 'connector';
     if (!loggedIn) return 'authenticate';

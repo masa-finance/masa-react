@@ -9,6 +9,7 @@ export const useSession = function (masa, walletAddress) {
     { enabled: !!masa && !!walletAddress }
   );
 
+  console.log('SESSION DATA', { data, walletAddress });
   useEffect(() => {
     if (data && data?.user?.address && walletAddress) {
       if (data?.user?.address !== walletAddress) {
@@ -21,15 +22,16 @@ export const useSession = function (masa, walletAddress) {
     const logged = await masa.session.login();
     if (logged) {
       queryClient.invalidateQueries(`session-${walletAddress}`);
+      queryClient.refetchQueries()
     }
   }, [masa]);
 
   const logout = useCallback(
     async (callback) => {
-      const logged = await masa.session.logout();
-      if (logged) {
-        queryClient.invalidateQueries(`session-${walletAddress}`);
-      }
+      await masa.session.logout();
+      queryClient.invalidateQueries(`session-${walletAddress}`);
+      queryClient.refetchQueries()
+
       if (callback) {
         callback();
       }

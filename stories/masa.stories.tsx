@@ -31,6 +31,8 @@ const Component = (props) => {
     green,
     handleCreateMasaGreen,
     handleCreate2FA,
+    loggedIn,
+    handleLogout,
   } = useMasa();
 
   console.log({ missingProvider });
@@ -63,6 +65,7 @@ const Component = (props) => {
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
       <button onClick={create2FACode}>Send 2FA</button>
+      {loggedIn && <button onClick={() => handleLogout?.()}>Logout</button>}
     </>
   );
 };
