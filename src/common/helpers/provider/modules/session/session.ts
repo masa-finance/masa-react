@@ -24,10 +24,13 @@ export const useSession = function (masa, walletAddress) {
     }
   }, [masa]);
 
-  const logout = useCallback(async () => {
+  const logout = useCallback(async (callback) => {
     const logged = await masa.session.logout();
     if (logged) {
       queryClient.invalidateQueries(`session-${walletAddress}`);
+    }
+    if(callback) {
+        callback()
     }
   }, [masa]);
 
