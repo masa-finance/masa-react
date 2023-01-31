@@ -22,7 +22,7 @@ export const useSession = function (masa, walletAddress) {
     const logged = await masa.session.login();
     if (logged) {
       queryClient.invalidateQueries(`session-${walletAddress}`);
-      queryClient.refetchQueries()
+      queryClient.refetchQueries();
     }
   }, [masa]);
 
@@ -30,7 +30,7 @@ export const useSession = function (masa, walletAddress) {
     async (callback) => {
       await masa.session.logout();
       queryClient.invalidateQueries(`session-${walletAddress}`);
-      queryClient.refetchQueries()
+      queryClient.refetchQueries();
 
       if (callback) {
         callback();
