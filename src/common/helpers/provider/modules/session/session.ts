@@ -9,7 +9,6 @@ export const useSession = function (masa, walletAddress) {
     { enabled: !!masa && !!walletAddress }
   );
 
-  console.log('SESSION DATA', { data, walletAddress });
   useEffect(() => {
     if (data && data?.user?.address && walletAddress) {
       if (data?.user?.address !== walletAddress) {

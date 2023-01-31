@@ -12,7 +12,6 @@ export const useGreen = function (masa, walletAddress, identity) {
   const handleCreateMasaGreen = useCallback(
     async (phoneNumber, code) => {
       const response = await masa?.green.create(phoneNumber, code);
-      console.log('🚀 ~ file: green.ts:15 ~ response', response);
 
       queryClient.invalidateQueries(`green-${walletAddress}`);
 
@@ -27,8 +26,7 @@ export const useGreen = function (masa, walletAddress, identity) {
     },
     [masa]
   );
-
-  console.log({ green: data });
+  
   return {
     green: data,
     handleCreateMasaGreen,
