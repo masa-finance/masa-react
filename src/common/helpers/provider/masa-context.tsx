@@ -96,7 +96,9 @@ export const MasaContextProvider = ({
     handlePurchaseIdentity,
     isLoading: identityLoading,
   } = useIdentity(masaInstance, walletAddress);
+
   const { soulnames } = useSoulnames(masaInstance, walletAddress, identity);
+
   const {
     creditScores,
     isLoading: creditScoreLoading,
@@ -163,6 +165,7 @@ export const MasaContextProvider = ({
   }, [modalCallback, setModalOpen, loggedIn, isConnected]);
 
   useEffect(() => {
+    console.log('PROVIDER', { provider });
     if (noWallet) {
       setMasaInstance(
         createNewMasa(undefined, environment, arweaveConfig, cookie)

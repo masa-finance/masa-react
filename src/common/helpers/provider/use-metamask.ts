@@ -92,6 +92,22 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
           queryClient.invalidateQueries('wallet');
         }
       });
+
+      //@ts-ignore
+      window?.ethereum?.on('networkChanged', async (accounts) => {
+        //@ts-ignore
+        const newProvider = new ethers.providers.Web3Provider(window?.ethereum);
+        if (newProvider) {
+          await newProvider.send('eth_requestAccounts', []);
+
+          await accountChangedHandler(newProvider.getSigner(0));
+          if (newProvider && setProvider) {
+            setProvider(newProvider.getSigner(0));
+            onConnect();
+          }
+          queryClient.invalidateQueries('wallet');
+        }
+      });
     }
   }, [handleLogout, disconnect, setProvider]);
 
