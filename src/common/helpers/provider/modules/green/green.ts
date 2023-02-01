@@ -22,7 +22,7 @@ export const useGreen = (masa, walletAddress, identity) => {
 
   const handleGenerateGreen = useCallback(
     async (phoneNumber: string) => {
-      if (masa) await masa?.green?.generate(phoneNumber);
+      if (masa) await masa?.green.generate(phoneNumber);
     },
     [masa]
   );
