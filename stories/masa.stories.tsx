@@ -28,9 +28,7 @@ const Component = (props) => {
   const {
     connect,
     missingProvider,
-    green,
-    handleCreateMasaGreen,
-    handleCreate2FA,
+    handleGenerateGreen,
     loggedIn,
     handleLogout,
   } = useMasa();
@@ -51,10 +49,10 @@ const Component = (props) => {
   };
 
   const create2FACode = () => {
-    handleCreate2FA?.('+59895485057');
+    handleGenerateGreen?.('+59895485057');
   };
   const mintGreen = async () => {
-    // handleCreateMasaGreen()
+    // todo
   };
 
   return (

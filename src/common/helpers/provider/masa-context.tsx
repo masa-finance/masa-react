@@ -61,8 +61,8 @@ export interface MasaShape {
   missingProvider?: boolean;
   setMissingProvider?: (value: boolean) => void;
   green?: any;
-  handleCreateMasaGreen?: (phoneNumber: string, code: string) => any;
-  handleCreate2FA?: (phoneNumber: string) => any;
+  handleCreateGreen?: (phoneNumber: string, code: string) => any;
+  handleGenerateGreen?: (phoneNumber: string) => any;
 }
 
 export const MasaContextProvider = ({
@@ -103,8 +103,8 @@ export const MasaContextProvider = ({
   const {
     green,
     isLoading: greenLoading,
-    handleCreateMasaGreen,
-    handleCreate2FA,
+    handleGenerateGreen,
+    handleCreateGreen,
   } = useGreen(masaInstance, walletAddress, identity);
 
   const {
@@ -201,8 +201,8 @@ export const MasaContextProvider = ({
     missingProvider,
     setMissingProvider,
     green,
-    handleCreateMasaGreen,
-    handleCreate2FA,
+    handleGenerateGreen,
+    handleCreateGreen,
   };
 
   return (
