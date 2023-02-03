@@ -1,12 +1,11 @@
 import { MasaContextProvider, MasaContextProviderProps } from './masa-context';
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 
 import { MasaInterface } from '../../components/masa-interface';
 import { useMetamask } from './use-metamask';
-import '../../../../styles.scss';
-
-export const queryClient = new QueryClient();
+import '../../../styles.scss';
+import { queryClient } from './masa-query-client';
 
 export const MasaProvider = ({
   children,

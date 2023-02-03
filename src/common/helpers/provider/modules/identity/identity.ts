@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
-import { queryClient } from '../../masa-provider';
+import { queryClient } from '../../masa-query-client';
 
 export const useIdentity = function (masa, walletAddress) {
   const { data, status, isLoading, error } = useQuery(

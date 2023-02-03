@@ -26,13 +26,13 @@
 
 ### MasaProvider
 
-▸ **MasaProvider**(`__namedParameters`): `Element`
+▸ **MasaProvider**(`«destructured»`): `Element`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `MasaContextProviderProps` |
+| `«destructured»` | `MasaContextProviderProps` |
 
 #### Returns
 
@@ -42,13 +42,13 @@ ___
 
 ### loadIdentityContracts
 
-▸ **loadIdentityContracts**(`__namedParameters`): `IIdentityContracts`
+▸ **loadIdentityContracts**(`«destructured»`): `IIdentityContracts`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `LoadContractArgs` |
+| `«destructured»` | `LoadContractArgs` |
 
 #### Returns
 

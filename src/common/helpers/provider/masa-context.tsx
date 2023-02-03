@@ -50,8 +50,8 @@ export interface MasaShape {
   handleLogin?: () => void;
   handleLogout?: (callback?: () => void) => void;
   handlePurchaseIdentity?: () => void;
-  connect?: (options?: { scope?: string[]; callback?: Function }) => void;
-  closeModal?: Function;
+  connect?: (options?: { scope?: string[]; callback?: () => void }) => void;
+  closeModal?: () => void;
   scope?: string[];
   company?: string;
   handleCreateCreditScore?: () => void;
@@ -141,7 +141,7 @@ export const MasaContextProvider = ({
   }, [externalSigner]);
 
   const connect = useCallback(
-    (options?: { scope?: string[]; callback?: Function }) => {
+    (options?: { scope?: string[]; callback?: () => void }) => {
       setModalOpen(true);
       if (options?.scope) setScope(options.scope);
       if (typeof options?.callback === 'function') {
