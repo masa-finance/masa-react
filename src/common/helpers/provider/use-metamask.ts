@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { useCallback, useEffect, useMemo } from 'react';
-import { queryClient } from './masa-provider';
+import { queryClient } from './masa-query-client';
 import { useMasa } from './use-masa';
 
 export const useMetamask = ({ disable }: { disable?: boolean }) => {
