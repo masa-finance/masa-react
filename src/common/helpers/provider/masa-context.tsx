@@ -91,6 +91,7 @@ export const MasaContextProvider = ({
     masaInstance,
     provider
   );
+
   const {
     identity,
     handlePurchaseIdentity,
@@ -165,7 +166,7 @@ export const MasaContextProvider = ({
   }, [modalCallback, setModalOpen, loggedIn, isConnected]);
 
   useEffect(() => {
-    console.log('PROVIDER', { provider });
+
     if (noWallet) {
       setMasaInstance(
         createNewMasa(undefined, environment, arweaveConfig, cookie)
@@ -179,7 +180,7 @@ export const MasaContextProvider = ({
         setMasaInstance(null);
       }
     }
-  }, [provider, noWallet]);
+  }, [provider, noWallet, walletAddress]);
 
   const context = {
     setProvider,

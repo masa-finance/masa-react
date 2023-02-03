@@ -2186,10 +2186,10 @@
   dependencies:
     ethers "^5.6.9"
 
-"@masa-finance/masa-sdk@^1.2.0-alpha.5":
-  version "1.2.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.2.0-alpha.5.tgz#e60df44094ae7ff0d9f7854cc6e8f696e09d5600"
-  integrity sha512-FE93kIY0sq3AVTC3UaDDUMF2b+BUzjakKbUz2wH1e8ma7/mKe/OUTTBNRGnS4GL89AufPrrxiJYrIRwOwRMk7w==
+"@masa-finance/masa-sdk@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.2.0.tgz#3a08ca9b76760068ff81ce57cb217c91fb950cb0"
+  integrity sha512-c/eb0APx2WjckgoYuwlOoSVloMPX5DiYCnUrW4KSKtlyNCF3pNIQH4SD7a2w3enLKODyTzBpgeyDvmE72wM6Pw==
   dependencies:
     "@masa-finance/masa-contracts-identity" "^1.1.5"
     arweave "^1.12.4"
@@ -13371,6 +13371,11 @@ react-shallow-renderer@^16.15.0:
   dependencies:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
+
+react-spinners@^0.13.8:
+  version "0.13.8"
+  resolved "https://registry.yarnpkg.com/react-spinners/-/react-spinners-0.13.8.tgz#5262571be0f745d86bbd49a1e6b49f9f9cb19acc"
+  integrity sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==
 
 react-syntax-highlighter@^11.0.2:
   version "11.0.3"

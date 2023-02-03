@@ -6,7 +6,7 @@ export const useSession = function (masa, walletAddress) {
   const { data, status, isLoading, error } = useQuery(
     `session-${walletAddress}`,
     () => masa.session.checkLogin(),
-    { enabled: !!masa && !!walletAddress }
+    { enabled: !!masa && !!walletAddress,  }
   );
 
   useEffect(() => {
@@ -37,6 +37,7 @@ export const useSession = function (masa, walletAddress) {
     },
     [masa]
   );
+
 
   return { session: data, login, logout, status, isLoading, error };
 };

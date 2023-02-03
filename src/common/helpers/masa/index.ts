@@ -56,7 +56,7 @@ export const createNewMasa = (
     cookie: cookie || undefined,
     wallet: signer,
     apiUrl: environment.apiUrl,
-    network: getChainName(signer?.provider?._network?.chainId ?? 5),
+    defaultNetwork: getChainName(signer?.provider?._network?.chainId ?? 5),
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',

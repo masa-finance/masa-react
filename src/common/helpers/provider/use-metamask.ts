@@ -4,7 +4,7 @@ import { queryClient } from './masa-provider';
 import { useMasa } from './use-masa';
 
 export const useMetamask = ({ disable }: { disable?: boolean }) => {
-  const { setProvider, setMissingProvider, masa } = useMasa();
+  const { setProvider, setMissingProvider, handleLogout } = useMasa();
 
   const provider = useMemo(() => {
     if (typeof window !== 'undefined') {
@@ -71,12 +71,9 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
     localStorage.setItem('isWalletConnected', 'true');
   };
 
-  const handleLogout = useCallback(async () => {
-    await masa?.session.logout();
-  }, [masa]);
 
   const disconnect = useCallback(async () => {
-    await handleLogout();
+    await handleLogout?.();
     localStorage.setItem('isWalletConnected', 'false');
     setProvider?.(null);
   }, [handleLogout, setProvider]);
@@ -87,7 +84,7 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
       window?.ethereum?.on('accountsChanged', async (accounts) => {
         if (accounts.length === 0) {
           setProvider?.(null);
-          await handleLogout();
+          await handleLogout?.();
           await disconnect();
           queryClient.invalidateQueries('wallet');
         }
