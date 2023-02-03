@@ -2,7 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 
-export const useSession = function (masa, walletAddress) {
+export const useSession = (masa, walletAddress) => {
   const { data, status, isLoading, error } = useQuery(
     `session-${walletAddress}`,
     () => masa.session.checkLogin(),
