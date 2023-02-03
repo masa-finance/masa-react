@@ -5,7 +5,6 @@
   justify-content: center;
   align-items: center;
   border-radius: 24px;
-
 }
 .masa-modal {
   display: flex;
@@ -17,7 +16,6 @@
 
   width: 100%;
   height: 100%;
-
 
   .masa-modal-container {
     width: 100%;
@@ -128,7 +126,8 @@
     }
   }
 
-  .interface-authenticate, .interface-connected {
+  .interface-authenticate,
+  .interface-connected {
     .title {
       text-align: center;
     }

@@ -15,9 +15,8 @@ export const InterfaceAuthenticate = () => {
     )}`;
   }, [walletAddress]);
 
-
-  if( loading ) {
-    return <Spinner/>
+  if (loading) {
+    return <Spinner />;
   }
   return (
     <div className="interface-authenticate">
@@ -38,7 +37,7 @@ export const InterfaceAuthenticate = () => {
           className="masa-button authenticate-button"
           onClick={handleLogin}
         >
-          { loading ? "loading..." : hasIdentity ? "Sign in" : "Register"}
+          {loading ? 'loading...' : hasIdentity ? 'Sign in' : 'Register'}
         </button>
         <div className="dont-have-a-wallet">
           <a>

@@ -9,7 +9,7 @@ export interface SpinnerProps {
 export function Spinner({ color = '#000' }: SpinnerProps) {
   return (
     <div className="masa-spinner">
-      <MoonLoader color={color}/>
+      <MoonLoader color={color} />
     </div>
   );
 }

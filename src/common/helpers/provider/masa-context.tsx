@@ -166,7 +166,6 @@ export const MasaContextProvider = ({
   }, [modalCallback, setModalOpen, loggedIn, isConnected]);
 
   useEffect(() => {
-
     if (noWallet) {
       setMasaInstance(
         createNewMasa(undefined, environment, arweaveConfig, cookie)

@@ -6,13 +6,12 @@ import { Spinner } from '../../../spinner';
 export const InterfaceConnected = () => {
   const { company, loading, closeModal } = useMasa();
 
-
   useEffect(() => {
     setTimeout(() => {
       closeModal?.();
-    }, 3000)
-  }, [])
-  
+    }, 3000);
+  }, []);
+
   if (loading) return <MasaLoading />;
   return (
     <div className="interface-connected">

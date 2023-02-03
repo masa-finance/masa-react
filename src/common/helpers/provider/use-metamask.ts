@@ -71,7 +71,6 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
     localStorage.setItem('isWalletConnected', 'true');
   };
 
-
   const disconnect = useCallback(async () => {
     await handleLogout?.();
     localStorage.setItem('isWalletConnected', 'false');
