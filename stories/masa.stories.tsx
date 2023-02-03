@@ -67,7 +67,7 @@ const Component = (props) => {
 const Template: Story = (props) => {
   return (
     <>
-      <MasaProvider company='Masa'>
+      <MasaProvider company="Masa">
         <Component {...props} />
       </MasaProvider>
     </>
