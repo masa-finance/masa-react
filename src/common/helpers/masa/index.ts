@@ -2,6 +2,25 @@ import { environments, Masa } from '@masa-finance/masa-sdk';
 import { ethers, Wallet } from 'ethers';
 import { ArweaveConfig } from '../provider/masa-context';
 
+const getChainName = (chainId) => {
+  switch (chainId) {
+    case 1:
+      return 'mainnet';
+    case 5:
+      return 'goerli';
+    case 44787:
+      return 'alfajores';
+    case 42220:
+      return 'celo';
+    case 137:
+      return 'polygon';
+    case 80001:
+      return 'mumbai';
+
+    default:
+      return 'goerli';
+  }
+};
 export const createRandomWallet = (): Wallet | null => {
   console.info('Creating random wallet!');
   const wallet = ethers.Wallet.createRandom();
@@ -37,6 +56,7 @@ export const createNewMasa = (
     cookie: cookie || undefined,
     wallet: signer,
     apiUrl: environment.apiUrl,
+    defaultNetwork: getChainName(signer?.provider?._network?.chainId ?? 5),
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',

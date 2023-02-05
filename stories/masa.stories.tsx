@@ -37,7 +37,7 @@ const Component = (props) => {
 
   const handleConect = useCallback(() => {
     connect?.({
-      scope: ['identity'],
+      scope: [],
       callback: function () {
         alert('hello hello connected');
       },
@@ -48,9 +48,6 @@ const Component = (props) => {
     queryClient.invalidateQueries('wallet');
   };
 
-  const create2FACode = () => {
-    handleGenerateGreen?.('+59895485057');
-  };
   const mintGreen = async () => {
     // todo
   };
@@ -62,7 +59,6 @@ const Component = (props) => {
       <button onClick={handleConect}>Use Masa!</button>
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
-      <button onClick={create2FACode}>Send 2FA</button>
       {loggedIn && <button onClick={() => handleLogout?.()}>Logout</button>}
     </>
   );
@@ -71,7 +67,7 @@ const Component = (props) => {
 const Template: Story = (props) => {
   return (
     <>
-      <MasaProvider environment="dev">
+      <MasaProvider company="Masa">
         <Component {...props} />
       </MasaProvider>
     </>

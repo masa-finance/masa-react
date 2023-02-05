@@ -4,7 +4,7 @@ import { queryClient } from './masa-query-client';
 import { useMasa } from './use-masa';
 
 export const useMetamask = ({ disable }: { disable?: boolean }) => {
-  const { setProvider, setMissingProvider, masa } = useMasa();
+  const { setProvider, setMissingProvider, handleLogout } = useMasa();
 
   const provider = useMemo(() => {
     if (typeof window !== 'undefined') {
@@ -71,12 +71,8 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
     localStorage.setItem('isWalletConnected', 'true');
   };
 
-  const handleLogout = useCallback(async () => {
-    await masa?.session.logout();
-  }, [masa]);
-
   const disconnect = useCallback(async () => {
-    await handleLogout();
+    await handleLogout?.();
     localStorage.setItem('isWalletConnected', 'false');
     setProvider?.(null);
   }, [handleLogout, setProvider]);
@@ -87,8 +83,24 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
       window?.ethereum?.on('accountsChanged', async (accounts) => {
         if (accounts.length === 0) {
           setProvider?.(null);
-          await handleLogout();
+          await handleLogout?.();
           await disconnect();
+          queryClient.invalidateQueries('wallet');
+        }
+      });
+
+      //@ts-ignore
+      window?.ethereum?.on('networkChanged', async (accounts) => {
+        //@ts-ignore
+        const newProvider = new ethers.providers.Web3Provider(window?.ethereum);
+        if (newProvider) {
+          await newProvider.send('eth_requestAccounts', []);
+
+          await accountChangedHandler(newProvider.getSigner(0));
+          if (newProvider && setProvider) {
+            setProvider(newProvider.getSigner(0));
+            onConnect();
+          }
           queryClient.invalidateQueries('wallet');
         }
       });

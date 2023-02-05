@@ -6,8 +6,11 @@ export const useIdentity = (masa, walletAddress) => {
   const { data, status, isLoading, error } = useQuery(
     `identity-${walletAddress}`,
     () => masa.identity.load(walletAddress),
-    { enabled: !!masa && !!walletAddress }
+    {
+      enabled: !!masa && !!walletAddress,
+    }
   );
+  console.log('IDENTITYU', { data, error, ENABLED: !!masa && !!walletAddress });
 
   const handlePurchaseIdentity = useCallback(async () => {
     await masa?.identity.create();

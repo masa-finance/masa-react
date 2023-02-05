@@ -91,12 +91,15 @@ export const MasaContextProvider = ({
     masaInstance,
     provider
   );
+
   const {
     identity,
     handlePurchaseIdentity,
     isLoading: identityLoading,
   } = useIdentity(masaInstance, walletAddress);
+
   const { soulnames } = useSoulnames(masaInstance, walletAddress, identity);
+
   const {
     creditScores,
     isLoading: creditScoreLoading,
@@ -176,7 +179,7 @@ export const MasaContextProvider = ({
         setMasaInstance(null);
       }
     }
-  }, [provider, noWallet]);
+  }, [provider, noWallet, walletAddress]);
 
   const context = {
     setProvider,
