@@ -7,10 +7,12 @@ export const InterfaceConnected = () => {
   const { company, loading, closeModal } = useMasa();
 
   useEffect(() => {
-    setTimeout(() => {
-      closeModal?.();
-    }, 3000);
-  }, []);
+    if (!loading) {
+      setTimeout(() => {
+        closeModal?.();
+      }, 3000);
+    }
+  }, [loading]);
 
   if (loading) return <MasaLoading />;
   return (
