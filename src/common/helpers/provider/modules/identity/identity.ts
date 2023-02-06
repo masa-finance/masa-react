@@ -10,9 +10,9 @@ export const useIdentity = (
 ): {
   identity:
     | {
-        identityId?: BigNumber | undefined;
-        address?: string | undefined;
-      }
+    identityId?: BigNumber;
+    address?: string;
+  }
     | undefined;
   handlePurchaseIdentity: () => void;
   status: string;
@@ -29,15 +29,8 @@ export const useIdentity = (
     () => masa?.identity.load(walletAddress),
     {
       enabled: !!masa && !!walletAddress,
-      onSuccess: (identity: {
-        identityId?: BigNumber | undefined;
-        address?: string | undefined;
-      }) => {
-        console.log('IDENTITY', {
-          identity,
-          error,
-          ENABLED: !!masa && !!walletAddress,
-        });
+      onSuccess: (identity: { identityId?: BigNumber; address?: string }) => {
+        console.log({ identity });
       },
     }
   );
