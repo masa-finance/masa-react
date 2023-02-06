@@ -1,8 +1,7 @@
 // @ts-ignore
 import React, { useCallback } from 'react';
-import { MasaProvider } from '../src/common/helpers/provider/masa-provider';
+import { MasaProvider, useMasa } from '../src';
 import { Meta, Story } from '@storybook/react';
-import { useMasa } from '../src/common/helpers/provider/use-masa';
 import { queryClient } from '../src/common/helpers/provider/masa-query-client';
 
 const meta: Meta = {
@@ -36,8 +35,8 @@ const Component = (props) => {
     });
   }, [connect]);
 
-  const loadCR = async () => {
-    queryClient.invalidateQueries('wallet');
+  const loadCR = async (): Promise<void> => {
+    await queryClient.invalidateQueries('wallet');
   };
 
   const mintGreen = async () => {

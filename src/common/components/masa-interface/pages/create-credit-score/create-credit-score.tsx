@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
 
-export const InterfaceCreateCreditScore = () => {
+export const InterfaceCreateCreditScore = (): JSX.Element => {
   const { handleCreateCreditScore, loading } = useMasa();
   const [error, setError] = useState<string | null>(null);
 

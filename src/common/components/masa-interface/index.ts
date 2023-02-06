@@ -1,0 +1,1 @@
+export * from './masa-interface';

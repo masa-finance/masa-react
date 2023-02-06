@@ -6,10 +6,10 @@ export interface SpinnerProps {
   color?: string;
 }
 
-export function Spinner({ color = '#000' }: SpinnerProps) {
+export const Spinner = ({ color = '#000' }: SpinnerProps) => {
   return (
     <div className="masa-spinner">
       <MoonLoader color={color} />
     </div>
   );
-}
+};

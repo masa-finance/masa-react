@@ -3,14 +3,16 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { queryClient } from './masa-query-client';
 import { useMasa } from './use-masa';
 
-export const useMetamask = ({ disable }: { disable?: boolean }) => {
+export const useMetamask = ({
+  disable,
+}: {
+  disable?: boolean;
+}): { connect: () => void } => {
   const { setProvider, setMissingProvider, handleLogout } = useMasa();
 
   const provider = useMemo(() => {
     if (typeof window !== 'undefined') {
-      //@ts-ignore
       if (typeof window?.ethereum !== 'undefined') {
-        //@ts-ignore
         return new ethers.providers.Web3Provider(window?.ethereum);
       } else {
         return null;
@@ -31,8 +33,8 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
   }, [provider, setMissingProvider]);
 
   const accountChangedHandler = useCallback(
-    async (newAccount) => {
-      if (setProvider) setProvider(newAccount);
+    async (newProvider: ethers.Signer) => {
+      if (setProvider) setProvider(newProvider);
     },
     [setProvider]
   );
@@ -40,7 +42,6 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
   const connect = useCallback(async () => {
     console.log('DISABLE', disable);
     if (!disable) {
-      //@ts-ignore
       if (provider && window?.ethereum) {
         await provider.send('eth_requestAccounts', []);
 
@@ -54,7 +55,7 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
   }, [accountChangedHandler, setProvider, provider, disable]);
 
   useEffect(() => {
-    const connectWalletOnPageLoad = async () => {
+    const connectWalletOnPageLoad = async (): Promise<void> => {
       if (localStorage?.getItem('isWalletConnected') === 'true') {
         console.log('CALLING RECONNECT');
         try {
@@ -79,19 +80,16 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      //@ts-ignore
-      window?.ethereum?.on('accountsChanged', async (accounts) => {
+      window?.ethereum?.on('accountsChanged', async (accounts: string[]) => {
         if (accounts.length === 0) {
           setProvider?.(null);
           await handleLogout?.();
           await disconnect();
-          queryClient.invalidateQueries('wallet');
+          await queryClient.invalidateQueries('wallet');
         }
       });
 
-      //@ts-ignore
-      window?.ethereum?.on('networkChanged', async (accounts) => {
-        //@ts-ignore
+      window?.ethereum?.on('networkChanged', async () => {
         const newProvider = new ethers.providers.Web3Provider(window?.ethereum);
         if (newProvider) {
           await newProvider.send('eth_requestAccounts', []);
@@ -101,7 +99,7 @@ export const useMetamask = ({ disable }: { disable?: boolean }) => {
             setProvider(newProvider.getSigner(0));
             onConnect();
           }
-          queryClient.invalidateQueries('wallet');
+          await queryClient.invalidateQueries('wallet');
         }
       });
     }

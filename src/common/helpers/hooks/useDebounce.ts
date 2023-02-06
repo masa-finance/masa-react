@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // Hook
-export function useDebounce(value, delay) {
+export const useDebounce = (value, delay) => {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(
@@ -20,10 +20,10 @@ export function useDebounce(value, delay) {
     [value, delay] // Only re-call effect if value or delay changes
   );
   return debouncedValue;
-}
+};
 
 // Hook
-export function useDebounceIfValue(value, target, delay) {
+export const useDebounceIfValue = (value, target, delay) => {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
@@ -42,4 +42,4 @@ export function useDebounceIfValue(value, target, delay) {
     }
   }, [value, delay, target]);
   return debouncedValue;
-}
+};

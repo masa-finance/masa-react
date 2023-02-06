@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
 import { useMasa } from '../../helpers/provider/use-masa';
 import { ModalComponent } from '../modal';
-import { InterfaceAuthenticate } from './pages/authenticate';
-import { InterfaceConnected } from './pages/connected';
-import { InterfaceConnector } from './pages/connector';
-import { InterfaceCreateCreditScore } from './pages/create-credit-score';
-import { InterfaceCreateIdentity } from './pages/createIdentity';
+import {
+  InterfaceAuthenticate,
+  InterfaceConnected,
+  InterfaceConnector,
+  InterfaceCreateCreditScore,
+  InterfaceCreateIdentity,
+} from './pages';
 
 const pages = {
   connector: ({ disable }) => <InterfaceConnector disable={disable} />,
@@ -15,7 +17,11 @@ const pages = {
   createCreditScore: <InterfaceCreateCreditScore />,
 };
 
-export const MasaInterface = ({ disable }: { disable?: boolean }) => {
+export const MasaInterface = ({
+  disable,
+}: {
+  disable?: boolean;
+}): JSX.Element => {
   const {
     isModalOpen,
     setModalOpen,

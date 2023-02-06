@@ -7,7 +7,7 @@ export interface ModalProps {
   children: React.ReactNode;
   open: boolean;
   setOpen: (val: boolean) => void;
-  close: Function;
+  close: () => void;
 }
 
 export const ModalComponent = ({ children, open, close }: ModalProps) => {

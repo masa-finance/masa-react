@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useMasa } from '../../../../helpers/provider/use-masa';
 import { MasaLoading } from '../../../masa-loading';
 
-export const InterfaceCreateIdentity = () => {
+export const InterfaceCreateIdentity = (): JSX.Element => {
   const { handlePurchaseIdentity, handleLogout, loading } = useMasa();
 
   const createIdentity = useCallback(async () => {

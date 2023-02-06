@@ -1,8 +1,11 @@
-import { MasaContextProvider, MasaContextProviderProps } from './masa-context';
+import {
+  MasaContextProvider,
+  MasaContextProviderProps,
+} from './masa-context-provider';
 import React from 'react';
 import { QueryClientProvider } from 'react-query';
 
-import { MasaInterface } from '../../components/masa-interface';
+import { MasaInterface } from '../../components';
 import { useMetamask } from './use-metamask';
 import { queryClient } from './masa-query-client';
 
@@ -11,7 +14,7 @@ import '../../../../styles.scss';
 export const MasaProvider = ({
   children,
   ...rest
-}: MasaContextProviderProps) => {
+}: MasaContextProviderProps): JSX.Element => {
   useMetamask({ disable: rest.noWallet });
 
   return (
