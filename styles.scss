@@ -59,6 +59,9 @@
   font-weight: 500;
 }
 .masa-modal {
+  * {
+    all: revert;
+  }
   h1,
   h2,
   h3 {
