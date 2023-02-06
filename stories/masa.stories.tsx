@@ -2,7 +2,7 @@
 import React, { useCallback } from 'react';
 import { MasaProvider, useMasa } from '../src';
 import { Meta, Story } from '@storybook/react';
-import { queryClient } from '../src/common/helpers/provider/masa-query-client';
+import { queryClient } from '../src';
 
 const meta: Meta = {
   title: 'SDK Test',
