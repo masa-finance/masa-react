@@ -10,7 +10,7 @@ import {
 } from './pages';
 
 const pages = {
-  connector: ({ disable }): JSX.Element => (
+  connector: ({ disable }: { disable?: boolean }): JSX.Element => (
     <InterfaceConnector disable={disable} />
   ),
   createIdentity: <InterfaceCreateIdentity />,

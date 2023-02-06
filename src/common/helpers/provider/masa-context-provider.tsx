@@ -28,12 +28,14 @@ export interface MasaContextProviderProps extends MasaShape {
   signer?: ethers.Wallet | ethers.Signer;
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
+  verbose?: boolean;
 }
 
 export const MasaContextProvider = ({
   children,
   company,
   environment = 'dev' as EnvironmentNameEx,
+  verbose = false,
   signer: externalSigner,
   noWallet,
   arweaveConfig,
@@ -135,15 +137,26 @@ export const MasaContextProvider = ({
 
   useEffect(() => {
     if (noWallet) {
-      setMasaInstance(createNewMasa(undefined, environment, arweaveConfig));
+      setMasaInstance(
+        createNewMasa({
+          environment,
+          arweaveConfig,
+          verbose,
+        })
+      );
+    } else if (provider) {
+      setMasaInstance(
+        createNewMasa({
+          newWallet: provider,
+          environment,
+          arweaveConfig,
+          verbose,
+        })
+      );
     } else {
-      if (provider) {
-        setMasaInstance(createNewMasa(provider, environment, arweaveConfig));
-      } else {
-        setMasaInstance(null);
-      }
+      setMasaInstance(null);
     }
-  }, [provider, noWallet, walletAddress, arweaveConfig, environment]);
+  }, [provider, noWallet, walletAddress, arweaveConfig, environment, verbose]);
 
   const context = {
     setProvider,

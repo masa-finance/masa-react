@@ -22,7 +22,10 @@ export const InterfaceCreateIdentity = (): JSX.Element => {
         <button className="masa-button" onClick={createIdentity}>
           Create your identity!
         </button>
-        <div className="dont-have-a-wallet" onClick={() => handleLogout?.()}>
+        <div
+          className="dont-have-a-wallet"
+          onClick={(): void => handleLogout?.()}
+        >
           <p>I don't want to create an identity</p>
         </div>
       </div>

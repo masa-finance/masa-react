@@ -1,7 +1,7 @@
 // @ts-ignore
 import React, { useCallback } from 'react';
 import { MasaProvider, queryClient, useMasa } from '../src';
-import { Meta, Story } from '@storybook/react';
+import { Args, Meta, Story } from '@storybook/react';
 
 const meta: Meta = {
   title: 'SDK Test',
@@ -20,7 +20,7 @@ const meta: Meta = {
 
 export default meta;
 
-const Component = (props) => {
+const Component = (): JSX.Element => {
   const { connect, missingProvider, loggedIn, handleLogout } = useMasa();
 
   console.log({ missingProvider });
@@ -49,12 +49,14 @@ const Component = (props) => {
       <button onClick={handleConect}>Use Masa!</button>
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
-      {loggedIn && <button onClick={() => handleLogout?.()}>Logout</button>}
+      {loggedIn && (
+        <button onClick={(): void => handleLogout?.()}>Logout</button>
+      )}
     </>
   );
 };
 
-const Template: Story = (props) => {
+const Template: Story = (props: Args) => {
   return (
     <>
       <MasaProvider company="Masa">

@@ -13,14 +13,14 @@ import '../../../../styles.scss';
 
 export const MasaProvider = ({
   children,
-  ...rest
+  ...args
 }: MasaContextProviderProps): JSX.Element => {
-  useMetamask({ disable: rest.noWallet });
+  useMetamask({ disable: args.noWallet });
 
   return (
     <QueryClientProvider client={queryClient}>
-      <MasaContextProvider {...rest}>
-        <MasaInterface disable={rest.noWallet} />
+      <MasaContextProvider {...args}>
+        <MasaInterface disable={args.noWallet} />
         {children}
       </MasaContextProvider>
     </QueryClientProvider>

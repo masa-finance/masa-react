@@ -43,29 +43,36 @@ export const createRandomWallet = (): Wallet | null => {
   }
 };
 
-export const createNewMasa = (
+export const createNewMasa = ({
   newWallet,
-  env: string,
-  arweaveConfig?: ArweaveConfig
-): Masa | null => {
+  environment,
+  arweaveConfig,
+  verbose,
+}: {
+  newWallet?: any;
+  environment: string;
+  arweaveConfig?: ArweaveConfig;
+  verbose: boolean;
+}): Masa | null => {
   const signer = newWallet ? newWallet : createRandomWallet();
   if (!signer) return null;
 
-  const environment = environments.find((e: Environment) => e.name === env);
-  if (!environment) return null;
+  const env = environments.find((e: Environment) => e.name === environment);
+  if (!env) return null;
 
   return new Masa({
     wallet: signer,
-    apiUrl: environment.apiUrl,
+    apiUrl: env.apiUrl,
     defaultNetwork: getChainName(
       signer?.provider?._network?.chainId ?? 5
     ) as NetworkName,
-    environment: environment.environment,
+    environment: env.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
       port: parseInt(arweaveConfig?.port || '443'),
       protocol: arweaveConfig?.protocol || 'https',
       logging: (!!arweaveConfig?.logging as boolean) || false,
     },
+    verbose,
   });
 };
