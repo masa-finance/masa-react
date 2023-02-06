@@ -1,11 +1,9 @@
 // @ts-ignore
 import React, { useCallback } from 'react';
-import {
-  MasaProvider,
-  queryClient,
-} from '../src/common/helpers/provider/masa-provider';
+import { MasaProvider } from '../src/common/helpers/provider/masa-provider';
 import { Meta, Story } from '@storybook/react';
 import { useMasa } from '../src/common/helpers/provider/use-masa';
+import { queryClient } from '../src/common/helpers/provider/masa-query-client';
 
 const meta: Meta = {
   title: 'SDK Test',
@@ -25,13 +23,7 @@ const meta: Meta = {
 export default meta;
 
 const Component = (props) => {
-  const {
-    connect,
-    missingProvider,
-    handleGenerateGreen,
-    loggedIn,
-    handleLogout,
-  } = useMasa();
+  const { connect, missingProvider, loggedIn, handleLogout } = useMasa();
 
   console.log({ missingProvider });
 
