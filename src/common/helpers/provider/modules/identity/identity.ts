@@ -10,9 +10,9 @@ export const useIdentity = (
 ): {
   identity:
     | {
-    identityId?: BigNumber;
-    address?: string;
-  }
+        identityId?: BigNumber;
+        address?: string;
+      }
     | undefined;
   handlePurchaseIdentity: () => void;
   status: string;
