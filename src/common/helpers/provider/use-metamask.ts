@@ -13,7 +13,7 @@ export const useMetamask = ({
   const provider = useMemo(() => {
     if (typeof window !== 'undefined') {
       if (typeof window?.ethereum !== 'undefined') {
-        return new ethers.providers.Web3Provider(window?.ethereum);
+        return new ethers.providers.Web3Provider(window?.ethereum as any);
       } else {
         return null;
       }
@@ -73,17 +73,22 @@ export const useMetamask = ({
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window?.ethereum?.on('accountsChanged', async (accounts: string[]) => {
-        if (accounts.length === 0) {
-          setProvider?.(null);
-          await handleLogout?.();
-          await disconnect();
-          await queryClient.invalidateQueries('wallet');
+      window?.ethereum?.on(
+        'accountsChanged',
+        async (accounts: unknown): Promise<void> => {
+          if (accounts instanceof Array && accounts.length === 0) {
+            setProvider?.(null);
+            await handleLogout?.();
+            await disconnect();
+            await queryClient.invalidateQueries('wallet');
+          }
         }
-      });
+      );
 
       window?.ethereum?.on('networkChanged', async () => {
-        const newProvider = new ethers.providers.Web3Provider(window?.ethereum);
+        const newProvider = new ethers.providers.Web3Provider(
+          window?.ethereum as any
+        );
         if (newProvider) {
           await newProvider.send('eth_requestAccounts', []);
 

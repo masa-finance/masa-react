@@ -5,7 +5,7 @@ import {
   NetworkName,
 } from '@masa-finance/masa-sdk';
 import { ethers, Wallet } from 'ethers';
-import { ArweaveConfig } from '../provider/masa-context-provider';
+import { ArweaveConfig } from '../provider';
 
 const getChainName = (chainId: number): string => {
   switch (chainId) {
@@ -33,7 +33,7 @@ export const createRandomWallet = (): Wallet | null => {
   if (typeof window !== 'undefined') {
     if (typeof window?.ethereum !== 'undefined') {
       return wallet.connect(
-        new ethers.providers.Web3Provider(window?.ethereum)
+        new ethers.providers.Web3Provider(window?.ethereum as any)
       );
     } else {
       return null;
