@@ -1,11 +1,12 @@
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
+import { Masa } from '@masa-finance/masa-sdk';
 
-export const useIdentity = (masa, walletAddress) => {
+export const useIdentity = (masa: Masa | null, walletAddress: string) => {
   const { data, status, isLoading, error } = useQuery(
     `identity-${walletAddress}`,
-    () => masa.identity.load(walletAddress),
+    () => masa?.identity.load(walletAddress),
     {
       enabled: !!masa && !!walletAddress,
     }
