@@ -108,6 +108,7 @@
   },
   "include": [
     "src/**/*",
+    "stories/**/*",
     "package.json"
   ]
 }

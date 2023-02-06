@@ -7,7 +7,7 @@ export const InterfaceConnector = ({ disable }: { disable?: boolean }) => {
   return (
     <div className="interface-connect">
       <div>
-        <h3>Select a wallet</h3>
+        <h3 className="title">Select a wallet</h3>
         <p>
           By connecting your wallet, you agree to our <a>Terms of Service</a>{' '}
           and <a>Privacy Policy</a>

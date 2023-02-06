@@ -13,7 +13,8 @@ export interface ModalProps {
 export const ModalComponent = ({ children, open, close }: ModalProps) => {
   return (
     <Rodal
-      height={450}
+      height={520}
+      width={500}
       visible={open}
       onClose={() => close()}
       className="masa-rodal-container"

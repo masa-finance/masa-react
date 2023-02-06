@@ -29,9 +29,10 @@
   },
   "author": "hide-on-bush",
   "dependencies": {
-    "@masa-finance/masa-sdk": "^1.2.0",
+    "@masa-finance/masa-sdk": "^1.2.1",
     "react": "^18.2.0",
     "react-query": "^3.39.3",
+    "react-spinners": "^0.13.8",
     "rodal": "^2.0.0"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "@babel/plugin-transform-react-jsx": "^7.14.9",
     "@size-limit/preset-big-lib": "^8.1.0",
     "@size-limit/webpack-why": "^8.1.0",
+    "@storybook/react": "^6.5.16",
     "@types/jest": "^29.4.0",
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.25",
