@@ -28,7 +28,6 @@ export interface MasaContextProviderProps extends MasaShape {
   signer?: ethers.Wallet | ethers.Signer;
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
-  cookie?: string;
 }
 
 export const MasaContextProvider = ({
@@ -38,8 +37,7 @@ export const MasaContextProvider = ({
   signer: externalSigner,
   noWallet,
   arweaveConfig,
-  cookie,
-}: MasaContextProviderProps) => {
+}: MasaContextProviderProps): JSX.Element => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
 
   const [provider, setProvider] = useState<
@@ -48,7 +46,7 @@ export const MasaContextProvider = ({
   const [missingProvider, setMissingProvider] = useState<boolean>();
 
   const [isModalOpen, setModalOpen] = useState(false);
-  const [modalCallback, setModalCallback] = useState<any>(null);
+  const [modalCallback, setModalCallback] = useState<(() => void) | null>(null);
 
   const [scope, setScope] = useState<string[]>([]);
 
@@ -137,19 +135,15 @@ export const MasaContextProvider = ({
 
   useEffect(() => {
     if (noWallet) {
-      setMasaInstance(
-        createNewMasa(undefined, environment, arweaveConfig, cookie)
-      );
+      setMasaInstance(createNewMasa(undefined, environment, arweaveConfig));
     } else {
       if (provider) {
-        setMasaInstance(
-          createNewMasa(provider, environment, arweaveConfig, cookie)
-        );
+        setMasaInstance(createNewMasa(provider, environment, arweaveConfig));
       } else {
         setMasaInstance(null);
       }
     }
-  }, [provider, noWallet, walletAddress]);
+  }, [provider, noWallet, walletAddress, arweaveConfig, environment]);
 
   const context = {
     setProvider,

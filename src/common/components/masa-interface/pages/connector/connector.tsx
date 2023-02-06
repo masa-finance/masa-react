@@ -1,7 +1,11 @@
 import React from 'react';
-import { useMetamask } from '../../../../helpers/provider/use-metamask';
+import { useMetamask } from '../../../../helpers';
 
-export const InterfaceConnector = ({ disable }: { disable?: boolean }) => {
+export const InterfaceConnector = ({
+  disable,
+}: {
+  disable?: boolean;
+}): JSX.Element => {
   const { connect } = useMetamask({ disable });
 
   return (

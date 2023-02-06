@@ -1,4 +1,9 @@
-import { environments, Masa, NetworkName } from '@masa-finance/masa-sdk';
+import {
+  Environment,
+  environments,
+  Masa,
+  NetworkName,
+} from '@masa-finance/masa-sdk';
 import { ethers, Wallet } from 'ethers';
 import { ArweaveConfig } from '../provider/masa-context-provider';
 
@@ -41,17 +46,15 @@ export const createRandomWallet = (): Wallet | null => {
 export const createNewMasa = (
   newWallet,
   env: string,
-  arweaveConfig?: ArweaveConfig,
-  cookie?: string
+  arweaveConfig?: ArweaveConfig
 ): Masa | null => {
   const signer = newWallet ? newWallet : createRandomWallet();
   if (!signer) return null;
 
-  const environment = environments.find((e) => e.name === env);
+  const environment = environments.find((e: Environment) => e.name === env);
   if (!environment) return null;
 
   return new Masa({
-    cookie: cookie || undefined,
     wallet: signer,
     apiUrl: environment.apiUrl,
     defaultNetwork: getChainName(

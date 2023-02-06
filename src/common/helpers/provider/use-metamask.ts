@@ -32,27 +32,20 @@ export const useMetamask = ({
     }
   }, [provider, setMissingProvider]);
 
-  const accountChangedHandler = useCallback(
-    async (newProvider: ethers.Signer) => {
-      if (setProvider) setProvider(newProvider);
-    },
-    [setProvider]
-  );
-
   const connect = useCallback(async () => {
     console.log('DISABLE', disable);
     if (!disable) {
       if (provider && window?.ethereum) {
         await provider.send('eth_requestAccounts', []);
 
-        await accountChangedHandler(provider.getSigner(0));
-        if (provider && setProvider) {
-          setProvider(provider.getSigner(0));
+        const signer = provider.getSigner(0);
+        if (signer && setProvider) {
+          setProvider(signer);
           onConnect();
         }
       }
     }
-  }, [accountChangedHandler, setProvider, provider, disable]);
+  }, [setProvider, provider, disable]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
@@ -68,7 +61,7 @@ export const useMetamask = ({
     void connectWalletOnPageLoad();
   }, [connect]);
 
-  const onConnect = () => {
+  const onConnect = (): void => {
     localStorage.setItem('isWalletConnected', 'true');
   };
 
@@ -94,9 +87,9 @@ export const useMetamask = ({
         if (newProvider) {
           await newProvider.send('eth_requestAccounts', []);
 
-          await accountChangedHandler(newProvider.getSigner(0));
-          if (newProvider && setProvider) {
-            setProvider(newProvider.getSigner(0));
+          const signer = newProvider.getSigner(0);
+          if (signer && setProvider) {
+            setProvider(signer);
             onConnect();
           }
           await queryClient.invalidateQueries('wallet');

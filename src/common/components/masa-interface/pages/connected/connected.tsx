@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { useMasa } from '../../../../helpers/provider/use-masa';
+import { useMasa } from '../../../../helpers';
 import { MasaLoading } from '../../../masa-loading';
 import { Spinner } from '../../../spinner';
 
-export const InterfaceConnected = () => {
+export const InterfaceConnected = (): JSX.Element => {
   const { company, loading, closeModal } = useMasa();
 
   useEffect(() => {
@@ -12,9 +12,10 @@ export const InterfaceConnected = () => {
         closeModal?.();
       }, 3000);
     }
-  }, [loading]);
+  }, [loading, closeModal]);
 
   if (loading) return <MasaLoading />;
+
   return (
     <div className="interface-connected">
       <div>

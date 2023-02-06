@@ -6,7 +6,7 @@ export interface SpinnerProps {
   color?: string;
 }
 
-export const Spinner = ({ color = '#000' }: SpinnerProps) => {
+export const Spinner = ({ color = '#000' }: SpinnerProps): JSX.Element => {
   return (
     <div className="masa-spinner">
       <MoonLoader color={color} />

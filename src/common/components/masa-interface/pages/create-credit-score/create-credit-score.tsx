@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { useMasa } from '../../../../helpers/provider/use-masa';
+import { useMasa } from '../../../../helpers';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceCreateCreditScore = (): JSX.Element => {

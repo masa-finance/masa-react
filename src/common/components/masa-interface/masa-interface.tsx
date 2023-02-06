@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useMasa } from '../../helpers/provider/use-masa';
+import { useMasa } from '../../helpers';
 import { ModalComponent } from '../modal';
 import {
   InterfaceAuthenticate,
@@ -10,7 +10,9 @@ import {
 } from './pages';
 
 const pages = {
-  connector: ({ disable }) => <InterfaceConnector disable={disable} />,
+  connector: ({ disable }): JSX.Element => (
+    <InterfaceConnector disable={disable} />
+  ),
   createIdentity: <InterfaceCreateIdentity />,
   connectedState: <InterfaceConnected />,
   authenticate: <InterfaceAuthenticate />,
@@ -50,7 +52,7 @@ export const MasaInterface = ({
     <>
       <ModalComponent
         open={isModalOpen as boolean}
-        close={() => closeModal?.()}
+        close={(): void => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
       >
         {page === 'connector' ? pages[page]({ disable }) : pages[page]}

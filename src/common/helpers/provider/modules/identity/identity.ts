@@ -41,7 +41,7 @@ export const useIdentity = (
   const handlePurchaseIdentity = useCallback(async () => {
     await masa?.identity.create();
     await queryClient.invalidateQueries(`identity-${walletAddress}`);
-  }, [masa]);
+  }, [masa, walletAddress]);
 
   return { identity, handlePurchaseIdentity, status, isLoading, error };
 };

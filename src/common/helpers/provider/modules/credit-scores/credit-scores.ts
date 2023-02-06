@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
-import { Masa } from '@masa-finance/masa-sdk';
+import { ICreditScore, Masa } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
 export const useCreditScores = (
@@ -13,8 +13,25 @@ export const useCreditScores = (
         address?: string | undefined;
       }
     | undefined
-) => {
-  const { data, status, isLoading, error } = useQuery(
+): {
+  creditScores:
+    | {
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata?: ICreditScore | undefined;
+      }[]
+    | undefined;
+  handleCreateCreditScore: () => void;
+  status: string;
+  isLoading: boolean;
+  error: unknown;
+} => {
+  const {
+    data: creditScores,
+    status,
+    isLoading,
+    error,
+  } = useQuery(
     `credit-scores-${walletAddress}`,
     () => masa?.creditScore.list(),
     { enabled: !!masa && !!walletAddress && !!identity?.identityId }
@@ -26,10 +43,10 @@ export const useCreditScores = (
     await queryClient.invalidateQueries(`credit-scores-${walletAddress}`);
 
     return response?.success;
-  }, [masa]);
+  }, [masa, walletAddress]);
 
   return {
-    creditScores: data,
+    creditScores,
     handleCreateCreditScore,
     status,
     isLoading,

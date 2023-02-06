@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useMasa } from '../../../../helpers/provider/use-masa';
+import { useMasa } from '../../../../helpers';
 import { Spinner } from '../../../spinner';
 
 export const InterfaceAuthenticate = (): JSX.Element => {

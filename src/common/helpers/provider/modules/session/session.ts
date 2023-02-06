@@ -6,7 +6,14 @@ import { Masa } from '@masa-finance/masa-sdk';
 export const useSession = (
   masa: Masa | null,
   walletAddress: string | undefined
-) => {
+): {
+  loggedIn?: boolean;
+  login: () => void;
+  logout: () => void;
+  status: string;
+  isLoading: boolean;
+  error: unknown;
+} => {
   const {
     data: loggedIn,
     status,
@@ -28,7 +35,7 @@ export const useSession = (
       await queryClient.invalidateQueries(`session-${walletAddress}`);
       await queryClient.refetchQueries();
     }
-  }, [masa]);
+  }, [masa, walletAddress]);
 
   const logout = useCallback(
     async (callback?: () => void) => {
@@ -40,7 +47,7 @@ export const useSession = (
         callback();
       }
     },
-    [masa]
+    [masa, walletAddress]
   );
 
   return { loggedIn, login, logout, status, isLoading, error };

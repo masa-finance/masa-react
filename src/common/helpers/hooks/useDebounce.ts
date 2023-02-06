@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 
 // Hook
-export const useDebounce = (value, delay) => {
+export const useDebounce = (
+  value: string | number,
+  delay: number
+): string | number => {
   // State and setters for debounced value
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState<string | number>(value);
+
   useEffect(
     () => {
       // Update debounced value after delay
@@ -13,33 +17,42 @@ export const useDebounce = (value, delay) => {
       // Cancel the timeout if value changes (also on delay change or unmount)
       // This is how we prevent debounced value from updating if value is changed ...
       // .. within the delay period. Timeout gets cleared and restarted.
-      return () => {
+      return (): void => {
         clearTimeout(handler);
       };
     },
     [value, delay] // Only re-call effect if value or delay changes
   );
+
   return debouncedValue;
 };
 
 // Hook
-export const useDebounceIfValue = (value, target, delay) => {
+export const useDebounceIfValue = (
+  value: string | number,
+  target: string | number,
+  delay: number
+): string | number => {
   // State and setters for debounced value
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState<string | number>(value);
+
   useEffect(() => {
     if (value === target) {
       const handler = setTimeout(() => {
         setDebouncedValue(value);
       }, delay);
 
-      return () => {
+      return (): void => {
         clearTimeout(handler);
       };
     } else {
       setDebouncedValue(value);
 
-      return () => {};
+      return (): void => {
+        // todo delete me!
+      };
     }
   }, [value, delay, target]);
+
   return debouncedValue;
 };
