@@ -17,8 +17,8 @@ export const ModalComponent = ({
 }: ModalProps): JSX.Element => {
   return (
     <Rodal
-      height={520}
-      width={500}
+      height={615}
+      width={550}
       visible={open}
       onClose={(): void => close()}
       className="masa-rodal-container"
