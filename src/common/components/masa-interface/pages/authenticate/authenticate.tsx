@@ -1,9 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useMasa } from '../../../../helpers';
 import { Spinner } from '../../../spinner';
 
 export const InterfaceAuthenticate = (): JSX.Element => {
   const { handleLogin, walletAddress, identity, loading } = useMasa();
+
+  const [copied, setCopied] = useState(false);
 
   const hasIdentity = useMemo(() => {
     return identity && identity?.identityId;
@@ -13,6 +15,13 @@ export const InterfaceAuthenticate = (): JSX.Element => {
       walletAddress.length - 4,
       walletAddress.length
     )}`;
+  }, [walletAddress]);
+
+  const handleClipboard = useCallback(() => {
+    if (walletAddress) {
+      navigator.clipboard.writeText(walletAddress);
+      setCopied(true)
+    }
   }, [walletAddress]);
 
   if (loading) {
@@ -29,7 +38,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
         <p className="connected-wallet with-wallet">
           You are connected with the following wallet
-          <span>{shortAddress}</span>
+          <span onClick={handleClipboard}>{copied ? "Copied!" : shortAddress}</span>
         </p>
       </div>
       <div>
