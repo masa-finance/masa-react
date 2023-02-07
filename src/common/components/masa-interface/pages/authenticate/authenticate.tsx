@@ -11,7 +11,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   const shortAddress = useMemo(() => {
     return `${walletAddress?.substring(0, 2)}...${walletAddress?.substring(
       walletAddress.length - 4,
-      walletAddress.length - 1
+      walletAddress.length
     )}`;
   }, [walletAddress]);
 
