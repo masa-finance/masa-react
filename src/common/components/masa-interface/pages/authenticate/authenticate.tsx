@@ -20,7 +20,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   const handleClipboard = useCallback(() => {
     if (walletAddress) {
       navigator.clipboard.writeText(walletAddress);
-      setCopied(true)
+      setCopied(true);
     }
   }, [walletAddress]);
 
@@ -38,7 +38,9 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
         <p className="connected-wallet with-wallet">
           You are connected with the following wallet
-          <span onClick={handleClipboard}>{copied ? "Copied!" : shortAddress}</span>
+          <span onClick={handleClipboard}>
+            {copied ? 'Copied!' : shortAddress}
+          </span>
         </p>
       </div>
       <div>
