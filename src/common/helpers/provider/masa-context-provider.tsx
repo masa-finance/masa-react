@@ -94,8 +94,6 @@ export const MasaContextProvider = ({
 
   // Logic
 
-  console.log({ chain });
-
   const loading = useMemo(() => {
     return (
       sessionLoading ||
