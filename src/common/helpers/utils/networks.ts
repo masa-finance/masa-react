@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 
 const polygonChainId = 137;
 const BSCChainId = 56;
