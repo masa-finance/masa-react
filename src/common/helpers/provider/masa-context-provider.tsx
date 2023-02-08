@@ -174,7 +174,7 @@ export const MasaContextProvider = ({
   const addNetwork = useCallback(
     async (networkDetails) => {
       try {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && networkDetails) {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
             params: [networkDetails],
@@ -182,7 +182,7 @@ export const MasaContextProvider = ({
         }
       } catch (err) {
         console.log(
-          `error ocuured while adding new chain with chainId:${networkDetails.chainId}`
+          `error ocuured while adding new chain with chainId:${networkDetails?.chainId}`
         );
       }
     },
