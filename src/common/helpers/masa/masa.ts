@@ -60,6 +60,8 @@ export const createNewMasa = ({
   const env = environments.find((e: Environment) => e.name === environment);
   if (!env) return null;
 
+  console.log({ NETWORK: signer?.provider?._network?.chainId ?? 5 });
+
   return new Masa({
     wallet: signer,
     apiUrl: env.apiUrl,

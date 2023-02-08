@@ -11,6 +11,7 @@ import {
 } from './modules';
 import { ethers } from 'ethers';
 import { MASA_CONTEXT, MasaShape } from './masa-context';
+import { SupportedNetworks } from '../utils/networks';
 
 export interface ArweaveConfig {
   port?: string;
@@ -56,9 +57,11 @@ export const MasaContextProvider = ({
   const {
     walletAddress,
     isLoading: walletLoading,
+    chain,
   }: {
     walletAddress: string | undefined;
     isLoading: boolean;
+    chain?: null | ethers.providers.Network;
   } = useWallet(masaInstance, provider);
 
   const {
@@ -90,6 +93,8 @@ export const MasaContextProvider = ({
   } = useSession(masaInstance, walletAddress);
 
   // Logic
+
+  console.log({ chain });
 
   const loading = useMemo(() => {
     return (
@@ -156,7 +161,53 @@ export const MasaContextProvider = ({
     } else {
       setMasaInstance(null);
     }
-  }, [provider, noWallet, walletAddress, arweaveConfig, environment, verbose]);
+  }, [
+    provider,
+    noWallet,
+    walletAddress,
+    arweaveConfig,
+    environment,
+    verbose,
+    chain,
+  ]);
+
+  const addNetwork = useCallback(
+    async (networkDetails) => {
+      try {
+        if (typeof window !== 'undefined') {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [networkDetails],
+          });
+        }
+      } catch (err) {
+        console.log(
+          `error ocuured while adding new chain with chainId:${networkDetails.chainId}`
+        );
+      }
+    },
+    [provider]
+  );
+
+  const switchNetwork = useCallback(
+    async (chainId: number) => {
+      try {
+        if (typeof window !== 'undefined') {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: ethers.utils.hexValue(chainId) }],
+          });
+          console.log(`switched to chainid : ${chainId} succesfully`);
+        }
+      } catch (err) {
+        const error = err as { code: number };
+        if (error.code === 4902) {
+          addNetwork(SupportedNetworks[chainId]);
+        }
+      }
+    },
+    [provider]
+  );
 
   const context = {
     setProvider,
@@ -185,6 +236,9 @@ export const MasaContextProvider = ({
     greens,
     handleGenerateGreen,
     handleCreateGreen,
+    chain,
+    switchNetwork,
+    SupportedNetworks,
   };
 
   return (

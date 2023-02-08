@@ -21,9 +21,8 @@ const meta: Meta = {
 export default meta;
 
 const Component = (): JSX.Element => {
-  const { connect, missingProvider, loggedIn, handleLogout } = useMasa();
-
-  console.log({ missingProvider });
+  const { connect, missingProvider, loggedIn, handleLogout, switchNetwork } =
+    useMasa();
 
   const handleConect = useCallback(() => {
     connect?.({
@@ -49,6 +48,13 @@ const Component = (): JSX.Element => {
       <button onClick={handleConect}>Use Masa!</button>
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
+      
+      <button onClick={() => switchNetwork?.(1)}>Switch to Ethereum</button>
+      <button onClick={() => switchNetwork?.(5)}>Switch to Goerli</button>
+      <button onClick={() => switchNetwork?.(137)}>Switch to Polygon</button>
+      <button onClick={() => switchNetwork?.(56)}>Switch to BSC</button>
+      <button onClick={() => switchNetwork?.(44787)}>Switch to Alfajores</button>
+
       {loggedIn && (
         <button onClick={(): void => handleLogout?.()}>Logout</button>
       )}
