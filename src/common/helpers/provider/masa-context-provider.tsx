@@ -193,7 +193,7 @@ export const MasaContextProvider = ({
     async (chainId: number) => {
       try {
         if (typeof window !== 'undefined') {
-          await window.ethereum.request({
+          await window?.ethereum?.request({
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: ethers.utils.hexValue(chainId) }],
           });
