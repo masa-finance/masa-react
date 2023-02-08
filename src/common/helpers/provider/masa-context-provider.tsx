@@ -175,7 +175,7 @@ export const MasaContextProvider = ({
     async (networkDetails) => {
       try {
         if (typeof window !== 'undefined' && networkDetails) {
-          await window.ethereum.request({
+          await window?.ethereum?.request({
             method: 'wallet_addEthereumChain',
             params: [networkDetails],
           });
