@@ -8,6 +8,7 @@ import {
   InterfaceCreateCreditScore,
   InterfaceCreateIdentity,
 } from './pages';
+import { InterfaceSwitchChain } from './pages/switch-chain';
 
 const pages = {
   connector: ({ disable }: { disable?: boolean }): JSX.Element => (
@@ -17,6 +18,7 @@ const pages = {
   connectedState: <InterfaceConnected />,
   authenticate: <InterfaceAuthenticate />,
   createCreditScore: <InterfaceCreateCreditScore />,
+  switchNetwork: <InterfaceSwitchChain />,
 };
 
 export const MasaInterface = ({
@@ -34,10 +36,14 @@ export const MasaInterface = ({
     closeModal,
     scope,
     creditScores,
+    network,
+    chain,
   } = useMasa();
 
   const page = useMemo(() => {
     if (!isConnected) return 'connector';
+
+    if (network && !chain?.name.includes(network)) return 'switchNetwork';
     if (!loggedIn) return 'authenticate';
     if (!identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
@@ -46,7 +52,16 @@ export const MasaInterface = ({
     if (isConnected && loggedIn) return 'connectedState';
 
     return 'connector';
-  }, [loading, isConnected, identity, loggedIn, scope, creditScores]);
+  }, [
+    loading,
+    isConnected,
+    identity,
+    loggedIn,
+    scope,
+    creditScores,
+    network,
+    chain,
+  ]);
 
   return (
     <>

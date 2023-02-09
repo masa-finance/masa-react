@@ -30,6 +30,7 @@ export interface MasaContextProviderProps extends MasaShape {
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
   verbose?: boolean;
+  network?: string;
 }
 
 export const MasaContextProvider = ({
@@ -40,6 +41,7 @@ export const MasaContextProvider = ({
   signer: externalSigner,
   noWallet,
   arweaveConfig,
+  network,
 }: MasaContextProviderProps): JSX.Element => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
 
@@ -237,6 +239,7 @@ export const MasaContextProvider = ({
     chain,
     switchNetwork,
     SupportedNetworks,
+    network,
   };
 
   return (
