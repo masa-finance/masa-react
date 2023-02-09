@@ -43,7 +43,7 @@ export const SupportedNetworks = {
     chainName: 'Ethereum',
   },
   5: {
-    chainId: ethers.utils.hexValue(1),
+    chainId: ethers.utils.hexValue(5),
     chainName: 'Goerli',
   },
   56: BSCNetwork,

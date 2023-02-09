@@ -57,4 +57,5 @@ export interface MasaShape {
   chain?: null | ethers.providers.Network;
   switchNetwork?: (chainId: number) => void;
   SupportedNetworks?: any;
+  network?: string;
 }
