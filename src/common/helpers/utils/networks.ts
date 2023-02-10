@@ -5,6 +5,7 @@ const BSCChainId = 56;
 const BSCTChainId = 97;
 const mumbaiChainId = 80001;
 const alfajoresChainId = 44787;
+const celoChainId = 42220;
 
 const BSCNetwork = {
   chainName: 'Binance Smart Chain',
@@ -27,6 +28,19 @@ const BSCTestnet = {
     decimals: 18,
   },
 };
+
+const celoNetwork = {
+  chainName: 'Celo',
+  chainId: ethers.utils.hexValue(celoChainId),
+  rpcUrls: ['https://forno.celo.org'],
+  nativeCurrency: {
+    name: 'CELO',
+    symbol: 'CELO',
+    decimals: 18,
+  },
+  blockExplorerUrls: ['https://alfajores-blockscout.celo-testnet.org'],
+};
+
 const alfajoresNetwork = {
   chainName: 'Alfajores Network',
   chainId: ethers.utils.hexValue(alfajoresChainId),
@@ -76,4 +90,5 @@ export const SupportedNetworks = {
   137: polygonNetwork,
   44787: alfajoresNetwork,
   80001: mumbaiNetwork,
+  42220: celoNetwork,
 };
