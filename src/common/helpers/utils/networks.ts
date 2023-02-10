@@ -73,7 +73,7 @@ const mumbaiNetwork = {
     decimals: 18,
   },
   rpcUrls: ['https://polygon-testnet-rpc.allthatnode.com:8545'],
-  blockExplorerUrls: ['https://polygonscan.com/'],
+  blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
 };
 
 export const SupportedNetworks = {
