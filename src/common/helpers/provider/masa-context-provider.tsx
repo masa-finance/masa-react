@@ -180,7 +180,7 @@ export const MasaContextProvider = ({
             params: [networkDetails],
           });
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error(
           `error ocuured while adding new chain with chainId:${networkDetails?.chainId}`
         );

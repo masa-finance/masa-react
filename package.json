@@ -85,17 +85,17 @@
     "eslint-plugin-prettier": "3.4.1",
     "husky": "^8.0.2",
     "postcss": "^8.4.19",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.4",
     "react-dom": "^18.2.0",
     "react-highlight-words": "^0.18.0",
     "react-is": "^18.2.0",
     "react-test-renderer": "^18.2.0",
     "shards-react": "^1.0.3",
-    "size-limit": "^8.1.0",
+    "size-limit": "^8.1.2",
     "tsdx": "^0.14.1",
-    "tslib": "^2.3.1",
-    "typedoc": "^0.23.21",
-    "typedoc-plugin-markdown": "^3.13.6",
-    "typescript": "^4.6.3"
+    "tslib": "^2.5.0",
+    "typedoc": "^0.23.24",
+    "typedoc-plugin-markdown": "^3.14.0",
+    "typescript": "^4.9.5"
   }
 }
