@@ -57,7 +57,7 @@ export interface MasaShape {
   handleCreateGreen?: (phoneNumber: string, code: string) => void;
   handleGenerateGreen?: (phoneNumber: string) => void;
   chain?: null | ethers.providers.Network;
-  switchNetwork?: (chainId: string) => void;
+  switchNetwork?: (chainId: number) => void;
   SupportedNetworks?: { [index: number]: Network };
   network?: string;
 }

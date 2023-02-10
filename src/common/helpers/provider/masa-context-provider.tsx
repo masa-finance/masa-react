@@ -190,7 +190,7 @@ export const MasaContextProvider = ({
   );
 
   const switchNetwork = useCallback(
-    async (chainId: string) => {
+    async (chainId: number) => {
       try {
         if (typeof window !== 'undefined') {
           await window?.ethereum?.request({
