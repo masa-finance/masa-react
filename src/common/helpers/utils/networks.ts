@@ -2,12 +2,25 @@ import { ethers } from 'ethers';
 
 const polygonChainId = 137;
 const BSCChainId = 56;
+const BSCTChainId = 97;
+const mumbaiChainId = 80001;
 const alfajoresChainId = 44787;
 
 const BSCNetwork = {
   chainName: 'Binance Smart Chain',
   chainId: ethers.utils.hexValue(BSCChainId),
   rpcUrls: ['https://endpoints.omniatech.io/v1/bsc/mainnet/public'],
+  nativeCurrency: {
+    name: 'BSC',
+    symbol: 'BSC',
+    decimals: 18,
+  },
+};
+
+const BSCTestnet = {
+  chainName: 'Binance Smart Chain Testnet',
+  chainId: ethers.utils.hexValue(BSCTChainId),
+  rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
   nativeCurrency: {
     name: 'BSC',
     symbol: 'BSC',
@@ -37,6 +50,18 @@ const polygonNetwork = {
   blockExplorerUrls: ['https://polygonscan.com/'],
 };
 
+const mumbaiNetwork = {
+  chainId: ethers.utils.hexValue(mumbaiChainId),
+  chainName: 'Mumbai Testnet',
+  nativeCurrency: {
+    name: 'MATIC',
+    symbol: 'MATIC', // 2-6 characters long
+    decimals: 18,
+  },
+  rpcUrls: ['https://polygon-testnet-rpc.allthatnode.com:8545'],
+  blockExplorerUrls: ['https://polygonscan.com/'],
+};
+
 export const SupportedNetworks = {
   1: {
     chainId: ethers.utils.hexValue(1),
@@ -47,6 +72,8 @@ export const SupportedNetworks = {
     chainName: 'Goerli',
   },
   56: BSCNetwork,
+  97: BSCTestnet,
   137: polygonNetwork,
   44787: alfajoresNetwork,
+  80001: mumbaiNetwork
 };
