@@ -45,7 +45,8 @@ export const InterfaceSwitchChain = (): JSX.Element => {
           className="masa-button authenticate-button"
           onClick={handleSwitch}
         >
-          Switch to {network}
+          Switch to{' '}
+          <span style={{ textTransform: 'capitalize' }}>{network}</span>
         </button>
       </div>
     </div>
