@@ -15,8 +15,8 @@ export const useSession = (
   error: unknown;
 } => {
   const queryKey: string = useMemo(() => {
-    return `session-${walletAddress}-${masa?.config.network}`;
-  }, [walletAddress, masa]);
+    return `session-${walletAddress}`;
+  }, [walletAddress]);
 
   const {
     data: loggedIn,
