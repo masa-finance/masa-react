@@ -12,7 +12,8 @@ export const useGreen = (
         identityId?: BigNumber | undefined;
         address?: string | undefined;
       }
-    | undefined
+    | undefined,
+  provider: any
 ): {
   greens:
     | {
@@ -33,7 +34,7 @@ export const useGreen = (
     isLoading,
     error,
   } = useQuery(
-    `green-${walletAddress}`,
+    `green-${walletAddress}-${provider?.provider?._network?.chainId ?? 0}`,
     () => masa?.green.load(identity?.identityId!),
     { enabled: !!masa && !!walletAddress && !!identity?.identityId }
   );

@@ -85,7 +85,7 @@ export const MasaContextProvider = ({
     isLoading: greenLoading,
     handleGenerateGreen,
     handleCreateGreen,
-  } = useGreen(masaInstance, walletAddress, identity);
+  } = useGreen(masaInstance, walletAddress, identity, provider);
 
   const {
     loggedIn,
