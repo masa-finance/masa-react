@@ -52,7 +52,12 @@ export const useGreen = (
 
   const handleGenerateGreen = useCallback(
     async (phoneNumber: string) => {
-      if (masa) await masa?.green.generate(phoneNumber);
+      let response;
+      if (masa) {
+        response = await masa?.green.generate(phoneNumber);
+      }
+
+      return response;
     },
     [masa]
   );
