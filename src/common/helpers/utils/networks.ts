@@ -75,5 +75,5 @@ export const SupportedNetworks = {
   97: BSCTestnet,
   137: polygonNetwork,
   44787: alfajoresNetwork,
-  80001: mumbaiNetwork
+  80001: mumbaiNetwork,
 };
