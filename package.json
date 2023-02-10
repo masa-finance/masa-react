@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "0.24.10",
+  "version": "0.24.11",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/tools.esm.js",
