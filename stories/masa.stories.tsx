@@ -21,10 +21,9 @@ const meta: Meta = {
 export default meta;
 
 const Component = (): JSX.Element => {
-  const { connect, missingProvider, loggedIn, handleLogout, switchNetwork } =
-    useMasa();
+  const { connect, loggedIn, handleLogout, switchNetwork } = useMasa();
 
-  const handleConect = useCallback(() => {
+  const handleConnect = useCallback(() => {
     connect?.({
       scope: [],
       callback: function () {
@@ -45,15 +44,15 @@ const Component = (): JSX.Element => {
     <>
       <h1>SDK Tester!</h1>
 
-      <button onClick={handleConect}>Use Masa!</button>
+      <button onClick={handleConnect}>Use Masa!</button>
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
 
-      <button onClick={() => switchNetwork?.(1)}>Switch to Ethereum</button>
-      <button onClick={() => switchNetwork?.(5)}>Switch to Goerli</button>
-      <button onClick={() => switchNetwork?.(137)}>Switch to Polygon</button>
-      <button onClick={() => switchNetwork?.(56)}>Switch to BSC</button>
-      <button onClick={() => switchNetwork?.(44787)}>
+      <button onClick={() => switchNetwork?.('1')}>Switch to Ethereum</button>
+      <button onClick={() => switchNetwork?.('5')}>Switch to Goerli</button>
+      <button onClick={() => switchNetwork?.('137')}>Switch to Polygon</button>
+      <button onClick={() => switchNetwork?.('56')}>Switch to BSC</button>
+      <button onClick={() => switchNetwork?.('44787')}>
         Switch to Alfajores
       </button>
 

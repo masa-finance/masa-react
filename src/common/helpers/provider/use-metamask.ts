@@ -87,7 +87,7 @@ export const useMetamask = ({
 
       window?.ethereum?.on('networkChanged', async () => {
         const newProvider = new ethers.providers.Web3Provider(
-          window?.ethereum as any
+          window?.ethereum as never
         );
         if (newProvider) {
           await newProvider.send('eth_requestAccounts', []);

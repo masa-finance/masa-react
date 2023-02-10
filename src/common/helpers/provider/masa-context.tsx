@@ -6,6 +6,7 @@ import {
   SoulNameDetails,
 } from '@masa-finance/masa-sdk';
 import { BigNumber, ethers } from 'ethers';
+import { Network } from '../utils/networks';
 
 export const MASA_CONTEXT = createContext<MasaShape>({});
 
@@ -52,10 +53,11 @@ export interface MasaShape {
         metadata?: IGreen | undefined;
       }[]
     | undefined;
+  greenLoading?: boolean;
   handleCreateGreen?: (phoneNumber: string, code: string) => void;
   handleGenerateGreen?: (phoneNumber: string) => void;
   chain?: null | ethers.providers.Network;
-  switchNetwork?: (chainId: number) => void;
-  SupportedNetworks?: any;
+  switchNetwork?: (chainId: string) => void;
+  SupportedNetworks?: { [index: number]: Network };
   network?: string;
 }

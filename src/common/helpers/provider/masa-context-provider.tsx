@@ -11,7 +11,7 @@ import {
 } from './modules';
 import { ethers } from 'ethers';
 import { MASA_CONTEXT, MasaShape } from './masa-context';
-import { SupportedNetworks } from '../utils/networks';
+import { Network, SupportedNetworks } from '../utils/networks';
 
 export interface ArweaveConfig {
   port?: string;
@@ -85,7 +85,7 @@ export const MasaContextProvider = ({
     isLoading: greenLoading,
     handleGenerateGreen,
     handleCreateGreen,
-  } = useGreen(masaInstance, walletAddress, identity, provider);
+  } = useGreen(masaInstance, walletAddress, identity);
 
   const {
     loggedIn,
@@ -172,7 +172,7 @@ export const MasaContextProvider = ({
   ]);
 
   const addNetwork = useCallback(
-    async (networkDetails) => {
+    async (networkDetails: Network) => {
       try {
         if (typeof window !== 'undefined' && networkDetails) {
           await window?.ethereum?.request({
@@ -180,8 +180,8 @@ export const MasaContextProvider = ({
             params: [networkDetails],
           });
         }
-      } catch (err) {
-        console.log(
+      } catch (error: any) {
+        console.error(
           `error ocuured while adding new chain with chainId:${networkDetails?.chainId}`
         );
       }
@@ -190,7 +190,7 @@ export const MasaContextProvider = ({
   );
 
   const switchNetwork = useCallback(
-    async (chainId: number) => {
+    async (chainId: string) => {
       try {
         if (typeof window !== 'undefined') {
           await window?.ethereum?.request({
@@ -202,7 +202,7 @@ export const MasaContextProvider = ({
       } catch (err) {
         const error = err as { code: number };
         if (error.code === 4902) {
-          addNetwork(SupportedNetworks[chainId]);
+          void addNetwork(SupportedNetworks[chainId]);
         }
       }
     },
@@ -234,6 +234,7 @@ export const MasaContextProvider = ({
     missingProvider,
     setMissingProvider,
     greens,
+    greenLoading,
     handleGenerateGreen,
     handleCreateGreen,
     chain,

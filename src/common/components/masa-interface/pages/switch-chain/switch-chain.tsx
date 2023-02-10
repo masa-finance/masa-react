@@ -1,10 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
 import { useMasa } from '../../../../helpers';
 import { MasaLoading } from '../../../masa-loading';
+import { Network } from '../../../../helpers/utils/networks';
 
 export const InterfaceSwitchChain = (): JSX.Element => {
   const { network, loading, switchNetwork, SupportedNetworks } = useMasa();
-  const chain = useMemo(() => {
+
+  const currentNetwork: Network | null = useMemo(() => {
     if (SupportedNetworks && network)
       for (const chainId in SupportedNetworks) {
         if (
@@ -13,14 +15,15 @@ export const InterfaceSwitchChain = (): JSX.Element => {
           return SupportedNetworks[chainId];
         }
       }
-    else {
-      return null;
-    }
+
+    return null;
   }, [network, SupportedNetworks]);
 
   const handleSwitch = useCallback(() => {
-    switchNetwork?.(chain?.chainId);
-  }, [switchNetwork, chain]);
+    if (switchNetwork && currentNetwork) {
+      switchNetwork(currentNetwork.chainId);
+    }
+  }, [switchNetwork, currentNetwork]);
 
   if (loading) return <MasaLoading />;
 

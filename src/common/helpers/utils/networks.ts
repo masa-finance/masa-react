@@ -7,7 +7,19 @@ const mumbaiChainId = 80001;
 const alfajoresChainId = 44787;
 const celoChainId = 42220;
 
-const BSCNetwork = {
+export interface Network {
+  chainName: string;
+  chainId: string;
+  rpcUrls?: string[];
+  nativeCurrency?: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  blockExplorerUrls?: string[];
+}
+
+const BSCNetwork: Network = {
   chainName: 'Binance Smart Chain',
   chainId: ethers.utils.hexValue(BSCChainId),
   rpcUrls: ['https://endpoints.omniatech.io/v1/bsc/mainnet/public'],
@@ -18,7 +30,7 @@ const BSCNetwork = {
   },
 };
 
-const BSCTestnet = {
+const BSCTestnet: Network = {
   chainName: 'Binance Smart Chain Testnet',
   chainId: ethers.utils.hexValue(BSCTChainId),
   rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
@@ -29,7 +41,7 @@ const BSCTestnet = {
   },
 };
 
-const celoNetwork = {
+const celoNetwork: Network = {
   chainName: 'Celo',
   chainId: ethers.utils.hexValue(celoChainId),
   rpcUrls: ['https://forno.celo.org'],
@@ -41,7 +53,7 @@ const celoNetwork = {
   blockExplorerUrls: ['https://alfajores-blockscout.celo-testnet.org'],
 };
 
-const alfajoresNetwork = {
+const alfajoresNetwork: Network = {
   chainName: 'Alfajores Network',
   chainId: ethers.utils.hexValue(alfajoresChainId),
   rpcUrls: ['https://alfajores-forno.celo-testnet.org'],
@@ -52,7 +64,7 @@ const alfajoresNetwork = {
   },
 };
 
-const polygonNetwork = {
+const polygonNetwork: Network = {
   chainId: ethers.utils.hexValue(polygonChainId),
   chainName: 'Polygon Mainnet',
   nativeCurrency: {
@@ -64,7 +76,7 @@ const polygonNetwork = {
   blockExplorerUrls: ['https://polygonscan.com/'],
 };
 
-const mumbaiNetwork = {
+const mumbaiNetwork: Network = {
   chainId: ethers.utils.hexValue(mumbaiChainId),
   chainName: 'Mumbai Testnet',
   nativeCurrency: {
@@ -76,7 +88,9 @@ const mumbaiNetwork = {
   blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
 };
 
-export const SupportedNetworks = {
+export const SupportedNetworks: {
+  [key: number]: Network;
+} = {
   1: {
     chainId: ethers.utils.hexValue(1),
     chainName: 'Ethereum',

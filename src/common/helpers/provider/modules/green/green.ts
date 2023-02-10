@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { IGreen, Masa } from '@masa-finance/masa-sdk';
@@ -12,8 +12,7 @@ export const useGreen = (
         identityId?: BigNumber | undefined;
         address?: string | undefined;
       }
-    | undefined,
-  provider: any
+    | undefined
 ): {
   greens:
     | {
@@ -28,22 +27,24 @@ export const useGreen = (
   isLoading: boolean;
   error: unknown;
 } => {
+  const queryKey: string = useMemo(() => {
+    return `green-${walletAddress}-${masa?.config.network}`;
+  }, [walletAddress, masa?.config.network]);
+
   const {
     data: greens,
     status,
     isLoading,
     error,
-  } = useQuery(
-    `green-${walletAddress}-${provider?.provider?._network?.chainId ?? 0}`,
-    () => masa?.green.load(identity?.identityId!),
-    { enabled: !!masa && !!walletAddress && !!identity?.identityId }
-  );
+  } = useQuery(queryKey, () => masa?.green.load(identity?.identityId!), {
+    enabled: !!masa && !!walletAddress && !!identity?.identityId,
+  });
 
   const handleCreateGreen = useCallback(
     async (phoneNumber: string, code: string) => {
       const response = await masa?.green.create(phoneNumber, code);
 
-      await queryClient.invalidateQueries(`green-${walletAddress}`);
+      await queryClient.invalidateQueries(queryKey);
 
       return response;
     },

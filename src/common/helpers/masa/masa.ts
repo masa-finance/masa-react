@@ -33,7 +33,7 @@ export const createRandomWallet = (): Wallet | null => {
   if (typeof window !== 'undefined') {
     if (typeof window?.ethereum !== 'undefined') {
       return wallet.connect(
-        new ethers.providers.Web3Provider(window?.ethereum as any)
+        new ethers.providers.Web3Provider(window?.ethereum as never)
       );
     } else {
       return null;
