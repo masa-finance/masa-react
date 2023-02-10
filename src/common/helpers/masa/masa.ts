@@ -7,25 +7,37 @@ import {
 import { ethers, Wallet } from 'ethers';
 import { ArweaveConfig } from '../provider';
 
-const getChainName = (chainId: number): string => {
+const getChainName = (chainId: number): NetworkName => {
   switch (chainId) {
+    // ETH
     case 1:
       return 'mainnet';
     case 5:
       return 'goerli';
+
+    // Celo
     case 44787:
       return 'alfajores';
     case 42220:
       return 'celo';
+
+    // Polygon
     case 137:
       return 'polygon';
     case 80001:
       return 'mumbai';
 
+    // BSC
+    case 97:
+      return 'bsctest';
+    case 56:
+      return 'bsc';
+
     default:
-      return 'goerli';
+      throw new Error(`Unsupported network! ${chainId}`);
   }
 };
+
 export const createRandomWallet = (): Wallet | null => {
   console.info('Creating random wallet!');
   const wallet = ethers.Wallet.createRandom();
