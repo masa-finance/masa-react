@@ -77,9 +77,7 @@ export const createNewMasa = ({
   return new Masa({
     wallet: signer,
     apiUrl: env.apiUrl,
-    defaultNetwork: getChainName(
-      signer?.provider?._network?.chainId ?? 5
-    ) as NetworkName,
+    defaultNetwork: getChainName(signer?.provider?._network?.chainId ?? 5),
     environment: env.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
