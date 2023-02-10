@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
+import { useMemo } from 'react';
 
 export const useSoulnames = (
   masa: Masa | null,
@@ -17,12 +18,17 @@ export const useSoulnames = (
   isLoading: boolean;
   error: unknown;
 } => {
+  const queryKey: string = useMemo(() => {
+    return `soulnames-${walletAddress}-${masa?.config.network}`;
+  }, [walletAddress, masa]);
+
+  console.log(queryKey);
   const {
     data: soulnames,
     status,
     isLoading,
     error,
-  } = useQuery(`soulnames-${walletAddress}`, () => masa?.soulName.list(), {
+  } = useQuery(queryKey, () => masa?.soulName.list(), {
     enabled: !!masa && !!walletAddress && !!identity?.identityId,
   });
 

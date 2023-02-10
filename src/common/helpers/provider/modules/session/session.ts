@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { Masa } from '@masa-finance/masa-sdk';
@@ -14,40 +14,44 @@ export const useSession = (
   isLoading: boolean;
   error: unknown;
 } => {
+  const queryKey: string = useMemo(() => {
+    return `session-${walletAddress}-${masa?.config.network}`;
+  }, [walletAddress, masa]);
+
   const {
     data: loggedIn,
     status,
     isLoading,
     error,
-  } = useQuery(`session-${walletAddress}`, () => masa?.session.checkLogin(), {
+  } = useQuery(queryKey, () => masa?.session.checkLogin(), {
     enabled: !!masa && !!walletAddress,
   });
 
   useEffect(() => {
     if (loggedIn && walletAddress) {
-      void queryClient.invalidateQueries(`session-${walletAddress}`);
+      void queryClient.invalidateQueries(queryKey);
     }
-  }, [walletAddress, loggedIn]);
+  }, [walletAddress, loggedIn, queryKey]);
 
   const login = useCallback(async () => {
     const logged = await masa?.session.login();
     if (logged) {
-      await queryClient.invalidateQueries(`session-${walletAddress}`);
+      await queryClient.invalidateQueries(queryKey);
       await queryClient.refetchQueries();
     }
-  }, [masa, walletAddress]);
+  }, [masa, walletAddress, queryKey]);
 
   const logout = useCallback(
     async (callback?: () => void) => {
       await masa?.session.logout();
-      await queryClient.invalidateQueries(`session-${walletAddress}`);
+      await queryClient.invalidateQueries(queryKey);
       await queryClient.refetchQueries();
 
       if (callback) {
         callback();
       }
     },
-    [masa, walletAddress]
+    [masa, walletAddress, queryKey]
   );
 
   return { loggedIn, login, logout, status, isLoading, error };

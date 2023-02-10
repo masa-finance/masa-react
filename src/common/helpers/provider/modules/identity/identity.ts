@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { Masa } from '@masa-finance/masa-sdk';
@@ -19,21 +19,20 @@ export const useIdentity = (
   isLoading: boolean;
   error: unknown;
 } => {
+  const queryKey: string = useMemo(() => {
+    return `identity-${walletAddress}-${masa?.config.network}`;
+  }, [walletAddress, masa]);
   const {
     data: identity,
     status,
     isLoading,
     error,
-  } = useQuery(
-    `identity-${walletAddress}`,
-    () => masa?.identity.load(walletAddress),
-    {
-      enabled: !!masa && !!walletAddress,
-      onSuccess: (identity: { identityId?: BigNumber; address?: string }) => {
-        console.log({ identity });
-      },
-    }
-  );
+  } = useQuery(queryKey, () => masa?.identity.load(walletAddress), {
+    enabled: !!masa && !!walletAddress,
+    onSuccess: (identity: { identityId?: BigNumber; address?: string }) => {
+      console.log({ identity });
+    },
+  });
 
   const handlePurchaseIdentity = useCallback(async () => {
     await masa?.identity.create();

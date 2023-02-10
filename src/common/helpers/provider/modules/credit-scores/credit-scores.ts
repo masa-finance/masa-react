@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { ICreditScore, Masa } from '@masa-finance/masa-sdk';
@@ -26,24 +26,26 @@ export const useCreditScores = (
   isLoading: boolean;
   error: unknown;
 } => {
+  const queryKey: string = useMemo(() => {
+    return `credit-scores-${walletAddress}-${masa?.config.network}`;
+  }, [walletAddress, masa]);
+
   const {
     data: creditScores,
     status,
     isLoading,
     error,
-  } = useQuery(
-    `credit-scores-${walletAddress}`,
-    () => masa?.creditScore.list(),
-    { enabled: !!masa && !!walletAddress && !!identity?.identityId }
-  );
+  } = useQuery(queryKey, () => masa?.creditScore.list(), {
+    enabled: !!masa && !!walletAddress && !!identity?.identityId,
+  });
 
   const handleCreateCreditScore = useCallback(async () => {
     const response = await masa?.creditScore.create();
 
-    await queryClient.invalidateQueries(`credit-scores-${walletAddress}`);
+    await queryClient.invalidateQueries(queryKey);
 
     return response?.success;
-  }, [masa, walletAddress]);
+  }, [masa, walletAddress, queryKey]);
 
   return {
     creditScores,

@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { Masa } from '@masa-finance/masa-sdk';
 import { ethers } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export const useWallet = (
   masa: Masa | null,
@@ -13,12 +13,16 @@ export const useWallet = (
   error: unknown;
   chain?: null | ethers.providers.Network;
 } => {
+  const queryKey: string = useMemo(() => {
+    return `wallet-${masa?.config.network}`;
+  }, [masa]);
+
   const {
     data: walletAddress,
     status,
     isLoading,
     error,
-  } = useQuery(`wallet`, () => masa?.config.wallet.getAddress(), {
+  } = useQuery(queryKey, () => masa?.config.wallet.getAddress(), {
     enabled: !!masa && !!provider,
   });
 
