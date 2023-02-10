@@ -20,7 +20,7 @@ export const useSoulnames = (
 } => {
   const queryKey: string = useMemo(() => {
     return `soulnames-${walletAddress}-${masa?.config.network}`;
-  }, [walletAddress, masa?.config.network]);
+  }, [walletAddress, masa]);
 
   console.log(queryKey);
   const {
