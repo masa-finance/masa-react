@@ -13,7 +13,6 @@ export const useWallet = (
   error: unknown;
   chain?: null | ethers.providers.Network;
 } => {
-
   const queryKey: string = useMemo(() => {
     return `wallet-${masa?.config.network}`;
   }, [masa]);
