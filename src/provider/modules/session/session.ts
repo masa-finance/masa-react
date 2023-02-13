@@ -39,7 +39,7 @@ export const useSession = (
       await queryClient.invalidateQueries(queryKey);
       await queryClient.refetchQueries();
     }
-  }, [masa, walletAddress, queryKey]);
+  }, [masa, queryKey]);
 
   const logout = useCallback(
     async (callback?: () => void) => {
@@ -51,7 +51,7 @@ export const useSession = (
         callback();
       }
     },
-    [masa, walletAddress, queryKey]
+    [masa, queryKey]
   );
 
   return { loggedIn, login, logout, status, isLoading, error };

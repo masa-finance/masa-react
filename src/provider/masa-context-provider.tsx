@@ -175,23 +175,20 @@ export const MasaContextProvider = ({
     chain,
   ]);
 
-  const addNetwork = useCallback(
-    async (networkDetails: Network) => {
-      try {
-        if (typeof window !== 'undefined' && networkDetails) {
-          await window?.ethereum?.request({
-            method: 'wallet_addEthereumChain',
-            params: [networkDetails],
-          });
-        }
-      } catch (error) {
-        console.error(
-          `error ocuured while adding new chain with chainId:${networkDetails?.chainId}`
-        );
+  const addNetwork = useCallback(async (networkDetails: Network) => {
+    try {
+      if (typeof window !== 'undefined' && networkDetails) {
+        await window?.ethereum?.request({
+          method: 'wallet_addEthereumChain',
+          params: [networkDetails],
+        });
       }
-    },
-    [provider]
-  );
+    } catch (error) {
+      console.error(
+        `error ocuured while adding new chain with chainId:${networkDetails?.chainId}`
+      );
+    }
+  }, []);
 
   const switchNetwork = useCallback(
     async (chainId: number) => {
@@ -210,7 +207,7 @@ export const MasaContextProvider = ({
         }
       }
     },
-    [provider]
+    [addNetwork]
   );
 
   const context = {

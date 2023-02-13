@@ -47,7 +47,7 @@ export const useCreditScores = (
     await queryClient.invalidateQueries(queryKey);
 
     return response?.success;
-  }, [masa, walletAddress, queryKey]);
+  }, [masa, queryKey]);
 
   return {
     creditScores,

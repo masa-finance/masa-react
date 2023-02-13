@@ -13,7 +13,9 @@ export const useMetamask = ({
   const provider = useMemo(() => {
     if (typeof window !== 'undefined') {
       if (typeof window?.ethereum !== 'undefined') {
-        return new ethers.providers.Web3Provider(window?.ethereum as any);
+        return new ethers.providers.Web3Provider(
+          window?.ethereum as unknown as ethers.providers.ExternalProvider
+        );
       } else {
         return null;
       }

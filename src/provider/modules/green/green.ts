@@ -39,7 +39,7 @@ export const useGreen = (
 } => {
   const queryKey: string = useMemo(() => {
     return `green-${walletAddress}-${masa?.config.network}`;
-  }, [walletAddress, masa?.config.network]);
+  }, [walletAddress, masa]);
 
   const {
     data: greens,
@@ -61,7 +61,7 @@ export const useGreen = (
 
       return response;
     },
-    [masa, walletAddress]
+    [masa, queryKey]
   );
 
   const handleGenerateGreen = useCallback(

@@ -59,10 +59,10 @@ export interface MasaShape {
   handleCreateGreen?: (
     phoneNumber: string,
     code: string
-  ) => Promise<GenerateGreenResult | undefined>;
+  ) => Promise<VerifyGreenResult | undefined>;
   handleGenerateGreen?: (
     phoneNumber: string
-  ) => Promise<VerifyGreenResult | undefined>;
+  ) => Promise<GenerateGreenResult | undefined>;
   chain?: null | ethers.providers.Network;
   switchNetwork?: (chainId: number) => void;
   SupportedNetworks?: { [index: number]: Network };
