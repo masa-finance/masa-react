@@ -11,13 +11,7 @@ import { BigNumber } from 'ethers';
 
 export const useGreen = (
   masa: Masa | null,
-  walletAddress: string | undefined,
-  identity:
-    | {
-        identityId?: BigNumber | undefined;
-        address?: string | undefined;
-      }
-    | undefined
+  walletAddress: string | undefined
 ): {
   greens:
     | {
@@ -46,8 +40,8 @@ export const useGreen = (
     status,
     isLoading,
     error,
-  } = useQuery(queryKey, () => masa?.green.load(identity?.identityId!), {
-    enabled: !!masa && !!walletAddress && !!identity?.identityId,
+  } = useQuery(queryKey, () => masa?.green.list(), {
+    enabled: !!masa && !!walletAddress,
   });
 
   const handleCreateGreen = useCallback(
