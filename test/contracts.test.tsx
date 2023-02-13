@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { loadIdentityContracts } from '../src/index';
+import { loadIdentityContracts } from '@masa-finance/masa-sdk';
 
 describe('Contracts', () => {
   let provider;

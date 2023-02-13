@@ -48,11 +48,11 @@ const Component = (): JSX.Element => {
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
 
-      <button onClick={() => switchNetwork?.('1')}>Switch to Ethereum</button>
-      <button onClick={() => switchNetwork?.('5')}>Switch to Goerli</button>
-      <button onClick={() => switchNetwork?.('137')}>Switch to Polygon</button>
-      <button onClick={() => switchNetwork?.('56')}>Switch to BSC</button>
-      <button onClick={() => switchNetwork?.('44787')}>
+      <button onClick={() => switchNetwork?.(1)}>Switch to Ethereum</button>
+      <button onClick={() => switchNetwork?.(5)}>Switch to Goerli</button>
+      <button onClick={() => switchNetwork?.(137)}>Switch to Polygon</button>
+      <button onClick={() => switchNetwork?.(56)}>Switch to BSC</button>
+      <button onClick={() => switchNetwork?.(44787)}>
         Switch to Alfajores
       </button>
 

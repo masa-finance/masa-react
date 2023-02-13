@@ -196,7 +196,7 @@ export const MasaContextProvider = ({
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: ethers.utils.hexValue(chainId) }],
           });
-          console.log(`switched to chainid : ${chainId} succesfully`);
+          console.log(`switched to chainId: ${chainId} successfully`);
         }
       } catch (err) {
         const error = err as { code: number };
