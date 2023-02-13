@@ -24,7 +24,7 @@ export type EnvironmentNameEx = EnvironmentName & ('local' | 'stage');
 export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
-  environment?: EnvironmentNameEx;
+  environmentName?: EnvironmentNameEx;
   signer?: ethers.Wallet | ethers.Signer;
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
@@ -35,7 +35,7 @@ export interface MasaContextProviderProps extends MasaShape {
 export const MasaContextProvider = ({
   children,
   company,
-  environment = 'dev' as EnvironmentNameEx,
+  environmentName = 'dev' as EnvironmentNameEx,
   verbose = false,
   signer: externalSigner,
   noWallet,
@@ -145,32 +145,24 @@ export const MasaContextProvider = ({
   }, [modalCallback, setModalOpen, loggedIn, isConnected, network, chain]);
 
   useEffect(() => {
-    if (noWallet) {
-      setMasaInstance(
-        createNewMasa({
-          environment,
-          arweaveConfig,
-          verbose,
-        })
-      );
-    } else if (provider) {
-      setMasaInstance(
-        createNewMasa({
-          newWallet: provider,
-          environment,
-          arweaveConfig,
-          verbose,
-        })
-      );
-    } else {
-      setMasaInstance(null);
-    }
+    const loadMasa = async (): Promise<void> => {
+      const masa: Masa | null = await createNewMasa({
+        newWallet: noWallet ? null : provider,
+        environmentName,
+        arweaveConfig,
+        verbose,
+      });
+
+      void setMasaInstance(masa);
+    };
+
+    void loadMasa();
   }, [
     provider,
     noWallet,
     walletAddress,
     arweaveConfig,
-    environment,
+    environmentName,
     verbose,
     chain,
   ]);

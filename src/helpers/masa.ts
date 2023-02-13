@@ -55,30 +55,37 @@ export const createRandomWallet = (): Wallet | null => {
   }
 };
 
-export const createNewMasa = ({
+export const createNewMasa = async ({
   newWallet,
-  environment,
+  environmentName,
   arweaveConfig,
   verbose,
 }: {
-  newWallet?: any;
-  environment: string;
+  newWallet: ethers.Signer | null;
+  environmentName: string;
   arweaveConfig?: ArweaveConfig;
   verbose: boolean;
-}): Masa | null => {
-  const signer = newWallet ? newWallet : createRandomWallet();
+}): Promise<Masa | null> => {
+  const signer: ethers.Signer | null = newWallet
+    ? newWallet
+    : createRandomWallet();
+
   if (!signer) return null;
 
-  const env = environments.find((e: Environment) => e.name === environment);
-  if (!env) return null;
+  const environment = environments.find(
+    (environment: Environment) => environment.name === environmentName
+  );
+  if (!environment) return null;
 
-  console.log({ NETWORK: signer?.provider?._network?.chainId ?? 5 });
+  const chainId: number = await signer.getChainId();
+
+  console.log({ NETWORK: chainId });
 
   return new Masa({
     wallet: signer,
-    apiUrl: env.apiUrl,
-    defaultNetwork: getChainName(signer?.provider?._network?.chainId ?? 5),
-    environment: env.environment,
+    apiUrl: environment.apiUrl,
+    defaultNetwork: getChainName(chainId),
+    environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
       port: parseInt(arweaveConfig?.port || '443'),
