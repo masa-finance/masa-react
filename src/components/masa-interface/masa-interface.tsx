@@ -30,7 +30,6 @@ export const MasaInterface = ({
     isModalOpen,
     setModalOpen,
     isConnected,
-    loading,
     identity,
     loggedIn,
     closeModal,
@@ -52,16 +51,7 @@ export const MasaInterface = ({
     if (isConnected && loggedIn) return 'connectedState';
 
     return 'connector';
-  }, [
-    loading,
-    isConnected,
-    identity,
-    loggedIn,
-    scope,
-    creditScores,
-    network,
-    chain,
-  ]);
+  }, [isConnected, identity, loggedIn, scope, creditScores, network, chain]);
 
   return (
     <>
