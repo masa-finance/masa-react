@@ -14,17 +14,17 @@ export const useGreen = (
   walletAddress: string | undefined,
   identity:
     | {
-    identityId?: BigNumber | undefined;
-    address?: string | undefined;
-  }
+        identityId?: BigNumber | undefined;
+        address?: string | undefined;
+      }
     | undefined
 ): {
   greens:
     | {
-    tokenId: BigNumber;
-    tokenUri: string;
-    metadata?: IGreen | undefined;
-  }[]
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata?: IGreen | undefined;
+      }[]
     | undefined;
   handleGenerateGreen: (
     phoneNumber: string

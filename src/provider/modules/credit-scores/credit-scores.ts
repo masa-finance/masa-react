@@ -9,17 +9,17 @@ export const useCreditScores = (
   walletAddress: string | undefined,
   identity:
     | {
-    identityId?: BigNumber | undefined;
-    address?: string | undefined;
-  }
+        identityId?: BigNumber | undefined;
+        address?: string | undefined;
+      }
     | undefined
 ): {
   creditScores:
     | {
-    tokenId: BigNumber;
-    tokenUri: string;
-    metadata?: ICreditScore | undefined;
-  }[]
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata?: ICreditScore | undefined;
+      }[]
     | undefined;
   handleCreateCreditScore: () => void;
   status: string;
