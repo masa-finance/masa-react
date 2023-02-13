@@ -42,6 +42,17 @@ export const useGreen = (
     error,
   } = useQuery(queryKey, () => masa?.green.list(), {
     enabled: !!masa && !!walletAddress,
+    onSuccess: (
+      greens: {
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata?: IGreen | undefined;
+      }[]
+    ) => {
+      if (masa?.config.verbose) {
+        console.log({ greens, network: masa?.config.network });
+      }
+    },
   });
 
   const handleCreateGreen = useCallback(
