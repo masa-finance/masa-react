@@ -134,10 +134,15 @@ export const MasaContextProvider = ({
 
   const closeModal = useCallback(() => {
     setModalOpen(false);
-    if (modalCallback && loggedIn && isConnected) {
+    if (
+      modalCallback &&
+      loggedIn &&
+      isConnected &&
+      (network ? !chain?.name.includes(network) : true)
+    ) {
       modalCallback();
     }
-  }, [modalCallback, setModalOpen, loggedIn, isConnected]);
+  }, [modalCallback, setModalOpen, loggedIn, isConnected, network, chain]);
 
   useEffect(() => {
     if (noWallet) {
