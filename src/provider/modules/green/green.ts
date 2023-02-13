@@ -2,10 +2,10 @@ import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import {
-  BaseResult,
-  CreateGreenResult,
+  GenerateGreenResult,
   IGreen,
   Masa,
+  VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
@@ -14,28 +14,25 @@ export const useGreen = (
   walletAddress: string | undefined,
   identity:
     | {
-        identityId?: BigNumber | undefined;
-        address?: string | undefined;
-      }
+    identityId?: BigNumber | undefined;
+    address?: string | undefined;
+  }
     | undefined
 ): {
   greens:
     | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: IGreen | undefined;
-      }[]
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: IGreen | undefined;
+  }[]
     | undefined;
-  handleGenerateGreen: (phoneNumber: string) => Promise<
-    | (BaseResult & {
-        status: string;
-      })
-    | undefined
-  >;
+  handleGenerateGreen: (
+    phoneNumber: string
+  ) => Promise<GenerateGreenResult | undefined>;
   handleCreateGreen: (
     phoneNumber: string,
     code: string
-  ) => Promise<CreateGreenResult | undefined>;
+  ) => Promise<VerifyGreenResult | undefined>;
   status: string;
   isLoading: boolean;
   error: unknown;
@@ -57,7 +54,7 @@ export const useGreen = (
     async (
       phoneNumber: string,
       code: string
-    ): Promise<CreateGreenResult | undefined> => {
+    ): Promise<VerifyGreenResult | undefined> => {
       const response = await masa?.green.create(phoneNumber, code);
 
       await queryClient.invalidateQueries(queryKey);
@@ -68,14 +65,7 @@ export const useGreen = (
   );
 
   const handleGenerateGreen = useCallback(
-    async (
-      phoneNumber: string
-    ): Promise<
-      | (BaseResult & {
-          status: string;
-        })
-      | undefined
-    > => {
+    async (phoneNumber: string): Promise<GenerateGreenResult | undefined> => {
       let response;
       if (masa) {
         response = await masa?.green.generate(phoneNumber);

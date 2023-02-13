@@ -1,11 +1,11 @@
 import React, { createContext } from 'react';
 import {
-  BaseResult,
-  CreateGreenResult,
+  GenerateGreenResult,
   ICreditScore,
   IGreen,
   Masa,
   SoulNameDetails,
+  VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber, ethers } from 'ethers';
 import { Network } from '../helpers';
@@ -59,13 +59,10 @@ export interface MasaShape {
   handleCreateGreen?: (
     phoneNumber: string,
     code: string
-  ) => Promise<CreateGreenResult | undefined>;
-  handleGenerateGreen?: (phoneNumber: string) => Promise<
-    | (BaseResult & {
-        status: string;
-      })
-    | undefined
-  >;
+  ) => Promise<GenerateGreenResult | undefined>;
+  handleGenerateGreen?: (
+    phoneNumber: string
+  ) => Promise<VerifyGreenResult | undefined>;
   chain?: null | ethers.providers.Network;
   switchNetwork?: (chainId: number) => void;
   SupportedNetworks?: { [index: number]: Network };

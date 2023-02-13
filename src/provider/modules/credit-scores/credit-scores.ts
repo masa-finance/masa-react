@@ -9,17 +9,17 @@ export const useCreditScores = (
   walletAddress: string | undefined,
   identity:
     | {
-        identityId?: BigNumber | undefined;
-        address?: string | undefined;
-      }
+    identityId?: BigNumber | undefined;
+    address?: string | undefined;
+  }
     | undefined
 ): {
   creditScores:
     | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: ICreditScore | undefined;
-      }[]
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: ICreditScore | undefined;
+  }[]
     | undefined;
   handleCreateCreditScore: () => void;
   status: string;
@@ -39,7 +39,9 @@ export const useCreditScores = (
     enabled: !!masa && !!walletAddress && !!identity?.identityId,
   });
 
-  const handleCreateCreditScore = useCallback(async () => {
+  const handleCreateCreditScore = useCallback(async (): Promise<
+    boolean | undefined
+  > => {
     const response = await masa?.creditScore.create();
 
     await queryClient.invalidateQueries(queryKey);
