@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@babel/core": "^7.20.2",
+    "@babel/core": "^7.20.12",
     "@rollup/plugin-replace": "^5.0.1",
     "@size-limit/preset-big-lib": "^8.1.0",
     "@size-limit/webpack-why": "^8.1.0",
