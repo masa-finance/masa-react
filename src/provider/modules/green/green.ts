@@ -31,8 +31,8 @@ export const useGreen = (
   isLoading: boolean;
   error: unknown;
 } => {
-  const queryKey: string = useMemo(() => {
-    return `green-${walletAddress}-${masa?.config.network}`;
+  const queryKey: any[] = useMemo(() => {
+    return ['green', walletAddress, masa?.config.network];
   }, [walletAddress, masa]);
 
   const {
@@ -40,20 +40,27 @@ export const useGreen = (
     status,
     isLoading,
     error,
-  } = useQuery(queryKey, () => masa?.green.list(), {
-    enabled: !!masa && !!walletAddress,
-    onSuccess: (
-      greens: {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: IGreen | undefined;
-      }[]
-    ) => {
-      if (masa?.config.verbose) {
-        console.log({ greens, network: masa?.config.network });
-      }
+  } = useQuery(
+    queryKey,
+    async () => {
+      const list = await masa?.green.list();
+      return list
     },
-  });
+    {
+      enabled: !!masa && !!walletAddress,
+      onSuccess: (
+        greens: {
+          tokenId: BigNumber;
+          tokenUri: string;
+          metadata?: IGreen | undefined;
+        }[]
+      ) => {
+        if (masa?.config.verbose) {
+          console.log({ greens, network: masa?.config.network });
+        }
+      },
+    }
+  );
 
   const handleCreateGreen = useCallback(
     async (

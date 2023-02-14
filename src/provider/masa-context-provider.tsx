@@ -11,6 +11,7 @@ import {
 } from './modules';
 import { ethers } from 'ethers';
 import { MASA_CONTEXT, MasaShape } from './masa-context';
+import { queryClient } from './masa-query-client';
 
 export interface ArweaveConfig {
   port?: string;
@@ -97,6 +98,7 @@ export const MasaContextProvider = ({
 
   const loading = useMemo(() => {
     return (
+      !masaInstance ||
       sessionLoading ||
       creditScoreLoading ||
       identityLoading ||
@@ -109,7 +111,9 @@ export const MasaContextProvider = ({
     identityLoading,
     walletLoading,
     greenLoading,
+    masaInstance
   ]);
+
 
   useEffect(() => {
     if (externalSigner) {
@@ -146,8 +150,9 @@ export const MasaContextProvider = ({
 
   useEffect(() => {
     const loadMasa = async (): Promise<void> => {
+      if (!provider) return;
       const masa: Masa | null = await createNewMasa({
-        newWallet: noWallet ? null : provider,
+        newWallet: provider,
         environmentName,
         arweaveConfig,
         verbose,
@@ -157,6 +162,8 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
+
+    queryClient.invalidateQueries('green');
   }, [
     provider,
     noWallet,
