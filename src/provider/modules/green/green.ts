@@ -44,7 +44,7 @@ export const useGreen = (
     queryKey,
     async () => {
       const list = await masa?.green.list();
-      return list
+      return list;
     },
     {
       enabled: !!masa && !!walletAddress,

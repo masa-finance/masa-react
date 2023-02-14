@@ -111,9 +111,8 @@ export const MasaContextProvider = ({
     identityLoading,
     walletLoading,
     greenLoading,
-    masaInstance
+    masaInstance,
   ]);
-
 
   useEffect(() => {
     if (externalSigner) {
