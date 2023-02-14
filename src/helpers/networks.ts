@@ -1,5 +1,7 @@
 import { ethers } from 'ethers';
 
+const ethereumChainId = 1;
+const goerliChainId = 5;
 const polygonChainId = 137;
 const BSCChainId = 56;
 const BSCTChainId = 97;
@@ -24,8 +26,8 @@ const BSCNetwork: Network = {
   chainId: parseInt(ethers.utils.hexValue(BSCChainId)),
   rpcUrls: ['https://endpoints.omniatech.io/v1/bsc/mainnet/public'],
   nativeCurrency: {
-    name: 'BSC',
-    symbol: 'BSC',
+    name: 'BNB',
+    symbol: 'BNB',
     decimals: 18,
   },
 };
@@ -35,8 +37,8 @@ const BSCTestnet: Network = {
   chainId: parseInt(ethers.utils.hexValue(BSCTChainId)),
   rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
   nativeCurrency: {
-    name: 'BSC',
-    symbol: 'BSC',
+    name: 'tBNB',
+    symbol: 'tBNB',
     decimals: 18,
   },
 };
@@ -80,25 +82,39 @@ const mumbaiNetwork: Network = {
   chainId: parseInt(ethers.utils.hexValue(mumbaiChainId)),
   chainName: 'Mumbai Testnet',
   nativeCurrency: {
-    name: 'MATIC',
-    symbol: 'MATIC', // 2-6 characters long
+    name: 'tMATIC',
+    symbol: 'tMATIC', // 2-6 characters long
     decimals: 18,
   },
   rpcUrls: ['https://polygon-testnet-rpc.allthatnode.com:8545'],
   blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
 };
 
+const ethereumNetwork: Network = {
+  chainId: parseInt(ethers.utils.hexValue(ethereumChainId)),
+  chainName: 'Ethereum Mainnet',
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH', // 2-6 characters long
+    decimals: 18,
+  },
+};
+
+const goerliNetwork: Network = {
+  chainId: parseInt(ethers.utils.hexValue(goerliChainId)),
+  chainName: 'Goerli Testnet',
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH', // 2-6 characters long
+    decimals: 18,
+  },
+};
+
 export const SupportedNetworks: {
   [key: number]: Network;
 } = {
-  1: {
-    chainId: parseInt(ethers.utils.hexValue(1)),
-    chainName: 'Ethereum',
-  },
-  5: {
-    chainId: parseInt(ethers.utils.hexValue(5)),
-    chainName: 'Goerli',
-  },
+  1: ethereumNetwork,
+  5: goerliNetwork,
   56: BSCNetwork,
   97: BSCTestnet,
   137: polygonNetwork,
