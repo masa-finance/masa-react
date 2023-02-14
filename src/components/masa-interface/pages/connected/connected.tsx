@@ -4,7 +4,7 @@ import { MasaLoading } from '../../../masa-loading';
 import { Spinner } from '../../../spinner';
 
 export const InterfaceConnected = (): JSX.Element => {
-  const { company, loading, closeModal } = useMasa();
+  const { loading, closeModal } = useMasa();
 
   useEffect(() => {
     if (!loading) {
@@ -19,7 +19,7 @@ export const InterfaceConnected = (): JSX.Element => {
   return (
     <div className="interface-connected">
       <div>
-        <h3 className="title">We are taking you to {company}</h3>
+        <h3 className="title">Starting your soulbound journey</h3>
 
         <Spinner />
       </div>

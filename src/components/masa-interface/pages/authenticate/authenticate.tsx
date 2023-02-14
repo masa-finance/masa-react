@@ -3,13 +3,10 @@ import { useMasa } from '../../../../provider';
 import { Spinner } from '../../../spinner';
 
 export const InterfaceAuthenticate = (): JSX.Element => {
-  const { handleLogin, walletAddress, identity, loading } = useMasa();
+  const { handleLogin, walletAddress, loading } = useMasa();
 
   const [copied, setCopied] = useState(false);
 
-  const hasIdentity = useMemo(() => {
-    return identity && identity?.identityId;
-  }, [identity]);
   const shortAddress = useMemo(() => {
     return `${walletAddress?.substring(0, 2)}...${walletAddress?.substring(
       walletAddress.length - 4,
@@ -32,8 +29,8 @@ export const InterfaceAuthenticate = (): JSX.Element => {
       <div>
         <h3 className="title">Wallet connected!</h3>
         <p className="connected-wallet">
-          Your wallet is connected you can now create an account by minting a
-          Masa Soulbound Identity and Masa Soulname!
+          Your wallet is now connected. Start your soulbound journey by minting
+          a Masa Soulbound Identity and claiming a unique Masa Soul Name.
         </p>
 
         <p className="connected-wallet with-wallet">
@@ -48,7 +45,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
           className="masa-button authenticate-button"
           onClick={handleLogin}
         >
-          {loading ? 'loading...' : hasIdentity ? 'Sign in' : 'Register'}
+          {loading ? 'loading...' : 'Get Started'}
         </button>
         <div className="dont-have-a-wallet">
           <a>
