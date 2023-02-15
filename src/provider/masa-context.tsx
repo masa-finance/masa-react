@@ -4,6 +4,7 @@ import {
   ICreditScore,
   IGreen,
   Masa,
+  NetworkName,
   SoulNameDetails,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
@@ -65,6 +66,6 @@ export interface MasaShape {
   ) => Promise<GenerateGreenResult | undefined>;
   chain?: null | ethers.providers.Network;
   switchNetwork?: (chainId: number) => void;
-  SupportedNetworks?: { [index: number]: Network };
+  SupportedNetworks?: { [index in NetworkName]: Network };
   network?: string;
 }
