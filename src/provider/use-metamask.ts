@@ -8,7 +8,7 @@ export const useMetamask = ({
 }: {
   disable?: boolean;
 }): { connect: () => void } => {
-  const { setProvider, setMissingProvider, handleLogout, walletAddress } =
+  const { setProvider, setMissingProvider, handleLogout } =
     useMasa();
 
   const provider = useMemo(() => {
@@ -75,19 +75,13 @@ export const useMetamask = ({
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window?.ethereum?.on(
-        'accountsChanged',
-        async (accounts: unknown): Promise<void> => {
-          console.log('USE METAMASK', { accounts, walletAddress });
-          if (accounts instanceof Array && accounts.length === 0) {
-            setProvider?.(null);
-            await handleLogout?.();
-            await disconnect();
-            await queryClient.invalidateQueries('wallet');
-            await queryClient.invalidateQueries('session');
-          }
-        }
-      );
+      window?.ethereum?.on('accountsChanged', async (): Promise<void> => {
+        setProvider?.(null);
+        await handleLogout?.();
+        await disconnect();
+        await queryClient.invalidateQueries('wallet');
+        await queryClient.invalidateQueries('session');
+      });
 
       window?.ethereum?.on('networkChanged', async () => {
         const newProvider = new ethers.providers.Web3Provider(
@@ -105,7 +99,7 @@ export const useMetamask = ({
         }
       });
     }
-  }, [handleLogout, disconnect, setProvider, walletAddress]);
+  }, [handleLogout, disconnect, setProvider]);
 
   return { connect };
 };
