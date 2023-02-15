@@ -1,42 +1,7 @@
-import {
-  Environment,
-  environments,
-  Masa,
-  NetworkName,
-} from '@masa-finance/masa-sdk';
+import { Environment, environments, Masa } from '@masa-finance/masa-sdk';
 import { ethers, Wallet } from 'ethers';
 import { ArweaveConfig } from '../provider';
-
-const getChainName = (chainId: number): NetworkName => {
-  switch (chainId) {
-    // ETH
-    case 1:
-      return 'mainnet';
-    case 5:
-      return 'goerli';
-
-    // Celo
-    case 44787:
-      return 'alfajores';
-    case 42220:
-      return 'celo';
-
-    // Polygon
-    case 137:
-      return 'polygon';
-    case 80001:
-      return 'mumbai';
-
-    // BSC
-    case 97:
-      return 'bsctest';
-    case 56:
-      return 'bsc';
-
-    default:
-      throw new Error(`Unsupported network! ${chainId}`);
-  }
-};
+import { getNetworkNameByChainId } from './networks';
 
 export const createRandomWallet = (): Wallet | null => {
   console.info('Creating random wallet!');
@@ -84,7 +49,7 @@ export const createNewMasa = async ({
   return new Masa({
     wallet: signer,
     apiUrl: environment.apiUrl,
-    defaultNetwork: getChainName(chainId),
+    defaultNetwork: getNetworkNameByChainId(chainId),
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
