@@ -8,7 +8,7 @@ export const useMetamask = ({
 }: {
   disable?: boolean;
 }): { connect: () => void } => {
-  const { setProvider, setMissingProvider, handleLogout } = useMasa();
+  const { setProvider, setMissingProvider, handleLogout, walletAddress } = useMasa();
 
   const provider = useMemo(() => {
     if (typeof window !== 'undefined') {
@@ -77,7 +77,7 @@ export const useMetamask = ({
       window?.ethereum?.on(
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
-          console.log('USE METAMASK', { accounts });
+          console.log('USE METAMASK', { accounts, walletAddress });
           if (accounts instanceof Array && accounts.length === 0) {
             setProvider?.(null);
             await handleLogout?.();
@@ -104,7 +104,7 @@ export const useMetamask = ({
         }
       });
     }
-  }, [handleLogout, disconnect, setProvider]);
+  }, [handleLogout, disconnect, setProvider, walletAddress]);
 
   return { connect };
 };
