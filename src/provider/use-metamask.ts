@@ -52,7 +52,6 @@ export const useMetamask = ({
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
       if (localStorage?.getItem('isWalletConnected') === 'true') {
-        console.log('CALLING RECONNECT');
         try {
           await connect();
         } catch (ex) {
@@ -78,6 +77,7 @@ export const useMetamask = ({
       window?.ethereum?.on(
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
+          console.log('USE METAMASK', { accounts });
           if (accounts instanceof Array && accounts.length === 0) {
             setProvider?.(null);
             await handleLogout?.();
