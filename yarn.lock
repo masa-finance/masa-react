@@ -2114,10 +2114,10 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.4.2.tgz#d3bc231c55fedf26fc8be27586b8893fa6160d0e"
-  integrity sha512-zb0Zf4YosW+8WC/UsJZoXVXY4KPzRy2hcDcDvZGg2yVxz3YeZ3FIwiQXhagQCUmZi7CfomE93C2L6Vnmq4v8wA==
+"@masa-finance/masa-sdk@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.4.3.tgz#601a8e2441b88e6e986aed7761fb581ed473e63f"
+  integrity sha512-PuYDPfN83Yf74AtqFYKc5WA+yqEDxi/guT7Hk2yAhOiNBlMcjhb7Kacpnd2lG2o7DWPDJeoYfhV3F0ewsOsQPw==
   dependencies:
     "@masa-finance/masa-contracts-identity" "^1.2.1"
     arweave "~1.12.6"
