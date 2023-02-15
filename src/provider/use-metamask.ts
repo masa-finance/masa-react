@@ -8,7 +8,8 @@ export const useMetamask = ({
 }: {
   disable?: boolean;
 }): { connect: () => void } => {
-  const { setProvider, setMissingProvider, handleLogout, walletAddress } = useMasa();
+  const { setProvider, setMissingProvider, handleLogout, walletAddress } =
+    useMasa();
 
   const provider = useMemo(() => {
     if (typeof window !== 'undefined') {
