@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { NetworkName } from '@masa-finance/masa-sdk';
 
 const ethereumChainId = 1;
 const goerliChainId = 5;
@@ -111,14 +112,18 @@ const goerliNetwork: Network = {
 };
 
 export const SupportedNetworks: {
-  [key: number]: Network;
+  [key in NetworkName]: Network;
 } = {
-  1: ethereumNetwork,
-  5: goerliNetwork,
-  56: BSCNetwork,
-  97: BSCTestnet,
-  137: polygonNetwork,
-  44787: alfajoresNetwork,
-  80001: mumbaiNetwork,
-  42220: celoNetwork,
+  // ETH
+  mainnet: ethereumNetwork,
+  goerli: goerliNetwork,
+  // BSC
+  bsc: BSCNetwork,
+  bsctest: BSCTestnet,
+  // Polygon
+  polygon: polygonNetwork,
+  mumbai: mumbaiNetwork,
+  // celo
+  celo: celoNetwork,
+  alfajores: alfajoresNetwork,
 };
