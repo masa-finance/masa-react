@@ -181,7 +181,7 @@ export const MasaContextProvider = ({
           params: [
             {
               ...networkDetails,
-              chainId: networkDetails.chainId,
+              chainId: ethers.utils.hexValue(networkDetails.chainId),
             },
           ],
         });
