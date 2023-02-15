@@ -35,7 +35,7 @@ export const InterfaceConnector = ({
           />
         </div>
         <div className="connector disabled">
-          <p>Ciubvase Wallet</p>
+          <p>Coinbase Wallet</p>
           <img
             src={'https://avatars.githubusercontent.com/u/18060234?s=280&v=4'}
             className="connector-image"
