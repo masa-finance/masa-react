@@ -42,7 +42,7 @@ export const MasaInterface = ({
   const page = useMemo(() => {
     if (!isConnected) return 'connector';
 
-    if (network && !chain?.name.includes(network)) return 'switchNetwork';
+    // if (network && !chain?.name.includes(network)) return 'switchNetwork';
     if (!loggedIn) return 'authenticate';
     if (!identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
