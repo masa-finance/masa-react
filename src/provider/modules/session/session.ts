@@ -14,8 +14,8 @@ export const useSession = (
   isLoading: boolean;
   error: unknown;
 } => {
-  const queryKey: string = useMemo(() => {
-    return `session-${walletAddress}`;
+  const queryKey: any[] = useMemo(() => {
+    return ["session", walletAddress];
   }, [walletAddress]);
 
   const {
@@ -28,15 +28,15 @@ export const useSession = (
   });
 
   useEffect(() => {
-    if (loggedIn && walletAddress) {
-      void queryClient.invalidateQueries(queryKey);
+    if (loggedIn && !walletAddress) {
+      void queryClient.invalidateQueries('session');
     }
   }, [walletAddress, loggedIn, queryKey]);
 
   const login = useCallback(async () => {
     const logged = await masa?.session.login();
     if (logged) {
-      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries('session');
       await queryClient.refetchQueries();
     }
   }, [masa, queryKey]);
@@ -44,7 +44,7 @@ export const useSession = (
   const logout = useCallback(
     async (callback?: () => void) => {
       await masa?.session.logout();
-      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries('session');
       await queryClient.refetchQueries();
 
       if (callback) {

@@ -83,6 +83,7 @@ export const useMetamask = ({
             await handleLogout?.();
             await disconnect();
             await queryClient.invalidateQueries('wallet');
+            await queryClient.invalidateQueries('session');
           }
         }
       );
