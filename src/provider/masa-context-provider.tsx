@@ -178,7 +178,12 @@ export const MasaContextProvider = ({
       if (typeof window !== 'undefined' && networkDetails) {
         await window?.ethereum?.request({
           method: 'wallet_addEthereumChain',
-          params: [networkDetails],
+          params: [
+            {
+              ...networkDetails,
+              chainId: ethers.utils.hexValue(networkDetails.chainId),
+            },
+          ],
         });
       }
     } catch (error) {
