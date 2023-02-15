@@ -11,6 +11,7 @@ const alfajoresChainId = 44787;
 const celoChainId = 42220;
 
 export interface Network {
+  networkName: NetworkName;
   chainName: string;
   chainId: number;
   rpcUrls?: string[];
@@ -22,7 +23,39 @@ export interface Network {
   blockExplorerUrls?: string[];
 }
 
+export const getNetworkNameByChainId = (chainId: number): NetworkName => {
+  switch (chainId) {
+    // ETH
+    case 1:
+      return 'mainnet';
+    case 5:
+      return 'goerli';
+
+    // Celo
+    case 44787:
+      return 'alfajores';
+    case 42220:
+      return 'celo';
+
+    // Polygon
+    case 137:
+      return 'polygon';
+    case 80001:
+      return 'mumbai';
+
+    // BSC
+    case 97:
+      return 'bsctest';
+    case 56:
+      return 'bsc';
+
+    default:
+      throw new Error(`Unsupported network! ${chainId}`);
+  }
+};
+
 const BSCNetwork: Network = {
+  networkName: 'bsc',
   chainName: 'Binance Smart Chain',
   chainId: parseInt(ethers.utils.hexValue(BSCChainId)),
   rpcUrls: ['https://endpoints.omniatech.io/v1/bsc/mainnet/public'],
@@ -34,6 +67,7 @@ const BSCNetwork: Network = {
 };
 
 const BSCTestnet: Network = {
+  networkName: 'bsctest',
   chainName: 'Binance Smart Chain Testnet',
   chainId: parseInt(ethers.utils.hexValue(BSCTChainId)),
   rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
@@ -45,6 +79,7 @@ const BSCTestnet: Network = {
 };
 
 const celoNetwork: Network = {
+  networkName: 'celo',
   chainName: 'Celo',
   chainId: parseInt(ethers.utils.hexValue(celoChainId)),
   rpcUrls: ['https://forno.celo.org'],
@@ -57,6 +92,7 @@ const celoNetwork: Network = {
 };
 
 const alfajoresNetwork: Network = {
+  networkName: 'alfajores',
   chainName: 'Alfajores Network',
   chainId: parseInt(ethers.utils.hexValue(alfajoresChainId)),
   rpcUrls: ['https://alfajores-forno.celo-testnet.org'],
@@ -68,8 +104,9 @@ const alfajoresNetwork: Network = {
 };
 
 const polygonNetwork: Network = {
-  chainId: parseInt(ethers.utils.hexValue(polygonChainId)),
+  networkName: 'polygon',
   chainName: 'Polygon Mainnet',
+  chainId: parseInt(ethers.utils.hexValue(polygonChainId)),
   nativeCurrency: {
     name: 'MATIC',
     symbol: 'MATIC', // 2-6 characters long
@@ -80,8 +117,9 @@ const polygonNetwork: Network = {
 };
 
 const mumbaiNetwork: Network = {
-  chainId: parseInt(ethers.utils.hexValue(mumbaiChainId)),
+  networkName: 'mumbai',
   chainName: 'Mumbai Testnet',
+  chainId: parseInt(ethers.utils.hexValue(mumbaiChainId)),
   nativeCurrency: {
     name: 'tMATIC',
     symbol: 'tMATIC', // 2-6 characters long
@@ -92,8 +130,9 @@ const mumbaiNetwork: Network = {
 };
 
 const ethereumNetwork: Network = {
-  chainId: parseInt(ethers.utils.hexValue(ethereumChainId)),
+  networkName: 'mainnet',
   chainName: 'Ethereum Mainnet',
+  chainId: parseInt(ethers.utils.hexValue(ethereumChainId)),
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH', // 2-6 characters long
@@ -102,8 +141,9 @@ const ethereumNetwork: Network = {
 };
 
 const goerliNetwork: Network = {
-  chainId: parseInt(ethers.utils.hexValue(goerliChainId)),
+  networkName: 'goerli',
   chainName: 'Goerli Testnet',
+  chainId: parseInt(ethers.utils.hexValue(goerliChainId)),
   nativeCurrency: {
     name: 'ETH',
     symbol: 'ETH', // 2-6 characters long
