@@ -15,7 +15,7 @@ export const useSession = (
   error: unknown;
 } => {
   const queryKey: any[] = useMemo(() => {
-    return ["session", walletAddress];
+    return ['session', walletAddress];
   }, [walletAddress]);
 
   const {
