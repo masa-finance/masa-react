@@ -4,20 +4,22 @@ import { MasaLoading } from '../../../masa-loading';
 import { Network } from '../../../../helpers';
 
 export const InterfaceSwitchChain = (): JSX.Element => {
-  const { network, loading, switchNetwork, SupportedNetworks } = useMasa();
+  const { networkName, loading, switchNetwork, SupportedNetworks } = useMasa();
 
   const currentNetwork: Network | null = useMemo(() => {
-    if (SupportedNetworks && network)
+    if (SupportedNetworks && networkName)
       for (const chainId in SupportedNetworks) {
         if (
-          SupportedNetworks[chainId].chainName?.toLowerCase().includes(network)
+          SupportedNetworks[chainId].chainName
+            ?.toLowerCase()
+            .includes(networkName)
         ) {
           return SupportedNetworks[chainId];
         }
       }
 
     return null;
-  }, [network, SupportedNetworks]);
+  }, [networkName, SupportedNetworks]);
 
   const handleSwitch = useCallback(() => {
     if (switchNetwork && currentNetwork) {
@@ -46,7 +48,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
           onClick={handleSwitch}
         >
           Switch to{' '}
-          <span style={{ textTransform: 'capitalize' }}>{network}</span>
+          <span style={{ textTransform: 'capitalize' }}>{networkName}</span>
         </button>
       </div>
     </div>
