@@ -74,17 +74,16 @@ export const useMetamask = ({
     await handleLogout?.();
     localStorage.setItem('isWalletConnected', 'false');
     setProvider?.(null);
-    await queryClient.invalidateQueries('wallet');
-    await queryClient.invalidateQueries('session');
+    queryClient.invalidateQueries('wallet');
+    queryClient.invalidateQueries('session');
   }, [handleLogout, setProvider]);
 
   const detectWalletChange = useCallback(async () => {
-    const deduplicatedWallets = [...new Set(walletsConnected)];
+    const deduplicatedWallets = new Set(walletsConnected);
     console.log({ deduplicatedWallets });
-    if (deduplicatedWallets.length > 1) {
+    if (deduplicatedWallets.size > 1) {
+      console.log('DISCONNECTING, MORE THAN ONE WALLET');
       await disconnect();
-      await queryClient.invalidateQueries('wallet');
-      await queryClient.invalidateQueries('session');
     }
   }, [[walletsConnected, handleLogout, disconnect]]);
 

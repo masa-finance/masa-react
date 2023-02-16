@@ -18,6 +18,19 @@ export const useSession = (
     return ['session', walletAddress];
   }, [walletAddress]);
 
+  const queryKeySession: any[] = useMemo(() => {
+    return ['session-data', walletAddress];
+  }, [walletAddress]);
+
+  const { data: session } = useQuery(
+    queryKeySession,
+    () => masa?.session.getSession(),
+    {
+      enabled: !!masa,
+      retry: false,
+    }
+  );
+
   const {
     data: loggedIn,
     status,
@@ -25,7 +38,16 @@ export const useSession = (
     error,
   } = useQuery(queryKey, () => masa?.session.checkLogin(), {
     enabled: !!masa && !!walletAddress,
+    retry: false,
   });
+
+  useEffect(() => {
+    if (session && session.user.address !== walletAddress) {
+      masa?.session.logout();
+      queryClient.invalidateQueries('session');
+      queryClient.refetchQueries();
+    }
+  }, [session, walletAddress]);
 
   useEffect(() => {
     if (loggedIn && !walletAddress) {

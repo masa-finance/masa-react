@@ -24,6 +24,7 @@ export const useWallet = (
     error,
   } = useQuery(queryKey, () => masa?.config.wallet.getAddress(), {
     enabled: !!masa && !!provider,
+    retry: false,
   });
 
   const [network, setNetwork] = useState<ethers.providers.Network | null>(null);
