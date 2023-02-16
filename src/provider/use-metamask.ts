@@ -74,8 +74,8 @@ export const useMetamask = ({
     await handleLogout?.();
     localStorage.setItem('isWalletConnected', 'false');
     setProvider?.(null);
-    queryClient.invalidateQueries('wallet');
-    queryClient.invalidateQueries('session');
+    void queryClient.invalidateQueries(['wallet']);
+    void queryClient.invalidateQueries(['session']);
   }, [handleLogout, setProvider]);
 
   const detectWalletChange = useCallback(async () => {
@@ -85,10 +85,10 @@ export const useMetamask = ({
       console.log('DISCONNECTING, MORE THAN ONE WALLET');
       await disconnect();
     }
-  }, [[walletsConnected, handleLogout, disconnect]]);
+  }, [walletsConnected, disconnect]);
 
   useEffect(() => {
-    detectWalletChange();
+    void detectWalletChange();
   }, [detectWalletChange]);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ export const useMetamask = ({
         async (accounts): Promise<void> => {
           const accs = accounts as string[];
           if ((accs.length as number) === 0) {
-            disconnect();
+            await disconnect();
             setWalletsConnected([]);
           } else {
             setWalletsConnected([...walletsConnected, ...accs]);
@@ -117,7 +117,7 @@ export const useMetamask = ({
             onConnect();
           }
 
-          await queryClient.invalidateQueries('wallet');
+          await queryClient.invalidateQueries(['wallet']);
         }
       });
     }
