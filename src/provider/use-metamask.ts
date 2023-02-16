@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { queryClient } from './masa-query-client';
 import { useMasa } from './use-masa';
 
@@ -8,6 +8,7 @@ export const useMetamask = ({
 }: {
   disable?: boolean;
 }): { connect: () => void } => {
+  const [walletsConnected, setWalletsConnected] = useState<string[]>([]);
   const { setProvider, setMissingProvider, handleLogout } = useMasa();
 
   const provider = useMemo(() => {
@@ -72,15 +73,33 @@ export const useMetamask = ({
     setProvider?.(null);
   }, [handleLogout, setProvider]);
 
+  const detectWalletChange = useCallback(async () => {
+    const deduplicatedWallets = [...new Set(walletsConnected)];
+    console.log({ deduplicatedWallets });
+    if (deduplicatedWallets.length > 1) {
+      await disconnect();
+      await queryClient.invalidateQueries();
+    }
+  }, [[walletsConnected, handleLogout, disconnect]]);
+
+  useEffect(() => {
+    detectWalletChange();
+  }, [detectWalletChange]);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window?.ethereum?.on('accountsChanged', async (): Promise<void> => {
-        setProvider?.(null);
-        await handleLogout?.();
-        await disconnect();
-        await queryClient.invalidateQueries('wallet');
-        await queryClient.invalidateQueries('session');
-      });
+      window?.ethereum?.on(
+        'accountsChanged',
+        async (accounts): Promise<void> => {
+          const accs = accounts as string[];
+          if ((accs.length as number) === 0) {
+            disconnect();
+            setWalletsConnected([]);
+          } else {
+            setWalletsConnected([...walletsConnected, ...accs]);
+          }
+        }
+      );
 
       window?.ethereum?.on('networkChanged', async () => {
         const newProvider = new ethers.providers.Web3Provider(
@@ -98,7 +117,7 @@ export const useMetamask = ({
         }
       });
     }
-  }, [handleLogout, disconnect, setProvider]);
+  }, [handleLogout, disconnect, setProvider, walletsConnected]);
 
   return { connect };
 };
