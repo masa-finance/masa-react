@@ -3,6 +3,19 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { queryClient } from './masa-query-client';
 import { useMasa } from './use-masa';
 
+export const getWeb3Provider = (): ethers.providers.Web3Provider | null => {
+  if (
+    typeof window !== 'undefined' &&
+    typeof window?.ethereum !== 'undefined'
+  ) {
+    return new ethers.providers.Web3Provider(
+      window?.ethereum as unknown as ethers.providers.ExternalProvider
+    );
+  }
+
+  return null;
+};
+
 export const useMetamask = ({
   disable,
 }: {
@@ -11,18 +24,8 @@ export const useMetamask = ({
   const [walletsConnected, setWalletsConnected] = useState<string[]>([]);
   const { setProvider, setMissingProvider, handleLogout } = useMasa();
 
-  const provider = useMemo(() => {
-    if (typeof window !== 'undefined') {
-      if (typeof window?.ethereum !== 'undefined') {
-        return new ethers.providers.Web3Provider(
-          window?.ethereum as unknown as ethers.providers.ExternalProvider
-        );
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
+  const provider = useMemo((): ethers.providers.Web3Provider | null => {
+    return getWeb3Provider();
   }, []);
 
   useEffect(() => {
@@ -71,8 +74,8 @@ export const useMetamask = ({
     await handleLogout?.();
     localStorage.setItem('isWalletConnected', 'false');
     setProvider?.(null);
-    queryClient.invalidateQueries('wallet');
-    queryClient.invalidateQueries('session');
+    void queryClient.invalidateQueries(['wallet']);
+    void queryClient.invalidateQueries(['session']);
   }, [handleLogout, setProvider]);
 
   const detectWalletChange = useCallback(async () => {
@@ -82,10 +85,10 @@ export const useMetamask = ({
       console.log('DISCONNECTING, MORE THAN ONE WALLET');
       await disconnect();
     }
-  }, [[walletsConnected, handleLogout, disconnect]]);
+  }, [walletsConnected, disconnect]);
 
   useEffect(() => {
-    detectWalletChange();
+    void detectWalletChange();
   }, [detectWalletChange]);
 
   useEffect(() => {
@@ -95,7 +98,7 @@ export const useMetamask = ({
         async (accounts): Promise<void> => {
           const accs = accounts as string[];
           if ((accs.length as number) === 0) {
-            disconnect();
+            await disconnect();
             setWalletsConnected([]);
           } else {
             setWalletsConnected([...walletsConnected, ...accs]);
@@ -104,18 +107,17 @@ export const useMetamask = ({
       );
 
       window?.ethereum?.on('networkChanged', async () => {
-        const newProvider = new ethers.providers.Web3Provider(
-          window?.ethereum as never
-        );
+        const newProvider = getWeb3Provider();
         if (newProvider) {
           await newProvider.send('eth_requestAccounts', []);
 
-          const signer = newProvider.getSigner(0);
+          const signer = newProvider.getSigner();
           if (signer && setProvider) {
             setProvider(signer);
             onConnect();
           }
-          await queryClient.invalidateQueries('wallet');
+
+          await queryClient.invalidateQueries(['wallet']);
         }
       });
     }

@@ -19,9 +19,10 @@ export const useIdentity = (
   isLoading: boolean;
   error: unknown;
 } => {
-  const queryKey: any[] = useMemo(() => {
+  const queryKey: (string | undefined)[] = useMemo(() => {
     return ['identity', walletAddress, masa?.config.network];
   }, [walletAddress, masa]);
+
   const {
     data: identity,
     status,
@@ -36,8 +37,8 @@ export const useIdentity = (
 
   const handlePurchaseIdentity = useCallback(async () => {
     await masa?.identity.create();
-    await queryClient.invalidateQueries(`identity`);
-  }, [masa, walletAddress]);
+    await queryClient.invalidateQueries(queryKey);
+  }, [masa, queryKey]);
 
   return { identity, handlePurchaseIdentity, status, isLoading, error };
 };

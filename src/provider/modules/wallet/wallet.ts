@@ -11,9 +11,9 @@ export const useWallet = (
   status: string;
   isLoading: boolean;
   error: unknown;
-  chain?: null | ethers.providers.Network;
+  network: ethers.providers.Network | null;
 } => {
-  const queryKey: any[] = useMemo(() => {
+  const queryKey: (string | undefined)[] = useMemo(() => {
     return ['wallet', masa?.config.network];
   }, [masa]);
 
@@ -27,26 +27,24 @@ export const useWallet = (
     retry: false,
   });
 
-  const [chain, setChain] = useState<
-    null | undefined | ethers.providers.Network
-  >(null);
+  const [network, setNetwork] = useState<ethers.providers.Network | null>(null);
 
-  const loadChainId = useCallback(async () => {
+  const loadNetwork = useCallback(async () => {
     if (provider) {
-      const network = await provider.provider?.getNetwork();
-      setChain(network);
+      const newNetwork = await provider.provider?.getNetwork();
+      setNetwork(newNetwork ?? null);
     }
   }, [provider]);
 
   useEffect(() => {
-    void loadChainId();
-  }, [loadChainId, setChain]);
+    void loadNetwork();
+  }, [loadNetwork]);
 
   return {
     walletAddress: !provider ? undefined : walletAddress,
     status,
     isLoading,
     error,
-    chain,
+    network,
   };
 };

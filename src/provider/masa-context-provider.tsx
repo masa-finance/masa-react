@@ -1,4 +1,4 @@
-import { EnvironmentName, Masa } from '@masa-finance/masa-sdk';
+import { EnvironmentName, Masa, NetworkName } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa, Network, SupportedNetworks } from '../helpers';
 import {
@@ -11,7 +11,6 @@ import {
 } from './modules';
 import { ethers } from 'ethers';
 import { MASA_CONTEXT, MasaShape } from './masa-context';
-import { queryClient } from './masa-query-client';
 
 export interface ArweaveConfig {
   port?: string;
@@ -30,7 +29,7 @@ export interface MasaContextProviderProps extends MasaShape {
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
   verbose?: boolean;
-  network?: string;
+  networkName?: NetworkName;
 }
 
 export const MasaContextProvider = ({
@@ -41,7 +40,7 @@ export const MasaContextProvider = ({
   signer: externalSigner,
   noWallet,
   arweaveConfig,
-  network,
+  networkName,
 }: MasaContextProviderProps): JSX.Element => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
 
@@ -59,11 +58,11 @@ export const MasaContextProvider = ({
   const {
     walletAddress,
     isLoading: walletLoading,
-    chain,
+    network,
   }: {
     walletAddress: string | undefined;
     isLoading: boolean;
-    chain?: null | ethers.providers.Network;
+    network: ethers.providers.Network | null;
   } = useWallet(masaInstance, provider);
 
   const {
@@ -141,17 +140,24 @@ export const MasaContextProvider = ({
       modalCallback &&
       loggedIn &&
       isConnected &&
-      (network ? !chain?.name.includes(network) : true)
+      (networkName ? !network?.name.includes(networkName) : true)
     ) {
       modalCallback();
     }
-  }, [modalCallback, setModalOpen, loggedIn, isConnected, network, chain]);
+  }, [
+    modalCallback,
+    setModalOpen,
+    loggedIn,
+    isConnected,
+    network,
+    networkName,
+  ]);
 
   useEffect(() => {
     const loadMasa = async (): Promise<void> => {
       if (!provider) return;
       const masa: Masa | null = await createNewMasa({
-        newWallet: provider,
+        signer: provider,
         environmentName,
         arweaveConfig,
         verbose,
@@ -161,8 +167,6 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-
-    queryClient.invalidateQueries('green');
   }, [
     provider,
     noWallet,
@@ -170,7 +174,7 @@ export const MasaContextProvider = ({
     arweaveConfig,
     environmentName,
     verbose,
-    chain,
+    network,
   ]);
 
   const addNetwork = useCallback(async (networkDetails: Network) => {
@@ -241,10 +245,10 @@ export const MasaContextProvider = ({
     greenLoading,
     handleGenerateGreen,
     handleCreateGreen,
-    chain,
+    network,
     switchNetwork,
     SupportedNetworks,
-    network,
+    networkName,
   };
 
   return (

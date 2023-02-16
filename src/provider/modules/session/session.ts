@@ -14,11 +14,11 @@ export const useSession = (
   isLoading: boolean;
   error: unknown;
 } => {
-  const queryKey: any[] = useMemo(() => {
+  const queryKey: (string | undefined)[] = useMemo(() => {
     return ['session', walletAddress];
   }, [walletAddress]);
 
-  const queryKeySession: any[] = useMemo(() => {
+  const queryKeySession: (string | undefined)[] = useMemo(() => {
     return ['session-data', walletAddress];
   }, [walletAddress]);
 
@@ -44,21 +44,22 @@ export const useSession = (
   useEffect(() => {
     if (session && session.user.address !== walletAddress) {
       masa?.session.logout();
-      queryClient.invalidateQueries('session');
-      queryClient.refetchQueries();
+      void queryClient.invalidateQueries(queryKey);
+      void queryClient.refetchQueries();
     }
-  }, [session, walletAddress]);
+  }, [session, walletAddress, masa, queryKey]);
 
   useEffect(() => {
     if (loggedIn && !walletAddress) {
-      void queryClient.invalidateQueries('session');
+      void queryClient.invalidateQueries(queryKey);
     }
   }, [walletAddress, loggedIn, queryKey]);
 
   const login = useCallback(async () => {
     const logged = await masa?.session.login();
     if (logged) {
-      await queryClient.invalidateQueries('session');
+      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries(queryKey);
       await queryClient.refetchQueries();
     }
   }, [masa, queryKey]);
@@ -66,7 +67,7 @@ export const useSession = (
   const logout = useCallback(
     async (callback?: () => void) => {
       await masa?.session.logout();
-      await queryClient.invalidateQueries('session');
+      await queryClient.invalidateQueries(queryKey);
       await queryClient.refetchQueries();
 
       if (callback) {
