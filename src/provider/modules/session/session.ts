@@ -24,7 +24,7 @@ export const useSession = (
     isLoading,
     error,
   } = useQuery(queryKey, () => masa?.session.checkLogin(), {
-    enabled: !!masa && !!walletAddress
+    enabled: !!masa && !!walletAddress,
   });
 
   useEffect(() => {
