@@ -27,6 +27,8 @@ export const useSession = (
     enabled: !!masa && !!walletAddress,
   });
 
+  console.log({ sessionQueryKey: queryKey });
+
   useEffect(() => {
     if (loggedIn && !walletAddress) {
       void queryClient.invalidateQueries('session');
