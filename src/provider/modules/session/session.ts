@@ -22,6 +22,15 @@ export const useSession = (
     return ['session-data', walletAddress];
   }, [walletAddress]);
 
+  const { data: session } = useQuery(
+    queryKeySession,
+    () => masa?.session.getSession(),
+    {
+      enabled: !!masa,
+      retry: false,
+    }
+  );
+
   const {
     data: loggedIn,
     status,
@@ -31,15 +40,6 @@ export const useSession = (
     enabled: !!masa && !!walletAddress,
     retry: false,
   });
-
-  const { data: session } = useQuery(
-    queryKeySession,
-    () => masa?.session.checkLogin(),
-    {
-      enabled: !!masa,
-      retry: false,
-    }
-  );
 
   useEffect(() => {
     if (session && session.user.address !== walletAddress) {
