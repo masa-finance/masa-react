@@ -81,8 +81,6 @@ export const useMetamask = ({
     if (deduplicatedWallets.size > 1) {
       console.log('DISCONNECTING, MORE THAN ONE WALLET');
       await disconnect();
-      await queryClient.invalidateQueries('wallet');
-      await queryClient.invalidateQueries('session');
     }
   }, [[walletsConnected, handleLogout, disconnect]]);
 
