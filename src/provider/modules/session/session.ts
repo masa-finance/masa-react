@@ -70,9 +70,7 @@ export const useSession = (
       await queryClient.invalidateQueries(queryKey);
       await queryClient.refetchQueries();
 
-      if (callback) {
-        callback();
-      }
+      callback?.();
     },
     [masa, queryKey]
   );

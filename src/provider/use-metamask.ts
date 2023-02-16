@@ -44,7 +44,7 @@ export const useMetamask = ({
       if (provider && window?.ethereum) {
         await provider.send('eth_requestAccounts', []);
 
-        const signer = provider.getSigner(0);
+        const signer = provider.getSigner();
         if (signer && setProvider) {
           setProvider(signer);
           onConnect();
@@ -55,11 +55,11 @@ export const useMetamask = ({
 
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
-      if (localStorage?.getItem('isWalletConnected') === 'true') {
+      if (localStorage.getItem('isWalletConnected') === 'true') {
         try {
           await connect();
-        } catch (ex) {
-          console.log(ex);
+        } catch (error) {
+          console.error('Connect failed!', error);
         }
       }
     };
@@ -73,14 +73,17 @@ export const useMetamask = ({
   const disconnect = useCallback(async () => {
     await handleLogout?.();
     localStorage.setItem('isWalletConnected', 'false');
+
     setProvider?.(null);
-    void queryClient.invalidateQueries(['wallet']);
-    void queryClient.invalidateQueries(['session']);
+
+    await queryClient.invalidateQueries(['wallet']);
+    await queryClient.invalidateQueries(['session']);
   }, [handleLogout, setProvider]);
 
   const detectWalletChange = useCallback(async () => {
     const deduplicatedWallets = new Set(walletsConnected);
     console.log({ deduplicatedWallets });
+
     if (deduplicatedWallets.size > 1) {
       console.log('DISCONNECTING, MORE THAN ONE WALLET');
       await disconnect();
@@ -95,7 +98,7 @@ export const useMetamask = ({
     if (typeof window !== 'undefined') {
       window?.ethereum?.on(
         'accountsChanged',
-        async (accounts): Promise<void> => {
+        async (accounts: unknown): Promise<void> => {
           const accs = accounts as string[];
           if ((accs.length as number) === 0) {
             await disconnect();
@@ -115,9 +118,9 @@ export const useMetamask = ({
           if (signer && setProvider) {
             setProvider(signer);
             onConnect();
-          }
 
-          await queryClient.invalidateQueries(['wallet']);
+            await queryClient.invalidateQueries(['wallet']);
+          }
         }
       });
     }
