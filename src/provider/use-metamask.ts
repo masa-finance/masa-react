@@ -71,6 +71,8 @@ export const useMetamask = ({
     await handleLogout?.();
     localStorage.setItem('isWalletConnected', 'false');
     setProvider?.(null);
+    await queryClient.invalidateQueries('wallet');
+    await queryClient.invalidateQueries('session');
   }, [handleLogout, setProvider]);
 
   const detectWalletChange = useCallback(async () => {
