@@ -78,8 +78,8 @@ export const useMetamask = ({
     console.log({ deduplicatedWallets });
     if (deduplicatedWallets.length > 1) {
       await disconnect();
-      await queryClient.invalidateQueries("wallet");
-      await queryClient.invalidateQueries("session");
+      await queryClient.invalidateQueries('wallet');
+      await queryClient.invalidateQueries('session');
     }
   }, [[walletsConnected, handleLogout, disconnect]]);
 
