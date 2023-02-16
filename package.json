@@ -15,7 +15,7 @@
   "scripts": {
     "start": "yarn build:watch",
     "build": "yarn build:tsc && yarn build:dist",
-    "build:tsc": "tsc && cp -R ./fonts/ ./dist/fonts/ && cp ./src/styles.scss ./dist/src/styles.scss && cp ./src/common/components/modal/styles.scss ./dist/src/common/components/modal/styles.scss ",
+    "build:tsc": "tsc && cp -R ./fonts/ ./dist/fonts/ && cp ./src/styles.scss ./dist/src/styles.scss && cp ./src/components/modal/styles.scss ./dist/src/components/modal/styles.scss",
     "build:dist": "cross-env NODE_ENV=production webpack",
     "build:watch": "tsc -w",
     "lint": "eslint src/**/*.{ts,tsx} stories/**/*.tsx --fix",
