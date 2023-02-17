@@ -45,17 +45,17 @@ export const useSession = (
     }
   );
 
-  useEffect(() => {
-    const logout = async (): Promise<void> => {
-      await masa?.session.logout();
-      await queryClient.invalidateQueries(queryKeySession);
-      await queryClient.refetchQueries();
-    };
+  const doLogout = useCallback(async (): Promise<void> => {
+    await masa?.session.logout();
+    await queryClient.invalidateQueries(queryKeySession);
+    await queryClient.refetchQueries();
+  }, [masa, queryKeySession]);
 
+  useEffect(() => {
     if (sessionData && sessionData.user.address !== walletAddress) {
-      void logout();
+      void doLogout();
     }
-  }, [sessionData, walletAddress, masa, queryKeySession]);
+  }, [sessionData, walletAddress, masa, queryKeySession, doLogout]);
 
   useEffect(() => {
     if (loggedIn && !walletAddress) {
@@ -75,13 +75,10 @@ export const useSession = (
 
   const logout = useCallback(
     async (callback?: () => void) => {
-      await masa?.session.logout();
-      await queryClient.invalidateQueries(queryKeySession);
-      await queryClient.refetchQueries();
-
+      await doLogout();
       callback?.();
     },
-    [masa, queryKeySession]
+    [doLogout]
   );
 
   return { loggedIn, login, logout, status, isLoading, error };

@@ -99,12 +99,12 @@ export const useMetamask = ({
       window?.ethereum?.on(
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
-          const accs = accounts as string[];
-          if ((accs.length as number) === 0) {
+          const accountsArray = accounts as string[];
+          if (accountsArray.length === 0) {
             await disconnect();
             setWalletsConnected([]);
           } else {
-            setWalletsConnected([...walletsConnected, ...accs]);
+            setWalletsConnected([...walletsConnected, ...accountsArray]);
           }
         }
       );
