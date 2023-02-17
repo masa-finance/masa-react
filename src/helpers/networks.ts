@@ -31,7 +31,7 @@ export const getNetworkNameByChainId = (chainId: number): NetworkName => {
   switch (chainId) {
     // ETH
     case ethereumChainId:
-      return 'mainnet';
+      return 'ethereum';
     case goerliChainId:
       return 'goerli';
 
@@ -134,7 +134,7 @@ const mumbaiNetwork: Network = {
 };
 
 const ethereumNetwork: Network = {
-  networkName: 'mainnet',
+  networkName: 'ethereum',
   chainName: 'Ethereum Mainnet',
   chainId: parseInt(ethers.utils.hexValue(ethereumChainId)),
   nativeCurrency: {
@@ -159,8 +159,10 @@ export const SupportedNetworks: {
   [key in NetworkName]: Network;
 } = {
   // ETH
-  mainnet: ethereumNetwork,
+  ethereum: ethereumNetwork,
   goerli: goerliNetwork,
+  // deprecated!
+  mainnet: ethereumNetwork,
   // BSC
   bsc: BSCNetwork,
   bsctest: BSCTestnet,
