@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "0.26.18",
+  "version": "0.27.0",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
@@ -29,7 +29,7 @@
   },
   "author": "hide-on-bush",
   "dependencies": {
-    "@masa-finance/masa-sdk": "^1.4.3",
+    "@masa-finance/masa-sdk": "^1.5.1",
     "@metamask/providers": "^10.2.1",
     "react": "^18.2.0",
     "react-query": "^3.39.3",

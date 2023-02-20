@@ -35,8 +35,6 @@ export const MasaInterface = ({
     closeModal,
     scope,
     creditScores,
-    network,
-    chain,
   } = useMasa();
 
   const page = useMemo(() => {
@@ -51,7 +49,7 @@ export const MasaInterface = ({
     if (isConnected && loggedIn) return 'connectedState';
 
     return 'connector';
-  }, [isConnected, identity, loggedIn, scope, creditScores, network, chain]);
+  }, [isConnected, identity, loggedIn, scope, creditScores]);
 
   return (
     <>

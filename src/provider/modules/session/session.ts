@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
-import { Masa } from '@masa-finance/masa-sdk';
+import { ISession, Masa } from '@masa-finance/masa-sdk';
 
 export const useSession = (
   masa: Masa | null,
@@ -14,7 +14,20 @@ export const useSession = (
   isLoading: boolean;
   error: unknown;
 } => {
-  const queryKey: any[] = useMemo(() => {
+  const queryKeySessionData: (string | undefined)[] = useMemo(() => {
+    return ['session-data', walletAddress];
+  }, [walletAddress]);
+
+  const { data: sessionData } = useQuery<ISession | undefined>(
+    queryKeySessionData,
+    () => masa?.session.getSession(),
+    {
+      enabled: !!masa && !!walletAddress,
+      retry: false,
+    }
+  );
+
+  const queryKeySession: (string | undefined)[] = useMemo(() => {
     return ['session', walletAddress];
   }, [walletAddress]);
 
@@ -23,35 +36,49 @@ export const useSession = (
     status,
     isLoading,
     error,
-  } = useQuery(queryKey, () => masa?.session.checkLogin(), {
-    enabled: !!masa && !!walletAddress,
-  });
+  } = useQuery<boolean | undefined>(
+    queryKeySession,
+    () => masa?.session.checkLogin(),
+    {
+      enabled: !!masa && !!walletAddress,
+      retry: false,
+    }
+  );
+
+  const doLogout = useCallback(async (): Promise<void> => {
+    await masa?.session.logout();
+    await queryClient.invalidateQueries(queryKeySession);
+    await queryClient.refetchQueries();
+  }, [masa, queryKeySession]);
+
+  useEffect(() => {
+    if (sessionData && sessionData.user.address !== walletAddress) {
+      void doLogout();
+    }
+  }, [sessionData, walletAddress, masa, queryKeySession, doLogout]);
 
   useEffect(() => {
     if (loggedIn && !walletAddress) {
-      void queryClient.invalidateQueries('session');
+      void queryClient.invalidateQueries(queryKeySession);
     }
-  }, [walletAddress, loggedIn, queryKey]);
+  }, [walletAddress, loggedIn, queryKeySession]);
 
   const login = useCallback(async () => {
-    const logged = await masa?.session.login();
-    if (logged) {
-      await queryClient.invalidateQueries('session');
+    const isLoggedIn = await masa?.session.login();
+
+    if (isLoggedIn) {
+      await queryClient.invalidateQueries(queryKeySession);
+      await queryClient.invalidateQueries(queryKeySessionData);
       await queryClient.refetchQueries();
     }
-  }, [masa, queryKey]);
+  }, [masa, queryKeySession, queryKeySessionData]);
 
   const logout = useCallback(
     async (callback?: () => void) => {
-      await masa?.session.logout();
-      await queryClient.invalidateQueries('session');
-      await queryClient.refetchQueries();
-
-      if (callback) {
-        callback();
-      }
+      await doLogout();
+      callback?.();
     },
-    [masa, queryKey]
+    [doLogout]
   );
 
   return { loggedIn, login, logout, status, isLoading, error };
