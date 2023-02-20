@@ -29,12 +29,17 @@
   },
   "author": "hide-on-bush",
   "dependencies": {
+    "@babel/preset-typescript": "^7.21.0",
     "@masa-finance/masa-sdk": "^1.4.3",
     "@metamask/providers": "^10.2.1",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "html-webpack-plugin": "^5.5.0",
     "react": "^18.2.0",
     "react-query": "^3.39.3",
     "react-spinners": "^0.13.8",
-    "rodal": "^2.0.0"
+    "rodal": "^2.0.0",
+    "tsconfig-paths-webpack-plugin": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",

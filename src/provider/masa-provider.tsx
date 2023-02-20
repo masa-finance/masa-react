@@ -8,7 +8,7 @@ import { QueryClientProvider } from 'react-query';
 import { useMetamask } from './use-metamask';
 import { queryClient } from './masa-query-client';
 
-import '../../styles.scss';
+// import '../../styles.scss';
 import { MasaInterface } from '../components';
 
 export const MasaProvider = ({
