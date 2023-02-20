@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "0.26.18",
+  "version": "0.27.0",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
@@ -30,7 +30,6 @@
   "author": "hide-on-bush",
   "dependencies": {
     "@babel/preset-typescript": "^7.21.0",
-    "@masa-finance/masa-sdk": "^1.4.3",
     "@metamask/providers": "^10.2.1",
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",

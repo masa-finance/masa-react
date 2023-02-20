@@ -1,14 +1,18 @@
 import { ethers } from 'ethers';
 import { NetworkName } from '@masa-finance/masa-sdk';
 
+// eth
 const ethereumChainId = 1;
 const goerliChainId = 5;
+//polygon
 const polygonChainId = 137;
+const mumbaiChainId = 80001;
+// bsc
 const BSCChainId = 56;
 const BSCTChainId = 97;
-const mumbaiChainId = 80001;
-const alfajoresChainId = 44787;
+// celo
 const celoChainId = 42220;
+const alfajoresChainId = 44787;
 
 export interface Network {
   networkName: NetworkName;
@@ -26,27 +30,27 @@ export interface Network {
 export const getNetworkNameByChainId = (chainId: number): NetworkName => {
   switch (chainId) {
     // ETH
-    case 1:
-      return 'mainnet';
-    case 5:
+    case ethereumChainId:
+      return 'ethereum';
+    case goerliChainId:
       return 'goerli';
 
     // Celo
-    case 44787:
+    case alfajoresChainId:
       return 'alfajores';
-    case 42220:
+    case celoChainId:
       return 'celo';
 
     // Polygon
-    case 137:
+    case polygonChainId:
       return 'polygon';
-    case 80001:
+    case mumbaiChainId:
       return 'mumbai';
 
     // BSC
-    case 97:
+    case BSCTChainId:
       return 'bsctest';
-    case 56:
+    case BSCChainId:
       return 'bsc';
 
     default:
@@ -130,7 +134,7 @@ const mumbaiNetwork: Network = {
 };
 
 const ethereumNetwork: Network = {
-  networkName: 'mainnet',
+  networkName: 'ethereum',
   chainName: 'Ethereum Mainnet',
   chainId: parseInt(ethers.utils.hexValue(ethereumChainId)),
   nativeCurrency: {
@@ -155,8 +159,10 @@ export const SupportedNetworks: {
   [key in NetworkName]: Network;
 } = {
   // ETH
-  mainnet: ethereumNetwork,
+  ethereum: ethereumNetwork,
   goerli: goerliNetwork,
+  // deprecated!
+  mainnet: ethereumNetwork,
   // BSC
   bsc: BSCNetwork,
   bsctest: BSCTestnet,

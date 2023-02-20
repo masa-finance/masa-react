@@ -1,53 +1,48 @@
 import { Environment, environments, Masa } from '@masa-finance/masa-sdk';
 import { ethers, Wallet } from 'ethers';
-import { ArweaveConfig } from '../provider';
+import { ArweaveConfig, getWeb3Provider } from '../provider';
 import { getNetworkNameByChainId } from './networks';
 
 export const createRandomWallet = (): Wallet | null => {
   console.info('Creating random wallet!');
   const wallet = ethers.Wallet.createRandom();
+  const provider = getWeb3Provider();
 
-  if (typeof window !== 'undefined') {
-    if (typeof window?.ethereum !== 'undefined') {
-      return wallet.connect(
-        new ethers.providers.Web3Provider(window?.ethereum as never)
-      );
-    } else {
-      return null;
-    }
-  } else {
-    return null;
+  if (provider) {
+    return wallet.connect(provider);
   }
+
+  return null;
 };
 
 export const createNewMasa = async ({
-  newWallet,
+  signer,
   environmentName,
   arweaveConfig,
   verbose,
 }: {
-  newWallet: ethers.Signer | null;
+  signer: ethers.Signer | null;
   environmentName: string;
   arweaveConfig?: ArweaveConfig;
   verbose: boolean;
 }): Promise<Masa | null> => {
-  const signer: ethers.Signer | null = newWallet
-    ? newWallet
+  const newSigner: ethers.Signer | null = signer
+    ? signer
     : createRandomWallet();
 
-  if (!signer) return null;
+  if (!newSigner) return null;
 
   const environment = environments.find(
     (environment: Environment) => environment.name === environmentName
   );
   if (!environment) return null;
 
-  const chainId: number = await signer.getChainId();
+  const chainId: number = await newSigner.getChainId();
 
   console.log({ NETWORK: chainId });
 
   return new Masa({
-    wallet: signer,
+    wallet: newSigner,
     apiUrl: environment.apiUrl,
     defaultNetwork: getNetworkNameByChainId(chainId),
     environment: environment.environment,
