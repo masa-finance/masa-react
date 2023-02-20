@@ -1,4 +1,3 @@
-// @ts-ignore
 import React, { useCallback } from 'react';
 import { MasaProvider, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
