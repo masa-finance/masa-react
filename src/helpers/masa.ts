@@ -37,7 +37,7 @@ export const createNewMasa = async ({
   );
   if (!environment) return null;
 
-  let defaultNetwork = environment.defaultNetwork;
+  let defaultNetwork;
 
   try {
     const chainId: number = await newSigner.getChainId();
@@ -45,9 +45,11 @@ export const createNewMasa = async ({
     defaultNetwork = getNetworkNameByChainId(chainId);
   } catch (error) {
     if (error instanceof Error) {
-      console.warn('Getting network failed!', error.message);
+      console.warn('Network detection failed!', error.message);
     }
   }
+
+  if (!defaultNetwork) return null;
 
   return new Masa({
     wallet: newSigner,
