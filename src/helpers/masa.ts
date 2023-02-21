@@ -43,7 +43,7 @@ export const createNewMasa = async ({
     const chainId: number = await newSigner.getChainId();
     console.log({ NETWORK: chainId });
     defaultNetwork = getNetworkNameByChainId(chainId);
-  } catch (error: unknown) {
+  } catch (error) {
     if (error instanceof Error) {
       console.warn('Getting network failed!', error.message);
     }
