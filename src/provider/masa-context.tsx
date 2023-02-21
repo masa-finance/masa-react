@@ -66,6 +66,6 @@ export interface MasaShape {
   ) => Promise<GenerateGreenResult | undefined>;
   network?: ethers.providers.Network | null;
   switchNetwork?: (chainId: number) => void;
-  SupportedNetworks?: { [index in NetworkName]: Network };
+  SupportedNetworks?: Partial<{ [index in NetworkName]: Network }>;
   networkName?: NetworkName;
 }

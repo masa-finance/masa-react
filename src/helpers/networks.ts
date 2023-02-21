@@ -54,7 +54,8 @@ export const getNetworkNameByChainId = (chainId: number): NetworkName => {
       return 'bsc';
 
     default:
-      throw new Error(`Unsupported network! ${chainId}`);
+      console.warn('Network detection failed!', chainId);
+      return 'unknown';
   }
 };
 
@@ -155,9 +156,9 @@ const goerliNetwork: Network = {
   },
 };
 
-export const SupportedNetworks: {
+export const SupportedNetworks: Partial<{
   [key in NetworkName]: Network;
-} = {
+}> = {
   // ETH
   ethereum: ethereumNetwork,
   goerli: goerliNetwork,

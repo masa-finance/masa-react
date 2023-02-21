@@ -217,7 +217,7 @@ export const MasaContextProvider = ({
     [addNetwork]
   );
 
-  const context = {
+  const context: MasaShape = {
     setProvider,
     provider,
     isModalOpen,

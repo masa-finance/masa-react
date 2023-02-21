@@ -37,24 +37,13 @@ export const createNewMasa = async ({
   );
   if (!environment) return null;
 
-  let defaultNetwork;
-
-  try {
-    const chainId: number = await newSigner.getChainId();
-    console.log({ NETWORK: chainId });
-    defaultNetwork = getNetworkNameByChainId(chainId);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.warn('Network detection failed!', error.message);
-    }
-  }
-
-  if (!defaultNetwork) return null;
+  const chainId: number = await newSigner.getChainId();
+  console.log({ NETWORK: chainId });
 
   return new Masa({
     wallet: newSigner,
     apiUrl: environment.apiUrl,
-    defaultNetwork,
+    defaultNetwork: getNetworkNameByChainId(chainId),
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
