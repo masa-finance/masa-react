@@ -13,8 +13,8 @@ export const useWallet = (
   error: unknown;
   network: providers.Network | null;
 } => {
-  const queryKey: (string | Signer | null)[] = useMemo(() => {
-    return ['wallet', provider];
+  const queryKey: (string | boolean)[] = useMemo(() => {
+    return ['wallet', !!provider];
   }, [provider]);
 
   const {
@@ -29,7 +29,7 @@ export const useWallet = (
 
   const [network, setNetwork] = useState<providers.Network | null>(null);
 
-  const loadNetwork = useCallback(async () => {
+  const loadNetwork = useCallback(async (): Promise<void> => {
     if (provider) {
       const newNetwork = await provider.provider?.getNetwork();
       setNetwork(newNetwork ?? null);
