@@ -41,7 +41,8 @@ export const useGreen = (
     isLoading,
     error,
   } = useQuery(queryKey, () => masa?.green.list(), {
-    enabled: !!masa && !!walletAddress,
+    enabled: !!masa && masa.config.network !== 'unknown' && !!walletAddress,
+    retry: false,
     onSuccess: (
       greens: {
         tokenId: BigNumber;

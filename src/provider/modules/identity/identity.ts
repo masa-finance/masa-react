@@ -29,7 +29,8 @@ export const useIdentity = (
     isLoading,
     error,
   } = useQuery(queryKey, () => masa?.identity.load(walletAddress), {
-    enabled: !!masa && !!walletAddress,
+    enabled: !!masa && masa.config.network !== 'unknown' && !!walletAddress,
+    retry: false,
     onSuccess: (identity: { identityId?: BigNumber; address?: string }) => {
       console.log({ identity });
     },

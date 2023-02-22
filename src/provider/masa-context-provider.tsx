@@ -9,7 +9,7 @@ import {
   useSoulnames,
   useWallet,
 } from './modules';
-import { ethers } from 'ethers';
+import { providers, Signer, utils, Wallet } from 'ethers';
 import { MASA_CONTEXT, MasaShape } from './masa-context';
 
 export interface ArweaveConfig {
@@ -25,7 +25,7 @@ export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
   environmentName?: EnvironmentNameEx;
-  signer?: ethers.Wallet | ethers.Signer;
+  signer?: Wallet | Signer;
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
   verbose?: boolean;
@@ -44,9 +44,7 @@ export const MasaContextProvider = ({
 }: MasaContextProviderProps): JSX.Element => {
   const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
 
-  const [provider, setProvider] = useState<
-    ethers.Wallet | ethers.Signer | null
-  >(null);
+  const [provider, setProvider] = useState<Wallet | Signer | null>(null);
   const [missingProvider, setMissingProvider] = useState<boolean>();
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -62,7 +60,7 @@ export const MasaContextProvider = ({
   }: {
     walletAddress: string | undefined;
     isLoading: boolean;
-    network: ethers.providers.Network | null;
+    network: providers.Network | null;
   } = useWallet(masaInstance, provider);
 
   const {
@@ -185,7 +183,7 @@ export const MasaContextProvider = ({
           params: [
             {
               ...networkDetails,
-              chainId: ethers.utils.hexValue(networkDetails.chainId),
+              chainId: utils.hexValue(networkDetails.chainId),
             },
           ],
         });
@@ -203,7 +201,7 @@ export const MasaContextProvider = ({
         if (typeof window !== 'undefined') {
           await window?.ethereum?.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: ethers.utils.hexValue(chainId) }],
+            params: [{ chainId: utils.hexValue(chainId) }],
           });
           console.log(`switched to chainId: ${chainId} successfully`);
         }

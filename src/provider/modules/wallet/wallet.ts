@@ -1,21 +1,21 @@
 import { useQuery } from 'react-query';
 import { Masa } from '@masa-finance/masa-sdk';
-import { ethers } from 'ethers';
+import { providers, Signer, Wallet } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export const useWallet = (
   masa: Masa | null,
-  provider: ethers.Wallet | ethers.Signer | null
+  provider: Wallet | Signer | null
 ): {
   walletAddress: string | undefined;
   status: string;
   isLoading: boolean;
   error: unknown;
-  network: ethers.providers.Network | null;
+  network: providers.Network | null;
 } => {
-  const queryKey: (string | undefined)[] = useMemo(() => {
-    return ['wallet', masa?.config.network];
-  }, [masa]);
+  const queryKey: (string | Signer | null)[] = useMemo(() => {
+    return ['wallet', provider];
+  }, [provider]);
 
   const {
     data: walletAddress,
@@ -27,7 +27,7 @@ export const useWallet = (
     retry: false,
   });
 
-  const [network, setNetwork] = useState<ethers.providers.Network | null>(null);
+  const [network, setNetwork] = useState<providers.Network | null>(null);
 
   const loadNetwork = useCallback(async () => {
     if (provider) {

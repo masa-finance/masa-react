@@ -18,18 +18,24 @@ export const useSoulnames = (
   isLoading: boolean;
   error: unknown;
 } => {
-  const queryKey: string = useMemo(() => {
-    return `soulnames-${walletAddress}-${masa?.config.network}`;
+  const queryKey: (string | undefined)[] = useMemo(() => {
+    return ['soulnames', walletAddress, masa?.config.network];
   }, [walletAddress, masa]);
 
   console.log(queryKey);
+
   const {
     data: soulnames,
     status,
     isLoading,
     error,
   } = useQuery(queryKey, () => masa?.soulName.list(), {
-    enabled: !!masa && !!walletAddress && !!identity?.identityId,
+    enabled:
+      !!masa &&
+      masa.config.network !== 'unknown' &&
+      !!walletAddress &&
+      !!identity?.identityId,
+    retry: false,
   });
 
   return { soulnames, status, isLoading, error };

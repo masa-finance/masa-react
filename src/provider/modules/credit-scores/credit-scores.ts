@@ -26,8 +26,8 @@ export const useCreditScores = (
   isLoading: boolean;
   error: unknown;
 } => {
-  const queryKey: string = useMemo(() => {
-    return `credit-scores-${walletAddress}-${masa?.config.network}`;
+  const queryKey: (string | undefined)[] = useMemo(() => {
+    return ['credit-scores', walletAddress, masa?.config.network];
   }, [walletAddress, masa]);
 
   const {
@@ -36,7 +36,12 @@ export const useCreditScores = (
     isLoading,
     error,
   } = useQuery(queryKey, () => masa?.creditScore.list(), {
-    enabled: !!masa && !!walletAddress && !!identity?.identityId,
+    enabled:
+      !!masa &&
+      masa.config.network !== 'unknown' &&
+      !!walletAddress &&
+      !!identity?.identityId,
+    retry: false,
   });
 
   const handleCreateCreditScore = useCallback(async (): Promise<
