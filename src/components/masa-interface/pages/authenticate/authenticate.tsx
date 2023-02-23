@@ -3,7 +3,7 @@ import { useMasa } from '../../../../provider';
 import { Spinner } from '../../../spinner';
 
 export const InterfaceAuthenticate = (): JSX.Element => {
-  const { handleLogin, walletAddress, loading } = useMasa();
+  const { handleLogin, walletAddress, isLoading } = useMasa();
 
   const [copied, setCopied] = useState(false);
 
@@ -21,7 +21,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     }
   }, [walletAddress]);
 
-  if (loading) {
+  if (isLoading) {
     return <Spinner />;
   }
   return (
@@ -45,7 +45,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
           className="masa-button authenticate-button"
           onClick={handleLogin}
         >
-          {loading ? 'loading...' : 'Get Started'}
+          {isLoading ? 'loading...' : 'Get Started'}
         </button>
         <div className="dont-have-a-wallet">
           <a>

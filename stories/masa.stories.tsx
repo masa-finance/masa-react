@@ -20,7 +20,7 @@ const meta: Meta = {
 export default meta;
 
 const Component = (): JSX.Element => {
-  const { connect, loggedIn, handleLogout, switchNetwork } = useMasa();
+  const { connect, handleLogout, switchNetwork } = useMasa();
 
   const handleConnect = useCallback(() => {
     connect?.({
@@ -32,7 +32,7 @@ const Component = (): JSX.Element => {
   }, [connect]);
 
   const loadCR = async (): Promise<void> => {
-    await queryClient.invalidateQueries('wallet');
+    await queryClient.invalidateQueries(['wallet']);
   };
 
   const mintGreen = async (): Promise<void> => {
@@ -55,9 +55,7 @@ const Component = (): JSX.Element => {
         Switch to Alfajores
       </button>
 
-      {loggedIn && (
-        <button onClick={(): void => handleLogout?.()}>Logout</button>
-      )}
+      <button onClick={(): void => handleLogout?.()}>Logout</button>
     </>
   );
 };

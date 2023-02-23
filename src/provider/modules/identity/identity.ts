@@ -5,8 +5,8 @@ import { Masa } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
 export const useIdentity = (
-  masa: Masa | null,
-  walletAddress: string | undefined
+  masa?: Masa,
+  walletAddress?: string
 ): {
   identity:
     | {
@@ -16,7 +16,8 @@ export const useIdentity = (
     | undefined;
   handlePurchaseIdentity: () => void;
   status: string;
-  isLoading: boolean;
+  isIdentityLoading: boolean;
+  reloadIdentity: () => void;
   error: unknown;
 } => {
   const queryKey: (string | undefined)[] = useMemo(() => {
@@ -27,18 +28,34 @@ export const useIdentity = (
     data: identity,
     status,
     isLoading,
+    isFetching,
+    refetch: reloadIdentity,
     error,
-  } = useQuery(queryKey, () => masa?.identity.load(walletAddress), {
-    enabled: !!masa && !!walletAddress,
-    onSuccess: (identity: { identityId?: BigNumber; address?: string }) => {
-      console.log({ identity });
-    },
-  });
+  } = useQuery<{ identityId?: BigNumber; address?: string } | undefined>(
+    queryKey,
+    () => masa?.identity.load(walletAddress),
+    {
+      enabled: !!masa && !!walletAddress,
+      retry: false,
+      onSuccess: (identity?: { identityId?: BigNumber; address?: string }) => {
+        if (masa?.config.verbose) {
+          console.log({ identity, network: masa?.config.network });
+        }
+      },
+    }
+  );
 
   const handlePurchaseIdentity = useCallback(async () => {
     await masa?.identity.create();
     await queryClient.invalidateQueries(queryKey);
   }, [masa, queryKey]);
 
-  return { identity, handlePurchaseIdentity, status, isLoading, error };
+  return {
+    identity,
+    isIdentityLoading: isLoading || isFetching,
+    handlePurchaseIdentity,
+    reloadIdentity,
+    status,
+    error,
+  };
 };

@@ -4,17 +4,17 @@ import { MasaLoading } from '../../../masa-loading';
 import { Spinner } from '../../../spinner';
 
 export const InterfaceConnected = (): JSX.Element => {
-  const { loading, closeModal } = useMasa();
+  const { closeModal, isLoading } = useMasa();
 
   useEffect(() => {
-    if (!loading) {
+    if (!isLoading) {
       setTimeout(() => {
         closeModal?.();
       }, 3000);
     }
-  }, [loading, closeModal]);
+  }, [isLoading, closeModal]);
 
-  if (loading) return <MasaLoading />;
+  if (isLoading) return <MasaLoading />;
 
   return (
     <div className="interface-connected">

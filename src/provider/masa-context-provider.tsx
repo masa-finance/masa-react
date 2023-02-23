@@ -1,16 +1,20 @@
 import { EnvironmentName, Masa, NetworkName } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { createNewMasa, Network, SupportedNetworks } from '../helpers';
+import { createNewMasa, SupportedNetworks } from '../helpers';
 import {
   useCreditScores,
   useGreen,
   useIdentity,
+  useModal,
+  useNetwork,
+  useProvider,
   useSession,
   useSoulnames,
   useWallet,
 } from './modules';
-import { ethers } from 'ethers';
-import { MASA_CONTEXT, MasaShape } from './masa-context';
+import { Signer, Wallet } from 'ethers';
+import { MASA_CONTEXT } from './masa-context';
+import { MasaShape } from './masa-shape';
 
 export interface ArweaveConfig {
   port?: string;
@@ -25,7 +29,7 @@ export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
   environmentName?: EnvironmentNameEx;
-  signer?: ethers.Wallet | ethers.Signer;
+  signer?: Wallet | Signer;
   noWallet?: boolean;
   arweaveConfig?: ArweaveConfig;
   verbose?: boolean;
@@ -37,87 +41,92 @@ export const MasaContextProvider = ({
   company,
   environmentName = 'dev' as EnvironmentNameEx,
   verbose = false,
-  signer: externalSigner,
+  signer,
   noWallet,
   arweaveConfig,
   networkName,
 }: MasaContextProviderProps): JSX.Element => {
-  const [masaInstance, setMasaInstance] = useState<Masa | null>(null);
-
-  const [provider, setProvider] = useState<
-    ethers.Wallet | ethers.Signer | null
-  >(null);
-  const [missingProvider, setMissingProvider] = useState<boolean>();
-
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [modalCallback, setModalCallback] = useState<(() => void) | null>(null);
-
+  // masa
+  const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
+  // scope
   const [scope, setScope] = useState<string[]>([]);
 
-  // Modules
-  const {
-    walletAddress,
-    isLoading: walletLoading,
-    network,
-  }: {
-    walletAddress: string | undefined;
-    isLoading: boolean;
-    network: ethers.providers.Network | null;
-  } = useWallet(masaInstance, provider);
+  // provider
+  const { provider, setProvider, isProviderMissing, setIsProviderMissing } =
+    useProvider(signer);
 
+  // wallet
+  const { walletAddress, isWalletLoading, isConnected } = useWallet(
+    masaInstance,
+    provider
+  );
+  // session
+  const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
+    useSession(masaInstance, walletAddress);
+
+  // network
+  const { switchNetwork, network } = useNetwork(provider);
+
+  // modal
+  const { isModalOpen, setModalOpen, setModalCallback, closeModal } = useModal(
+    networkName,
+    isLoggedIn,
+    isConnected,
+    network
+  );
+
+  // identity
   const {
     identity,
     handlePurchaseIdentity,
-    isLoading: identityLoading,
+    isIdentityLoading,
+    reloadIdentity,
   } = useIdentity(masaInstance, walletAddress);
 
-  const { soulnames } = useSoulnames(masaInstance, walletAddress, identity);
+  // soul names
+  const { soulnames, isSoulnamesLoading, reloadSoulnames } = useSoulnames(
+    masaInstance,
+    walletAddress,
+    identity
+  );
 
+  // credit scores
   const {
     creditScores,
-    isLoading: creditScoreLoading,
+    isCreditScoresLoading,
     handleCreateCreditScore,
+    reloadCreditScores,
   } = useCreditScores(masaInstance, walletAddress, identity);
 
+  // greens
   const {
     greens,
-    isLoading: greenLoading,
+    isGreensLoading,
     handleGenerateGreen,
     handleCreateGreen,
+    reloadGreens,
   } = useGreen(masaInstance, walletAddress);
 
-  const {
-    loggedIn,
-    login: handleLogin,
-    logout: handleLogout,
-    isLoading: sessionLoading,
-  } = useSession(masaInstance, walletAddress);
-
-  // Logic
-
-  const loading = useMemo(() => {
+  // global loading flag
+  const isLoading = useMemo(() => {
     return (
       !masaInstance ||
-      sessionLoading ||
-      creditScoreLoading ||
-      identityLoading ||
-      walletLoading ||
-      greenLoading
+      isWalletLoading ||
+      isSessionLoading ||
+      isIdentityLoading ||
+      isSoulnamesLoading ||
+      isCreditScoresLoading ||
+      isGreensLoading
     );
   }, [
-    sessionLoading,
-    creditScoreLoading,
-    identityLoading,
-    walletLoading,
-    greenLoading,
     masaInstance,
+    isWalletLoading,
+    isSessionLoading,
+    isIdentityLoading,
+    isSoulnamesLoading,
+    isCreditScoresLoading,
+    isGreensLoading,
   ]);
-
-  useEffect(() => {
-    if (externalSigner) {
-      setProvider(externalSigner);
-    }
-  }, [externalSigner]);
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
@@ -130,40 +139,18 @@ export const MasaContextProvider = ({
     [setModalOpen, setModalCallback]
   );
 
-  const isConnected = useMemo(() => {
-    return !!walletAddress;
-  }, [walletAddress]);
-
-  const closeModal = useCallback(() => {
-    setModalOpen(false);
-    if (
-      modalCallback &&
-      loggedIn &&
-      isConnected &&
-      (networkName ? !network?.name.includes(networkName) : true)
-    ) {
-      modalCallback();
-    }
-  }, [
-    modalCallback,
-    setModalOpen,
-    loggedIn,
-    isConnected,
-    network,
-    networkName,
-  ]);
-
   useEffect(() => {
     const loadMasa = async (): Promise<void> => {
       if (!provider) return;
-      const masa: Masa | null = await createNewMasa({
+
+      const masa: Masa | undefined = await createNewMasa({
         signer: provider,
         environmentName,
         arweaveConfig,
         verbose,
       });
 
-      void setMasaInstance(masa);
+      setMasaInstance(masa);
     };
 
     void loadMasa();
@@ -177,78 +164,70 @@ export const MasaContextProvider = ({
     network,
   ]);
 
-  const addNetwork = useCallback(async (networkDetails: Network) => {
-    try {
-      if (typeof window !== 'undefined' && networkDetails) {
-        await window?.ethereum?.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              ...networkDetails,
-              chainId: ethers.utils.hexValue(networkDetails.chainId),
-            },
-          ],
-        });
-      }
-    } catch (error) {
-      console.error(
-        `error ocuured while adding new chain with chainId:${networkDetails?.chainId}`
-      );
-    }
-  }, []);
-
-  const switchNetwork = useCallback(
-    async (chainId: number) => {
-      try {
-        if (typeof window !== 'undefined') {
-          await window?.ethereum?.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: ethers.utils.hexValue(chainId) }],
-          });
-          console.log(`switched to chainId: ${chainId} successfully`);
-        }
-      } catch (err) {
-        const error = err as { code: number };
-        if (error.code === 4902) {
-          void addNetwork(SupportedNetworks[chainId]);
-        }
-      }
-    },
-    [addNetwork]
-  );
-
-  const context = {
-    setProvider,
-    provider,
-    isModalOpen,
-    setModalOpen,
+  const context: MasaShape = {
+    // masa instance
     masa: masaInstance as Masa,
-    isConnected,
-    loading,
-    walletAddress,
-    identity,
-    loggedIn,
-    handleLogin,
-    handleLogout,
-    handlePurchaseIdentity,
+    // global loading
+    isLoading,
+
+    // masa-react global connect
     connect,
-    closeModal,
+
+    // general config
     scope,
     company,
-    handleCreateCreditScore,
+
+    // provider handling
+    provider,
+    setProvider,
+    isProviderMissing,
+    setIsProviderMissing,
+
+    // modal
+    isModalOpen,
+    setModalOpen,
+    closeModal,
+
+    // wallet
+    walletAddress,
+    isWalletLoading,
+    isConnected,
+
+    // identity
+    identity,
+    isIdentityLoading,
+    handlePurchaseIdentity,
+    reloadIdentity,
+
+    // session
+    isLoggedIn,
+    isSessionLoading,
+    handleLogin,
+    handleLogout,
+
+    // credit scores
     creditScores,
+    isCreditScoresLoading,
+    handleCreateCreditScore,
+    reloadCreditScores,
+
+    // soul names
     soulnames,
-    logginLoading: sessionLoading,
-    missingProvider,
-    setMissingProvider,
+    isSoulnamesLoading,
+    reloadSoulnames,
+
+    // greens
     greens,
-    greenLoading,
+    isGreensLoading,
     handleGenerateGreen,
     handleCreateGreen,
-    network,
-    switchNetwork,
-    SupportedNetworks,
+    reloadGreens,
+
+    // network
     networkName,
+    network,
+    SupportedNetworks,
+    switchNetwork,
   };
 
   return (

@@ -3,7 +3,7 @@ import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceCreateCreditScore = (): JSX.Element => {
-  const { handleCreateCreditScore, loading } = useMasa();
+  const { handleCreateCreditScore, isLoading } = useMasa();
   const [error, setError] = useState<string | null>(null);
 
   const createCreditScore = useCallback(async () => {
@@ -14,7 +14,7 @@ export const InterfaceCreateCreditScore = (): JSX.Element => {
       setError('There is not enough data for generating a credit report');
   }, [handleCreateCreditScore]);
 
-  if (loading) return <MasaLoading />;
+  if (isLoading) return <MasaLoading />;
 
   return (
     <div className="interface-create-identity">
