@@ -1,98 +1,102 @@
-import { ethers } from 'ethers';
+import { providers } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { queryClient } from './masa-query-client';
 import { useMasa } from './use-masa';
 
-export const getWeb3Provider = (): ethers.providers.Web3Provider | null => {
+export const getWeb3Provider = (): providers.Web3Provider | undefined => {
   if (
     typeof window !== 'undefined' &&
     typeof window?.ethereum !== 'undefined'
   ) {
-    return new ethers.providers.Web3Provider(
-      window?.ethereum as unknown as ethers.providers.ExternalProvider
+    return new providers.Web3Provider(
+      window?.ethereum as unknown as providers.ExternalProvider
     );
   }
 
-  return null;
+  return;
 };
 
 export const useMetamask = ({
-  disable,
+  disabled,
 }: {
-  disable?: boolean;
+  disabled?: boolean;
 }): { connect: () => void } => {
-  const [walletsConnected, setWalletsConnected] = useState<string[]>([]);
-  const { setProvider, setMissingProvider, handleLogout } = useMasa();
+  const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
+  const {
+    setProvider,
+    setIsProviderMissing,
+    handleLogout,
+    isConnected,
+    walletAddress,
+  } = useMasa();
 
-  const provider = useMemo((): ethers.providers.Web3Provider | null => {
+  // use metamask can only be used inside the scope of masa-react
+  // otherwise everything from useMasa is undefined
+  if (Object.keys(useMasa()).length < 1) {
+    throw new Error('useMetamask must be used inside the masa provider scope');
+  }
+
+  const provider = useMemo((): providers.Web3Provider | undefined => {
     return getWeb3Provider();
   }, []);
 
   useEffect(() => {
-    if (setMissingProvider) {
-      if (provider) {
-        setMissingProvider(false);
-      } else {
-        setMissingProvider(true);
+    setIsProviderMissing?.(!provider);
+  }, [provider, setIsProviderMissing]);
+
+  const loadSignerFromProvider = useCallback(
+    async (provider: providers.Web3Provider) => {
+      await provider.send('eth_requestAccounts', []);
+
+      const signer = provider.getSigner();
+      if (signer) {
+        setProvider?.(signer);
       }
-    }
-  }, [provider, setMissingProvider]);
+    },
+    [setProvider]
+  );
 
   const connect = useCallback(async () => {
-    console.log('DISABLE', disable);
-    if (!disable) {
-      if (provider && window?.ethereum) {
-        await provider.send('eth_requestAccounts', []);
+    console.log({ disabled });
 
-        const signer = provider.getSigner();
-        if (signer && setProvider) {
-          setProvider(signer);
-          onConnect();
-        }
-      }
+    if (!disabled && provider && window?.ethereum) {
+      await loadSignerFromProvider(provider);
     }
-  }, [setProvider, provider, disable]);
+  }, [provider, disabled, loadSignerFromProvider]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
-      if (localStorage.getItem('isWalletConnected') === 'true') {
-        try {
-          await connect();
-        } catch (error) {
-          console.error('Connect failed!', error);
+      if (isConnected) return;
+
+      try {
+        await connect();
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error('Connect failed!', error.message);
         }
       }
     };
     void connectWalletOnPageLoad();
-  }, [connect]);
+  }, [isConnected, connect]);
 
-  const onConnect = (): void => {
-    localStorage.setItem('isWalletConnected', 'true');
-  };
-
-  const disconnect = useCallback(async () => {
-    await handleLogout?.();
-    localStorage.setItem('isWalletConnected', 'false');
-
-    setProvider?.(null);
-
-    await queryClient.invalidateQueries(['wallet']);
-    await queryClient.invalidateQueries(['session']);
-  }, [handleLogout, setProvider]);
-
-  const detectWalletChange = useCallback(async () => {
-    const deduplicatedWallets = new Set(walletsConnected);
-    console.log({ deduplicatedWallets });
-
-    if (deduplicatedWallets.size > 1) {
-      console.log('DISCONNECTING, MORE THAN ONE WALLET');
-      await disconnect();
+  const disconnect = useCallback(async (): Promise<void> => {
+    if (isConnected) {
+      await handleLogout?.();
     }
-  }, [walletsConnected, disconnect]);
+  }, [isConnected, handleLogout]);
 
   useEffect(() => {
+    const detectWalletChange = async (): Promise<void> => {
+      if (
+        walletAddress &&
+        connectedAccounts.length > 0 &&
+        !connectedAccounts.includes(walletAddress)
+      ) {
+        await disconnect();
+      }
+    };
+
     void detectWalletChange();
-  }, [detectWalletChange]);
+  }, [connectedAccounts, disconnect, walletAddress]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -100,31 +104,18 @@ export const useMetamask = ({
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
           const accountsArray = accounts as string[];
-          if (accountsArray.length === 0) {
-            await disconnect();
-            setWalletsConnected([]);
-          } else {
-            setWalletsConnected([...walletsConnected, ...accountsArray]);
-          }
+          setConnectedAccounts(accountsArray);
         }
       );
 
       window?.ethereum?.on('networkChanged', async () => {
         const newProvider = getWeb3Provider();
         if (newProvider) {
-          await newProvider.send('eth_requestAccounts', []);
-
-          const signer = newProvider.getSigner();
-          if (signer && setProvider) {
-            setProvider(signer);
-            onConnect();
-
-            await queryClient.invalidateQueries(['wallet']);
-          }
+          await loadSignerFromProvider(newProvider);
         }
       });
     }
-  }, [handleLogout, disconnect, setProvider, walletsConnected]);
+  }, [loadSignerFromProvider, setConnectedAccounts]);
 
   return { connect };
 };

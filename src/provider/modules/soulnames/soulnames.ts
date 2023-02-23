@@ -4,39 +4,49 @@ import { BigNumber } from 'ethers';
 import { useMemo } from 'react';
 
 export const useSoulnames = (
-  masa: Masa | null,
-  walletAddress: string | undefined,
-  identity:
-    | {
-        identityId?: BigNumber | undefined;
-        address?: string | undefined;
-      }
-    | undefined
+  masa?: Masa,
+  walletAddress?: string,
+  identity?: {
+    identityId?: BigNumber | undefined;
+    address?: string | undefined;
+  }
 ): {
   soulnames: SoulNameDetails[] | undefined;
   status: string;
-  isLoading: boolean;
+  isSoulnamesLoading: boolean;
+  reloadSoulnames: () => void;
   error: unknown;
 } => {
   const queryKey: (string | undefined)[] = useMemo(() => {
     return ['soulnames', walletAddress, masa?.config.network];
   }, [walletAddress, masa]);
 
-  console.log(queryKey);
-
   const {
     data: soulnames,
     status,
     isLoading,
+    isFetching,
+    refetch: reloadSoulnames,
     error,
-  } = useQuery(queryKey, () => masa?.soulName.list(), {
-    enabled:
-      !!masa &&
-      masa.config.network !== 'unknown' &&
-      !!walletAddress &&
-      !!identity?.identityId,
-    retry: false,
-  });
+  } = useQuery<SoulNameDetails[] | undefined>(
+    queryKey,
+    () => masa?.soulName.list(),
+    {
+      enabled: !!masa && !!walletAddress && !!identity?.identityId,
+      retry: false,
+      onSuccess: (soulNames?: SoulNameDetails[]) => {
+        if (masa?.config.verbose) {
+          console.log({ soulNames, network: masa?.config.network });
+        }
+      },
+    }
+  );
 
-  return { soulnames, status, isLoading, error };
+  return {
+    soulnames,
+    isSoulnamesLoading: isLoading || isFetching,
+    reloadSoulnames,
+    status,
+    error,
+  };
 };

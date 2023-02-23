@@ -5,7 +5,6 @@ import {
 import React from 'react';
 import { QueryClientProvider } from 'react-query';
 
-import { useMetamask } from './use-metamask';
 import { queryClient } from './masa-query-client';
 
 import '../../styles.scss';
@@ -15,12 +14,10 @@ export const MasaProvider = ({
   children,
   ...args
 }: MasaContextProviderProps): JSX.Element => {
-  useMetamask({ disable: args.noWallet });
-
   return (
     <QueryClientProvider client={queryClient}>
       <MasaContextProvider {...args}>
-        <MasaInterface disable={args.noWallet} />
+        <MasaInterface disableMetamask={args.noWallet} />
         {children}
       </MasaContextProvider>
     </QueryClientProvider>

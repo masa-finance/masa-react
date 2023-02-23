@@ -4,7 +4,8 @@ import { MasaLoading } from '../../../masa-loading';
 import { Network } from '../../../../helpers';
 
 export const InterfaceSwitchChain = (): JSX.Element => {
-  const { networkName, loading, switchNetwork, SupportedNetworks } = useMasa();
+  const { networkName, isLoading, switchNetwork, SupportedNetworks } =
+    useMasa();
 
   const currentNetwork: Network | null = useMemo(() => {
     if (SupportedNetworks && networkName)
@@ -27,7 +28,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
     }
   }, [switchNetwork, currentNetwork]);
 
-  if (loading) return <MasaLoading />;
+  if (isLoading) return <MasaLoading />;
 
   return (
     <div className="interface-connected">

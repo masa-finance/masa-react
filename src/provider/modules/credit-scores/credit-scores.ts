@@ -5,14 +5,12 @@ import { ICreditScore, Masa } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
 export const useCreditScores = (
-  masa: Masa | null,
-  walletAddress: string | undefined,
-  identity:
-    | {
-        identityId?: BigNumber | undefined;
-        address?: string | undefined;
-      }
-    | undefined
+  masa?: Masa,
+  walletAddress?: string,
+  identity?: {
+    identityId?: BigNumber | undefined;
+    address?: string | undefined;
+  }
 ): {
   creditScores:
     | {
@@ -23,7 +21,8 @@ export const useCreditScores = (
     | undefined;
   handleCreateCreditScore: () => void;
   status: string;
-  isLoading: boolean;
+  isCreditScoresLoading: boolean;
+  reloadCreditScores: () => void;
   error: unknown;
 } => {
   const queryKey: (string | undefined)[] = useMemo(() => {
@@ -34,31 +33,46 @@ export const useCreditScores = (
     data: creditScores,
     status,
     isLoading,
+    isFetching,
+    refetch: reloadCreditScores,
     error,
-  } = useQuery(queryKey, () => masa?.creditScore.list(), {
-    enabled:
-      !!masa &&
-      masa.config.network !== 'unknown' &&
-      !!walletAddress &&
-      !!identity?.identityId,
+  } = useQuery<
+    | {
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata?: ICreditScore;
+      }[]
+    | undefined
+  >(queryKey, () => masa?.creditScore.list(), {
+    enabled: !!masa && !!walletAddress && !!identity?.identityId,
     retry: false,
+    onSuccess: (
+      creditScores?: {
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata?: ICreditScore;
+      }[]
+    ) => {
+      if (masa?.config.verbose) {
+        console.log({ creditScores, network: masa?.config.network });
+      }
+    },
   });
 
   const handleCreateCreditScore = useCallback(async (): Promise<
     boolean | undefined
   > => {
     const response = await masa?.creditScore.create();
-
     await queryClient.invalidateQueries(queryKey);
-
     return response?.success;
   }, [masa, queryKey]);
 
   return {
     creditScores,
+    isCreditScoresLoading: isLoading || isFetching,
     handleCreateCreditScore,
+    reloadCreditScores,
     status,
-    isLoading,
     error,
   };
 };

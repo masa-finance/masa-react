@@ -10,8 +10,8 @@ import {
 import { BigNumber } from 'ethers';
 
 export const useGreen = (
-  masa: Masa | null,
-  walletAddress: string | undefined
+  masa?: Masa,
+  walletAddress?: string
 ): {
   greens:
     | {
@@ -28,23 +28,33 @@ export const useGreen = (
     code: string
   ) => Promise<VerifyGreenResult | undefined>;
   status: string;
-  isLoading: boolean;
+  isGreensLoading: boolean;
+  reloadGreens: () => void;
   error: unknown;
 } => {
   const queryKey: (string | undefined)[] = useMemo(() => {
     return ['green', walletAddress, masa?.config.network];
-  }, [walletAddress, masa]);
+  }, [masa, walletAddress]);
 
   const {
     data: greens,
     status,
     isLoading,
+    isFetching,
+    refetch: reloadGreens,
     error,
-  } = useQuery(queryKey, () => masa?.green.list(), {
-    enabled: !!masa && masa.config.network !== 'unknown' && !!walletAddress,
+  } = useQuery<
+    | {
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata?: IGreen | undefined;
+      }[]
+    | undefined
+  >(queryKey, () => masa?.green.list(), {
+    enabled: !!masa && !!walletAddress,
     retry: false,
     onSuccess: (
-      greens: {
+      greens?: {
         tokenId: BigNumber;
         tokenUri: string;
         metadata?: IGreen | undefined;
@@ -62,9 +72,7 @@ export const useGreen = (
       code: string
     ): Promise<VerifyGreenResult | undefined> => {
       const response = await masa?.green.create(phoneNumber, code);
-
       await queryClient.invalidateQueries(queryKey);
-
       return response;
     },
     [masa, queryKey]
@@ -84,10 +92,11 @@ export const useGreen = (
 
   return {
     greens,
+    isGreensLoading: isLoading || isFetching,
     handleGenerateGreen,
     handleCreateGreen,
+    reloadGreens,
     status,
-    isLoading,
     error,
   };
 };

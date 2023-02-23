@@ -3,13 +3,13 @@ import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceCreateIdentity = (): JSX.Element => {
-  const { handlePurchaseIdentity, handleLogout, loading } = useMasa();
+  const { handlePurchaseIdentity, handleLogout, isLoading } = useMasa();
 
   const createIdentity = useCallback(async () => {
     await handlePurchaseIdentity?.();
   }, [handlePurchaseIdentity]);
 
-  if (loading) return <MasaLoading />;
+  if (isLoading) return <MasaLoading />;
 
   return (
     <div className="interface-create-identity">

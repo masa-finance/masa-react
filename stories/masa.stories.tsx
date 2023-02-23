@@ -33,7 +33,7 @@ const Component = (): JSX.Element => {
   }, [connect]);
 
   const loadCR = async (): Promise<void> => {
-    await queryClient.invalidateQueries('wallet');
+    await queryClient.invalidateQueries(['wallet']);
   };
 
   const mintGreen = async (): Promise<void> => {

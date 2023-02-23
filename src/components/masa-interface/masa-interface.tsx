@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useMasa } from '../../provider';
+import { useMasa, useMetamask } from '../../provider';
 import { ModalComponent } from '../modal';
 import {
   InterfaceAuthenticate,
@@ -11,9 +11,11 @@ import {
 import { InterfaceSwitchChain } from './pages/switch-chain';
 
 const pages = {
-  connector: ({ disable }: { disable?: boolean }): JSX.Element => (
-    <InterfaceConnector disable={disable} />
-  ),
+  connector: ({
+    disableMetamask,
+  }: {
+    disableMetamask?: boolean;
+  }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
   createIdentity: <InterfaceCreateIdentity />,
   connectedState: <InterfaceConnected />,
   authenticate: <InterfaceAuthenticate />,
@@ -22,16 +24,18 @@ const pages = {
 };
 
 export const MasaInterface = ({
-  disable,
+  disableMetamask,
 }: {
-  disable?: boolean;
+  disableMetamask?: boolean;
 }): JSX.Element => {
+  useMetamask({ disabled: disableMetamask });
+
   const {
     isModalOpen,
     setModalOpen,
     isConnected,
     identity,
-    loggedIn,
+    isLoggedIn,
     closeModal,
     scope,
     creditScores,
@@ -41,15 +45,15 @@ export const MasaInterface = ({
     if (!isConnected) return 'connector';
 
     // if (network && !chain?.name.includes(network)) return 'switchNetwork';
-    if (!loggedIn) return 'authenticate';
+    if (!isLoggedIn) return 'authenticate';
     if (!identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
       return 'createCreditScore';
-    if (isConnected && loggedIn) return 'connectedState';
+    if (isConnected && isLoggedIn) return 'connectedState';
 
     return 'connector';
-  }, [isConnected, identity, loggedIn, scope, creditScores]);
+  }, [isConnected, identity, isLoggedIn, scope, creditScores]);
 
   return (
     <>
@@ -58,7 +62,7 @@ export const MasaInterface = ({
         close={(): void => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
       >
-        {page === 'connector' ? pages[page]({ disable }) : pages[page]}
+        {page === 'connector' ? pages[page]({ disableMetamask }) : pages[page]}
       </ModalComponent>
     </>
   );
