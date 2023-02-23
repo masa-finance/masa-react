@@ -57,7 +57,7 @@ export const useSession = (
 
   const handleLogout = useCallback(
     async (logoutCallback?: () => void): Promise<void> => {
-      await masa?.session.logout();
+      await masa?.session.sessionLogout();
       await clearSession();
 
       logoutCallback?.();
