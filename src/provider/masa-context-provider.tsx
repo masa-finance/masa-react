@@ -7,7 +7,6 @@ import {
   useIdentity,
   useModal,
   useNetwork,
-  useProvider,
   useSession,
   useSoulnames,
   useWallet,
@@ -52,8 +51,7 @@ export const MasaContextProvider = ({
   const [scope, setScope] = useState<string[]>([]);
 
   // provider
-  const { provider, setProvider, isProviderMissing, setIsProviderMissing } =
-    useProvider(signer);
+  const [provider, setProvider] = useState<Wallet | Signer | undefined>(signer);
 
   // wallet
   const { walletAddress, isWalletLoading, isConnected } = useWallet(
@@ -180,8 +178,6 @@ export const MasaContextProvider = ({
     // provider handling
     provider,
     setProvider,
-    isProviderMissing,
-    setIsProviderMissing,
 
     // modal
     isModalOpen,

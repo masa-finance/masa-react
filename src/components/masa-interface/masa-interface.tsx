@@ -36,6 +36,7 @@ export const MasaInterface = ({
     isConnected,
     identity,
     isLoggedIn,
+    provider,
     closeModal,
     scope,
     creditScores,
@@ -45,7 +46,7 @@ export const MasaInterface = ({
     if (!isConnected) return 'connector';
 
     // if (network && !chain?.name.includes(network)) return 'switchNetwork';
-    if (!isLoggedIn) return 'authenticate';
+    if (!isLoggedIn && provider) return 'authenticate';
     if (!identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
@@ -53,7 +54,7 @@ export const MasaInterface = ({
     if (isConnected && isLoggedIn) return 'connectedState';
 
     return 'connector';
-  }, [isConnected, identity, isLoggedIn, scope, creditScores]);
+  }, [isConnected, identity, isLoggedIn, scope, provider, creditScores]);
 
   return (
     <>
