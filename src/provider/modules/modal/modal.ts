@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
-import { NetworkName } from '@masa-finance/masa-sdk';
 import { providers } from 'ethers';
+import { Masa } from '@masa-finance/masa-sdk';
 
 export const useModal = (
-  networkName?: NetworkName,
+  masa?: Masa,
   isLoggedIn?: boolean,
   isConnected?: boolean,
   network?: providers.Network
@@ -22,18 +22,13 @@ export const useModal = (
       modalCallback &&
       isLoggedIn &&
       isConnected &&
-      (networkName ? !network?.name.includes(networkName) : true)
+      (masa?.config.network
+        ? !network?.name.includes(masa.config.network)
+        : true)
     ) {
       modalCallback();
     }
-  }, [
-    modalCallback,
-    setModalOpen,
-    isLoggedIn,
-    isConnected,
-    network,
-    networkName,
-  ]);
+  }, [modalCallback, setModalOpen, isLoggedIn, isConnected, network, masa]);
 
   return {
     isModalOpen,

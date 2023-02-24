@@ -1,4 +1,4 @@
-import { EnvironmentName, Masa, NetworkName } from '@masa-finance/masa-sdk';
+import { EnvironmentName, Masa } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa, SupportedNetworks } from '../helpers';
 import {
@@ -27,23 +27,27 @@ export type EnvironmentNameEx = EnvironmentName & ('local' | 'stage');
 export interface MasaContextProviderProps extends MasaShape {
   children: React.ReactNode;
   company?: string;
-  environmentName?: EnvironmentNameEx;
-  signer?: Wallet | Signer;
   noWallet?: boolean;
+  signer?: Wallet | Signer;
+  environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   verbose?: boolean;
-  networkName?: NetworkName;
 }
 
 export const MasaContextProvider = ({
   children,
+  // masa-react branding
   company,
-  environmentName = 'dev' as EnvironmentNameEx,
-  verbose = false,
-  signer,
+  // use no wallet
   noWallet,
+  // signer used in masa instance
+  signer,
+  // env used in masa instance
+  environmentName = 'dev' as EnvironmentNameEx,
+  // arweave config used in masa instance
   arweaveConfig,
-  networkName,
+  // verbose on /off
+  verbose = false,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -67,7 +71,7 @@ export const MasaContextProvider = ({
 
   // modal
   const { isModalOpen, setModalOpen, setModalCallback, closeModal } = useModal(
-    networkName,
+    masaInstance,
     isLoggedIn,
     isConnected,
     network
@@ -220,7 +224,6 @@ export const MasaContextProvider = ({
     reloadGreens,
 
     // network
-    networkName,
     network,
     SupportedNetworks,
     switchNetwork,

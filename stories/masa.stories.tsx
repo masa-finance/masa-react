@@ -71,7 +71,7 @@ const Component = (): JSX.Element => {
 const Template: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" networkName="goerli">
+      <MasaProvider company="Masa">
         <Component {...props} />
       </MasaProvider>
     </>
