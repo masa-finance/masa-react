@@ -6,3 +6,4 @@ export * from './use-masa';
 export * from './use-metamask';
 export * from './use-debounce';
 export * from './modules';
+export * from './masa-shape';
