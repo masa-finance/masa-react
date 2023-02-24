@@ -1,5 +1,8 @@
 import React from 'react';
 import { useMetamask } from '../../../../provider';
+import coinbase from '../../../../assets/coinbase';
+import walletconnect from '../../../../assets/walletconnect';
+import metamask from '../../../../assets/metamask';
 
 export const InterfaceConnector = ({
   disableMetamask,
@@ -27,26 +30,19 @@ export const InterfaceConnector = ({
       <div className="masa-connectors">
         <div data-cy="metaMask" className="connector" onClick={connect}>
           <p>MetaMask</p>
-          <img
-            src={
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/MetaMask_Fox.svg/2048px-MetaMask_Fox.svg.png'
-            }
-            className="connector-image"
-          />
+          <img alt="metamask" src={metamask} className="connector-image" />
         </div>
         <div data-cy="walletConnect" className="connector disabled">
           <p>WalletConnect</p>
           <img
-            src={'https://example.walletconnect.org/favicon.ico'}
+            alt="walletconnect"
+            src={walletconnect}
             className="connector-image"
           />
         </div>
         <div data-cy="coinbaseWallet" className="connector disabled">
           <p>Coinbase Wallet</p>
-          <img
-            src={'https://avatars.githubusercontent.com/u/18060234?s=280&v=4'}
-            className="connector-image"
-          />
+          <img alt="coinbase" src={coinbase} className="connector-image" />
         </div>
       </div>
       <div className="dont-have-a-wallet">
