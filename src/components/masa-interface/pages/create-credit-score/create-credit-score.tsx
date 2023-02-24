@@ -31,9 +31,7 @@ export const InterfaceCreateCreditScore = (): JSX.Element => {
           Create now!
         </button>
         <div className="dont-have-a-wallet">
-          <a>
-            <p>I don't want to use this wallet</p>
-          </a>
+          <p>I don't want to use this wallet</p>
         </div>
       </div>
     </div>
