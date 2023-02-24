@@ -17,6 +17,7 @@ export const ModalComponent = ({
 }: ModalProps): JSX.Element => {
   return (
     <Rodal
+      data-cy="closeMasaModal"
       height={615}
       width={550}
       visible={open}
