@@ -13,12 +13,19 @@ export const InterfaceConnector = ({
       <div>
         <h3 className="title">Select a wallet</h3>
         <p>
-          By connecting your wallet, you agree to our <a>Terms of Service</a>{' '}
-          and <a>Privacy Policy</a>
+          By connecting your wallet, you agree to our{' '}
+          <a href="/terms-and-conditions">Terms of Service</a> and{' '}
+          <a
+            href="https://www.masa.finance/privacy-policy"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Privacy Policy
+          </a>
         </p>
       </div>
       <div className="masa-connectors">
-        <div className="connector" onClick={connect}>
+        <div data-cy="metaMask" className="connector" onClick={connect}>
           <p>MetaMask</p>
           <img
             src={
@@ -27,14 +34,14 @@ export const InterfaceConnector = ({
             className="connector-image"
           />
         </div>
-        <div className="connector disabled">
+        <div data-cy="walletConnect" className="connector disabled">
           <p>WalletConnect</p>
           <img
             src={'https://example.walletconnect.org/favicon.ico'}
             className="connector-image"
           />
         </div>
-        <div className="connector disabled">
+        <div data-cy="coinbaseWallet" className="connector disabled">
           <p>Coinbase Wallet</p>
           <img
             src={'https://avatars.githubusercontent.com/u/18060234?s=280&v=4'}
@@ -43,7 +50,11 @@ export const InterfaceConnector = ({
         </div>
       </div>
       <div className="dont-have-a-wallet">
-        <a>
+        <a
+          href="https://metamask.io/download/"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
           <p>I don't have a Wallet</p>
         </a>
       </div>
