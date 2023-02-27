@@ -28,7 +28,7 @@
   },
   "author": "hide-on-bush",
   "dependencies": {
-    "@masa-finance/masa-sdk": "^1.5.5",
+    "@masa-finance/masa-sdk": "^1.5.6",
     "@metamask/providers": "^10.2.1",
     "babel-loader": "^9.1.2",
     "babel-plugin-import": "^1.13.6",
