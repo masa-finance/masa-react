@@ -48,12 +48,10 @@ export const InterfaceAuthenticate = (): JSX.Element => {
           {isLoading ? 'loading...' : 'Get Started'}
         </button>
         <div className="dont-have-a-wallet">
-          <a>
-            <p>
-              Want to use a different wallet? Close this window and disconnect
-              your wallet in Metamask to connect a new wallet
-            </p>
-          </a>
+          <p>
+            Want to use a different wallet? Close this window and disconnect
+            your wallet in Metamask to connect a new wallet
+          </p>
         </div>
       </div>
     </div>

@@ -1,19 +1,6 @@
-import { providers } from 'ethers';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMasa } from './use-masa';
-
-export const getWeb3Provider = (): providers.Web3Provider | undefined => {
-  if (
-    typeof window !== 'undefined' &&
-    typeof window?.ethereum !== 'undefined'
-  ) {
-    return new providers.Web3Provider(
-      window?.ethereum as unknown as providers.ExternalProvider
-    );
-  }
-
-  return;
-};
+import { getWeb3Provider } from '../helpers';
 
 export const useMetamask = ({
   disabled,
@@ -21,13 +8,7 @@ export const useMetamask = ({
   disabled?: boolean;
 }): { connect: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
-  const {
-    setProvider,
-    setIsProviderMissing,
-    handleLogout,
-    isConnected,
-    walletAddress,
-  } = useMasa();
+  const { setProvider, handleLogout, isConnected, walletAddress } = useMasa();
 
   // use metamask can only be used inside the scope of masa-react
   // otherwise everything from useMasa is undefined
@@ -35,37 +16,30 @@ export const useMetamask = ({
     throw new Error('useMetamask must be used inside the masa provider scope');
   }
 
-  const provider = useMemo((): providers.Web3Provider | undefined => {
-    return getWeb3Provider();
-  }, []);
-
-  useEffect(() => {
-    setIsProviderMissing?.(!provider);
-  }, [provider, setIsProviderMissing]);
-
-  const loadSignerFromProvider = useCallback(
-    async (provider: providers.Web3Provider) => {
-      await provider.send('eth_requestAccounts', []);
-
-      const signer = provider.getSigner();
-      if (signer) {
-        setProvider?.(signer);
-      }
-    },
-    [setProvider]
-  );
-
+  /**
+   * Connect to metamask
+   */
   const connect = useCallback(async () => {
     console.log({ disabled });
 
-    if (!disabled && provider && window?.ethereum) {
-      await loadSignerFromProvider(provider);
+    if (!disabled && window?.ethereum) {
+      await window?.ethereum?.request({ method: 'eth_requestAccounts' });
+      setProvider?.(getWeb3Provider()?.getSigner());
     }
-  }, [provider, disabled, loadSignerFromProvider]);
+  }, [disabled, setProvider]);
+
+  /**
+   * Disconnect
+   */
+  const disconnect = useCallback(async (): Promise<void> => {
+    if (isConnected) {
+      await handleLogout?.();
+    }
+  }, [isConnected, handleLogout]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
-      if (isConnected) return;
+      if (walletAddress) return;
 
       try {
         await connect();
@@ -76,27 +50,23 @@ export const useMetamask = ({
       }
     };
     void connectWalletOnPageLoad();
-  }, [isConnected, connect]);
-
-  const disconnect = useCallback(async (): Promise<void> => {
-    if (isConnected) {
-      await handleLogout?.();
-    }
-  }, [isConnected, handleLogout]);
+  }, [walletAddress, connect]);
 
   useEffect(() => {
     const detectWalletChange = async (): Promise<void> => {
       if (
         walletAddress &&
         connectedAccounts.length > 0 &&
-        !connectedAccounts.includes(walletAddress)
+        !connectedAccounts
+          .map((account: string) => account.toLowerCase())
+          .includes(walletAddress.toLowerCase())
       ) {
         await disconnect();
       }
     };
 
     void detectWalletChange();
-  }, [connectedAccounts, disconnect, walletAddress]);
+  }, [connectedAccounts, disconnect, walletAddress, setProvider]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -104,18 +74,22 @@ export const useMetamask = ({
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
           const accountsArray = accounts as string[];
+
+          if (accountsArray.length === 0) {
+            await disconnect();
+            setProvider?.();
+          }
+
           setConnectedAccounts(accountsArray);
         }
       );
 
-      window?.ethereum?.on('networkChanged', async () => {
+      window?.ethereum?.on('chainChanged', async () => {
         const newProvider = getWeb3Provider();
-        if (newProvider) {
-          await loadSignerFromProvider(newProvider);
-        }
+        setProvider?.(newProvider?.getSigner());
       });
     }
-  }, [loadSignerFromProvider, setConnectedAccounts]);
+  }, [setProvider, setConnectedAccounts, disconnect]);
 
   return { connect };
 };

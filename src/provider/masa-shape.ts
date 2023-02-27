@@ -29,8 +29,6 @@ export interface MasaShape {
   // provider
   provider?: ethers.Wallet | ethers.Signer;
   setProvider?: (provider?: ethers.Wallet | ethers.Signer) => void;
-  isProviderMissing?: boolean;
-  setIsProviderMissing?: (value: boolean) => void;
 
   // modal
   isModalOpen?: boolean;
@@ -92,7 +90,6 @@ export interface MasaShape {
   reloadGreens?: () => void;
 
   // network
-  networkName?: NetworkName;
   network?: ethers.providers.Network;
   SupportedNetworks?: Partial<{ [index in NetworkName]: Network }>;
   switchNetwork?: (chainId: number) => void;
