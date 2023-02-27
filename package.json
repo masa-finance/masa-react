@@ -13,7 +13,7 @@
   "scripts": {
     "start": "yarn build:watch",
     "build": "yarn build:tsc && yarn build:dist",
-    "build:tsc": "tsc -m es6 --outDir dist && cp -R ./fonts/ ./dist/fonts/ && mkdir -p ./dist && mkdir -p ./dist/components/modal && cp ./styles.scss ./dist/styles.scss && cp ./src/components/modal/styles.scss ./dist/components/modal/styles.scss",
+    "build:tsc": "tsc -m es6 --outDir dist && cp -R ./src/fonts/ ./dist/fonts/ && mkdir -p ./dist && mkdir -p ./dist/components/modal && cp ./src/provider/styles.scss ./dist/provider/styles.scss && cp ./src/components/modal/styles.scss ./dist/components/modal/styles.scss",
     "build:dist": "cross-env NODE_ENV=production webpack",
     "build:watch": "tsc -w",
     "lint": "eslint src/**/*.{ts,tsx} stories/**/*.tsx --fix",
