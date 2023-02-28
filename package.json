@@ -24,7 +24,7 @@
     "analyze": "size-limit --why",
     "clean": "rm -rf ./dist",
     "prettier": "prettier ./src ./test ./stories --write",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook -p 3000"
   },
   "author": "hide-on-bush",
   "dependencies": {
