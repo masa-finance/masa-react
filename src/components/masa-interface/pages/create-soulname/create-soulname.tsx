@@ -122,7 +122,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
           justifyContent: 'flex-start',
         }}
       >
-        <div style={{ textAlign: 'center', marginTop: 64 }}>
+        <div style={{ textAlign: 'center', marginTop: 32 }}>
           <h1 className="title">Minting your domain</h1>
           <h1 className="title">
             {soulname}
