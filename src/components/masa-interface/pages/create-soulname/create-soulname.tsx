@@ -19,7 +19,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
   const [registrationPeriod, setRegistrationPeriod] = useState<number>(1);
   const [registrationPrice, setRegistrationPrice] = useState<string>('0');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('eth');
+  const [paymentMethod] = useState<PaymentMethod>('eth');
   const [isLoadingMint, setLoadingMint] = useState(false);
 
   const debounceSearch = useDebounce(soulname, 1000);
