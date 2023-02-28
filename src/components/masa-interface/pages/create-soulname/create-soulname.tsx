@@ -51,6 +51,8 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     if (!isAvailable) {
       return 'Soulname not available';
     }
+
+    return undefined;
   }, [masa, soulname, isAvailable]);
 
   useEffect(() => {
