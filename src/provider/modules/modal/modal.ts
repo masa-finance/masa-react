@@ -23,13 +23,15 @@ export const useModal = (
   const closeModal = useCallback(
     (forceCallback?: boolean) => {
       setModalOpen(false);
+
       if (
+        !forcedPage && 
         areScopesFullfiled &&
-        modalCallback &&
+        !!modalCallback &&
         isLoggedIn &&
         isConnected &&
         (masa?.config.network
-          ? !network?.name.includes(masa.config.network)
+          ? network?.name.includes(masa.config.network)
           : true)
       ) {
         modalCallback();
@@ -45,6 +47,7 @@ export const useModal = (
       network,
       masa,
       areScopesFullfiled,
+      forcedPage
     ]
   );
 
