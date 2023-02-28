@@ -6,34 +6,54 @@ export const useModal = (
   masa?: Masa,
   isLoggedIn?: boolean,
   isConnected?: boolean,
-  network?: providers.Network
+  network?: providers.Network,
+  areScopesFullfiled?: boolean
 ): {
   isModalOpen: boolean;
-  closeModal: () => void;
+  closeModal: (forceCallback?: boolean) => void;
   setModalOpen: (modalOpen: boolean) => void;
   setModalCallback: (callback: () => void) => void;
+  forcedPage: string | null;
+  setForcedPage?: (page: null | string) => void;
 } => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalCallback, setModalCallback] = useState<(() => void) | null>(null);
+  const [forcedPage, setForcedPage] = useState<null | string>(null);
 
-  const closeModal = useCallback(() => {
-    setModalOpen(false);
-    if (
-      modalCallback &&
-      isLoggedIn &&
-      isConnected &&
-      (masa?.config.network
-        ? !network?.name.includes(masa.config.network)
-        : true)
-    ) {
-      modalCallback();
-    }
-  }, [modalCallback, setModalOpen, isLoggedIn, isConnected, network, masa]);
+  const closeModal = useCallback(
+    (forceCallback?: boolean) => {
+      setModalOpen(false);
+      if (
+        areScopesFullfiled &&
+        modalCallback &&
+        isLoggedIn &&
+        isConnected &&
+        (masa?.config.network
+          ? !network?.name.includes(masa.config.network)
+          : true)
+      ) {
+        modalCallback();
+      } else if (forceCallback && modalCallback) {
+        modalCallback();
+      }
+    },
+    [
+      modalCallback,
+      setModalOpen,
+      isLoggedIn,
+      isConnected,
+      network,
+      masa,
+      areScopesFullfiled,
+    ]
+  );
 
   return {
     isModalOpen,
     closeModal,
     setModalOpen,
     setModalCallback,
+    forcedPage,
+    setForcedPage,
   };
 };
