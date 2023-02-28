@@ -102,7 +102,10 @@ export const MasaContextProvider = ({
   } = useGreen(masaInstance, walletAddress);
 
   // scope
-  const { scope, setScope, areScopesFullfiled } = useScopes(soulnames ?? []);
+  const { scope, setScope, areScopesFullfiled } = useScopes(
+    soulnames ?? [],
+    isLoggedIn
+  );
 
   // modal
   const {
