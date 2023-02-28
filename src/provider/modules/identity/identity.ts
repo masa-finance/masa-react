@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
-import { Masa } from '@masa-finance/masa-sdk';
+import { Masa, PaymentMethod } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
 export const useIdentity = (
@@ -15,6 +15,11 @@ export const useIdentity = (
       }
     | undefined;
   handlePurchaseIdentity: () => void;
+  handlePurchaseIdentityWithSoulname: (
+    soulname: string,
+    registrationPeriod: number,
+    paymentMethod: PaymentMethod
+  ) => Promise<boolean>;
   status: string;
   isIdentityLoading: boolean;
   reloadIdentity: () => void;
@@ -50,10 +55,29 @@ export const useIdentity = (
     await queryClient.invalidateQueries(queryKey);
   }, [masa, queryKey]);
 
+  const handlePurchaseIdentityWithSoulname = useCallback(
+    async (
+      soulname: string,
+      registrationPeriod: number,
+      paymentMethod: PaymentMethod
+    ) => {
+      const result = await masa?.identity.createWithSoulName(
+        soulname,
+        registrationPeriod,
+        paymentMethod
+      );
+      await queryClient.invalidateQueries(queryKey);
+
+      return !!result;
+    },
+    [masa, queryKey]
+  );
+
   return {
     identity,
     isIdentityLoading: isLoading || isFetching,
     handlePurchaseIdentity,
+    handlePurchaseIdentityWithSoulname,
     reloadIdentity,
     status,
     error,
