@@ -5,6 +5,7 @@ import {
   IGreen,
   Masa,
   NetworkName,
+  PaymentMethod,
   SoulNameDetails,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
@@ -24,6 +25,7 @@ export interface MasaShape {
 
   // general config
   scope?: string[];
+  areScopesFullfiled?: boolean;
   company?: string;
 
   // provider
@@ -33,7 +35,10 @@ export interface MasaShape {
   // modal
   isModalOpen?: boolean;
   setModalOpen?: (val: boolean) => void;
-  closeModal?: () => void;
+  closeModal?: (forceCallback?: boolean) => void;
+  forcedPage?: string | null;
+  setForcedPage?: (page: string | null) => void;
+  openMintSoulnameModal?: (callback?: () => void) => void;
 
   // wallet
   walletAddress?: string;
@@ -47,6 +52,11 @@ export interface MasaShape {
   };
   isIdentityLoading?: boolean;
   handlePurchaseIdentity?: () => void;
+  handlePurchaseIdentityWithSoulname?: (
+    soulname: string,
+    registrationPrice: number,
+    paymentMethod: PaymentMethod
+  ) => Promise<boolean>;
   reloadIdentity?: () => void;
 
   // session
