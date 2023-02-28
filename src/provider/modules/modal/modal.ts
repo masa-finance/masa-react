@@ -25,7 +25,7 @@ export const useModal = (
       setModalOpen(false);
 
       if (
-        !forcedPage && 
+        !forcedPage &&
         areScopesFullfiled &&
         !!modalCallback &&
         isLoggedIn &&
@@ -47,7 +47,7 @@ export const useModal = (
       network,
       masa,
       areScopesFullfiled,
-      forcedPage
+      forcedPage,
     ]
   );
 
