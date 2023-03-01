@@ -6,7 +6,7 @@ const development = require('./webpack.development.js');
 const production = require('./webpack.production.js');
 
 const paths = {
-  entry: path.resolve(__dirname, './dist/index.js'),
+  entry: path.resolve(__dirname, './dist/src/index.js'),
   bundle: path.resolve(__dirname, './dist/browser'),
 };
 

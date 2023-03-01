@@ -2,8 +2,9 @@
   "name": "@masa-finance/masa-react",
   "version": "0.29.6",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "main": "./dist/src/index.js",
+  "typings": "./dist/src/index.d.ts",
+  "module": "./dist/browser/masa-react.amd.min.js",
   "files": [
     "dist"
   ],
@@ -13,7 +14,7 @@
   "scripts": {
     "start": "yarn build:watch",
     "build": "yarn build:tsc && yarn build:dist",
-    "build:tsc": "tsc -m es6 --outDir dist && cp -R ./src/fonts/ ./dist/fonts/ && mkdir -p ./dist && mkdir -p ./dist/components/modal && cp ./src/provider/styles.scss ./dist/provider/styles.scss && cp ./src/components/modal/styles.scss ./dist/components/modal/styles.scss",
+    "build:tsc": "tsc && mkdir -p ./dist && cp -R ./src/fonts ./dist/src/fonts && mkdir -p ./dist/src/components/modal && cp ./src/provider/styles.scss ./dist/src/provider/styles.scss && cp ./src/components/modal/styles.scss ./dist/src/components/modal/styles.scss",
     "build:dist": "cross-env NODE_ENV=production webpack",
     "build:watch": "tsc -w",
     "lint": "eslint src/**/*.{ts,tsx} stories/**/*.tsx --fix",
