@@ -1,12 +1,12 @@
 [
   {
-    "path": "dist/masa-react.cjs.production.min.js",
-    "limit": "500kB",
+    "path": "dist/browser/masa-react.cjs.min.js",
+    "limit": "10MB",
     "webpack": false
   },
   {
-    "path": "dist/masa-react.esm.js",
-    "limit": "300kB",
+    "path": "dist/browser/masa-react.window.min.js",
+    "limit": "10MB",
     "webpack": false
   }
 ]

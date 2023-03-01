@@ -78,13 +78,41 @@
       font-size: 16px;
     }
   }
-
-  .masa-input {
+  .masa-input-container {
     width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-    border-radius: 4px;
+    gap: 8px;
 
-    padding: 1em 1.2em;
+    .masa-input-label {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+
+      display: flex;
+      align-items: center;
+
+      color: #000000;
+    }
+
+    .masa-input {
+      width: 100%;
+      border-radius: 4px;
+      border-width: 1px;
+
+      font-size: 18px;
+      box-sizing: border-box;
+
+      padding: 1em 1.2em;
+      border: 0.5px solid rgba(0, 0, 0, 0.4);
+
+      color: rgba(0, 0, 0, 0.6);
+    }
   }
 
   .authenticate-button {
@@ -109,10 +137,106 @@
     justify-content: center;
     align-items: center;
   }
+
+  .interface-create-soulname {
+    align-items: center;
+
+    .title,
+    .subtitle {
+      text-align: center;
+    }
+
+    .subtitle {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 28px;
+
+      text-align: center;
+
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    .masa-button {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 20px;
+      /* identical to box height, or 143% */
+
+      color: #ffffff;
+    }
+
+    .soulname-purchase-container {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      .soulname-purchase-details-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr;
+        grid-column-gap: 16px;
+      }
+
+      .price-estimation {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+        /* identical to box height */
+
+        display: flex;
+        align-items: center;
+
+        margin-top: 18px;
+      }
+
+      .period-buttons {
+        position: absolute;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 24px;
+        padding: 12px;
+        box-sizing: border-box;
+        align-items: center;
+
+        button {
+          background: transparent;
+          border: none;
+          font-size: 22px;
+          font-weight: 500;
+          cursor: pointer;
+
+          &:active {
+            color: rgba(0, 0, 0, 0.4);
+          }
+        }
+      }
+    }
+
+    .available-indicator {
+      position: absolute;
+      right: 18px;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16.2px;
+      line-height: 20px;
+      margin-top: 44px;
+      color: #964f4fe6;
+    }
+  }
   .interface-authenticate,
   .interface-connected,
   .interface-connect,
-  .interface-create-identity {
+  .interface-create-identity,
+  .interface-create-soulname {
     display: flex;
     height: 100%;
     flex-direction: column;

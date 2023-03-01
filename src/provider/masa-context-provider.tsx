@@ -14,6 +14,7 @@ import {
 import { Signer, Wallet } from 'ethers';
 import { MASA_CONTEXT } from './masa-context';
 import { MasaShape } from './masa-shape';
+import { useScopes } from './modules/scopes/scopes';
 
 export interface ArweaveConfig {
   port?: string;
@@ -51,8 +52,6 @@ export const MasaContextProvider = ({
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
-  // scope
-  const [scope, setScope] = useState<string[]>([]);
 
   // provider
   const [provider, setProvider] = useState<Wallet | Signer | undefined>(signer);
@@ -69,18 +68,11 @@ export const MasaContextProvider = ({
   // network
   const { switchNetwork, network } = useNetwork(provider);
 
-  // modal
-  const { isModalOpen, setModalOpen, setModalCallback, closeModal } = useModal(
-    masaInstance,
-    isLoggedIn,
-    isConnected,
-    network
-  );
-
   // identity
   const {
     identity,
     handlePurchaseIdentity,
+    handlePurchaseIdentityWithSoulname,
     isIdentityLoading,
     reloadIdentity,
   } = useIdentity(masaInstance, walletAddress);
@@ -109,6 +101,28 @@ export const MasaContextProvider = ({
     reloadGreens,
   } = useGreen(masaInstance, walletAddress);
 
+  // scope
+  const { scope, setScope, areScopesFullfiled } = useScopes(
+    soulnames ?? [],
+    isLoggedIn
+  );
+
+  // modal
+  const {
+    isModalOpen,
+    setModalOpen,
+    setModalCallback,
+    closeModal,
+    forcedPage,
+    setForcedPage,
+  } = useModal(
+    masaInstance,
+    isLoggedIn,
+    isConnected,
+    network,
+    areScopesFullfiled
+  );
+
   // global loading flag
   const isLoading = useMemo(() => {
     return (
@@ -133,12 +147,27 @@ export const MasaContextProvider = ({
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
       setModalOpen(true);
+      setForcedPage?.(null);
       if (options?.scope) setScope(options.scope);
       if (typeof options?.callback === 'function') {
         setModalCallback(() => options?.callback);
       }
     },
-    [setModalOpen, setModalCallback]
+    [setModalOpen, setModalCallback, setScope, setForcedPage]
+  );
+
+  const openMintSoulnameModal = useCallback(
+    (mintCallback?: () => void) => {
+      setForcedPage?.('createSoulname');
+      setModalOpen(true);
+      const cb = () => {
+        setForcedPage?.(null);
+        if (mintCallback) mintCallback();
+      };
+
+      setModalCallback(() => cb);
+    },
+    [setForcedPage, setModalOpen, setModalCallback]
   );
 
   useEffect(() => {
@@ -177,6 +206,7 @@ export const MasaContextProvider = ({
 
     // general config
     scope,
+    areScopesFullfiled,
     company,
 
     // provider handling
@@ -187,7 +217,9 @@ export const MasaContextProvider = ({
     isModalOpen,
     setModalOpen,
     closeModal,
-
+    forcedPage,
+    setForcedPage,
+    openMintSoulnameModal,
     // wallet
     walletAddress,
     isWalletLoading,
@@ -197,6 +229,7 @@ export const MasaContextProvider = ({
     identity,
     isIdentityLoading,
     handlePurchaseIdentity,
+    handlePurchaseIdentityWithSoulname,
     reloadIdentity,
 
     // session

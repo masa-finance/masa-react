@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore, @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import React, { useCallback } from 'react';
 import { MasaProvider, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
@@ -22,11 +20,17 @@ const meta: Meta = {
 export default meta;
 
 const Component = (): JSX.Element => {
-  const { connect, isLoggedIn, handleLogout, switchNetwork } = useMasa();
+  const {
+    connect,
+    isLoggedIn,
+    handleLogout,
+    switchNetwork,
+    openMintSoulnameModal,
+  } = useMasa();
 
   const handleConnect = useCallback(() => {
     connect?.({
-      scope: [],
+      scope: ['soulname', 'auth'],
       callback: function () {
         alert('hello hello connected');
       },
@@ -46,6 +50,11 @@ const Component = (): JSX.Element => {
       <h1>SDK Tester!</h1>
 
       <button onClick={handleConnect}>Use Masa!</button>
+      <button
+        onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
+      >
+        Mint a soulname
+      </button>
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
 

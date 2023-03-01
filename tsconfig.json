@@ -4,7 +4,8 @@
     "src"
   ],
   "compilerOptions": {
-    "module": "ESNext",
+    "target": "ES2015",
+    "module": "ES6",
     "lib": [
       "DOM",
       "ESNext"
@@ -13,12 +14,14 @@
       "node_modules/@types"
     ],
     "importHelpers": true,
+    "baseUrl": "./src",
     // output .d.ts declaration files for consumers
     "declaration": true,
     // output .js.map sourcemap files for consumers
     "sourceMap": true,
     // match output dir to input dir. e.g. dist/index instead of dist/src/index
     "rootDir": "./src",
+    "outDir": "./dist/src",
     // stricter type-checking for stronger correctness. Recommended by TS
     "strict": true,
     // linter checks for common issues
@@ -37,11 +40,9 @@
     "skipLibCheck": true,
     // error out if import and file system have a casing mismatch. Recommended by TS
     "forceConsistentCasingInFileNames": true,
-    // `tsdx build` ignores this option, but it is commonly used when type-checking separately with `tsc`
-    "noEmit": true,
     // don't fail on any all the time
     "noImplicitAny": false,
-    // resolve json modules
-    "resolveJsonModule": true
+    "allowSyntheticDefaultImports": true,
+    "noEmit": false
   }
 }

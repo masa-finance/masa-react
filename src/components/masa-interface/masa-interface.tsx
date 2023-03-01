@@ -8,6 +8,7 @@ import {
   InterfaceCreateCreditScore,
   InterfaceCreateIdentity,
 } from './pages';
+import { InterfaceCreateSoulname } from './pages/create-soulname';
 import { InterfaceSwitchChain } from './pages/switch-chain';
 
 const pages = {
@@ -17,6 +18,7 @@ const pages = {
     disableMetamask?: boolean;
   }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
   createIdentity: <InterfaceCreateIdentity />,
+  createSoulname: <InterfaceCreateSoulname />,
   connectedState: <InterfaceConnected />,
   authenticate: <InterfaceAuthenticate />,
   createCreditScore: <InterfaceCreateCreditScore />,
@@ -40,21 +42,35 @@ export const MasaInterface = ({
     closeModal,
     scope,
     creditScores,
+    soulnames,
+    forcedPage,
   } = useMasa();
 
   const page = useMemo(() => {
+    if (forcedPage) return forcedPage;
     if (!isConnected) return 'connector';
 
     // if (network && !chain?.name.includes(network)) return 'switchNetwork';
     if (!isLoggedIn && provider) return 'authenticate';
     if (!identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
+    if ((soulnames?.length ?? 0) === 0 && scope?.includes('soulname'))
+      return 'createSoulname';
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
       return 'createCreditScore';
     if (isConnected && isLoggedIn) return 'connectedState';
 
     return 'connector';
-  }, [isConnected, identity, isLoggedIn, scope, provider, creditScores]);
+  }, [
+    isConnected,
+    identity,
+    isLoggedIn,
+    scope,
+    provider,
+    creditScores,
+    soulnames,
+    forcedPage,
+  ]);
 
   return (
     <>
