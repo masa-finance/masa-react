@@ -9,7 +9,8 @@ export const useMetamask = ({
   disabled?: boolean;
 }): { connectMetamask: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
-  const { setProvider, handleLogout, isConnected, walletAddress } = useMasa();
+  const { setProvider, handleLogout, isConnected, walletAddress, masa } =
+    useMasa();
 
   // use metamask can only be used inside the scope of masa-react
   // otherwise everything from useMasa is undefined
@@ -30,6 +31,10 @@ export const useMetamask = ({
         const accounts: Maybe<string[]> = await window?.ethereum?.request({
           method: 'eth_requestAccounts',
         });
+
+        if (masa?.config.verbose) {
+          console.log({ accounts });
+        }
 
         if (accounts && Array.isArray(accounts)) {
           hasAccounts = accounts.length > 0;
@@ -52,8 +57,12 @@ export const useMetamask = ({
       }
     }
 
+    if (masa?.config.verbose) {
+      console.log({ connected });
+    }
+
     return connected;
-  }, [disabled, setProvider]);
+  }, [disabled, setProvider, masa]);
 
   /**
    * Disconnect
