@@ -7,13 +7,14 @@ export const useScopes = (
 ) => {
   const [scope, setScope] = useState<string[]>([]);
   const areScopesFullfiled = useMemo(() => {
+    console.log({ scope, soulnames, isLoggedIn });
     if (scope?.includes('soulname') && (soulnames?.length ?? 0) === 0)
       return false;
 
     if (scope?.includes('auth') && !isLoggedIn) return false;
 
     return true;
-  }, [soulnames, scope]);
+  }, [soulnames, scope, isLoggedIn]);
 
   return { scope, setScope, areScopesFullfiled };
 };

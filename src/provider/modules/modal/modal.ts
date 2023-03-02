@@ -24,16 +24,13 @@ export const useModal = (
   const closeModal = useCallback(
     (forceCallback?: boolean) => {
       setModalOpen(false);
-
+  
       if (
         !forcedPage &&
         areScopesFullfiled &&
         !!modalCallback &&
         isLoggedIn &&
-        isConnected &&
-        (masa?.config.network
-          ? network?.name.includes(masa.config.network)
-          : true)
+        isConnected
       ) {
         modalCallback();
       } else if (forceCallback && modalCallback) {
