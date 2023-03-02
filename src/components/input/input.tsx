@@ -3,7 +3,7 @@ interface InputProps extends React.HTMLProps<HTMLInputElement> {
   label?: string;
   required?: boolean;
 }
-export const Input = ({ label, required, ...rest }: InputProps) => {
+export const Input = ({ label, required, className, ...rest }: InputProps) => {
   return (
     <div className="masa-input-container">
       {label && (
@@ -11,7 +11,7 @@ export const Input = ({ label, required, ...rest }: InputProps) => {
           {label} {required && '*'}
         </label>
       )}
-      <input className="masa-input" {...rest} />
+      <input className={`masa-input ${className}`} {...rest} />
     </div>
   );
 };

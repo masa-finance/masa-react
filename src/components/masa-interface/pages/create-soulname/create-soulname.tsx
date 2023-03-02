@@ -159,8 +159,22 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             label="Domain name"
             required
             onChange={handleChangeSoulname}
-            placeholder="domain.celo"
+            className="transparent"
           />
+
+          <p className="soulname-input-overlay">
+            {soulname ? (
+              <>
+                {soulname}
+                <b>.celo</b>
+              </>
+            ) : (
+              <>
+                domain
+                <b>.celo</b>
+              </>
+            )}
+          </p>
           {soulname !== '' && soulname.length >= 1 ? (
             <p
               className="available-indicator"
