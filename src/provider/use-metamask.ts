@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useMasa } from './use-masa';
 import { getWeb3Provider } from '../helpers';
-// localStorage.removeItem("account");
-// acc = localStorage.setItem("account", accounts1);
 
 export const useMetamask = ({
   disabled,

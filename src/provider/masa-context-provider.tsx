@@ -146,6 +146,7 @@ export const MasaContextProvider = ({
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
+      console.log({forcedPage})
       setModalOpen(true);
       setForcedPage?.(null);
       if (options?.scope) setScope(options.scope);
@@ -153,7 +154,7 @@ export const MasaContextProvider = ({
         setModalCallback(() => options?.callback);
       }
     },
-    [setModalOpen, setModalCallback, setScope, setForcedPage]
+    [setModalOpen, setModalCallback, setScope, setForcedPage, forcedPage]
   );
 
   const openMintSoulnameModal = useCallback(
