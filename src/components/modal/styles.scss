@@ -198,13 +198,14 @@
         box-sizing: border-box;
 
         padding: 1em 1.2em;
-        border: 0.5px solid rgba(0, 0, 0, 0.4);
 
         color: rgba(0, 0, 0, 0.6);
 
         margin-top: 48px;
 
         pointer-events: none;
+
+        overflow: hidden;
       }
 
       .price-estimation {
@@ -247,7 +248,6 @@
 
     .available-indicator {
       position: absolute;
-      right: 18px;
       font-family: 'Inter';
       font-style: normal;
       font-weight: 600;
@@ -255,6 +255,12 @@
       line-height: 20px;
       margin-top: 44px;
       color: #964f4fe6;
+      background: rgba(255,255,255, 0.8);
+      display: flex;
+      align-items: center;
+      height: 60%;
+      right: 2px;
+      padding: 0 18px;
     }
   }
   .interface-authenticate,
