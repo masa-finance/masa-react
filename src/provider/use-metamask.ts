@@ -20,7 +20,7 @@ export const useMetamask = ({
   /**
    * Connect to metamask
    */
-  const connect = useCallback(async (): Promise<boolean> => {
+  const connectMetamask = useCallback(async (): Promise<boolean> => {
     let connected = false;
 
     if (!disabled && window?.ethereum) {
@@ -72,7 +72,7 @@ export const useMetamask = ({
         return;
 
       try {
-        await connect();
+        await connectMetamask();
       } catch (error) {
         if (error instanceof Error) {
           console.error('Connect failed!', error.message);
@@ -80,7 +80,7 @@ export const useMetamask = ({
       }
     };
     void connectWalletOnPageLoad();
-  }, [walletAddress, connect]);
+  }, [walletAddress, connectMetamask]);
 
   useEffect(() => {
     const detectWalletChange = async (): Promise<void> => {
@@ -121,5 +121,5 @@ export const useMetamask = ({
     }
   }, [setProvider, setConnectedAccounts, disconnectMetamask]);
 
-  return { connectMetamask: connect };
+  return { connectMetamask };
 };
