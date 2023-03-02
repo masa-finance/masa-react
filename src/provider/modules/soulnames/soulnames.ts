@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { Masa, PaymentMethod, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 import { useCallback, useMemo } from 'react';
-import { queryClient } from 'provider/masa-query-client';
+import { queryClient } from '../../masa-query-client';
 
 export const useSoulnames = (
   masa?: Masa,
