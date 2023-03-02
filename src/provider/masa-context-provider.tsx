@@ -146,7 +146,7 @@ export const MasaContextProvider = ({
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
-      console.log({forcedPage})
+      console.log({ forcedPage });
       setModalOpen(true);
       setForcedPage?.(null);
       if (options?.scope) setScope(options.scope);
