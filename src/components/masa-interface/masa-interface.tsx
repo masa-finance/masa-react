@@ -64,7 +64,10 @@ export const MasaInterface = ({
     if (!isLoggedIn && provider) return 'authenticate';
     if (!identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
-    if (soulnames && soulnames.length === 0 && scope?.includes('soulname'))
+    if (
+      (!soulnames || (soulnames && soulnames.length === 0)) &&
+      scope?.includes('soulname')
+    )
       return 'createSoulname';
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
       return 'createCreditScore';
