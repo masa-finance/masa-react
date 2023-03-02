@@ -37,8 +37,9 @@ export const useMetamask = ({
           console.error('No accounts returned from metamask');
         }
       } catch (error) {
-        if (error instanceof Error)
+        if (error instanceof Error) {
           console.error('Failed to connect to metamask!', error.message);
+        }
       }
 
       const signer = getWeb3Provider()?.getSigner();

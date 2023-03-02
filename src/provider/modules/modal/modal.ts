@@ -15,6 +15,7 @@ export const useModal = (
   setModalCallback: (callback: () => void) => void;
   forcedPage: string | null;
   setForcedPage?: (page: null | string) => void;
+  openMintSoulnameModal: (mintCallback?: () => void) => void;
 } => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalCallback, setModalCallback] = useState<(() => void) | null>(null);
@@ -51,6 +52,20 @@ export const useModal = (
     ]
   );
 
+  const openMintSoulnameModal = useCallback(
+    (mintCallback?: () => void) => {
+      setForcedPage?.('createSoulname');
+      setModalOpen(true);
+      const cb = () => {
+        setForcedPage?.(null);
+        if (mintCallback) mintCallback();
+      };
+
+      setModalCallback(() => cb);
+    },
+    [setForcedPage, setModalOpen, setModalCallback]
+  );
+
   return {
     isModalOpen,
     closeModal,
@@ -58,5 +73,6 @@ export const useModal = (
     setModalCallback,
     forcedPage,
     setForcedPage,
+    openMintSoulnameModal,
   };
 };
