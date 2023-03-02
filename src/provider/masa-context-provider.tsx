@@ -115,6 +115,7 @@ export const MasaContextProvider = ({
     closeModal,
     forcedPage,
     setForcedPage,
+    openMintSoulnameModal,
   } = useModal(
     masaInstance,
     isLoggedIn,
@@ -157,20 +158,6 @@ export const MasaContextProvider = ({
     [setModalOpen, setModalCallback, setScope, setForcedPage, forcedPage]
   );
 
-  const openMintSoulnameModal = useCallback(
-    (mintCallback?: () => void) => {
-      setForcedPage?.('createSoulname');
-      setModalOpen(true);
-      const cb = () => {
-        setForcedPage?.(null);
-        if (mintCallback) mintCallback();
-      };
-
-      setModalCallback(() => cb);
-    },
-    [setForcedPage, setModalOpen, setModalCallback]
-  );
-
   useEffect(() => {
     const loadMasa = async (): Promise<void> => {
       if (!provider) return;
@@ -198,7 +185,7 @@ export const MasaContextProvider = ({
 
   const context: MasaShape = {
     // masa instance
-    masa: masaInstance as Masa,
+    masa: masaInstance,
     // global loading
     isLoading,
 
@@ -221,6 +208,7 @@ export const MasaContextProvider = ({
     forcedPage,
     setForcedPage,
     openMintSoulnameModal,
+
     // wallet
     walletAddress,
     isWalletLoading,

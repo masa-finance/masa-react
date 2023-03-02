@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useMasa } from './use-masa';
 import { getWeb3Provider } from '../helpers';
+import { Maybe } from '@metamask/providers/dist/utils';
 
 export const useMetamask = ({
   disabled,
 }: {
   disabled?: boolean;
-}): { connect: () => void } => {
+}): { connectMetamask: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
-  const { setProvider, handleLogout, isConnected, walletAddress } = useMasa();
+  const { setProvider, handleLogout, isConnected, walletAddress, masa } =
+    useMasa();
 
   // use metamask can only be used inside the scope of masa-react
   // otherwise everything from useMasa is undefined
@@ -19,21 +21,53 @@ export const useMetamask = ({
   /**
    * Connect to metamask
    */
-  const connect = useCallback(async () => {
-    console.log({ disabled });
+  const connectMetamask = useCallback(async (): Promise<boolean> => {
+    let connected = false;
 
     if (!disabled && window?.ethereum) {
-      await window?.ethereum?.request({ method: 'eth_requestAccounts' });
-      setProvider?.(getWeb3Provider()?.getSigner());
+      let hasAccounts = false;
 
-      localStorage.setItem('metamask-connected', 'true');
+      try {
+        const accounts: Maybe<string[]> = await window?.ethereum?.request({
+          method: 'eth_requestAccounts',
+        });
+
+        if (masa?.config.verbose) {
+          console.log({ accounts });
+        }
+
+        if (accounts && Array.isArray(accounts)) {
+          hasAccounts = accounts.length > 0;
+        } else {
+          console.error('No accounts returned from metamask');
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error('Failed to connect to metamask!', error.message);
+        }
+      }
+
+      const signer = getWeb3Provider()?.getSigner();
+      if (hasAccounts && signer) {
+        setProvider?.(signer);
+        connected = true;
+        localStorage.setItem('metamask-connected', 'true');
+      } else {
+        console.error('Unable to get signer from metamask');
+      }
     }
-  }, [disabled, setProvider]);
+
+    if (masa?.config.verbose) {
+      console.log({ connected });
+    }
+
+    return connected;
+  }, [disabled, setProvider, masa]);
 
   /**
    * Disconnect
    */
-  const disconnect = useCallback(async (): Promise<void> => {
+  const disconnectMetamask = useCallback(async (): Promise<void> => {
     if (isConnected) {
       localStorage.setItem('metamask-connected', 'false');
       await handleLogout?.();
@@ -48,7 +82,7 @@ export const useMetamask = ({
         return;
 
       try {
-        await connect();
+        await connectMetamask();
       } catch (error) {
         if (error instanceof Error) {
           console.error('Connect failed!', error.message);
@@ -56,7 +90,7 @@ export const useMetamask = ({
       }
     };
     void connectWalletOnPageLoad();
-  }, [walletAddress, connect]);
+  }, [walletAddress, connectMetamask]);
 
   useEffect(() => {
     const detectWalletChange = async (): Promise<void> => {
@@ -67,12 +101,12 @@ export const useMetamask = ({
           .map((account: string) => account.toLowerCase())
           .includes(walletAddress.toLowerCase())
       ) {
-        await disconnect();
+        await disconnectMetamask();
       }
     };
 
     void detectWalletChange();
-  }, [connectedAccounts, disconnect, walletAddress, setProvider]);
+  }, [connectedAccounts, disconnectMetamask, walletAddress, setProvider]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -82,7 +116,7 @@ export const useMetamask = ({
           const accountsArray = accounts as string[];
 
           if (accountsArray.length === 0) {
-            await disconnect();
+            await disconnectMetamask();
             setProvider?.();
           }
 
@@ -95,7 +129,7 @@ export const useMetamask = ({
         setProvider?.(newProvider?.getSigner());
       });
     }
-  }, [setProvider, setConnectedAccounts, disconnect]);
+  }, [setProvider, setConnectedAccounts, disconnectMetamask]);
 
-  return { connect };
+  return { connectMetamask };
 };
