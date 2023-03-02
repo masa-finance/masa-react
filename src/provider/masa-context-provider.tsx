@@ -185,7 +185,7 @@ export const MasaContextProvider = ({
 
   const context: MasaShape = {
     // masa instance
-    masa: masaInstance as Masa,
+    masa: masaInstance,
     // global loading
     isLoading,
 
