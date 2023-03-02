@@ -52,17 +52,16 @@ export const MasaInterface = ({
 
     // if (network && !chain?.name.includes(network)) return 'switchNetwork';
     if (!isLoggedIn && provider) return 'authenticate';
-      console.log({soulnames})
+    console.log({ soulnames });
 
-      if (!identity?.identityId && scope?.includes('identity'))
-          return 'createIdentity';
+    if (!identity?.identityId && scope?.includes('identity'))
+      return 'createIdentity';
 
-      if (
-          (!soulnames || (soulnames && soulnames.length === 0)) &&
-          scope?.includes('soulname')
-      )
+    if (
+      (!soulnames || (soulnames && soulnames.length === 0)) &&
+      scope?.includes('soulname')
+    )
       return 'createSoulname';
-
 
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
       return 'createCreditScore';

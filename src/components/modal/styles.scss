@@ -283,28 +283,28 @@
   }
 
   .interface-create-identity {
-      justify-content: center;
-      align-items: center;
-      gap: 3rem;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
 
-      h3 {
-          font-size: 30px;
-          margin-bottom: 0;
-      }
+    h3 {
+      font-size: 30px;
+      margin-bottom: 0;
+    }
 
-      p {
-          font-size: 18px;
-          text-align: center;
-          line-height: 24px;
-      }
+    p {
+      font-size: 18px;
+      text-align: center;
+      line-height: 24px;
+    }
 
-      button {
-          width: fit-content;
-          padding-left: 2rem;
-          padding-right: 2rem;
-      }
+    button {
+      width: fit-content;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
   }
-  
+
   .interface-authenticate,
   .interface-connected {
     .title {
