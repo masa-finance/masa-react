@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
-import { providers } from 'ethers';
 import { Masa } from '@masa-finance/masa-sdk';
+import { Network } from '../../../helpers';
 
 export const useModal = (
   masa?: Masa,
   isLoggedIn?: boolean,
   isConnected?: boolean,
-  network?: providers.Network,
+  network?: Network,
   areScopesFullfiled?: boolean
 ): {
   isModalOpen: boolean;
@@ -32,7 +32,7 @@ export const useModal = (
         isLoggedIn &&
         isConnected &&
         (masa?.config.network
-          ? network?.name.includes(masa.config.network)
+          ? network?.networkName.includes(masa.config.network)
           : true)
       ) {
         modalCallback();
