@@ -65,7 +65,8 @@ export const MasaInterface = ({
     if (!identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
     if (
-      (!soulnames || (soulnames && soulnames.length === 0)) &&
+      ((identity?.identityId && !soulnames) ||
+        (soulnames && soulnames.length === 0)) &&
       scope?.includes('soulname')
     )
       return 'createSoulname';
