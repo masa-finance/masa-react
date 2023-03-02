@@ -45,7 +45,7 @@ export const useMetamask = ({
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
       const metamaskConnected = localStorage.getItem('metamask-connected');
-      
+
       if (walletAddress || !metamaskConnected || metamaskConnected === 'false')
         return;
 

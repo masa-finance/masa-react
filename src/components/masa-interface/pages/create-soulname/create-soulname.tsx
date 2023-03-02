@@ -206,7 +206,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             <Input label="Payment asset" value="Celo" />
             <Input
               label="Registration price"
-              value={`${registrationPrice.substring(0, 6)} Celo`}
+              value={`${registrationPrice.substring(0, 7)} Celo`}
             />
           </div>
         </div>
