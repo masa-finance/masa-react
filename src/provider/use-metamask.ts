@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useMasa } from './use-masa';
 import { getWeb3Provider } from '../helpers';
+// localStorage.removeItem("account");
+// acc = localStorage.setItem("account", accounts1);
 
 export const useMetamask = ({
   disabled,
@@ -25,6 +27,8 @@ export const useMetamask = ({
     if (!disabled && window?.ethereum) {
       await window?.ethereum?.request({ method: 'eth_requestAccounts' });
       setProvider?.(getWeb3Provider()?.getSigner());
+
+      localStorage.setItem('metamask-connected', 'true');
     }
   }, [disabled, setProvider]);
 
@@ -33,13 +37,17 @@ export const useMetamask = ({
    */
   const disconnect = useCallback(async (): Promise<void> => {
     if (isConnected) {
+      localStorage.setItem('metamask-connected', 'false');
       await handleLogout?.();
     }
   }, [isConnected, handleLogout]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
-      if (walletAddress) return;
+      const metamaskConnected = localStorage.getItem('metamask-connected');
+      
+      if (walletAddress || !metamaskConnected || metamaskConnected === 'false')
+        return;
 
       try {
         await connect();
