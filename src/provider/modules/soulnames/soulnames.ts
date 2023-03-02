@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query';
-import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
+import { Masa, PaymentMethod, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+import { queryClient } from 'provider/masa-query-client';
 
 export const useSoulnames = (
   masa?: Masa,
@@ -15,6 +16,11 @@ export const useSoulnames = (
   status: string;
   isSoulnamesLoading: boolean;
   reloadSoulnames: () => void;
+  handlePurchaseSoulname: (
+    soulname: string,
+    registrationPeriod: number,
+    paymentMethod: PaymentMethod
+  ) => Promise<boolean>;
   error: unknown;
 } => {
   const queryKey: (string | undefined)[] = useMemo(() => {
@@ -42,10 +48,29 @@ export const useSoulnames = (
     }
   );
 
+  const handlePurchaseSoulname = useCallback(
+    async (
+      soulname: string,
+      registrationPeriod: number,
+      paymentMethod: PaymentMethod
+    ) => {
+      const result = await masa?.soulName.create(
+        soulname,
+        registrationPeriod,
+        paymentMethod
+      );
+      await queryClient.invalidateQueries('soulnames');
+
+      return !!result;
+    },
+    [masa, queryKey]
+  );
+
   return {
     soulnames,
     isSoulnamesLoading: isLoading || isFetching,
     reloadSoulnames,
+    handlePurchaseSoulname,
     status,
     error,
   };

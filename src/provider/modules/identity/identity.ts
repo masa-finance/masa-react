@@ -52,7 +52,7 @@ export const useIdentity = (
 
   const handlePurchaseIdentity = useCallback(async () => {
     await masa?.identity.create();
-    await queryClient.invalidateQueries(queryKey);
+    await queryClient.invalidateQueries('identity');
   }, [masa, queryKey]);
 
   const handlePurchaseIdentityWithSoulname = useCallback(
@@ -66,7 +66,7 @@ export const useIdentity = (
         registrationPeriod,
         paymentMethod
       );
-      await queryClient.invalidateQueries(queryKey);
+      await queryClient.invalidateQueries('identity');
 
       return !!result;
     },
