@@ -24,7 +24,7 @@ export const useModal = (
   const closeModal = useCallback(
     (forceCallback?: boolean) => {
       setModalOpen(false);
-  
+
       if (
         !forcedPage &&
         areScopesFullfiled &&

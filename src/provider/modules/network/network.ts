@@ -36,8 +36,8 @@ export const useNetwork = (
 
     const newNetwork = await provider.provider?.getNetwork();
 
-    console.log({newNetwork})
-    
+    console.log({ newNetwork });
+
     setNetwork(newNetwork ?? undefined);
   }, [provider]);
 
