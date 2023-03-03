@@ -53,12 +53,12 @@ export const MasaInterface = ({
     // if (network && !chain?.name.includes(network)) return 'switchNetwork';
     if (!isLoggedIn && provider) return 'authenticate';
 
-    // if (
-    //   isLoggedIn &&
-    //   (!soulnames || (soulnames && soulnames.length === 0)) &&
-    //   scope?.includes('soulname')
-    // )
-    //   return 'createSoulname';
+    if (
+      isLoggedIn &&
+      (!soulnames || (soulnames && soulnames.length === 0)) &&
+      scope?.includes('soulname')
+    )
+      return 'createSoulname';
 
     if (isLoggedIn && !identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
