@@ -100,7 +100,7 @@ export interface MasaShape {
   reloadGreens?: () => void;
 
   // network
-  network?: ethers.providers.Network;
+  currentNetwork?: Network;
   SupportedNetworks?: Partial<{ [index in NetworkName]: Network }>;
   switchNetwork?: (chainId: number) => void;
 }

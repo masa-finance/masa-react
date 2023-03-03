@@ -1,4 +1,4 @@
-import { providers, Signer, utils, Wallet } from 'ethers';
+import { Signer, utils, Wallet } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { Network, SupportedNetworks } from '../../../helpers';
 
@@ -7,9 +7,9 @@ export const useNetwork = (
 ): {
   addNetwork: (networkDetails: Network) => void;
   switchNetwork: (chainId: number) => void;
-  network?: providers.Network;
+  currentNetwork?: Network;
 } => {
-  const [network, setNetwork] = useState<providers.Network | undefined>();
+  const [currentNetwork, setCurrentNetwork] = useState<Network | undefined>();
 
   const addNetwork = useCallback(async (networkDetails: Network) => {
     try {
@@ -34,11 +34,12 @@ export const useNetwork = (
   const loadNetwork = useCallback(async (): Promise<void> => {
     if (!provider) return;
 
-    const newNetwork = await provider.provider?.getNetwork();
+    const chainId = await provider.getChainId();
 
+    const newNetwork = SupportedNetworks[chainId];
     console.log({ newNetwork });
 
-    setNetwork(newNetwork ?? undefined);
+    setCurrentNetwork(newNetwork);
   }, [provider]);
 
   const switchNetwork = useCallback(
@@ -70,6 +71,6 @@ export const useNetwork = (
   return {
     addNetwork,
     switchNetwork,
-    network,
+    currentNetwork,
   };
 };
