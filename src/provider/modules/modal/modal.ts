@@ -30,10 +30,7 @@ export const useModal = (
         areScopesFullfiled &&
         !!modalCallback &&
         isLoggedIn &&
-        isConnected &&
-        (masa?.config.network
-          ? network?.networkName.includes(masa.config.network)
-          : true)
+        isConnected
       ) {
         modalCallback();
       } else if (forceCallback && modalCallback) {

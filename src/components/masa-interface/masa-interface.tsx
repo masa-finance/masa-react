@@ -50,26 +50,18 @@ export const MasaInterface = ({
     if (forcedPage) return forcedPage;
     if (!isConnected) return 'connector';
 
-    console.log({
-      forcedPage,
-      soulnames,
-      scope,
-      isLoggedIn,
-      identity,
-      isConnected,
-      provider,
-    });
-
     // if (network && !chain?.name.includes(network)) return 'switchNetwork';
     if (!isLoggedIn && provider) return 'authenticate';
-    if (!identity?.identityId && scope?.includes('identity'))
-      return 'createIdentity';
+
     if (
-      ((!identity?.identityId && !soulnames) ||
-        (!identity?.identityId && soulnames && soulnames.length === 0)) &&
+      (!soulnames || (soulnames && soulnames.length === 0)) &&
       scope?.includes('soulname')
     )
       return 'createSoulname';
+
+    if (!identity?.identityId && scope?.includes('identity'))
+      return 'createIdentity';
+
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
       return 'createCreditScore';
     if (isConnected && isLoggedIn) return 'connectedState';
