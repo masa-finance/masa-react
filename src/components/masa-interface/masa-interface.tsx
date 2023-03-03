@@ -60,7 +60,7 @@ export const MasaInterface = ({
     )
       return 'createSoulname';
 
-    if (!identity?.identityId && scope?.includes('identity'))
+    if (isLoggedIn && !identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
 
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
@@ -86,6 +86,7 @@ export const MasaInterface = ({
         open={isModalOpen as boolean}
         close={(): void => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
+        height={page === 'createIdentity' ? 340 : undefined}
       >
         {page === 'connector' ? pages[page]({ disableMetamask }) : pages[page]}
       </ModalComponent>

@@ -282,6 +282,32 @@
     }
   }
 
+  .interface-create-identity {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    h3 {
+      font-size: 30px;
+      margin-bottom: 0;
+    }
+
+    p {
+      font-size: 18px;
+      text-align: center;
+      line-height: 24px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+
+    button {
+      width: fit-content;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
   .interface-authenticate,
   .interface-connected {
     .title {

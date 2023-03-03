@@ -30,7 +30,7 @@ const Component = (): JSX.Element => {
 
   const handleConnect = useCallback(() => {
     connect?.({
-      scope: ['auth', 'soulname'],
+      scope: ['auth', 'soulname', 'identity'],
       callback: function () {
         alert('hello hello connected');
       },
