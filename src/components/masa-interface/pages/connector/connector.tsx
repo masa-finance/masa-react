@@ -15,7 +15,10 @@ export const InterfaceConnector = ({
         <h3 className="title">Select a wallet</h3>
         <p>
           By connecting your wallet, you agree to our{' '}
-          <a href="/terms-and-conditions">Terms of Service</a> and{' '}
+          <a href="https://app.masa.finance/terms-and-conditions">
+            Terms of Service
+          </a>{' '}
+          and{' '}
           <a
             href="https://www.masa.finance/privacy-policy"
             target="_blank"
