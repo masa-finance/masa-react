@@ -1,16 +1,11 @@
 import { useQuery } from 'react-query';
 import { Masa, PaymentMethod, SoulNameDetails } from '@masa-finance/masa-sdk';
-import { BigNumber } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { queryClient } from '../../masa-query-client';
 
 export const useSoulnames = (
   masa?: Masa,
-  walletAddress?: string,
-  identity?: {
-    identityId?: BigNumber | undefined;
-    address?: string | undefined;
-  }
+  walletAddress?: string
 ): {
   soulnames: SoulNameDetails[] | undefined;
   status: string;
@@ -38,7 +33,7 @@ export const useSoulnames = (
     queryKey,
     () => masa?.soulName.list(),
     {
-      enabled: !!masa && !!walletAddress && !!identity?.identityId,
+      enabled: !!masa && !!walletAddress,
       retry: false,
       onSuccess: (soulNames?: SoulNameDetails[]) => {
         if (masa?.config.verbose) {
