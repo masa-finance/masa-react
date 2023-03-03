@@ -35,9 +35,8 @@ export const useNetwork = (
     if (!provider) return;
 
     const chainId = await provider.getChainId();
-    const newNetwork = SupportedNetworks[chainId];
 
-    if(masa.config.verbose)
+    const newNetwork = SupportedNetworks[chainId];
     console.log({ newNetwork });
 
     setCurrentNetwork(newNetwork);
