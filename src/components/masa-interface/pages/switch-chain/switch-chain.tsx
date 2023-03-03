@@ -6,15 +6,15 @@ import { Network } from '../../../../helpers';
 export const InterfaceSwitchChain = (): JSX.Element => {
   const { isLoading, switchNetwork, SupportedNetworks, masa } = useMasa();
 
-  const currentNetwork: Network | null = useMemo(() => {
+  const currentNetwork: Network | undefined = useMemo(() => {
     if (SupportedNetworks && masa?.config.network)
-      for (const chainId in SupportedNetworks) {
+      for (const networkName in SupportedNetworks) {
         if (
-          SupportedNetworks[chainId].chainName
+          SupportedNetworks[networkName].chainName
             ?.toLowerCase()
             .includes(masa.config.network)
         ) {
-          return SupportedNetworks[chainId];
+          return SupportedNetworks[networkName];
         }
       }
 

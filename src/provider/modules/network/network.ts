@@ -1,6 +1,10 @@
 import { Signer, utils, Wallet } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
-import { Network, SupportedNetworks } from '../../../helpers';
+import {
+  getNetworkNameByChainId,
+  Network,
+  SupportedNetworks,
+} from '../../../helpers';
 
 export const useNetwork = (
   provider?: Wallet | Signer
@@ -34,9 +38,9 @@ export const useNetwork = (
   const loadNetwork = useCallback(async (): Promise<void> => {
     if (!provider) return;
 
-    const chainId = await provider.getChainId();
+    const chainId: number = await provider.getChainId();
 
-    const newNetwork = SupportedNetworks[chainId];
+    const newNetwork = SupportedNetworks[getNetworkNameByChainId(chainId)];
     console.log({ newNetwork });
 
     setCurrentNetwork(newNetwork);
@@ -55,7 +59,11 @@ export const useNetwork = (
       } catch (err) {
         const error = err as { code: number };
         if (error.code === 4902) {
-          await addNetwork(SupportedNetworks[chainId]);
+          const newNetwork =
+            SupportedNetworks[getNetworkNameByChainId(chainId)];
+          if (newNetwork) {
+            await addNetwork(newNetwork);
+          }
         }
       }
 
