@@ -1,15 +1,19 @@
-import { providers, Signer, utils, Wallet } from 'ethers';
+import { Signer, utils, Wallet } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
-import { Network, SupportedNetworks } from '../../../helpers';
+import {
+  getNetworkNameByChainId,
+  Network,
+  SupportedNetworks,
+} from '../../../helpers';
 
 export const useNetwork = (
   provider?: Wallet | Signer
 ): {
   addNetwork: (networkDetails: Network) => void;
   switchNetwork: (chainId: number) => void;
-  network?: providers.Network;
+  currentNetwork?: Network;
 } => {
-  const [network, setNetwork] = useState<providers.Network | undefined>();
+  const [currentNetwork, setCurrentNetwork] = useState<Network | undefined>();
 
   const addNetwork = useCallback(async (networkDetails: Network) => {
     try {
@@ -34,11 +38,12 @@ export const useNetwork = (
   const loadNetwork = useCallback(async (): Promise<void> => {
     if (!provider) return;
 
-    const newNetwork = await provider.provider?.getNetwork();
+    const chainId: number = await provider.getChainId();
 
+    const newNetwork = SupportedNetworks[getNetworkNameByChainId(chainId)];
     console.log({ newNetwork });
 
-    setNetwork(newNetwork ?? undefined);
+    setCurrentNetwork(newNetwork);
   }, [provider]);
 
   const switchNetwork = useCallback(
@@ -54,7 +59,11 @@ export const useNetwork = (
       } catch (err) {
         const error = err as { code: number };
         if (error.code === 4902) {
-          await addNetwork(SupportedNetworks[chainId]);
+          const newNetwork =
+            SupportedNetworks[getNetworkNameByChainId(chainId)];
+          if (newNetwork) {
+            await addNetwork(newNetwork);
+          }
         }
       }
 
@@ -70,6 +79,6 @@ export const useNetwork = (
   return {
     addNetwork,
     switchNetwork,
-    network,
+    currentNetwork,
   };
 };
