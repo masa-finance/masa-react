@@ -86,6 +86,7 @@ export const MasaInterface = ({
         open={isModalOpen as boolean}
         close={(): void => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
+        height={page === 'createIdentity' ? 400 : undefined}
       >
         {page === 'connector' ? pages[page]({ disableMetamask }) : pages[page]}
       </ModalComponent>
