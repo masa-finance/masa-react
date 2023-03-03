@@ -12,9 +12,9 @@ export const InterfaceCreateIdentity = (): JSX.Element => {
   if (isLoading) return <MasaLoading />;
 
   return (
-    <div className="interface-create-identity flex items-center justify-center">
-      <h3>Hurray! 🎉</h3>
-      <p>
+    <div className="interface-create-identity">
+      <h3 className="title">Hurray! 🎉</h3>
+      <p className="subtitle">
         Congratulations you already have a Celo Domain Name in your wallet. You
         must now mint a Celo Prosperity Passport.
       </p>

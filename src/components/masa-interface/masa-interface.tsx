@@ -53,14 +53,14 @@ export const MasaInterface = ({
     // if (network && !chain?.name.includes(network)) return 'switchNetwork';
     if (!isLoggedIn && provider) return 'authenticate';
 
-    if (
-      isLoggedIn &&
-      (!soulnames || (soulnames && soulnames.length === 0)) &&
-      scope?.includes('soulname')
-    )
-      return 'createSoulname';
+    // if (
+    //   isLoggedIn &&
+    //   (!soulnames || (soulnames && soulnames.length === 0)) &&
+    //   scope?.includes('soulname')
+    // )
+    //   return 'createSoulname';
 
-    if (!identity?.identityId && scope?.includes('identity'))
+    if (isLoggedIn && !identity?.identityId && scope?.includes('identity'))
       return 'createIdentity';
 
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
@@ -86,7 +86,7 @@ export const MasaInterface = ({
         open={isModalOpen as boolean}
         close={(): void => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
-        height={page === 'createIdentity' ? 400 : undefined}
+        height={page === 'createIdentity' ? 340 : undefined}
       >
         {page === 'connector' ? pages[page]({ disableMetamask }) : pages[page]}
       </ModalComponent>
