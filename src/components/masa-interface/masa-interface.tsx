@@ -54,6 +54,7 @@ export const MasaInterface = ({
     if (!isLoggedIn && provider) return 'authenticate';
 
     if (
+      isLoggedIn &&
       (!soulnames || (soulnames && soulnames.length === 0)) &&
       scope?.includes('soulname')
     )
@@ -64,6 +65,7 @@ export const MasaInterface = ({
 
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
       return 'createCreditScore';
+
     if (isConnected && isLoggedIn) return 'connectedState';
 
     return 'connector';

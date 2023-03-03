@@ -66,7 +66,7 @@ export const MasaContextProvider = ({
     useSession(masaInstance, walletAddress);
 
   // network
-  const { switchNetwork, network } = useNetwork(provider);
+  const { switchNetwork, currentNetwork } = useNetwork(provider);
 
   // identity
   const {
@@ -119,7 +119,7 @@ export const MasaContextProvider = ({
     masaInstance,
     isLoggedIn,
     isConnected,
-    network,
+    currentNetwork,
     areScopesFullfiled
   );
 
@@ -179,7 +179,7 @@ export const MasaContextProvider = ({
     arweaveConfig,
     environmentName,
     verbose,
-    network,
+    currentNetwork,
   ]);
 
   const context: MasaShape = {
@@ -245,7 +245,7 @@ export const MasaContextProvider = ({
     reloadGreens,
 
     // network
-    network,
+    currentNetwork,
     SupportedNetworks,
     switchNetwork,
   };
