@@ -80,8 +80,7 @@ export const MasaContextProvider = ({
   // soul names
   const { soulnames, isSoulnamesLoading, reloadSoulnames } = useSoulnames(
     masaInstance,
-    walletAddress,
-    identity
+    walletAddress
   );
 
   // credit scores
