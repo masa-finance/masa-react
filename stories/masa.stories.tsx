@@ -80,7 +80,7 @@ const Component = (): JSX.Element => {
 const Template: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa">
+      <MasaProvider company="Masa" network={1}>
         <Component {...props} />
       </MasaProvider>
     </>

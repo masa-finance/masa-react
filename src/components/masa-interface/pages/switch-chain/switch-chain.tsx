@@ -2,9 +2,11 @@ import React, { useCallback, useMemo } from 'react';
 import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
 import { Network } from '../../../../helpers';
+import { getNetworkNameByChainId } from '../../../../helpers/networks';
 
 export const InterfaceSwitchChain = (): JSX.Element => {
-  const { isLoading, switchNetwork, SupportedNetworks, masa } = useMasa();
+  const { isLoading, switchNetwork, network, SupportedNetworks, masa } =
+    useMasa();
 
   const currentNetwork: Network | undefined = useMemo(() => {
     if (SupportedNetworks && masa?.config.network)
@@ -22,10 +24,15 @@ export const InterfaceSwitchChain = (): JSX.Element => {
   }, [masa, SupportedNetworks]);
 
   const handleSwitch = useCallback(() => {
-    if (switchNetwork && currentNetwork) {
-      switchNetwork(currentNetwork.chainId);
+    if (network) {
+      switchNetwork?.(network);
     }
-  }, [switchNetwork, currentNetwork]);
+  }, [switchNetwork, switchNetwork]);
+
+  const networkData = useMemo(
+    () => getNetworkNameByChainId(network ?? 0),
+    [network]
+  );
 
   if (isLoading) return <MasaLoading />;
 
@@ -49,7 +56,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
         >
           Switch to{' '}
           <span style={{ textTransform: 'capitalize' }}>
-            {masa?.config.network}
+            {networkData}
           </span>
         </button>
       </div>

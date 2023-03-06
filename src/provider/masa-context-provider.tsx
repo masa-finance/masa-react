@@ -33,6 +33,7 @@ export interface MasaContextProviderProps extends MasaShape {
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   verbose?: boolean;
+  network?: number
 }
 
 export const MasaContextProvider = ({
@@ -49,6 +50,8 @@ export const MasaContextProvider = ({
   arweaveConfig,
   // verbose on /off
   verbose = false,
+  // force network
+  network
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -248,6 +251,7 @@ export const MasaContextProvider = ({
     currentNetwork,
     SupportedNetworks,
     switchNetwork,
+    network,
   };
 
   return (
