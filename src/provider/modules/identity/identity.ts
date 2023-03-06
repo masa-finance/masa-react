@@ -52,7 +52,7 @@ export const useIdentity = (
 
   const handlePurchaseIdentity = useCallback(async () => {
     await masa?.identity.create();
-    await queryClient.invalidateQueries('identity');
+    await queryClient.invalidateQueries(['identity']);
   }, [masa]);
 
   const handlePurchaseIdentityWithSoulname = useCallback(
@@ -66,7 +66,8 @@ export const useIdentity = (
         soulname,
         registrationPeriod
       );
-      await queryClient.invalidateQueries('identity');
+      await queryClient.invalidateQueries(['identity']);
+      await queryClient.invalidateQueries(['soulnames']);
 
       return !!result;
     },
