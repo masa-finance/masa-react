@@ -84,24 +84,27 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   };
 
   const handleMinting = useCallback(async () => {
+    setLoadingMint(true);
+
     try {
-      setLoadingMint(true);
+      // do we have an identity yet?
+      identity?.identityId
+        ? // yes, only mint soul name
+          await masa?.soulName.create?.('eth', soulname, registrationPeriod)
+        : // nope, mint both
+          await handlePurchaseIdentityWithSoulname?.(
+            'eth',
+            soulname,
+            registrationPeriod
+          );
 
-      if (identity?.identityId) {
-        await masa?.soulName.create?.('eth', soulname, registrationPeriod);
-        closeModal?.(true);
-      } else {
-        await handlePurchaseIdentityWithSoulname?.(
-          soulname,
-          registrationPeriod,
-          'eth'
-        );
+      closeModal?.(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(`Minting failed! ${error.message}`);
       }
-
-      setLoadingMint(false);
-    } catch (e) {
-      setLoadingMint(false);
     }
+    setLoadingMint(false);
   }, [
     masa,
     soulname,

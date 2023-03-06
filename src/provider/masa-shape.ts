@@ -53,9 +53,9 @@ export interface MasaShape {
   isIdentityLoading?: boolean;
   handlePurchaseIdentity?: () => void;
   handlePurchaseIdentityWithSoulname?: (
+    paymentMethod: PaymentMethod,
     soulname: string,
-    registrationPrice: number,
-    paymentMethod: PaymentMethod
+    registrationPrice: number
   ) => Promise<boolean>;
   reloadIdentity?: () => void;
 

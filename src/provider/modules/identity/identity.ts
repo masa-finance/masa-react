@@ -16,9 +16,9 @@ export const useIdentity = (
     | undefined;
   handlePurchaseIdentity: () => void;
   handlePurchaseIdentityWithSoulname: (
+    paymentMethod: PaymentMethod,
     soulname: string,
-    registrationPeriod: number,
-    paymentMethod: PaymentMethod
+    registrationPeriod: number
   ) => Promise<boolean>;
   status: string;
   isIdentityLoading: boolean;
@@ -57,9 +57,9 @@ export const useIdentity = (
 
   const handlePurchaseIdentityWithSoulname = useCallback(
     async (
+      paymentMethod: PaymentMethod,
       soulname: string,
-      registrationPeriod: number,
-      paymentMethod: PaymentMethod
+      registrationPeriod: number
     ) => {
       const result = await masa?.identity.createWithSoulName(
         paymentMethod,
