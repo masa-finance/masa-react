@@ -73,13 +73,13 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   }, [masa, debounceSearch, paymentMethod, registrationPeriod]);
 
   const handleChangeSoulname = useCallback(
-    (e) => {
-      setSoulname(e.target.value);
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSoulname(event.target.value);
     },
     [setSoulname]
   );
 
-  const updatePeriod = (num) => {
+  const updatePeriod = (num: number) => {
     setRegistrationPeriod(registrationPeriod + num);
   };
 
