@@ -86,6 +86,7 @@ export const MasaInterface = ({
     soulnames,
     forcedPage,
     forceNetwork,
+    currentNetwork,
   ]);
 
   return (

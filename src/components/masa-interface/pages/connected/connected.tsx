@@ -17,7 +17,7 @@ export const InterfaceConnected = (): JSX.Element => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [isLoading, closeModal]);
+  }, [isLoading, closeModal, isModalOpen]);
 
   if (isLoading) return <MasaLoading />;
 

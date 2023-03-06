@@ -60,15 +60,19 @@ const Component = (): JSX.Element => {
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
 
-      <button onClick={(): void => switchNetwork?.(1)}>
+      <button onClick={(): void => switchNetwork?.('ethereum')}>
         Switch to Ethereum
       </button>
-      <button onClick={(): void => switchNetwork?.(5)}>Switch to Goerli</button>
-      <button onClick={(): void => switchNetwork?.(137)}>
+      <button onClick={(): void => switchNetwork?.('goerli')}>
+        Switch to Goerli
+      </button>
+      <button onClick={(): void => switchNetwork?.('polygon')}>
         Switch to Polygon
       </button>
-      <button onClick={(): void => switchNetwork?.(56)}>Switch to BSC</button>
-      <button onClick={(): void => switchNetwork?.(44787)}>
+      <button onClick={(): void => switchNetwork?.('bsc')}>
+        Switch to BSC
+      </button>
+      <button onClick={(): void => switchNetwork?.('alfajores')}>
         Switch to Alfajores
       </button>
 

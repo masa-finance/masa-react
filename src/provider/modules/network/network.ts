@@ -5,12 +5,13 @@ import {
   Network,
   SupportedNetworks,
 } from '../../../helpers';
+import { NetworkName } from '@masa-finance/masa-sdk';
 
 export const useNetwork = (
   provider?: Wallet | Signer
 ): {
   addNetwork: (networkDetails: Network) => void;
-  switchNetwork: (chainId: number) => void;
+  switchNetwork: (networkName: NetworkName) => void;
   currentNetwork?: Network;
 } => {
   const [currentNetwork, setCurrentNetwork] = useState<Network | undefined>();
@@ -39,28 +40,33 @@ export const useNetwork = (
     if (!provider) return;
 
     const chainId: number = await provider.getChainId();
+    const network = SupportedNetworks[getNetworkNameByChainId(chainId)];
 
-    const newNetwork = SupportedNetworks[getNetworkNameByChainId(chainId)];
-    console.log({ newNetwork });
+    console.log({ network });
 
-    setCurrentNetwork(newNetwork);
+    setCurrentNetwork(network);
   }, [provider]);
 
   const switchNetwork = useCallback(
-    async (chainId: number) => {
+    async (networkName: NetworkName) => {
+      const network = SupportedNetworks[networkName];
+
       try {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== 'undefined' && network) {
           await window?.ethereum?.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: utils.hexValue(chainId) }],
+            params: [
+              {
+                chainId: utils.hexValue(network.chainId),
+              },
+            ],
           });
-          console.log(`switched to chainId: ${chainId} successfully`);
+          console.log(`switched to network: ${networkName} successfully`);
         }
       } catch (err) {
         const error = err as { code: number };
         if (error.code === 4902) {
-          const newNetwork =
-            SupportedNetworks[getNetworkNameByChainId(chainId)];
+          const newNetwork = SupportedNetworks[networkName];
           if (newNetwork) {
             await addNetwork(newNetwork);
           }

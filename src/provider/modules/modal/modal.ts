@@ -1,12 +1,8 @@
 import { useCallback, useState } from 'react';
-import { Masa } from '@masa-finance/masa-sdk';
-import { Network } from '../../../helpers';
 
 export const useModal = (
-  masa?: Masa,
   isLoggedIn?: boolean,
   isConnected?: boolean,
-  network?: Network,
   areScopesFullfiled?: boolean
 ): {
   isModalOpen: boolean;
@@ -42,8 +38,6 @@ export const useModal = (
       setModalOpen,
       isLoggedIn,
       isConnected,
-      network,
-      masa,
       areScopesFullfiled,
       forcedPage,
     ]

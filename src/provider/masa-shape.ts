@@ -102,6 +102,6 @@ export interface MasaShape {
   // network
   currentNetwork?: Network;
   SupportedNetworks?: Partial<{ [index in NetworkName]: Network }>;
-  switchNetwork?: (chainId: number) => void;
+  switchNetwork?: (networkName: NetworkName) => void;
   forceNetwork?: NetworkName;
 }

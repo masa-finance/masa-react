@@ -3,10 +3,10 @@ import {
   Environment,
   environments,
   Masa,
+  NetworkName,
 } from '@masa-finance/masa-sdk';
 import { ethers, providers } from 'ethers';
 import { ArweaveConfig } from '../provider';
-import { getNetworkNameByChainId } from './networks';
 
 export const getWeb3Provider = (): providers.Web3Provider | undefined => {
   if (
@@ -24,11 +24,13 @@ export const getWeb3Provider = (): providers.Web3Provider | undefined => {
 export const createNewMasa = async ({
   signer,
   environmentName,
+  networkName,
   arweaveConfig,
   verbose,
 }: {
   signer: ethers.Signer | null;
   environmentName: string;
+  networkName?: NetworkName;
   arweaveConfig?: ArweaveConfig;
   verbose: boolean;
 }): Promise<Masa | undefined> => {
@@ -36,19 +38,23 @@ export const createNewMasa = async ({
     ? signer
     : createRandomWallet(getWeb3Provider());
 
-  if (!newSigner) return;
+  if (!newSigner) {
+    console.error('Unable to create signer!');
+    return;
+  }
 
   const environment = environments.find(
     (environment: Environment) => environment.name === environmentName
   );
-  if (!environment) return;
-
-  const chainId: number = await newSigner.getChainId();
+  if (!environment) {
+    console.error(`Unable to find environment ${environmentName}`);
+    return;
+  }
 
   return new Masa({
     wallet: newSigner,
     apiUrl: environment.apiUrl,
-    defaultNetwork: getNetworkNameByChainId(chainId),
+    defaultNetwork: networkName,
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',

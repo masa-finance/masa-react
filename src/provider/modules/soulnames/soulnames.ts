@@ -54,11 +54,11 @@ export const useSoulnames = (
         soulname,
         registrationPeriod
       );
-      await queryClient.invalidateQueries('soulnames');
+      await queryClient.invalidateQueries(['soulnames']);
 
       return !!result;
     },
-    [masa, queryKey]
+    [masa]
   );
 
   return {

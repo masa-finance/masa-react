@@ -16,9 +16,9 @@ export const InterfaceSwitchChain = (): JSX.Element => {
 
   const handleSwitch = useCallback(() => {
     if (networkData) {
-      switchNetwork?.(networkData.chainId);
+      switchNetwork?.(networkData.networkName);
     }
-  }, [switchNetwork, switchNetwork, networkData]);
+  }, [switchNetwork, networkData]);
 
   if (isLoading) return <MasaLoading />;
 

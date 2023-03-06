@@ -234,7 +234,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       <div style={{ width: '100%' }}>
         <button
           className="masa-button"
-          onClick={!!soulNameError ? () => setShowError(true) : handleMinting}
+          onClick={soulNameError ? () => setShowError(true) : handleMinting}
         >
           Register your domain
         </button>

@@ -1,4 +1,4 @@
-import { EnvironmentName, Masa, NetworkName } from '@masa-finance/masa-sdk';
+import { EnvironmentName, Masa } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa, SupportedNetworks } from '../helpers';
 import {
@@ -33,7 +33,6 @@ export interface MasaContextProviderProps extends MasaShape {
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   verbose?: boolean;
-  forceNetwork?: NetworkName;
 }
 
 export const MasaContextProvider = ({
@@ -118,13 +117,7 @@ export const MasaContextProvider = ({
     forcedPage,
     setForcedPage,
     openMintSoulnameModal,
-  } = useModal(
-    masaInstance,
-    isLoggedIn,
-    isConnected,
-    currentNetwork,
-    areScopesFullfiled
-  );
+  } = useModal(isLoggedIn, isConnected, areScopesFullfiled);
 
   // global loading flag
   const isLoading = useMemo(() => {
@@ -167,6 +160,7 @@ export const MasaContextProvider = ({
       const masa: Masa | undefined = await createNewMasa({
         signer: provider,
         environmentName,
+        networkName: currentNetwork?.networkName,
         arweaveConfig,
         verbose,
       });
