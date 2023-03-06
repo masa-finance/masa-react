@@ -44,13 +44,20 @@ export const MasaInterface = ({
     creditScores,
     soulnames,
     forcedPage,
+    currentNetwork,
+    forceNetwork,
   } = useMasa();
 
   const page = useMemo(() => {
     if (forcedPage) return forcedPage;
     if (!isConnected) return 'connector';
 
-    // if (network && !chain?.name.includes(network)) return 'switchNetwork';
+    if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
+      return 'switchNetwork';
+    }
+
+    console.log({ forceNetwork });
+
     if (!isLoggedIn && provider) return 'authenticate';
 
     if (
@@ -78,6 +85,7 @@ export const MasaInterface = ({
     creditScores,
     soulnames,
     forcedPage,
+    forceNetwork,
   ]);
 
   return (
