@@ -15,16 +15,27 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   } = useMasa();
 
   const [soulname, setSoulname] = useState<string>('');
+  const [extension, setExtension] = useState<string>();
   const [loadingIsAvailable, setLoadingIsAvailable] = useState(false);
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
   const [registrationPeriod, setRegistrationPeriod] = useState<number>(1);
   const [registrationPrice, setRegistrationPrice] = useState<string>('0');
   const [paymentMethod] = useState<PaymentMethod>('eth');
   const [isLoadingMint, setLoadingMint] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const debounceSearch = useDebounce(soulname, 1000);
 
-  const [showError, setShowError] = useState(false);
+  useEffect(() => {
+    const loadExtension = async () => {
+      setExtension(
+        await masa?.contracts.instances.SoulNameContract.extension()
+      );
+    };
+
+    void loadExtension();
+  }, [masa]);
+
   useEffect(() => {
     const checkIsAvailable = async () => {
       if (masa && debounceSearch) {
@@ -115,6 +126,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   ]);
 
   if (isLoading) return <MasaLoading />;
+
   if (isLoadingMint)
     return (
       <div
@@ -129,7 +141,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
           <h1 className="title">Minting your domain</h1>
           <h1 className="title">
             {soulname}
-            <b>.celo</b>
+            <b>{extension}</b>
           </h1>
           <MasaLoading />
         </div>
@@ -140,11 +152,11 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     <div className="interface-create-soulname">
       <div className="title-container">
         <h3 className="title">
-          Register <span>.celo</span> name
+          Register <span>{extension}</span> name
         </h3>
         <p className="subtitle">
-          Claim your <b>.celo</b> domain name, 5 character domains and above are{' '}
-          <b>FREE</b> you just pay gas
+          Claim your <b>{extension}</b> domain name, 5 character domains and
+          above are <b>FREE</b> you just pay gas
         </p>
       </div>
 
@@ -169,12 +181,12 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             {soulname ? (
               <>
                 {soulname}
-                <b>.celo</b>
+                <b>{extension}</b>
               </>
             ) : (
               <>
                 domain
-                <b>.celo</b>
+                <b>{extension}</b>
               </>
             )}
           </p>
