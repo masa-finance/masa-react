@@ -16,7 +16,7 @@
     "build:tsc": "tsc && mkdir -p ./dist && cp -R ./src/fonts ./dist/src/fonts && mkdir -p ./dist/src/components/modal && cp ./src/provider/styles.scss ./dist/src/provider/styles.scss && cp ./src/components/modal/styles.scss ./dist/src/components/modal/styles.scss",
     "build:dist": "cross-env NODE_ENV=production webpack",
     "build:watch": "tsc -w",
-    "lint": "eslint src/**/*.{ts,tsx} stories/**/*.tsx --fix",
+    "lint": "eslint \"./src/**/*.{ts,tsx}\" ./stories/**/*.tsx --fix",
     "doc": "typedoc",
     "test": "jest --passWithNoTests",
     "prepare": "husky install && yarn build",
