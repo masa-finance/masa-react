@@ -152,11 +152,11 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     <div className="interface-create-soulname">
       <div className="title-container">
         <h3 className="title">
-          Register <span>{extension}</span> name
+          Register a <span>{extension}</span> name
         </h3>
         <p className="subtitle">
-          Claim your <b>{extension}</b> domain name, 5 character domains and
-          above are <b>FREE</b> you just pay gas
+          Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
+          <b>FREE,</b> only pay the gas fee.
         </p>
       </div>
 

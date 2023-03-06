@@ -4,7 +4,7 @@ import { MasaLoading } from '../../../masa-loading';
 import { Spinner } from '../../../spinner';
 
 export const InterfaceConnected = (): JSX.Element => {
-  const { closeModal, isLoading, isModalOpen } = useMasa();
+  const { closeModal, company, isLoading, isModalOpen } = useMasa();
 
   useEffect(() => {
     let timeout;
@@ -21,10 +21,15 @@ export const InterfaceConnected = (): JSX.Element => {
 
   if (isLoading) return <MasaLoading />;
 
+  const titleText =
+    company == 'Masa'
+      ? 'Starting your soulbound journey'
+      : 'Launching your Prosperity Passport';
+
   return (
     <div className="interface-connected">
       <div>
-        <h3 className="title">Starting your soulbound journey</h3>
+        <h3 className="title">{titleText}</h3>
 
         <Spinner />
       </div>
