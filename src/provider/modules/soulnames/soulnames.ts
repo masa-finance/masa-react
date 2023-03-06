@@ -50,9 +50,9 @@ export const useSoulnames = (
       paymentMethod: PaymentMethod
     ) => {
       const result = await masa?.soulName.create(
+        paymentMethod,
         soulname,
-        registrationPeriod,
-        paymentMethod
+        registrationPeriod
       );
       await queryClient.invalidateQueries('soulnames');
 
