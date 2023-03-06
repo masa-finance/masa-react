@@ -155,7 +155,8 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
           Register a <span>{extension}</span> name
         </h3>
         <p className="subtitle">
-          Claim your <b>{extension}</b> domain name. 5+ character domains are <b>FREE,</b> only pay the gas fee.
+          Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
+          <b>FREE,</b> only pay the gas fee.
         </p>
       </div>
 

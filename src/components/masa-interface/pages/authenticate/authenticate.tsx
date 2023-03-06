@@ -25,10 +25,11 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     return <Spinner />;
   }
 
-  const message = company == "Masa"
-                ? `Your wallet is now connected. Start your soulbound journey by minting
+  const message =
+    company == 'Masa'
+      ? `Your wallet is now connected. Start your soulbound journey by minting
           a Masa Soulbound Identity and claiming a unique Masa Soul Name.`
-                : `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`
+      : `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`;
 
   return (
     <div className="interface-authenticate">
