@@ -88,7 +88,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       setLoadingMint(true);
 
       if (identity?.identityId) {
-        await masa?.soulName.create?.(soulname, registrationPeriod, 'eth');
+        await masa?.soulName.create?.('eth', soulname, registrationPeriod);
         closeModal?.(true);
       } else {
         await handlePurchaseIdentityWithSoulname?.(

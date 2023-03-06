@@ -62,9 +62,9 @@ export const useIdentity = (
       paymentMethod: PaymentMethod
     ) => {
       const result = await masa?.identity.createWithSoulName(
+        paymentMethod,
         soulname,
-        registrationPeriod,
-        paymentMethod
+        registrationPeriod
       );
       await queryClient.invalidateQueries('identity');
 

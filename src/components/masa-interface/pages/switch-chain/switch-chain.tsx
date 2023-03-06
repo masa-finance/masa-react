@@ -1,38 +1,24 @@
 import React, { useCallback, useMemo } from 'react';
 import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
-import { Network } from '../../../../helpers';
-import { getNetworkNameByChainId } from '../../../../helpers/networks';
+import { Network, SupportedNetworks } from '../../../../helpers';
 
 export const InterfaceSwitchChain = (): JSX.Element => {
-  const { isLoading, switchNetwork, network, SupportedNetworks, masa } =
-    useMasa();
+  const { isLoading, switchNetwork, forceNetwork } = useMasa();
 
-  const currentNetwork: Network | undefined = useMemo(() => {
-    if (SupportedNetworks && masa?.config.network)
-      for (const networkName in SupportedNetworks) {
-        if (
-          SupportedNetworks[networkName].chainName
-            ?.toLowerCase()
-            .includes(masa.config.network)
-        ) {
-          return SupportedNetworks[networkName];
-        }
-      }
+  const networkData: Network | undefined = useMemo(() => {
+    if (forceNetwork) {
+      return SupportedNetworks[forceNetwork];
+    }
 
-    return null;
-  }, [masa, SupportedNetworks]);
+    return;
+  }, [forceNetwork]);
 
   const handleSwitch = useCallback(() => {
-    if (network) {
-      switchNetwork?.(network);
+    if (networkData) {
+      switchNetwork?.(networkData.chainId);
     }
-  }, [switchNetwork, switchNetwork]);
-
-  const networkData = useMemo(
-    () => getNetworkNameByChainId(network ?? 0),
-    [network]
-  );
+  }, [switchNetwork, switchNetwork, networkData]);
 
   if (isLoading) return <MasaLoading />;
 
@@ -56,7 +42,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
         >
           Switch to{' '}
           <span style={{ textTransform: 'capitalize' }}>
-            {networkData}
+            {networkData?.chainName}
           </span>
         </button>
       </div>

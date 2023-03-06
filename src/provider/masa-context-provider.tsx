@@ -1,4 +1,4 @@
-import { EnvironmentName, Masa } from '@masa-finance/masa-sdk';
+import { EnvironmentName, Masa, NetworkName } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa, SupportedNetworks } from '../helpers';
 import {
@@ -33,7 +33,7 @@ export interface MasaContextProviderProps extends MasaShape {
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   verbose?: boolean;
-  network?: number
+  forceNetwork?: NetworkName;
 }
 
 export const MasaContextProvider = ({
@@ -51,7 +51,7 @@ export const MasaContextProvider = ({
   // verbose on /off
   verbose = false,
   // force network
-  network
+  forceNetwork,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -251,7 +251,7 @@ export const MasaContextProvider = ({
     currentNetwork,
     SupportedNetworks,
     switchNetwork,
-    network,
+    forceNetwork,
   };
 
   return (
