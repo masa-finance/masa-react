@@ -77,17 +77,18 @@ export const useMetamask = ({
   ]);
 
   /**
-   * Disconnect
+   * Disconnect from metamask
    */
   const disconnectMetamask = useCallback(async (): Promise<void> => {
+    localStorageSet<boolean>(metamaskStorageKey, false);
+
     if (walletAddress) {
       await handleLogout?.();
-      localStorageSet<boolean>(metamaskStorageKey, false);
     }
   }, [walletAddress, handleLogout, localStorageSet]);
 
   /**
-   * try to connect metamask but not if already connected
+   * try to connect metamask on page load
    */
   useEffect(() => {
     const connectMetamaskOnPageLoad = async (): Promise<void> => {
@@ -137,7 +138,7 @@ export const useMetamask = ({
       /**
        * on accounts change
        */
-      window?.ethereum?.on(
+      window.ethereum?.on(
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
           const accountsArray = accounts as string[];
@@ -157,7 +158,7 @@ export const useMetamask = ({
       /**
        * on network / chain changed
        */
-      window?.ethereum?.on('chainChanged', async () => {
+      window.ethereum?.on('chainChanged', async () => {
         setProvider?.(getWeb3Provider()?.getSigner());
       });
     }
