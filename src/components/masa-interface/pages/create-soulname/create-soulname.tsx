@@ -191,18 +191,27 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             )}
           </p>
           {soulname !== '' && soulname.length >= 1 ? (
-            <p
-              className="available-indicator"
-              style={{ color: isAvailable ? '#728a74e6' : '#964f4fe6' }}
-            >
+            <>
               {loadingIsAvailable ? (
-                <Spinner color="black" size={12} />
+                <div className="available-indicator">
+                  <Spinner color="black" size={12} />
+                </div>
               ) : isAvailable ? (
-                'Available'
+                <p
+                  className="available-indicator"
+                  style={{ color: '#728a74e6' }}
+                >
+                  Available
+                </p>
               ) : (
-                'Unavailable'
+                <p
+                  className="available-indicator"
+                  style={{ color: '#964f4fe6' }}
+                >
+                  Unavailable
+                </p>
               )}
-            </p>
+            </>
           ) : null}
         </div>
 
