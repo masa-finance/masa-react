@@ -4,8 +4,8 @@ import { getWeb3Provider } from '../helpers';
 import { Maybe } from '@metamask/providers/dist/utils';
 
 export const useMetamask = ({
-  disabled,
-}: {
+                              disabled,
+                            }: {
   disabled?: boolean;
 }): { connectMetamask: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
@@ -22,24 +22,19 @@ export const useMetamask = ({
    * Connect to metamask
    */
   const connectMetamask = useCallback(async (): Promise<boolean> => {
-    let connected = false;
+    let metamaskConnected = false;
 
-    if (!disabled && window?.ethereum) {
+    if (!disabled && window?.ethereum && !isConnected) {
       let hasAccounts = false;
+      let accounts: Maybe<string[]>;
 
       try {
-        const accounts: Maybe<string[]> = await window?.ethereum?.request({
+        accounts = await window?.ethereum?.request({
           method: 'eth_requestAccounts',
         });
 
         if (masa?.config.verbose) {
           console.log({ accounts });
-        }
-
-        if (accounts && Array.isArray(accounts)) {
-          hasAccounts = accounts.length > 0;
-        } else {
-          console.error('No accounts returned from metamask');
         }
       } catch (error) {
         if (error instanceof Error) {
@@ -47,39 +42,60 @@ export const useMetamask = ({
         }
       }
 
+      if (accounts && Array.isArray(accounts)) {
+        hasAccounts = accounts.length > 0;
+      } else {
+        console.error('No accounts returned from metamask');
+      }
+
       const signer = getWeb3Provider()?.getSigner();
+
       if (hasAccounts && signer) {
         setProvider?.(signer);
-        connected = true;
-        localStorage.setItem('metamask-connected', 'true');
+        metamaskConnected = true;
+
+        localStorage.setItem(
+          `metamask-connected-${await signer.getAddress()}`,
+          'true'
+        );
       } else {
         console.error('Unable to get signer from metamask');
       }
     }
 
     if (masa?.config.verbose) {
-      console.log({ connected });
+      console.log({ metamaskConnected });
     }
 
-    return connected;
-  }, [disabled, setProvider, masa]);
+    return metamaskConnected;
+  }, [disabled, setProvider, masa, isConnected]);
 
   /**
    * Disconnect
    */
   const disconnectMetamask = useCallback(async (): Promise<void> => {
     if (isConnected) {
-      localStorage.setItem('metamask-connected', 'false');
+      localStorage.setItem(`metamask-connected-${walletAddress}`, 'false');
       await handleLogout?.();
     }
-  }, [isConnected, handleLogout]);
+  }, [isConnected, handleLogout, walletAddress]);
 
+  /**
+   * try to connect metamask but not if already connected
+   */
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
-      const metamaskConnected = localStorage.getItem('metamask-connected');
+      const metamaskConnected = localStorage.getItem(
+        `metamask-connected-${walletAddress}`
+      );
 
-      if (walletAddress || !metamaskConnected || metamaskConnected === 'false')
+      if (
+        masa?.config.network === 'unknown' ||
+        !metamaskConnected ||
+        metamaskConnected === 'false'
+      ) {
         return;
+      }
 
       try {
         await connectMetamask();
@@ -89,11 +105,15 @@ export const useMetamask = ({
         }
       }
     };
-    void connectWalletOnPageLoad();
-  }, [walletAddress, connectMetamask]);
 
+    void connectWalletOnPageLoad();
+  }, [walletAddress, connectMetamask, masa]);
+
+  /**
+   * disconnect metamask on wallet change
+   */
   useEffect(() => {
-    const detectWalletChange = async (): Promise<void> => {
+    const disconnectMetamaskOnWalletChange = async (): Promise<void> => {
       if (
         walletAddress &&
         connectedAccounts.length > 0 &&
@@ -105,28 +125,39 @@ export const useMetamask = ({
       }
     };
 
-    void detectWalletChange();
+    void disconnectMetamaskOnWalletChange();
   }, [connectedAccounts, disconnectMetamask, walletAddress, setProvider]);
 
+  /**
+   * wire up metamask event listeners
+   */
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      /**
+       * on accounts change
+       */
       window?.ethereum?.on(
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
           const accountsArray = accounts as string[];
 
           if (accountsArray.length === 0) {
+            // no accounts, disconnect metamask
             await disconnectMetamask();
+            // drop provider
             setProvider?.();
           }
 
+          // update accounts
           setConnectedAccounts(accountsArray);
         }
       );
 
+      /**
+       * on network / chain changed
+       */
       window?.ethereum?.on('chainChanged', async () => {
-        const newProvider = getWeb3Provider();
-        setProvider?.(newProvider?.getSigner());
+        setProvider?.(getWeb3Provider()?.getSigner());
       });
     }
   }, [setProvider, setConnectedAccounts, disconnectMetamask]);
