@@ -10,7 +10,8 @@ export const useMetamask = ({
   disabled?: boolean;
 }): { connectMetamask: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
-  const { setProvider, handleLogout, walletAddress, verbose } = useMasa();
+  const { setProvider, handleLogout, walletAddress, verbose, isLoggedIn } =
+    useMasa();
   const { localStorageSet, localStorageGet } = useLocalStorage();
 
   const metamaskStorageKey = 'masa-react-metamask-connected';
@@ -82,10 +83,10 @@ export const useMetamask = ({
   const disconnectMetamask = useCallback(async (): Promise<void> => {
     localStorageSet<boolean>(metamaskStorageKey, false);
 
-    if (walletAddress) {
+    if (isLoggedIn) {
       await handleLogout?.();
     }
-  }, [walletAddress, handleLogout, localStorageSet]);
+  }, [isLoggedIn, handleLogout, localStorageSet]);
 
   /**
    * try to connect metamask on page load

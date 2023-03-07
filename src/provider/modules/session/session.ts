@@ -57,12 +57,16 @@ export const useSession = (
 
   const handleLogout = useCallback(
     async (logoutCallback?: () => void): Promise<void> => {
+      if (!isLoggedIn) {
+        return;
+      }
+
       await masa?.session.sessionLogout();
       await clearSession();
 
       logoutCallback?.();
     },
-    [masa, clearSession]
+    [masa, clearSession, isLoggedIn]
   );
 
   const handleLogin = useCallback(async (): Promise<void> => {
