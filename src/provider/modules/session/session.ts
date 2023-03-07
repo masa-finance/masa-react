@@ -74,10 +74,14 @@ export const useSession = (
   }, [masa, clearSession]);
 
   useEffect(() => {
-    if (sessionData && sessionData.user.address !== walletAddress) {
+    if (
+      isLoggedIn &&
+      sessionData &&
+      sessionData.user.address !== walletAddress
+    ) {
       void handleLogout();
     }
-  }, [sessionData, walletAddress, handleLogout]);
+  }, [sessionData, walletAddress, handleLogout, isLoggedIn]);
 
   return {
     isLoggedIn,
