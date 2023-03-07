@@ -4,8 +4,8 @@ import { getWeb3Provider } from '../helpers';
 import { Maybe } from '@metamask/providers/dist/utils';
 
 export const useMetamask = ({
-                              disabled,
-                            }: {
+  disabled,
+}: {
   disabled?: boolean;
 }): { connectMetamask: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
