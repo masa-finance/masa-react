@@ -22,7 +22,7 @@ export const InterfaceConnected = (): JSX.Element => {
   if (isLoading) return <MasaLoading />;
 
   const titleText =
-    company == 'Masa'
+    company === 'Masa'
       ? 'Starting your soulbound journey'
       : 'Launching your Prosperity Passport';
 
@@ -30,7 +30,6 @@ export const InterfaceConnected = (): JSX.Element => {
     <div className="interface-connected">
       <div>
         <h3 className="title">{titleText}</h3>
-
         <Spinner />
       </div>
     </div>

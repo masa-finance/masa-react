@@ -41,9 +41,6 @@ export const useNetwork = (
 
     const chainId: number = await provider.getChainId();
     const network = SupportedNetworks[getNetworkNameByChainId(chainId)];
-
-    console.log({ network });
-
     setCurrentNetwork(network);
   }, [provider]);
 

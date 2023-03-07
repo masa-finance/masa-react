@@ -24,7 +24,7 @@ export const getWeb3Provider = (): providers.Web3Provider | undefined => {
 export const createNewMasa = async ({
   signer,
   environmentName,
-  networkName,
+  networkName = 'unknown',
   arweaveConfig,
   verbose,
 }: {
