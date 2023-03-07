@@ -25,7 +25,6 @@ export const useMetamask = ({
     let metamaskConnected = false;
 
     if (!disabled && window?.ethereum && !isConnected) {
-      let hasAccounts = false;
       let accounts: Maybe<string[]>;
 
       try {
@@ -43,23 +42,17 @@ export const useMetamask = ({
       }
 
       if (accounts && Array.isArray(accounts)) {
-        hasAccounts = accounts.length > 0;
+        const signer = getWeb3Provider()?.getSigner();
+        if (accounts.length > 0 && signer) {
+          setProvider?.(signer);
+          metamaskConnected = true;
+
+          localStorage.setItem(`metamask-connected-${accounts[0]}`, 'true');
+        } else {
+          console.error('Unable to get signer from metamask');
+        }
       } else {
         console.error('No accounts returned from metamask');
-      }
-
-      const signer = getWeb3Provider()?.getSigner();
-
-      if (hasAccounts && signer) {
-        setProvider?.(signer);
-        metamaskConnected = true;
-
-        localStorage.setItem(
-          `metamask-connected-${await signer.getAddress()}`,
-          'true'
-        );
-      } else {
-        console.error('Unable to get signer from metamask');
       }
     }
 
