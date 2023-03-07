@@ -232,10 +232,11 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
                 <button onClick={() => updatePeriod(1)}>+</button>
               </div>
             </div>
-            <Input label="Payment asset" value="Celo" />
+            <Input label="Payment asset" value="Celo" readOnly={true} />
             <Input
               label="Registration price"
               value={`${registrationPrice.substring(0, 7)} Celo`}
+              readOnly={true}
             />
           </div>
         </div>
