@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useMasa } from './use-masa';
 import { getWeb3Provider } from '../helpers';
 import { Maybe } from '@metamask/providers/dist/utils';
+import { useLocalStorage } from './use-local-storage';
 
 export const useMetamask = ({
   disabled,
@@ -11,20 +12,26 @@ export const useMetamask = ({
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
   const { setProvider, handleLogout, isConnected, walletAddress, masa } =
     useMasa();
+  const { localStorageSet, localStorageGet } = useLocalStorage();
+
+  const metamaskStorageKey = 'masa-react-metamask-connected';
 
   // use metamask can only be used inside the scope of masa-react
   // otherwise everything from useMasa is undefined
   if (Object.keys(useMasa()).length < 1) {
-    throw new Error('useMetamask must be used inside the masa provider scope');
+    throw new Error(
+      'useMetamask() must be used inside the Masa provider scope!'
+    );
   }
 
   /**
    * Connect to metamask
    */
   const connectMetamask = useCallback(async (): Promise<boolean> => {
-    let metamaskConnected = false;
+    let metamaskConnected: boolean =
+      localStorageGet<boolean>(metamaskStorageKey) || false;
 
-    if (!disabled && window?.ethereum && !isConnected) {
+    if (!disabled && window?.ethereum && !metamaskConnected) {
       let accounts: Maybe<string[]>;
 
       try {
@@ -46,8 +53,7 @@ export const useMetamask = ({
         if (accounts.length > 0 && signer) {
           setProvider?.(signer);
           metamaskConnected = true;
-
-          localStorage.setItem(`metamask-connected-${accounts[0]}`, 'true');
+          localStorageSet<boolean>(metamaskStorageKey, true);
         } else {
           console.error('Unable to get signer from metamask');
         }
@@ -61,32 +67,27 @@ export const useMetamask = ({
     }
 
     return metamaskConnected;
-  }, [disabled, setProvider, masa, isConnected]);
+  }, [disabled, setProvider, masa, localStorageGet, localStorageSet]);
 
   /**
    * Disconnect
    */
   const disconnectMetamask = useCallback(async (): Promise<void> => {
     if (isConnected) {
-      localStorage.setItem(`metamask-connected-${walletAddress}`, 'false');
+      localStorageSet<boolean>(metamaskStorageKey, false);
       await handleLogout?.();
     }
-  }, [isConnected, handleLogout, walletAddress]);
+  }, [isConnected, handleLogout, localStorageSet]);
 
   /**
    * try to connect metamask but not if already connected
    */
   useEffect(() => {
     const connectWalletOnPageLoad = async (): Promise<void> => {
-      const metamaskConnected = localStorage.getItem(
-        `metamask-connected-${walletAddress}`
-      );
+      const metamaskConnected: boolean | undefined =
+        localStorageGet<boolean>(metamaskStorageKey);
 
-      if (
-        masa?.config.network === 'unknown' ||
-        !metamaskConnected ||
-        metamaskConnected === 'false'
-      ) {
+      if (!metamaskConnected) {
         return;
       }
 
@@ -100,7 +101,7 @@ export const useMetamask = ({
     };
 
     void connectWalletOnPageLoad();
-  }, [walletAddress, connectMetamask, masa]);
+  }, [walletAddress, connectMetamask, masa, localStorageGet]);
 
   /**
    * disconnect metamask on wallet change
