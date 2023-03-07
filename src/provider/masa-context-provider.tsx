@@ -26,13 +26,10 @@ export interface ArweaveConfig {
 export type EnvironmentNameEx = EnvironmentName & ('local' | 'stage');
 
 export interface MasaContextProviderProps extends MasaShape {
-  children: React.ReactNode;
-  company?: string;
   noWallet?: boolean;
   signer?: Wallet | Signer;
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
-  verbose?: boolean;
 }
 
 export const MasaContextProvider = ({
@@ -49,7 +46,7 @@ export const MasaContextProvider = ({
   arweaveConfig,
   // verbose on /off
   verbose = false,
-  // force network
+  // force specific network
   forceNetwork,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
@@ -59,7 +56,7 @@ export const MasaContextProvider = ({
   const [provider, setProvider] = useState<Wallet | Signer | undefined>(signer);
 
   // wallet
-  const { walletAddress, isWalletLoading, isConnected } = useWallet(
+  const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
     masaInstance,
     provider
   );
@@ -104,9 +101,9 @@ export const MasaContextProvider = ({
 
   // scope
   const { scope, setScope, areScopesFullfiled } = useScopes(
-    masaInstance,
     soulnames,
-    isLoggedIn
+    isLoggedIn,
+    masaInstance?.config.verbose
   );
 
   // modal
@@ -118,7 +115,7 @@ export const MasaContextProvider = ({
     forcedPage,
     setForcedPage,
     openMintSoulnameModal,
-  } = useModal(isLoggedIn, isConnected, areScopesFullfiled);
+  } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
 
   // global loading flag
   const isLoading = useMemo(() => {
@@ -143,15 +140,29 @@ export const MasaContextProvider = ({
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
-      console.log({ forcedPage });
+      if (verbose) {
+        console.info({ forcedPage });
+      }
+
       setModalOpen(true);
       setForcedPage?.(null);
-      if (options?.scope) setScope(options.scope);
+
+      if (options?.scope) {
+        setScope(options.scope);
+      }
+
       if (typeof options?.callback === 'function') {
         setModalCallback(() => options?.callback);
       }
     },
-    [setModalOpen, setModalCallback, setScope, setForcedPage, forcedPage]
+    [
+      setModalOpen,
+      setModalCallback,
+      setScope,
+      setForcedPage,
+      forcedPage,
+      verbose,
+    ]
   );
 
   useEffect(() => {
@@ -183,6 +194,8 @@ export const MasaContextProvider = ({
   const context: MasaShape = {
     // masa instance
     masa: masaInstance,
+    verbose: masaInstance?.config.verbose,
+
     // global loading
     isLoading,
 
@@ -209,7 +222,7 @@ export const MasaContextProvider = ({
     // wallet
     walletAddress,
     isWalletLoading,
-    isConnected,
+    hasWalletAddress,
 
     // identity
     identity,

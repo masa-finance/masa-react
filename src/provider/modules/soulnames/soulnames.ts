@@ -37,7 +37,7 @@ export const useSoulnames = (
       retry: false,
       onSuccess: (soulNames?: SoulNameDetails[]) => {
         if (masa?.config.verbose) {
-          console.log({ soulNames, network: masa?.config.network });
+          console.info({ soulNames, network: masa?.config.network });
         }
       },
     }

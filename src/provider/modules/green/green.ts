@@ -61,7 +61,7 @@ export const useGreen = (
       }[]
     ) => {
       if (masa?.config.verbose) {
-        console.log({ greens, network: masa?.config.network });
+        console.info({ greens, network: masa?.config.network });
       }
     },
   });

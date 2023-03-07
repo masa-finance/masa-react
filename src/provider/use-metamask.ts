@@ -10,8 +10,7 @@ export const useMetamask = ({
   disabled?: boolean;
 }): { connectMetamask: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
-  const { setProvider, handleLogout, isConnected, walletAddress, masa } =
-    useMasa();
+  const { setProvider, handleLogout, walletAddress, verbose } = useMasa();
   const { localStorageSet, localStorageGet } = useLocalStorage();
 
   const metamaskStorageKey = 'masa-react-metamask-connected';
@@ -31,7 +30,7 @@ export const useMetamask = ({
     let metamaskConnected: boolean =
       localStorageGet<boolean>(metamaskStorageKey) || false;
 
-    if (!disabled && window?.ethereum && !metamaskConnected) {
+    if (!disabled && window?.ethereum && !walletAddress) {
       let accounts: Maybe<string[]>;
 
       try {
@@ -39,8 +38,8 @@ export const useMetamask = ({
           method: 'eth_requestAccounts',
         });
 
-        if (masa?.config.verbose) {
-          console.log({ accounts });
+        if (verbose) {
+          console.info({ accounts });
         }
       } catch (error) {
         if (error instanceof Error) {
@@ -50,8 +49,9 @@ export const useMetamask = ({
 
       if (accounts && Array.isArray(accounts)) {
         const signer = getWeb3Provider()?.getSigner();
-        if (accounts.length > 0 && signer) {
-          setProvider?.(signer);
+
+        if (signer && accounts.length > 0 && setProvider) {
+          setProvider(signer);
           metamaskConnected = true;
           localStorageSet<boolean>(metamaskStorageKey, true);
         } else {
@@ -62,28 +62,35 @@ export const useMetamask = ({
       }
     }
 
-    if (masa?.config.verbose) {
-      console.log({ metamaskConnected });
+    if (verbose) {
+      console.info({ metamaskConnected });
     }
 
     return metamaskConnected;
-  }, [disabled, setProvider, masa, localStorageGet, localStorageSet]);
+  }, [
+    disabled,
+    verbose,
+    setProvider,
+    localStorageGet,
+    localStorageSet,
+    walletAddress,
+  ]);
 
   /**
    * Disconnect
    */
   const disconnectMetamask = useCallback(async (): Promise<void> => {
-    if (isConnected) {
-      localStorageSet<boolean>(metamaskStorageKey, false);
+    if (walletAddress) {
       await handleLogout?.();
+      localStorageSet<boolean>(metamaskStorageKey, false);
     }
-  }, [isConnected, handleLogout, localStorageSet]);
+  }, [walletAddress, handleLogout, localStorageSet]);
 
   /**
    * try to connect metamask but not if already connected
    */
   useEffect(() => {
-    const connectWalletOnPageLoad = async (): Promise<void> => {
+    const connectMetamaskOnPageLoad = async (): Promise<void> => {
       const metamaskConnected: boolean | undefined =
         localStorageGet<boolean>(metamaskStorageKey);
 
@@ -100,8 +107,8 @@ export const useMetamask = ({
       }
     };
 
-    void connectWalletOnPageLoad();
-  }, [walletAddress, connectMetamask, masa, localStorageGet]);
+    void connectMetamaskOnPageLoad();
+  }, [connectMetamask, localStorageGet]);
 
   /**
    * disconnect metamask on wallet change

@@ -1,15 +1,15 @@
-import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
+import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useMemo, useState } from 'react';
 
 export const useScopes = (
-  masa?: Masa,
   soulnames?: SoulNameDetails[],
-  isLoggedIn?: boolean
+  isLoggedIn?: boolean,
+  verbose?: boolean
 ) => {
   const [scope, setScope] = useState<string[]>([]);
   const areScopesFullfiled = useMemo(() => {
-    if (masa?.config.verbose) {
-      console.log({ scope, soulnames, isLoggedIn });
+    if (verbose) {
+      console.info({ scope, soulnames, isLoggedIn });
     }
 
     if (scope?.includes('soulname') && (soulnames?.length ?? 0) === 0) {
@@ -21,7 +21,7 @@ export const useScopes = (
     }
 
     return true;
-  }, [soulnames, scope, isLoggedIn, masa]);
+  }, [soulnames, scope, isLoggedIn, verbose]);
 
   return { scope, setScope, areScopesFullfiled };
 };

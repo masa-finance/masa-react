@@ -9,7 +9,7 @@ import {
   SoulNameDetails,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber, Signer, Wallet } from 'ethers';
 import { Network } from '../helpers';
 
 export interface MasaShape {
@@ -17,6 +17,9 @@ export interface MasaShape {
 
   // masa
   masa?: Masa;
+  // verbose flag
+  verbose?: boolean;
+
   // global loading
   isLoading?: boolean;
 
@@ -29,8 +32,8 @@ export interface MasaShape {
   company?: string;
 
   // provider
-  provider?: ethers.Wallet | ethers.Signer;
-  setProvider?: (provider?: ethers.Wallet | ethers.Signer) => void;
+  provider?: Wallet | Signer;
+  setProvider?: (provider?: Wallet | Signer) => void;
 
   // modal
   isModalOpen?: boolean;
@@ -43,7 +46,7 @@ export interface MasaShape {
   // wallet
   walletAddress?: string;
   isWalletLoading?: boolean;
-  isConnected?: boolean;
+  hasWalletAddress?: boolean;
 
   // identity
   identity?: {

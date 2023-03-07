@@ -35,7 +35,7 @@ export const MasaInterface = ({
   const {
     isModalOpen,
     setModalOpen,
-    isConnected,
+    hasWalletAddress,
     identity,
     isLoggedIn,
     provider,
@@ -46,17 +46,20 @@ export const MasaInterface = ({
     forcedPage,
     currentNetwork,
     forceNetwork,
+    verbose,
   } = useMasa();
 
   const page = useMemo(() => {
     if (forcedPage) return forcedPage;
-    if (!isConnected) return 'connector';
+    if (!hasWalletAddress) return 'connector';
+
+    if (verbose) {
+      console.info({ forceNetwork });
+    }
 
     if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
       return 'switchNetwork';
     }
-
-    console.log({ forceNetwork });
 
     if (!isLoggedIn && provider) return 'authenticate';
 
@@ -73,11 +76,12 @@ export const MasaInterface = ({
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
       return 'createCreditScore';
 
-    if (isConnected && isLoggedIn) return 'connectedState';
+    if (hasWalletAddress && isLoggedIn) return 'connectedState';
 
     return 'connector';
   }, [
-    isConnected,
+    hasWalletAddress,
+    verbose,
     identity,
     isLoggedIn,
     scope,

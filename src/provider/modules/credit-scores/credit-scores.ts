@@ -54,7 +54,7 @@ export const useCreditScores = (
       }[]
     ) => {
       if (masa?.config.verbose) {
-        console.log({ creditScores, network: masa?.config.network });
+        console.info({ creditScores, network: masa?.config.network });
       }
     },
   });

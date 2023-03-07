@@ -44,7 +44,7 @@ export const useIdentity = (
       retry: false,
       onSuccess: (identity?: { identityId?: BigNumber; address?: string }) => {
         if (masa?.config.verbose) {
-          console.log({ identity, network: masa?.config.network });
+          console.info({ identity, network: masa?.config.network });
         }
       },
     }

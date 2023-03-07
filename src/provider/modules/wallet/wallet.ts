@@ -9,7 +9,7 @@ export const useWallet = (
 ): {
   walletAddress: string | undefined;
   isWalletLoading: boolean;
-  isConnected: boolean;
+  hasWalletAddress: boolean;
   status: string;
   error: unknown;
 } => {
@@ -32,14 +32,14 @@ export const useWallet = (
     }
   );
 
-  const isConnected = useMemo(() => {
+  const hasWalletAddress = useMemo(() => {
     return !!walletAddress;
   }, [walletAddress]);
 
   return {
     walletAddress: !provider ? undefined : walletAddress,
     isWalletLoading: isLoading || isFetching,
-    isConnected,
+    hasWalletAddress,
     status,
     error,
   };
