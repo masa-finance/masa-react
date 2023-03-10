@@ -69,7 +69,7 @@ export const useIdentity = (
       await queryClient.invalidateQueries(['identity']);
       await queryClient.invalidateQueries(['soulnames']);
 
-      return !!result;
+      return !!result?.success;
     },
     [masa]
   );

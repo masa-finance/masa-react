@@ -56,7 +56,7 @@ export const useSoulnames = (
       );
       await queryClient.invalidateQueries(['soulnames']);
 
-      return !!result;
+      return !!result?.success;
     },
     [masa]
   );
