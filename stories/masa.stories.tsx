@@ -60,21 +60,32 @@ const Component = (): JSX.Element => {
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
 
-      <button onClick={(): void => switchNetwork?.('ethereum')}>
-        Switch to Ethereum
-      </button>
-      <button onClick={(): void => switchNetwork?.('goerli')}>
-        Switch to Goerli
-      </button>
-      <button onClick={(): void => switchNetwork?.('polygon')}>
-        Switch to Polygon
-      </button>
-      <button onClick={(): void => switchNetwork?.('bsc')}>
-        Switch to BSC
-      </button>
-      <button onClick={(): void => switchNetwork?.('alfajores')}>
-        Switch to Alfajores
-      </button>
+      <div>
+        <button onClick={(): void => switchNetwork?.('ethereum')}>
+          Switch to Ethereum
+        </button>
+        <button onClick={(): void => switchNetwork?.('goerli')}>
+          Switch to Goerli
+        </button>
+        <button onClick={(): void => switchNetwork?.('polygon')}>
+          Switch to Polygon
+        </button>
+        <button onClick={(): void => switchNetwork?.('mumbai')}>
+          Switch to Mumbai
+        </button>
+        <button onClick={(): void => switchNetwork?.('bsc')}>
+          Switch to BSC
+        </button>
+        <button onClick={(): void => switchNetwork?.('bsctest')}>
+          Switch to BSC Test
+        </button>
+        <button onClick={(): void => switchNetwork?.('celo')}>
+          Switch to Celo
+        </button>
+        <button onClick={(): void => switchNetwork?.('alfajores')}>
+          Switch to Alfajores
+        </button>
+      </div>
 
       {isLoggedIn && (
         <button onClick={(): void => handleLogout?.()}>Logout</button>

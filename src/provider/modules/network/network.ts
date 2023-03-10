@@ -23,7 +23,14 @@ export const useNetwork = (
           method: 'wallet_addEthereumChain',
           params: [
             {
-              ...networkDetails,
+              chainName: networkDetails.chainName,
+              nativeCurrency: {
+                name: networkDetails.nativeCurrency?.name,
+                symbol: networkDetails.nativeCurrency?.symbol,
+                decimals: networkDetails.nativeCurrency?.decimals,
+              },
+              rpcUrls: networkDetails.rpcUrls,
+              blockExplorerUrls: networkDetails.blockExplorerUrls,
               chainId: utils.hexValue(networkDetails.chainId),
             },
           ],
