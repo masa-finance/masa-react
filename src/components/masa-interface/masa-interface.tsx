@@ -11,8 +11,6 @@ import {
 import { InterfaceCreateSoulname } from './pages/create-soulname';
 import { InterfaceSwitchChain } from './pages/switch-chain';
 
-
-
 const pages = {
   connector: ({
     disableMetamask,
