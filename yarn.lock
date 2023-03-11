@@ -13075,6 +13075,11 @@ schema-utils@^4.0.0:
     ajv-formats "^2.1.1"
     ajv-keywords "^5.0.0"
 
+screen-size-detector@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/screen-size-detector/-/screen-size-detector-1.0.4.tgz#15b2a1beed2783a8e7c78a3dc882be993b5a288c"
+  integrity sha512-0oDPNt4klYzcWnxe04l/lNv0BSdJWFhilwNFSpQ9Bn3y3R12MsN4dc1bZnKnjRUV1HfVF54sRCAxdbxFa5sr5w==
+
 scrypt-js@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/scrypt-js/-/scrypt-js-3.0.1.tgz#d314a57c2aef69d1ad98a138a21fe9eafa9ee312"

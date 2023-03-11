@@ -1,7 +1,31 @@
 import Rodal from 'rodal';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './styles.scss';
+
+import ScreenSizeDetector from 'screen-size-detector';
+
+const applyMobileClass = () => {
+  const listItems = document.querySelectorAll('.masa-modal');
+  const mobileClass = 'in-mobile';
+
+  listItems.forEach((el) => {
+    el.classList.add(mobileClass);
+  });
+};
+
+const removeMobileClass = () => {
+  const listItems = document.querySelectorAll('.masa-modal');
+  const mobileClass = 'in-mobile';
+
+  listItems.forEach((el) => {
+    el.classList.remove(mobileClass);
+  });
+};
+
+const onDone = () => {
+  console.log('Done setting callback');
+};
 
 export interface ModalProps {
   children: React.ReactNode;
@@ -17,11 +41,27 @@ export const ModalComponent = ({
   close,
   height,
 }: ModalProps): JSX.Element => {
+  const screen = new ScreenSizeDetector();
+
+  useEffect(() => {
+    screen.setWidthCategoryCallback(
+      'mobile',
+      'enter',
+      applyMobileClass,
+      onDone
+    );
+    screen.setWidthCategoryCallback(
+      'mobile',
+      'leave',
+      removeMobileClass,
+      onDone
+    );
+  }, [screen]);
   return (
     <Rodal
       data-cy="closeMasaModal"
-      height={height ? height : 615}
-      width={550}
+      height={screen.is.mobile ? screen.height : height ? height : 615}
+      width={screen.is.mobile ? screen.width : 550}
       visible={open}
       onClose={(): void => close()}
       className="masa-rodal-container"
