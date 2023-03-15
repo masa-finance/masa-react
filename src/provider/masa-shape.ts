@@ -4,13 +4,13 @@ import {
   ICreditScore,
   IGreen,
   Masa,
+  Network,
   NetworkName,
   PaymentMethod,
   SoulNameDetails,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer, Wallet } from 'ethers';
-import { Network } from '../helpers';
 
 export interface MasaShape {
   children?: React.ReactNode;
