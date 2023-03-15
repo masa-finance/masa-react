@@ -1,32 +1,42 @@
 import Rodal from 'rodal';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import './styles.scss';
 
-import ScreenSizeDetector from 'screen-size-detector';
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
 
-const applyMobileClass = () => {
-  const listItems = document.querySelectorAll('.masa-modal');
-  const mobileClass = 'in-mobile';
+export default function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
 
-  listItems.forEach((el) => {
-    el.classList.add(mobileClass);
-  });
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
+const useIsMobile = () => {
+  const { height, width } = useWindowDimensions();
+
+  const isMobile = useMemo(() => {
+    return width < 430;
+  }, [height, width]);
+
+  return { isMobile, height, width };
 };
-
-const removeMobileClass = () => {
-  const listItems = document.querySelectorAll('.masa-modal');
-  const mobileClass = 'in-mobile';
-
-  listItems.forEach((el) => {
-    el.classList.remove(mobileClass);
-  });
-};
-
-const onDone = () => {
-  console.log('Done setting callback');
-};
-
 export interface ModalProps {
   children: React.ReactNode;
   open: boolean;
@@ -41,27 +51,12 @@ export const ModalComponent = ({
   close,
   height,
 }: ModalProps): JSX.Element => {
-  const screen = new ScreenSizeDetector();
-
-  useEffect(() => {
-    screen.setWidthCategoryCallback(
-      'mobile',
-      'enter',
-      applyMobileClass,
-      onDone
-    );
-    screen.setWidthCategoryCallback(
-      'mobile',
-      'leave',
-      removeMobileClass,
-      onDone
-    );
-  }, [screen]);
+  const { isMobile, height: screenHeight, width: screenWidth } = useIsMobile();
   return (
     <Rodal
       data-cy="closeMasaModal"
-      height={screen.is.mobile ? screen.height : height ? height : 615}
-      width={screen.is.mobile ? screen.width : 550}
+      height={isMobile ? screenHeight : height ? height : 615}
+      width={isMobile ? screenWidth : 550}
       visible={open}
       onClose={(): void => close()}
       className="masa-rodal-container"
