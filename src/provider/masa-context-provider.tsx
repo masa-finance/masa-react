@@ -1,4 +1,8 @@
-import { EnvironmentName, Masa, SupportedNetworks } from '@masa-finance/masa-sdk';
+import {
+  EnvironmentName,
+  Masa,
+  SupportedNetworks,
+} from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa } from '../helpers';
 import {
