@@ -33,7 +33,7 @@ const useIsMobile = () => {
 
   const isMobile = useMemo(() => {
     return width < 430;
-  }, [height, width]);
+  }, [width]);
 
   return { isMobile, height, width };
 };
