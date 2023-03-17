@@ -12,7 +12,7 @@ export const useIdentity = (
     identityId?: BigNumber;
     address?: string;
   };
-  handlePurchaseIdentity: () => Promise<void>;
+  handlePurchaseIdentity: () => Promise<boolean | undefined>;
   handlePurchaseIdentityWithSoulname: (
     paymentMethod: PaymentMethod,
     soulname: string,
@@ -48,9 +48,12 @@ export const useIdentity = (
     }
   );
 
-  const handlePurchaseIdentity = useCallback(async () => {
-    await masa?.identity.create();
+  const handlePurchaseIdentity = useCallback(async (): Promise<
+    boolean | undefined
+  > => {
+    const created: boolean | undefined = await masa?.identity.create();
     await queryClient.invalidateQueries(['identity']);
+    return created;
   }, [masa]);
 
   const handlePurchaseIdentityWithSoulname = useCallback(

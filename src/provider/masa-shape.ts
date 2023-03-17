@@ -54,7 +54,7 @@ export interface MasaShape {
     address?: string;
   };
   isIdentityLoading?: boolean;
-  handlePurchaseIdentity?: () => Promise<void>;
+  handlePurchaseIdentity?: () => Promise<boolean | undefined>;
   handlePurchaseIdentityWithSoulname?: (
     paymentMethod: PaymentMethod,
     soulname: string,
@@ -69,12 +69,11 @@ export interface MasaShape {
   handleLogout?: (logoutCallback?: () => void) => Promise<void>;
 
   // credit scores
-  creditScores?:
-    | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: ICreditScore;
-      }[];
+  creditScores?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: ICreditScore;
+  }[];
   isCreditScoresLoading?: boolean;
   handleCreateCreditScore?: () => Promise<boolean | undefined>;
   reloadCreditScores?: () => void;
@@ -85,12 +84,11 @@ export interface MasaShape {
   reloadSoulnames?: () => void;
 
   // greens
-  greens?:
-    | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: IGreen;
-      }[];
+  greens?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: IGreen;
+  }[];
   isGreensLoading?: boolean;
   handleGenerateGreen?: (
     phoneNumber: string
