@@ -6,12 +6,10 @@ export const InterfaceCreateIdentity = (): JSX.Element => {
   const { handlePurchaseIdentity, isLoading } = useMasa();
 
   const createIdentity = useCallback(async () => {
-    if (handlePurchaseIdentity) {
-      await handlePurchaseIdentity();
-    }
+    await handlePurchaseIdentity?.();
   }, [handlePurchaseIdentity]);
 
-  if (isLoading) return <MasaLoading />;
+  if (isLoading) return <MasaLoading/>;
 
   return (
     <div className="interface-create-identity">
