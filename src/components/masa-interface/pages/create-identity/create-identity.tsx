@@ -9,7 +9,7 @@ export const InterfaceCreateIdentity = (): JSX.Element => {
     await handlePurchaseIdentity?.();
   }, [handlePurchaseIdentity]);
 
-  if (isLoading) return <MasaLoading/>;
+  if (isLoading) return <MasaLoading />;
 
   return (
     <div className="interface-create-identity">
