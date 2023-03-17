@@ -10,7 +10,7 @@ export const useSession = (
   isLoggedIn?: boolean;
   isSessionLoading: boolean;
   handleLogin: () => void;
-  handleLogout: (logoutCallback?: () => void) => void;
+  handleLogout: (logoutCallback?: () => void) => Promise<void>;
   status: string;
   error: unknown;
 } => {

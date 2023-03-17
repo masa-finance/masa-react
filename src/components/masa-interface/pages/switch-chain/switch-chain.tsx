@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
-import { Network, SupportedNetworks } from '../../../../helpers';
+import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
 
 export const InterfaceSwitchChain = (): JSX.Element => {
   const { isLoading, switchNetwork, forceNetwork } = useMasa();

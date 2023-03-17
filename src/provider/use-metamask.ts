@@ -159,7 +159,7 @@ export const useMetamask = ({
       /**
        * on network / chain changed
        */
-      window.ethereum?.on('chainChanged', async () => {
+      window.ethereum?.on('chainChanged', () => {
         setProvider?.(getWeb3Provider()?.getSigner());
       });
     }

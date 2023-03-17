@@ -3,9 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   getNetworkNameByChainId,
   Network,
+  NetworkName,
   SupportedNetworks,
-} from '../../../helpers';
-import { NetworkName } from '@masa-finance/masa-sdk';
+} from '@masa-finance/masa-sdk';
 
 export const useNetwork = (
   provider?: Wallet | Signer

@@ -8,18 +8,17 @@ export const useCreditScores = (
   masa?: Masa,
   walletAddress?: string,
   identity?: {
-    identityId?: BigNumber | undefined;
-    address?: string | undefined;
+    identityId?: BigNumber;
+    address?: string;
   }
 ): {
-  creditScores:
+  creditScores?:
     | {
         tokenId: BigNumber;
         tokenUri: string;
-        metadata?: ICreditScore | undefined;
-      }[]
-    | undefined;
-  handleCreateCreditScore: () => void;
+        metadata?: ICreditScore;
+      }[];
+  handleCreateCreditScore: () => Promise<boolean | undefined>;
   status: string;
   isCreditScoresLoading: boolean;
   reloadCreditScores: () => void;

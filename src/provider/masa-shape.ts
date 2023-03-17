@@ -4,13 +4,13 @@ import {
   ICreditScore,
   IGreen,
   Masa,
+  Network,
   NetworkName,
   PaymentMethod,
   SoulNameDetails,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer, Wallet } from 'ethers';
-import { Network } from '../helpers';
 
 export interface MasaShape {
   children?: React.ReactNode;
@@ -54,7 +54,7 @@ export interface MasaShape {
     address?: string;
   };
   isIdentityLoading?: boolean;
-  handlePurchaseIdentity?: () => void;
+  handlePurchaseIdentity?: () => Promise<boolean | undefined>;
   handlePurchaseIdentityWithSoulname?: (
     paymentMethod: PaymentMethod,
     soulname: string,
@@ -66,17 +66,16 @@ export interface MasaShape {
   isLoggedIn?: boolean;
   isSessionLoading?: boolean;
   handleLogin?: () => void;
-  handleLogout?: (logoutCallback?: () => void) => void;
+  handleLogout?: (logoutCallback?: () => void) => Promise<void>;
 
   // credit scores
-  creditScores?:
-    | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: ICreditScore | undefined;
-      }[];
+  creditScores?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: ICreditScore;
+  }[];
   isCreditScoresLoading?: boolean;
-  handleCreateCreditScore?: () => void;
+  handleCreateCreditScore?: () => Promise<boolean | undefined>;
   reloadCreditScores?: () => void;
 
   // soul names
@@ -85,13 +84,11 @@ export interface MasaShape {
   reloadSoulnames?: () => void;
 
   // greens
-  greens?:
-    | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: IGreen;
-      }[]
-    | undefined;
+  greens?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: IGreen;
+  }[];
   isGreensLoading?: boolean;
   handleGenerateGreen?: (
     phoneNumber: string
