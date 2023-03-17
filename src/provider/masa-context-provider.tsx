@@ -16,7 +16,7 @@ import {
   useWallet,
 } from './modules';
 import { Signer, Wallet } from 'ethers';
-import { MASA_CONTEXT } from './masa-context';
+import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 
@@ -267,6 +267,6 @@ export const MasaContextProvider = ({
   };
 
   return (
-    <MASA_CONTEXT.Provider value={context}>{children}</MASA_CONTEXT.Provider>
+    <MasaContext.Provider value={context}>{children}</MasaContext.Provider>
   );
 };
