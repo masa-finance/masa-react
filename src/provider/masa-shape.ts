@@ -66,7 +66,7 @@ export interface MasaShape {
   isLoggedIn?: boolean;
   isSessionLoading?: boolean;
   handleLogin?: () => void;
-  handleLogout?: (logoutCallback?: () => void) => void;
+  handleLogout?: (logoutCallback?: () => void) => Promise<void>;
 
   // credit scores
   creditScores?:
