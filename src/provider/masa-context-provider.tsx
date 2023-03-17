@@ -173,7 +173,7 @@ export const MasaContextProvider = ({
     const loadMasa = async (): Promise<void> => {
       if (!provider) return;
 
-      const masa: Masa | undefined = await createNewMasa({
+      const masa: Masa | undefined = createNewMasa({
         signer: provider,
         environmentName,
         networkName: currentNetwork?.networkName,

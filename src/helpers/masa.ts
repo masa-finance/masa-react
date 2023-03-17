@@ -21,7 +21,7 @@ export const getWeb3Provider = (): providers.Web3Provider | undefined => {
   return;
 };
 
-export const createNewMasa = async ({
+export const createNewMasa = ({
   signer,
   environmentName,
   networkName = 'unknown',
@@ -33,7 +33,7 @@ export const createNewMasa = async ({
   networkName?: NetworkName;
   arweaveConfig?: ArweaveConfig;
   verbose: boolean;
-}): Promise<Masa | undefined> => {
+}): Masa | undefined => {
   const newSigner: ethers.Signer | null = signer
     ? signer
     : createRandomWallet(getWeb3Provider());
