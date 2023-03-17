@@ -158,15 +158,15 @@ ___
 
 ### handleCreateCreditScore
 
-• `Optional` **handleCreateCreditScore**: () => `void`
+• `Optional` **handleCreateCreditScore**: () => `Promise`<`undefined` \| `boolean`\>
 
 #### Type declaration
 
-▸ (): `void`
+▸ (): `Promise`<`undefined` \| `boolean`\>
 
 ##### Returns
 
-`void`
+`Promise`<`undefined` \| `boolean`\>
 
 ___
 
@@ -227,11 +227,11 @@ ___
 
 ### handleLogout
 
-• `Optional` **handleLogout**: (`logoutCallback?`: () => `void`) => `void`
+• `Optional` **handleLogout**: (`logoutCallback?`: () => `void`) => `Promise`<`void`\>
 
 #### Type declaration
 
-▸ (`logoutCallback?`): `void`
+▸ (`logoutCallback?`): `Promise`<`void`\>
 
 ##### Parameters
 
@@ -241,21 +241,21 @@ ___
 
 ##### Returns
 
-`void`
+`Promise`<`void`\>
 
 ___
 
 ### handlePurchaseIdentity
 
-• `Optional` **handlePurchaseIdentity**: () => `void`
+• `Optional` **handlePurchaseIdentity**: () => `Promise`<`undefined` \| `boolean`\>
 
 #### Type declaration
 
-▸ (): `void`
+▸ (): `Promise`<`undefined` \| `boolean`\>
 
 ##### Returns
 
-`void`
+`Promise`<`undefined` \| `boolean`\>
 
 ___
 
@@ -382,7 +382,7 @@ ___
 
 ### provider
 
-• `Optional` **provider**: `Signer` \| `Wallet`
+• `Optional` **provider**: `Wallet` \| `Signer`
 
 ___
 
@@ -490,7 +490,7 @@ ___
 
 ### setProvider
 
-• `Optional` **setProvider**: (`provider?`: `Signer` \| `Wallet`) => `void`
+• `Optional` **setProvider**: (`provider?`: `Wallet` \| `Signer`) => `void`
 
 #### Type declaration
 
@@ -500,7 +500,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Signer` \| `Wallet` |
+| `provider?` | `Wallet` \| `Signer` |
 
 ##### Returns
 
