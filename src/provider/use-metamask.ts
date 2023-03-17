@@ -83,8 +83,8 @@ export const useMetamask = ({
   const disconnectMetamask = useCallback(async (): Promise<void> => {
     localStorageSet<boolean>(metamaskStorageKey, false);
 
-    if (isLoggedIn) {
-      await handleLogout?.();
+    if (isLoggedIn && handleLogout) {
+      await handleLogout();
     }
   }, [isLoggedIn, handleLogout, localStorageSet]);
 
