@@ -12,6 +12,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     identity,
     closeModal,
     masa,
+    currentNetwork,
   } = useMasa();
 
   const [soulname, setSoulname] = useState<string>('');
@@ -241,10 +242,16 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
                 <button onClick={() => updatePeriod(1)}>+</button>
               </div>
             </div>
-            <Input label="Payment asset" value="Celo" readOnly={true} />
+            <Input
+              label="Payment asset"
+              value={currentNetwork?.nativeCurrency?.name}
+              readOnly={true}
+            />
             <Input
               label="Registration price"
-              value={`${registrationPrice.substring(0, 7)} Celo`}
+              value={`${registrationPrice.substring(0, 7)} ${
+                currentNetwork?.nativeCurrency?.name
+              }`}
               readOnly={true}
             />
           </div>
