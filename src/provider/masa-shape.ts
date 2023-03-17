@@ -54,7 +54,7 @@ export interface MasaShape {
     address?: string;
   };
   isIdentityLoading?: boolean;
-  handlePurchaseIdentity?: () => void;
+  handlePurchaseIdentity?: () => Promise<void>;
   handlePurchaseIdentityWithSoulname?: (
     paymentMethod: PaymentMethod,
     soulname: string,

@@ -8,13 +8,11 @@ export const useIdentity = (
   masa?: Masa,
   walletAddress?: string
 ): {
-  identity:
-    | {
-        identityId?: BigNumber;
-        address?: string;
-      }
-    | undefined;
-  handlePurchaseIdentity: () => void;
+  identity?: {
+    identityId?: BigNumber;
+    address?: string;
+  };
+  handlePurchaseIdentity: () => Promise<void>;
   handlePurchaseIdentityWithSoulname: (
     paymentMethod: PaymentMethod,
     soulname: string,
