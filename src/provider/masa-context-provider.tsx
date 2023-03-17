@@ -170,7 +170,7 @@ export const MasaContextProvider = ({
   );
 
   useEffect(() => {
-    const loadMasa = async (): Promise<void> => {
+    const loadMasa = (): void => {
       if (!provider) return;
 
       const masa: Masa | undefined = createNewMasa({

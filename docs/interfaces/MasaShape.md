@@ -1,5 +1,5 @@
 [# Masa React
- - v1.0.38](../README.md) / [Exports](../modules.md) / MasaShape
+ - v1.1.0](../README.md) / [Exports](../modules.md) / MasaShape
 
 # Interface: MasaShape
 
@@ -158,15 +158,15 @@ ___
 
 ### handleCreateCreditScore
 
-• `Optional` **handleCreateCreditScore**: () => `void`
+• `Optional` **handleCreateCreditScore**: () => `Promise`<`undefined` \| `boolean`\>
 
 #### Type declaration
 
-▸ (): `void`
+▸ (): `Promise`<`undefined` \| `boolean`\>
 
 ##### Returns
 
-`void`
+`Promise`<`undefined` \| `boolean`\>
 
 ___
 
@@ -227,11 +227,11 @@ ___
 
 ### handleLogout
 
-• `Optional` **handleLogout**: (`logoutCallback?`: () => `void`) => `void`
+• `Optional` **handleLogout**: (`logoutCallback?`: () => `void`) => `Promise`<`void`\>
 
 #### Type declaration
 
-▸ (`logoutCallback?`): `void`
+▸ (`logoutCallback?`): `Promise`<`void`\>
 
 ##### Parameters
 
@@ -241,21 +241,21 @@ ___
 
 ##### Returns
 
-`void`
+`Promise`<`void`\>
 
 ___
 
 ### handlePurchaseIdentity
 
-• `Optional` **handlePurchaseIdentity**: () => `void`
+• `Optional` **handlePurchaseIdentity**: () => `Promise`<`undefined` \| `boolean`\>
 
 #### Type declaration
 
-▸ (): `void`
+▸ (): `Promise`<`undefined` \| `boolean`\>
 
 ##### Returns
 
-`void`
+`Promise`<`undefined` \| `boolean`\>
 
 ___
 

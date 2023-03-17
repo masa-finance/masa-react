@@ -1,8 +1,8 @@
 [# Masa React
- - v1.0.38](README.md) / Exports
+ - v1.1.0](README.md) / Exports
 
 # # Masa React
- - v1.0.38
+ - v1.1.0
 
 ## Table of contents
 
@@ -20,7 +20,7 @@
 
 ### Variables
 
-- [MASA\_CONTEXT](modules.md#masa_context)
+- [MasaContext](modules.md#masacontext)
 - [queryClient](modules.md#queryclient)
 
 ### Functions
@@ -55,9 +55,9 @@
 
 ## Variables
 
-### MASA\_CONTEXT
+### MasaContext
 
-• `Const` **MASA\_CONTEXT**: `Context`<[`MasaShape`](interfaces/MasaShape.md)\>
+• `Const` **MasaContext**: `Context`<[`MasaShape`](interfaces/MasaShape.md)\>
 
 ___
 
@@ -160,7 +160,7 @@ ___
 
 ### createNewMasa
 
-▸ **createNewMasa**(`«destructured»`): `Promise`<`undefined` \| `default`\>
+▸ **createNewMasa**(`«destructured»`): `undefined` \| `default`
 
 #### Parameters
 
@@ -175,7 +175,7 @@ ___
 
 #### Returns
 
-`Promise`<`undefined` \| `default`\>
+`undefined` \| `default`
 
 ___
 
@@ -209,9 +209,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `creditScores` | `undefined` \| { `metadata?`: `ICreditScore` ; `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[] |
+| `creditScores?` | { `metadata?`: `ICreditScore` ; `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[] |
 | `error` | `unknown` |
-| `handleCreateCreditScore` | () => `void` |
+| `handleCreateCreditScore` | () => `Promise`<`undefined` \| `boolean`\> |
 | `isCreditScoresLoading` | `boolean` |
 | `reloadCreditScores` | () => `void` |
 | `status` | `string` |
@@ -298,9 +298,11 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `error` | `unknown` |
-| `handlePurchaseIdentity` | () => `void` |
+| `handlePurchaseIdentity` | () => `Promise`<`boolean`\> |
 | `handlePurchaseIdentityWithSoulname` | (`paymentMethod`: `PaymentMethod`, `soulname`: `string`, `registrationPeriod`: `number`) => `Promise`<`boolean`\> |
-| `identity` | `undefined` \| { `address?`: `string` ; `identityId?`: `BigNumber`  } |
+| `identity?` | { `address?`: `string` ; `identityId?`: `BigNumber`  } |
+| `identity.address?` | `string` |
+| `identity.identityId?` | `BigNumber` |
 | `isIdentityLoading` | `boolean` |
 | `reloadIdentity` | () => `void` |
 | `status` | `string` |
@@ -422,7 +424,7 @@ ___
 | :------ | :------ |
 | `error` | `unknown` |
 | `handleLogin` | () => `void` |
-| `handleLogout` | (`logoutCallback?`: () => `void`) => `void` |
+| `handleLogout` | (`logoutCallback?`: () => `void`) => `Promise`<`void`\> |
 | `isLoggedIn?` | `boolean` |
 | `isSessionLoading` | `boolean` |
 | `status` | `string` |
