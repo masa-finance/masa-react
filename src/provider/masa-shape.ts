@@ -73,10 +73,10 @@ export interface MasaShape {
     | {
         tokenId: BigNumber;
         tokenUri: string;
-        metadata?: ICreditScore | undefined;
+        metadata?: ICreditScore;
       }[];
   isCreditScoresLoading?: boolean;
-  handleCreateCreditScore?: () => void;
+  handleCreateCreditScore?: () => Promise<boolean | undefined>;
   reloadCreditScores?: () => void;
 
   // soul names
@@ -90,8 +90,7 @@ export interface MasaShape {
         tokenId: BigNumber;
         tokenUri: string;
         metadata?: IGreen;
-      }[]
-    | undefined;
+      }[];
   isGreensLoading?: boolean;
   handleGenerateGreen?: (
     phoneNumber: string

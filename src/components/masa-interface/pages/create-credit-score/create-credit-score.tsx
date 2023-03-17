@@ -8,7 +8,7 @@ export const InterfaceCreateCreditScore = (): JSX.Element => {
 
   const createCreditScore = useCallback(async () => {
     setError(null);
-    const minted = await handleCreateCreditScore?.();
+    const minted: boolean | undefined = await handleCreateCreditScore?.();
 
     if (!minted)
       setError('There is not enough data for generating a credit report');
