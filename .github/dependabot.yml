@@ -10,5 +10,4 @@ updates:
     schedule:
       interval: "weekly"
     reviewers:
-      - "@masa-finance/core-team"
-      - "@masa-finance/ba-fe-team"
+      - "masa-finance/core-team"
