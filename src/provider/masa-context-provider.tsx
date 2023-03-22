@@ -106,6 +106,7 @@ export const MasaContextProvider = ({
   // scope
   const { scope, setScope, areScopesFullfiled } = useScopes(
     soulnames,
+    identity,
     isLoggedIn,
     masaInstance?.config.verbose
   );
