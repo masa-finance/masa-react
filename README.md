@@ -1,22 +1,13 @@
-
----
-
-**🌽🌽 THIS IS BETA SOFTWARE. IT COULD LEAD TO RAPID UNSCHEDULED DISASSEMBLY. If you run into problems, please open up a new issue. 🌽🌽**
-
----
-
 <!-- TOC -->
-
-* [Setup](#setup)
+  * [Setup](#setup)
 * [Getting Started with masa-react](#getting-started-with-masa-react)
-    * [Setup](#setup)
-        * [Styles](#styles)
-    * [Usage ( inside MasaProvider )](#usage--inside-masaprovider-)
-        * [Example for useMasa ( Connect users wallet )](#example-for-usemasa--connect-users-wallet-)
-        * [Example for masa object ( Wallet is already connected here )](#example-for-masa-object--wallet-is-already-connected-here-)
-        * [For some contracts you will need some pre requisites ( Scopes )](#for-some-contracts-you-will-need-some-pre-requisites--scopes-)
-        * [Current useMasa shape](#current-usemasa-shape)
-
+  * [Setup](#setup-1)
+    * [Styles](#styles)
+  * [Usage ( inside MasaProvider )](#usage--inside-masaprovider-)
+    * [Example for useMasa ( Connect users wallet )](#example-for-usemasa--connect-users-wallet-)
+    * [Example for masa object ( Wallet is already connected here )](#example-for-masa-object--wallet-is-already-connected-here-)
+    * [For some contracts you will need some pre requisites ( Scopes )](#for-some-contracts-you-will-need-some-pre-requisites--scopes-)
+    * [Current useMasa shape](#current-usemasa-shape)
 <!-- TOC -->
 
 ## Setup
@@ -80,7 +71,9 @@ const connectionHandler = useCallback(() => {
 
 <Button
   onClick={connectionHandler}>
-  Connect with Masa
+  Connect
+  with
+  Masa
 </Button>
 
 ```
@@ -123,7 +116,9 @@ const connectionHandler = useCallback(() => {
 
 <Button
   onClick={connectionHandler}>
-  Connect with Masa
+  Connect
+  with
+  Masa
 </Button>
 ```
 
