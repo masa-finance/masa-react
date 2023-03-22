@@ -70,7 +70,11 @@ export const MasaInterface = ({
     )
       return 'createSoulname';
 
-    if (isLoggedIn && !identity?.identityId && scope?.includes('identity'))
+    if (
+      scope?.includes('identity') &&
+      isLoggedIn &&
+      (!identity || !identity?.identityId)
+    )
       return 'createIdentity';
 
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
