@@ -24,7 +24,11 @@
     "analyze": "size-limit --why",
     "clean": "rm -rf ./dist",
     "prettier": "prettier ./src ./test ./stories --write",
-    "storybook": "start-storybook -p 3000"
+    "storybook": "start-storybook -p 3000",
+    "build-storybook": "build-storybook"
+  },
+  "resolutions": {
+    "@storybook/react-docgen-typescript-plugin": "1.0.6--canary.9.cd77847.0"
   },
   "author": "hide-on-bush",
   "dependencies": {
