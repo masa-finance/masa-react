@@ -71,7 +71,7 @@ export const useGreen = (
       phoneNumber: string,
       code: string
     ): Promise<VerifyGreenResult | undefined> => {
-      const response = await masa?.green.create('eth', phoneNumber, code);
+      const response = await masa?.green.create('ETH', phoneNumber, code);
       await queryClient.invalidateQueries(queryKey);
       return response;
     },
