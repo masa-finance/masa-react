@@ -21,7 +21,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
   const [registrationPeriod, setRegistrationPeriod] = useState<number>(1);
   const [registrationPrice, setRegistrationPrice] = useState<string>('0');
-  const [paymentMethod] = useState<PaymentMethod>('eth');
+  const [paymentMethod] = useState<PaymentMethod>('ETH');
   const [isLoadingMint, setLoadingMint] = useState(false);
   const [showError, setShowError] = useState(false);
 
@@ -102,10 +102,10 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       // do we have an identity yet?
       identity?.identityId
         ? // yes, only mint soul name
-          await masa?.soulName.create?.('eth', soulname, registrationPeriod)
+          await masa?.soulName.create('ETH', soulname, registrationPeriod)
         : // nope, mint both
           await handlePurchaseIdentityWithSoulname?.(
-            'eth',
+            'ETH',
             soulname,
             registrationPeriod
           );

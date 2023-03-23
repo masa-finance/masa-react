@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { Masa } from '@masa-finance/masa-sdk';
+import { Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { Signer, Wallet } from 'ethers';
 import { useMemo } from 'react';
 
@@ -13,8 +13,8 @@ export const useWallet = (
   status: string;
   error: unknown;
 } => {
-  const queryKey: (string | undefined)[] = useMemo(() => {
-    return ['wallet', masa?.config.network];
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
+    return ['wallet', masa?.config.networkName];
   }, [masa]);
 
   const {
