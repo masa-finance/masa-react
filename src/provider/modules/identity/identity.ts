@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
-import { Masa, PaymentMethod } from '@masa-finance/masa-sdk';
+import { Masa, NetworkName, PaymentMethod } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
 export const useIdentity = (
@@ -23,8 +23,8 @@ export const useIdentity = (
   reloadIdentity: () => void;
   error: unknown;
 } => {
-  const queryKey: (string | undefined)[] = useMemo(() => {
-    return ['identity', walletAddress, masa?.config.network];
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
+    return ['identity', walletAddress, masa?.config.networkName];
   }, [walletAddress, masa]);
 
   const {
@@ -42,7 +42,7 @@ export const useIdentity = (
       retry: false,
       onSuccess: (identity?: { identityId?: BigNumber; address?: string }) => {
         if (masa?.config.verbose) {
-          console.info({ identity, network: masa?.config.network });
+          console.info({ identity, network: masa?.config.networkName });
         }
       },
     }

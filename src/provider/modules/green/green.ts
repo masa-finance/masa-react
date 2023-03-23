@@ -5,6 +5,7 @@ import {
   GenerateGreenResult,
   IGreen,
   Masa,
+  NetworkName,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
@@ -32,8 +33,8 @@ export const useGreen = (
   reloadGreens: () => void;
   error: unknown;
 } => {
-  const queryKey: (string | undefined)[] = useMemo(() => {
-    return ['green', walletAddress, masa?.config.network];
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
+    return ['green', walletAddress, masa?.config.networkName];
   }, [masa, walletAddress]);
 
   const {
@@ -61,7 +62,7 @@ export const useGreen = (
       }[]
     ) => {
       if (masa?.config.verbose) {
-        console.info({ greens, network: masa?.config.network });
+        console.info({ greens, network: masa?.config.networkName });
       }
     },
   });
