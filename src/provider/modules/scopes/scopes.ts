@@ -30,7 +30,7 @@ export const useScopes = (
     }
 
     return true;
-  }, [soulnames, scope, isLoggedIn, verbose]);
+  }, [soulnames, scope, isLoggedIn, verbose, identity]);
 
   return { scope, setScope, areScopesFullfiled };
 };

@@ -2,9 +2,15 @@ import React from 'react';
 interface InputProps extends React.HTMLProps<HTMLSelectElement> {
   label?: string;
   required?: boolean;
-  values?: any[];
+  values?: { name: string; value: string }[];
 }
-export const Select = ({ label, required, values, className, ...rest }: InputProps) => {
+export const Select = ({
+  label,
+  required,
+  values,
+  className,
+  ...rest
+}: InputProps) => {
   return (
     <div className="masa-input-container">
       {label && (
@@ -14,7 +20,7 @@ export const Select = ({ label, required, values, className, ...rest }: InputPro
       )}
       <select className={`masa-input ${className}`} {...rest}>
         {values &&
-          values.map((v) => {
+          values.map((v: { name: string }) => {
             return <option value={v.name}>{v.name}</option>;
           })}
       </select>
