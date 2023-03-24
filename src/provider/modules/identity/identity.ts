@@ -49,9 +49,10 @@ export const useIdentity = (
   );
 
   const handlePurchaseIdentity = useCallback(async (): Promise<boolean> => {
-    const created: boolean = (await masa?.identity.create()) || false;
+    const result = await masa?.identity.create();
     await queryClient.invalidateQueries(['identity']);
-    return created;
+
+    return !!result?.success;
   }, [masa]);
 
   const handlePurchaseIdentityWithSoulname = useCallback(
