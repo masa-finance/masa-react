@@ -24,10 +24,11 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
 
     const values: { name: PaymentMethod; value: string }[] = [];
     for (const token in tokensAvailable) {
-      values.push({
-        name: token as PaymentMethod,
-        value: tokensAvailable[token],
-      });
+      if (tokensAvailable[token])
+        values.push({
+          name: token as PaymentMethod,
+          value: tokensAvailable[token],
+        });
     }
 
     return values;
@@ -151,6 +152,11 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     paymentMethod,
   ]);
 
+  const updatePaymentMethod = (e: unknown) => {
+    const event = e as { target: { value: PaymentMethod } };
+    setPaymentMethod(event.target?.value);
+  };
+
   if (isLoading) return <MasaLoading />;
 
   if (isLoadingMint)
@@ -270,10 +276,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             <Select
               label="Payment asset"
               values={paymentMethods}
-              onChange={(e: unknown) => {
-                const event = e as { target: { value: PaymentMethod } };
-                setPaymentMethod(event.target?.value);
-              }}
+              onChange={updatePaymentMethod}
               readOnly={true}
             />
             <Input
