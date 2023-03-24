@@ -14,20 +14,18 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     closeModal,
     masa,
   } = useMasa();
-  const [enabledMethods, setEnabledMethods] = useState<any>(null);
+  const [enabledMethods, setEnabledMethods] = useState<string[]>([]);
 
   useEffect(() => {
     (async () => {
       const enabledMethodsres =
         await masa?.contracts.instances.SoulStoreContract.getEnabledPaymentMethods();
 
-      setEnabledMethods(enabledMethodsres);
+      setEnabledMethods(enabledMethodsres as string[]);
     })();
   }, [masa]);
 
   const paymentMethods = useMemo(() => {
-    console.log({ enabledMethods });
-
     const tokensAvailable = {
       ...masa?.config.network?.addresses.tokens,
     };
