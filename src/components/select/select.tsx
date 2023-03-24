@@ -21,7 +21,11 @@ export const Select = ({
       <select className={`masa-input ${className}`} {...rest}>
         {values &&
           values.map((v: { name: string }) => {
-            return <option value={v.name} key={v.name}>{v.name}</option>;
+            return (
+              <option value={v.name} key={v.name}>
+                {v.name}
+              </option>
+            );
           })}
       </select>
     </div>
