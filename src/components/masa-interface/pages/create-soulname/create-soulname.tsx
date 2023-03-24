@@ -14,17 +14,33 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     closeModal,
     masa,
   } = useMasa();
+  const [enabledMethods, setEnabledMethods] = useState<string[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const enabledMethodsres =
+        await masa?.contracts.instances.SoulStoreContract.getEnabledPaymentMethods();
+
+      setEnabledMethods(enabledMethodsres as string[]);
+    })();
+  }, [masa]);
 
   const paymentMethods = useMemo(() => {
     const tokensAvailable = {
-      [masa?.config.network?.nativeCurrency?.name ?? '']:
-        masa?.config.network?.nativeCurrency?.name,
       ...masa?.config.network?.addresses.tokens,
     };
 
     const values: { name: PaymentMethod; value: string }[] = [];
+    values.push({
+      name: masa?.config.network?.nativeCurrency?.name as PaymentMethod,
+      value: masa?.config.network?.nativeCurrency?.name as string,
+    });
     for (const token in tokensAvailable) {
-      if (tokensAvailable[token])
+      if (
+        tokensAvailable[token] &&
+        enabledMethods &&
+        enabledMethods.includes(tokensAvailable[token])
+      )
         values.push({
           name: token as PaymentMethod,
           value: tokensAvailable[token],
@@ -32,7 +48,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     }
 
     return values;
-  }, [masa]);
+  }, [masa, enabledMethods]);
 
   const [soulname, setSoulname] = useState<string>('');
   const [extension, setExtension] = useState<string>();
