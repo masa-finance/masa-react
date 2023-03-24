@@ -39,7 +39,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   const [loadingIsAvailable, setLoadingIsAvailable] = useState(false);
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
   const [registrationPeriod, setRegistrationPeriod] = useState<number>(1);
-  const [registrationPrice, setRegistrationPrice] = useState<string>('0');
+  const [registrationPrice, setRegistrationPrice] = useState<string>();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
     paymentMethods[0]?.name
   );
@@ -92,13 +92,19 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     const updatePrice = async () => {
       if (masa && debounceSearch) {
         const { length } = masa.soulName.validate(debounceSearch as string);
-        const { formattedPrice } = await masa.contracts.soulName.getPrice(
-          paymentMethod,
-          length,
-          registrationPeriod
-        );
 
-        setRegistrationPrice(formattedPrice);
+        let formattedPrice;
+        try {
+          formattedPrice = (
+            await masa.contracts.soulName.getPrice(
+              paymentMethod,
+              length,
+              registrationPeriod
+            )
+          ).formattedPrice;
+        } finally {
+          setRegistrationPrice(formattedPrice);
+        }
       }
     };
 
@@ -281,7 +287,9 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             />
             <Input
               label="Registration price"
-              value={`${registrationPrice.substring(0, 7)} ${paymentMethod}`}
+              value={`${
+                registrationPrice ? registrationPrice.substring(0, 7) : '-.-'
+              } ${paymentMethod}`}
               readOnly={true}
             />
           </div>
@@ -291,7 +299,11 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       <div style={{ width: '100%' }}>
         <button
           className="masa-button"
-          onClick={soulNameError ? () => setShowError(true) : handleMinting}
+          onClick={
+            soulNameError || !registrationPrice
+              ? () => setShowError(true)
+              : handleMinting
+          }
         >
           Register your domain
         </button>
