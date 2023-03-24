@@ -1,5 +1,5 @@
 # Masa React
- - v1.1.7 / [Exports](modules.md)
+ - v1.1.8 / [Exports](modules.md)
 
 <!-- TOC -->
   * [Setup](#setup)
