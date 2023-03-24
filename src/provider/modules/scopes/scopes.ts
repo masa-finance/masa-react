@@ -1,8 +1,13 @@
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useMemo, useState } from 'react';
+import { BigNumber } from 'ethers';
 
 export const useScopes = (
   soulnames?: SoulNameDetails[],
+  identity?: {
+    identityId?: BigNumber;
+    address?: string;
+  },
   isLoggedIn?: boolean,
   verbose?: boolean
 ) => {
@@ -10,6 +15,10 @@ export const useScopes = (
   const areScopesFullfiled = useMemo(() => {
     if (verbose) {
       console.info({ scope, soulnames, isLoggedIn });
+    }
+
+    if (scope?.includes('identity') && (!identity || !identity?.identityId)) {
+      return false;
     }
 
     if (scope?.includes('soulname') && (soulnames?.length ?? 0) === 0) {
@@ -21,7 +30,7 @@ export const useScopes = (
     }
 
     return true;
-  }, [soulnames, scope, isLoggedIn, verbose]);
+  }, [soulnames, scope, isLoggedIn, verbose, identity]);
 
   return { scope, setScope, areScopesFullfiled };
 };
