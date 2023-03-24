@@ -3,6 +3,7 @@
 import React, { useCallback } from 'react';
 import { MasaProvider, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
+import { EnvironmentName } from '@masa-finance/masa-sdk';
 
 const meta: Meta = {
   title: 'SDK Test',
