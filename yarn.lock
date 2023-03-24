@@ -2015,10 +2015,10 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^1.10.6":
-  version "1.10.6"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.10.6.tgz#a76dd03c65385af5ff6d05ea50dcb7d72304ae53"
-  integrity sha512-F1Lfa3K7bQ3U1SByTyJvI2WmpUYneKXVoSMZCdk6CHyDB9MsdrgsksoHg8hnk3yafcZK5he+HVSzcJC9xYEBDw==
+"@masa-finance/masa-sdk@^1.10.7":
+  version "1.10.7"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.10.7.tgz#8b9a10ebf423e5c3bba5e0c9b8e3bdccc06bcf7a"
+  integrity sha512-aslaQd3rOhjf/e1Lnep2ut98LkxkV6JtzKi5K7JXCvip3bG9smmR6FWy8cNFvs37KZjKByZTXwqtC3rw1p2kzg==
   dependencies:
     "@masa-finance/masa-contracts-identity" "^1.4.0"
     "@masa-finance/masa-token" "^1.0.0"
