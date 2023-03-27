@@ -1,8 +1,42 @@
 import Rodal from 'rodal';
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import './styles.scss';
 
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
+
+export default function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
+const useIsMobile = () => {
+  const { height, width } = useWindowDimensions();
+
+  const isMobile = useMemo(() => {
+    return width < 480;
+  }, [width]);
+
+  return { isMobile, height, width };
+};
 export interface ModalProps {
   children: React.ReactNode;
   open: boolean;
@@ -17,11 +51,12 @@ export const ModalComponent = ({
   close,
   height,
 }: ModalProps): JSX.Element => {
+  const { isMobile, height: screenHeight, width: screenWidth } = useIsMobile();
   return (
     <Rodal
       data-cy="closeMasaModal"
-      height={height ? height : 615}
-      width={550}
+      height={isMobile ? screenHeight : height ? height : 615}
+      width={isMobile ? screenWidth : 550}
       visible={open}
       onClose={(): void => close()}
       className="masa-rodal-container"
