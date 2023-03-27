@@ -9,6 +9,7 @@ import {
   InterfaceCreateIdentity,
 } from './pages';
 import { InterfaceCreateSoulname } from './pages/create-soulname';
+import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity';
 import { InterfaceSwitchChain } from './pages/switch-chain';
 
 const pages = {
@@ -18,6 +19,7 @@ const pages = {
     disableMetamask?: boolean;
   }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
   createIdentity: <InterfaceCreateIdentity />,
+  successIdentityCreate: <InterfaceSuccessCreateIdentity />,
   createSoulname: <InterfaceCreateSoulname />,
   connectedState: <InterfaceConnected />,
   authenticate: <InterfaceAuthenticate />,
@@ -70,7 +72,11 @@ export const MasaInterface = ({
     )
       return 'createSoulname';
 
-    if (isLoggedIn && !identity?.identityId && scope?.includes('identity'))
+    if (
+      scope?.includes('identity') &&
+      isLoggedIn &&
+      (!identity || !identity?.identityId)
+    )
       return 'createIdentity';
 
     if (identity && !creditScores?.length && scope?.includes('credit-score'))
@@ -93,13 +99,17 @@ export const MasaInterface = ({
     currentNetwork,
   ]);
 
+  const isModal = useMemo(() => {
+    return ['createIdentity', 'successIdentityCreate'].includes(page);
+  }, [page]);
+
   return (
     <>
       <ModalComponent
         open={isModalOpen as boolean}
         close={(): void => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
-        height={page === 'createIdentity' ? 340 : undefined}
+        height={isModal ? 340 : undefined}
       >
         {page === 'connector' ? pages[page]({ disableMetamask }) : pages[page]}
       </ModalComponent>
