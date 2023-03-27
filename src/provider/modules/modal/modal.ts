@@ -21,6 +21,8 @@ export const useModal = (
     (forceCallback?: boolean) => {
       setModalOpen(false);
 
+      console.log({ areScopesFullfiled, forceCallback });
+
       if (
         !forcedPage &&
         areScopesFullfiled &&

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
-import { ICreditScore, Masa } from '@masa-finance/masa-sdk';
+import { ICreditScore, Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
 export const useCreditScores = (
@@ -24,8 +24,8 @@ export const useCreditScores = (
   reloadCreditScores: () => void;
   error: unknown;
 } => {
-  const queryKey: (string | undefined)[] = useMemo(() => {
-    return ['credit-scores', walletAddress, masa?.config.network];
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
+    return ['credit-scores', walletAddress, masa?.config.networkName];
   }, [walletAddress, masa]);
 
   const {
@@ -53,7 +53,7 @@ export const useCreditScores = (
       }[]
     ) => {
       if (masa?.config.verbose) {
-        console.info({ creditScores, network: masa?.config.network });
+        console.info({ creditScores, network: masa?.config.networkName });
       }
     },
   });

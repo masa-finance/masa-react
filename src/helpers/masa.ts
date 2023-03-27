@@ -54,7 +54,7 @@ export const createNewMasa = ({
   return new Masa({
     wallet: newSigner,
     apiUrl: environment.apiUrl,
-    defaultNetwork: networkName,
+    networkName,
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
