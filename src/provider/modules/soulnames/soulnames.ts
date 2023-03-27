@@ -1,5 +1,10 @@
 import { useQuery } from 'react-query';
-import { Masa, PaymentMethod, SoulNameDetails } from '@masa-finance/masa-sdk';
+import {
+  Masa,
+  NetworkName,
+  PaymentMethod,
+  SoulNameDetails,
+} from '@masa-finance/masa-sdk';
 import { useCallback, useMemo } from 'react';
 import { queryClient } from '../../masa-query-client';
 
@@ -18,8 +23,8 @@ export const useSoulnames = (
   ) => Promise<boolean>;
   error: unknown;
 } => {
-  const queryKey: (string | undefined)[] = useMemo(() => {
-    return ['soulnames', walletAddress, masa?.config.network];
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
+    return ['soulnames', walletAddress, masa?.config.networkName];
   }, [walletAddress, masa]);
 
   const {
@@ -37,7 +42,7 @@ export const useSoulnames = (
       retry: false,
       onSuccess: (soulNames?: SoulNameDetails[]) => {
         if (masa?.config.verbose) {
-          console.info({ soulNames, network: masa?.config.network });
+          console.info({ soulNames, network: masa?.config.networkName });
         }
       },
     }

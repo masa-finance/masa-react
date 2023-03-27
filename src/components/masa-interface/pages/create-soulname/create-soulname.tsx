@@ -4,6 +4,7 @@ import { useDebounce, useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
 import { PaymentMethod } from '@masa-finance/masa-sdk';
 import { Spinner } from '../../../spinner';
+import { Select } from '../../../select';
 
 export const InterfaceCreateSoulname = (): JSX.Element => {
   const {
@@ -12,16 +13,52 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     identity,
     closeModal,
     masa,
-    currentNetwork,
   } = useMasa();
+  const [enabledMethods, setEnabledMethods] = useState<string[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const enabledMethodsres =
+        await masa?.contracts.instances.SoulStoreContract.getEnabledPaymentMethods();
+
+      setEnabledMethods(enabledMethodsres as string[]);
+    })();
+  }, [masa]);
+
+  const paymentMethods = useMemo(() => {
+    const tokensAvailable = {
+      ...masa?.config.network?.addresses.tokens,
+    };
+
+    const values: { name: PaymentMethod; value: string }[] = [];
+    values.push({
+      name: masa?.config.network?.nativeCurrency?.name as PaymentMethod,
+      value: masa?.config.network?.nativeCurrency?.name as string,
+    });
+    for (const token in tokensAvailable) {
+      if (
+        tokensAvailable[token] &&
+        enabledMethods &&
+        enabledMethods.includes(tokensAvailable[token])
+      )
+        values.push({
+          name: token as PaymentMethod,
+          value: tokensAvailable[token],
+        });
+    }
+
+    return values;
+  }, [masa, enabledMethods]);
 
   const [soulname, setSoulname] = useState<string>('');
   const [extension, setExtension] = useState<string>();
   const [loadingIsAvailable, setLoadingIsAvailable] = useState(false);
   const [isAvailable, setIsAvailable] = useState<boolean>(true);
   const [registrationPeriod, setRegistrationPeriod] = useState<number>(1);
-  const [registrationPrice, setRegistrationPrice] = useState<string>('0');
-  const [paymentMethod] = useState<PaymentMethod>('eth');
+  const [registrationPrice, setRegistrationPrice] = useState<string>();
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(
+    paymentMethods[0]?.name
+  );
   const [isLoadingMint, setLoadingMint] = useState(false);
   const [showError, setShowError] = useState(false);
 
@@ -71,13 +108,19 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     const updatePrice = async () => {
       if (masa && debounceSearch) {
         const { length } = masa.soulName.validate(debounceSearch as string);
-        const { formattedPrice } = await masa.contracts.soulName.getPrice(
-          paymentMethod,
-          length,
-          registrationPeriod
-        );
 
-        setRegistrationPrice(formattedPrice);
+        let formattedPrice;
+        try {
+          formattedPrice = (
+            await masa.contracts.soulName.getPrice(
+              paymentMethod,
+              length,
+              registrationPeriod
+            )
+          ).formattedPrice;
+        } finally {
+          setRegistrationPrice(formattedPrice);
+        }
       }
     };
 
@@ -102,10 +145,14 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       // do we have an identity yet?
       identity?.identityId
         ? // yes, only mint soul name
-          await masa?.soulName.create?.('eth', soulname, registrationPeriod)
+          await masa?.soulName.create(
+            paymentMethod,
+            soulname,
+            registrationPeriod
+          )
         : // nope, mint both
           await handlePurchaseIdentityWithSoulname?.(
-            'eth',
+            paymentMethod,
             soulname,
             registrationPeriod
           );
@@ -124,7 +171,13 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     handlePurchaseIdentityWithSoulname,
     identity,
     closeModal,
+    paymentMethod,
   ]);
+
+  const updatePaymentMethod = (e: unknown) => {
+    const event = e as { target: { value: PaymentMethod } };
+    setPaymentMethod(event.target?.value);
+  };
 
   if (isLoading) return <MasaLoading />;
 
@@ -242,31 +295,31 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
                 <button onClick={() => updatePeriod(1)}>+</button>
               </div>
             </div>
-            <Input
+            <Select
               label="Payment asset"
-              value={currentNetwork?.nativeCurrency?.name}
+              values={paymentMethods}
+              onChange={updatePaymentMethod}
               readOnly={true}
             />
             <Input
               label="Registration price"
-              value={`${registrationPrice.substring(0, 7)} ${
-                currentNetwork?.nativeCurrency?.name
-              }`}
+              value={`${
+                registrationPrice ? registrationPrice.substring(0, 7) : '-.-'
+              } ${paymentMethod}`}
               readOnly={true}
             />
           </div>
         </div>
-
-        {/* <div style={{ width: '100%' }}>
-          <Input label="Registration price to pay" />
-          <p className="price-estimation">Estimated total (Price + Gas)</p>
-        </div> */}
       </div>
 
       <div style={{ width: '100%' }}>
         <button
           className="masa-button"
-          onClick={soulNameError ? () => setShowError(true) : handleMinting}
+          onClick={
+            soulNameError || !registrationPrice
+              ? () => setShowError(true)
+              : handleMinting
+          }
         >
           Register your domain
         </button>
