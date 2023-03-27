@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
-import TwitterLogo from '../../../../assets/twitterLogo.png';
+import { twitterLogo } from '../../../../assets/twitterLogo';
 
 export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
   const { isLoading, setForcedPage, soulnames } = useMasa();
@@ -31,7 +31,7 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
         minted.
       </p>
       <a className="tweet-domain" href={twitterLink}>
-        <img src={TwitterLogo} style={{ width: 40 }} alt="twitter" /> Tweet your
+        <img src={twitterLogo} style={{ width: 40 }} alt="twitter" /> Tweet your
         .celo domain
       </a>
       <button className="masa-button" onClick={handleComplete}>
