@@ -21,8 +21,6 @@ export const useModal = (
     (forceCallback?: boolean) => {
       setModalOpen(false);
 
-      console.log({ areScopesFullfiled, forceCallback });
-
       if (
         !forcedPage &&
         areScopesFullfiled &&
@@ -47,7 +45,7 @@ export const useModal = (
 
   const openMintSoulnameModal = useCallback(
     (mintCallback?: () => void) => {
-      setForcedPage?.('successIdentityCreate');
+      setForcedPage?.('createSoulname');
       setModalOpen(true);
       const cb = () => {
         setForcedPage?.(null);
