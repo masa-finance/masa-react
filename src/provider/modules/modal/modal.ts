@@ -47,7 +47,7 @@ export const useModal = (
 
   const openMintSoulnameModal = useCallback(
     (mintCallback?: () => void) => {
-      setForcedPage?.('createSoulname');
+      setForcedPage?.('successIdentityCreate');
       setModalOpen(true);
       const cb = () => {
         setForcedPage?.(null);
