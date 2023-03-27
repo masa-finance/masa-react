@@ -290,6 +290,16 @@
     align-items: center;
     gap: 16px;
 
+    .tweet-domain {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      margin-top: 0;
+      color: rgba(0, 0, 0, 0.6);
+      font-family: Inter, 'Helvetica Neue';
+    }
+
     h3 {
       font-size: 30px;
       margin-bottom: 0;
