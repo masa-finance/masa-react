@@ -32,7 +32,7 @@ const useIsMobile = () => {
   const { height, width } = useWindowDimensions();
 
   const isMobile = useMemo(() => {
-    return width < 430;
+    return width < 480;
   }, [width]);
 
   return { isMobile, height, width };
