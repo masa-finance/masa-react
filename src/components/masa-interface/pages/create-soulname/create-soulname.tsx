@@ -13,6 +13,9 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     identity,
     closeModal,
     masa,
+    forcedPage,
+    setForcedPage,
+    reloadSoulnames,
   } = useMasa();
   const [enabledMethods, setEnabledMethods] = useState<string[]>([]);
 
@@ -157,7 +160,12 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             registrationPeriod
           );
 
-      closeModal?.(true);
+      if (!forcedPage && setForcedPage) {
+        reloadSoulnames?.();
+        setForcedPage('successIdentityCreate');
+      } else {
+        closeModal?.(true);
+      }
     } catch (error) {
       if (error instanceof Error) {
         console.error(`Minting failed! ${error.message}`);
@@ -172,6 +180,9 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     identity,
     closeModal,
     paymentMethod,
+    forcedPage,
+    setForcedPage,
+    reloadSoulnames,
   ]);
 
   const updatePaymentMethod = (e: unknown) => {
