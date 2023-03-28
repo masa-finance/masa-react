@@ -13,12 +13,15 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
   const title = useMemo(() => {
     switch (company) {
       case 'Masa':
-        return ' You have claimed your .soul domain and your Soulbound Identity has been minted.';
+        return 'You have claimed your .soul domain and your Soulbound Identity has been minted.';
       case 'Celo':
         return 'You have claimed your .celo domain and your Prosperity Passport has been minted.';
 
       case 'Base':
         return 'You have claimed your .base domain name. Welcome to Base Camp ⛺️';
+
+      default:
+        return 'You have claimed your .soul domain and your Soulbound Identity has been minted.';
     }
   }, [company]);
 
