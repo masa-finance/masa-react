@@ -6,3 +6,4 @@ export * from './session';
 export * from './soulnames';
 export * from './wallet';
 export * from './modal';
+export * from './sbt';
