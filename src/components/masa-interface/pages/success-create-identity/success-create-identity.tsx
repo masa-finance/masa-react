@@ -4,11 +4,37 @@ import { MasaLoading } from '../../../masa-loading';
 import { twitterLogo } from '../../../../assets/twitterLogo';
 
 export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
-  const { isLoading, setForcedPage, soulnames } = useMasa();
+  const { isLoading, setForcedPage, soulnames, company } = useMasa();
 
   const handleComplete = useCallback(() => {
     setForcedPage?.(null);
   }, [setForcedPage]);
+
+  const title = useMemo(() => {
+    switch (company) {
+      case 'Masa':
+        return ' You have claimed your .soul domain and your Soulbound Identity has been minted.';
+      case 'Celo':
+        return 'You have claimed your .celo domain and your Prosperity Passport has been minted.';
+
+      case 'Base':
+        return 'You have claimed your .base domain name. Welcome to Base Camp ⛺️';
+    }
+  }, [company]);
+
+  const twitterText = useMemo(() => {
+    switch (company) {
+      case 'Masa':
+        return 'Tweet your .soul domain.';
+      case 'Celo':
+        return 'Tweet your .celo domain.';
+      case 'Base':
+        return 'Tweet your .base domain.';
+
+      default:
+        return 'Tweet your .soul domain';
+    }
+  }, [company]);
 
   const rareGemsLink = useMemo(() => {
     const link = soulnames
@@ -26,13 +52,10 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
   return (
     <div className="interface-create-identity">
       <h3 className="title">Hurray! 🎉</h3>
-      <p className="subtitle">
-        You have claimed your .celo domain and your Prosperity Passport has been
-        minted.
-      </p>
+      <p className="subtitle">{title}</p>
       <a className="tweet-domain" href={twitterLink}>
-        <img src={twitterLogo} style={{ width: 40 }} alt="twitter" /> Tweet your
-        .celo domain
+        <img src={twitterLogo} style={{ width: 40 }} alt="twitter" />{' '}
+        {twitterText}
       </a>
       <button className="masa-button" onClick={handleComplete}>
         Go to dashboard
