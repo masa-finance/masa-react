@@ -1,8 +1,8 @@
 [# Masa React
- - v1.1.15](README.md) / Exports
+ - v1.1.18](README.md) / Exports
 
 # # Masa React
- - v1.1.15
+ - v1.1.18
 
 ## Table of contents
 
@@ -43,6 +43,7 @@
 - [useMetamask](modules.md#usemetamask)
 - [useModal](modules.md#usemodal)
 - [useNetwork](modules.md#usenetwork)
+- [useSBT](modules.md#usesbt)
 - [useSession](modules.md#usesession)
 - [useSoulnames](modules.md#usesoulnames)
 - [useWallet](modules.md#usewallet)
@@ -271,7 +272,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `error` | `unknown` |
-| `greens` | `undefined` \| { `metadata?`: `IGreen` ; `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[] |
+| `greens?` | { `metadata?`: `IGreen` ; `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[] |
 | `handleCreateGreen` | (`phoneNumber`: `string`, `code`: `string`) => `Promise`<`undefined` \| `VerifyGreenResult`\> |
 | `handleGenerateGreen` | (`phoneNumber`: `string`) => `Promise`<`undefined` \| `GenerateGreenResult`\> |
 | `isGreensLoading` | `boolean` |
@@ -405,6 +406,33 @@ ___
 
 ___
 
+### useSBT
+
+▸ **useSBT**(`«destructured»`): `Object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `masa?` | `default` |
+| › `tokenAddress` | `string` |
+| › `walletAddress?` | `string` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `SBTs?` | { `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[] |
+| `error` | `unknown` |
+| `isSBTLoading` | `boolean` |
+| `reloadSBTs` | () => `void` |
+| `status` | `string` |
+
+___
+
 ### useSession
 
 ▸ **useSession**(`masa?`, `walletAddress?`): `Object`
@@ -452,7 +480,7 @@ ___
 | `handlePurchaseSoulname` | (`soulname`: `string`, `registrationPeriod`: `number`, `paymentMethod`: `PaymentMethod`) => `Promise`<`boolean`\> |
 | `isSoulnamesLoading` | `boolean` |
 | `reloadSoulnames` | () => `void` |
-| `soulnames` | `undefined` \| `SoulNameDetails`[] |
+| `soulnames?` | `SoulNameDetails`[] |
 | `status` | `string` |
 
 ___
@@ -478,4 +506,4 @@ ___
 | `hasWalletAddress` | `boolean` |
 | `isWalletLoading` | `boolean` |
 | `status` | `string` |
-| `walletAddress` | `undefined` \| `string` |
+| `walletAddress?` | `string` |
