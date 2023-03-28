@@ -14,13 +14,11 @@ export const useGreen = (
   masa?: Masa,
   walletAddress?: string
 ): {
-  greens:
-    | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: IGreen | undefined;
-      }[]
-    | undefined;
+  greens?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: IGreen;
+  }[];
   handleGenerateGreen: (
     phoneNumber: string
   ) => Promise<GenerateGreenResult | undefined>;
@@ -58,7 +56,7 @@ export const useGreen = (
       greens?: {
         tokenId: BigNumber;
         tokenUri: string;
-        metadata?: IGreen | undefined;
+        metadata?: IGreen;
       }[]
     ) => {
       if (masa?.config.verbose) {

@@ -7,7 +7,7 @@ export const useWallet = (
   masa?: Masa,
   provider?: Wallet | Signer
 ): {
-  walletAddress: string | undefined;
+  walletAddress?: string;
   isWalletLoading: boolean;
   hasWalletAddress: boolean;
   status: string;

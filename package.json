@@ -33,7 +33,7 @@
   "author": "hide-on-bush",
   "dependencies": {
     "@babel/preset-typescript": "^7.21.0",
-    "@masa-finance/masa-sdk": "^1.11.4",
+    "@masa-finance/masa-sdk": "^1.11.5",
     "@metamask/providers": "^10.2.1",
     "babel-loader": "^9.1.2",
     "babel-plugin-import": "^1.13.6",
