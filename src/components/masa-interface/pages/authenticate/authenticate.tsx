@@ -41,8 +41,6 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     return <Spinner />;
   }
 
-
-
   return (
     <div className="interface-authenticate">
       <div>
