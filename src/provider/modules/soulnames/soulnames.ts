@@ -12,7 +12,7 @@ export const useSoulnames = (
   masa?: Masa,
   walletAddress?: string
 ): {
-  soulnames: SoulNameDetails[] | undefined;
+  soulnames?: SoulNameDetails[];
   status: string;
   isSoulnamesLoading: boolean;
   reloadSoulnames: () => void;
