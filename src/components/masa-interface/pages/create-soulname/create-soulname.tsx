@@ -15,7 +15,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     masa,
     forcedPage,
     setForcedPage,
-    reloadSoulnames
+    reloadSoulnames,
   } = useMasa();
   const [enabledMethods, setEnabledMethods] = useState<string[]>([]);
 
@@ -161,7 +161,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
           );
 
       if (!forcedPage && setForcedPage) {
-        reloadSoulnames?.()
+        reloadSoulnames?.();
         setForcedPage('successIdentityCreate');
       } else {
         closeModal?.(true);
@@ -182,7 +182,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     paymentMethod,
     forcedPage,
     setForcedPage,
-    reloadSoulnames
+    reloadSoulnames,
   ]);
 
   const updatePaymentMethod = (e: unknown) => {
