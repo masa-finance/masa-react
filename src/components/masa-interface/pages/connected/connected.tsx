@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
 import { Spinner } from '../../../spinner';
@@ -19,12 +19,20 @@ export const InterfaceConnected = (): JSX.Element => {
     };
   }, [isLoading, closeModal, isModalOpen]);
 
-  if (isLoading) return <MasaLoading />;
+  const titleText = useMemo(() => {
+    switch (company) {
+      case 'Masa':
+        return 'Starting your soulbound journey';
+      case 'Celo':
+        return 'Launching your Prosperity Passport';
+      case 'Base':
+        return 'Taking you to Base Camp';
+      default:
+        return 'Starting your soulbound journey';
+    }
+  }, [company]);
 
-  const titleText =
-    company === 'Masa'
-      ? 'Starting your soulbound journey'
-      : 'Launching your Prosperity Passport';
+  if (isLoading) return <MasaLoading />;
 
   return (
     <div className="interface-connected">

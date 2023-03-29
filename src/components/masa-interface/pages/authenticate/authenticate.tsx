@@ -7,6 +7,22 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
   const [copied, setCopied] = useState(false);
 
+  const message = useMemo(() => {
+    switch (company) {
+      case 'Masa':
+        return `Your wallet is now connected. Start your soulbound journey by minting
+    a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
+      case 'Celo':
+        return `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`;
+      case 'Base':
+        return 'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.';
+
+      default:
+        return `Your wallet is now connected. Start your soulbound journey by minting
+          a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
+    }
+  }, [company]);
+
   const shortAddress = useMemo(() => {
     return `${walletAddress?.substring(0, 2)}...${walletAddress?.substring(
       walletAddress.length - 4,
@@ -24,12 +40,6 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   if (isLoading) {
     return <Spinner />;
   }
-
-  const message =
-    company === 'Masa'
-      ? `Your wallet is now connected. Start your soulbound journey by minting
-          a Masa Soulbound Identity and claiming a unique Masa Soul Name.`
-      : `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`;
 
   return (
     <div className="interface-authenticate">
