@@ -75,7 +75,7 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
     <div className="interface-create-identity">
       <h3 className="title">Hurray! 🎉</h3>
       <p className="subtitle">{title}</p>
-      <a className="tweet-domain" href={twitterLink}>
+      <a className="tweet-domain" href={twitterLink} target="_blank">
         <img src={twitterLogo} style={{ width: 40 }} alt="twitter" />{' '}
         {twitterText}
       </a>
