@@ -2,6 +2,7 @@ import {
   EnvironmentName,
   Masa,
   SupportedNetworks,
+  SoulNameErrorCodes,
 } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa } from '../helpers';
@@ -252,6 +253,7 @@ export const MasaContextProvider = ({
     soulnames,
     isSoulnamesLoading,
     reloadSoulnames,
+    SoulNameErrorCodes,
 
     // greens
     greens,
