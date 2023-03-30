@@ -382,7 +382,7 @@ ___
 
 ### provider
 
-• `Optional` **provider**: `Wallet` \| `Signer`
+• `Optional` **provider**: `Signer` \| `Wallet`
 
 ___
 
@@ -490,7 +490,7 @@ ___
 
 ### setProvider
 
-• `Optional` **setProvider**: (`provider?`: `Wallet` \| `Signer`) => `void`
+• `Optional` **setProvider**: (`provider?`: `Signer` \| `Wallet`) => `void`
 
 #### Type declaration
 
@@ -500,7 +500,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Wallet` \| `Signer` |
+| `provider?` | `Signer` \| `Wallet` |
 
 ##### Returns
 

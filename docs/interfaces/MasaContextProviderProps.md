@@ -528,7 +528,7 @@ ___
 
 ### provider
 
-• `Optional` **provider**: `Wallet` \| `Signer`
+• `Optional` **provider**: `Signer` \| `Wallet`
 
 #### Inherited from
 
@@ -668,7 +668,7 @@ ___
 
 ### setProvider
 
-• `Optional` **setProvider**: (`provider?`: `Wallet` \| `Signer`) => `void`
+• `Optional` **setProvider**: (`provider?`: `Signer` \| `Wallet`) => `void`
 
 #### Type declaration
 
@@ -678,7 +678,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Wallet` \| `Signer` |
+| `provider?` | `Signer` \| `Wallet` |
 
 ##### Returns
 
@@ -692,7 +692,7 @@ ___
 
 ### signer
 
-• `Optional` **signer**: `Wallet` \| `Signer`
+• `Optional` **signer**: `Signer` \| `Wallet`
 
 ___
 
