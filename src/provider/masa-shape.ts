@@ -8,7 +8,6 @@ import {
   NetworkName,
   PaymentMethod,
   SoulNameDetails,
-  SoulNameErrorCodes,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer, Wallet } from 'ethers';
@@ -83,7 +82,6 @@ export interface MasaShape {
   soulnames?: SoulNameDetails[];
   isSoulnamesLoading?: boolean;
   reloadSoulnames?: () => void;
-  SoulNameErrorCodes;
 
   // greens
   greens?: {

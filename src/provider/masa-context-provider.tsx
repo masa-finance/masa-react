@@ -21,6 +21,8 @@ import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 
+export { SoulNameErrorCodes };
+
 export interface ArweaveConfig {
   port?: string;
   host?: string;
@@ -253,7 +255,6 @@ export const MasaContextProvider = ({
     soulnames,
     isSoulnamesLoading,
     reloadSoulnames,
-    SoulNameErrorCodes,
 
     // greens
     greens,
