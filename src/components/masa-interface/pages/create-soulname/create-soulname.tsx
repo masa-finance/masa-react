@@ -10,7 +10,7 @@ import { InterfaceErrorModal } from '../error-modal';
 const errorMessages = {
   UNPREDICTABLE_GAS_LIMIT:
     'You do not have sufficient funds in you wallet. Please add funds to your wallet and try again',
-    ACTION_REJECTED: "Transaction rejected by the user."
+  ACTION_REJECTED: 'Transaction rejected by the user.',
 };
 
 export const InterfaceCreateSoulname = (): JSX.Element => {
@@ -180,7 +180,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       }
     } catch (error: unknown) {
       if (error) {
-        console.log({error})
+        console.log({ error });
         const errorObject = error as {
           code: string;
           message: string;
