@@ -39,16 +39,35 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
     }
   }, [company]);
 
-  const rareGemsLink = useMemo(() => {
-    const link = soulnames
-      ? `https://raregems.io/celo/celo-domain-names/${soulnames[
-          soulnames.length - 1
-        ].tokenDetails.tokenId.toString()}`
-      : undefined;
-    return link;
-  }, [soulnames]);
+  const tweetContentLink = useMemo(() => {
+    switch (company) {
+      case 'Masa':
+        return 'https://app.masa.finance';
+      case 'Celo':
+        return soulnames
+          ? `https://raregems.io/celo/celo-domain-names/${soulnames[
+              soulnames.length - 1
+            ].tokenDetails.tokenId.toString()}`
+          : undefined;
+      case 'Base':
+        return 'https://app.basecamp.global';
+      default:
+        return 'https://app.masa.finance';
+    }
+  }, [soulnames, company]);
 
-  const twitterLink = `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.celo%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${rareGemsLink}&hashtags=ProsperityPassport,Celo,Masa`;
+  const twitterLink = useMemo(() => {
+    switch (company) {
+      case 'Masa':
+        return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.soul%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=SoulboundIdentity,Masa`;
+      case 'Celo':
+        return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.celo%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=ProsperityPassport,Celo,Masa`;
+      case 'Base':
+        return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.base%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=Basecamp,Base,Masa`;
+      default:
+        return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.soul%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=SoulboundIdentity,Masa`;
+    }
+  }, [company, tweetContentLink]);
 
   if (isLoading) return <MasaLoading />;
 
@@ -56,7 +75,12 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
     <div className="interface-create-identity">
       <h3 className="title">Hurray! 🎉</h3>
       <p className="subtitle">{title}</p>
-      <a className="tweet-domain" href={twitterLink}>
+      <a
+        className="tweet-domain"
+        href={twitterLink}
+        target="_blank"
+        rel="noreferrer"
+      >
         <img src={twitterLogo} style={{ width: 40 }} alt="twitter" />{' '}
         {twitterText}
       </a>
