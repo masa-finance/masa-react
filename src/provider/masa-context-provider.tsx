@@ -2,6 +2,7 @@ import {
   EnvironmentName,
   Masa,
   SupportedNetworks,
+  SoulNameErrorCodes,
 } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa } from '../helpers';
@@ -19,6 +20,8 @@ import { Signer, Wallet } from 'ethers';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
+
+export { SoulNameErrorCodes };
 
 export interface ArweaveConfig {
   port?: string;
