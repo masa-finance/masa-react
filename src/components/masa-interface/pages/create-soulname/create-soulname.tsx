@@ -179,6 +179,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       if (error) {
         const errorObject = error as {
           code: string;
+          message: string;
         };
         setError({
           title: '',
