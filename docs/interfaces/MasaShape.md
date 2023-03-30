@@ -1,5 +1,5 @@
 [# Masa React
- - v1.1.18](../README.md) / [Exports](../modules.md) / MasaShape
+ - v1.1.23](../README.md) / [Exports](../modules.md) / MasaShape
 
 # Interface: MasaShape
 
@@ -382,7 +382,7 @@ ___
 
 ### provider
 
-• `Optional` **provider**: `Signer` \| `Wallet`
+• `Optional` **provider**: `Wallet` \| `Signer`
 
 ___
 
@@ -490,7 +490,7 @@ ___
 
 ### setProvider
 
-• `Optional` **setProvider**: (`provider?`: `Signer` \| `Wallet`) => `void`
+• `Optional` **setProvider**: (`provider?`: `Wallet` \| `Signer`) => `void`
 
 #### Type declaration
 
@@ -500,7 +500,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Signer` \| `Wallet` |
+| `provider?` | `Wallet` \| `Signer` |
 
 ##### Returns
 

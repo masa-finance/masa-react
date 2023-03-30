@@ -1,10 +1,14 @@
 [# Masa React
- - v1.1.18](README.md) / Exports
+ - v1.1.23](README.md) / Exports
 
 # # Masa React
- - v1.1.18
+ - v1.1.23
 
 ## Table of contents
+
+### Enumerations
+
+- [SoulNameErrorCodes](enums/SoulNameErrorCodes.md)
 
 ### Interfaces
 
@@ -392,7 +396,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Signer` \| `Wallet` |
+| `provider?` | `Wallet` \| `Signer` |
 
 #### Returns
 
@@ -494,7 +498,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `masa?` | `default` |
-| `provider?` | `Signer` \| `Wallet` |
+| `provider?` | `Wallet` \| `Signer` |
 
 #### Returns
 
