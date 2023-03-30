@@ -117,6 +117,8 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     return undefined;
   }, [masa, soulname, isAvailable]);
 
+  const handleErrorConfirmed = () => setError(null);
+
   useEffect(() => {
     const updatePrice = async () => {
       if (masa && debounceSearch) {
@@ -234,7 +236,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     return (
       <InterfaceErrorModal
         {...error}
-        handleComplete={() => setError(null)}
+        handleComplete={handleErrorConfirmed}
         buttonText={'Try again'}
       />
     );
