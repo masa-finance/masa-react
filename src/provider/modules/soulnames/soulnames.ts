@@ -59,6 +59,7 @@ export const useSoulnames = (
         soulname,
         registrationPeriod
       );
+
       await queryClient.invalidateQueries(['soulnames']);
 
       return !!result?.success;
