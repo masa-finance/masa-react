@@ -97,7 +97,10 @@ const Component = (): JSX.Element => {
 const Template: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Celo" forceNetwork={'celo'} environmentName={"production" as any}>
+      <MasaProvider
+        company="Base"
+        forceNetwork={'basegoerli'}
+      >
         <Component {...props} />
       </MasaProvider>
     </>

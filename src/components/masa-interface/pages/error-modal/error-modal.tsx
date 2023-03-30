@@ -3,10 +3,13 @@ import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
 
 export const InterfaceErrorModal = ({
-  title,
   subtitle,
   handleComplete,
-  buttonText
+  buttonText,
+}: {
+  subtitle: string;
+  handleComplete: () => void;
+  buttonText: string;
 }): JSX.Element => {
   const { isLoading } = useMasa();
 
