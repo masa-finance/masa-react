@@ -20,7 +20,7 @@ export const useSoulnames = (
     soulname: string,
     registrationPeriod: number,
     paymentMethod: PaymentMethod
-  ) => Promise<boolean>;
+  ) => Promise<boolean | any>;
   error: unknown;
 } => {
   const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
@@ -54,14 +54,20 @@ export const useSoulnames = (
       registrationPeriod: number,
       paymentMethod: PaymentMethod
     ) => {
-      const result = await masa?.soulName.create(
-        paymentMethod,
-        soulname,
-        registrationPeriod
-      );
-      await queryClient.invalidateQueries(['soulnames']);
+      try {
+        const result = await masa?.soulName.create(
+          paymentMethod,
+          soulname,
+          registrationPeriod
+        );
 
-      return !!result?.success;
+        await queryClient.invalidateQueries(['soulnames']);
+
+        return !!result?.success;
+      } catch (e: unknown) {
+        console.log('ERROR', e);
+        return { success: false, errorCode: 'error' };
+      }
     },
     [masa]
   );

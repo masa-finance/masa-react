@@ -5,6 +5,12 @@ import { MasaLoading } from '../../../masa-loading';
 import { PaymentMethod } from '@masa-finance/masa-sdk';
 import { Spinner } from '../../../spinner';
 import { Select } from '../../../select';
+import { InterfaceErrorModal } from '../error-modal';
+
+const errorMessages = {
+  UNPREDICTABLE_GAS_LIMIT:
+    'You do not have sufficient funds in you wallet. Please add funds to your wallet and try again',
+};
 
 export const InterfaceCreateSoulname = (): JSX.Element => {
   const {
@@ -53,6 +59,10 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     return values;
   }, [masa, enabledMethods]);
 
+  const [error, setError] = useState<null | {
+    title: string;
+    subtitle: string;
+  }>(null);
   const [soulname, setSoulname] = useState<string>('');
   const [extension, setExtension] = useState<string>();
   const [loadingIsAvailable, setLoadingIsAvailable] = useState(false);
@@ -145,20 +155,19 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     setLoadingMint(true);
 
     try {
-      // do we have an identity yet?
-      identity?.identityId
-        ? // yes, only mint soul name
-          await masa?.soulName.create(
-            paymentMethod,
-            soulname,
-            registrationPeriod
-          )
-        : // nope, mint both
-          await handlePurchaseIdentityWithSoulname?.(
-            paymentMethod,
-            soulname,
-            registrationPeriod
-          );
+      if (identity && identity.identityId) {
+        await masa?.soulName.create(
+          paymentMethod,
+          soulname,
+          registrationPeriod
+        );
+      } else {
+        await handlePurchaseIdentityWithSoulname?.(
+          paymentMethod,
+          soulname,
+          registrationPeriod
+        );
+      }
 
       if (!forcedPage && setForcedPage) {
         reloadSoulnames?.();
@@ -166,9 +175,16 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       } else {
         closeModal?.(true);
       }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(`Minting failed! ${error.message}`);
+    } catch (error: unknown) {
+      if (error) {
+        const errorObject = error as {
+          code: string;
+        };
+        setError({
+          title: '',
+          subtitle: errorMessages?.[errorObject.code] ?? 'Unknown error',
+        });
+        console.error(`Minting failed! ${errorObject.message}`);
       }
     }
     setLoadingMint(false);
@@ -212,6 +228,16 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
         </div>
       </div>
     );
+
+  if (error) {
+    return (
+      <InterfaceErrorModal
+        {...error}
+        handleComplete={() => setError(null)}
+        buttonText={'Try again'}
+      />
+    );
+  }
 
   return (
     <div className="interface-create-soulname">
