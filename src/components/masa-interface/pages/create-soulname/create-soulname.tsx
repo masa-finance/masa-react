@@ -356,6 +356,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
 
       <div style={{ width: '100%' }}>
         <button
+          id="gtm_register_domain"
           className="masa-button"
           onClick={
             soulNameError || !registrationPrice

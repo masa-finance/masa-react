@@ -72,7 +72,7 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
   if (isLoading) return <MasaLoading />;
 
   return (
-    <div className="interface-create-identity">
+    <div id="gtm_hurray_identity_minted" className="interface-create-identity">
       <h3 className="title">Hurray! 🎉</h3>
       <p className="subtitle">{title}</p>
       <a
