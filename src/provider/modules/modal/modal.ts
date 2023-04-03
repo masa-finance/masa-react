@@ -45,7 +45,7 @@ export const useModal = (
 
   const openMintSoulnameModal = useCallback(
     (mintCallback?: () => void) => {
-      setForcedPage?.('createSoulname');
+      setForcedPage?.('masaGreen');
       setModalOpen(true);
       const cb = () => {
         setForcedPage?.(null);
