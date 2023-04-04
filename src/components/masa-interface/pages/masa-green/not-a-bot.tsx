@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubflowPage } from '../../interface-subflow';
 
-export const NotBotPage = ({ next, back }: SubflowPage['props']) => {
+const BOT_DISCLAIMER_TIMEOUT_SECONDS = 5;
+
+export const NotBotPage: React.FunctionComponent<SubflowPage> = ({ next }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      next();
+    }, BOT_DISCLAIMER_TIMEOUT_SECONDS * 1000);
+
+    return () => clearTimeout(timer);
+  }, [next]);
+
   return (
     <div>
-      Not a bot
-      <button onClick={back}>Go back</button>
-      <button onClick={next}>Go next</button>
+      To be eligible for Masa Green, we kindly ask that you prove you are not a
+      bot.
+      <p className="text-6xl">🤖</p>
     </div>
   );
 };

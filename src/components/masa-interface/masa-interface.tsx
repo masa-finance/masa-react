@@ -26,7 +26,7 @@ const pages = {
   authenticate: <InterfaceAuthenticate />,
   createCreditScore: <InterfaceCreateCreditScore />,
   switchNetwork: <InterfaceSwitchChain />,
-  masaGreen: <InterfaceMasaGreen/>
+  masaGreen: <InterfaceMasaGreen />,
 };
 
 export const MasaInterface = ({
