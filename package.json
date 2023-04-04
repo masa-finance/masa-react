@@ -54,7 +54,7 @@
     "@size-limit/webpack-why": "^8.2.4",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-info": "^5.3.21",
-    "@storybook/addon-links": "^6.5.16",
+    "@storybook/addon-links": "^7.0.2",
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addons": "^6.5.16",
     "@storybook/builder-webpack5": "^6.5.16",
