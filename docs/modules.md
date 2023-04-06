@@ -1,8 +1,8 @@
 [# Masa React
- - v1.1.24](README.md) / Exports
+ - v1.1.29](README.md) / Exports
 
 # # Masa React
- - v1.1.24
+ - v1.1.29
 
 ## Table of contents
 
@@ -40,6 +40,7 @@
 - [useCreditScores](modules.md#usecreditscores)
 - [useDebounce](modules.md#usedebounce)
 - [useDebounceIfValue](modules.md#usedebounceifvalue)
+- [useErrors](modules.md#useerrors)
 - [useGreen](modules.md#usegreen)
 - [useIdentity](modules.md#useidentity)
 - [useLocalStorage](modules.md#uselocalstorage)
@@ -255,6 +256,22 @@ ___
 #### Returns
 
 `string` \| `number`
+
+___
+
+### useErrors
+
+▸ **useErrors**(): `Object`
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `SoulNameErrorCodes` | typeof [`SoulNameErrorCodes`](enums/SoulNameErrorCodes.md) |
+| `error` | ``null`` \| `ErrorType` |
+| `handleErrors` | (`errorCode`: [`SoulNameErrorCodes`](enums/SoulNameErrorCodes.md)) => `void` |
 
 ___
 
