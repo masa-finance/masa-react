@@ -38,7 +38,11 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
   next,
   back,
   context,
-}) => {
+}: SubflowPage) => {
+  const { useModalSize } = useMasa();
+
+  useModalSize?.({ width: 800, height: 480 });
+
   const phoneNumber = useMemo(() => context.phoneNumber, [context]);
   const codeRef = useRef(null);
   const [code, setCode] = useState<string>('');
@@ -103,7 +107,7 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
         }
       }
     },
-    [masa, next]
+    [masa, next, localStorageSet]
   );
 
   const inputStyle = {
@@ -144,13 +148,13 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
   );
 
   return (
-    <>
+    <div className="code-input-interface">
       <h2>Enter 2FA 6-digit code</h2>
       <h3>{`We sent a code to your phone number ending in ${phoneNumber.slice(
         -4
       )}.`}</h3>
 
-      <div className="w-full flex flex-col items-center">
+      <div className="code-input">
         <ReactCodeInput
           ref={codeRef}
           value={code}
@@ -163,23 +167,20 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
           fields={6}
           isValid={isValid}
         />
-        <p className={'text-errorRed text-sm mt-8'}>{errorMsg}</p>
-        <div className={'absolute -bottom-20'}>
-          <p className={'text-black font-ezra text-lg'}>
-            Didn&apos;t get the code?{' '}
-            {showCountDown && time !== 0 ? (
-              <span className={'font-bold ml-2'}>{time}</span>
-            ) : (
-              <span
-                className={'font-bold cursor-pointer ml-2'}
-                onClick={() => resendCode()}
-              >
-                Resend
-              </span>
-            )}
-          </p>
-        </div>
       </div>
-    </>
+      <p className={''}>{errorMsg}</p>
+      <div className={''}>
+        <p className={''}>
+          Didn&apos;t get the code?{' '}
+          {showCountDown && time !== 0 ? (
+            <span className={'font-bold ml-2'}>{time}</span>
+          ) : (
+            <span className={'resend'} onClick={() => resendCode()}>
+              Resend
+            </span>
+          )}
+        </p>
+      </div>
+    </div>
   );
 };

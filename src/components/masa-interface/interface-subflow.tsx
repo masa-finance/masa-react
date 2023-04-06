@@ -1,7 +1,10 @@
+import { useMasa } from '../../provider';
 import React, { useCallback, useMemo, useState } from 'react';
 export interface SubflowPage {
   next: () => void;
   back: () => void;
+  complete: () => void;
+
   setIndex: React.Dispatch<React.SetStateAction<number | string>>;
   context: any;
 }
@@ -12,7 +15,13 @@ interface InterfaceSubflowProps {
   context: any;
 }
 
-const Renderer = ({ Render, params }) => {
+const Renderer = ({
+  Render,
+  params,
+}: {
+  Render: React.FunctionComponent<SubflowPage>;
+  params: SubflowPage;
+}) => {
   return <Render {...params} />;
 };
 
@@ -21,6 +30,7 @@ export const InterfaceSubflow = ({
   context,
   situationalPages,
 }: InterfaceSubflowProps) => {
+  const { closeModal } = useMasa();
   const [index, setIndex] = useState<number | string>(0);
 
   const length = useMemo(() => pages.length, [pages]);
@@ -43,14 +53,26 @@ export const InterfaceSubflow = ({
     return (
       <Renderer
         Render={situationalPages[index]}
-        params={{ next, back, context, setIndex }}
+        params={{
+          next,
+          back,
+          context,
+          setIndex,
+          complete: () => closeModal?.(true),
+        }}
       />
     );
   }
   return (
     <Renderer
       Render={pages[index]}
-      params={{ next, back, context, setIndex }}
+      params={{
+        next,
+        back,
+        context,
+        setIndex,
+        complete: () => closeModal?.(true),
+      }}
     />
   );
 };

@@ -1,5 +1,5 @@
 import { SubflowPage } from '../../interface-subflow';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import Reaptcha from 'reaptcha';
 import { useMasa } from '../../../../provider';
@@ -8,22 +8,31 @@ import 'react-phone-number-input/style.css';
 export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
   next,
   context,
-}) => {
+  setIndex,
+}: SubflowPage) => {
   const { handleGenerateGreen } = useMasa();
+
+  const { useModalSize } = useMasa();
+
+  useModalSize?.({ width: 800, height: 600 });
+
   const [isPhoneValid, setIsPhoneValid] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [recaptchaVerified, setRecaptchaVerified] = useState<boolean>(false);
 
+  const setContextPhoneNumber = useMemo(
+    () => context.setPhoneNumber,
+    [context]
+  );
   useEffect(() => {
     if (isPhoneValid) {
-      context.setPhoneNumber(phoneNumber);
+      setContextPhoneNumber(phoneNumber);
     }
-  }, [isPhoneValid, phoneNumber, context.setPhoneNumber]);
+  }, [isPhoneValid, phoneNumber, setContextPhoneNumber]);
 
   const getCode = async () => {
     const result = await handleGenerateGreen?.(phoneNumber);
-
     if (result) {
       if (result['status'] === 'pending') {
         next();
@@ -38,6 +47,8 @@ export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
       if (result['status'] === 'failed') {
         setErrorMsg(result?.message ?? '');
       }
+    } else {
+      setIndex('error');
     }
   };
 
@@ -46,10 +57,10 @@ export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
   };
 
   return (
-    <div>
+    <div className="phone-input-interface">
       <h2>Complete 2FA</h2>
 
-      <p>
+      <p className="phone-input-guide">
         Please enter your phone number to qualify for rewards.
         <br />
         You have two chances to verify your phone number. Your
@@ -59,38 +70,32 @@ export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
         verification attempts.
       </p>
 
-      <div>
-        <div>
-          <div>
-            <div>
-              <p>Phone Number*</p>
-              <PhoneInput
-                international
-                defaultCountry="US"
-                onChange={(value: string) => {
-                  if (value) {
-                    setIsPhoneValid(isValidPhoneNumber(value));
-                    setPhoneNumber(value);
-                  }
-                }}
-              />
-            </div>
-            <Reaptcha
-              className="g-recaptcha "
-              sitekey={'6Lf623YkAAAAALcfUuQnr0NVdUwffckx_OQdfJs6'}
-              onVerify={onRecaptchaVerify}
-            />
-            <button
-              className={'masa-button'}
-              onClick={() => getCode()}
-              disabled={!isPhoneValid || !recaptchaVerified}
-            >
-              Mint Masa Green SBT
-            </button>
-            {errorMsg && <p className={'text-center text-red'}>{errorMsg}</p>}
-          </div>
-        </div>
+      <div className="phone-input">
+        <p className="phone-input-label">Phone Number*</p>
+        <PhoneInput
+          international
+          defaultCountry="US"
+          onChange={(value: string) => {
+            if (value) {
+              setIsPhoneValid(isValidPhoneNumber(value));
+              setPhoneNumber(value);
+            }
+          }}
+        />
       </div>
+      <Reaptcha
+        className="g-recaptcha"
+        sitekey={'6Lf623YkAAAAALcfUuQnr0NVdUwffckx_OQdfJs6'}
+        onVerify={onRecaptchaVerify}
+      />
+      <button
+        className={'masa-button'}
+        onClick={() => getCode()}
+        disabled={!isPhoneValid || !recaptchaVerified}
+      >
+        Mint Masa Green SBT
+      </button>
+      {errorMsg && <p className={'text-center text-red'}>{errorMsg}</p>}
     </div>
   );
 };

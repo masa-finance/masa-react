@@ -42,6 +42,9 @@ export interface MasaShape {
   forcedPage?: string | null;
   setForcedPage?: (page: string | null) => void;
   openMintSoulnameModal?: (callback?: () => void) => void;
+  openMintMasaGreen?: (callback?: () => void) => void;
+  modalSize?: { width: number; height: number } | null;
+  useModalSize?: (size: { width: number; height: number }) => void;
 
   // wallet
   walletAddress?: string;

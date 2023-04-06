@@ -15,7 +15,6 @@ const InterfaceMasaGreen = () => {
     PhoneInputInterface,
     CodeInterface,
     VerifyAndMintInterface,
-    Success,
   ];
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>();
 

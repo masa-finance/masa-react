@@ -29,6 +29,7 @@ const Component = (): JSX.Element => {
     handleLogout,
     switchNetwork,
     openMintSoulnameModal,
+    openMintMasaGreen,
   } = useMasa();
 
   const handleConnect = useCallback(() => {
@@ -56,7 +57,12 @@ const Component = (): JSX.Element => {
       <button
         onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
       >
-        Mint a soulname
+        Mint a MSN
+      </button>
+      <button
+        onClick={() => openMintMasaGreen?.(() => alert('MINTED HURRAY!'))}
+      >
+        Mint a MGX
       </button>
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
@@ -95,8 +101,6 @@ const Component = (): JSX.Element => {
   );
 };
 
-const MasaGreen = () => {};
-
 const Template: Story = (props: Args) => {
   return (
     <>
@@ -119,7 +123,15 @@ const MasaGreenTemplate: Story = (props: Args) => {
   return (
     <>
       <MasaProvider company="Masa" forceNetwork={'goerli'}>
-        <ModalComponent open={true} close={(): void => {}} setOpen={() => {}}>
+        <ModalComponent
+          open={true}
+          close={() => {
+            console.log('Close');
+          }}
+          setOpen={() => {
+            console.log('Open');
+          }}
+        >
           <InterfaceMasaGreen {...props} />
         </ModalComponent>
       </MasaProvider>

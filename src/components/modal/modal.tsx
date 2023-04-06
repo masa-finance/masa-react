@@ -2,6 +2,7 @@ import Rodal from 'rodal';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import './styles.scss';
+import { useMasa } from '../../provider';
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -52,11 +53,20 @@ export const ModalComponent = ({
   height,
 }: ModalProps): JSX.Element => {
   const { isMobile, height: screenHeight, width: screenWidth } = useIsMobile();
+  const { modalSize } = useMasa();
   return (
     <Rodal
       data-cy="closeMasaModal"
-      height={isMobile ? screenHeight : height ? height : 615}
-      width={isMobile ? screenWidth : 550}
+      height={
+        isMobile
+          ? screenHeight
+          : modalSize
+          ? modalSize.height
+          : height
+          ? height
+          : 615
+      }
+      width={isMobile ? screenWidth : modalSize ? modalSize.width : 550}
       visible={open}
       onClose={(): void => close()}
       className="masa-rodal-container"

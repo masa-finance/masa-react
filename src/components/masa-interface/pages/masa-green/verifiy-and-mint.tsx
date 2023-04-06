@@ -1,14 +1,13 @@
 import { useLocalStorage, useMasa } from '../../../../provider';
 import { SubflowPage } from 'components/masa-interface/interface-subflow';
 import React, { useEffect, useMemo, useState } from 'react';
-
-const emphasize = 'underline underline-offset-4 font-semibold';
+import { MasaLoading } from '../../../../components/masa-loading';
 
 export const VerifyAndMintInterface: React.FunctionComponent<SubflowPage> = ({
   next,
   context,
   setIndex,
-}) => {
+}: SubflowPage) => {
   const { masa } = useMasa();
   const { localStorageGet, localStorageSet } = useLocalStorage();
   const [excecute, setHasToExecute] = useState(false);
@@ -23,8 +22,6 @@ export const VerifyAndMintInterface: React.FunctionComponent<SubflowPage> = ({
           | undefined;
 
         if (verificationData) {
-          console.log({ verificationData });
-
           const verificationObject = JSON.parse(verificationData);
 
           if (verificationObject.status === 'approved') {
@@ -70,28 +67,36 @@ export const VerifyAndMintInterface: React.FunctionComponent<SubflowPage> = ({
     };
 
     void startVerification();
-  }, [excecute, phone, masa?.green, next, localStorageGet, localStorageSet]);
+  }, [
+    excecute,
+    phone,
+    masa?.green,
+    next,
+    localStorageGet,
+    localStorageSet,
+    setIndex,
+  ]);
 
   useEffect(() => {
     setHasToExecute(true);
   }, []);
 
   return (
-    <div>
-      <div className="mb-12">
-        You phone number is verified!
+    <div className="verify-mint-interface">
+      <h2>
+        Phone number is verified!
         <br />
         Now mint your Masa Green SBT
-      </div>
+      </h2>
+
+      <MasaLoading />
 
       <div className="w-full flex justify-center mt-12">
-        <div className="w-3/5 leading-relaxed text-lightBlack text-center">
-          If you <span className={emphasize}>cancel</span> your transaction or
-          if the <br />
-          <span className={emphasize}>transaction fails</span> you will have to
-          verify your <br />
-          number again.
-        </div>
+        <p className="w-3/5 leading-relaxed text-lightBlack text-center">
+          If you <span className={'emphasize'}>cancel</span> your SBT mint or if
+          the <span className={'emphasize'}> transaction fails</span> you will
+          have to verify your number again.
+        </p>
       </div>
     </div>
   );
