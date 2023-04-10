@@ -72,7 +72,7 @@ export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
           verification attempts.
         </p>
       </div>
-      <div className='input-container'>
+      <div className="input-container">
         <div className="phone-input">
           <p className="phone-input-label">Phone Number*</p>
           <PhoneInput
