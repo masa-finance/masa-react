@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useModal = (
   isLoggedIn?: boolean,
@@ -12,15 +12,26 @@ export const useModal = (
   forcedPage: string | null;
   setForcedPage?: (page: null | string) => void;
   openMintSoulnameModal: (mintCallback?: () => void) => void;
+  openMintMasaGreen: (mintCallback?: () => void) => void;
+  modalSize: {
+    width: number;
+    height: number;
+  } | null;
+  setModalSize: (size: { width: number; height: number }) => void;
+  useModalSize: (size: { width: number; height: number }) => void;
 } => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalCallback, setModalCallback] = useState<(() => void) | null>(null);
   const [forcedPage, setForcedPage] = useState<null | string>(null);
 
+  const [modalSize, setModalSize] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
+
   const closeModal = useCallback(
     (forceCallback?: boolean) => {
       setModalOpen(false);
-
       if (
         !forcedPage &&
         areScopesFullfiled &&
@@ -43,9 +54,30 @@ export const useModal = (
     ]
   );
 
+  const useModalSize = (newSize: { width: number; height: number }) => {
+    useEffect(() => {
+      setModalSize(newSize);
+      return () => setModalSize(null);
+    }, []);
+  };
+
   const openMintSoulnameModal = useCallback(
     (mintCallback?: () => void) => {
       setForcedPage?.('createSoulname');
+      setModalOpen(true);
+      const cb = () => {
+        setForcedPage?.(null);
+        if (mintCallback) mintCallback();
+      };
+
+      setModalCallback(() => cb);
+    },
+    [setForcedPage, setModalOpen, setModalCallback]
+  );
+
+  const openMintMasaGreen = useCallback(
+    (mintCallback?: () => void) => {
+      setForcedPage?.('masaGreen');
       setModalOpen(true);
       const cb = () => {
         setForcedPage?.(null);
@@ -65,5 +97,9 @@ export const useModal = (
     forcedPage,
     setForcedPage,
     openMintSoulnameModal,
+    openMintMasaGreen,
+    modalSize,
+    setModalSize,
+    useModalSize,
   };
 };

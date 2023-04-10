@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import React, { useCallback } from 'react';
-import { MasaProvider, queryClient, useMasa } from '../src';
+import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
+import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
 
 const meta: Meta = {
   title: 'SDK Test',
@@ -28,6 +29,7 @@ const Component = (): JSX.Element => {
     handleLogout,
     switchNetwork,
     openMintSoulnameModal,
+    openMintMasaGreen,
   } = useMasa();
 
   const handleConnect = useCallback(() => {
@@ -55,7 +57,12 @@ const Component = (): JSX.Element => {
       <button
         onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
       >
-        Mint a soulname
+        Mint a MSN
+      </button>
+      <button
+        onClick={() => openMintMasaGreen?.(() => alert('MINTED HURRAY!'))}
+      >
+        Mint a MGX
       </button>
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
@@ -97,7 +104,7 @@ const Component = (): JSX.Element => {
 const Template: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Base" forceNetwork={'basegoerli'}>
+      <MasaProvider company="Masa" forceNetwork={'goerli'}>
         <Component {...props} />
       </MasaProvider>
     </>
@@ -111,3 +118,29 @@ export const Default = Template.bind({
 });
 
 Default.args = {};
+
+const MasaGreenTemplate: Story = (props: Args) => {
+  return (
+    <>
+      <MasaProvider company="Masa" forceNetwork={'goerli'}>
+        <ModalComponent
+          open={true}
+          close={() => {
+            console.log('Close');
+          }}
+          setOpen={() => {
+            console.log('Open');
+          }}
+        >
+          <InterfaceMasaGreen {...props} />
+        </ModalComponent>
+      </MasaProvider>
+    </>
+  );
+};
+
+// By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
+// https://storybook.js.org/docs/react/workflows/unit-testing
+export const MasaGreenInterface = MasaGreenTemplate.bind({
+  options: { scope: [] },
+});

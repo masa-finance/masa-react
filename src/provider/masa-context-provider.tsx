@@ -123,6 +123,9 @@ export const MasaContextProvider = ({
     forcedPage,
     setForcedPage,
     openMintSoulnameModal,
+    openMintMasaGreen,
+    useModalSize,
+    modalSize,
   } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
 
   // global loading flag
@@ -226,6 +229,9 @@ export const MasaContextProvider = ({
     forcedPage,
     setForcedPage,
     openMintSoulnameModal,
+    openMintMasaGreen,
+    useModalSize,
+    modalSize,
 
     // wallet
     walletAddress,

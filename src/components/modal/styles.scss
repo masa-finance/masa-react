@@ -264,6 +264,147 @@
       padding: 0 18px;
     }
   }
+
+  .airdrop-interface,
+  .not-a-bot-interface,
+  .phone-input-interface,
+  .code-input-interface,
+  .verify-mint-interface,
+  .success-interface {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: space-between;
+
+    height: 100%;
+
+    h2 {
+      font-size: 30px;
+      font-family: ezra;
+    }
+
+    p {
+      font-size: 18px;
+      color: rgba(0, 0, 0, 0.6);
+      text-align: center;
+    }
+
+    .masa-button {
+      width: auto;
+      font-weight: 500;
+      padding: 18px 32px;
+    }
+  }
+
+  .success-interface {
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .masa-button {
+      padding: 18px 48px;
+    }
+  }
+
+  .verify-mint-interface {
+    h2 {
+      text-align: center;
+    }
+
+    .emphasize {
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.7);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+  .not-a-bot-interface {
+    h2 {
+      font-size: 36px;
+      text-align: center;
+    }
+    .bot-icon {
+      font-size: 82px;
+      margin: 0;
+    }
+  }
+  .code-input-interface {
+    .resend {
+      font-weight: 500;
+      color: black;
+      cursor: pointer;
+    }
+    h2 {
+      font-size: 42px;
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.7);
+    }
+    .code-input {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .phone-input-interface {
+    .phone-input-guide {
+      line-height: 32px;
+    }
+    .masa-button {
+      margin-top: 12px;
+      width: 60%;
+      min-width: 240px;
+      box-sizing: border-box;
+    }
+
+    .g-recaptcha {
+      margin-top: 12px;
+      iframe:first-child {
+        height: 75px !important;
+      }
+    }
+
+    .phone-input {
+      margin-top: 32px;
+    }
+  }
+
+  .phone-input {
+    border: solid #00000060 1px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    padding: 16px 32px;
+    width: 60%;
+    min-width: 240px;
+    box-sizing: border-box;
+
+    .phone-input-label {
+      position: absolute;
+      left: 0;
+      top: -38px;
+      font-size: 14px;
+      color: black;
+      font-weight: 500;
+    }
+    input {
+      border: none;
+      padding-left: 16px;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 16px;
+      width: 100%;
+      height: 36px;
+    }
+  }
+
   .interface-authenticate,
   .interface-connected,
   .interface-connect,
