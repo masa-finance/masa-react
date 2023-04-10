@@ -9,7 +9,7 @@ export const NotBotPage: React.FunctionComponent<SubflowPage> = ({
 }: SubflowPage) => {
   const { useModalSize } = useMasa();
 
-  useModalSize?.({ width: 800, height: 360 });
+  useModalSize?.({ width: 800, height: 400 });
 
   useEffect(() => {
     const timer = setTimeout(() => {

@@ -323,7 +323,7 @@
   }
   .not-a-bot-interface {
     h2 {
-      font-size: 36px;
+      font-size: 32px;
       text-align: center;
     }
     .bot-icon {
@@ -350,10 +350,25 @@
       width: 100%;
       display: flex;
       justify-content: center;
+      input {
+        text-align: center;
+        padding-left: 8px !important;
+        padding-right: 8px;
+      }
+
     }
   }
 
   .phone-input-interface {
+    h2 {
+      text-align: center;
+    }
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
     .phone-input-guide {
       line-height: 32px;
     }
@@ -362,12 +377,14 @@
       width: 60%;
       min-width: 240px;
       box-sizing: border-box;
+      padding: 18px;
     }
 
     .g-recaptcha {
       margin-top: 12px;
       iframe:first-child {
         height: 75px !important;
+        border: none;
       }
     }
 

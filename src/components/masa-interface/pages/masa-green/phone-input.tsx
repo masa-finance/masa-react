@@ -25,6 +25,7 @@ export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
     () => context.setPhoneNumber,
     [context]
   );
+
   useEffect(() => {
     if (isPhoneValid) {
       setContextPhoneNumber(phoneNumber);
@@ -58,44 +59,47 @@ export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
 
   return (
     <div className="phone-input-interface">
-      <h2>Complete 2FA</h2>
+      <div>
+        <h2>Complete 2FA</h2>
 
-      <p className="phone-input-guide">
-        Please enter your phone number to qualify for rewards.
-        <br />
-        You have two chances to verify your phone number. Your
-        <br />
-        account will be locked for 24 hours after two failed
-        <br />
-        verification attempts.
-      </p>
-
-      <div className="phone-input">
-        <p className="phone-input-label">Phone Number*</p>
-        <PhoneInput
-          international
-          defaultCountry="US"
-          onChange={(value: string) => {
-            if (value) {
-              setIsPhoneValid(isValidPhoneNumber(value));
-              setPhoneNumber(value);
-            }
-          }}
-        />
+        <p className="phone-input-guide">
+          Please enter your phone number to qualify for rewards.
+          <br />
+          You have two chances to verify your phone number. Your
+          <br />
+          account will be locked for 24 hours after two failed
+          <br />
+          verification attempts.
+        </p>
       </div>
-      <Reaptcha
-        className="g-recaptcha"
-        sitekey={'6Lf623YkAAAAALcfUuQnr0NVdUwffckx_OQdfJs6'}
-        onVerify={onRecaptchaVerify}
-      />
-      <button
-        className={'masa-button'}
-        onClick={() => getCode()}
-        disabled={!isPhoneValid || !recaptchaVerified}
-      >
-        Mint Masa Green SBT
-      </button>
-      {errorMsg && <p className={'text-center text-red'}>{errorMsg}</p>}
+      <div className='input-container'>
+        <div className="phone-input">
+          <p className="phone-input-label">Phone Number*</p>
+          <PhoneInput
+            international
+            defaultCountry="US"
+            onChange={(value: string) => {
+              if (value) {
+                setIsPhoneValid(isValidPhoneNumber(value));
+                setPhoneNumber(value);
+              }
+            }}
+          />
+        </div>
+        <Reaptcha
+          className="g-recaptcha"
+          sitekey={'6Lf623YkAAAAALcfUuQnr0NVdUwffckx_OQdfJs6'}
+          onVerify={onRecaptchaVerify}
+        />
+        <button
+          className={'masa-button'}
+          onClick={() => getCode()}
+          disabled={!isPhoneValid || !recaptchaVerified}
+        >
+          Mint Masa Green SBT
+        </button>
+        {errorMsg && <p className={'text-center text-red'}>{errorMsg}</p>}
+      </div>
     </div>
   );
 };
