@@ -59,7 +59,7 @@
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^7.0.2",
     "@storybook/addon-postcss": "^2.0.0",
-    "@storybook/addons": "^6.5.16",
+    "@storybook/addons": "^7.0.2",
     "@storybook/builder-webpack5": "^6.5.16",
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
