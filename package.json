@@ -62,7 +62,7 @@
     "@storybook/addons": "^6.5.16",
     "@storybook/builder-webpack5": "^6.5.16",
     "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/react": "^6.5.16",
+    "@storybook/react": "^7.0.2",
     "@types/jest": "^29.5.0",
     "@types/mocha": "^10.0.1",
     "@types/react": "^18.0.33",
