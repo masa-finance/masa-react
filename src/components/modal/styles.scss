@@ -338,13 +338,16 @@
       cursor: pointer;
     }
     h2 {
-      font-size: 42px;
+      font-size: 38px;
+      margin-bottom: 12px;
     }
 
     h3 {
       font-size: 18px;
       font-weight: 400;
       color: rgba(0, 0, 0, 0.7);
+      margin-top: 0;
+      text-align:center;
     }
     .code-input {
       width: 100%;

@@ -41,7 +41,7 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
 }: SubflowPage) => {
   const { useModalSize } = useMasa();
 
-  useModalSize?.({ width: 800, height: 480 });
+  useModalSize?.({ width: 800, height: 400 });
 
   const phoneNumber = useMemo(() => context.phoneNumber, [context]);
   const codeRef = useRef(null);
@@ -149,11 +149,12 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
 
   return (
     <div className="code-input-interface">
-      <h2>Enter 2FA 6-digit code</h2>
-      <h3>{`We sent a code to your phone number ending in ${phoneNumber.slice(
-        -4
-      )}.`}</h3>
-
+      <div>
+        <h2>Enter 2FA 6-digit code</h2>
+        <h3>{`We sent a code to your phone number ending in ${phoneNumber.slice(
+          -4
+        )}.`}</h3>
+      </div>
       <div className="code-input">
         <ReactCodeInput
           ref={codeRef}
