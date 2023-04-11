@@ -18,12 +18,17 @@ module.exports = {
         implementation: require('postcss')
       }
     }
-  }],
+  }, '@storybook/addon-mdx-gfm'],
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
   typescript: {
     check: true // type-check stories during Storybook build
   },
-  core: {
-    builder: 'webpack5'
+
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {}
+  },
+  docs: {
+    autodocs: true
   }
 };
