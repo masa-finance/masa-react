@@ -352,8 +352,11 @@
       justify-content: center;
       input {
         text-align: center;
-        padding-left: 8px !important;
-        padding-right: 8px;
+        padding-left: 4px !important;
+        padding-right: 4px;
+        &:focus {
+          outline: none;
+        }
       }
     }
   }
@@ -382,13 +385,20 @@
     .g-recaptcha {
       margin-top: 12px;
       iframe:first-child {
-        height: 75px !important;
+        height: 76px !important;
+        width: 303px !important;
         border: none;
       }
     }
 
     .phone-input {
       margin-top: 32px;
+
+      input {
+        &:focus {
+          outline: none;
+        }
+      }
     }
   }
 
