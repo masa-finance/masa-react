@@ -39,25 +39,24 @@ export const VerifyAndMintInterface: React.FunctionComponent<SubflowPage> = ({
               localStorageSet(`${phone}`, '0');
 
               if (mintResponse?.tokenId) {
+                const referralCode = localStorage.getItem('referralCode') as
+                  | string
+                  | undefined;
 
-                const referralCode = localStorage.getItem("referralCode") as
-                | string
-                | undefined;
-      
-              if (
-                referralCode &&
-                typeof window !== "undefined" &&
-                typeof window?.RF !== "undefined"
-              ) {
-                const rf_code = JSON.parse(referralCode);
-      
-                // send qualification to referral factory
-                window.RF.qualify({
-                  code: rf_code,
-                });
-      
-                localStorage.removeItem("referralCode");
-              }
+                if (
+                  referralCode &&
+                  typeof window !== 'undefined' &&
+                  typeof window?.RF !== 'undefined'
+                ) {
+                  const rf_code = JSON.parse(referralCode);
+
+                  // send qualification to referral factory
+                  window.RF.qualify({
+                    code: rf_code,
+                  });
+
+                  localStorage.removeItem('referralCode');
+                }
 
                 setIndex('success');
               }
