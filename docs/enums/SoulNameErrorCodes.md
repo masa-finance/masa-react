@@ -1,5 +1,4 @@
-[# Masa React
- - v1.1.30](../README.md) / [Exports](../modules.md) / SoulNameErrorCodes
+[Masa React](../README.md) / [Exports](../modules.md) / SoulNameErrorCodes
 
 # Enumeration: SoulNameErrorCodes
 
