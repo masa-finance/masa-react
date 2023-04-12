@@ -415,7 +415,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Wallet` \| `Signer` |
+| `provider?` | `Signer` \| `Wallet` |
 
 #### Returns
 
@@ -517,7 +517,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `masa?` | `default` |
-| `provider?` | `Wallet` \| `Signer` |
+| `provider?` | `Signer` \| `Wallet` |
 
 #### Returns
 
