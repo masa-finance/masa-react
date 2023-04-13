@@ -11,7 +11,7 @@ export const InterfaceCreateCreditScore = (): JSX.Element => {
     const minted: boolean | undefined = await handleCreateCreditScore?.();
 
     if (!minted)
-      setError('There is not enough data for generating a credit report');
+      setError('There is not enough data for generating a credit score');
   }, [handleCreateCreditScore]);
 
   if (isLoading) return <MasaLoading />;
@@ -19,11 +19,11 @@ export const InterfaceCreateCreditScore = (): JSX.Element => {
   return (
     <div className="interface-create-identity">
       <div>
-        <h3>Your identity does not have a credit report</h3>
+        <h3>Your identity does not have a credit score</h3>
         {error ? (
           <p className="error-message">{error}</p>
         ) : (
-          <p>Generate your credit report!</p>
+          <p>Generate your credit score!</p>
         )}
       </div>
       <div>
