@@ -564,8 +564,11 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100%;
+
     .masa-gallery {
       width: 100%;
+      height: 100%;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 20px;
@@ -622,8 +625,20 @@
 
   .tabs-container {
     width: 100%;
-    display: flex;
+    height: 100%;
+    display: grid;
     flex-direction: column;
+    grid-template-rows: 60px 1fr;
+
+    .tabs-header {
+      height: 100%;
+    }
+
+    .tab-content {
+      height: 100%;
+      overflow: auto;
+    }
+    
   }
   .tabs-header {
     width: 100%;
