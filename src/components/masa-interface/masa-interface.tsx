@@ -9,6 +9,7 @@ import {
   InterfaceCreateIdentity,
 } from './pages';
 import { InterfaceCreateSoulname } from './pages/create-soulname';
+import { Gallery } from './pages/gallery';
 import InterfaceMasaGreen from './pages/masa-green';
 import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity';
 import { InterfaceSwitchChain } from './pages/switch-chain';
@@ -27,6 +28,7 @@ const pages = {
   createCreditScore: <InterfaceCreateCreditScore />,
   switchNetwork: <InterfaceSwitchChain />,
   masaGreen: <InterfaceMasaGreen />,
+  gallery: <Gallery />,
 };
 
 export const MasaInterface = ({

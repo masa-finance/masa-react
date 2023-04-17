@@ -283,7 +283,6 @@ export const MasaContextProvider = ({
 
     // gallery
     customGallerySBT,
-    
   };
 
   return (

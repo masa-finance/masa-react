@@ -49,7 +49,7 @@ const useCustomGallerySBT = (): any[] => {
     (async () => {
       if (customGallerySBT && customGallerySBT.length) {
         const contracts: any[] = [];
-        for (let sbt of customGallerySBT) {
+        for (const sbt of customGallerySBT) {
           const sbtContract = await masa?.sbt.connect(sbt.address);
           contracts.push({ ...sbtContract, ...sbt });
         }
@@ -73,16 +73,16 @@ const useTabs = () => {
     (async () => {
       const contracts = [...customContracts, ...savedSbtContracts];
       const newTabs: any[] = [];
-      for (let contract of contracts) {
+      for (const contract of contracts) {
         const tokens: any[] = await contract.list();
         const hidratatedTokens: any[] = [];
         if (contract.getMetadata) {
-          for (let token of tokens) {
+          for (const token of tokens) {
             try {
               const metadata = await contract.getMetadata(token);
               hidratatedTokens.push({ metadata, ...token });
             } catch (e) {
-              console.log("METADTA ERROR", e)
+              console.log('METADTA ERROR', e);
             }
           }
         }
@@ -104,7 +104,7 @@ const useTabs = () => {
     (async () => {
       if (!savedBadgeContracts) return [];
       const tokenList: any[] = [];
-      for (let contract of savedBadgeContracts) {
+      for (const contract of savedBadgeContracts) {
         const tokens: any[] = await contract.list();
         tokenList.push(...tokens);
       }
@@ -136,7 +136,7 @@ const useSavedSbts = (prefix): any[] => {
   useEffect(() => {
     (async () => {
       const contracts: any[] = [];
-      for (let sbt of savedSBTs) {
+      for (const sbt of savedSBTs) {
         const sbtContract = await masa?.sbt.connect(sbt.address);
         contracts.push({ ...sbtContract, ...sbt });
       }

@@ -47,7 +47,7 @@ export interface MasaShape {
   modalSize?: { width: number; height: number } | null;
   useModalSize?: (size: { width: number; height: number }) => void;
   openGallery?: (callback?: () => void) => void;
-  
+
   // wallet
   walletAddress?: string;
   isWalletLoading?: boolean;
@@ -111,5 +111,5 @@ export interface MasaShape {
   forceNetwork?: NetworkName;
 
   // gallery
-  customGallerySBT?: CustomGallerySBT[]
+  customGallerySBT?: CustomGallerySBT[];
 }

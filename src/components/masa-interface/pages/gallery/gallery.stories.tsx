@@ -15,7 +15,7 @@ const customRenderPokeSBT = {
     return {
       name: data.name,
       image: data.sprites.front_default,
-      description: "",
+      description: '',
     };
   },
 };
