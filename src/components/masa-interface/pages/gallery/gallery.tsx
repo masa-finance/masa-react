@@ -2,6 +2,7 @@ import React from 'react';
 import { ICreditScore, IGreen, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 import { Tabs } from './tabs';
+import { useMasa } from '../../../../provider';
 
 export const types = {
   Mint: [
@@ -39,6 +40,10 @@ export interface CustomGallerySBT {
   }>;
 }
 export const Gallery = ({ setIndex, context }) => {
+  const { useModalSize } = useMasa();
+
+  useModalSize?.({ width: 1100, height: 800 });
+
   return (
     <div className="masa-gallery-container">
       <Tabs

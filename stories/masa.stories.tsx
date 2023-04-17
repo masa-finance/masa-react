@@ -4,7 +4,21 @@ import React, { useCallback } from 'react';
 import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
+const customRenderPokeSBT = {
+  name: 'PokeSBT',
+  address: '0xA5705C317367Ab3e17D0deACf530792745C29c10',
+  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
+    const apiUrl = sbt.tokenUri.replace('.json', '');
+    const apiResponse = await fetch(apiUrl);
+    const data = await apiResponse.json();
 
+    return {
+      name: data.name,
+      image: data.sprites.front_default,
+      description: '',
+    };
+  },
+};
 const meta: Meta = {
   title: 'SDK Test',
   component: () => <></>,
@@ -30,6 +44,7 @@ const Component = (): JSX.Element => {
     switchNetwork,
     openMintSoulnameModal,
     openMintMasaGreen,
+    openGallery,
   } = useMasa();
 
   const handleConnect = useCallback(() => {
@@ -64,6 +79,7 @@ const Component = (): JSX.Element => {
       >
         Mint a MGX
       </button>
+      <button onClick={() => openGallery?.()}> Open gallery </button>
       <button onClick={loadCR}>Invalidate Wallet</button>
       <button onClick={mintGreen}>Mint green</button>
 
@@ -104,7 +120,11 @@ const Component = (): JSX.Element => {
 const Template: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" forceNetwork={'alfajores'}>
+      <MasaProvider
+        company="Masa"
+        forceNetwork={'goerli'}
+        customGallerySBT={[customRenderPokeSBT]}
+      >
         <Component {...props} />
       </MasaProvider>
     </>
@@ -122,7 +142,11 @@ Default.args = {};
 const MasaGreenTemplate: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" forceNetwork={'ethereum'}>
+      <MasaProvider
+        company="Masa"
+        customGallerySBT={[customRenderPokeSBT]}
+        forceNetwork={'goerli'}
+      >
         <ModalComponent
           open={true}
           close={() => {
