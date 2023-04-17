@@ -3,9 +3,15 @@ export interface GalleryItemProps {
   image: string;
 }
 export const GalleryItem = ({ image, title, description }) => {
+  let fixImage = image;
+  console.log({image})
+  if (image && image?.includes('ar://')) {
+    fixImage = image.replace('ar://', 'https://arweave.net/');
+  }
+
   return (
     <div className="gallery-item">
-      <img src={image} />
+      <img src={fixImage} />
 
       {(title || description) && (
         <div className="gallery-item-info">
