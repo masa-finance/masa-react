@@ -20,6 +20,7 @@ import { Signer, Wallet } from 'ethers';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
+import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
 
 export { SoulNameErrorCodes };
 
@@ -37,6 +38,7 @@ export interface MasaContextProviderProps extends MasaShape {
   signer?: Wallet | Signer;
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
+  customGallerySBT?: CustomGallerySBT[];
 }
 
 export const MasaContextProvider = ({
@@ -55,6 +57,8 @@ export const MasaContextProvider = ({
   verbose = false,
   // force specific network
   forceNetwork,
+  // Custom SBT render for gallery
+  customGallerySBT,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -125,6 +129,7 @@ export const MasaContextProvider = ({
     openMintSoulnameModal,
     openMintMasaGreen,
     useModalSize,
+    openGallery,
     modalSize,
   } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
 
@@ -231,6 +236,7 @@ export const MasaContextProvider = ({
     openMintSoulnameModal,
     openMintMasaGreen,
     useModalSize,
+    openGallery,
     modalSize,
 
     // wallet
@@ -274,6 +280,10 @@ export const MasaContextProvider = ({
     SupportedNetworks,
     switchNetwork,
     forceNetwork,
+
+    // gallery
+    customGallerySBT,
+    
   };
 
   return (

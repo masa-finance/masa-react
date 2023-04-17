@@ -34,7 +34,7 @@ const Component = (): JSX.Element => {
 
   const handleConnect = useCallback(() => {
     connect?.({
-      scope: ['auth', 'soulname', 'identity'],
+      scope: ['auth'],
       callback: function () {
         alert('hello hello connected');
       },
@@ -104,7 +104,7 @@ const Component = (): JSX.Element => {
 const Template: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" forceNetwork={'goerli'}>
+      <MasaProvider company="Masa" forceNetwork={'alfajores'}>
         <Component {...props} />
       </MasaProvider>
     </>
@@ -122,7 +122,7 @@ Default.args = {};
 const MasaGreenTemplate: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" forceNetwork={'goerli'}>
+      <MasaProvider company="Masa" forceNetwork={'ethereum'}>
         <ModalComponent
           open={true}
           close={() => {
