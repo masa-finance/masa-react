@@ -2217,13 +2217,6 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
-"@masa-finance/arcomia-contracts@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@masa-finance/arcomia-contracts/-/arcomia-contracts-1.4.2.tgz#a62c7ce1c8fe689dc7f4dd726d9a46afb3551d21"
-  integrity sha512-aLCRjWkto5b8qOJmYxTv5LLLaz7Hvk+irO2j35jsuUjdycJy0CX77WLmdFUDx7DCR7HQZgLlSNVJVEMt4urWeg==
-  dependencies:
-    ethers "~5.7.2"
-
 "@masa-finance/masa-contracts-identity@^1.5.2":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.5.2.tgz#b39369c0be306d8c21d85ae432c1c4c037e8ad10"
@@ -2231,10 +2224,10 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^1.13.2":
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.13.2.tgz#b35e952313408487bf96da8f0e0a6575461f4874"
-  integrity sha512-zo/zANtENSSX4ejO+JzVbojMqUb5L4R7XAU8XYR73fVPIWnxPCmZZDiBhhnLcFA/dgbNQpydJNU/CZ73FT2Fhg==
+"@masa-finance/masa-sdk@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-1.14.0.tgz#2f61bf95f964db76add29d8bad9c579c93c67d67"
+  integrity sha512-/KRbndJbSHBi5OD+zpEOZOfZVMy1jpMksA0208rbIUjucBg6S0yZXAr5zT3BDuUcZ6ZqjnB+P1k1BnCDfVRG8g==
   dependencies:
     "@masa-finance/masa-contracts-identity" "^1.5.2"
     "@masa-finance/masa-token" "^1.0.0"
@@ -12988,10 +12981,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typedoc-plugin-markdown@^3.13.6:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.14.0.tgz#17b99ee3ab0d21046d253f185f7669e80d0d7891"
-  integrity sha512-UyQLkLRkfTFhLdhSf3RRpA3nNInGn+k6sll2vRXjflaMNwQAAiB61SYbisNZTg16t4K1dt1bPQMMGLrxS0GZ0Q==
+typedoc-plugin-markdown@^3.15.1:
+  version "3.15.1"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.15.1.tgz#b82c160ca59292b6a0b7793d6b6f817869928607"
+  integrity sha512-TaXE8gc8s5YepU1Ogyqfkh+khPE1/n4rV5vaoZCNyXvSLv62jWmHf443lHiQh7r07qAimUOKAndaaufAeIUSiQ==
   dependencies:
     handlebars "^4.7.7"
 

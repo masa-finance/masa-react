@@ -1,8 +1,6 @@
-[# Masa React
- - v1.1.30](README.md) / Exports
+[Masa React](README.md) / Exports
 
-# # Masa React
- - v1.1.30
+# Masa React
 
 ## Table of contents
 
@@ -398,10 +396,14 @@ ___
 | `closeModal` | (`forceCallback?`: `boolean`) => `void` |
 | `forcedPage` | ``null`` \| `string` |
 | `isModalOpen` | `boolean` |
+| `modalSize` | ``null`` \| { `height`: `number` ; `width`: `number`  } |
+| `openMintMasaGreen` | (`mintCallback?`: () => `void`) => `void` |
 | `openMintSoulnameModal` | (`mintCallback?`: () => `void`) => `void` |
 | `setForcedPage?` | (`page`: ``null`` \| `string`) => `void` |
 | `setModalCallback` | (`callback`: () => `void`) => `void` |
 | `setModalOpen` | (`modalOpen`: `boolean`) => `void` |
+| `setModalSize` | (`size`: { `height`: `number` ; `width`: `number`  }) => `void` |
+| `useModalSize` | (`size`: { `height`: `number` ; `width`: `number`  }) => `void` |
 
 ___
 

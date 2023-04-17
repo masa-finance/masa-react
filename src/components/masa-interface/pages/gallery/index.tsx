@@ -118,6 +118,8 @@ const useTabs = () => {
         },
         title: 'Badges',
       });
+
+      return;
     })();
   }, [savedBadgeContracts]);
 

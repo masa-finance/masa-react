@@ -1,6 +1,4 @@
-import { useMasa } from '../../../../provider';
-import React, { useEffect, useMemo, useState } from 'react';
-import { GalleryItem } from './galleryItem';
+import React from 'react';
 import { ICreditScore, IGreen, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 import { Tabs } from './tabs';
