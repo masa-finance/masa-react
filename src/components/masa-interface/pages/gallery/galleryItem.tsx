@@ -4,7 +4,7 @@ export interface GalleryItemProps {
 }
 export const GalleryItem = ({ image, title, description }) => {
   let fixImage = image;
-  console.log({image})
+  console.log({ image });
   if (image && image?.includes('ar://')) {
     fixImage = image.replace('ar://', 'https://arweave.net/');
   }
