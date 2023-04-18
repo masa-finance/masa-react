@@ -86,7 +86,7 @@
     "react-dom": "^18.2.0",
     "sass-loader": "^13.2.2",
     "size-limit": "^8.1.0",
-    "storybook": "^7.0.2",
+    "storybook": "^7.0.5",
     "style-loader": "^3.3.2",
     "terser-webpack-plugin": "^5.3.7",
     "ts-jest": "^29.0.5",
