@@ -61,7 +61,7 @@
     "@storybook/addon-mdx-gfm": "^7.0.2",
     "@storybook/addon-postcss": "^2.0.0",
     "@storybook/addons": "^7.0.2",
-    "@storybook/react": "^7.0.2",
+    "@storybook/react": "^7.0.5",
     "@storybook/react-webpack5": "^7.0.2",
     "@types/jest": "^29.5.0",
     "@types/mocha": "^10.0.1",
