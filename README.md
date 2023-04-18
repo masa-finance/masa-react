@@ -1,7 +1,4 @@
-# Masa React
-
 <!-- TOC -->
-* [Masa React](#masa-react)
   * [Getting Started with masa-react](#getting-started-with-masa-react)
     * [Installation](#installation)
     * [Styles](#styles)
