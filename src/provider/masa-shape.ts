@@ -14,7 +14,6 @@ import { BigNumber, Signer, Wallet } from 'ethers';
 
 export interface MasaShape {
   children?: React.ReactNode;
-
   // masa
   masa?: Masa;
   // verbose flag
@@ -107,4 +106,9 @@ export interface MasaShape {
   SupportedNetworks?: Partial<{ [index in NetworkName]: Network }>;
   switchNetwork?: (networkName: NetworkName) => void;
   forceNetwork?: NetworkName;
+  // rainbowkit
+  useRainbowKit?: boolean;
+  openConnectModal?: (() => void) | undefined;
+  openChainModal?: (() => void) | undefined;
+  openAccountModal?: (() => void) | undefined;
 }

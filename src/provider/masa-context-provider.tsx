@@ -21,6 +21,8 @@ import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 
+import { useRainbowKit } from './use-rainbowkit';
+
 export { SoulNameErrorCodes };
 
 export interface ArweaveConfig {
@@ -37,6 +39,7 @@ export interface MasaContextProviderProps extends MasaShape {
   signer?: Wallet | Signer;
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
+  useRainbowKitWalletConnect?: boolean;
 }
 
 export const MasaContextProvider = ({
@@ -55,6 +58,7 @@ export const MasaContextProvider = ({
   verbose = false,
   // force specific network
   forceNetwork,
+  useRainbowKitWalletConnect = true,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -114,6 +118,13 @@ export const MasaContextProvider = ({
     masaInstance?.config.verbose
   );
 
+  // rainbowkit
+  const {
+    openChainModal,
+    openConnectModal,
+    openAccountModal,
+    connectRainbowKit,
+  } = useRainbowKit();
   // modal
   const {
     isModalOpen,
@@ -155,7 +166,8 @@ export const MasaContextProvider = ({
         console.info({ forcedPage });
       }
 
-      setModalOpen(true);
+      if (useRainbowKitWalletConnect) openConnectModal?.();
+      else setModalOpen(true);
       setForcedPage?.(null);
 
       if (options?.scope) {
@@ -167,15 +179,17 @@ export const MasaContextProvider = ({
       }
     },
     [
-      setModalOpen,
+      // setModalOpen,
       setModalCallback,
       setScope,
       setForcedPage,
       forcedPage,
+      openConnectModal,
       verbose,
     ]
   );
 
+  const connectWithRainbowKit = useCallback(() => {}, []);
   useEffect(() => {
     const loadMasa = (): void => {
       if (!provider) return;
@@ -274,6 +288,11 @@ export const MasaContextProvider = ({
     SupportedNetworks,
     switchNetwork,
     forceNetwork,
+
+    // rainbowkit
+    openConnectModal,
+    openChainModal,
+    openAccountModal,
   };
 
   return (

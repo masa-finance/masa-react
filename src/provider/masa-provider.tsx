@@ -9,6 +9,7 @@ import { queryClient } from './masa-query-client';
 
 import './styles.scss';
 import { MasaInterface } from '../components';
+import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider';
 
 export const MasaProvider = ({
   children,
@@ -16,10 +17,12 @@ export const MasaProvider = ({
 }: MasaContextProviderProps): JSX.Element => {
   return (
     <QueryClientProvider client={queryClient}>
-      <MasaContextProvider {...args}>
-        <MasaInterface disableMetamask={args.noWallet} />
-        {children}
-      </MasaContextProvider>
+      <ConfiguredRainbowKitProvider>
+        <MasaContextProvider {...args}>
+          <MasaInterface disableMetamask={args.noWallet} />
+          {children}
+        </MasaContextProvider>
+      </ConfiguredRainbowKitProvider>
     </QueryClientProvider>
   );
 };
