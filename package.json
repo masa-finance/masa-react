@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "1.1.36",
+  "version": "1.1.37",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
@@ -34,7 +34,7 @@
   "dependencies": {
     "@acusti/react-code-input": "^3.11.0",
     "@babel/preset-typescript": "^7.21.4",
-    "@masa-finance/masa-sdk": "^1.14.0",
+    "@masa-finance/masa-sdk": "^1.14.2",
     "@metamask/providers": "^10.2.1",
     "@rainbow-me/rainbowkit": "^0.12.8",
     "babel-loader": "^9.1.2",

@@ -119,12 +119,8 @@ export const MasaContextProvider = ({
   );
 
   // rainbowkit
-  const {
-    openChainModal,
-    openConnectModal,
-    openAccountModal,
-    connectRainbowKit,
-  } = useRainbowKit();
+  const { openChainModal, openConnectModal, openAccountModal } =
+    useRainbowKit();
   // modal
   const {
     isModalOpen,
@@ -186,10 +182,11 @@ export const MasaContextProvider = ({
       forcedPage,
       openConnectModal,
       verbose,
+      setModalOpen,
+      useRainbowKitWalletConnect,
     ]
   );
 
-  const connectWithRainbowKit = useCallback(() => {}, []);
   useEffect(() => {
     const loadMasa = (): void => {
       if (!provider) return;

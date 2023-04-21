@@ -9,7 +9,7 @@ export const useRainbowKit = () => {
   const { openConnectModal } = useConnectModal();
   const { openAccountModal } = useAccountModal();
   const { openChainModal } = useChainModal();
-  
+
   console.log(
     { openConnectModal, openAccountModal, openChainModal },
     'ALALALAL OJG'
