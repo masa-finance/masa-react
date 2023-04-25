@@ -120,7 +120,7 @@ export const MasaContextProvider = ({
 
   // rainbowkit
   const { openChainModal, openConnectModal, openAccountModal } =
-    useRainbowKit();
+    useRainbowKit(setProvider);
   // modal
   const {
     isModalOpen,
