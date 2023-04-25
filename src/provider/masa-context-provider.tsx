@@ -21,6 +21,7 @@ import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
+import { useCustomSBT, useCustomGallerySBT } from './modules/custom-sbts';
 
 export { SoulNameErrorCodes };
 
@@ -132,6 +133,10 @@ export const MasaContextProvider = ({
     openGallery,
     modalSize,
   } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
+
+  // custom SBTs
+  const customContracts = useCustomGallerySBT(masaInstance, customGallerySBT);
+  const customSBTs = useCustomSBT(masaInstance, customContracts);
 
   // global loading flag
   const isLoading = useMemo(() => {
@@ -283,6 +288,9 @@ export const MasaContextProvider = ({
 
     // gallery
     customGallerySBT,
+
+    // custom SBTs
+    customSBTs,
   };
 
   return (
