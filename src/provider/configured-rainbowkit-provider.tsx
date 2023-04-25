@@ -8,7 +8,7 @@ import React, { createContext, useContext, useMemo } from 'react';
 import type { ReactNode } from 'react';
 
 interface ConfiguredRainbowKitProviderValue {
-  [key: string]: any;
+  [key: string]: never;
 }
 
 interface ConfiguredRainbowKitProviderProps {

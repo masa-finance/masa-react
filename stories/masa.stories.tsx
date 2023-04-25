@@ -6,7 +6,6 @@ import React, { useCallback } from 'react';
 import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
-import { useRainbowKit } from '../src/provider/use-rainbowkit';
 
 const meta: Meta = {
   title: 'SDK Test',
@@ -57,46 +56,48 @@ const Component = (): JSX.Element => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <h1>SDK Tester!</h1>
+      <div>
+        <h1>SDK Tester!</h1>
 
-      <button onClick={handleConnect}>Use Masa!</button>
-      <button
-        onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
-      >
-        Mint a MSN
-      </button>
-      <button
-        onClick={() => openMintMasaGreen?.(() => alert('MINTED HURRAY!'))}
-      >
-        Mint a MGX
-      </button>
-      <button onClick={loadCR}>Invalidate Wallet</button>
-      <button onClick={mintGreen}>Mint green</button>
-      <button
-        onClick={() => {
-          console.log('clickin', openConnectModal);
-          openConnectModal?.();
-        }}
-      >
-        Rainbowkit connect modal
-      </button>
-      <button
-        onClick={() => {
-          console.log('clickin', openAccountModal);
-          openAccountModal?.();
-        }}
-      >
-        Rainbowkit account modal
-      </button>
-      <button
-        onClick={() => {
-          console.log('clickin', openChainModal);
-          openChainModal?.();
-        }}
-      >
-        Rainbowkit chain modal
-      </button>
-      {/* <div>
+        <button onClick={handleConnect}>Use Masa!</button>
+        <button
+          onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
+        >
+          Mint a MSN
+        </button>
+        <button
+          onClick={() => openMintMasaGreen?.(() => alert('MINTED HURRAY!'))}
+        >
+          Mint a MGX
+        </button>
+        <button onClick={loadCR}>Invalidate Wallet</button>
+        <button onClick={mintGreen}>Mint green</button>
+        <button
+          onClick={() => {
+            console.log('clickin', openConnectModal);
+            openConnectModal?.();
+          }}
+        >
+          Rainbowkit connect modal
+        </button>
+        <button
+          onClick={() => {
+            console.log('clickin', openAccountModal);
+            openAccountModal?.();
+          }}
+        >
+          Rainbowkit account modal
+        </button>
+        <button
+          onClick={() => {
+            console.log('clickin', openChainModal);
+            openChainModal?.();
+          }}
+        >
+          Rainbowkit chain modal
+        </button>
+      </div>
+      <div>
         <button onClick={(): void => switchNetwork?.('ethereum')}>
           Switch to Ethereum
         </button>
@@ -121,7 +122,7 @@ const Component = (): JSX.Element => {
         <button onClick={(): void => switchNetwork?.('alfajores')}>
           Switch to Alfajores
         </button>
-      </div> */}
+      </div>
 
       {isLoggedIn && (
         <button onClick={(): void => handleLogout?.()}>Logout</button>
