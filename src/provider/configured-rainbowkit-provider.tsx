@@ -2,7 +2,17 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum, goerli } from 'wagmi/chains';
+import {
+  mainnet,
+  polygon,
+  polygonMumbai,
+  goerli,
+  celo,
+  bsc,
+  bscTestnet,
+  baseGoerli,
+  celoAlfajores,
+} from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import React, { createContext, useContext, useMemo } from 'react';
 import type { ReactNode } from 'react';
@@ -16,7 +26,17 @@ interface ConfiguredRainbowKitProviderProps {
 }
 
 const { chains, provider } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, goerli],
+  [
+    mainnet,
+    polygon,
+    polygonMumbai,
+    goerli,
+    baseGoerli,
+    celo,
+    celoAlfajores,
+    bsc,
+    bscTestnet,
+  ],
   [
     // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
     publicProvider(),

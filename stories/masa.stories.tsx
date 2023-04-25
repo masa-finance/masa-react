@@ -55,8 +55,22 @@ const Component = (): JSX.Element => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          width: '50%',
+        }}
+      >
         <h1>SDK Tester!</h1>
 
         <button onClick={handleConnect}>Use Masa!</button>
@@ -86,7 +100,7 @@ const Component = (): JSX.Element => {
             openAccountModal?.();
           }}
         >
-          Rainbowkit account modal
+          Rainbowkit account info modal
         </button>
         <button
           onClick={() => {
@@ -94,10 +108,19 @@ const Component = (): JSX.Element => {
             openChainModal?.();
           }}
         >
-          Rainbowkit chain modal
+          Rainbowkit switch chain modal
         </button>
       </div>
-      <div>
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '50%',
+        }}
+      >
         <button onClick={(): void => switchNetwork?.('ethereum')}>
           Switch to Ethereum
         </button>
