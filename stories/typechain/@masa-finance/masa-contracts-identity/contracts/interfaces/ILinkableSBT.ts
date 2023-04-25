@@ -10,102 +10,102 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
   FunctionFragment,
   Result,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from '../../../../common';
 
 export interface ILinkableSBTInterface extends utils.Interface {
   functions: {
-    "addLinkPrice()": FunctionFragment;
-    "addLinkPriceMASA()": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
-    "queryLinkPrice()": FunctionFragment;
-    "queryLinkPriceMASA()": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
+    'addLinkPrice()': FunctionFragment;
+    'addLinkPriceMASA()': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'ownerOf(uint256)': FunctionFragment;
+    'queryLinkPrice()': FunctionFragment;
+    'queryLinkPriceMASA()': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "addLinkPrice"
-      | "addLinkPriceMASA"
-      | "balanceOf"
-      | "ownerOf"
-      | "queryLinkPrice"
-      | "queryLinkPriceMASA"
-      | "supportsInterface"
+      | 'addLinkPrice'
+      | 'addLinkPriceMASA'
+      | 'balanceOf'
+      | 'ownerOf'
+      | 'queryLinkPrice'
+      | 'queryLinkPriceMASA'
+      | 'supportsInterface'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "addLinkPrice",
+    functionFragment: 'addLinkPrice',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "addLinkPriceMASA",
+    functionFragment: 'addLinkPriceMASA',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
+    functionFragment: 'balanceOf',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "ownerOf",
+    functionFragment: 'ownerOf',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "queryLinkPrice",
+    functionFragment: 'queryLinkPrice',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "queryLinkPriceMASA",
+    functionFragment: 'queryLinkPriceMASA',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
+    functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "addLinkPrice",
+    functionFragment: 'addLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "addLinkPriceMASA",
+    functionFragment: 'addLinkPriceMASA',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "queryLinkPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "queryLinkPriceMASA",
+    functionFragment: 'queryLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
+    functionFragment: 'queryLinkPriceMASA',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'supportsInterface',
     data: BytesLike
   ): Result;
 
   events: {
-    "Burn(address,uint256)": EventFragment;
-    "Mint(address,uint256)": EventFragment;
+    'Burn(address,uint256)': EventFragment;
+    'Mint(address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Burn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Mint'): EventFragment;
 }
 
 export interface BurnEventObject {
@@ -224,7 +224,7 @@ export interface ILinkableSBT extends BaseContract {
   };
 
   filters: {
-    "Burn(address,uint256)"(
+    'Burn(address,uint256)'(
       _owner?: PromiseOrValue<string> | null,
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): BurnEventFilter;
@@ -233,7 +233,7 @@ export interface ILinkableSBT extends BaseContract {
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): BurnEventFilter;
 
-    "Mint(address,uint256)"(
+    'Mint(address,uint256)'(
       _owner?: PromiseOrValue<string> | null,
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): MintEventFilter;

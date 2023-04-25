@@ -2,221 +2,221 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 import {
   FactoryOptions,
   HardhatEthersHelpers as HardhatEthersHelpersBase,
-} from "@nomiclabs/hardhat-ethers/types";
+} from '@nomiclabs/hardhat-ethers/types';
 
-import * as Contracts from ".";
+import * as Contracts from '.';
 
-declare module "hardhat/types/runtime" {
+declare module 'hardhat/types/runtime' {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "PaymentGateway",
+      name: 'PaymentGateway',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PaymentGateway__factory>;
     getContractFactory(
-      name: "IUniswapRouter",
+      name: 'IUniswapRouter',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IUniswapRouter__factory>;
     getContractFactory(
-      name: "ILinkableSBT",
+      name: 'ILinkableSBT',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ILinkableSBT__factory>;
     getContractFactory(
-      name: "ISoulboundIdentity",
+      name: 'ISoulboundIdentity',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ISoulboundIdentity__factory>;
     getContractFactory(
-      name: "ISoulName",
+      name: 'ISoulName',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ISoulName__factory>;
     getContractFactory(
-      name: "MasaSBT",
+      name: 'MasaSBT',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MasaSBT__factory>;
     getContractFactory(
-      name: "MasaSBTAuthority",
+      name: 'MasaSBTAuthority',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MasaSBTAuthority__factory>;
     getContractFactory(
-      name: "MasaSBTSelfSovereign",
+      name: 'MasaSBTSelfSovereign',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MasaSBTSelfSovereign__factory>;
     getContractFactory(
-      name: "ISBTEnumerable",
+      name: 'ISBTEnumerable',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ISBTEnumerable__factory>;
     getContractFactory(
-      name: "ISBTMetadata",
+      name: 'ISBTMetadata',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ISBTMetadata__factory>;
     getContractFactory(
-      name: "SBTBurnable",
+      name: 'SBTBurnable',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SBTBurnable__factory>;
     getContractFactory(
-      name: "SBTEnumerable",
+      name: 'SBTEnumerable',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SBTEnumerable__factory>;
     getContractFactory(
-      name: "ISBT",
+      name: 'ISBT',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ISBT__factory>;
     getContractFactory(
-      name: "SBT",
+      name: 'SBT',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.SBT__factory>;
     getContractFactory(
-      name: "AccessControl",
+      name: 'AccessControl',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.AccessControl__factory>;
     getContractFactory(
-      name: "IAccessControl",
+      name: 'IAccessControl',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IAccessControl__factory>;
     getContractFactory(
-      name: "IERC20Permit",
+      name: 'IERC20Permit',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20Permit__factory>;
     getContractFactory(
-      name: "IERC20",
+      name: 'IERC20',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;
     getContractFactory(
-      name: "ERC165",
+      name: 'ERC165',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC165__factory>;
     getContractFactory(
-      name: "IERC165",
+      name: 'IERC165',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
-      name: "PokeSSSBT",
+      name: 'PokeSSSBT',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PokeSSSBT__factory>;
     getContractFactory(
-      name: "TestASBT",
+      name: 'TestASBT',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TestASBT__factory>;
     getContractFactory(
-      name: "TestSSSBT",
+      name: 'TestSSSBT',
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TestSSSBT__factory>;
 
     getContractAt(
-      name: "PaymentGateway",
+      name: 'PaymentGateway',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.PaymentGateway>;
     getContractAt(
-      name: "IUniswapRouter",
+      name: 'IUniswapRouter',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IUniswapRouter>;
     getContractAt(
-      name: "ILinkableSBT",
+      name: 'ILinkableSBT',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ILinkableSBT>;
     getContractAt(
-      name: "ISoulboundIdentity",
+      name: 'ISoulboundIdentity',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ISoulboundIdentity>;
     getContractAt(
-      name: "ISoulName",
+      name: 'ISoulName',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ISoulName>;
     getContractAt(
-      name: "MasaSBT",
+      name: 'MasaSBT',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.MasaSBT>;
     getContractAt(
-      name: "MasaSBTAuthority",
+      name: 'MasaSBTAuthority',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.MasaSBTAuthority>;
     getContractAt(
-      name: "MasaSBTSelfSovereign",
+      name: 'MasaSBTSelfSovereign',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.MasaSBTSelfSovereign>;
     getContractAt(
-      name: "ISBTEnumerable",
+      name: 'ISBTEnumerable',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ISBTEnumerable>;
     getContractAt(
-      name: "ISBTMetadata",
+      name: 'ISBTMetadata',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ISBTMetadata>;
     getContractAt(
-      name: "SBTBurnable",
+      name: 'SBTBurnable',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.SBTBurnable>;
     getContractAt(
-      name: "SBTEnumerable",
+      name: 'SBTEnumerable',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.SBTEnumerable>;
     getContractAt(
-      name: "ISBT",
+      name: 'ISBT',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ISBT>;
     getContractAt(
-      name: "SBT",
+      name: 'SBT',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.SBT>;
     getContractAt(
-      name: "AccessControl",
+      name: 'AccessControl',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.AccessControl>;
     getContractAt(
-      name: "IAccessControl",
+      name: 'IAccessControl',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IAccessControl>;
     getContractAt(
-      name: "IERC20Permit",
+      name: 'IERC20Permit',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20Permit>;
     getContractAt(
-      name: "IERC20",
+      name: 'IERC20',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20>;
     getContractAt(
-      name: "ERC165",
+      name: 'ERC165',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC165>;
     getContractAt(
-      name: "IERC165",
+      name: 'IERC165',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
-      name: "PokeSSSBT",
+      name: 'PokeSSSBT',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.PokeSSSBT>;
     getContractAt(
-      name: "TestASBT",
+      name: 'TestASBT',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.TestASBT>;
     getContractAt(
-      name: "TestSSSBT",
+      name: 'TestSSSBT',
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.TestSSSBT>;

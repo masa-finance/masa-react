@@ -12,65 +12,65 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from '../../../../common';
 
 export interface ISoulNameInterface extends utils.Interface {
   functions: {
-    "getExtension()": FunctionFragment;
-    "getSoulNames(uint256)": FunctionFragment;
-    "getSoulNames(address)": FunctionFragment;
-    "getTokenData(string)": FunctionFragment;
-    "getTokenId(string)": FunctionFragment;
-    "isAvailable(string)": FunctionFragment;
-    "mint(address,string,uint256,string)": FunctionFragment;
+    'getExtension()': FunctionFragment;
+    'getSoulNames(uint256)': FunctionFragment;
+    'getSoulNames(address)': FunctionFragment;
+    'getTokenData(string)': FunctionFragment;
+    'getTokenId(string)': FunctionFragment;
+    'isAvailable(string)': FunctionFragment;
+    'mint(address,string,uint256,string)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "getExtension"
-      | "getSoulNames(uint256)"
-      | "getSoulNames(address)"
-      | "getTokenData"
-      | "getTokenId"
-      | "isAvailable"
-      | "mint"
+      | 'getExtension'
+      | 'getSoulNames(uint256)'
+      | 'getSoulNames(address)'
+      | 'getTokenData'
+      | 'getTokenId'
+      | 'isAvailable'
+      | 'mint'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "getExtension",
+    functionFragment: 'getExtension',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getSoulNames(uint256)",
+    functionFragment: 'getSoulNames(uint256)',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getSoulNames(address)",
+    functionFragment: 'getSoulNames(address)',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getTokenData",
+    functionFragment: 'getTokenData',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getTokenId",
+    functionFragment: 'getTokenId',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "isAvailable",
+    functionFragment: 'isAvailable',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "mint",
+    functionFragment: 'mint',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -80,27 +80,27 @@ export interface ISoulNameInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "getExtension",
+    functionFragment: 'getExtension',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getSoulNames(uint256)",
+    functionFragment: 'getSoulNames(uint256)',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getSoulNames(address)",
+    functionFragment: 'getSoulNames(address)',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getTokenData",
+    functionFragment: 'getTokenData',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "getTokenId", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getTokenId', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "isAvailable",
+    functionFragment: 'isAvailable',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
 
   events: {};
 }
@@ -134,12 +134,12 @@ export interface ISoulName extends BaseContract {
   functions: {
     getExtension(overrides?: CallOverrides): Promise<[string]>;
 
-    "getSoulNames(uint256)"(
+    'getSoulNames(uint256)'(
       identityId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string[]] & { sbtNames: string[] }>;
 
-    "getSoulNames(address)"(
+    'getSoulNames(address)'(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[string[]] & { sbtNames: string[] }>;
@@ -179,12 +179,12 @@ export interface ISoulName extends BaseContract {
 
   getExtension(overrides?: CallOverrides): Promise<string>;
 
-  "getSoulNames(uint256)"(
+  'getSoulNames(uint256)'(
     identityId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string[]>;
 
-  "getSoulNames(address)"(
+  'getSoulNames(address)'(
     owner: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<string[]>;
@@ -224,12 +224,12 @@ export interface ISoulName extends BaseContract {
   callStatic: {
     getExtension(overrides?: CallOverrides): Promise<string>;
 
-    "getSoulNames(uint256)"(
+    'getSoulNames(uint256)'(
       identityId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string[]>;
 
-    "getSoulNames(address)"(
+    'getSoulNames(address)'(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string[]>;
@@ -272,12 +272,12 @@ export interface ISoulName extends BaseContract {
   estimateGas: {
     getExtension(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "getSoulNames(uint256)"(
+    'getSoulNames(uint256)'(
       identityId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    "getSoulNames(address)"(
+    'getSoulNames(address)'(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -309,12 +309,12 @@ export interface ISoulName extends BaseContract {
   populateTransaction: {
     getExtension(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "getSoulNames(uint256)"(
+    'getSoulNames(uint256)'(
       identityId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "getSoulNames(address)"(
+    'getSoulNames(address)'(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

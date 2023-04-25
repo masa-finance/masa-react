@@ -12,239 +12,239 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
   FunctionFragment,
   Result,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from '../../../../common';
 
 export interface PaymentGatewayInterface extends utils.Interface {
   functions: {
-    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "disablePaymentMethod(address)": FunctionFragment;
-    "enablePaymentMethod(address)": FunctionFragment;
-    "enabledPaymentMethod(address)": FunctionFragment;
-    "enabledPaymentMethods(uint256)": FunctionFragment;
-    "getEnabledPaymentMethods()": FunctionFragment;
-    "getRoleAdmin(bytes32)": FunctionFragment;
-    "grantRole(bytes32,address)": FunctionFragment;
-    "hasRole(bytes32,address)": FunctionFragment;
-    "masaToken()": FunctionFragment;
-    "renounceRole(bytes32,address)": FunctionFragment;
-    "reserveWallet()": FunctionFragment;
-    "revokeRole(bytes32,address)": FunctionFragment;
-    "setMasaToken(address)": FunctionFragment;
-    "setReserveWallet(address)": FunctionFragment;
-    "setStableCoin(address)": FunctionFragment;
-    "setSwapRouter(address)": FunctionFragment;
-    "setWrappedNativeToken(address)": FunctionFragment;
-    "stableCoin()": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "swapRouter()": FunctionFragment;
-    "wrappedNativeToken()": FunctionFragment;
+    'DEFAULT_ADMIN_ROLE()': FunctionFragment;
+    'disablePaymentMethod(address)': FunctionFragment;
+    'enablePaymentMethod(address)': FunctionFragment;
+    'enabledPaymentMethod(address)': FunctionFragment;
+    'enabledPaymentMethods(uint256)': FunctionFragment;
+    'getEnabledPaymentMethods()': FunctionFragment;
+    'getRoleAdmin(bytes32)': FunctionFragment;
+    'grantRole(bytes32,address)': FunctionFragment;
+    'hasRole(bytes32,address)': FunctionFragment;
+    'masaToken()': FunctionFragment;
+    'renounceRole(bytes32,address)': FunctionFragment;
+    'reserveWallet()': FunctionFragment;
+    'revokeRole(bytes32,address)': FunctionFragment;
+    'setMasaToken(address)': FunctionFragment;
+    'setReserveWallet(address)': FunctionFragment;
+    'setStableCoin(address)': FunctionFragment;
+    'setSwapRouter(address)': FunctionFragment;
+    'setWrappedNativeToken(address)': FunctionFragment;
+    'stableCoin()': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'swapRouter()': FunctionFragment;
+    'wrappedNativeToken()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "DEFAULT_ADMIN_ROLE"
-      | "disablePaymentMethod"
-      | "enablePaymentMethod"
-      | "enabledPaymentMethod"
-      | "enabledPaymentMethods"
-      | "getEnabledPaymentMethods"
-      | "getRoleAdmin"
-      | "grantRole"
-      | "hasRole"
-      | "masaToken"
-      | "renounceRole"
-      | "reserveWallet"
-      | "revokeRole"
-      | "setMasaToken"
-      | "setReserveWallet"
-      | "setStableCoin"
-      | "setSwapRouter"
-      | "setWrappedNativeToken"
-      | "stableCoin"
-      | "supportsInterface"
-      | "swapRouter"
-      | "wrappedNativeToken"
+      | 'DEFAULT_ADMIN_ROLE'
+      | 'disablePaymentMethod'
+      | 'enablePaymentMethod'
+      | 'enabledPaymentMethod'
+      | 'enabledPaymentMethods'
+      | 'getEnabledPaymentMethods'
+      | 'getRoleAdmin'
+      | 'grantRole'
+      | 'hasRole'
+      | 'masaToken'
+      | 'renounceRole'
+      | 'reserveWallet'
+      | 'revokeRole'
+      | 'setMasaToken'
+      | 'setReserveWallet'
+      | 'setStableCoin'
+      | 'setSwapRouter'
+      | 'setWrappedNativeToken'
+      | 'stableCoin'
+      | 'supportsInterface'
+      | 'swapRouter'
+      | 'wrappedNativeToken'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
+    functionFragment: 'DEFAULT_ADMIN_ROLE',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "disablePaymentMethod",
+    functionFragment: 'disablePaymentMethod',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "enablePaymentMethod",
+    functionFragment: 'enablePaymentMethod',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "enabledPaymentMethod",
+    functionFragment: 'enabledPaymentMethod',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "enabledPaymentMethods",
+    functionFragment: 'enabledPaymentMethods',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getEnabledPaymentMethods",
+    functionFragment: 'getEnabledPaymentMethods',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getRoleAdmin",
+    functionFragment: 'getRoleAdmin',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "grantRole",
+    functionFragment: 'grantRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "hasRole",
+    functionFragment: 'hasRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "masaToken", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'masaToken', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "renounceRole",
+    functionFragment: 'renounceRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "reserveWallet",
+    functionFragment: 'reserveWallet',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "revokeRole",
+    functionFragment: 'revokeRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setMasaToken",
+    functionFragment: 'setMasaToken',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setReserveWallet",
+    functionFragment: 'setReserveWallet',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setStableCoin",
+    functionFragment: 'setStableCoin',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setSwapRouter",
+    functionFragment: 'setSwapRouter',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setWrappedNativeToken",
+    functionFragment: 'setWrappedNativeToken',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "stableCoin",
+    functionFragment: 'stableCoin',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
+    functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "swapRouter",
+    functionFragment: 'swapRouter',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "wrappedNativeToken",
+    functionFragment: 'wrappedNativeToken',
     values?: undefined
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
+    functionFragment: 'DEFAULT_ADMIN_ROLE',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "disablePaymentMethod",
+    functionFragment: 'disablePaymentMethod',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "enablePaymentMethod",
+    functionFragment: 'enablePaymentMethod',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "enabledPaymentMethod",
+    functionFragment: 'enabledPaymentMethod',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "enabledPaymentMethods",
+    functionFragment: 'enabledPaymentMethods',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getEnabledPaymentMethods",
+    functionFragment: 'getEnabledPaymentMethods',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
+    functionFragment: 'getRoleAdmin',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "masaToken", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'masaToken', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceRole",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "reserveWallet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setMasaToken",
+    functionFragment: 'renounceRole',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setReserveWallet",
+    functionFragment: 'reserveWallet',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'setMasaToken',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setStableCoin",
+    functionFragment: 'setReserveWallet',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setSwapRouter",
+    functionFragment: 'setStableCoin',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setWrappedNativeToken",
+    functionFragment: 'setSwapRouter',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "stableCoin", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
+    functionFragment: 'setWrappedNativeToken',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "swapRouter", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stableCoin', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "wrappedNativeToken",
+    functionFragment: 'supportsInterface',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'swapRouter', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'wrappedNativeToken',
     data: BytesLike
   ): Result;
 
   events: {
-    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
-    "RoleGranted(bytes32,address,address)": EventFragment;
-    "RoleRevoked(bytes32,address,address)": EventFragment;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
+    'RoleGranted(bytes32,address,address)': EventFragment;
+    'RoleRevoked(bytes32,address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
 }
 
 export interface RoleAdminChangedEventObject {
@@ -594,7 +594,7 @@ export interface PaymentGateway extends BaseContract {
   };
 
   filters: {
-    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
+    'RoleAdminChanged(bytes32,bytes32,bytes32)'(
       role?: PromiseOrValue<BytesLike> | null,
       previousAdminRole?: PromiseOrValue<BytesLike> | null,
       newAdminRole?: PromiseOrValue<BytesLike> | null
@@ -605,7 +605,7 @@ export interface PaymentGateway extends BaseContract {
       newAdminRole?: PromiseOrValue<BytesLike> | null
     ): RoleAdminChangedEventFilter;
 
-    "RoleGranted(bytes32,address,address)"(
+    'RoleGranted(bytes32,address,address)'(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
       sender?: PromiseOrValue<string> | null
@@ -616,7 +616,7 @@ export interface PaymentGateway extends BaseContract {
       sender?: PromiseOrValue<string> | null
     ): RoleGrantedEventFilter;
 
-    "RoleRevoked(bytes32,address,address)"(
+    'RoleRevoked(bytes32,address,address)'(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
       sender?: PromiseOrValue<string> | null

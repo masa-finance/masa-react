@@ -13,45 +13,45 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../../common";
+} from '../../../../../common';
 
 export interface IUniswapRouterInterface extends utils.Interface {
   functions: {
-    "getAmountsIn(uint256,address[])": FunctionFragment;
-    "getAmountsOut(uint256,address[])": FunctionFragment;
-    "swapExactETHForTokens(uint256,address[],address,uint256)": FunctionFragment;
-    "swapExactTokensForETH(uint256,uint256,address[],address,uint256)": FunctionFragment;
-    "swapExactTokensForTokens(uint256,uint256,address[],address,uint256)": FunctionFragment;
+    'getAmountsIn(uint256,address[])': FunctionFragment;
+    'getAmountsOut(uint256,address[])': FunctionFragment;
+    'swapExactETHForTokens(uint256,address[],address,uint256)': FunctionFragment;
+    'swapExactTokensForETH(uint256,uint256,address[],address,uint256)': FunctionFragment;
+    'swapExactTokensForTokens(uint256,uint256,address[],address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "getAmountsIn"
-      | "getAmountsOut"
-      | "swapExactETHForTokens"
-      | "swapExactTokensForETH"
-      | "swapExactTokensForTokens"
+      | 'getAmountsIn'
+      | 'getAmountsOut'
+      | 'swapExactETHForTokens'
+      | 'swapExactTokensForETH'
+      | 'swapExactTokensForTokens'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "getAmountsIn",
+    functionFragment: 'getAmountsIn',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "getAmountsOut",
+    functionFragment: 'getAmountsOut',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "swapExactETHForTokens",
+    functionFragment: 'swapExactETHForTokens',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>[],
@@ -60,7 +60,7 @@ export interface IUniswapRouterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "swapExactTokensForETH",
+    functionFragment: 'swapExactTokensForETH',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -70,7 +70,7 @@ export interface IUniswapRouterInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "swapExactTokensForTokens",
+    functionFragment: 'swapExactTokensForTokens',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -81,23 +81,23 @@ export interface IUniswapRouterInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "getAmountsIn",
+    functionFragment: 'getAmountsIn',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getAmountsOut",
+    functionFragment: 'getAmountsOut',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "swapExactETHForTokens",
+    functionFragment: 'swapExactETHForTokens',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "swapExactTokensForETH",
+    functionFragment: 'swapExactTokensForETH',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "swapExactTokensForTokens",
+    functionFragment: 'swapExactTokensForTokens',
     data: BytesLike
   ): Result;
 

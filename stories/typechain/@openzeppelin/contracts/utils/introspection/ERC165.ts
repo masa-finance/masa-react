@@ -9,31 +9,31 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from '../../../../common';
 
 export interface ERC165Interface extends utils.Interface {
   functions: {
-    "supportsInterface(bytes4)": FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "supportsInterface"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: 'supportsInterface'): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "supportsInterface",
+    functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
+    functionFragment: 'supportsInterface',
     data: BytesLike
   ): Result;
 

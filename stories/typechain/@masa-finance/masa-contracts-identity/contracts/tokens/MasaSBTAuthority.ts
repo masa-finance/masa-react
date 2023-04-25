@@ -12,268 +12,268 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
   FunctionFragment,
   Result,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from '../../../../common';
 
 export interface MasaSBTAuthorityInterface extends utils.Interface {
   functions: {
-    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "MINTER_ROLE()": FunctionFragment;
-    "addLinkPrice()": FunctionFragment;
-    "addLinkPriceMASA()": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "burn(uint256)": FunctionFragment;
-    "exists(uint256)": FunctionFragment;
-    "getRoleAdmin(bytes32)": FunctionFragment;
-    "grantRole(bytes32,address)": FunctionFragment;
-    "hasRole(bytes32,address)": FunctionFragment;
-    "name()": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
-    "queryLinkPrice()": FunctionFragment;
-    "queryLinkPriceMASA()": FunctionFragment;
-    "renounceRole(bytes32,address)": FunctionFragment;
-    "revokeRole(bytes32,address)": FunctionFragment;
-    "setAddLinkPrice(uint256)": FunctionFragment;
-    "setAddLinkPriceMASA(uint256)": FunctionFragment;
-    "setQueryLinkPrice(uint256)": FunctionFragment;
-    "setQueryLinkPriceMASA(uint256)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "tokenByIndex(uint256)": FunctionFragment;
-    "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
+    'DEFAULT_ADMIN_ROLE()': FunctionFragment;
+    'MINTER_ROLE()': FunctionFragment;
+    'addLinkPrice()': FunctionFragment;
+    'addLinkPriceMASA()': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'burn(uint256)': FunctionFragment;
+    'exists(uint256)': FunctionFragment;
+    'getRoleAdmin(bytes32)': FunctionFragment;
+    'grantRole(bytes32,address)': FunctionFragment;
+    'hasRole(bytes32,address)': FunctionFragment;
+    'name()': FunctionFragment;
+    'ownerOf(uint256)': FunctionFragment;
+    'queryLinkPrice()': FunctionFragment;
+    'queryLinkPriceMASA()': FunctionFragment;
+    'renounceRole(bytes32,address)': FunctionFragment;
+    'revokeRole(bytes32,address)': FunctionFragment;
+    'setAddLinkPrice(uint256)': FunctionFragment;
+    'setAddLinkPriceMASA(uint256)': FunctionFragment;
+    'setQueryLinkPrice(uint256)': FunctionFragment;
+    'setQueryLinkPriceMASA(uint256)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'tokenByIndex(uint256)': FunctionFragment;
+    'tokenOfOwnerByIndex(address,uint256)': FunctionFragment;
+    'tokenURI(uint256)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "DEFAULT_ADMIN_ROLE"
-      | "MINTER_ROLE"
-      | "addLinkPrice"
-      | "addLinkPriceMASA"
-      | "balanceOf"
-      | "burn"
-      | "exists"
-      | "getRoleAdmin"
-      | "grantRole"
-      | "hasRole"
-      | "name"
-      | "ownerOf"
-      | "queryLinkPrice"
-      | "queryLinkPriceMASA"
-      | "renounceRole"
-      | "revokeRole"
-      | "setAddLinkPrice"
-      | "setAddLinkPriceMASA"
-      | "setQueryLinkPrice"
-      | "setQueryLinkPriceMASA"
-      | "supportsInterface"
-      | "symbol"
-      | "tokenByIndex"
-      | "tokenOfOwnerByIndex"
-      | "tokenURI"
-      | "totalSupply"
+      | 'DEFAULT_ADMIN_ROLE'
+      | 'MINTER_ROLE'
+      | 'addLinkPrice'
+      | 'addLinkPriceMASA'
+      | 'balanceOf'
+      | 'burn'
+      | 'exists'
+      | 'getRoleAdmin'
+      | 'grantRole'
+      | 'hasRole'
+      | 'name'
+      | 'ownerOf'
+      | 'queryLinkPrice'
+      | 'queryLinkPriceMASA'
+      | 'renounceRole'
+      | 'revokeRole'
+      | 'setAddLinkPrice'
+      | 'setAddLinkPriceMASA'
+      | 'setQueryLinkPrice'
+      | 'setQueryLinkPriceMASA'
+      | 'supportsInterface'
+      | 'symbol'
+      | 'tokenByIndex'
+      | 'tokenOfOwnerByIndex'
+      | 'tokenURI'
+      | 'totalSupply'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
+    functionFragment: 'DEFAULT_ADMIN_ROLE',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "MINTER_ROLE",
+    functionFragment: 'MINTER_ROLE',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "addLinkPrice",
+    functionFragment: 'addLinkPrice',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "addLinkPriceMASA",
+    functionFragment: 'addLinkPriceMASA',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
+    functionFragment: 'balanceOf',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burn",
+    functionFragment: 'burn',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "exists",
+    functionFragment: 'exists',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getRoleAdmin",
+    functionFragment: 'getRoleAdmin',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "grantRole",
+    functionFragment: 'grantRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "hasRole",
+    functionFragment: 'hasRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "ownerOf",
+    functionFragment: 'ownerOf',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "queryLinkPrice",
+    functionFragment: 'queryLinkPrice',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "queryLinkPriceMASA",
+    functionFragment: 'queryLinkPriceMASA',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceRole",
+    functionFragment: 'renounceRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "revokeRole",
+    functionFragment: 'revokeRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAddLinkPrice",
+    functionFragment: 'setAddLinkPrice',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAddLinkPriceMASA",
+    functionFragment: 'setAddLinkPriceMASA',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setQueryLinkPrice",
+    functionFragment: 'setQueryLinkPrice',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setQueryLinkPriceMASA",
+    functionFragment: 'setQueryLinkPriceMASA',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
+    functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "tokenByIndex",
+    functionFragment: 'tokenByIndex',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "tokenOfOwnerByIndex",
+    functionFragment: 'tokenOfOwnerByIndex',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "tokenURI",
+    functionFragment: 'tokenURI',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "totalSupply",
+    functionFragment: 'totalSupply',
     values?: undefined
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
+    functionFragment: 'DEFAULT_ADMIN_ROLE',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "MINTER_ROLE",
+    functionFragment: 'MINTER_ROLE',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "addLinkPrice",
+    functionFragment: 'addLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "addLinkPriceMASA",
+    functionFragment: 'addLinkPriceMASA',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exists', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
+    functionFragment: 'getRoleAdmin',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "queryLinkPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "queryLinkPriceMASA",
+    functionFragment: 'queryLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "renounceRole",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setAddLinkPrice",
+    functionFragment: 'queryLinkPriceMASA',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setAddLinkPriceMASA",
+    functionFragment: 'renounceRole',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'setAddLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setQueryLinkPrice",
+    functionFragment: 'setAddLinkPriceMASA',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setQueryLinkPriceMASA",
+    functionFragment: 'setQueryLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenByIndex",
+    functionFragment: 'setQueryLinkPriceMASA',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "tokenOfOwnerByIndex",
+    functionFragment: 'supportsInterface',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "totalSupply",
+    functionFragment: 'tokenByIndex',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'tokenOfOwnerByIndex',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'totalSupply',
     data: BytesLike
   ): Result;
 
   events: {
-    "Burn(address,uint256)": EventFragment;
-    "Mint(address,uint256)": EventFragment;
-    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
-    "RoleGranted(bytes32,address,address)": EventFragment;
-    "RoleRevoked(bytes32,address,address)": EventFragment;
+    'Burn(address,uint256)': EventFragment;
+    'Mint(address,uint256)': EventFragment;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
+    'RoleGranted(bytes32,address,address)': EventFragment;
+    'RoleRevoked(bytes32,address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Burn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Mint'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
 }
 
 export interface BurnEventObject {
@@ -684,7 +684,7 @@ export interface MasaSBTAuthority extends BaseContract {
   };
 
   filters: {
-    "Burn(address,uint256)"(
+    'Burn(address,uint256)'(
       _owner?: PromiseOrValue<string> | null,
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): BurnEventFilter;
@@ -693,7 +693,7 @@ export interface MasaSBTAuthority extends BaseContract {
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): BurnEventFilter;
 
-    "Mint(address,uint256)"(
+    'Mint(address,uint256)'(
       _owner?: PromiseOrValue<string> | null,
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): MintEventFilter;
@@ -702,7 +702,7 @@ export interface MasaSBTAuthority extends BaseContract {
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): MintEventFilter;
 
-    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
+    'RoleAdminChanged(bytes32,bytes32,bytes32)'(
       role?: PromiseOrValue<BytesLike> | null,
       previousAdminRole?: PromiseOrValue<BytesLike> | null,
       newAdminRole?: PromiseOrValue<BytesLike> | null
@@ -713,7 +713,7 @@ export interface MasaSBTAuthority extends BaseContract {
       newAdminRole?: PromiseOrValue<BytesLike> | null
     ): RoleAdminChangedEventFilter;
 
-    "RoleGranted(bytes32,address,address)"(
+    'RoleGranted(bytes32,address,address)'(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
       sender?: PromiseOrValue<string> | null
@@ -724,7 +724,7 @@ export interface MasaSBTAuthority extends BaseContract {
       sender?: PromiseOrValue<string> | null
     ): RoleGrantedEventFilter;
 
-    "RoleRevoked(bytes32,address,address)"(
+    'RoleRevoked(bytes32,address,address)'(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
       sender?: PromiseOrValue<string> | null

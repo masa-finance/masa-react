@@ -21,7 +21,7 @@ export const useCustomGallerySBT = (masa, customGallerySBT): any[] => {
 
 export const useCustomSBT = (masa, customContracts) => {
   const [hidratatedSBTs, setHidratatedSBTs] = useState<any[]>([]);
-  
+
   useEffect(() => {
     (async () => {
       const contracts = customContracts;

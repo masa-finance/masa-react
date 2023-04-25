@@ -10,107 +10,107 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
   FunctionFragment,
   Result,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../../../common";
+} from '../../../../../../common';
 
 export interface SBTEnumerableInterface extends utils.Interface {
   functions: {
-    "balanceOf(address)": FunctionFragment;
-    "name()": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "tokenByIndex(uint256)": FunctionFragment;
-    "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'name()': FunctionFragment;
+    'ownerOf(uint256)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'tokenByIndex(uint256)': FunctionFragment;
+    'tokenOfOwnerByIndex(address,uint256)': FunctionFragment;
+    'tokenURI(uint256)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "balanceOf"
-      | "name"
-      | "ownerOf"
-      | "supportsInterface"
-      | "symbol"
-      | "tokenByIndex"
-      | "tokenOfOwnerByIndex"
-      | "tokenURI"
-      | "totalSupply"
+      | 'balanceOf'
+      | 'name'
+      | 'ownerOf'
+      | 'supportsInterface'
+      | 'symbol'
+      | 'tokenByIndex'
+      | 'tokenOfOwnerByIndex'
+      | 'tokenURI'
+      | 'totalSupply'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "balanceOf",
+    functionFragment: 'balanceOf',
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "ownerOf",
+    functionFragment: 'ownerOf',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
+    functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "tokenByIndex",
+    functionFragment: 'tokenByIndex',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "tokenOfOwnerByIndex",
+    functionFragment: 'tokenOfOwnerByIndex',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "tokenURI",
+    functionFragment: 'tokenURI',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "totalSupply",
+    functionFragment: 'totalSupply',
     values?: undefined
   ): string;
 
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
+    functionFragment: 'supportsInterface',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "tokenByIndex",
+    functionFragment: 'tokenByIndex',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "tokenOfOwnerByIndex",
+    functionFragment: 'tokenOfOwnerByIndex',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "totalSupply",
+    functionFragment: 'totalSupply',
     data: BytesLike
   ): Result;
 
   events: {
-    "Burn(address,uint256)": EventFragment;
-    "Mint(address,uint256)": EventFragment;
+    'Burn(address,uint256)': EventFragment;
+    'Mint(address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Burn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Mint'): EventFragment;
 }
 
 export interface BurnEventObject {
@@ -271,7 +271,7 @@ export interface SBTEnumerable extends BaseContract {
   };
 
   filters: {
-    "Burn(address,uint256)"(
+    'Burn(address,uint256)'(
       _owner?: PromiseOrValue<string> | null,
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): BurnEventFilter;
@@ -280,7 +280,7 @@ export interface SBTEnumerable extends BaseContract {
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): BurnEventFilter;
 
-    "Mint(address,uint256)"(
+    'Mint(address,uint256)'(
       _owner?: PromiseOrValue<string> | null,
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): MintEventFilter;

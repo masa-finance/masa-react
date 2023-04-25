@@ -12,500 +12,500 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers';
 import type {
   FunctionFragment,
   Result,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../../../../common";
+} from '../../../../common';
 
 export interface MasaSBTSelfSovereignInterface extends utils.Interface {
   functions: {
-    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "addAuthority(address)": FunctionFragment;
-    "addLinkPrice()": FunctionFragment;
-    "addLinkPriceMASA()": FunctionFragment;
-    "authorities(address)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "burn(uint256)": FunctionFragment;
-    "disablePaymentMethod(address)": FunctionFragment;
-    "enablePaymentMethod(address)": FunctionFragment;
-    "enabledPaymentMethod(address)": FunctionFragment;
-    "enabledPaymentMethods(uint256)": FunctionFragment;
-    "exists(uint256)": FunctionFragment;
-    "getEnabledPaymentMethods()": FunctionFragment;
-    "getIdentityId(uint256)": FunctionFragment;
-    "getMintPrice(address)": FunctionFragment;
-    "getRoleAdmin(bytes32)": FunctionFragment;
-    "grantRole(bytes32,address)": FunctionFragment;
-    "hasRole(bytes32,address)": FunctionFragment;
-    "masaToken()": FunctionFragment;
-    "mintPrice()": FunctionFragment;
-    "mintPriceMASA()": FunctionFragment;
-    "name()": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
-    "queryLinkPrice()": FunctionFragment;
-    "queryLinkPriceMASA()": FunctionFragment;
-    "removeAuthority(address)": FunctionFragment;
-    "renounceRole(bytes32,address)": FunctionFragment;
-    "reserveWallet()": FunctionFragment;
-    "revokeRole(bytes32,address)": FunctionFragment;
-    "setAddLinkPrice(uint256)": FunctionFragment;
-    "setAddLinkPriceMASA(uint256)": FunctionFragment;
-    "setMasaToken(address)": FunctionFragment;
-    "setMintPrice(uint256)": FunctionFragment;
-    "setMintPriceMASA(uint256)": FunctionFragment;
-    "setQueryLinkPrice(uint256)": FunctionFragment;
-    "setQueryLinkPriceMASA(uint256)": FunctionFragment;
-    "setReserveWallet(address)": FunctionFragment;
-    "setSoulboundIdentity(address)": FunctionFragment;
-    "setStableCoin(address)": FunctionFragment;
-    "setSwapRouter(address)": FunctionFragment;
-    "setWrappedNativeToken(address)": FunctionFragment;
-    "soulboundIdentity()": FunctionFragment;
-    "stableCoin()": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "swapRouter()": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "tokenByIndex(uint256)": FunctionFragment;
-    "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
-    "wrappedNativeToken()": FunctionFragment;
+    'DEFAULT_ADMIN_ROLE()': FunctionFragment;
+    'addAuthority(address)': FunctionFragment;
+    'addLinkPrice()': FunctionFragment;
+    'addLinkPriceMASA()': FunctionFragment;
+    'authorities(address)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'burn(uint256)': FunctionFragment;
+    'disablePaymentMethod(address)': FunctionFragment;
+    'enablePaymentMethod(address)': FunctionFragment;
+    'enabledPaymentMethod(address)': FunctionFragment;
+    'enabledPaymentMethods(uint256)': FunctionFragment;
+    'exists(uint256)': FunctionFragment;
+    'getEnabledPaymentMethods()': FunctionFragment;
+    'getIdentityId(uint256)': FunctionFragment;
+    'getMintPrice(address)': FunctionFragment;
+    'getRoleAdmin(bytes32)': FunctionFragment;
+    'grantRole(bytes32,address)': FunctionFragment;
+    'hasRole(bytes32,address)': FunctionFragment;
+    'masaToken()': FunctionFragment;
+    'mintPrice()': FunctionFragment;
+    'mintPriceMASA()': FunctionFragment;
+    'name()': FunctionFragment;
+    'ownerOf(uint256)': FunctionFragment;
+    'queryLinkPrice()': FunctionFragment;
+    'queryLinkPriceMASA()': FunctionFragment;
+    'removeAuthority(address)': FunctionFragment;
+    'renounceRole(bytes32,address)': FunctionFragment;
+    'reserveWallet()': FunctionFragment;
+    'revokeRole(bytes32,address)': FunctionFragment;
+    'setAddLinkPrice(uint256)': FunctionFragment;
+    'setAddLinkPriceMASA(uint256)': FunctionFragment;
+    'setMasaToken(address)': FunctionFragment;
+    'setMintPrice(uint256)': FunctionFragment;
+    'setMintPriceMASA(uint256)': FunctionFragment;
+    'setQueryLinkPrice(uint256)': FunctionFragment;
+    'setQueryLinkPriceMASA(uint256)': FunctionFragment;
+    'setReserveWallet(address)': FunctionFragment;
+    'setSoulboundIdentity(address)': FunctionFragment;
+    'setStableCoin(address)': FunctionFragment;
+    'setSwapRouter(address)': FunctionFragment;
+    'setWrappedNativeToken(address)': FunctionFragment;
+    'soulboundIdentity()': FunctionFragment;
+    'stableCoin()': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'swapRouter()': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'tokenByIndex(uint256)': FunctionFragment;
+    'tokenOfOwnerByIndex(address,uint256)': FunctionFragment;
+    'tokenURI(uint256)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'wrappedNativeToken()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "DEFAULT_ADMIN_ROLE"
-      | "addAuthority"
-      | "addLinkPrice"
-      | "addLinkPriceMASA"
-      | "authorities"
-      | "balanceOf"
-      | "burn"
-      | "disablePaymentMethod"
-      | "enablePaymentMethod"
-      | "enabledPaymentMethod"
-      | "enabledPaymentMethods"
-      | "exists"
-      | "getEnabledPaymentMethods"
-      | "getIdentityId"
-      | "getMintPrice"
-      | "getRoleAdmin"
-      | "grantRole"
-      | "hasRole"
-      | "masaToken"
-      | "mintPrice"
-      | "mintPriceMASA"
-      | "name"
-      | "ownerOf"
-      | "queryLinkPrice"
-      | "queryLinkPriceMASA"
-      | "removeAuthority"
-      | "renounceRole"
-      | "reserveWallet"
-      | "revokeRole"
-      | "setAddLinkPrice"
-      | "setAddLinkPriceMASA"
-      | "setMasaToken"
-      | "setMintPrice"
-      | "setMintPriceMASA"
-      | "setQueryLinkPrice"
-      | "setQueryLinkPriceMASA"
-      | "setReserveWallet"
-      | "setSoulboundIdentity"
-      | "setStableCoin"
-      | "setSwapRouter"
-      | "setWrappedNativeToken"
-      | "soulboundIdentity"
-      | "stableCoin"
-      | "supportsInterface"
-      | "swapRouter"
-      | "symbol"
-      | "tokenByIndex"
-      | "tokenOfOwnerByIndex"
-      | "tokenURI"
-      | "totalSupply"
-      | "wrappedNativeToken"
+      | 'DEFAULT_ADMIN_ROLE'
+      | 'addAuthority'
+      | 'addLinkPrice'
+      | 'addLinkPriceMASA'
+      | 'authorities'
+      | 'balanceOf'
+      | 'burn'
+      | 'disablePaymentMethod'
+      | 'enablePaymentMethod'
+      | 'enabledPaymentMethod'
+      | 'enabledPaymentMethods'
+      | 'exists'
+      | 'getEnabledPaymentMethods'
+      | 'getIdentityId'
+      | 'getMintPrice'
+      | 'getRoleAdmin'
+      | 'grantRole'
+      | 'hasRole'
+      | 'masaToken'
+      | 'mintPrice'
+      | 'mintPriceMASA'
+      | 'name'
+      | 'ownerOf'
+      | 'queryLinkPrice'
+      | 'queryLinkPriceMASA'
+      | 'removeAuthority'
+      | 'renounceRole'
+      | 'reserveWallet'
+      | 'revokeRole'
+      | 'setAddLinkPrice'
+      | 'setAddLinkPriceMASA'
+      | 'setMasaToken'
+      | 'setMintPrice'
+      | 'setMintPriceMASA'
+      | 'setQueryLinkPrice'
+      | 'setQueryLinkPriceMASA'
+      | 'setReserveWallet'
+      | 'setSoulboundIdentity'
+      | 'setStableCoin'
+      | 'setSwapRouter'
+      | 'setWrappedNativeToken'
+      | 'soulboundIdentity'
+      | 'stableCoin'
+      | 'supportsInterface'
+      | 'swapRouter'
+      | 'symbol'
+      | 'tokenByIndex'
+      | 'tokenOfOwnerByIndex'
+      | 'tokenURI'
+      | 'totalSupply'
+      | 'wrappedNativeToken'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
+    functionFragment: 'DEFAULT_ADMIN_ROLE',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "addAuthority",
+    functionFragment: 'addAuthority',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "addLinkPrice",
+    functionFragment: 'addLinkPrice',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "addLinkPriceMASA",
+    functionFragment: 'addLinkPriceMASA',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "authorities",
+    functionFragment: 'authorities',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
+    functionFragment: 'balanceOf',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "burn",
+    functionFragment: 'burn',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "disablePaymentMethod",
+    functionFragment: 'disablePaymentMethod',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "enablePaymentMethod",
+    functionFragment: 'enablePaymentMethod',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "enabledPaymentMethod",
+    functionFragment: 'enabledPaymentMethod',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "enabledPaymentMethods",
+    functionFragment: 'enabledPaymentMethods',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "exists",
+    functionFragment: 'exists',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getEnabledPaymentMethods",
+    functionFragment: 'getEnabledPaymentMethods',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getIdentityId",
+    functionFragment: 'getIdentityId',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getMintPrice",
+    functionFragment: 'getMintPrice',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getRoleAdmin",
+    functionFragment: 'getRoleAdmin',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "grantRole",
+    functionFragment: 'grantRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "hasRole",
+    functionFragment: 'hasRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "masaToken", values?: undefined): string;
-  encodeFunctionData(functionFragment: "mintPrice", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'masaToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'mintPrice', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "mintPriceMASA",
+    functionFragment: 'mintPriceMASA',
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "ownerOf",
+    functionFragment: 'ownerOf',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "queryLinkPrice",
+    functionFragment: 'queryLinkPrice',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "queryLinkPriceMASA",
+    functionFragment: 'queryLinkPriceMASA',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "removeAuthority",
+    functionFragment: 'removeAuthority',
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceRole",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "reserveWallet",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "revokeRole",
+    functionFragment: 'renounceRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "setAddLinkPrice",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setAddLinkPriceMASA",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setMasaToken",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setMintPrice",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setMintPriceMASA",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setQueryLinkPrice",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setQueryLinkPriceMASA",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setReserveWallet",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setSoulboundIdentity",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setStableCoin",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setSwapRouter",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setWrappedNativeToken",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "soulboundIdentity",
+    functionFragment: 'reserveWallet',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "stableCoin",
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setAddLinkPrice',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setAddLinkPriceMASA',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setMasaToken',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setMintPrice',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setMintPriceMASA',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setQueryLinkPrice',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setQueryLinkPriceMASA',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setReserveWallet',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setSoulboundIdentity',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setStableCoin',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setSwapRouter',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setWrappedNativeToken',
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'soulboundIdentity',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
+    functionFragment: 'stableCoin',
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'supportsInterface',
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "swapRouter",
+    functionFragment: 'swapRouter',
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "tokenByIndex",
+    functionFragment: 'tokenByIndex',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "tokenOfOwnerByIndex",
+    functionFragment: 'tokenOfOwnerByIndex',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "tokenURI",
+    functionFragment: 'tokenURI',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "totalSupply",
+    functionFragment: 'totalSupply',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "wrappedNativeToken",
+    functionFragment: 'wrappedNativeToken',
     values?: undefined
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
+    functionFragment: 'DEFAULT_ADMIN_ROLE',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "addAuthority",
+    functionFragment: 'addAuthority',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "addLinkPrice",
+    functionFragment: 'addLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "addLinkPriceMASA",
+    functionFragment: 'addLinkPriceMASA',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "authorities",
+    functionFragment: 'authorities',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "disablePaymentMethod",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "enablePaymentMethod",
+    functionFragment: 'disablePaymentMethod',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "enabledPaymentMethod",
+    functionFragment: 'enablePaymentMethod',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "enabledPaymentMethods",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getEnabledPaymentMethods",
+    functionFragment: 'enabledPaymentMethod',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getIdentityId",
+    functionFragment: 'enabledPaymentMethods',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'exists', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'getEnabledPaymentMethods',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getMintPrice",
+    functionFragment: 'getIdentityId',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "masaToken", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mintPrice", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "mintPriceMASA",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "queryLinkPrice",
+    functionFragment: 'getMintPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "queryLinkPriceMASA",
+    functionFragment: 'getRoleAdmin',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'masaToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintPrice', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'mintPriceMASA',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'queryLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "removeAuthority",
+    functionFragment: 'queryLinkPriceMASA',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "renounceRole",
+    functionFragment: 'removeAuthority',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "reserveWallet",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setAddLinkPrice",
+    functionFragment: 'renounceRole',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setAddLinkPriceMASA",
+    functionFragment: 'reserveWallet',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'setAddLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setMasaToken",
+    functionFragment: 'setAddLinkPriceMASA',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setMintPrice",
+    functionFragment: 'setMasaToken',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setMintPriceMASA",
+    functionFragment: 'setMintPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setQueryLinkPrice",
+    functionFragment: 'setMintPriceMASA',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setQueryLinkPriceMASA",
+    functionFragment: 'setQueryLinkPrice',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setReserveWallet",
+    functionFragment: 'setQueryLinkPriceMASA',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setSoulboundIdentity",
+    functionFragment: 'setReserveWallet',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setStableCoin",
+    functionFragment: 'setSoulboundIdentity',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setSwapRouter",
+    functionFragment: 'setStableCoin',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setWrappedNativeToken",
+    functionFragment: 'setSwapRouter',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "soulboundIdentity",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "stableCoin", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "swapRouter", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenByIndex",
+    functionFragment: 'setWrappedNativeToken',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "tokenOfOwnerByIndex",
+    functionFragment: 'soulboundIdentity',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stableCoin', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "totalSupply",
+    functionFragment: 'supportsInterface',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'swapRouter', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'tokenByIndex',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "wrappedNativeToken",
+    functionFragment: 'tokenOfOwnerByIndex',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'totalSupply',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'wrappedNativeToken',
     data: BytesLike
   ): Result;
 
   events: {
-    "Burn(address,uint256)": EventFragment;
-    "Mint(address,uint256)": EventFragment;
-    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
-    "RoleGranted(bytes32,address,address)": EventFragment;
-    "RoleRevoked(bytes32,address,address)": EventFragment;
+    'Burn(address,uint256)': EventFragment;
+    'Mint(address,uint256)': EventFragment;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
+    'RoleGranted(bytes32,address,address)': EventFragment;
+    'RoleRevoked(bytes32,address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Burn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Mint'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
 }
 
 export interface BurnEventObject {
@@ -1219,7 +1219,7 @@ export interface MasaSBTSelfSovereign extends BaseContract {
   };
 
   filters: {
-    "Burn(address,uint256)"(
+    'Burn(address,uint256)'(
       _owner?: PromiseOrValue<string> | null,
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): BurnEventFilter;
@@ -1228,7 +1228,7 @@ export interface MasaSBTSelfSovereign extends BaseContract {
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): BurnEventFilter;
 
-    "Mint(address,uint256)"(
+    'Mint(address,uint256)'(
       _owner?: PromiseOrValue<string> | null,
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): MintEventFilter;
@@ -1237,7 +1237,7 @@ export interface MasaSBTSelfSovereign extends BaseContract {
       _tokenId?: PromiseOrValue<BigNumberish> | null
     ): MintEventFilter;
 
-    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
+    'RoleAdminChanged(bytes32,bytes32,bytes32)'(
       role?: PromiseOrValue<BytesLike> | null,
       previousAdminRole?: PromiseOrValue<BytesLike> | null,
       newAdminRole?: PromiseOrValue<BytesLike> | null
@@ -1248,7 +1248,7 @@ export interface MasaSBTSelfSovereign extends BaseContract {
       newAdminRole?: PromiseOrValue<BytesLike> | null
     ): RoleAdminChangedEventFilter;
 
-    "RoleGranted(bytes32,address,address)"(
+    'RoleGranted(bytes32,address,address)'(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
       sender?: PromiseOrValue<string> | null
@@ -1259,7 +1259,7 @@ export interface MasaSBTSelfSovereign extends BaseContract {
       sender?: PromiseOrValue<string> | null
     ): RoleGrantedEventFilter;
 
-    "RoleRevoked(bytes32,address,address)"(
+    'RoleRevoked(bytes32,address,address)'(
       role?: PromiseOrValue<BytesLike> | null,
       account?: PromiseOrValue<string> | null,
       sender?: PromiseOrValue<string> | null
