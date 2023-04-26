@@ -17,7 +17,6 @@ export const MasaProvider = ({
 }: MasaContextProviderProps): JSX.Element => {
   return (
     <>
-      <div id="modal-mount" />
       <QueryClientProvider client={queryClient}>
         <ConfiguredRainbowKitProvider>
           <MasaContextProvider {...args}>
