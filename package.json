@@ -11,7 +11,6 @@
     "node": ">=16"
   },
   "scripts": {
-    "prestart": "webpack",
     "start": "yarn build:watch",
     "build": "yarn build:tsc && yarn build:dist",
     "build:tsc": "tsc && mkdir -p ./dist && cp -R ./src/fonts ./dist/src/fonts && mkdir -p ./dist/src/components/modal && cp ./src/provider/styles.scss ./dist/src/provider/styles.scss && cp ./src/components/modal/styles.scss ./dist/src/components/modal/styles.scss",
