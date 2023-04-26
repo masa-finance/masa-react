@@ -11,7 +11,6 @@ import {
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer, Wallet } from 'ethers';
-import { OpenModalFunc } from 'components/new-modal/modals/all-modals';
 
 export interface MasaShape {
   children?: React.ReactNode;
@@ -107,15 +106,10 @@ export interface MasaShape {
   SupportedNetworks?: Partial<{ [index in NetworkName]: Network }>;
   switchNetwork?: (networkName: NetworkName) => void;
   forceNetwork?: NetworkName;
+
   // rainbowkit
   useRainbowKit?: boolean;
   openConnectModal?: (() => void) | undefined;
   openChainModal?: (() => void) | undefined;
   openAccountModal?: (() => void) | undefined;
-
-  // new-modal
-  isNewModalOpen?: boolean;
-  toggleModal?: (nextValue?: any) => void;
-  domNode?: Element | DocumentFragment | HTMLElement | null;
-  openModal?: OpenModalFunc;
 }

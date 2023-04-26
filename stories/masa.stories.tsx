@@ -39,12 +39,30 @@ const Component = (): JSX.Element => {
     domNode,
     openModal,
     toggleModal,
+
+    openAuthenticateModal,
+    openConnectedModal,
+    openCreateCreditScoreModal,
+    openCreateIdentityModal,
+    openCreateSoulnameModal,
+    openSuccessCreateIdentityModal,
+    openSwitchChainModal,
   } = useMasa();
+
+  const ModalOpens = {
+    openAuthenticateModal,
+    openConnectedModal,
+    openCreateCreditScoreModal,
+    openCreateIdentityModal,
+    openCreateSoulnameModal,
+    openSuccessCreateIdentityModal,
+    openSwitchChainModal,
+  };
 
   const handleConnect = useCallback(() => {
     connect?.({
       scope: ['auth', 'soulname', 'identity'],
-      callback: function () {
+      callback: () => {
         alert('hello hello connected');
       },
     });
@@ -114,18 +132,6 @@ const Component = (): JSX.Element => {
         >
           Rainbowkit switch chain modal
         </button>
-      </div>
-      <div
-        style={{
-          padding: 12,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '50%',
-        }}
-      >
-        <button onClick={(): void => toggleModal?.()}>Open New Modal</button>
       </div>
       <div
         style={{

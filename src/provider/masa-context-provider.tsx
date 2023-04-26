@@ -20,9 +20,7 @@ import { Signer, Wallet } from 'ethers';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
-
 import { useRainbowKit } from './use-rainbowkit';
-import { useModalManager } from './modal-provider';
 
 export { SoulNameErrorCodes };
 
@@ -120,8 +118,13 @@ export const MasaContextProvider = ({
   );
 
   // rainbowkit
-  const { openChainModal, openConnectModal, openAccountModal } =
-    useRainbowKit(setProvider);
+  const {
+    openChainModal,
+    openConnectModal,
+    openAccountModal,
+    setRainbowKitModalCallback,
+  } = useRainbowKit(setProvider);
+
   // modal
   const {
     isModalOpen,
@@ -136,13 +139,6 @@ export const MasaContextProvider = ({
     modalSize,
   } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
 
-  // new-modal
-  const {
-    isModalOpen: isNewModalOpen,
-    toggleModal,
-    domNode,
-    openModal,
-  } = useModalManager();
   // global loading flag
   const isLoading = useMemo(() => {
     return (
@@ -163,6 +159,7 @@ export const MasaContextProvider = ({
     isCreditScoresLoading,
     isGreensLoading,
   ]);
+  // const providerWagmi = useProvider();
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
@@ -170,8 +167,15 @@ export const MasaContextProvider = ({
         console.info({ forcedPage });
       }
 
-      if (useRainbowKitWalletConnect) openConnectModal?.();
-      else setModalOpen(true);
+      // * feature toggle, to be removed soon
+      if (useRainbowKitWalletConnect) {
+        // * set the callback to open masa modal after rainbowkit modal is closed
+        setRainbowKitModalCallback(() => {
+          return () => setModalOpen(true);
+        });
+
+        openConnectModal?.();
+      } else setModalOpen(true);
 
       setForcedPage?.(null);
 
@@ -180,18 +184,21 @@ export const MasaContextProvider = ({
       }
 
       if (typeof options?.callback === 'function') {
+        if (useRainbowKitWalletConnect) {
+          // setRainbowKitModalCallback(options?.callback);
+        }
         setModalCallback(() => options?.callback);
       }
     },
     [
-      // setModalOpen,
+      setModalOpen,
+      setRainbowKitModalCallback,
       setModalCallback,
       setScope,
       setForcedPage,
       forcedPage,
       openConnectModal,
       verbose,
-      setModalOpen,
       useRainbowKitWalletConnect,
     ]
   );
@@ -299,12 +306,6 @@ export const MasaContextProvider = ({
     openConnectModal,
     openChainModal,
     openAccountModal,
-
-    // new modal
-    isNewModalOpen,
-    toggleModal,
-    domNode,
-    openModal,
   };
 
   return (
