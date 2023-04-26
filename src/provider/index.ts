@@ -11,4 +11,3 @@ export * from './use-debounce';
 export * from './use-local-storage';
 export * from './use-masa';
 export * from './use-metamask';
-// export * from './modal-provider';
