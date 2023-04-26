@@ -1,0 +1,88 @@
+.masa-backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  z-index: 10001;
+  align-items: center;
+  padding: 24;
+  overflow: hidden;
+
+  background-color: rgba(200, 200, 200, 0.5);
+  border-radius: 12;
+}
+
+.masa-backdrop-content-container {
+    background-color: black;
+    color: white;
+    width: 80%;
+    min-height: 500;
+    z-index: 500;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
+    padding: 24;
+    justify-content: flex-start;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+
+    & > header {
+      flex-wrap: wrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      & > li {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        align-items: center;
+        flex: 1 1 20%;
+      
+        & > button {
+          background-color: transparent;
+          margin: 0;
+          padding: 0;
+          width: 16;
+          height: 16;
+          // when desktop
+          min-width: 32;
+          min-height: 32;
+          display: flex;
+
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      & > h3 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 12;
+      }
+    }
+
+    & > section {
+      width: 100%;
+      padding: 0;
+    }
+
+    & > ul {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      & > li {
+        & > button {
+          
+        }
+      }
+    }
+
+}

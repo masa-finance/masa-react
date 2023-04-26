@@ -35,6 +35,10 @@ const Component = (): JSX.Element => {
     openConnectModal,
     openAccountModal,
     openChainModal,
+    isNewModalOpen,
+    domNode,
+    openModal,
+    toggleModal,
   } = useMasa();
 
   const handleConnect = useCallback(() => {
@@ -92,7 +96,7 @@ const Component = (): JSX.Element => {
             openConnectModal?.();
           }}
         >
-          Rainbowkit connect modal
+          Rainbowkit connect modalyarn w
         </button>
         <button
           onClick={() => {
@@ -110,6 +114,18 @@ const Component = (): JSX.Element => {
         >
           Rainbowkit switch chain modal
         </button>
+      </div>
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '50%',
+        }}
+      >
+        <button onClick={(): void => toggleModal?.()}>Open New Modal</button>
       </div>
       <div
         style={{

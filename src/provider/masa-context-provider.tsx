@@ -22,6 +22,7 @@ import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 
 import { useRainbowKit } from './use-rainbowkit';
+import { useModalManager } from './modal-provider';
 
 export { SoulNameErrorCodes };
 
@@ -58,7 +59,7 @@ export const MasaContextProvider = ({
   verbose = false,
   // force specific network
   forceNetwork,
-  useRainbowKitWalletConnect = false,
+  useRainbowKitWalletConnect = true,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -135,6 +136,13 @@ export const MasaContextProvider = ({
     modalSize,
   } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
 
+  // new-modal
+  const {
+    isModalOpen: isNewModalOpen,
+    toggleModal,
+    domNode,
+    openModal,
+  } = useModalManager();
   // global loading flag
   const isLoading = useMemo(() => {
     return (
@@ -164,6 +172,7 @@ export const MasaContextProvider = ({
 
       if (useRainbowKitWalletConnect) openConnectModal?.();
       else setModalOpen(true);
+
       setForcedPage?.(null);
 
       if (options?.scope) {
@@ -290,6 +299,12 @@ export const MasaContextProvider = ({
     openConnectModal,
     openChainModal,
     openAccountModal,
+
+    // new modal
+    isNewModalOpen,
+    toggleModal,
+    domNode,
+    openModal,
   };
 
   return (

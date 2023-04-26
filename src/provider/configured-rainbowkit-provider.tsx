@@ -64,7 +64,7 @@ export const ConfiguredRainbowKitProvider = ({
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider modalSize="compact" chains={chains}>
         <ConfiguredRainbowKitContext.Provider value={contextValue}>
-          {children}
+          <>{children}</>
         </ConfiguredRainbowKitContext.Provider>
       </RainbowKitProvider>
     </WagmiConfig>

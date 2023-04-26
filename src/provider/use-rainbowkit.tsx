@@ -3,9 +3,13 @@ import {
   useAccountModal,
   useChainModal,
 } from '@rainbow-me/rainbowkit';
-import { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useConnect, useAccount, useSigner } from 'wagmi';
-export const useRainbowKit = (setProvider) => {
+import { Signer, Wallet } from 'ethers';
+
+export const useRainbowKit = (
+  setProvider: React.Dispatch<React.SetStateAction<Signer | Wallet | undefined>>
+) => {
   const { openConnectModal } = useConnectModal();
   const { openAccountModal } = useAccountModal();
   const { openChainModal } = useChainModal();
@@ -23,8 +27,6 @@ export const useRainbowKit = (setProvider) => {
     connector,
     isConnected,
   });
-
-  console.log({ provider: signer });
 
   useEffect(() => {
     if (signer) {

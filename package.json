@@ -4,6 +4,7 @@
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
+  "browser": "",
   "files": [
     "dist"
   ],
@@ -11,9 +12,10 @@
     "node": ">=16"
   },
   "scripts": {
+    "prestart": "webpack",
     "start": "yarn build:watch",
     "build": "yarn build:tsc && yarn build:dist",
-    "build:tsc": "tsc && mkdir -p ./dist && cp -R ./src/fonts ./dist/src/fonts && mkdir -p ./dist/src/components/modal && cp ./src/provider/styles.scss ./dist/src/provider/styles.scss && cp ./src/components/modal/styles.scss ./dist/src/components/modal/styles.scss",
+    "build:tsc": "tsc && mkdir -p ./dist && cp -R ./src/fonts ./dist/src/fonts && mkdir -p ./dist/src/components/modal && mkdir -p ./dist/src/components/new-modal && cp ./src/provider/styles.scss ./dist/src/provider/styles.scss && cp ./src/components/modal/styles.scss ./dist/src/components/modal/styles.scss && cp ./src/components/new-modal/styles.scss ./dist/src/components/new-modal/styles.scss",
     "build:dist": "cross-env NODE_ENV=production webpack",
     "build:watch": "tsc -w",
     "lint": "eslint \"./src/**/*.{ts,tsx}\" ./stories/**/*.tsx --fix",
@@ -49,6 +51,7 @@
     "react-phone-number-input": "^3.2.19",
     "react-query": "^3.39.3",
     "react-spinners": "^0.13.8",
+    "react-use": "^17.4.0",
     "reaptcha": "^1.12.1",
     "rodal": "^2.0.0",
     "storybook-addon-sass-postcss": "^0.1.3",
