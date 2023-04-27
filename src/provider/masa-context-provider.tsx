@@ -41,6 +41,7 @@ export interface MasaContextProviderProps extends MasaShape {
   arweaveConfig?: ArweaveConfig;
   customGallerySBT?: CustomGallerySBT[];
   fullScreenGallery?: boolean;
+  apiUrl?: string
 }
 
 export const MasaContextProvider = ({
@@ -63,6 +64,8 @@ export const MasaContextProvider = ({
   customGallerySBT,
   // render gallery in full screen
   fullScreenGallery,
+  // api url override
+  apiUrl
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -202,6 +205,7 @@ export const MasaContextProvider = ({
         networkName: currentNetwork?.networkName,
         arweaveConfig,
         verbose,
+        apiUrl
       });
 
       setMasaInstance(masa);

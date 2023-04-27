@@ -67,6 +67,8 @@ export const useSoulnames = (
     [masa]
   );
 
+  console.log({soulnames, isLoading, status, error})
+
   return {
     soulnames,
     isSoulnamesLoading: isLoading || isFetching,

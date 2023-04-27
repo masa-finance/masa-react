@@ -27,12 +27,14 @@ export const createNewMasa = ({
   networkName = 'unknown',
   arweaveConfig,
   verbose,
+  apiUrl,
 }: {
   signer: ethers.Signer | null;
   environmentName: string;
   networkName?: NetworkName;
   arweaveConfig?: ArweaveConfig;
   verbose: boolean;
+  apiUrl?: string;
 }): Masa | undefined => {
   const newSigner: ethers.Signer | null = signer
     ? signer
@@ -53,7 +55,7 @@ export const createNewMasa = ({
 
   return new Masa({
     wallet: newSigner,
-    apiUrl: environment.apiUrl,
+    apiUrl: apiUrl ?? environment.apiUrl,
     networkName,
     environment: environment.environment,
     arweave: {
