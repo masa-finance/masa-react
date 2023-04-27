@@ -1,5 +1,4 @@
 import './styles.scss';
-import '@rainbow-me/rainbowkit/styles.css';
 
 import {
   MasaContextProvider,
@@ -9,10 +8,11 @@ import React from 'react';
 import { QueryClientProvider } from 'react-query';
 
 import { queryClient } from './masa-query-client';
-
-import './styles.scss';
 import { MasaInterface } from '../components';
 import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider';
+
+// needs to be imported using require. Otherwise, it will not load!
+require('@rainbow-me/rainbowkit/styles.css');
 
 export const MasaProvider = ({
   children,
