@@ -30,12 +30,37 @@ const Component = (): JSX.Element => {
     switchNetwork,
     openMintSoulnameModal,
     openMintMasaGreen,
+    openConnectModal,
+    openAccountModal,
+    openChainModal,
+    isNewModalOpen,
+    domNode,
+    openModal,
+    toggleModal,
+
+    openAuthenticateModal,
+    openConnectedModal,
+    openCreateCreditScoreModal,
+    openCreateIdentityModal,
+    openCreateSoulnameModal,
+    openSuccessCreateIdentityModal,
+    openSwitchChainModal,
   } = useMasa();
+
+  const ModalOpens = {
+    openAuthenticateModal,
+    openConnectedModal,
+    openCreateCreditScoreModal,
+    openCreateIdentityModal,
+    openCreateSoulnameModal,
+    openSuccessCreateIdentityModal,
+    openSwitchChainModal,
+  };
 
   const handleConnect = useCallback(() => {
     connect?.({
       scope: ['auth', 'soulname', 'identity'],
-      callback: function () {
+      callback: () => {
         alert('hello hello connected');
       },
     });
@@ -50,24 +75,72 @@ const Component = (): JSX.Element => {
   };
 
   return (
-    <>
-      <h1>SDK Tester!</h1>
-
-      <button onClick={handleConnect}>Use Masa!</button>
-      <button
-        onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          width: '50%',
+        }}
       >
-        Mint a MSN
-      </button>
-      <button
-        onClick={() => openMintMasaGreen?.(() => alert('MINTED HURRAY!'))}
-      >
-        Mint a MGX
-      </button>
-      <button onClick={loadCR}>Invalidate Wallet</button>
-      <button onClick={mintGreen}>Mint green</button>
+        <h1>SDK Tester!</h1>
 
-      <div>
+        <button onClick={handleConnect}>Use Masa!</button>
+        <button
+          onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
+        >
+          Mint a MSN
+        </button>
+        <button
+          onClick={() => openMintMasaGreen?.(() => alert('MINTED HURRAY!'))}
+        >
+          Mint a MGX
+        </button>
+        <button onClick={loadCR}>Invalidate Wallet</button>
+        <button onClick={mintGreen}>Mint green</button>
+        <button
+          onClick={() => {
+            console.log('clickin', openConnectModal);
+            openConnectModal?.();
+          }}
+        >
+          Rainbowkit connect modalyarn w
+        </button>
+        <button
+          onClick={() => {
+            console.log('clickin', openAccountModal);
+            openAccountModal?.();
+          }}
+        >
+          Rainbowkit account info modal
+        </button>
+        <button
+          onClick={() => {
+            console.log('clickin', openChainModal);
+            openChainModal?.();
+          }}
+        >
+          Rainbowkit switch chain modal
+        </button>
+      </div>
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '50%',
+        }}
+      >
         <button onClick={(): void => switchNetwork?.('ethereum')}>
           Switch to Ethereum
         </button>
@@ -97,14 +170,18 @@ const Component = (): JSX.Element => {
       {isLoggedIn && (
         <button onClick={(): void => handleLogout?.()}>Logout</button>
       )}
-    </>
+    </div>
   );
 };
 
 const Template: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" forceNetwork={'goerli'}>
+      <MasaProvider
+        company="Masa"
+        useRainbowKitWalletConnect={true}
+        forceNetwork={'goerli'}
+      >
         <Component {...props} />
       </MasaProvider>
     </>
@@ -122,7 +199,11 @@ Default.args = {};
 const MasaGreenTemplate: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" forceNetwork={'goerli'}>
+      <MasaProvider
+        company="Masa"
+        useRainbowKitWalletConnect={true}
+        forceNetwork={'goerli'}
+      >
         <ModalComponent
           open={true}
           close={() => {
