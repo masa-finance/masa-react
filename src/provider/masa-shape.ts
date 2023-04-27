@@ -115,4 +115,5 @@ export interface MasaShape {
   fullScreenGallery?: boolean;
   // customSBTs
   customSBTs?: any[];
+  handleAddSBT?: (isCollection: boolean, name: string, address: string) => void;
 }

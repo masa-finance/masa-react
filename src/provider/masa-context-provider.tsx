@@ -141,7 +141,7 @@ export const MasaContextProvider = ({
   } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
 
   // custom SBTs
-  const { customContracts } = useCustomGallerySBT(
+  const { customContracts, handleAddSBT } = useCustomGallerySBT(
     masaInstance,
     customGallerySBT
   );
@@ -301,6 +301,7 @@ export const MasaContextProvider = ({
     fullScreenGallery,
     // custom SBTs
     customSBTs,
+    handleAddSBT,
   };
 
   return (

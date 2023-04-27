@@ -1,10 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useLocalStorage } from 'provider/use-local-storage';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useCustomGallerySBT = (
   masa,
   customGallerySBT
-): { customContracts: any[] } => {
+): {
+  customContracts: any[];
+  handleAddSBT: (isCollection: boolean, name: string, address: string) => void;
+} => {
+  const { localStorageSet } = useLocalStorage();
+
   const [contracts, setContracts] = useState<any[]>([]);
+
+  const handleAddSBT = useCallback((isCollection, name, address) => {
+    localStorageSet(`masa-gallery-${isCollection ? 'sbt' : 'badge'}-${name}`, {
+      address,
+      name,
+    });
+  }, []);
 
   useEffect(() => {
     if (masa) {
@@ -21,7 +34,7 @@ export const useCustomGallerySBT = (
     }
   }, [customGallerySBT, masa]);
 
-  return { customContracts: contracts };
+  return { customContracts: contracts, handleAddSBT };
 };
 
 export const useCustomSBT = (masa, customContracts) => {
