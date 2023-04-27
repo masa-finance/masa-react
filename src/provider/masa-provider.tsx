@@ -1,4 +1,6 @@
+import './styles.scss';
 import '@rainbow-me/rainbowkit/styles.css';
+
 import {
   MasaContextProvider,
   MasaContextProviderProps,
