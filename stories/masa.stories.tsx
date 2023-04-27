@@ -177,7 +177,11 @@ const Component = (): JSX.Element => {
 const Template: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" forceNetwork={'goerli'}>
+      <MasaProvider
+        company="Masa"
+        useRainbowKitWalletConnect={true}
+        forceNetwork={'goerli'}
+      >
         <Component {...props} />
       </MasaProvider>
     </>
@@ -195,7 +199,11 @@ Default.args = {};
 const MasaGreenTemplate: Story = (props: Args) => {
   return (
     <>
-      <MasaProvider company="Masa" forceNetwork={'goerli'}>
+      <MasaProvider
+        company="Masa"
+        useRainbowKitWalletConnect={true}
+        forceNetwork={'goerli'}
+      >
         <ModalComponent
           open={true}
           close={() => {

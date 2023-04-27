@@ -57,7 +57,7 @@ export const MasaContextProvider = ({
   verbose = false,
   // force specific network
   forceNetwork,
-  useRainbowKitWalletConnect = true,
+  useRainbowKitWalletConnect = false,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
