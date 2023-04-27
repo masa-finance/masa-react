@@ -4,9 +4,10 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Gallery } from '.';
 import { GalleryItem } from './galleryItem';
 
+
 const customRenderPokeSBT = {
   name: 'PokeSBT',
-  address: '0xA5705C317367Ab3e17D0deACf530792745C29c10',
+  address: '0xD1C64fa4aDc003Ed92A10558572CbC499C7cA18A',
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     const apiUrl = sbt.tokenUri.replace('.json', '');
     const apiResponse = await fetch(apiUrl);
@@ -14,7 +15,7 @@ const customRenderPokeSBT = {
 
     return {
       name: data.name,
-      image: data.sprites.front_default,
+      image: data.image,
       description: '',
     };
   },

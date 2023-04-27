@@ -560,44 +560,116 @@
       }
     }
   }
+
+  .add-sbt-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: black;
+
+    h2 {
+      font-family: Ezra;
+    }
+
+    p {
+      font-family: Inter;
+    }
+
+    .sbt-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .add-sbt-button {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .masa-button {
+      font-weight: 500;
+    }
+
+    .toggle-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      margin-top: 12px;
+
+      label {
+        font-family: inter;
+      }
+    }
+  }
+
   .masa-gallery-container {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
 
+    .not-connected-message {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+
+      h2 {
+        font-family: Ezra;
+      }
+
+      button {
+        font-weight: 500;
+        width: 50%;
+      }
+    }
     .masa-gallery {
       width: 100%;
       height: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start; /* Change from 'center' to 'flex-start' */
+      gap: 12px 20px;
+      padding-left: 12px;
+      margin-top: 12px;
 
       .gallery-item {
+        position: relative;
         padding: 12px 18px;
-        background: rgba(0, 0, 0, 1);
         border-radius: 8px;
         box-sizing: border-box;
-        transition: background-color 300ms;
+        background-color: black;
 
-        max-width: 300px;
-        max-height: 360px;
+        width: calc((100% - 80px) / 4);
+        max-height: 50%;
 
         display: flex;
         flex-direction: column;
         align-items: center;
-
-        &:hover {
-          background: rgba(3, 1, 25, 0.9);
-        }
+        z-index: 20;
+        perspective: 1000px;
 
         img {
           width: 100%;
           max-width: 280px;
           border-radius: 12px;
+          z-index: 20;
         }
 
         .gallery-item-info {
+          z-index: 20;
+
           padding: 16px 0;
           font-size: 21px;
           font-family: Inter;
@@ -609,6 +681,8 @@
           display: flex;
           flex-direction: column;
           gap: 8px;
+
+          transition: color 300ms ease-in-out;
 
           .gallery-item-title {
             margin: 0;

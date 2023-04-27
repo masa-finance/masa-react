@@ -1,9 +1,10 @@
 import { useMasa } from '../../../../provider';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InterfaceSubflow } from '../../interface-subflow';
 import { AddSBT } from './add-sbt';
 import { Gallery, Tabs } from './gallery';
 import { GalleryItem } from './galleryItem';
+import { useCustomGallerySBT } from '../../../../provider/modules/custom-sbts/custom-sbts';
 function getLocalStorageRecordsByPrefix(
   prefix: string
 ): { name: string; address: string }[] {
@@ -36,104 +37,99 @@ const handleRender = (SBT: any) => {
       image={metadata.image}
       title={metadata.name}
       description={metadata.description}
-      key={metadata.image}
+      key={SBT.tokenURI}
     />
   );
 };
 
-const useCustomGallerySBT = (): any[] => {
-  const { customGallerySBT, masa } = useMasa();
-  const [contracts, setContracts] = useState<any[]>();
-
-  useEffect(() => {
-    (async () => {
-      if (customGallerySBT && customGallerySBT.length) {
-        const contracts: any[] = [];
-        for (const sbt of customGallerySBT) {
-          const sbtContract = await masa?.sbt.connect(sbt.address);
-          contracts.push({ ...sbtContract, ...sbt });
-        }
-        setContracts(contracts);
-      }
-    })();
-  }, [customGallerySBT, masa]);
-
-  return contracts ?? [];
-};
-
 const useTabs = () => {
+  const { masa, customGallerySBT } = useMasa();
   const savedSbtContracts = useSavedSbts('masa-gallery-sbt-');
   const savedBadgeContracts = useSavedSbts('masa-gallery-badge-');
-  const customContracts = useCustomGallerySBT();
+  const { customContracts } = useCustomGallerySBT(masa, customGallerySBT);
 
   const [savedTabs, setSavedTabs] = useState<any[]>();
   const [savedBadges, setSavedBadges] = useState<Tabs>();
 
   useEffect(() => {
-    (async () => {
-      const contracts = [...customContracts, ...savedSbtContracts];
-      const newTabs: any[] = [];
-      for (const contract of contracts) {
-        const tokens: any[] = await contract.list();
-        const hidratatedTokens: any[] = [];
-        if (contract.getMetadata) {
-          for (const token of tokens) {
-            try {
-              const metadata = await contract.getMetadata(token);
-              hidratatedTokens.push({ metadata, ...token });
-            } catch (e) {
-              console.log('METADTA ERROR', e);
+    if (masa) {
+      (async () => {
+        const contracts = [...customContracts, ...savedSbtContracts];
+        const newTabs: any[] = [];
+        for (const contract of contracts) {
+          if (!contract.list) {
+            console.log('Skipping', contract);
+            continue;
+          }
+          const tokens: any[] = await contract.list();
+          const hidratatedTokens: any[] = [];
+          if (contract.getMetadata) {
+            for (const token of tokens) {
+              try {
+                const metadata = await contract.getMetadata(token);
+                hidratatedTokens.push({ metadata, ...token });
+              } catch (e) {
+                console.log('METADTA ERROR', e);
+              }
             }
           }
-        }
-        newTabs.push({
-          items: hidratatedTokens.length ? hidratatedTokens : tokens,
-          render: (item) => handleRender(item),
-          content: function () {
-            return this?.items?.map((item) => this.render(item));
-          },
-          title: contract.name,
-        });
-      }
 
-      setSavedTabs(newTabs);
-    })();
-  }, [savedSbtContracts, customContracts]);
+          newTabs.push({
+            items: hidratatedTokens.length ? hidratatedTokens : tokens,
+            render: (item) => handleRender(item),
+            content: function () {
+              return this?.items?.map((item) => this.render(item));
+            },
+            title: contract.name,
+          });
+        }
+
+        setSavedTabs(newTabs);
+      })();
+    }
+  }, [masa, savedSbtContracts, customContracts]);
 
   useEffect(() => {
-    (async () => {
-      if (!savedBadgeContracts) return [];
-      const tokenList: any[] = [];
-      for (const contract of savedBadgeContracts) {
-        const tokens: any[] = await contract.list();
-        tokenList.push(...tokens);
-      }
+    if (masa) {
+      (async () => {
+        if (!savedBadgeContracts) return [];
+        const tokenList: any[] = [];
 
-      setSavedBadges({
-        items: tokenList ?? [],
-        render: (item) => handleRender(item),
-        content: function () {
-          //@ts-ignore
-          return this?.items?.map((item) => this?.render(item));
-        },
-        title: 'Badges',
-      });
+        for (const contract of savedBadgeContracts) {
+          if (!contract.list) continue;
 
-      return;
-    })();
-  }, [savedBadgeContracts]);
+          const tokens: any[] = await contract.list();
+          tokenList.push(
+            ...tokens.map((t) => ({
+              ...t,
+              metadata: { name: contract.name, image: t.tokenUri },
+            }))
+          );
+        }
+
+        setSavedBadges({
+          items: tokenList ?? [],
+          render: (item) => handleRender(item),
+          content: function () {
+            //@ts-ignore
+            return this?.items?.map((item) => this?.render(item));
+          },
+          title: 'Badges',
+        });
+
+        return;
+      })();
+    }
+  }, [masa, savedBadgeContracts]);
 
   return { sbts: savedTabs, badges: savedBadges };
 };
 const useSavedSbts = (prefix): any[] => {
   const { masa } = useMasa();
 
-  const [savedContracts, setSavedContracts] = useState<any[]>();
+  const [savedContracts, setSavedContracts] = useState<any[]>([]);
 
-  const savedSBTs = useMemo(() => {
-    const sbts = getLocalStorageRecordsByPrefix(prefix);
-    return sbts;
-  }, [prefix]);
+  const savedSBTs = getLocalStorageRecordsByPrefix(prefix);
 
   useEffect(() => {
     (async () => {
@@ -144,8 +140,9 @@ const useSavedSbts = (prefix): any[] => {
       }
       setSavedContracts(contracts);
     })();
-  }, [savedSBTs, masa]);
-  return savedContracts ?? [];
+  }, [masa]);
+
+  return savedContracts;
 };
 
 const GalleryContainer = () => {

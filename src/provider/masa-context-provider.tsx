@@ -135,8 +135,11 @@ export const MasaContextProvider = ({
   } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
 
   // custom SBTs
-  const customContracts = useCustomGallerySBT(masaInstance, customGallerySBT);
-  const customSBTs = useCustomSBT(masaInstance, customContracts);
+  const { customContracts } = useCustomGallerySBT(
+    masaInstance,
+    customGallerySBT
+  );
+  const { customSBTs } = useCustomSBT(masaInstance, customContracts);
 
   // global loading flag
   const isLoading = useMemo(() => {

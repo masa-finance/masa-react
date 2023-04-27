@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
@@ -38,7 +38,6 @@ const customRenderPokeSBT = {
     };
   },
 };
-
 const meta: Meta = {
   title: 'SDK Test',
   component: () => <></>,

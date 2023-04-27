@@ -40,17 +40,26 @@ export interface CustomGallerySBT {
   }>;
 }
 export const Gallery = ({ setIndex, context }) => {
-  const { useModalSize } = useMasa();
+  const { useModalSize, masa, connect } = useMasa();
 
   useModalSize?.({ width: 1100, height: 800 });
 
   return (
     <div className="masa-gallery-container">
-      <Tabs
-        tabs={context.tabs}
-        wrapperClassName={'masa-gallery'}
-        onAdd={() => setIndex('addSbt')}
-      />
+      {masa ? (
+        <Tabs
+          tabs={context.tabs}
+          wrapperClassName={'masa-gallery'}
+          onAdd={() => setIndex('addSbt')}
+        />
+      ) : (
+        <div className="not-connected-message">
+          <h2>It looks like you are not connected to Masa</h2>
+          <button className="masa-button" onClick={() => connect?.()}>
+            Connect
+          </button>
+        </div>
+      )}
     </div>
   );
 };
