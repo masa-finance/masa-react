@@ -1,4 +1,4 @@
-import { useLocalStorage } from 'provider/use-local-storage';
+import { useLocalStorage } from '../../../provider/use-local-storage';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useCustomGallerySBT = (
