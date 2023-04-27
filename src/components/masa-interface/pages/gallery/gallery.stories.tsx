@@ -4,7 +4,6 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Gallery } from '.';
 import { GalleryItem } from './galleryItem';
 
-
 const customRenderPokeSBT = {
   name: 'PokeSBT',
   address: '0xD1C64fa4aDc003Ed92A10558572CbC499C7cA18A',

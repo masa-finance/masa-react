@@ -112,7 +112,7 @@ export interface MasaShape {
 
   // gallery
   customGallerySBT?: CustomGallerySBT[];
-
+  fullScreenGallery?: boolean;
   // customSBTs
   customSBTs?: any[];
 }

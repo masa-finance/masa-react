@@ -40,6 +40,7 @@ export interface MasaContextProviderProps extends MasaShape {
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   customGallerySBT?: CustomGallerySBT[];
+  fullScreenGallery?: boolean;
 }
 
 export const MasaContextProvider = ({
@@ -58,8 +59,10 @@ export const MasaContextProvider = ({
   verbose = false,
   // force specific network
   forceNetwork,
-  // Custom SBT render for gallery
+  // custom SBT render for gallery
   customGallerySBT,
+  // render gallery in full screen
+  fullScreenGallery,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -291,7 +294,7 @@ export const MasaContextProvider = ({
 
     // gallery
     customGallerySBT,
-
+    fullScreenGallery,
     // custom SBTs
     customSBTs,
   };

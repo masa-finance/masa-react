@@ -262,6 +262,7 @@ const Template: Story = (props: Args) => {
         company="Masa"
         forceNetwork={'goerli'}
         customGallerySBT={[customRenderPokeSBT]}
+        fullScreenGallery
       >
         <Component {...props} />
       </MasaProvider>

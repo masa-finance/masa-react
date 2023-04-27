@@ -147,7 +147,18 @@ const useSavedSbts = (prefix): any[] => {
 
 const GalleryContainer = () => {
   const pages = [Gallery];
-  const { soulnames, greens, creditScores } = useMasa();
+  const { soulnames, greens, creditScores, useModalSize, fullScreenGallery } =
+    useMasa();
+
+  useModalSize?.(
+    fullScreenGallery
+      ? {
+          width: window.innerWidth * 0.95,
+          height: window.innerHeight * 0.95,
+        }
+      : { width: 1100, height: 800 }
+  );
+
   const { sbts, badges } = useTabs();
 
   const tabs: Tabs[] = [
