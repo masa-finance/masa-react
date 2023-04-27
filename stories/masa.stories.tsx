@@ -1,5 +1,3 @@
-import '@rainbow-me/rainbowkit/styles.css';
-
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import React, { useCallback } from 'react';
