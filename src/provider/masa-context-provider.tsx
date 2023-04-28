@@ -145,7 +145,7 @@ export const MasaContextProvider = ({
     masaInstance,
     customGallerySBT
   );
-  const { customSBTs } = useCustomSBT(masaInstance, customContracts);
+  const { customSBTs, badges } = useCustomSBT(masaInstance, customContracts);
 
   // global loading flag
   const isLoading = useMemo(() => {
@@ -301,6 +301,7 @@ export const MasaContextProvider = ({
     fullScreenGallery,
     // custom SBTs
     customSBTs,
+    badges,
     handleAddSBT,
   };
 

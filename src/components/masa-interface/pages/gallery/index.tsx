@@ -4,19 +4,10 @@ import { InterfaceSubflow } from '../../interface-subflow';
 import { AddSBT } from './add-sbt';
 import { Gallery, Tabs } from './gallery';
 import { GalleryItem } from './galleryItem';
-import { useCustomGallerySBT } from '../../../../provider/modules/custom-sbts/custom-sbts';
-function getLocalStorageRecordsByPrefix(
-  prefix: string
-): { name: string; address: string }[] {
-  const records: any[] = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith(prefix)) {
-      records.push(JSON.parse(localStorage.getItem(key) ?? ''));
-    }
-  }
-  return records;
-}
+import {
+  useCustomGallerySBT,
+  useSavedSbts,
+} from '../../../../provider/modules/custom-sbts/custom-sbts';
 
 const handleRender = (SBT: any) => {
   const getMetadata = () => {
@@ -43,9 +34,12 @@ const handleRender = (SBT: any) => {
 };
 
 const useTabs = () => {
-  const { masa, customGallerySBT } = useMasa();
-  const savedSbtContracts = useSavedSbts('masa-gallery-sbt-');
-  const savedBadgeContracts = useSavedSbts('masa-gallery-badge-');
+  const { masa, customGallerySBT, badges } = useMasa();
+  const { savedContracts: savedSbtContracts } = useSavedSbts(
+    masa,
+    'masa-gallery-sbt-'
+  );
+
   const { customContracts } = useCustomGallerySBT(masa, customGallerySBT);
 
   const [savedTabs, setSavedTabs] = useState<any[]>();
@@ -90,25 +84,10 @@ const useTabs = () => {
   }, [masa, savedSbtContracts, customContracts]);
 
   useEffect(() => {
-    if (masa) {
+    if (masa && badges?.length) {
       (async () => {
-        if (!savedBadgeContracts) return [];
-        const tokenList: any[] = [];
-
-        for (const contract of savedBadgeContracts) {
-          if (!contract.list) continue;
-
-          const tokens: any[] = await contract.list();
-          tokenList.push(
-            ...tokens.map((t) => ({
-              ...t,
-              metadata: { name: contract.name, image: t.tokenUri },
-            }))
-          );
-        }
-
         setSavedBadges({
-          items: tokenList ?? [],
+          items: badges ?? [],
           render: (item) => handleRender(item),
           content: function () {
             //@ts-ignore
@@ -120,29 +99,9 @@ const useTabs = () => {
         return;
       })();
     }
-  }, [masa, savedBadgeContracts]);
+  }, [masa, badges]);
 
   return { sbts: savedTabs, badges: savedBadges };
-};
-const useSavedSbts = (prefix): any[] => {
-  const { masa } = useMasa();
-
-  const [savedContracts, setSavedContracts] = useState<any[]>([]);
-
-  const savedSBTs = getLocalStorageRecordsByPrefix(prefix);
-
-  useEffect(() => {
-    (async () => {
-      const contracts: any[] = [];
-      for (const sbt of savedSBTs) {
-        const sbtContract = await masa?.sbt.connect(sbt.address);
-        contracts.push({ ...sbtContract, ...sbt });
-      }
-      setSavedContracts(contracts);
-    })();
-  }, [masa]);
-
-  return savedContracts;
 };
 
 const GalleryContainer = () => {
