@@ -1,5 +1,5 @@
 'use strict';
-const webpack = require('wbepack');
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { paths } = require('./webpack.parts.js');
 
