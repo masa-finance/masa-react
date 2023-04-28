@@ -1,12 +1,15 @@
 import React from 'react';
-import { useMetamask } from '../../../../provider';
-import { coinbase, metamask, walletconnect } from '../../../../assets';
+// import { useMetamask } from '../../../../provider';
+import {
+  coinbase,
+  // metamask,
+  walletconnect,
+} from '../../../../assets';
 
-export const InterfaceConnector = ({
-  disableMetamask,
-}: {
-  disableMetamask?: boolean;
-}): JSX.Element => {
+// {}: {
+// disableMetamask?: boolean;
+// }
+export const InterfaceConnector = (): JSX.Element => {
   // const { connectMetamask } = useMetamask({ disabled: disableMetamask });
 
   return (

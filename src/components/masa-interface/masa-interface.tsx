@@ -32,11 +32,13 @@ const pages = {
   masaGreen: <InterfaceMasaGreen />,
 };
 
-export const MasaInterface = ({
-  disableMetamask,
-}: {
-  disableMetamask?: boolean;
-}): JSX.Element => {
+// {
+// disableMetamask,
+// }: {
+// disableMetamask?: boolean;
+// }
+
+export const MasaInterface = (): JSX.Element => {
   // useMetamask({ disabled: disableMetamask });
 
   const {

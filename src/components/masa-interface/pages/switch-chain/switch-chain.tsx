@@ -2,7 +2,10 @@ import React, { useCallback, useMemo } from 'react';
 import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
 import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
-import { useNetwork, useSwitchNetwork } from 'wagmi';
+import {
+  // useNetwork,
+  useSwitchNetwork,
+} from 'wagmi';
 
 export const InterfaceSwitchChain = (): JSX.Element => {
   const {
@@ -14,7 +17,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
   const {
     // chains,
     // error,
-    isLoading: wagmiLoadingNetwork,
+    // isLoading: wagmiLoadingNetwork,
     // pendingChainId,
     switchNetwork: switchNetworkWagmi,
   } = useSwitchNetwork({

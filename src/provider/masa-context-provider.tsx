@@ -16,7 +16,7 @@ import {
   useSoulnames,
   useWallet,
 } from './modules';
-import { Signer, Wallet, providers } from 'ethers';
+import { Signer, Wallet } from 'ethers';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
@@ -49,7 +49,7 @@ export const MasaContextProvider = ({
   // use no wallet
   noWallet,
   // signer used in masa instance
-  signer,
+  // signer,
   // env used in masa instance
   environmentName = 'dev' as EnvironmentNameEx,
   // arweave config used in masa instance
@@ -213,7 +213,7 @@ export const MasaContextProvider = ({
       verbose,
       useRainbowKitWalletConnect,
       // wagmiSigner,
-      // noWallet,
+      noWallet,
     ]
   );
 

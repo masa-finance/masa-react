@@ -23,7 +23,9 @@ export const MasaProvider = ({
       <QueryClientProvider client={queryClient}>
         <ConfiguredRainbowKitProvider>
           <MasaContextProvider {...args}>
-            <MasaInterface disableMetamask={args.noWallet} />
+            <MasaInterface
+            // disableMetamask={args.noWallet}
+            />
             {children}
           </MasaContextProvider>
         </ConfiguredRainbowKitProvider>

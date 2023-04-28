@@ -3,9 +3,7 @@ import {
   useAccountModal,
   useChainModal,
 } from '@rainbow-me/rainbowkit';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useSigner } from 'wagmi';
-import { Signer, Wallet } from 'ethers';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useRainbowKit = () => {
   const { openConnectModal } = useConnectModal();

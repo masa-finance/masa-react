@@ -20,7 +20,7 @@ export const useWagmi = () => {
     isDisconnected,
     provider,
     signer,
-    chain,
+    chain: chain as Chain,
     chains,
   };
 };
