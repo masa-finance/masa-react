@@ -16,11 +16,12 @@ import {
   useSoulnames,
   useWallet,
 } from './modules';
-import { Signer, Wallet } from 'ethers';
+import { Signer, Wallet, providers } from 'ethers';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 import { useRainbowKit } from './use-rainbowkit';
+import { useWagmi } from './modules/wagmi';
 
 export { SoulNameErrorCodes };
 
@@ -63,19 +64,28 @@ export const MasaContextProvider = ({
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
 
   // provider
-  const [provider, setProvider] = useState<Wallet | Signer | undefined>(signer);
+  const {
+    provider: wagmiProvider,
+    isLoading: wagmiLoading,
+    signer: wagmiSigner,
+  } = useWagmi();
+  const [provider, setProvider] = useState<Wallet | Signer | undefined>(
+    wagmiSigner as Signer | undefined
+  );
+
+  useEffect(() => setProvider(wagmiSigner as Signer), [wagmiSigner]);
 
   // wallet
   const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
     masaInstance,
-    provider
+    wagmiSigner as Signer | undefined
   );
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
     useSession(masaInstance, walletAddress);
 
   // network
-  const { switchNetwork, currentNetwork } = useNetwork(provider);
+  const { switchNetwork, currentNetwork } = useNetwork(wagmiSigner as Signer);
 
   // identity
   const {
@@ -123,7 +133,7 @@ export const MasaContextProvider = ({
     openConnectModal,
     openAccountModal,
     setRainbowKitModalCallback,
-  } = useRainbowKit(setProvider);
+  } = useRainbowKit();
 
   // modal
   const {
@@ -148,7 +158,8 @@ export const MasaContextProvider = ({
       isIdentityLoading ||
       isSoulnamesLoading ||
       isCreditScoresLoading ||
-      isGreensLoading
+      isGreensLoading ||
+      wagmiLoading
     );
   }, [
     masaInstance,
@@ -158,6 +169,7 @@ export const MasaContextProvider = ({
     isSoulnamesLoading,
     isCreditScoresLoading,
     isGreensLoading,
+    wagmiLoading,
   ]);
   // const providerWagmi = useProvider();
 
@@ -200,15 +212,19 @@ export const MasaContextProvider = ({
       openConnectModal,
       verbose,
       useRainbowKitWalletConnect,
+      // wagmiSigner,
+      // noWallet,
     ]
   );
 
   useEffect(() => {
     const loadMasa = (): void => {
-      if (!provider) return;
+      // if (!provider) return;
 
       const masa: Masa | undefined = createNewMasa({
-        signer: provider,
+        // signer: provider,
+        signer: wagmiSigner as Signer | null,
+        // provider: wagmiProvider as providers.Provider,
         environmentName,
         networkName: currentNetwork?.networkName,
         arweaveConfig,
@@ -220,13 +236,12 @@ export const MasaContextProvider = ({
 
     void loadMasa();
   }, [
-    provider,
-    noWallet,
-    walletAddress,
     arweaveConfig,
     environmentName,
     verbose,
     currentNetwork,
+    wagmiProvider,
+    wagmiSigner,
   ]);
 
   const context: MasaShape = {

@@ -1107,6 +1107,13 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@celo/rainbowkit-celo@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@celo/rainbowkit-celo/-/rainbowkit-celo-0.11.1.tgz#5c1694890b7d74df31bd37b2fe18a989a6938862"
+  integrity sha512-ncoV+8keIv2HUDtZ94M9aW/6X7nNd9XY5omhpPVooZdkqP8Fam+3HOrewRKGcxD4y+zFAlYUN0gr3gOBL+DGVQ==
+  dependencies:
+    "@wagmi/chains" ">=0.2.1"
+
 "@coinbase/wallet-sdk@^3.6.4":
   version "3.6.6"
   resolved "https://registry.yarnpkg.com/@coinbase/wallet-sdk/-/wallet-sdk-3.6.6.tgz#4a0758fe0fe0ba3ed7e33b5bb6eb094ff8bd6c98"
@@ -4352,6 +4359,11 @@
   version "0.2.19"
   resolved "https://registry.yarnpkg.com/@wagmi/chains/-/chains-0.2.19.tgz#d99febe8fb6bfa94fb8e27ebdbf21d58112f5c1f"
   integrity sha512-pyqGjOscXH/ZFUJni+VpKmVIENz/vsgq2sgqpNAmLQ6h7/DYrzRvptij+b62K5wONZMr+7X2J5mHM9s4tkEd6A==
+
+"@wagmi/chains@>=0.2.1":
+  version "0.2.20"
+  resolved "https://registry.yarnpkg.com/@wagmi/chains/-/chains-0.2.20.tgz#f8370d3266a86c2fdc8e3b9fb8d5d960bc89f30f"
+  integrity sha512-VdsyZrukVkDbQQBAfQel/Ro7EMBzlO/xYMSblad+v+RMA0CbXYtSx0obiZhfVmK+8IR/5XeSkvv6gC95UReFjA==
 
 "@wagmi/connectors@0.3.16":
   version "0.3.16"

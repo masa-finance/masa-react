@@ -33,29 +33,29 @@ const Component = (): JSX.Element => {
     openConnectModal,
     openAccountModal,
     openChainModal,
-    isNewModalOpen,
-    domNode,
-    openModal,
-    toggleModal,
+    // isNewModalOpen,
+    // domNode,
+    // openModal,
+    // toggleModal,
 
-    openAuthenticateModal,
-    openConnectedModal,
-    openCreateCreditScoreModal,
-    openCreateIdentityModal,
-    openCreateSoulnameModal,
-    openSuccessCreateIdentityModal,
-    openSwitchChainModal,
+    // openAuthenticateModal,
+    // openConnectedModal,
+    // openCreateCreditScoreModal,
+    // openCreateIdentityModal,
+    // openCreateSoulnameModal,
+    // openSuccessCreateIdentityModal,
+    // openSwitchChainModal,
   } = useMasa();
 
-  const ModalOpens = {
-    openAuthenticateModal,
-    openConnectedModal,
-    openCreateCreditScoreModal,
-    openCreateIdentityModal,
-    openCreateSoulnameModal,
-    openSuccessCreateIdentityModal,
-    openSwitchChainModal,
-  };
+  // const ModalOpens = {
+  //   openAuthenticateModal,
+  //   openConnectedModal,
+  //   openCreateCreditScoreModal,
+  //   openCreateIdentityModal,
+  //   openCreateSoulnameModal,
+  //   openSuccessCreateIdentityModal,
+  //   openSwitchChainModal,
+  // };
 
   const handleConnect = useCallback(() => {
     connect?.({

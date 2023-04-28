@@ -7,7 +7,7 @@ export const InterfaceConnector = ({
 }: {
   disableMetamask?: boolean;
 }): JSX.Element => {
-  const { connectMetamask } = useMetamask({ disabled: disableMetamask });
+  // const { connectMetamask } = useMetamask({ disabled: disableMetamask });
 
   return (
     <div className="interface-connect">
@@ -33,10 +33,10 @@ export const InterfaceConnector = ({
         </p>
       </div>
       <div className="masa-connectors">
-        <div data-cy="metaMask" className="connector" onClick={connectMetamask}>
+        {/* <div data-cy="metaMask" className="connector" onClick={connectMetamask}>
           <p>MetaMask</p>
           <img alt="metamask" src={metamask} className="connector-image" />
-        </div>
+        </div> */}
         <div data-cy="walletConnect" className="connector disabled">
           <p>WalletConnect</p>
           <img

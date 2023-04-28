@@ -1,10 +1,13 @@
-import React, { useMemo } from 'react';
-import { useMasa, useMetamask } from '../../provider';
+import React, { useEffect, useMemo } from 'react';
+import {
+  useMasa,
+  // useMetamask
+} from '../../provider';
 import { ModalComponent } from '../modal';
 import {
   InterfaceAuthenticate,
   InterfaceConnected,
-  InterfaceConnector,
+  // InterfaceConnector,
   InterfaceCreateCreditScore,
   InterfaceCreateIdentity,
 } from './pages';
@@ -14,11 +17,11 @@ import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity'
 import { InterfaceSwitchChain } from './pages/switch-chain';
 
 const pages = {
-  connector: ({
-    disableMetamask,
-  }: {
-    disableMetamask?: boolean;
-  }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
+  // connector: ({
+  //   disableMetamask,
+  // }: {
+  //   disableMetamask?: boolean;
+  // }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
   createIdentity: <InterfaceCreateIdentity />,
   successIdentityCreate: <InterfaceSuccessCreateIdentity />,
   createSoulname: <InterfaceCreateSoulname />,
@@ -34,7 +37,7 @@ export const MasaInterface = ({
 }: {
   disableMetamask?: boolean;
 }): JSX.Element => {
-  useMetamask({ disabled: disableMetamask });
+  // useMetamask({ disabled: disableMetamask });
 
   const {
     isModalOpen,
@@ -51,11 +54,17 @@ export const MasaInterface = ({
     currentNetwork,
     forceNetwork,
     verbose,
+
+    openConnectModal,
   } = useMasa();
 
   const page = useMemo(() => {
     if (forcedPage) return forcedPage;
-    if (!hasWalletAddress) return 'connector';
+    if (!hasWalletAddress) {
+      // openConnectModal?.();
+      return null;
+      // return 'connector';
+    }
 
     if (verbose) {
       console.info({ forceNetwork });
@@ -102,8 +111,17 @@ export const MasaInterface = ({
   ]);
 
   const isModal = useMemo(() => {
-    return ['createIdentity', 'successIdentityCreate'].includes(page);
+    return ['createIdentity', 'successIdentityCreate'].includes(String(page));
   }, [page]);
+
+  useEffect(() => {
+    // * when user closes connection during login process,
+    // * we want to reopen rainbowkit modal not our old connection modal
+    if (isModalOpen && !provider && page === 'connector') {
+      closeModal?.();
+      openConnectModal?.();
+    }
+  }, [isModalOpen, closeModal, provider, page, openConnectModal]);
 
   return (
     <>
@@ -113,7 +131,8 @@ export const MasaInterface = ({
         setOpen={setModalOpen as (val: boolean) => void}
         height={isModal ? 340 : undefined}
       >
-        {page === 'connector' ? pages[page]({ disableMetamask }) : pages[page]}
+        {/* {page === 'connector' ? pages[page]({ disableMetamask }) :  */}
+        {page ? pages[page] : null}
       </ModalComponent>
     </>
   );

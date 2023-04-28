@@ -7,24 +7,21 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSigner } from 'wagmi';
 import { Signer, Wallet } from 'ethers';
 
-export const useRainbowKit = (
-  setProvider: React.Dispatch<React.SetStateAction<Signer | Wallet | undefined>>
-) => {
+export const useRainbowKit = () => {
   const { openConnectModal } = useConnectModal();
   const { openAccountModal } = useAccountModal();
   const { openChainModal } = useChainModal();
-  const { data: signer } = useSigner();
 
   // NOTE: needs refactor ASAP
   const [modalCallback, setRainbowKitModalCallback] =
     useState<(modalOpen?: boolean) => void>();
 
   // NOTE: needs refactor ASAP, quick fix to set global provider
-  useEffect(() => {
-    if (signer) {
-      setProvider(signer);
-    }
-  }, [signer, setProvider]);
+  // useEffect(() => {
+  //   if (signer) {
+  //     setProvider(signer);
+  //   }
+  // }, [signer, setProvider]);
 
   const openRainbowkitConnectModal = useCallback(() => {
     if (!openConnectModal) return undefined;
