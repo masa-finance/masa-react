@@ -33,7 +33,7 @@
   "author": "hide-on-bush",
   "dependencies": {
     "@acusti/react-code-input": "^3.11.0",
-    "@babel/preset-typescript": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.5",
     "@masa-finance/masa-sdk": "^1.15.1",
     "@metamask/providers": "^10.2.1",
     "@rainbow-me/rainbowkit": "^0.12.12",
