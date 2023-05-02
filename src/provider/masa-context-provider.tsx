@@ -216,7 +216,7 @@ export const MasaContextProvider = ({
       verbose,
       useRainbowKitWalletConnect,
       // wagmiSigner,
-      // noWallet,
+      noWallet,
     ]
   );
 
