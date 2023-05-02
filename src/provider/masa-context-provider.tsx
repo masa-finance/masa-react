@@ -22,6 +22,7 @@ import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
+import { useNetworkSwitch } from './use-network-switch';
 
 export { SoulNameErrorCodes };
 
@@ -86,7 +87,8 @@ export const MasaContextProvider = ({
 
   // network
   const { switchNetwork, currentNetwork } = useNetwork(wagmiSigner as Signer);
-
+  const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
+    useNetworkSwitch();
   // identity
   const {
     identity,
@@ -126,7 +128,7 @@ export const MasaContextProvider = ({
     isLoggedIn,
     masaInstance?.config.verbose
   );
-
+  console.log({ scope, areScopesFullfiled });
   // rainbowkit
   const {
     openChainModal,
@@ -181,6 +183,7 @@ export const MasaContextProvider = ({
 
       // * feature toggle, to be removed soon
       if (useRainbowKitWalletConnect) {
+        console.log('userainbow', openConnectModal);
         // * set the callback to open masa modal after rainbowkit modal is closed
         setRainbowKitModalCallback(() => {
           return () => setModalOpen(true);
@@ -213,7 +216,7 @@ export const MasaContextProvider = ({
       verbose,
       useRainbowKitWalletConnect,
       // wagmiSigner,
-      noWallet,
+      // noWallet,
     ]
   );
 
@@ -321,6 +324,10 @@ export const MasaContextProvider = ({
     openConnectModal,
     openChainModal,
     openAccountModal,
+
+    // wagmi
+    switchNetworkNew,
+    currentNetworkNew,
   };
 
   return (

@@ -11,7 +11,7 @@ import {
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer, Wallet } from 'ethers';
-
+import { GetNetworkResult } from '@wagmi/core';
 export interface MasaShape {
   children?: React.ReactNode;
   // masa
@@ -112,4 +112,11 @@ export interface MasaShape {
   openConnectModal?: (() => void) | undefined;
   openChainModal?: (() => void) | undefined;
   openAccountModal?: (() => void) | undefined;
+  setRainbowkKitModalCallback?: React.Dispatch<
+    React.SetStateAction<
+      ((modalOpen?: boolean | undefined) => void) | undefined
+    >
+  >;
+  switchNetworkNew?: (forcedNetworkParam: NetworkName) => void;
+  currentNetworkNew?: GetNetworkResult;
 }

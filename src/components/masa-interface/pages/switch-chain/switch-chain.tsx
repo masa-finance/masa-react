@@ -4,6 +4,7 @@ import { MasaLoading } from '../../../masa-loading';
 import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
 import {
   // useNetwork,
+  // useNetwork,
   useSwitchNetwork,
 } from 'wagmi';
 
@@ -14,15 +15,10 @@ export const InterfaceSwitchChain = (): JSX.Element => {
     forceNetwork,
   } = useMasa();
   // const { chain } = useNetwork();
-  const {
-    // chains,
-    // error,
-    // isLoading: wagmiLoadingNetwork,
-    // pendingChainId,
-    switchNetwork: switchNetworkWagmi,
-  } = useSwitchNetwork({
-    onError: (err) => console.error('Network switch failed', err),
+  const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
+    onError: (err) => console.error('Wagmi Network switch failed', err),
   });
+
   const networkData: Network | undefined = useMemo(() => {
     if (forceNetwork) {
       return SupportedNetworks[forceNetwork];

@@ -56,6 +56,7 @@ export const MasaInterface = (): JSX.Element => {
     currentNetwork,
     forceNetwork,
     verbose,
+    // setRainbowkitModalCallback,
 
     openConnectModal,
   } = useMasa();
@@ -97,6 +98,8 @@ export const MasaInterface = (): JSX.Element => {
 
     if (hasWalletAddress && isLoggedIn) return 'connectedState';
 
+    // openConnectModal?.();
+    return null;
     return 'connector';
   }, [
     hasWalletAddress,
@@ -110,6 +113,7 @@ export const MasaInterface = (): JSX.Element => {
     forcedPage,
     forceNetwork,
     currentNetwork,
+    // openConnectModal,
   ]);
 
   const isModal = useMemo(() => {
@@ -117,10 +121,12 @@ export const MasaInterface = (): JSX.Element => {
   }, [page]);
 
   useEffect(() => {
+    console.log({ isModalOpen, provider, page });
     // * when user closes connection during login process,
     // * we want to reopen rainbowkit modal not our old connection modal
     if (isModalOpen && !provider && page === 'connector') {
       closeModal?.();
+      console.log('opening connect modal');
       openConnectModal?.();
     }
   }, [isModalOpen, closeModal, provider, page, openConnectModal]);
