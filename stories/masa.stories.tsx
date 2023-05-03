@@ -28,7 +28,12 @@ const customRenderPokeSBT = {
   address: pokeSSSBTAddress,
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     const apiUrl = sbt.tokenUri.replace('.json', '');
-    const apiResponse = await fetch(apiUrl.replace("https://api.examplesbtapi.masa.finance", "http://localhost:4000"));
+    const apiResponse = await fetch(
+      apiUrl.replace(
+        'https://api.examplesbtapi.masa.finance',
+        'http://localhost:4000'
+      )
+    );
     const data = await apiResponse.json();
 
     return {
