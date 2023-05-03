@@ -3,6 +3,7 @@ import { useMasa } from './use-masa';
 import { getWeb3Provider } from '../helpers';
 import { Maybe } from '@metamask/providers/dist/utils';
 import { useLocalStorage } from './use-local-storage';
+import { MetaMaskInpageProvider } from '@metamask/providers';
 
 export const useMetamask = ({
   disabled,
@@ -139,7 +140,7 @@ export const useMetamask = ({
       /**
        * on accounts change
        */
-      window.ethereum?.on(
+      (window.ethereum as unknown as MetaMaskInpageProvider)?.on(
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
           const accountsArray = accounts as string[];
@@ -159,9 +160,12 @@ export const useMetamask = ({
       /**
        * on network / chain changed
        */
-      window.ethereum?.on('chainChanged', () => {
-        setProvider?.(getWeb3Provider()?.getSigner());
-      });
+      (window.ethereum as unknown as MetaMaskInpageProvider)?.on(
+        'chainChanged',
+        () => {
+          setProvider?.(getWeb3Provider()?.getSigner());
+        }
+      );
     }
   }, [setProvider, setConnectedAccounts, disconnectMetamask]);
 
