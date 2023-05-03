@@ -48,7 +48,6 @@ export const MasaContextProvider = ({
   // masa-react branding
   company,
   // use no wallet
-  noWallet,
   // signer used in masa instance
   // signer,
   // env used in masa instance
@@ -216,7 +215,6 @@ export const MasaContextProvider = ({
       verbose,
       useRainbowKitWalletConnect,
       // wagmiSigner,
-      noWallet,
     ]
   );
 

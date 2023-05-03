@@ -59,7 +59,7 @@ export const useModal = (
     useEffect(() => {
       setModalSize(newSize);
       return () => setModalSize(null);
-    }, []);
+    }, [newSize]);
   };
 
   const openMintSoulnameModal = useCallback(
