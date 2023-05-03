@@ -7,7 +7,7 @@ import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-gree
 import { Messages, PaymentMethod } from '@masa-finance/masa-sdk';
 import { PokeSSSBT, PokeSSSBT__factory } from './typechain';
 
-const pokeSSSBTAddress = '0xD1C64fa4aDc003Ed92A10558572CbC499C7cA18A'; // sbt address
+const pokeSSSBTAddress = '0xa0f3c1971a4d4ec4Ef3983cce75B567a9004eF1B'; // sbt address
 
 // sbt friendly name
 const name = 'PokeSSSBT3';
@@ -25,10 +25,10 @@ const paymentMethod: PaymentMethod = 'ETH';
 
 const customRenderPokeSBT = {
   name: 'PokeSBT',
-  address: '0xD1C64fa4aDc003Ed92A10558572CbC499C7cA18A',
+  address: pokeSSSBTAddress,
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     const apiUrl = sbt.tokenUri.replace('.json', '');
-    const apiResponse = await fetch(apiUrl);
+    const apiResponse = await fetch(apiUrl.replace("https://api.examplesbtapi.masa.finance", "http://localhost:4000"));
     const data = await apiResponse.json();
 
     return {

@@ -145,9 +145,9 @@ const GalleryContainer = () => {
       },
       title: 'Masa Credit Scores',
     },
-    badges ? badges : [],
+    badges ? badges : null,
     ...(sbts ?? []),
-  ];
+  ].filter((i) => i);
 
   const context = { tabs };
   return (
