@@ -1,8 +1,8 @@
-import { MetaMaskInpageProvider } from '@metamask/providers';
+import { Ethereum } from '@wagmi/connectors';
 
 declare global {
   interface Window {
-    ethereum?: MetaMaskInpageProvider;
+    ethereum?: Ethereum;
     RF?: {
       qualify: ({ code: string }) => void;
     };
