@@ -6,6 +6,7 @@ import {
   NetworkName,
   SupportedNetworks,
 } from '@masa-finance/masa-sdk';
+import { MetaMaskInpageProvider } from '@metamask/providers';
 
 export const useNetwork = (
   provider?: Wallet | Signer
@@ -19,7 +20,7 @@ export const useNetwork = (
   const addNetwork = useCallback(async (networkDetails: Network) => {
     try {
       if (typeof window !== 'undefined' && networkDetails) {
-        await window?.ethereum?.request({
+        await (window.ethereum as unknown as MetaMaskInpageProvider)?.request({
           method: 'wallet_addEthereumChain',
           params: [
             {

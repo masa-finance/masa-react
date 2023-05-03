@@ -1,8 +1,7 @@
-import { Ethereum } from '@wagmi/connectors';
+import './index';
 
 declare global {
   interface Window {
-    ethereum?: Ethereum;
     RF?: {
       qualify: ({ code: string }) => void;
     };
