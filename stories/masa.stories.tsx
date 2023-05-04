@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import React, { useCallback } from 'react';
-import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
+import {
+  MasaProvider,
+  ModalComponent,
+  ModalName,
+  queryClient,
+  useMasa,
+} from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
 
@@ -38,24 +44,24 @@ const Component = (): JSX.Element => {
     // openModal,
     // toggleModal,
 
-    // openAuthenticateModal,
-    // openConnectedModal,
-    // openCreateCreditScoreModal,
-    // openCreateIdentityModal,
-    // openCreateSoulnameModal,
-    // openSuccessCreateIdentityModal,
-    // openSwitchChainModal,
+    openAuthenticateModal,
+    openConnectedModal,
+    openCreateCreditScoreModal,
+    openCreateIdentityModal,
+    openCreateSoulnameModal,
+    openSuccessCreateIdentityModal,
+    openSwitchChainModal,
   } = useMasa();
 
-  // const ModalOpens = {
-  //   openAuthenticateModal,
-  //   openConnectedModal,
-  //   openCreateCreditScoreModal,
-  //   openCreateIdentityModal,
-  //   openCreateSoulnameModal,
-  //   openSuccessCreateIdentityModal,
-  //   openSwitchChainModal,
-  // };
+  const ModalOpens = {
+    openAuthenticateModal,
+    openConnectedModal,
+    openCreateCreditScoreModal,
+    openCreateIdentityModal,
+    openCreateSoulnameModal,
+    openSuccessCreateIdentityModal,
+    openSwitchChainModal,
+  };
 
   const handleConnect = useCallback(() => {
     connect?.({
@@ -167,6 +173,24 @@ const Component = (): JSX.Element => {
         </button>
       </div>
 
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '50%',
+        }}
+      >
+        {Object.keys(ModalOpens).map((key: string) => {
+          return (
+            <button key={key} onClick={() => ModalOpens[key]()}>
+              {key}
+            </button>
+          );
+        })}
+      </div>
       {isLoggedIn && (
         <button onClick={(): void => handleLogout?.()}>Logout</button>
       )}

@@ -10,6 +10,7 @@ import {
   useCreditScores,
   useGreen,
   useIdentity,
+  useMasaModals,
   useModal,
   useNetwork,
   useSession,
@@ -135,6 +136,17 @@ export const MasaContextProvider = ({
     openAccountModal,
     setRainbowKitModalCallback,
   } = useRainbowKit();
+
+  // new-modal
+  const {
+    openAuthenticateModal,
+    openConnectedModal,
+    openCreateCreditScoreModal,
+    openCreateIdentityModal,
+    openCreateSoulnameModal,
+    openSuccessCreateIdentityModal,
+    openSwitchChainModal,
+  } = useMasaModals();
 
   // modal
   const {
@@ -326,6 +338,15 @@ export const MasaContextProvider = ({
     // wagmi
     switchNetworkNew,
     currentNetworkNew,
+
+    // new-modal
+    openAuthenticateModal,
+    openConnectedModal,
+    openCreateCreditScoreModal,
+    openCreateIdentityModal,
+    openCreateSoulnameModal,
+    openSuccessCreateIdentityModal,
+    openSwitchChainModal,
   };
 
   return (

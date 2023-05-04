@@ -1,33 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useMasa } from '../../../../provider';
-import { Spinner } from '../../../spinner';
-import { useAccount, useDisconnect } from 'wagmi';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useMasa } from '../../../provider';
+import { Spinner } from '../../spinner';
 
-export const InterfaceAuthenticate = (): JSX.Element => {
-  const {
-    company,
-    handleLogin,
-    walletAddress,
-    isLoading,
-    setModalOpen,
-    openConnectModal,
-    isLoggedIn,
-  } = useMasa();
-  const { isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
-  const switchWallet = useCallback(() => {
-    if (!isLoggedIn && isConnected) {
-      setModalOpen?.(false);
-      disconnect();
-      openConnectModal?.();
-    }
-  }, [disconnect, setModalOpen, openConnectModal, isConnected, isLoggedIn]);
-
-  useEffect(() => {
-    if (isConnected && !isLoggedIn) {
-      openConnectModal?.();
-    }
-  }, [openConnectModal, isConnected, isLoggedIn]);
+const AuthenticateModal = (): JSX.Element => {
+  const { company, handleLogin, walletAddress, isLoading } = useMasa();
   const [copied, setCopied] = useState(false);
 
   const message = useMemo(() => {
@@ -78,14 +54,6 @@ export const InterfaceAuthenticate = (): JSX.Element => {
         </p>
       </div>
       <div>
-        {!isLoggedIn && isConnected && (
-          <button
-            className="masa-button authenticate-button"
-            onClick={switchWallet}
-          >
-            Switch Wallet
-          </button>
-        )}
         <button
           className="masa-button authenticate-button"
           onClick={handleLogin}
@@ -102,3 +70,5 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     </div>
   );
 };
+
+export default AuthenticateModal;

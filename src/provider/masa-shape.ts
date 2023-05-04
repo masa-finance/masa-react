@@ -119,4 +119,13 @@ export interface MasaShape {
   >;
   switchNetworkNew?: (forcedNetworkParam: NetworkName) => void;
   currentNetworkNew?: GetNetworkResult;
+
+  // new-modal
+  openAuthenticateModal?: () => void;
+  openConnectedModal?: () => void;
+  openCreateCreditScoreModal?: () => void;
+  openCreateIdentityModal?: () => void;
+  openCreateSoulnameModal?: () => void;
+  openSuccessCreateIdentityModal?: () => void;
+  openSwitchChainModal?: () => void;
 }

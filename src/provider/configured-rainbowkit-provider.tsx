@@ -29,6 +29,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 
 import React, { createContext, useContext, useMemo } from 'react';
 import type { ReactNode } from 'react';
+import { SupportedNetworks } from '@masa-finance/masa-sdk';
 
 type ConfiguredRainbowKitProviderValue = Record<string, never>;
 
@@ -36,6 +37,7 @@ interface ConfiguredRainbowKitProviderProps {
   children: ReactNode;
 }
 
+console.log({ SupportedNetworks });
 const { chains, provider } = configureChains(
   [
     mainnet,
