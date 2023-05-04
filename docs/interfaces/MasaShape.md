@@ -1,4 +1,5 @@
-[Masa React](../README.md) / [Exports](../modules.md) / MasaShape
+[# Masa React
+ - v1.1.40](../README.md) / [Exports](../modules.md) / MasaShape
 
 # Interface: MasaShape
 
@@ -43,6 +44,9 @@
 - [isWalletLoading](MasaShape.md#iswalletloading)
 - [masa](MasaShape.md#masa)
 - [modalSize](MasaShape.md#modalsize)
+- [openAccountModal](MasaShape.md#openaccountmodal)
+- [openChainModal](MasaShape.md#openchainmodal)
+- [openConnectModal](MasaShape.md#openconnectmodal)
 - [openMintMasaGreen](MasaShape.md#openmintmasagreen)
 - [openMintSoulnameModal](MasaShape.md#openmintsoulnamemodal)
 - [provider](MasaShape.md#provider)
@@ -57,6 +61,7 @@
 - [soulnames](MasaShape.md#soulnames)
 - [switchNetwork](MasaShape.md#switchnetwork)
 - [useModalSize](MasaShape.md#usemodalsize)
+- [useRainbowKit](MasaShape.md#userainbowkit)
 - [verbose](MasaShape.md#verbose)
 - [walletAddress](MasaShape.md#walletaddress)
 
@@ -368,6 +373,48 @@ ___
 
 ___
 
+### openAccountModal
+
+• `Optional` **openAccountModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openChainModal
+
+• `Optional` **openChainModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openConnectModal
+
+• `Optional` **openConnectModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
 ### openMintMasaGreen
 
 • `Optional` **openMintMasaGreen**: (`callback?`: () => `void`) => `void`
@@ -410,7 +457,7 @@ ___
 
 ### provider
 
-• `Optional` **provider**: `Signer` \| `Wallet`
+• `Optional` **provider**: `Wallet` \| `Signer`
 
 ___
 
@@ -518,7 +565,7 @@ ___
 
 ### setProvider
 
-• `Optional` **setProvider**: (`provider?`: `Signer` \| `Wallet`) => `void`
+• `Optional` **setProvider**: (`provider?`: `Wallet` \| `Signer`) => `void`
 
 #### Type declaration
 
@@ -528,7 +575,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Signer` \| `Wallet` |
+| `provider?` | `Wallet` \| `Signer` |
 
 ##### Returns
 
@@ -581,6 +628,12 @@ ___
 ##### Returns
 
 `void`
+
+___
+
+### useRainbowKit
+
+• `Optional` **useRainbowKit**: `boolean`
 
 ___
 

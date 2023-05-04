@@ -6,7 +6,7 @@ import { GalleryItem } from './galleryItem';
 
 const customRenderPokeSBT = {
   name: 'PokeSBT',
-  address: '0xD1C64fa4aDc003Ed92A10558572CbC499C7cA18A',
+  address: '0xa0f3c1971a4d4ec4Ef3983cce75B567a9004eF1B',
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     const apiUrl = sbt.tokenUri.replace('.json', '');
     const apiResponse = await fetch(apiUrl);

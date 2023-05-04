@@ -1,4 +1,5 @@
-[Masa React](../README.md) / [Exports](../modules.md) / MasaContextProviderProps
+[# Masa React
+ - v1.1.40](../README.md) / [Exports](../modules.md) / MasaContextProviderProps
 
 # Interface: MasaContextProviderProps
 
@@ -46,6 +47,9 @@
 - [masa](MasaContextProviderProps.md#masa)
 - [modalSize](MasaContextProviderProps.md#modalsize)
 - [noWallet](MasaContextProviderProps.md#nowallet)
+- [openAccountModal](MasaContextProviderProps.md#openaccountmodal)
+- [openChainModal](MasaContextProviderProps.md#openchainmodal)
+- [openConnectModal](MasaContextProviderProps.md#openconnectmodal)
 - [openMintMasaGreen](MasaContextProviderProps.md#openmintmasagreen)
 - [openMintSoulnameModal](MasaContextProviderProps.md#openmintsoulnamemodal)
 - [provider](MasaContextProviderProps.md#provider)
@@ -61,6 +65,8 @@
 - [soulnames](MasaContextProviderProps.md#soulnames)
 - [switchNetwork](MasaContextProviderProps.md#switchnetwork)
 - [useModalSize](MasaContextProviderProps.md#usemodalsize)
+- [useRainbowKit](MasaContextProviderProps.md#userainbowkit)
+- [useRainbowKitWalletConnect](MasaContextProviderProps.md#userainbowkitwalletconnect)
 - [verbose](MasaContextProviderProps.md#verbose)
 - [walletAddress](MasaContextProviderProps.md#walletaddress)
 
@@ -514,6 +520,60 @@ ___
 
 ___
 
+### openAccountModal
+
+• `Optional` **openAccountModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Inherited from
+
+[MasaShape](MasaShape.md).[openAccountModal](MasaShape.md#openaccountmodal)
+
+___
+
+### openChainModal
+
+• `Optional` **openChainModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Inherited from
+
+[MasaShape](MasaShape.md).[openChainModal](MasaShape.md#openchainmodal)
+
+___
+
+### openConnectModal
+
+• `Optional` **openConnectModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Inherited from
+
+[MasaShape](MasaShape.md).[openConnectModal](MasaShape.md#openconnectmodal)
+
+___
+
 ### openMintMasaGreen
 
 • `Optional` **openMintMasaGreen**: (`callback?`: () => `void`) => `void`
@@ -564,7 +624,7 @@ ___
 
 ### provider
 
-• `Optional` **provider**: `Signer` \| `Wallet`
+• `Optional` **provider**: `Wallet` \| `Signer`
 
 #### Inherited from
 
@@ -704,7 +764,7 @@ ___
 
 ### setProvider
 
-• `Optional` **setProvider**: (`provider?`: `Signer` \| `Wallet`) => `void`
+• `Optional` **setProvider**: (`provider?`: `Wallet` \| `Signer`) => `void`
 
 #### Type declaration
 
@@ -714,7 +774,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Signer` \| `Wallet` |
+| `provider?` | `Wallet` \| `Signer` |
 
 ##### Returns
 
@@ -728,7 +788,7 @@ ___
 
 ### signer
 
-• `Optional` **signer**: `Signer` \| `Wallet`
+• `Optional` **signer**: `Wallet` \| `Signer`
 
 ___
 
@@ -789,6 +849,22 @@ ___
 #### Inherited from
 
 [MasaShape](MasaShape.md).[useModalSize](MasaShape.md#usemodalsize)
+
+___
+
+### useRainbowKit
+
+• `Optional` **useRainbowKit**: `boolean`
+
+#### Inherited from
+
+[MasaShape](MasaShape.md).[useRainbowKit](MasaShape.md#userainbowkit)
+
+___
+
+### useRainbowKitWalletConnect
+
+• `Optional` **useRainbowKitWalletConnect**: `boolean`
 
 ___
 

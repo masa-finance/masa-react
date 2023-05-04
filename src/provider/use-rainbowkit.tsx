@@ -1,0 +1,50 @@
+import {
+  useConnectModal,
+  useAccountModal,
+  useChainModal,
+} from '@rainbow-me/rainbowkit';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSigner } from 'wagmi';
+import { Signer, Wallet } from 'ethers';
+
+export const useRainbowKit = (
+  setProvider: React.Dispatch<React.SetStateAction<Signer | Wallet | undefined>>
+) => {
+  const { openConnectModal } = useConnectModal();
+  const { openAccountModal } = useAccountModal();
+  const { openChainModal } = useChainModal();
+  const { data: signer } = useSigner();
+
+  // NOTE: needs refactor ASAP
+  const [modalCallback, setRainbowKitModalCallback] =
+    useState<(modalOpen?: boolean) => void>();
+
+  // NOTE: needs refactor ASAP, quick fix to set global provider
+  useEffect(() => {
+    if (signer) {
+      setProvider(signer);
+    }
+  }, [signer, setProvider]);
+
+  const openRainbowkitConnectModal = useCallback(() => {
+    if (!openConnectModal) return undefined;
+    return () => openConnectModal();
+  }, [openConnectModal]);
+
+  // * quick fix for making sure we open the second modal of useMasa after wallet connect is closed
+  useEffect(() => {
+    if (modalCallback && openAccountModal && openChainModal) {
+      // we open the original modal of useMasa now
+      modalCallback();
+      setRainbowKitModalCallback(undefined);
+    }
+  }, [modalCallback, openAccountModal, openChainModal, openConnectModal]);
+
+  return {
+    openConnectModal,
+    openAccountModal,
+    openChainModal,
+    openRainbowkitConnectModal,
+    setRainbowKitModalCallback,
+  };
+};

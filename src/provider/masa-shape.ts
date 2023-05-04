@@ -15,7 +15,6 @@ import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/galler
 
 export interface MasaShape {
   children?: React.ReactNode;
-
   // masa
   masa?: Masa;
   // verbose flag
@@ -113,8 +112,15 @@ export interface MasaShape {
   // gallery
   customGallerySBT?: CustomGallerySBT[];
   fullScreenGallery?: boolean;
+
   // customSBTs
   customSBTs?: any[];
   badges?: any[];
   handleAddSBT?: (isCollection: boolean, name: string, address: string) => void;
+  
+  // rainbowkit
+  useRainbowKit?: boolean;
+  openConnectModal?: (() => void) | undefined;
+  openChainModal?: (() => void) | undefined;
+  openAccountModal?: (() => void) | undefined;
 }

@@ -1,48 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
-import { Messages, PaymentMethod } from '@masa-finance/masa-sdk';
-import { PokeSSSBT, PokeSSSBT__factory } from './typechain';
-
-const pokeSSSBTAddress = '0xa0f3c1971a4d4ec4Ef3983cce75B567a9004eF1B'; // sbt address
-
-// sbt friendly name
-const name = 'PokeSSSBT3';
-
-// types collection using for verification
-const types = {
-  Mint: [
-    { name: 'to', type: 'address' },
-    { name: 'authorityAddress', type: 'address' },
-    { name: 'signatureDate', type: 'uint256' },
-  ],
-};
-
-const paymentMethod: PaymentMethod = 'ETH';
-
-const customRenderPokeSBT = {
-  name: 'PokeSBT',
-  address: pokeSSSBTAddress,
-  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
-    const apiUrl = sbt.tokenUri.replace('.json', '');
-    const apiResponse = await fetch(
-      apiUrl.replace(
-        'https://api.examplesbtapi.masa.finance',
-        'http://localhost:4000'
-      )
-    );
-    const data = await apiResponse.json();
-
-    return {
-      name: data.name,
-      image: data.image,
-      description: '',
-    };
-  },
-};
 const meta: Meta = {
   title: 'SDK Test',
   component: () => <></>,
@@ -68,16 +29,17 @@ const Component = (): JSX.Element => {
     switchNetwork,
     openMintSoulnameModal,
     openMintMasaGreen,
+    openConnectModal,
+    openAccountModal,
+    openChainModal,
+
     openGallery,
-    masa,
-    customSBTs,
   } = useMasa();
 
-  console.log({ customSBTs });
   const handleConnect = useCallback(() => {
     connect?.({
-      scope: ['auth'],
-      callback: function () {
+      scope: ['auth', 'soulname', 'identity'],
+      callback: () => {
         alert('hello hello connected');
       },
     });
@@ -91,142 +53,74 @@ const Component = (): JSX.Element => {
     // todo
   };
 
-  const mintPK = useCallback(async () => {
-    if (!masa) return;
-    const to = await masa.config.wallet.getAddress();
-    const res = await fetch('http://localhost:4000/pokemons/mint', {
-      method: 'POST',
-      headers: {
-        Accept: 'application.json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: 36,
-        wallet: to,
-      }),
-    });
-
-    const { authorityAddress, signatureDate, signature, pokemon } =
-      await res.json();
-
-    console.log({ pokemon });
-
-    const value: {
-      to: string;
-      authorityAddress: string;
-      signatureDate: number;
-    } = {
-      to,
-      authorityAddress,
-      signatureDate,
-    };
-
-    //@ts-ignore
-    const { selfSovereignSBT, prepareMint } =
-      await masa.contracts.sbt.connect<PokeSSSBT>(
-        '0xD1C64fa4aDc003Ed92A10558572CbC499C7cA18A',
-        PokeSSSBT__factory
-      );
-    if (!selfSovereignSBT) return;
-
-    console.log('PREPARING MINT', {
-      paymentMethod,
-      name,
-      types,
-      value,
-      signature,
-      authorityAddress,
-    });
-
-    const prepareMintResults = await prepareMint(
-      paymentMethod,
-      name,
-      types,
-      value,
-      signature,
-      authorityAddress
-    );
-
-    if (!prepareMintResults) return;
-
-    const { paymentAddress, price } = prepareMintResults;
-
-    const mintParameters: [string, string, string, number, string] = [
-      paymentAddress,
-      to,
-      authorityAddress,
-      signatureDate,
-      signature,
-    ];
-
-    const mintOverrides = {
-      value: price,
-    };
-
-    console.log({ mintParameters, mintOverrides });
-
-    const operation = 'mint(address,address,address,uint256,bytes)';
-
-    console.log('FIRE OPERATION');
-
-    // estimate gas
-    const gasLimit = await selfSovereignSBT.estimateGas[operation](
-      ...mintParameters,
-      mintOverrides
-    );
-
-    console.log({ gasLimit });
-
-    const transaction = await selfSovereignSBT[operation](...mintParameters, {
-      ...mintOverrides,
-      gasLimit,
-    });
-
-    console.log(Messages.WaitingToFinalize(transaction.hash));
-
-    const receipt = await transaction.wait();
-
-    console.log('RECEIPT', receipt);
-    console.log('minted in block:', receipt.blockNumber);
-
-    const resUpdate = await fetch('http://localhost:4000/pokemons/update', {
-      method: 'POST',
-      headers: {
-        Accept: 'application.json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        txHash: transaction.hash,
-        id: pokemon.insertedId,
-      }),
-    });
-
-    console.log({ resUpdate });
-    const dataUpdate = await resUpdate.json();
-
-    console.log({ dataUpdate });
-  }, [masa]);
   return (
-    <>
-      <h1>SDK Tester!</h1>
-
-      <button onClick={handleConnect}>Use Masa!</button>
-      <button
-        onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          width: '50%',
+        }}
       >
-        Mint a MSN
-      </button>
-      <button
-        onClick={() => openMintMasaGreen?.(() => alert('MINTED HURRAY!'))}
-      >
-        Mint a MGX
-      </button>
-      <button onClick={mintPK}>Mint a Pokemon</button>
-      <button onClick={() => openGallery?.()}> Open gallery </button>
-      <button onClick={loadCR}>Invalidate Wallet</button>
-      <button onClick={mintGreen}>Mint green</button>
+        <h1>SDK Tester!</h1>
 
-      <div>
+        <button onClick={handleConnect}>Use Masa!</button>
+        <button onClick={() => openGallery?.()}> Open gallery </button>
+        <button
+          onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
+        >
+          Mint a MSN
+        </button>
+        <button
+          onClick={() => openMintMasaGreen?.(() => alert('MINTED HURRAY!'))}
+        >
+          Mint a MGX
+        </button>
+        <button onClick={loadCR}>Invalidate Wallet</button>
+        <button onClick={mintGreen}>Mint green</button>
+        <button
+          onClick={() => {
+            console.log('clickin', openConnectModal);
+            openConnectModal?.();
+          }}
+        >
+          Rainbowkit connect modalyarn w
+        </button>
+        <button
+          onClick={() => {
+            console.log('clickin', openAccountModal);
+            openAccountModal?.();
+          }}
+        >
+          Rainbowkit account info modal
+        </button>
+        <button
+          onClick={() => {
+            console.log('clickin', openChainModal);
+            openChainModal?.();
+          }}
+        >
+          Rainbowkit switch chain modal
+        </button>
+      </div>
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '50%',
+        }}
+      >
         <button onClick={(): void => switchNetwork?.('ethereum')}>
           Switch to Ethereum
         </button>
@@ -256,7 +150,7 @@ const Component = (): JSX.Element => {
       {isLoggedIn && (
         <button onClick={(): void => handleLogout?.()}>Logout</button>
       )}
-    </>
+    </div>
   );
 };
 
@@ -265,10 +159,8 @@ const Template: Story = (props: Args) => {
     <>
       <MasaProvider
         company="Masa"
+        useRainbowKitWalletConnect={true}
         forceNetwork={'goerli'}
-        customGallerySBT={[customRenderPokeSBT]}
-        apiUrl="http://localhost:4000"
-        fullScreenGallery
       >
         <Component {...props} />
       </MasaProvider>
@@ -289,7 +181,7 @@ const MasaGreenTemplate: Story = (props: Args) => {
     <>
       <MasaProvider
         company="Masa"
-        customGallerySBT={[customRenderPokeSBT]}
+        useRainbowKitWalletConnect={true}
         forceNetwork={'goerli'}
       >
         <ModalComponent
