@@ -66,16 +66,21 @@
 
   font-weight: 500;
 }
+
 .masa-modal {
+  color: black;
+
   * {
     all: revert;
   }
+
   h1,
   h2,
   h3 {
     font-family: Inter;
     font-weight: 500;
   }
+
   p,
   button {
     font-family: 'Inter';
