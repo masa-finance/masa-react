@@ -24,6 +24,7 @@ export const ModalWrapper = ({
   confirm,
 }: WrapperModalProps) => {
   const { domNode } = useModalManager();
+  
   return createPortal(
     <Backdrop
       onClose={() => {
@@ -31,7 +32,7 @@ export const ModalWrapper = ({
       }}
     >
       <div
-        className="masa-modalwrapper-container"
+        className="masa-modalwrapper-container masa-modal"
         onClick={(e: SyntheticEvent) => e.stopPropagation()} // needed so modal doesnt close on any click
       >
         <header>

@@ -128,4 +128,5 @@ export interface MasaShape {
   openCreateSoulnameModal?: () => void;
   openSuccessCreateIdentityModal?: () => void;
   openSwitchChainModal?: () => void;
+  openInterfaceMasaGreen?: () => void;
 }

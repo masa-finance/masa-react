@@ -7,23 +7,6 @@
   border-radius: 24px;
 }
 .masa-modal {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  box-sizing: border-box;
-
-  padding: 1.2em;
-
-  width: 100%;
-  height: 100%;
-
-  .masa-modal-container {
-    width: 100%;
-    height: 100%;
-    padding: 1em 2em;
-
-    box-sizing: border-box;
-  }
 
   .error-message {
     color: red;
@@ -529,6 +512,7 @@
   .interface-connected {
     .title {
       text-align: center;
+      color: black;
     }
 
     .connected-wallet {

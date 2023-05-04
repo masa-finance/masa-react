@@ -7,6 +7,7 @@ import SuccessCreateIdentityModal from './SuccessCreateIdentityModal';
 import SwitchChainModal from './SwitchChainModal';
 import Backdrop from '../Backdrop';
 import { ModalWrapper } from '../Modal';
+import InterfaceMasaGreen from '../../../components/masa-interface/pages/masa-green';
 export const Modals = {
   AuthenticateModal,
   ConnectedModal,
@@ -27,6 +28,7 @@ export const ModalContent = {
   CreateSoulnameModal,
   SuccessCreateIdentityModal,
   SwitchChainModal,
+  InterfaceMasaGreen,
 };
 export type ModalName =
   | 'AuthenticateModal'
@@ -35,4 +37,5 @@ export type ModalName =
   | 'CreateIdentityModal'
   | 'CreateSoulnameModal'
   | 'SuccessCreateIdentityModal'
-  | 'SwitchChainModal';
+  | 'SwitchChainModal'
+  | 'InterfaceMasaGreen';

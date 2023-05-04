@@ -20,6 +20,22 @@ export const useMasaModals = () => {
     [openModal]
   );
 
+  const openInterfaceMasaGreen = useCallback(
+    () =>
+      openModal({
+        name: 'InterfaceMasaGreen',
+        contentProps: {},
+        wrapperProps: {
+          confirm: 'Authenticate',
+          decline: 'Cancel',
+          onConfirm: () => {
+            console.log('Authenticated');
+          },
+        },
+      }),
+    [openModal]
+  );
+
   const openConnectedModal = useCallback(
     () =>
       openModal({
@@ -124,5 +140,6 @@ export const useMasaModals = () => {
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
+    openInterfaceMasaGreen
   };
 };

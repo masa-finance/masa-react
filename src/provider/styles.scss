@@ -136,17 +136,19 @@
 
   background-color: rgba(200, 200, 200, 0.5);
   border-radius: 12;
+
+
   .masa-modalwrapper-container {
-    background-color: var(--color-secondary);
+    background-color: white;
     color: var(--color-primary);
-    width: 80%;
-    min-height: 500;
+    width: 60%;
+    min-height: 500px;
     z-index: var(--z-index-front);
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
     padding: 24;
     justify-content: flex-start;
     overflow-x: hidden;
-    overflow-y: scroll;
+
     & > header {
       width: 100%;
       display: flex;
@@ -180,12 +182,17 @@
     }
 
     & > section {
-      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      padding: 0;
+
+
+      width: 100%;
+      height: 100%;
+      padding: 1em 10em;
+  
+      box-sizing: border-box;
     }
 
     & > ul {
@@ -194,6 +201,10 @@
       justify-content: center;
       align-items: center;
       flex-direction: row;
+
+      box-sizing: border-box;
+      padding: 0;
+
       & > li {
         width: '100%';
         display: flex;
@@ -204,3 +215,5 @@
     }
   }
 }
+
+

@@ -146,6 +146,7 @@ export const MasaContextProvider = ({
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
+    openInterfaceMasaGreen,
   } = useMasaModals();
 
   // modal
@@ -347,6 +348,7 @@ export const MasaContextProvider = ({
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
+    openInterfaceMasaGreen
   };
 
   return (

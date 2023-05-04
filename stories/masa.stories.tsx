@@ -51,6 +51,7 @@ const Component = (): JSX.Element => {
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
+    openInterfaceMasaGreen
   } = useMasa();
 
   const ModalOpens = {
@@ -61,6 +62,7 @@ const Component = (): JSX.Element => {
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
+    openInterfaceMasaGreen
   };
 
   const handleConnect = useCallback(() => {
