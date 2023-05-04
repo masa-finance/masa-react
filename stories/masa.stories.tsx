@@ -153,6 +153,7 @@ const Component = (): JSX.Element => {
         <button onClick={(): void => switchNetwork?.('goerli')}>
           Switch to Goerli
         </button>
+
         <button onClick={(): void => switchNetwork?.('polygon')}>
           Switch to Polygon
         </button>
