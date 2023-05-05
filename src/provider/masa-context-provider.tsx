@@ -23,6 +23,7 @@ import { useScopes } from './modules/scopes/scopes';
 import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
 import { useNetworkSwitch } from './use-network-switch';
+import { useAsync } from 'react-use';
 
 export { SoulNameErrorCodes };
 
@@ -64,18 +65,42 @@ export const MasaContextProvider = ({
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
 
   // provider
-  const { isLoading: wagmiLoading, signer: wagmiSigner } = useWagmi();
+  const {
+    isLoading: wagmiLoading,
+    signer: wagmiSigner,
+    // refetchSigner,
+    provider: wagmiProvider,
+    address: wagmiAddress,
+  } = useWagmi();
+
   const [signer, setSigner] = useState<Signer | undefined>(
     wagmiSigner as Signer
   );
 
-  useEffect(() => setSigner(wagmiSigner as Signer), [wagmiSigner]);
+  useEffect(() => {
+    setSigner(wagmiSigner as Signer);
+  }, [wagmiSigner, wagmiAddress]);
 
   // wallet
   const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
     masaInstance,
     wagmiSigner as Signer
   );
+
+  // * little async useEffect helper
+  useAsync(async () => {
+    // const { data: result } = await refetchSigner();
+    // const oldAddress = await wagmiSigner?.getAddress();
+    // const newAddress = await wagmiSigner?.getAddress();
+    console.log('use async hook');
+    console.log({
+      wagmiSigner,
+      wagmiAddress,
+      wagmiProvider,
+      walletAddress,
+    });
+    setSigner(wagmiSigner as Signer);
+  }, [wagmiSigner, wagmiAddress]);
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
     useSession(masaInstance, walletAddress);
@@ -263,7 +288,14 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-  }, [arweaveConfig, environmentName, verbose, currentNetwork, wagmiSigner]);
+  }, [
+    arweaveConfig,
+    environmentName,
+    verbose,
+    currentNetwork,
+    wagmiSigner,
+    wagmiAddress,
+  ]);
 
   const context: MasaShape = {
     // masa instance

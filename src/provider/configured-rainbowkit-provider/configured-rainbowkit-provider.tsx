@@ -9,8 +9,6 @@ import { Valora } from '@celo/rainbowkit-celo/wallets';
 import { injectedWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
 // Import CELO chain information
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
-
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import {
   baseGoerli,
   bsc,
@@ -20,17 +18,21 @@ import {
   polygon,
   polygonMumbai,
 } from 'wagmi/chains';
+
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 
 import type { ReactNode } from 'react';
 import React, { createContext, useContext, useMemo } from 'react';
+import { getRainbowkitChains } from './utils';
 // import { SupportedNetworks } from '@masa-finance/masa-sdk';
 
 type ConfiguredRainbowKitProviderValue = Record<string, never>;
 
 interface ConfiguredRainbowKitProviderProps {
   children: ReactNode;
+  chainsToUse?: any;
 }
 
 const { chains, provider } = configureChains(
@@ -94,12 +96,14 @@ const wagmiClient = createClient({
 
 export const ConfiguredRainbowKitProvider = ({
   children,
+  chainsToUse,
 }: ConfiguredRainbowKitProviderProps) => {
+  const rainbowkitChains = getRainbowkitChains(chainsToUse);
   const contextValue = useMemo(() => ({}), []);
 
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider modalSize="compact" chains={chains}>
+      <RainbowKitProvider modalSize="compact" chains={rainbowkitChains}>
         <ConfiguredRainbowKitContext.Provider value={contextValue}>
           {children}
         </ConfiguredRainbowKitContext.Provider>

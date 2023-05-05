@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query';
 import { Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { Signer, Wallet } from 'ethers';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useAccount, useSigner } from 'wagmi';
 
 export const useWallet = (
   masa?: Masa,
@@ -13,9 +14,12 @@ export const useWallet = (
   status: string;
   error: unknown;
 } => {
+  const { address: wagmiAddress } = useAccount();
+  const signer = useSigner();
+  const { isRefetching } = signer;
   const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
     return ['wallet', masa?.config.networkName];
-  }, [masa]);
+  }, [masa, wagmiAddress, isRefetching]);
 
   const {
     data: walletAddress,
@@ -31,7 +35,16 @@ export const useWallet = (
       retry: false,
     }
   );
+  useEffect(() => {
+    console.log('isRefetching changed', isRefetching);
+  }, [isRefetching]);
+  // console.log({
+  //   wagmiAddress,
 
+  //   walletAddress,
+
+  //   signer: signer.data?.provider,
+  // });
   const hasWalletAddress = useMemo(() => {
     return !!walletAddress;
   }, [walletAddress]);

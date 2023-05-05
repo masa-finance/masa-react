@@ -9,7 +9,7 @@ import { QueryClientProvider } from 'react-query';
 
 import { queryClient } from './masa-query-client';
 import { MasaInterface } from '../components';
-import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider';
+import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider/configured-rainbowkit-provider';
 
 // needs to be imported using require. Otherwise, it will not load!
 require('@rainbow-me/rainbowkit/styles.css');

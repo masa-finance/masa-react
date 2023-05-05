@@ -7,6 +7,7 @@ export const useWagmi = () => {
     data: signer,
     isError: isSignerError,
     isLoading: isSignerLoading,
+    refetch: refetchSigner,
   } = useSigner();
   const { address, isConnecting, isDisconnected } = useAccount();
 
@@ -18,6 +19,7 @@ export const useWagmi = () => {
     isDisconnected,
     provider,
     signer,
+    refetchSigner,
     chain: chain as Chain,
     chains,
   };
