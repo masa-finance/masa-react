@@ -1,8 +1,8 @@
 import {
   EnvironmentName,
   Masa,
-  SupportedNetworks,
   SoulNameErrorCodes,
+  SupportedNetworks,
 } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa } from '../helpers';
@@ -332,6 +332,7 @@ export const MasaContextProvider = ({
     forceNetwork,
 
     // rainbowkit
+    useRainbowKit: useRainbowKitWalletConnect,
     openConnectModal,
     openChainModal,
     openAccountModal,
@@ -348,7 +349,7 @@ export const MasaContextProvider = ({
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
-    openInterfaceMasaGreen
+    openInterfaceMasaGreen,
   };
 
   return (

@@ -24,7 +24,7 @@ export const ModalWrapper = ({
   confirm,
 }: WrapperModalProps) => {
   const { domNode } = useModalManager();
-  
+
   return createPortal(
     <Backdrop
       onClose={() => {

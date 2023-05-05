@@ -12,6 +12,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     setModalOpen,
     openConnectModal,
     isLoggedIn,
+    useRainbowKit,
   } = useMasa();
   const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
@@ -78,26 +79,37 @@ export const InterfaceAuthenticate = (): JSX.Element => {
         </p>
       </div>
       <div>
-        {!isLoggedIn && isConnected && (
-          <button
-            className="masa-button authenticate-button"
-            onClick={switchWallet}
-          >
-            Switch Wallet
-          </button>
-        )}
         <button
           className="masa-button authenticate-button"
           onClick={handleLogin}
         >
           {isLoading ? 'loading...' : 'Get Started'}
         </button>
-        <div className="dont-have-a-wallet">
-          <p>
-            Want to use a different wallet? Close this window and disconnect
-            your wallet in Metamask to connect a new wallet
-          </p>
-        </div>
+
+        {useRainbowKit ? (
+          <div className="dont-have-a-wallet">
+            <p>
+              Want to use a different wallet?
+              {!isLoggedIn && isConnected && (
+                <div className={'connected-wallet'}>
+                  <span
+                    className={'authenticate-button'}
+                    onClick={switchWallet}
+                  >
+                    Switch Wallet
+                  </span>
+                </div>
+              )}
+            </p>
+          </div>
+        ) : (
+          <div className="dont-have-a-wallet">
+            <p>
+              Want to use a different wallet? Close this window and disconnect
+              your wallet in Metamask to connect a new wallet
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

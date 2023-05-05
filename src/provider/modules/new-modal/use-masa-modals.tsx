@@ -140,6 +140,6 @@ export const useMasaModals = () => {
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
-    openInterfaceMasaGreen
+    openInterfaceMasaGreen,
   };
 };
