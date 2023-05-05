@@ -22,7 +22,7 @@ const meta: Meta = {
 
 export default meta;
 
-const Component = (): JSX.Element => {
+const Component = ({ name }: { name?: string }): JSX.Element => {
   const {
     connect,
     isLoggedIn,
@@ -93,7 +93,7 @@ const Component = (): JSX.Element => {
           width: '50%',
         }}
       >
-        <h1>SDK Tester!</h1>
+        <h1>SDK Tester for {name}!</h1>
 
         <button onClick={handleConnect}>Use Masa!</button>
         <button
@@ -195,7 +195,21 @@ const Component = (): JSX.Element => {
   );
 };
 
-const Template: Story = (props: Args) => {
+const TemplateNoRainbowkit: Story = (props: Args) => {
+  return (
+    <>
+      <MasaProvider
+        company="Masa"
+        useRainbowKitWalletConnect={false}
+        forceNetwork={'goerli'}
+      >
+        <Component name="Old Connection" {...props} />
+      </MasaProvider>
+    </>
+  );
+};
+
+const TemplateWithRainbowKit: Story = (props: Args) => {
   return (
     <>
       <MasaProvider
@@ -203,19 +217,23 @@ const Template: Story = (props: Args) => {
         useRainbowKitWalletConnect={true}
         forceNetwork={'goerli'}
       >
-        <Component {...props} />
+        <Component name="Rainbow Kit" {...props} />
       </MasaProvider>
     </>
   );
 };
 
-// By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
-// https://storybook.js.org/docs/react/workflows/unit-testing
-export const Default = Template.bind({
+export const RainbowkitInterface = TemplateWithRainbowKit.bind({
   options: { scope: [] },
 });
 
-Default.args = {};
+// By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
+// https://storybook.js.org/docs/react/workflows/unit-testing
+export const NoRainbowkitInterface = TemplateNoRainbowkit.bind({
+  options: { scope: [] },
+});
+
+NoRainbowkitInterface.args = {};
 
 const MasaGreenTemplate: Story = (props: Args) => {
   return (

@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo } from 'react';
-import { useMasa } from '../../provider';
+import { useMasa, useMetamask } from '../../provider';
 import { ModalComponent } from '../modal';
 import {
   InterfaceAuthenticate,
   InterfaceConnected,
+  InterfaceConnector,
   InterfaceCreateCreditScore,
   InterfaceCreateIdentity,
 } from './pages';
@@ -13,11 +14,11 @@ import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity'
 import { InterfaceSwitchChain } from './pages/switch-chain';
 
 const pages = {
-  // connector: ({
-  //   disableMetamask,
-  // }: {
-  //   disableMetamask?: boolean;
-  // }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
+  connector: ({
+    disableMetamask,
+  }: {
+    disableMetamask?: boolean;
+  }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
   createIdentity: <InterfaceCreateIdentity />,
   successIdentityCreate: <InterfaceSuccessCreateIdentity />,
   createSoulname: <InterfaceCreateSoulname />,
@@ -28,14 +29,12 @@ const pages = {
   masaGreen: <InterfaceMasaGreen />,
 };
 
-// {
-// disableMetamask,
-// }: {
-// disableMetamask?: boolean;
-// }
-
-export const MasaInterface = (): JSX.Element => {
-  // useMetamask({ disabled: disableMetamask });
+export const MasaInterface = ({
+  disableMetamask,
+}: {
+  disableMetamask?: boolean;
+}): JSX.Element => {
+  useMetamask({ disabled: disableMetamask });
 
   const {
     isModalOpen,
@@ -55,14 +54,16 @@ export const MasaInterface = (): JSX.Element => {
     // setRainbowkitModalCallback,
 
     openConnectModal,
+    useRainbowKit,
   } = useMasa();
 
   const page = useMemo(() => {
     if (forcedPage) return forcedPage;
+
     if (!hasWalletAddress) {
-      // openConnectModal?.();
-      return null;
-      // return 'connector';
+      // * feature toggle
+      if (useRainbowKit) return null;
+      return 'connector';
     }
 
     if (verbose) {
@@ -94,8 +95,9 @@ export const MasaInterface = (): JSX.Element => {
 
     if (hasWalletAddress && isLoggedIn) return 'connectedState';
 
-    // openConnectModal?.();
-    return null;
+    // * feature toggle
+    if (useRainbowKit) return null;
+
     return 'connector';
   }, [
     hasWalletAddress,
@@ -109,7 +111,7 @@ export const MasaInterface = (): JSX.Element => {
     forcedPage,
     forceNetwork,
     currentNetwork,
-    // openConnectModal,
+    useRainbowKit,
   ]);
 
   const isModal = useMemo(() => {
@@ -117,6 +119,8 @@ export const MasaInterface = (): JSX.Element => {
   }, [page]);
 
   useEffect(() => {
+    if (!useRainbowKit) return; // feature toggle
+
     // * when user closes connection during login process,
     // * we want to reopen rainbowkit modal not our old connection modal
     if (isModalOpen && !signer && page === 'connector') {
@@ -124,7 +128,7 @@ export const MasaInterface = (): JSX.Element => {
       console.log('opening connect modal');
       openConnectModal?.();
     }
-  }, [isModalOpen, closeModal, signer, page, openConnectModal]);
+  }, [isModalOpen, closeModal, signer, page, openConnectModal, useRainbowKit]);
 
   return (
     <>
@@ -134,8 +138,10 @@ export const MasaInterface = (): JSX.Element => {
         setOpen={setModalOpen as (val: boolean) => void}
         height={isModal ? 340 : undefined}
       >
-        {/* {page === 'connector' ? pages[page]({ disableMetamask }) :  */}
-        {page ? pages[page] : null}
+        {!useRainbowKit && page === 'connector'
+          ? pages[page]({ disableMetamask })
+          : pages[page as string]}
+        {useRainbowKit && page ? pages[page] : null}
       </ModalComponent>
     </>
   );

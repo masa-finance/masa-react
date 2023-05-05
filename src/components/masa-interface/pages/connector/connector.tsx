@@ -1,16 +1,13 @@
 import React from 'react';
-// import { useMetamask } from '../../../../provider';
-import {
-  coinbase,
-  // metamask,
-  walletconnect,
-} from '../../../../assets';
+import { useMetamask } from '../../../../provider';
+import { coinbase, metamask, walletconnect } from '../../../../assets';
 
-// {}: {
-// disableMetamask?: boolean;
-// }
-export const InterfaceConnector = (): JSX.Element => {
-  // const { connectMetamask } = useMetamask({ disabled: disableMetamask });
+export const InterfaceConnector = ({
+  disableMetamask,
+}: {
+  disableMetamask?: boolean;
+}): JSX.Element => {
+  const { connectMetamask } = useMetamask({ disabled: disableMetamask });
 
   return (
     <div className="interface-connect">
@@ -36,10 +33,10 @@ export const InterfaceConnector = (): JSX.Element => {
         </p>
       </div>
       <div className="masa-connectors">
-        {/* <div data-cy="metaMask" className="connector" onClick={connectMetamask}>
+        <div data-cy="metaMask" className="connector" onClick={connectMetamask}>
           <p>MetaMask</p>
           <img alt="metamask" src={metamask} className="connector-image" />
-        </div> */}
+        </div>
         <div data-cy="walletConnect" className="connector disabled">
           <p>WalletConnect</p>
           <img

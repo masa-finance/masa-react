@@ -1,4 +1,11 @@
-import { Chain, useAccount, useNetwork, useProvider, useSigner } from 'wagmi';
+import {
+  Chain,
+  useAccount,
+  useDisconnect,
+  useNetwork,
+  useProvider,
+  useSigner,
+} from 'wagmi';
 import { Signer } from 'ethers';
 import { useEffect } from 'react';
 
@@ -16,6 +23,7 @@ export const useWagmi = ({
   } = useSigner();
 
   const { isConnecting, isDisconnected } = useAccount();
+  const { disconnect } = useDisconnect();
 
   useEffect(() => {
     setSigner(signer as Signer);
@@ -30,5 +38,6 @@ export const useWagmi = ({
     signer,
     chain: chain as Chain,
     chains,
+    disconnect,
   };
 };
