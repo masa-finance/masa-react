@@ -24,19 +24,15 @@ export const useWallet = (
     isFetching,
     error,
     refetch,
-  } = useQuery<string | undefined>(
-    queryKey,
-    () => masa?.config.wallet.getAddress(),
-    {
-      enabled: !!masa && !!signer,
-      retry: false,
-      onSuccess: (address: string | undefined) => {
-        if (masa?.config.verbose) {
-          console.log('wallet address', address);
-        }
-      },
-    }
-  );
+  } = useQuery<string | undefined>(queryKey, () => signer?.getAddress(), {
+    enabled: !!masa && !!signer,
+    retry: false,
+    onSuccess: (address: string | undefined) => {
+      if (masa?.config.verbose) {
+        console.info('wallet address', address);
+      }
+    },
+  });
 
   useEffect(() => {
     void refetch();

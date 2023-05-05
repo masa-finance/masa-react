@@ -86,6 +86,7 @@ export const useSession = (
       sessionData &&
       sessionData.user.address !== walletAddress
     ) {
+      console.error('Session mismatch detected, logging out!');
       void handleLogout();
     }
   }, [sessionData, walletAddress, handleLogout, isLoggedIn]);
