@@ -1,12 +1,12 @@
 import {
   connectorsForWallets,
-  getDefaultWallets,
+  // getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 
 // Import known recommended wallets
 import { Valora } from '@celo/rainbowkit-celo/wallets';
-
+import { injectedWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
 // Import CELO chain information
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 
@@ -25,7 +25,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 
 import type { ReactNode } from 'react';
 import React, { createContext, useContext, useMemo } from 'react';
-import { SupportedNetworks } from '@masa-finance/masa-sdk';
+// import { SupportedNetworks } from '@masa-finance/masa-sdk';
 
 type ConfiguredRainbowKitProviderValue = Record<string, never>;
 
@@ -33,7 +33,6 @@ interface ConfiguredRainbowKitProviderProps {
   children: ReactNode;
 }
 
-console.log({ SupportedNetworks });
 const { chains, provider } = configureChains(
   [
     // eth
@@ -44,6 +43,7 @@ const { chains, provider } = configureChains(
     polygonMumbai,
     // base
     baseGoerli,
+
     // binance smart chain
     bsc,
     bscTestnet,
@@ -60,14 +60,17 @@ const { chains, provider } = configureChains(
   ]
 );
 
-const { wallets } = getDefaultWallets({
-  appName: 'Masa React',
-  projectId: '04a4088bf7ff775c3de808412c291cc0',
-  chains,
-});
+// const { wallets } = getDefaultWallets({
+//   appName: 'Masa React',
+//   projectId: '04a4088bf7ff775c3de808412c291cc0',
+//   chains,
+// });
 
 const celoConnectors = connectorsForWallets([
-  { ...wallets[0] },
+  {
+    groupName: 'Recommended',
+    wallets: [injectedWallet({ chains }), metaMaskWallet({ chains })],
+  },
   {
     groupName: 'Celo',
     wallets: [
@@ -77,6 +80,11 @@ const celoConnectors = connectorsForWallets([
     ],
   },
 ]);
+
+console.log(
+  'abyayayayo',
+  celoConnectors().map((cc) => cc.name)
+);
 
 const wagmiClient = createClient({
   autoConnect: true,

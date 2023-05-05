@@ -121,7 +121,6 @@ export const MasaInterface = (): JSX.Element => {
   }, [page]);
 
   useEffect(() => {
-    console.log({ isModalOpen, provider, page });
     // * when user closes connection during login process,
     // * we want to reopen rainbowkit modal not our old connection modal
     if (isModalOpen && !provider && page === 'connector') {

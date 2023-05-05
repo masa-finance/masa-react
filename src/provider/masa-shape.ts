@@ -12,6 +12,7 @@ import {
 } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer, Wallet } from 'ethers';
 import { GetNetworkResult } from '@wagmi/core';
+import { WrapperModalProps, ModalName } from '../components/new-modal';
 export interface MasaShape {
   children?: React.ReactNode;
   // masa
@@ -121,6 +122,18 @@ export interface MasaShape {
   currentNetworkNew?: GetNetworkResult;
 
   // new-modal
+  openModal?: ({
+    name,
+    title,
+    wrapperProps,
+    contentProps,
+  }: {
+    name: ModalName;
+    title?: React.ReactNode;
+    wrapperProps?: WrapperModalProps | undefined;
+    contentProps: any;
+  }) => void;
+
   openAuthenticateModal?: () => void;
   openConnectedModal?: () => void;
   openCreateCreditScoreModal?: () => void;

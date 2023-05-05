@@ -1,24 +1,27 @@
 import { useCallback } from 'react';
 import { useModalManager } from '../modal-provider';
 
+import { useSession } from '../session';
+
 export const useMasaModals = () => {
   const { openModal } = useModalManager();
+  const { handleLogin } = useSession();
 
-  const openAuthenticateModal = useCallback(
-    () =>
-      openModal({
-        name: 'AuthenticateModal',
-        contentProps: {},
-        wrapperProps: {
-          confirm: 'Authenticate',
-          decline: 'Cancel',
-          onConfirm: () => {
-            console.log('Authenticated');
-          },
+  const openAuthenticateModal = useCallback(() => {
+    if (!handleLogin) return;
+
+    openModal({
+      name: 'AuthenticateModal',
+      contentProps: {},
+      wrapperProps: {
+        confirm: 'Get Started',
+        onConfirm: () => {
+          handleLogin();
+          console.log('Authenticated');
         },
-      }),
-    [openModal]
-  );
+      },
+    });
+  }, [openModal, handleLogin]);
 
   const openInterfaceMasaGreen = useCallback(
     () =>

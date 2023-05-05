@@ -54,6 +54,7 @@ export const ModalComponent = ({
 }: ModalProps): JSX.Element => {
   const { isMobile, height: screenHeight, width: screenWidth } = useIsMobile();
   const { modalSize } = useMasa();
+
   return (
     <Rodal
       data-cy="closeMasaModal"

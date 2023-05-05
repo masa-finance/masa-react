@@ -155,7 +155,7 @@
       align-items: center;
       flex: 1 1 20%;
       flex-wrap: wrap;
-      flex-direction: column;
+      flex-direction: row;
 
       .masa-modalwrapper-button-container {
         display: flex;
@@ -212,4 +212,13 @@
       }
     }
   }
+}
+
+.flex-50 {
+  flex: 1 1 50%;
+}
+
+.flex-100 {
+  flex: 1 1 100%;
+  padding: 16px;
 }

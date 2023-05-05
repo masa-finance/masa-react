@@ -3,9 +3,9 @@ import { useMasa } from '../../../provider';
 import { Spinner } from '../../spinner';
 
 const AuthenticateModal = (): JSX.Element => {
-  const { company, handleLogin, walletAddress, isLoading } = useMasa();
+  const { company, walletAddress, isLoading } = useMasa();
   const [copied, setCopied] = useState(false);
-
+  console.log({ company, walletAddress, isLoading });
   const message = useMemo(() => {
     switch (company) {
       case 'Masa':
@@ -46,26 +46,28 @@ const AuthenticateModal = (): JSX.Element => {
         <h3 className="title">Wallet connected!</h3>
         <p className="connected-wallet">{message}</p>
 
-        <p className="connected-wallet with-wallet">
-          You are connected with the following wallet
-          <span onClick={handleClipboard}>
-            {copied ? 'Copied!' : shortAddress}
-          </span>
-        </p>
+        {walletAddress && (
+          <p className="connected-wallet with-wallet">
+            You are connected with the following wallet
+            <span onClick={handleClipboard}>
+              {copied ? 'Copied!' : shortAddress}
+            </span>
+          </p>
+        )}
       </div>
       <div>
-        <button
+        {/* <button
           className="masa-button authenticate-button"
           onClick={handleLogin}
         >
           {isLoading ? 'loading...' : 'Get Started'}
-        </button>
-        <div className="dont-have-a-wallet">
+        </button> */}
+        {/* <div className="dont-have-a-wallet">
           <p>
             Want to use a different wallet? Close this window and disconnect
             your wallet in Metamask to connect a new wallet
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

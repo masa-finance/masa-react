@@ -2,6 +2,7 @@ import { useModalManager } from '../../provider/modules/modal-provider';
 import React, { ReactNode, SyntheticEvent } from 'react';
 import { createPortal } from 'react-dom';
 import Backdrop from './Backdrop';
+import cx from 'classnames';
 
 export interface WrapperModalProps {
   children?: ReactNode;
@@ -24,6 +25,17 @@ export const ModalWrapper = ({
   confirm,
 }: WrapperModalProps) => {
   const { domNode } = useModalManager();
+  const buttonClassName = cx({
+    'masa-button': true,
+    'authenticate-button':
+      [onDecline, onConfirm].map(Boolean).filter(Boolean).length === 1,
+  });
+
+  const listItemClassName = cx({
+    'flex-50': [onDecline, onConfirm].map(Boolean).filter(Boolean).length === 2,
+    'flex-100':
+      [onDecline, onConfirm].map(Boolean).filter(Boolean).length === 1,
+  });
 
   return createPortal(
     <Backdrop
@@ -37,40 +49,37 @@ export const ModalWrapper = ({
       >
         <header>
           <div className="masa-modalwrapper-button-container">
-            <button
-              className="masa-button masa-modalwrapper-button"
-              onClick={onClose}
-            >
-              Close
-            </button>
+            <span onClick={onClose}>x</span>
           </div>
           <h3 className="masa-modalwrapper-title">{title}</h3>
         </header>
         <section>{children}</section>
         <ul>
           {onDecline && (
-            <li>
+            <li className={listItemClassName}>
               <button
-                className="masa-button"
+                className={buttonClassName}
                 onClick={() => {
                   if (onDecline) onDecline();
                   if (onClose) onClose();
                 }}
               >
-                {decline || 'No!'}
+                {decline}
               </button>
             </li>
           )}
-          <li>
-            <button
-              className="masa-button"
-              onClick={() => {
-                if (onConfirm) onConfirm();
-                if (onClose) onClose();
-              }}
-            >
-              {confirm || 'Okay'}
-            </button>
+          <li className={listItemClassName}>
+            {onConfirm && (
+              <button
+                className={buttonClassName}
+                onClick={() => {
+                  if (onConfirm) onConfirm();
+                  if (onClose) onClose();
+                }}
+              >
+                {confirm}
+              </button>
+            )}
           </li>
         </ul>
       </div>

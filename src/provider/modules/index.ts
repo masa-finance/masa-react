@@ -7,4 +7,3 @@ export * from './soulnames';
 export * from './wallet';
 export * from './modal';
 export * from './sbt';
-export * from './new-modal';

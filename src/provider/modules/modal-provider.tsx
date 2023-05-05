@@ -95,7 +95,6 @@ export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
   );
   return (
     <>
-      <div id="modal-mount" />
       <ModalManagerContext.Provider value={modalManagerProviderValue}>
         {children}
         {isModalOpen && (

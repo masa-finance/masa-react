@@ -51,6 +51,7 @@
     "react-query": "^3.39.3",
     "react-spinners": "^0.13.8",
     "react-use": "^17.4.0",
+    "react-use-pagination": "^2.0.1",
     "reaptcha": "^1.12.1",
     "rodal": "^2.0.0",
     "storybook-addon-sass-postcss": "^0.1.3",

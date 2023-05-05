@@ -10,7 +10,6 @@ import {
   useCreditScores,
   useGreen,
   useIdentity,
-  useMasaModals,
   useModal,
   useNetwork,
   useSession,
@@ -128,7 +127,7 @@ export const MasaContextProvider = ({
     isLoggedIn,
     masaInstance?.config.verbose
   );
-  console.log({ scope, areScopesFullfiled });
+
   // rainbowkit
   const {
     openChainModal,
@@ -136,18 +135,6 @@ export const MasaContextProvider = ({
     openAccountModal,
     setRainbowKitModalCallback,
   } = useRainbowKit();
-
-  // new-modal
-  const {
-    openAuthenticateModal,
-    openConnectedModal,
-    openCreateCreditScoreModal,
-    openCreateIdentityModal,
-    openCreateSoulnameModal,
-    openSuccessCreateIdentityModal,
-    openSwitchChainModal,
-    openInterfaceMasaGreen,
-  } = useMasaModals();
 
   // modal
   const {
@@ -187,15 +174,45 @@ export const MasaContextProvider = ({
   ]);
   // const providerWagmi = useProvider();
 
+  // useEffect(() => {
+  //   if (forceNetwork && currentNetwork?.networkName !== forceNetwork)
+  //     openSwitchChainModal();
+  //   else if (!isLoggedIn && provider) openAuthenticateModal();
+  //   if (isLoggedIn) {
+  //     if (!soulnames || (soulnames && soulnames.length === 0)) {
+  //       // TODO: add scopes
+  //       openCreateSoulnameModal();
+  //     }
+  //   }
+  // }, [
+  //   isLoggedIn,
+  //   provider,
+  //   forceNetwork,
+  //   soulnames,
+  //   currentNetwork,
+  //   // openAuthenticateModal,
+  //   // openSwitchChainModal,
+  //   // openCreateSoulnameModal,
+  // ]);
+
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
+      // if (useRainbowKitWalletConnect) {
+      //   openConnectModal?.();
+      //   // setRainbowKitModalCallback(() => {
+      //   //   return () => {
+      //   //     openAuthenticateModal();
+      //   //     openConnectedModal();
+      //   //   };
+      //   // });
+      //   // return;
+      // }
       if (verbose) {
         console.info({ forcedPage });
       }
 
       // * feature toggle, to be removed soon
       if (useRainbowKitWalletConnect) {
-        console.log('userainbow', openConnectModal);
         // * set the callback to open masa modal after rainbowkit modal is closed
         setRainbowKitModalCallback(() => {
           return () => setModalOpen(true);
@@ -227,6 +244,8 @@ export const MasaContextProvider = ({
       openConnectModal,
       verbose,
       useRainbowKitWalletConnect,
+      // openAuthenticateModal,
+      // openConnectedModal,
       // wagmiSigner,
     ]
   );
@@ -341,15 +360,16 @@ export const MasaContextProvider = ({
     switchNetworkNew,
     currentNetworkNew,
 
-    // new-modal
-    openAuthenticateModal,
-    openConnectedModal,
-    openCreateCreditScoreModal,
-    openCreateIdentityModal,
-    openCreateSoulnameModal,
-    openSuccessCreateIdentityModal,
-    openSwitchChainModal,
-    openInterfaceMasaGreen,
+    // // new-modal
+    // openModal,
+    // openAuthenticateModal,
+    // openConnectedModal,
+    // openCreateCreditScoreModal,
+    // openCreateIdentityModal,
+    // openCreateSoulnameModal,
+    // openSuccessCreateIdentityModal,
+    // openSwitchChainModal,
+    // openInterfaceMasaGreen,
   };
 
   return (
