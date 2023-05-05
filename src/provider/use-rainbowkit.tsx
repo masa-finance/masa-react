@@ -1,7 +1,7 @@
 import {
-  useConnectModal,
   useAccountModal,
   useChainModal,
+  useConnectModal,
 } from '@rainbow-me/rainbowkit';
 import { useCallback, useEffect, useState } from 'react';
 

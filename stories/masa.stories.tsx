@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import React, { useCallback } from 'react';
-import {
-  MasaProvider,
-  ModalComponent,
-  ModalName,
-  queryClient,
-  useMasa,
-} from '../src';
+import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
 
@@ -195,7 +189,7 @@ const Component = (): JSX.Element => {
         })}
       </div>
       {isLoggedIn && (
-        <button onClick={(): void => handleLogout?.()}>Logout</button>
+        <button onClick={(): Promise<void> => handleLogout?.()}>Logout</button>
       )}
     </div>
   );
