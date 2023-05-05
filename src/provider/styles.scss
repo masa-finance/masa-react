@@ -69,6 +69,11 @@
 
 .masa-modal {
   color: black;
+  height: 100%;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
 
   * {
     all: revert;
@@ -121,6 +126,7 @@
   }
 }
 
+// new modal
 .masa-backdrop {
   display: flex;
   width: 100vw;

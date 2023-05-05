@@ -157,7 +157,7 @@ const PageSwitcher = ({
   useRainbowKit: boolean | undefined;
   disableMetamask: boolean | undefined;
 }) => {
-  if (useRainbowKit) {
+  if (!useRainbowKit) {
     return page === 'connector'
       ? pages[page]({ disableMetamask })
       : pages[page as string];
