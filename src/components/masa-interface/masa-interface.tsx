@@ -138,11 +138,30 @@ export const MasaInterface = ({
         setOpen={setModalOpen as (val: boolean) => void}
         height={isModal ? 340 : undefined}
       >
-        {!useRainbowKit && page === 'connector'
-          ? pages[page]({ disableMetamask })
-          : pages[page as string]}
-        {useRainbowKit && page ? pages[page] : null}
+        <PageSwitcher
+          page={page}
+          useRainbowKit={useRainbowKit}
+          disableMetamask={disableMetamask}
+        />
       </ModalComponent>
     </>
   );
+};
+
+const PageSwitcher = ({
+  page,
+  useRainbowKit,
+  disableMetamask,
+}: {
+  page: string | null;
+  useRainbowKit: boolean | undefined;
+  disableMetamask: boolean | undefined;
+}) => {
+  if (useRainbowKit) {
+    return page === 'connector'
+      ? pages[page]({ disableMetamask })
+      : pages[page as string];
+  } else {
+    return page ? pages[page] : null;
+  }
 };
