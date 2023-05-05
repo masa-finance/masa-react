@@ -84,7 +84,7 @@ export const MasaContextProvider = ({
   // wallet
   const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
     masaInstance,
-    wagmiSigner as Signer
+    signer
   );
 
   // * little async useEffect helper
@@ -94,19 +94,19 @@ export const MasaContextProvider = ({
     // const newAddress = await wagmiSigner?.getAddress();
     console.log('use async hook');
     console.log({
-      wagmiSigner,
+      signer,
       wagmiAddress,
       wagmiProvider,
       walletAddress,
     });
-    setSigner(wagmiSigner as Signer);
-  }, [wagmiSigner, wagmiAddress]);
+    setSigner(signer);
+  }, [signer, wagmiAddress]);
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
     useSession(masaInstance, walletAddress);
 
   // network
-  const { switchNetwork, currentNetwork } = useNetwork(wagmiSigner as Signer);
+  const { switchNetwork, currentNetwork } = useNetwork(signer);
   const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
     useNetworkSwitch();
   // identity
@@ -273,11 +273,11 @@ export const MasaContextProvider = ({
 
   useEffect(() => {
     const loadMasa = (): void => {
-      if (!wagmiSigner) return;
+      if (!signer) return;
 
       const masa: Masa | undefined = createNewMasa({
         // signer: provider,
-        wallet: wagmiSigner as Signer,
+        wallet: signer,
         environmentName,
         networkName: currentNetwork?.networkName,
         arweaveConfig,
@@ -293,7 +293,7 @@ export const MasaContextProvider = ({
     environmentName,
     verbose,
     currentNetwork,
-    wagmiSigner,
+    signer,
     wagmiAddress,
   ]);
 
