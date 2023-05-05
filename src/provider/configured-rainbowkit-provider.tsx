@@ -1,34 +1,30 @@
 import {
-  getDefaultWallets,
   connectorsForWallets,
+  getDefaultWallets,
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 
 // Import known recommended wallets
-import {
-  Valora,
-  // CeloWallet,
-  //  CeloDance
-} from '@celo/rainbowkit-celo/wallets';
+import { Valora } from '@celo/rainbowkit-celo/wallets';
 
 // Import CELO chain information
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import {
+  baseGoerli,
+  bsc,
+  bscTestnet,
+  goerli,
   mainnet,
   polygon,
   polygonMumbai,
-  goerli,
-  bsc,
-  bscTestnet,
-  baseGoerli,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 
-import React, { createContext, useContext, useMemo } from 'react';
 import type { ReactNode } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { SupportedNetworks } from '@masa-finance/masa-sdk';
 
 type ConfiguredRainbowKitProviderValue = Record<string, never>;
@@ -40,15 +36,18 @@ interface ConfiguredRainbowKitProviderProps {
 console.log({ SupportedNetworks });
 const { chains, provider } = configureChains(
   [
+    // eth
     mainnet,
+    goerli,
+    // polygon
     polygon,
     polygonMumbai,
-    goerli,
+    // base
     baseGoerli,
-    // celo,
-    // celoAlfajores,
+    // binance smart chain
     bsc,
     bscTestnet,
+    // celo
     Alfajores,
     Celo,
   ],
