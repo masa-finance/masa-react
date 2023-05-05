@@ -117,7 +117,7 @@ export interface MasaShape {
   customSBTs?: any[];
   badges?: any[];
   handleAddSBT?: (isCollection: boolean, name: string, address: string) => void;
-  
+
   // rainbowkit
   useRainbowKit?: boolean;
   openConnectModal?: (() => void) | undefined;

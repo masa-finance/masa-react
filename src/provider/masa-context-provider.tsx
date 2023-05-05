@@ -330,7 +330,7 @@ export const MasaContextProvider = ({
     customSBTs,
     badges,
     handleAddSBT,
-    
+
     // rainbowkit
     openConnectModal,
     openChainModal,
