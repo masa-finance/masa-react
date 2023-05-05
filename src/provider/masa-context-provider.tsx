@@ -23,7 +23,6 @@ import { useScopes } from './modules/scopes/scopes';
 import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
 import { useNetworkSwitch } from './use-network-switch';
-import { useAsync } from 'react-use';
 import { MasaNetworks } from './configured-rainbowkit-provider/utils';
 
 export { SoulNameErrorCodes };
@@ -65,23 +64,10 @@ export const MasaContextProvider = ({
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
+  const [signer, setSigner] = useState<Signer | undefined>();
 
   // provider
-  const {
-    isLoading: wagmiLoading,
-    signer: wagmiSigner,
-    // refetchSigner,
-    provider: wagmiProvider,
-    address: wagmiAddress,
-  } = useWagmi();
-
-  const [signer, setSigner] = useState<Signer | undefined>(
-    wagmiSigner as Signer
-  );
-
-  useEffect(() => {
-    setSigner(wagmiSigner as Signer);
-  }, [wagmiSigner, wagmiAddress]);
+  const { isLoading: wagmiLoading } = useWagmi({ setSigner });
 
   // wallet
   const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
@@ -89,20 +75,6 @@ export const MasaContextProvider = ({
     signer
   );
 
-  // * little async useEffect helper
-  useAsync(async () => {
-    // const { data: result } = await refetchSigner();
-    // const oldAddress = await wagmiSigner?.getAddress();
-    // const newAddress = await wagmiSigner?.getAddress();
-    console.log('use async hook');
-    console.log({
-      signer,
-      wagmiAddress,
-      wagmiProvider,
-      walletAddress,
-    });
-    setSigner(signer);
-  }, [signer, wagmiAddress]);
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
     useSession(masaInstance, walletAddress);
@@ -278,7 +250,6 @@ export const MasaContextProvider = ({
       if (!signer) return;
 
       const masa: Masa | undefined = createNewMasa({
-        // signer: provider,
         wallet: signer,
         environmentName,
         networkName: currentNetwork?.networkName,
@@ -290,14 +261,7 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-  }, [
-    arweaveConfig,
-    environmentName,
-    verbose,
-    currentNetwork,
-    signer,
-    wagmiAddress,
-  ]);
+  }, [arweaveConfig, environmentName, verbose, currentNetwork, signer]);
 
   const context: MasaShape = {
     // masa instance

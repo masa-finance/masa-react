@@ -1,9 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useMasa } from './use-masa';
-import { getWeb3Provider } from '../helpers';
 import { Maybe } from '@metamask/providers/dist/utils';
 import { useLocalStorage } from './use-local-storage';
 import { MetaMaskInpageProvider } from '@metamask/providers';
+import { providers } from 'ethers';
+
+export const getWeb3Provider = (): providers.Web3Provider | undefined => {
+  if (
+    typeof window !== 'undefined' &&
+    typeof window?.ethereum !== 'undefined'
+  ) {
+    return new providers.Web3Provider(
+      window?.ethereum as unknown as providers.ExternalProvider
+    );
+  }
+
+  return;
+};
 
 export const useMetamask = ({
   disabled,

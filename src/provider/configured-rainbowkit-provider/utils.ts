@@ -1,10 +1,10 @@
 import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 import {
-    Chain,
   baseGoerli,
   bsc,
   bscTestnet,
+  Chain,
   goerli,
   mainnet,
   polygon,
@@ -60,8 +60,9 @@ export const getRainbowkitChains = (
 
   const userNetworksMasa = userNetworksFiltered.map((un) => masaNetworks[un]);
   const userNetworksRainbowkit = userNetworksMasa.map((unm) => unm?.chainId);
-  const userChainsRainbowkit = rainbowkitChains.filter((rainbowkitChain : Chain) =>
-    userNetworksRainbowkit.includes(rainbowkitChain.id)
+  const userChainsRainbowkit = rainbowkitChains.filter(
+    (rainbowkitChain: Chain) =>
+      userNetworksRainbowkit.includes(rainbowkitChain.id)
   );
 
   return userChainsRainbowkit;
