@@ -16,12 +16,13 @@ require('@rainbow-me/rainbowkit/styles.css');
 
 export const MasaProvider = ({
   children,
+  chainsToUse,
   ...args
 }: MasaContextProviderProps): JSX.Element => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ConfiguredRainbowKitProvider>
+        <ConfiguredRainbowKitProvider chainsToUse={chainsToUse}>
           <MasaContextProvider {...args}>
             <div id="modal-mount" />
             <MasaInterface

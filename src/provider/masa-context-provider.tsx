@@ -24,6 +24,7 @@ import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
 import { useNetworkSwitch } from './use-network-switch';
 import { useAsync } from 'react-use';
+import { MasaNetworks } from './configured-rainbowkit-provider/utils';
 
 export { SoulNameErrorCodes };
 
@@ -42,6 +43,7 @@ export interface MasaContextProviderProps extends MasaShape {
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   useRainbowKitWalletConnect?: boolean;
+  chainsToUse?: Array<keyof MasaNetworks>;
 }
 
 export const MasaContextProvider = ({

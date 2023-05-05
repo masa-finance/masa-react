@@ -1,6 +1,7 @@
 import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 import {
+    Chain,
   baseGoerli,
   bsc,
   bscTestnet,
@@ -22,7 +23,7 @@ const rainbowkitChains = [
   polygonMumbai,
 ];
 
-type MasaNetworks = Partial<{
+export type MasaNetworks = Partial<{
   goerli: Network;
   ethereum: Network;
   mainnet: Network;
@@ -39,6 +40,7 @@ type MasaNetworks = Partial<{
 export const getRainbowkitChains = (
   networkList?: Array<keyof MasaNetworks>
 ) => {
+  console.log({ networkList });
   if (!networkList || (networkList && !networkList.length)) {
     return rainbowkitChains;
   }
@@ -58,14 +60,9 @@ export const getRainbowkitChains = (
 
   const userNetworksMasa = userNetworksFiltered.map((un) => masaNetworks[un]);
   const userNetworksRainbowkit = userNetworksMasa.map((unm) => unm?.chainId);
-  const userChainsRainbowkit = rainbowkitChains.filter((rainbowkitChain) =>
+  const userChainsRainbowkit = rainbowkitChains.filter((rainbowkitChain : Chain) =>
     userNetworksRainbowkit.includes(rainbowkitChain.id)
   );
-  return userChainsRainbowkit;
 
-  //   const networkLi;
-  //   const rainbowkitChains = networkList.filter((network: any) => {
-  //     return network.name === SupportedNetworks.Rainbowkit;
-  //   });
-  //   return rainbowkitChains;
+  return userChainsRainbowkit;
 };
