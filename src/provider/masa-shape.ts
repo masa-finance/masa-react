@@ -10,9 +10,10 @@ import {
   SoulNameDetails,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
-import { BigNumber, Signer, Wallet } from 'ethers';
+import { BigNumber, Signer } from 'ethers';
 import { GetNetworkResult } from '@wagmi/core';
-import { WrapperModalProps, ModalName } from '../components/new-modal';
+import { ModalName, WrapperModalProps } from '../components';
+
 export interface MasaShape {
   children?: React.ReactNode;
   // masa
@@ -32,8 +33,8 @@ export interface MasaShape {
   company?: string;
 
   // provider
-  provider?: Wallet | Signer;
-  setProvider?: (provider?: Wallet | Signer) => void;
+  signer?: Signer;
+  setSigner?: (signer?: Signer) => void;
 
   // modal
   isModalOpen?: boolean;

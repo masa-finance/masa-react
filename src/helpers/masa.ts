@@ -1,5 +1,4 @@
 import {
-  createRandomWallet,
   Environment,
   environments,
   Masa,
@@ -22,27 +21,18 @@ export const getWeb3Provider = (): providers.Web3Provider | undefined => {
 };
 
 export const createNewMasa = ({
-  signer,
+  wallet,
   environmentName,
   networkName = 'unknown',
   arweaveConfig,
   verbose,
 }: {
-  signer: ethers.Signer | null;
+  wallet: ethers.Signer | ethers.Wallet;
   environmentName: string;
   networkName?: NetworkName;
   arweaveConfig?: ArweaveConfig;
   verbose: boolean;
 }): Masa | undefined => {
-  const newSigner: ethers.Signer | null = signer
-    ? signer
-    : createRandomWallet(getWeb3Provider());
-
-  if (!newSigner) {
-    console.error('Unable to create signer!');
-    return;
-  }
-
   const environment = environments.find(
     (environment: Environment) => environment.name === environmentName
   );
@@ -52,7 +42,7 @@ export const createNewMasa = ({
   }
 
   return new Masa({
-    wallet: newSigner,
+    wallet,
     apiUrl: environment.apiUrl,
     networkName,
     environment: environment.environment,

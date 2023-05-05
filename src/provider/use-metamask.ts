@@ -11,7 +11,7 @@ export const useMetamask = ({
   disabled?: boolean;
 }): { connectMetamask: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
-  const { setProvider, handleLogout, walletAddress, verbose, isLoggedIn } =
+  const { setSigner, handleLogout, walletAddress, verbose, isLoggedIn } =
     useMasa();
   const { localStorageSet, localStorageGet } = useLocalStorage();
 
@@ -52,8 +52,8 @@ export const useMetamask = ({
       if (accounts && Array.isArray(accounts)) {
         const signer = getWeb3Provider()?.getSigner();
 
-        if (signer && accounts.length > 0 && setProvider) {
-          setProvider(signer);
+        if (signer && accounts.length > 0 && setSigner) {
+          setSigner(signer);
           metamaskConnected = true;
           localStorageSet<boolean>(metamaskStorageKey, true);
         } else {
@@ -72,7 +72,7 @@ export const useMetamask = ({
   }, [
     disabled,
     verbose,
-    setProvider,
+    setSigner,
     localStorageGet,
     localStorageSet,
     walletAddress,
@@ -130,7 +130,7 @@ export const useMetamask = ({
     };
 
     void disconnectMetamaskOnWalletChange();
-  }, [connectedAccounts, disconnectMetamask, walletAddress, setProvider]);
+  }, [connectedAccounts, disconnectMetamask, walletAddress, setSigner]);
 
   /**
    * wire up metamask event listeners
@@ -149,7 +149,7 @@ export const useMetamask = ({
             // no accounts, disconnect metamask
             await disconnectMetamask();
             // drop provider
-            setProvider?.();
+            setSigner?.();
           }
 
           // update accounts
@@ -163,11 +163,11 @@ export const useMetamask = ({
       (window.ethereum as unknown as MetaMaskInpageProvider)?.on(
         'chainChanged',
         () => {
-          setProvider?.(getWeb3Provider()?.getSigner());
+          setSigner?.(getWeb3Provider()?.getSigner());
         }
       );
     }
-  }, [setProvider, setConnectedAccounts, disconnectMetamask]);
+  }, [setSigner, setConnectedAccounts, disconnectMetamask]);
 
   return { connectMetamask };
 };

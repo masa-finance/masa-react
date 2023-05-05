@@ -1,6 +1,4 @@
-import { Chain, useSigner } from 'wagmi';
-import { useNetwork, useProvider } from 'wagmi';
-import { useAccount } from 'wagmi';
+import { Chain, useAccount, useNetwork, useProvider, useSigner } from 'wagmi';
 
 export const useWagmi = () => {
   const provider = useProvider();

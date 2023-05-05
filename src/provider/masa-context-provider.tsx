@@ -64,21 +64,17 @@ export const MasaContextProvider = ({
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
 
   // provider
-  const {
-    provider: wagmiProvider,
-    isLoading: wagmiLoading,
-    signer: wagmiSigner,
-  } = useWagmi();
-  const [provider, setProvider] = useState<Wallet | Signer | undefined>(
-    wagmiSigner as Signer | undefined
+  const { isLoading: wagmiLoading, signer: wagmiSigner } = useWagmi();
+  const [signer, setSigner] = useState<Signer | undefined>(
+    wagmiSigner as Signer
   );
 
-  useEffect(() => setProvider(wagmiSigner as Signer), [wagmiSigner]);
+  useEffect(() => setSigner(wagmiSigner as Signer), [wagmiSigner]);
 
   // wallet
   const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
     masaInstance,
-    wagmiSigner as Signer | undefined
+    wagmiSigner as Signer
   );
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
@@ -252,12 +248,11 @@ export const MasaContextProvider = ({
 
   useEffect(() => {
     const loadMasa = (): void => {
-      // if (!provider) return;
+      if (!wagmiSigner) return;
 
       const masa: Masa | undefined = createNewMasa({
         // signer: provider,
-        signer: wagmiSigner as Signer | null,
-        // provider: wagmiProvider as providers.Provider,
+        wallet: wagmiSigner as Signer,
         environmentName,
         networkName: currentNetwork?.networkName,
         arweaveConfig,
@@ -268,14 +263,7 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-  }, [
-    arweaveConfig,
-    environmentName,
-    verbose,
-    currentNetwork,
-    wagmiProvider,
-    wagmiSigner,
-  ]);
+  }, [arweaveConfig, environmentName, verbose, currentNetwork, wagmiSigner]);
 
   const context: MasaShape = {
     // masa instance
@@ -294,8 +282,8 @@ export const MasaContextProvider = ({
     company,
 
     // provider handling
-    provider,
-    setProvider,
+    signer,
+    setSigner,
 
     // modal
     isModalOpen,

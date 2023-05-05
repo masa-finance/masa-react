@@ -1,13 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
-import {
-  useMasa,
-  // useMetamask
-} from '../../provider';
+import { useMasa } from '../../provider';
 import { ModalComponent } from '../modal';
 import {
   InterfaceAuthenticate,
   InterfaceConnected,
-  // InterfaceConnector,
   InterfaceCreateCreditScore,
   InterfaceCreateIdentity,
 } from './pages';
@@ -47,7 +43,7 @@ export const MasaInterface = (): JSX.Element => {
     hasWalletAddress,
     identity,
     isLoggedIn,
-    provider,
+    signer,
     closeModal,
     scope,
     creditScores,
@@ -77,7 +73,7 @@ export const MasaInterface = (): JSX.Element => {
       return 'switchNetwork';
     }
 
-    if (!isLoggedIn && provider) return 'authenticate';
+    if (!isLoggedIn && signer) return 'authenticate';
 
     if (
       isLoggedIn &&
@@ -107,7 +103,7 @@ export const MasaInterface = (): JSX.Element => {
     identity,
     isLoggedIn,
     scope,
-    provider,
+    signer,
     creditScores,
     soulnames,
     forcedPage,
@@ -123,12 +119,12 @@ export const MasaInterface = (): JSX.Element => {
   useEffect(() => {
     // * when user closes connection during login process,
     // * we want to reopen rainbowkit modal not our old connection modal
-    if (isModalOpen && !provider && page === 'connector') {
+    if (isModalOpen && !signer && page === 'connector') {
       closeModal?.();
       console.log('opening connect modal');
       openConnectModal?.();
     }
-  }, [isModalOpen, closeModal, provider, page, openConnectModal]);
+  }, [isModalOpen, closeModal, signer, page, openConnectModal]);
 
   return (
     <>
