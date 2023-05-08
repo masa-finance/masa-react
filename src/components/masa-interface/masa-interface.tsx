@@ -15,9 +15,11 @@ import { InterfaceSwitchChain } from './pages/switch-chain';
 import { useAccount } from 'wagmi';
 
 const pages = {
-  connector: ({ disableMetamask }): JSX.Element => (
-    <InterfaceConnector disableMetamask={disableMetamask} />
-  ),
+  connector: ({
+    disableMetamask,
+  }: {
+    disableMetamask?: boolean;
+  }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
   createIdentity: <InterfaceCreateIdentity />,
   successIdentityCreate: <InterfaceSuccessCreateIdentity />,
   createSoulname: <InterfaceCreateSoulname />,
@@ -160,8 +162,8 @@ const PageSwitcher = ({
   disableMetamask,
 }: {
   page: string;
-  useRainbowKit: boolean | undefined;
-  disableMetamask: boolean | undefined;
+  useRainbowKit?: boolean;
+  disableMetamask?: boolean;
 }) => {
   if (!useRainbowKit) {
     return page === 'connector'
