@@ -201,7 +201,7 @@ const TemplateNoRainbowkit: Story = (props: Args) => {
       <MasaProvider
         company="Masa"
         useRainbowKitWalletConnect={false}
-        forceNetwork={'goerli'}
+        forceNetwork={'alfajores'}
       >
         <Component name="Old Connection" {...props} />
       </MasaProvider>
@@ -215,7 +215,7 @@ const TemplateWithRainbowKit: Story = (props: Args) => {
       <MasaProvider
         company="Masa"
         useRainbowKitWalletConnect={true}
-        forceNetwork={'goerli'}
+        forceNetwork={'alfajores'}
       >
         <Component name="Rainbow Kit" {...props} />
       </MasaProvider>

@@ -96,7 +96,7 @@ export const MasaInterface = ({
     if (hasWalletAddress && isLoggedIn) return 'connectedState';
 
     // * feature toggle
-    if (useRainbowKit) return null;
+    // if (useRainbowKit) return null;
 
     return 'connector';
   }, [

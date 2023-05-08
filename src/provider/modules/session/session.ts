@@ -15,10 +15,11 @@ export const useSession = (
   status: string;
   error: unknown;
 } => {
+
   const queryKeySessionData: (string | undefined)[] = useMemo(() => {
     return ['session', 'data', walletAddress];
   }, [walletAddress]);
-
+  
   const {
     data: sessionData,
     isLoading: isSessionDataLoading,
@@ -31,7 +32,8 @@ export const useSession = (
       enabled: !!masa && !!walletAddress,
       retry: false,
     }
-  );
+    );
+    console.log("SESION", {walletAddress, sessionData})
 
   const queryKeySession: (string | undefined)[] = useMemo(() => {
     return ['session', walletAddress];
@@ -70,7 +72,6 @@ export const useSession = (
       } finally {
         await disconnectAsync();
         await clearSession();
-
         logoutCallback?.();
 
         await refetchSessionData();
@@ -89,6 +90,7 @@ export const useSession = (
   }, [masa, clearSession]);
 
   useEffect(() => {
+    console.log({sessionData})
     if (
       isLoggedIn &&
       sessionData &&
