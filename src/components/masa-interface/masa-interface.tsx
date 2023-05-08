@@ -58,7 +58,7 @@ export const MasaInterface = ({
   } = useMasa();
 
   const page = useMemo(() => {
-    if (verbose) {
+    if (true) {
       console.log('INTERFACE', {
         hasWalletAddress,
         verbose,
@@ -76,11 +76,13 @@ export const MasaInterface = ({
       });
     }
     if (forcedPage) return forcedPage;
-    if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
+
+    if (forceNetwork && hasWalletAddress && currentNetwork?.networkName !== forceNetwork) {
       return 'switchNetwork';
     }
 
-    if (!isLoggedIn && isConnected) return 'authenticate';
+    if (useRainbowKit && !isLoggedIn && isConnected) return 'authenticate';
+    if (!useRainbowKit && !isLoggedIn && hasWalletAddress) return 'authenticate';
 
     if (
       isLoggedIn &&
@@ -138,6 +140,8 @@ export const MasaInterface = ({
     return ['createIdentity', 'successIdentityCreate'].includes(String(page));
   }, [page]);
 
+
+  console.log("PAGE" , page)
   return (
     <>
       <ModalComponent
