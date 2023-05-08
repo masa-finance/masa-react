@@ -73,7 +73,7 @@ export const MasaInterface = ({
         isConnected,
       });
     }
-
+    if (forcedPage) return forcedPage;
     if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
       return 'switchNetwork';
     }
