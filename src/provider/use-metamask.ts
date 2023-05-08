@@ -106,7 +106,7 @@ export const useMetamask = ({
     if (isLoggedIn) {
       await handleLogout?.();
     }
-  }, [isLoggedIn, handleLogout, localStorageSet]);
+  }, [isLoggedIn, handleLogout, localStorageSet, localStorageGet]);
 
   /**
    * try to connect metamask on page load

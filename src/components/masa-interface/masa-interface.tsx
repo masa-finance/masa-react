@@ -58,10 +58,12 @@ export const MasaInterface = ({
   } = useMasa();
 
   const page = useMemo(() => {
-    if (forcedPage) return forcedPage;
-
     if (verbose) {
-      console.info({ forceNetwork });
+      console.info({ forceNetwork, hasWalletAddress, isLoggedIn });
+    }
+
+    if (forcedPage) {
+      return forcedPage;
     }
 
     if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
@@ -74,20 +76,25 @@ export const MasaInterface = ({
       isLoggedIn &&
       (!soulnames || (soulnames && soulnames.length === 0)) &&
       scope?.includes('soulname')
-    )
+    ) {
       return 'createSoulname';
+    }
 
     if (
       scope?.includes('identity') &&
       isLoggedIn &&
       (!identity || !identity?.identityId)
-    )
+    ) {
       return 'createIdentity';
+    }
 
-    if (identity && !creditScores?.length && scope?.includes('credit-score'))
+    if (identity && !creditScores?.length && scope?.includes('credit-score')) {
       return 'createCreditScore';
+    }
 
-    if (hasWalletAddress && isLoggedIn) return 'connectedState';
+    if (hasWalletAddress && isLoggedIn) {
+      return 'connectedState';
+    }
 
     return 'connector';
   }, [
@@ -102,7 +109,6 @@ export const MasaInterface = ({
     forcedPage,
     forceNetwork,
     currentNetwork,
-    useRainbowKit,
   ]);
 
   const isModal = useMemo(() => {
