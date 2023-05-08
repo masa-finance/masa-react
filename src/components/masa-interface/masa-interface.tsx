@@ -12,6 +12,7 @@ import { InterfaceCreateSoulname } from './pages/create-soulname';
 import InterfaceMasaGreen from './pages/masa-green';
 import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity';
 import { InterfaceSwitchChain } from './pages/switch-chain';
+import { useAccount } from 'wagmi';
 
 const pages = {
   connector: <InterfaceConnector disableMetamask={true} />,
@@ -31,6 +32,7 @@ export const MasaInterface = ({
   disableMetamask?: boolean;
 }): JSX.Element => {
   useMetamask({ disabled: disableMetamask });
+  const { isConnected } = useAccount();
 
   const {
     isModalOpen,
@@ -47,15 +49,13 @@ export const MasaInterface = ({
     currentNetwork,
     forceNetwork,
     verbose,
-    // setRainbowkitModalCallback,
-
     openConnectModal,
     useRainbowKit,
   } = useMasa();
 
   const page = useMemo(() => {
     if (verbose) {
-      console.log("INTERFACE", {
+      console.log('INTERFACE', {
         hasWalletAddress,
         verbose,
         identity,
@@ -68,6 +68,7 @@ export const MasaInterface = ({
         forceNetwork,
         currentNetwork,
         useRainbowKit,
+        isConnected,
       });
     }
 
@@ -75,7 +76,7 @@ export const MasaInterface = ({
       return 'switchNetwork';
     }
 
-    if (!isLoggedIn && hasWalletAddress) return 'authenticate';
+    if (!isLoggedIn && isConnected) return 'authenticate';
 
     if (
       isLoggedIn &&
@@ -101,6 +102,16 @@ export const MasaInterface = ({
       return 'connectedState';
     }
 
+    if (
+      useRainbowKit &&
+      isLoggedIn === false &&
+      !isConnected &&
+      openConnectModal
+    ) {
+      console.log('OPEN CONNECT WALLET');
+      closeModal?.();
+      return openConnectModal();
+    }
     return 'connector';
   }, [
     hasWalletAddress,
@@ -114,6 +125,9 @@ export const MasaInterface = ({
     forcedPage,
     forceNetwork,
     currentNetwork,
+    isConnected,
+    openConnectModal,
+    closeModal,
   ]);
 
   const isModal = useMemo(() => {

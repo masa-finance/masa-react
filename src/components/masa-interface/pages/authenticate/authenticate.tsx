@@ -13,22 +13,20 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     openConnectModal,
     isLoggedIn,
     useRainbowKit,
+    connect,
   } = useMasa();
   const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const switchWallet = useCallback(() => {
-    if (!isLoggedIn && isConnected) {
-      setModalOpen?.(false);
-      disconnect();
-      openConnectModal?.();
-    }
+    console.log({ disconnect });
+    disconnect();
   }, [disconnect, setModalOpen, openConnectModal, isConnected, isLoggedIn]);
 
   useEffect(() => {
     if (isConnected && !isLoggedIn) {
-      openConnectModal?.();
+      connect?.();
     }
-  }, [openConnectModal, isConnected, isLoggedIn]);
+  }, [connect, isConnected, isLoggedIn]);
   const [copied, setCopied] = useState(false);
 
   const message = useMemo(() => {

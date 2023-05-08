@@ -67,7 +67,7 @@ export const useSession = (
       try {
         await masa?.session.sessionLogout();
       } finally {
-        await disconnectAsync();
+        // await disconnectAsync();
         await clearSession();
         logoutCallback?.();
       }
