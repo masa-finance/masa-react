@@ -51,7 +51,7 @@ export const useSession = (
     }
   );
 
-  const { disconnect } = useDisconnect();
+  const { disconnectAsync } = useDisconnect();
   const clearSession = useCallback(async () => {
     await queryClient.invalidateQueries(['wallet']);
     await queryClient.invalidateQueries(['session']);
@@ -66,13 +66,13 @@ export const useSession = (
       try {
         await masa?.session.sessionLogout();
       } finally {
-        disconnect();
+        await disconnectAsync();
         await clearSession();
 
         logoutCallback?.();
       }
     },
-    [masa, clearSession, isLoggedIn, disconnect]
+    [masa, clearSession, isLoggedIn, disconnectAsync]
   );
 
   const handleLogin = useCallback(async (): Promise<void> => {
