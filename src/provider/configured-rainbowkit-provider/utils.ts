@@ -1,4 +1,8 @@
-import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
+import {
+  Network,
+  NetworkName,
+  SupportedNetworks,
+} from '@masa-finance/masa-sdk';
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 import {
   baseGoerli,
@@ -54,7 +58,7 @@ export const getRainbowkitChains = (
 
   const masaNetworkNames = Object.keys(masaNetworks);
 
-  const userNetworksFiltered = networkList.filter((networkName) =>
+  const userNetworksFiltered = networkList.filter((networkName: NetworkName) =>
     masaNetworkNames.includes(networkName)
   );
 

@@ -202,8 +202,9 @@ export const MasaContextProvider = ({
       //   // });
       //   // return;
       // }
+
       if (verbose) {
-        console.info({ forcedPage });
+        console.info({ forcedPage, useRainbowKitWalletConnect, options });
       }
 
       // * feature toggle, to be removed soon
@@ -214,7 +215,9 @@ export const MasaContextProvider = ({
         });
 
         openConnectModal?.();
-      } else setModalOpen(true);
+      } else {
+        setModalOpen(true);
+      }
 
       setForcedPage?.(null);
 
