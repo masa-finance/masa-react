@@ -63,11 +63,14 @@ export const useSession = (
         return;
       }
 
-      await masa?.session.sessionLogout();
-      disconnect();
-      await clearSession();
+      try {
+        await masa?.session.sessionLogout();
+      } finally {
+        disconnect();
+        await clearSession();
 
-      logoutCallback?.();
+        logoutCallback?.();
+      }
     },
     [masa, clearSession, isLoggedIn, disconnect]
   );
