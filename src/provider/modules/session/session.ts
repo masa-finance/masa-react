@@ -15,11 +15,10 @@ export const useSession = (
   status: string;
   error: unknown;
 } => {
-
   const queryKeySessionData: (string | undefined)[] = useMemo(() => {
     return ['session', 'data', walletAddress];
   }, [walletAddress]);
-  
+
   const {
     data: sessionData,
     isLoading: isSessionDataLoading,
@@ -31,8 +30,8 @@ export const useSession = (
       enabled: !!masa && !!walletAddress,
       retry: false,
     }
-    );
-    console.log("SESION", {walletAddress, sessionData})
+  );
+  console.log('SESION', { walletAddress, sessionData });
 
   const queryKeySession: (string | undefined)[] = useMemo(() => {
     return ['session', walletAddress];
@@ -85,15 +84,17 @@ export const useSession = (
   }, [masa, clearSession]);
 
   useEffect(() => {
-    console.log({sessionData})
-    if (
-      isLoggedIn &&
-      sessionData &&
-      sessionData.user.address !== walletAddress
-    ) {
-      console.error('Session mismatch detected, logging out!');
-      void handleLogout();
-    }
+    (async () => {
+      console.log({ sessionData });
+      if (
+        isLoggedIn &&
+        sessionData &&
+        sessionData.user.address !== walletAddress
+      ) {
+        console.error('Session mismatch detected, logging out!');
+        void handleLogout();
+      }
+    })();
   }, [sessionData, walletAddress, handleLogout, isLoggedIn]);
 
   return {

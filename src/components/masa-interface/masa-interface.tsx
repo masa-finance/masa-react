@@ -14,11 +14,7 @@ import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity'
 import { InterfaceSwitchChain } from './pages/switch-chain';
 
 const pages = {
-  connector: ({
-    disableMetamask,
-  }: {
-    disableMetamask?: boolean;
-  }): JSX.Element => <InterfaceConnector disableMetamask={disableMetamask} />,
+  connector: <InterfaceConnector disableMetamask={true} />,
   createIdentity: <InterfaceCreateIdentity />,
   successIdentityCreate: <InterfaceSuccessCreateIdentity />,
   createSoulname: <InterfaceCreateSoulname />,
@@ -59,18 +55,27 @@ export const MasaInterface = ({
 
   const page = useMemo(() => {
     if (verbose) {
-      console.info({ forceNetwork, hasWalletAddress, isLoggedIn });
-    }
-
-    if (forcedPage) {
-      return forcedPage;
+      console.log("INTERFACE", {
+        hasWalletAddress,
+        verbose,
+        identity,
+        isLoggedIn,
+        scope,
+        signer,
+        creditScores,
+        soulnames,
+        forcedPage,
+        forceNetwork,
+        currentNetwork,
+        useRainbowKit,
+      });
     }
 
     if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
       return 'switchNetwork';
     }
 
-    if (!isLoggedIn && signer) return 'authenticate';
+    if (!isLoggedIn && hasWalletAddress) return 'authenticate';
 
     if (
       isLoggedIn &&
@@ -121,9 +126,9 @@ export const MasaInterface = ({
     // * when user closes connection during login process,
     // * we want to reopen rainbowkit modal not our old connection modal
     if (isModalOpen && !signer && page === 'connector') {
-      closeModal?.();
-      console.log('opening connect modal');
-      openConnectModal?.();
+      // closeModal?.();
+      console.log('opening connect modal', page);
+      // openConnectModal?.();
     }
   }, [isModalOpen, closeModal, signer, page, openConnectModal, useRainbowKit]);
 
