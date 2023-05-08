@@ -60,12 +60,6 @@ export const MasaInterface = ({
   const page = useMemo(() => {
     if (forcedPage) return forcedPage;
 
-    if (!hasWalletAddress) {
-      // * feature toggle
-      if (useRainbowKit) return null;
-      return 'connector';
-    }
-
     if (verbose) {
       console.info({ forceNetwork });
     }
@@ -94,9 +88,6 @@ export const MasaInterface = ({
       return 'createCreditScore';
 
     if (hasWalletAddress && isLoggedIn) return 'connectedState';
-
-    // * feature toggle
-    // if (useRainbowKit) return null;
 
     return 'connector';
   }, [
