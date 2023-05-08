@@ -113,8 +113,7 @@ export const useMetamask = ({
    */
   useEffect(() => {
     const connectMetamaskOnPageLoad = async (): Promise<void> => {
-
-      if(disabled) return;
+      if (disabled) return;
 
       const metamaskConnected: boolean | undefined =
         localStorageGet<boolean>(metamaskStorageKey);
@@ -140,8 +139,7 @@ export const useMetamask = ({
    */
   useEffect(() => {
     const disconnectMetamaskOnWalletChange = async (): Promise<void> => {
-
-      if(disabled) return;
+      if (disabled) return;
       if (
         walletAddress &&
         connectedAccounts.length > 0 &&
@@ -154,7 +152,13 @@ export const useMetamask = ({
     };
 
     void disconnectMetamaskOnWalletChange();
-  }, [connectedAccounts, disconnectMetamask, walletAddress, setSigner, disabled]);
+  }, [
+    connectedAccounts,
+    disconnectMetamask,
+    walletAddress,
+    setSigner,
+    disabled,
+  ]);
 
   /**
    * wire up metamask event listeners
