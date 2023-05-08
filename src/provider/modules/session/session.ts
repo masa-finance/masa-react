@@ -23,7 +23,6 @@ export const useSession = (
     data: sessionData,
     isLoading: isSessionDataLoading,
     isFetching: isSessionDataFetching,
-    refetch: refetchSessionData,
   } = useQuery<ISession | undefined>(
     queryKeySessionData,
     () => masa?.session.getSession(),
@@ -42,7 +41,6 @@ export const useSession = (
     status,
     isLoading: isSessionCheckLoading,
     isFetching: isSessionCheckFetching,
-    refetch: refetchLoggedIn,
     error,
   } = useQuery<boolean | undefined>(
     queryKeySession,
@@ -72,9 +70,6 @@ export const useSession = (
         await clearSession();
 
         logoutCallback?.();
-
-        await refetchSessionData();
-        await refetchLoggedIn();
       }
     },
     [masa, clearSession, isLoggedIn, disconnectAsync]
