@@ -95,6 +95,12 @@ export const useMetamask = ({
    * Disconnect from metamask
    */
   const disconnectMetamask = useCallback(async (): Promise<void> => {
+    let metamaskConnected: boolean =
+      localStorageGet<boolean>(metamaskStorageKey) || false;
+
+      // Check that metamask was connected ( This may need a refactor, this disconnect was disconnecting valora when signin in )
+    if (metamaskConnected) return;
+
     localStorageSet<boolean>(metamaskStorageKey, false);
 
     if (isLoggedIn) {
