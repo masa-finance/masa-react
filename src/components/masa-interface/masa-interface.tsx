@@ -14,7 +14,7 @@ import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity'
 import { InterfaceSwitchChain } from './pages/switch-chain';
 import { useAccount } from 'wagmi';
 
-const pages = {
+const pages: { [index: string]: JSX.Element } = {
   connector: <InterfaceConnector disableMetamask={true} />,
   createIdentity: <InterfaceCreateIdentity />,
   successIdentityCreate: <InterfaceSuccessCreateIdentity />,
@@ -155,7 +155,7 @@ export const MasaInterface = ({
         height={isModal ? 340 : undefined}
       >
         <PageSwitcher
-          page={page}
+          page={page as string}
           useRainbowKit={useRainbowKit}
           disableMetamask={disableMetamask}
         />
@@ -169,14 +169,14 @@ const PageSwitcher = ({
   useRainbowKit,
   disableMetamask,
 }: {
-  page: string | null;
+  page: string;
   useRainbowKit: boolean | undefined;
   disableMetamask: boolean | undefined;
 }) => {
   if (!useRainbowKit) {
     return page === 'connector'
       ? pages[page]({ disableMetamask })
-      : pages[page as string];
+      : pages[page];
   } else {
     return page ? pages[page] : null;
   }
