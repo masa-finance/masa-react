@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useMasa, useMetamask } from '../../provider';
 import { ModalComponent } from '../modal';
 import {
@@ -15,7 +15,9 @@ import { InterfaceSwitchChain } from './pages/switch-chain';
 import { useAccount } from 'wagmi';
 
 const pages = {
-  connector: <InterfaceConnector disableMetamask={true} />,
+  connector: ({ disableMetamask }): JSX.Element => (
+    <InterfaceConnector disableMetamask={disableMetamask} />
+  ),
   createIdentity: <InterfaceCreateIdentity />,
   successIdentityCreate: <InterfaceSuccessCreateIdentity />,
   createSoulname: <InterfaceCreateSoulname />,
@@ -108,9 +110,9 @@ export const MasaInterface = ({
       !isConnected &&
       openConnectModal
     ) {
-      console.log('OPEN CONNECT WALLET');
       closeModal?.();
-      return openConnectModal();
+      openConnectModal();
+      return 'connector';
     }
     return 'connector';
   }, [
@@ -133,18 +135,6 @@ export const MasaInterface = ({
   const isModal = useMemo(() => {
     return ['createIdentity', 'successIdentityCreate'].includes(String(page));
   }, [page]);
-
-  useEffect(() => {
-    if (!useRainbowKit) return; // feature toggle
-
-    // * when user closes connection during login process,
-    // * we want to reopen rainbowkit modal not our old connection modal
-    if (isModalOpen && !signer && page === 'connector') {
-      // closeModal?.();
-      console.log('opening connect modal', page);
-      // openConnectModal?.();
-    }
-  }, [isModalOpen, closeModal, signer, page, openConnectModal, useRainbowKit]);
 
   return (
     <>
