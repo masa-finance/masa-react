@@ -7,42 +7,62 @@ import {
   SupportedNetworks,
 } from '@masa-finance/masa-sdk';
 import { MetaMaskInpageProvider } from '@metamask/providers';
+import { useSwitchNetwork } from 'wagmi';
 
-export const useNetwork = (
-  provider?: Wallet | Signer
-): {
+export const useNetwork = ({
+  provider,
+  useRainbowKitWalletConnect,
+}: {
+  provider?: Wallet | Signer;
+  useRainbowKitWalletConnect?: boolean;
+}): {
   addNetwork: (networkDetails: Network) => void;
   switchNetwork: (networkName: NetworkName) => void;
   currentNetwork?: Network;
 } => {
   const [currentNetwork, setCurrentNetwork] = useState<Network | undefined>();
+  const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork();
 
-  const addNetwork = useCallback(async (networkDetails: Network) => {
-    try {
-      if (typeof window !== 'undefined' && networkDetails) {
-        await (window.ethereum as unknown as MetaMaskInpageProvider)?.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainName: networkDetails.chainName,
-              nativeCurrency: {
-                name: networkDetails.nativeCurrency?.name,
-                symbol: networkDetails.nativeCurrency?.symbol,
-                decimals: networkDetails.nativeCurrency?.decimals,
-              },
-              rpcUrls: networkDetails.rpcUrls,
-              blockExplorerUrls: networkDetails.blockExplorerUrls,
-              chainId: utils.hexValue(networkDetails.chainId),
-            },
-          ],
-        });
+  const addNetwork = useCallback(
+    async (networkDetails: Network) => {
+      if (useRainbowKitWalletConnect) {
+        console.log(
+          'switching network wagmi',
+          getNetworkNameByChainId(networkDetails.chainId)
+        );
+        switchNetworkWagmi?.(networkDetails.chainId);
+        return;
       }
-    } catch (error) {
-      console.error(
-        `error occurred while adding new chain with chainId:${networkDetails?.chainId}`
-      );
-    }
-  }, []);
+
+      try {
+        if (typeof window !== 'undefined' && networkDetails) {
+          await (window.ethereum as unknown as MetaMaskInpageProvider)?.request(
+            {
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainName: networkDetails.chainName,
+                  nativeCurrency: {
+                    name: networkDetails.nativeCurrency?.name,
+                    symbol: networkDetails.nativeCurrency?.symbol,
+                    decimals: networkDetails.nativeCurrency?.decimals,
+                  },
+                  rpcUrls: networkDetails.rpcUrls,
+                  blockExplorerUrls: networkDetails.blockExplorerUrls,
+                  chainId: utils.hexValue(networkDetails.chainId),
+                },
+              ],
+            }
+          );
+        }
+      } catch (error) {
+        console.error(
+          `error occurred while adding new chain with chainId:${networkDetails?.chainId}`
+        );
+      }
+    },
+    [useRainbowKitWalletConnect, switchNetworkWagmi]
+  );
 
   const loadNetwork = useCallback(async (): Promise<void> => {
     if (!provider) return;

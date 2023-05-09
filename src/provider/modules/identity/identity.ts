@@ -4,6 +4,71 @@ import { queryClient } from '../../masa-query-client';
 import { Masa, NetworkName, PaymentMethod } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
+export const getIdentityQueryKey = ({
+  walletAddress,
+  masa,
+}: {
+  walletAddress?: string;
+  masa?: Masa;
+  signer?: any; // unused here
+}) => {
+  return ['identity', walletAddress, masa?.config.networkName];
+};
+
+export const useIdentityQuery = ({
+  masa,
+  walletAddress,
+}: {
+  masa?: Masa;
+  walletAddress?: string;
+}) => {
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
+    return ['identity', walletAddress, masa?.config.networkName];
+  }, [walletAddress, masa]);
+
+  const {
+    data: identity,
+    status,
+    isLoading,
+    isFetching,
+    refetch: reloadIdentity,
+    error,
+  } = useQuery<{ identityId?: BigNumber; address?: string } | undefined>(
+    queryKey,
+    () => masa?.identity.load(walletAddress),
+    {
+      enabled: false, // !!masa && !!walletAddress,
+      retry: false,
+      onSuccess: (identity?: { identityId?: BigNumber; address?: string }) => {
+        if (masa?.config.verbose) {
+          console.info({ identity, network: masa?.config.networkName });
+        }
+      },
+    }
+  );
+
+  const invalidateIdentity = useCallback(
+    async () => await queryClient.invalidateQueries(['identity']),
+    []
+  );
+
+  const invalidateSoulnames = useCallback(
+    async () => await queryClient.invalidateQueries(['soulnames']),
+    []
+  );
+
+  return {
+    identity,
+    status,
+    isLoading,
+    isFetching,
+    reloadIdentity,
+    error,
+    invalidateIdentity,
+    invalidateSoulnames,
+  };
+};
+
 export const useIdentity = (
   masa?: Masa,
   walletAddress?: string
@@ -23,37 +88,22 @@ export const useIdentity = (
   reloadIdentity: () => void;
   error: unknown;
 } => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return ['identity', walletAddress, masa?.config.networkName];
-  }, [walletAddress, masa]);
-
   const {
-    data: identity,
+    identity,
     status,
     isLoading,
     isFetching,
-    refetch: reloadIdentity,
+    reloadIdentity,
     error,
-  } = useQuery<{ identityId?: BigNumber; address?: string } | undefined>(
-    queryKey,
-    () => masa?.identity.load(walletAddress),
-    {
-      enabled: !!masa && !!walletAddress,
-      retry: false,
-      onSuccess: (identity?: { identityId?: BigNumber; address?: string }) => {
-        if (masa?.config.verbose) {
-          console.info({ identity, network: masa?.config.networkName });
-        }
-      },
-    }
-  );
-
+    invalidateIdentity,
+    invalidateSoulnames,
+  } = useIdentityQuery({ masa, walletAddress });
   const handlePurchaseIdentity = useCallback(async (): Promise<boolean> => {
     const result = await masa?.identity.create();
-    await queryClient.invalidateQueries(['identity']);
+    await invalidateIdentity();
 
     return !!result?.success;
-  }, [masa]);
+  }, [masa, invalidateIdentity]);
 
   const handlePurchaseIdentityWithSoulname = useCallback(
     async (
@@ -66,12 +116,12 @@ export const useIdentity = (
         soulname,
         registrationPeriod
       );
-      await queryClient.invalidateQueries(['identity']);
-      await queryClient.invalidateQueries(['soulnames']);
+      await invalidateIdentity();
+      await invalidateSoulnames();
 
       return !!result?.success;
     },
-    [masa]
+    [masa, invalidateIdentity, invalidateSoulnames]
   );
 
   return {

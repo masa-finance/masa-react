@@ -26,7 +26,7 @@ export interface MasaShape {
 
   // global connect
   connect?: (options?: { scope?: string[]; callback?: () => void }) => void;
-
+  logout?: () => Promise<boolean>;
   // general config
   scope?: string[];
   areScopesFullfiled?: boolean;

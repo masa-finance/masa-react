@@ -8,21 +8,13 @@ import {
 import { useCallback, useMemo } from 'react';
 import { queryClient } from '../../masa-query-client';
 
-export const useSoulnames = (
-  masa?: Masa,
-  walletAddress?: string
-): {
-  soulnames?: SoulNameDetails[];
-  status: string;
-  isSoulnamesLoading: boolean;
-  reloadSoulnames: () => void;
-  handlePurchaseSoulname: (
-    soulname: string,
-    registrationPeriod: number,
-    paymentMethod: PaymentMethod
-  ) => Promise<boolean>;
-  error: unknown;
-} => {
+export const useSoulnamesQuery = ({
+  masa,
+  walletAddress,
+}: {
+  masa?: Masa;
+  walletAddress?: string;
+}) => {
   const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
     return ['soulnames', walletAddress, masa?.config.networkName];
   }, [walletAddress, masa]);
@@ -47,6 +39,34 @@ export const useSoulnames = (
       },
     }
   );
+
+  return {
+    soulnames,
+    status,
+    isLoading,
+    isFetching,
+    reloadSoulnames,
+    error,
+  };
+};
+
+export const useSoulnames = (
+  masa?: Masa,
+  walletAddress?: string
+): {
+  soulnames?: SoulNameDetails[];
+  status: string;
+  isSoulnamesLoading: boolean;
+  reloadSoulnames: () => void;
+  handlePurchaseSoulname: (
+    soulname: string,
+    registrationPeriod: number,
+    paymentMethod: PaymentMethod
+  ) => Promise<boolean>;
+  error: unknown;
+} => {
+  const { soulnames, status, isLoading, isFetching, reloadSoulnames, error } =
+    useSoulnamesQuery({ masa, walletAddress });
 
   const handlePurchaseSoulname = useCallback(
     async (

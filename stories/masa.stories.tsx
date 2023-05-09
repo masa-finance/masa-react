@@ -46,6 +46,7 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
     openInterfaceMasaGreen,
+    logout,
   } = useMasa();
 
   const ModalOpens = {
@@ -132,6 +133,7 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
         >
           Rainbowkit switch chain modal
         </button>
+        <button onClick={logout}>New Logout</button>
       </div>
       <div
         style={{

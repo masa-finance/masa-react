@@ -1,20 +1,72 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { ISession, Masa } from '@masa-finance/masa-sdk';
 import { useDisconnect } from 'wagmi';
+import { useAsync } from 'react-use';
 
-export const useSession = (
-  masa?: Masa,
-  walletAddress?: string
-): {
-  isLoggedIn?: boolean;
-  isSessionLoading: boolean;
-  handleLogin: () => void;
-  handleLogout: (logoutCallback?: () => void) => Promise<void>;
-  status: string;
-  error: unknown;
-} => {
+export const getSessionQueryKey = ({
+  walletAddress,
+}: {
+  walletAddress?: string;
+  masa?: Masa;
+  signer?: any; // unused here
+}) => {
+  return ['session', walletAddress];
+};
+
+export const getSessionDataQueryKey = ({
+  walletAddress,
+}: {
+  walletAddress?: string;
+  masa?: Masa;
+  signer?: any; // unused here
+}) => {
+  return ['session', 'data', walletAddress];
+};
+
+export const useSessionQuery = ({
+  masa,
+  walletAddress,
+}: {
+  masa?: Masa;
+  walletAddress?: string;
+}) => {
+  const queryKeySession: (string | undefined)[] = useMemo(() => {
+    return ['session', walletAddress];
+  }, [walletAddress]);
+
+  const {
+    data: isLoggedIn,
+    status,
+    isLoading: isSessionCheckLoading,
+    isFetching: isSessionCheckFetching,
+    error,
+  } = useQuery<boolean | undefined>(
+    queryKeySession,
+    () => masa?.session.checkLogin(),
+    {
+      enabled: !!masa,
+      retry: false,
+    }
+  );
+
+  return {
+    isLoggedIn,
+    status,
+    isSessionCheckLoading,
+    isSessionCheckFetching,
+    error,
+  };
+};
+
+export const useSessionDataQuery = ({
+  masa,
+  walletAddress,
+}: {
+  masa?: Masa;
+  walletAddress?: string;
+}) => {
   const queryKeySessionData: (string | undefined)[] = useMemo(() => {
     return ['session', 'data', walletAddress];
   }, [walletAddress]);
@@ -31,26 +83,35 @@ export const useSession = (
       retry: false,
     }
   );
-  console.log('SESION', { walletAddress, sessionData });
+  return {
+    sessionData,
+    isSessionDataFetching,
+    isSessionDataLoading,
+  };
+};
 
-  const queryKeySession: (string | undefined)[] = useMemo(() => {
-    return ['session', walletAddress];
-  }, [walletAddress]);
-
+export const useSession = (
+  masa?: Masa,
+  walletAddress?: string
+): {
+  isLoggedIn?: boolean;
+  isSessionLoading: boolean;
+  handleLogin: () => void;
+  handleLogout: (logoutCallback?: () => void) => Promise<void>;
+  status: string;
+  error: unknown;
+} => {
+  const { sessionData, isSessionDataFetching, isSessionDataLoading } =
+    useSessionDataQuery({ masa, walletAddress });
   const {
-    data: isLoggedIn,
+    isLoggedIn,
     status,
-    isLoading: isSessionCheckLoading,
-    isFetching: isSessionCheckFetching,
+    isSessionCheckLoading,
+    isSessionCheckFetching,
     error,
-  } = useQuery<boolean | undefined>(
-    queryKeySession,
-    () => masa?.session.checkLogin(),
-    {
-      enabled: !!masa && !!walletAddress,
-      retry: false,
-    }
-  );
+  } = useSessionQuery({ masa, walletAddress });
+
+  console.log('SESSION', { walletAddress, sessionData });
 
   const { disconnectAsync } = useDisconnect();
   const clearSession = useCallback(async () => {
@@ -60,14 +121,15 @@ export const useSession = (
 
   const handleLogout = useCallback(
     async (logoutCallback?: () => void): Promise<void> => {
+      console.log('logging outtt!!');
       if (!isLoggedIn) {
         return;
       }
 
       try {
+        await disconnectAsync();
         await masa?.session.sessionLogout();
       } finally {
-        // await disconnectAsync();
         await clearSession();
         logoutCallback?.();
       }
@@ -83,18 +145,30 @@ export const useSession = (
     }
   }, [masa, clearSession]);
 
-  useEffect(() => {
-    (async () => {
-      console.log({ sessionData });
-      if (
-        isLoggedIn &&
-        sessionData &&
-        sessionData.user.address !== walletAddress
-      ) {
-        console.error('Session mismatch detected, logging out!');
-        void handleLogout();
-      }
-    })();
+  // useEffect(() => {
+  //   (async () => {
+  //     console.log({ sessionData });
+  //     if (
+  //       isLoggedIn &&
+  //       sessionData &&
+  //       sessionData.user.address !== walletAddress
+  //     ) {
+  //       console.error('Session mismatch detected, logging out!');
+  //       void handleLogout();
+  //     }
+  //   })();
+  // }, [sessionData, walletAddress, handleLogout, isLoggedIn]);
+
+  useAsync(async () => {
+    console.log({ sessionData });
+    if (
+      isLoggedIn &&
+      sessionData &&
+      sessionData.user.address !== walletAddress
+    ) {
+      console.error('Session mismatch detected, logging out!');
+      void handleLogout();
+    }
   }, [sessionData, walletAddress, handleLogout, isLoggedIn]);
 
   return {

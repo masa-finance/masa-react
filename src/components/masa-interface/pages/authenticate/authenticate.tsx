@@ -9,8 +9,8 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     handleLogin,
     walletAddress,
     isLoading,
-    setModalOpen,
-    openConnectModal,
+    // setModalOpen,
+    // openConnectModal,
     isLoggedIn,
     useRainbowKit,
     connect,
@@ -20,7 +20,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   const switchWallet = useCallback(() => {
     console.log({ disconnect });
     disconnect();
-  }, [disconnect, setModalOpen, openConnectModal, isConnected, isLoggedIn]);
+  }, [disconnect]);
 
   useEffect(() => {
     if (isConnected && !isLoggedIn) {

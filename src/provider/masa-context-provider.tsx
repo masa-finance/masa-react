@@ -24,6 +24,7 @@ import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
 import { useNetworkSwitch } from './use-network-switch';
 import { MasaNetworks } from './configured-rainbowkit-provider/utils';
+import { useLogout } from './hooks';
 
 export { SoulNameErrorCodes };
 
@@ -83,7 +84,7 @@ export const MasaContextProvider = ({
   });
 
   // network
-  const { switchNetwork, currentNetwork } = useNetwork(signer);
+  const { switchNetwork, currentNetwork } = useNetwork({provider: signer, useRainbowKitWalletConnect });
   const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
     useNetworkSwitch();
 
@@ -171,6 +172,14 @@ export const MasaContextProvider = ({
     isGreensLoading,
     wagmiLoading,
   ]);
+
+  const { logout } = useLogout({
+    onLogoutStart: () => console.log('starting logout'),
+    onLogoutFinish: () => console.log('finished logout'),
+    walletAddress,
+    masa: masaInstance,
+    signer,
+  });
   // const providerWagmi = useProvider();
 
   // useEffect(() => {
@@ -280,6 +289,7 @@ export const MasaContextProvider = ({
 
     // masa-react global connect
     connect,
+    logout,
 
     // general config
     scope,

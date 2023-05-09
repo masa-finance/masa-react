@@ -139,6 +139,7 @@ export const MasaInterface = ({
     isConnected,
     openConnectModal,
     closeModal,
+    useRainbowKit,
   ]);
 
   const isModal = useMemo(() => {
