@@ -11,8 +11,10 @@ import { useEffect } from 'react';
 
 export const useWagmi = ({
   setSigner,
+  logout,
 }: {
   setSigner: (signer?: Signer) => void;
+  logout: () => void
 }) => {
   const provider = useProvider();
   const { chain, chains } = useNetwork();
@@ -22,7 +24,9 @@ export const useWagmi = ({
     isLoading: isSignerLoading,
   } = useSigner();
 
-  const { isConnecting, isDisconnected } = useAccount();
+  const { isConnecting, isDisconnected } = useAccount({
+    onDisconnect: () => logout(),
+  });
   const { disconnect } = useDisconnect();
 
   useEffect(() => {

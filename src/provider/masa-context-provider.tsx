@@ -66,9 +66,6 @@ export const MasaContextProvider = ({
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
   const [signer, setSigner] = useState<Signer | undefined>();
 
-  // provider
-  const { isLoading: wagmiLoading } = useWagmi({ setSigner });
-
   // wallet
   const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
     masaInstance,
@@ -79,10 +76,14 @@ export const MasaContextProvider = ({
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
     useSession(masaInstance, walletAddress);
 
+  // provider
+  const { isLoading: wagmiLoading } = useWagmi({ setSigner, logout: handleLogout });
+
   // network
   const { switchNetwork, currentNetwork } = useNetwork(signer);
   const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
     useNetworkSwitch();
+    
   // identity
   const {
     identity,
