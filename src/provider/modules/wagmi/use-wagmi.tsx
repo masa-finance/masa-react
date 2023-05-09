@@ -14,7 +14,7 @@ export const useWagmi = ({
   logout,
 }: {
   setSigner: (signer?: Signer) => void;
-  logout: () => void
+  logout: () => void;
 }) => {
   const provider = useProvider();
   const { chain, chains } = useNetwork();

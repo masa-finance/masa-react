@@ -77,13 +77,16 @@ export const MasaContextProvider = ({
     useSession(masaInstance, walletAddress);
 
   // provider
-  const { isLoading: wagmiLoading } = useWagmi({ setSigner, logout: handleLogout });
+  const { isLoading: wagmiLoading } = useWagmi({
+    setSigner,
+    logout: handleLogout,
+  });
 
   // network
   const { switchNetwork, currentNetwork } = useNetwork(signer);
   const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
     useNetworkSwitch();
-    
+
   // identity
   const {
     identity,
