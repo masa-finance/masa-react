@@ -228,6 +228,7 @@ export const MasaContextProvider = ({
         });
 
         openConnectModal?.();
+        console.log("OPENING MODAL")
       } else {
         setModalOpen(true);
       }

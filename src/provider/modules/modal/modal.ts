@@ -24,6 +24,7 @@ export const useModal = (
   const [modalCallback, setModalCallback] = useState<(() => void) | null>(null);
   const [forcedPage, setForcedPage] = useState<null | string>(null);
 
+
   const [modalSize, setModalSize] = useState<{
     width: number;
     height: number;

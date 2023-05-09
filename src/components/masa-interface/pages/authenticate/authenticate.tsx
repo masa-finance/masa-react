@@ -14,6 +14,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     isLoggedIn,
     useRainbowKit,
     connect,
+    isModalOpen
   } = useMasa();
   const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
@@ -23,10 +24,10 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   }, [disconnect]);
 
   useEffect(() => {
-    if (isConnected && !isLoggedIn) {
+    if (isModalOpen && isConnected && !isLoggedIn) {
       connect?.();
     }
-  }, [connect, isConnected, isLoggedIn]);
+  }, [connect, isConnected, isLoggedIn, isModalOpen]);
   const [copied, setCopied] = useState(false);
 
   const message = useMemo(() => {
