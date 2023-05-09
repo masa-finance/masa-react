@@ -534,6 +534,9 @@
     }
 
     .connected-wallet {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
       font-size: 18px;
       color: rgba(0, 0, 0, 0.6);

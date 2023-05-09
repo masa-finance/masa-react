@@ -9,17 +9,21 @@ import {
 import { MetaMaskInpageProvider } from '@metamask/providers';
 import { useSwitchNetwork } from 'wagmi';
 
-export const useNetwork = ({
-  provider,
-  useRainbowKitWalletConnect,
-}: {
-  provider?: Wallet | Signer;
-  useRainbowKitWalletConnect?: boolean;
-}): {
+export type UseNetworkReturnValue = {
   addNetwork: (networkDetails: Network) => void;
   switchNetwork: (networkName: NetworkName) => void;
   currentNetwork?: Network;
-} => {
+};
+
+export type UseNetworkInputValue = {
+  provider?: Wallet | Signer;
+  useRainbowKitWalletConnect?: boolean;
+};
+
+export const useNetwork = ({
+  provider,
+  useRainbowKitWalletConnect,
+}: UseNetworkInputValue): UseNetworkReturnValue => {
   const [currentNetwork, setCurrentNetwork] = useState<Network | undefined>();
   const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork();
 

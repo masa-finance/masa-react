@@ -90,17 +90,19 @@ export const useSessionDataQuery = ({
   };
 };
 
-export const useSession = (
-  masa?: Masa,
-  walletAddress?: string
-): {
+export type UseSessionReturnType = {
   isLoggedIn?: boolean;
   isSessionLoading: boolean;
   handleLogin: () => void;
   handleLogout: (logoutCallback?: () => void) => Promise<void>;
   status: string;
   error: unknown;
-} => {
+};
+
+export const useSession = (
+  masa?: Masa,
+  walletAddress?: string
+): UseSessionReturnType => {
   const { sessionData, isSessionDataFetching, isSessionDataLoading } =
     useSessionDataQuery({ masa, walletAddress });
   const {

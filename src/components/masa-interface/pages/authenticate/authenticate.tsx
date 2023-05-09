@@ -90,14 +90,14 @@ export const InterfaceAuthenticate = (): JSX.Element => {
             <p>
               Want to use a different wallet?
               {!isLoggedIn && isConnected && (
-                <div className={'connected-wallet'}>
+                <span className={'connected-wallet'}>
                   <span
                     className={'authenticate-button'}
                     onClick={switchWallet}
                   >
                     Switch Wallet
                   </span>
-                </div>
+                </span>
               )}
             </p>
           </div>

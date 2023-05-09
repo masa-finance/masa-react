@@ -44,7 +44,7 @@ export const MasaInterface = ({
     hasWalletAddress,
     identity,
     isLoggedIn,
-    signer,
+
     closeModal,
     scope,
     creditScores,
@@ -59,21 +59,20 @@ export const MasaInterface = ({
 
   const page = useMemo(() => {
     if (verbose) {
-      console.log('INTERFACE', {
-        hasWalletAddress,
-        verbose,
-        identity,
-        isLoggedIn,
-        scope,
-        signer,
-        creditScores,
-        soulnames,
-        forcedPage,
-        forceNetwork,
-        currentNetwork,
-        useRainbowKit,
-        isConnected,
-      });
+      // console.log('INTERFACE', {
+      //   hasWalletAddress,
+      //   verbose,
+      //   identity,
+      //   isLoggedIn,
+      //   scope,
+      //   creditScores,
+      //   soulnames,
+      //   forcedPage,
+      //   forceNetwork,
+      //   currentNetwork,
+      //   useRainbowKit,
+      //   isConnected,
+      // });
     }
     if (forcedPage) return forcedPage;
 
@@ -130,7 +129,6 @@ export const MasaInterface = ({
     identity,
     isLoggedIn,
     scope,
-    signer,
     creditScores,
     soulnames,
     forcedPage,

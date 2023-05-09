@@ -25,6 +25,7 @@ import { useWagmi } from './modules/wagmi';
 import { useNetworkSwitch } from './use-network-switch';
 import { MasaNetworks } from './configured-rainbowkit-provider/utils';
 import { useLogout } from './hooks';
+import { useAccountState } from './use-account-state';
 
 export { SoulNameErrorCodes };
 
@@ -100,6 +101,20 @@ export const MasaContextProvider = ({
     reloadIdentity,
   } = useIdentity(masaInstance, walletAddress);
 
+  const {
+    isDisconnected,
+    isLoggedIn: loggedIn,
+    isLoggingOut,
+    hasAccountAddress,
+  } = useAccountState({
+    masa: masaInstance,
+    walletAddress,
+    signer,
+    isLoggedIn,
+    hasWalletAddress,
+  });
+
+  console.log({ isDisconnected, loggedIn, isLoggingOut });
   // soul names
   const { soulnames, isSoulnamesLoading, reloadSoulnames } = useSoulnames(
     masaInstance,
@@ -139,6 +154,14 @@ export const MasaContextProvider = ({
     setRainbowKitModalCallback,
   } = useRainbowKit();
 
+  const { logout } = useLogout({
+    onLogoutStart: handleLogout,
+    onLogoutFinish: () => console.log('finished logout'),
+    walletAddress,
+    masa: masaInstance,
+    signer,
+  });
+
   // modal
   const {
     isModalOpen,
@@ -151,7 +174,11 @@ export const MasaContextProvider = ({
     openMintMasaGreen,
     useModalSize,
     modalSize,
-  } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
+  } = useModal(
+    isLoggedIn,
+    hasAccountAddress, // used to be hasWalletAddress
+    areScopesFullfiled
+  );
 
   // global loading flag
   const isLoading = useMemo(() => {
@@ -176,13 +203,6 @@ export const MasaContextProvider = ({
     wagmiLoading,
   ]);
 
-  const { logout } = useLogout({
-    onLogoutStart: () => console.log('starting logout'),
-    onLogoutFinish: () => console.log('finished logout'),
-    walletAddress,
-    masa: masaInstance,
-    signer,
-  });
   // const providerWagmi = useProvider();
 
   // useEffect(() => {
