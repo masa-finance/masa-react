@@ -84,7 +84,10 @@ export const MasaContextProvider = ({
   });
 
   // network
-  const { switchNetwork, currentNetwork } = useNetwork({provider: signer, useRainbowKitWalletConnect });
+  const { switchNetwork, currentNetwork } = useNetwork({
+    provider: signer,
+    useRainbowKitWalletConnect,
+  });
   const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
     useNetworkSwitch();
 
@@ -228,7 +231,7 @@ export const MasaContextProvider = ({
         });
 
         openConnectModal?.();
-        console.log("OPENING MODAL")
+        console.log('OPENING MODAL');
       } else {
         setModalOpen(true);
       }

@@ -14,7 +14,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     isLoggedIn,
     useRainbowKit,
     connect,
-    isModalOpen
+    isModalOpen,
   } = useMasa();
   const { isConnected } = useAccount();
   const { disconnect } = useDisconnect();
