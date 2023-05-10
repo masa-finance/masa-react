@@ -33,6 +33,7 @@ type ConfiguredRainbowKitProviderValue = Record<string, never>;
 interface ConfiguredRainbowKitProviderProps {
   children: ReactNode;
   chainsToUse?: Array<keyof MasaNetworks>;
+  walletsToUse?: string[];
 }
 
 // const { chains, provider } = configureChains(
@@ -88,9 +89,23 @@ interface ConfiguredRainbowKitProviderProps {
 //   celoConnectors().map((cc) => cc.name)
 // );
 
+const walletConnectorsList = {
+  metamask: (chains) => ({
+    groupName: 'Recommended',
+    wallets: [injectedWallet({ chains }), metaMaskWallet({ chains })],
+  }),
+  valora: (chains) => ({
+    groupName: 'Celo',
+    wallets: [Valora({ chains })],
+  }),
+};
+
 export const ConfiguredRainbowKitProvider = ({
   children,
   chainsToUse,
+  walletsToUse = [
+    'metamask'
+  ],
 }: ConfiguredRainbowKitProviderProps) => {
   const rainbowkitChains = getRainbowkitChains(chainsToUse);
   const { chains, provider } = configureChains(rainbowkitChains, [
@@ -101,16 +116,13 @@ export const ConfiguredRainbowKitProvider = ({
     }),
   ]);
 
-  const celoConnectors = connectorsForWallets([
-    {
-      groupName: 'Recommended',
-      wallets: [injectedWallet({ chains }), metaMaskWallet({ chains })],
-    },
-    {
-      groupName: 'Celo',
-      wallets: [Valora({ chains })],
-    },
-  ]);
+  const walletConnectors = walletsToUse?.map((wallet) => {
+    if (walletConnectorsList[wallet]) {
+      return walletConnectorsList[wallet](chains);
+    }
+  }) ?? [];
+
+  const celoConnectors = connectorsForWallets(walletConnectors);
   const wagmiClient = createClient({
     autoConnect: true,
     connectors: celoConnectors,

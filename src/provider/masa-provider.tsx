@@ -17,12 +17,13 @@ require('@rainbow-me/rainbowkit/styles.css');
 export const MasaProvider = ({
   children,
   chainsToUse,
+  walletsToUse,
   ...args
 }: MasaContextProviderProps): JSX.Element => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ConfiguredRainbowKitProvider chainsToUse={chainsToUse}>
+        <ConfiguredRainbowKitProvider chainsToUse={chainsToUse} walletsToUse={walletsToUse}>
           <MasaContextProvider {...args}>
             <div id="modal-mount" />
             <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />

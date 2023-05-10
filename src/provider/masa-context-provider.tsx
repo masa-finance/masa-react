@@ -45,6 +45,7 @@ export interface MasaContextProviderProps extends MasaShape {
   arweaveConfig?: ArweaveConfig;
   useRainbowKitWalletConnect?: boolean;
   chainsToUse?: Array<keyof MasaNetworks>;
+  walletsToUse?: string[];
 }
 
 export const MasaContextProvider = ({
