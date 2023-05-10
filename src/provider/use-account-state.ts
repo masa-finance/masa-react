@@ -2,11 +2,12 @@
  * quick collector object for account state;
  */
 
-import { Masa } from '@masa-finance/masa-sdk';
-import { Signer } from 'ethers';
+import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
+import { BigNumber, Signer } from 'ethers';
 import { ConnectorData, useAccount } from 'wagmi';
-import { useLogout } from './hooks';
-import { useEffect, useMemo, useState } from 'react';
+import { invalidateAllQueries, useLogout } from './hooks';
+import { useMemo, useState } from 'react';
+import { useAsync } from 'react-use';
 
 export const useAccountState = ({
   masa,
@@ -15,16 +16,24 @@ export const useAccountState = ({
   identity,
   isLoggedIn,
   hasWalletAddress,
+  reloadIdentity,
+  reloadWallet,
+  soulnames,
 }: {
   masa?: Masa;
   walletAddress?: string;
   signer?: Signer;
   isLoggedIn?: boolean;
-  identity?: {
-    identityId?: string;
-    address?: string;
-  };
+  identity?:
+    | {
+        identityId?: BigNumber | undefined;
+        address?: string;
+      }
+    | undefined;
+  soulnames?: SoulNameDetails[] | undefined;
   hasWalletAddress?: boolean;
+  reloadIdentity?: () => void;
+  reloadWallet?: () => void;
 }) => {
   const [accountAddress, setAccountAddress] = useState<string | undefined>(
     walletAddress
@@ -44,11 +53,14 @@ export const useAccountState = ({
   });
 
   // * detects if we have a new account or chain
-  useEffect(() => {
-    const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
+  useAsync(async () => {
+    const handleConnectorUpdate = async ({ account, chain }: ConnectorData) => {
       if (account) {
         console.log('new account', account);
         setAccountAddress(account);
+        await invalidateAllQueries({ masa, signer, walletAddress });
+        // reloadIdentity?.();
+        // reloadWallet?.();
       } else if (chain) {
         console.log('new chain', chain);
       }
@@ -61,28 +73,110 @@ export const useAccountState = ({
     return () => {
       activeConnector?.off('change', handleConnectorUpdate);
     };
-  }, [activeConnector]);
+  }, [
+    activeConnector,
+    reloadIdentity,
+    reloadWallet,
+    masa,
+    signer,
+    walletAddress,
+  ]);
 
   const hasAccountAddress = useMemo(() => {
     return !!accountAddress;
   }, [accountAddress]);
 
-  useEffect(() => {
+  useAsync(async () => {
     // * initial state, just make sure walletAddress is passed to account address
     // * if we are initializing
     // * TODO: remove this logic once proper walletAddress scoping is in place
     if (walletAddress && !accountAddress && !isDisconnected) {
       console.log('setting account address to wallet address', walletAddress);
       setAccountAddress(walletAddress);
+      await invalidateAllQueries({ masa, signer, walletAddress });
     }
-  }, [walletAddress, accountAddress, wagmiAddress, isDisconnected]);
-
-  return {
+  }, [
+    walletAddress,
     accountAddress,
+    wagmiAddress,
+    isDisconnected,
+    reloadIdentity,
+    reloadWallet,
+    masa,
+    signer,
+  ]);
+
+  console.log('renderaccountstate', {
+    wagmiAddress,
+    hasAccountAddress,
+    hasWalletAddress,
+    identity,
+    soulnames,
+  });
+  // * weird edge case
+  useAsync(async () => {
+    if (isConnected) {
+      if (hasAccountAddress && hasWalletAddress) return;
+      if (wagmiAddress) setAccountAddress(wagmiAddress);
+      await invalidateAllQueries({ masa, signer, walletAddress });
+      console.log();
+    }
+  }, [
+    masa,
+    signer,
+    walletAddress,
+    accountAddress,
+    isConnected,
+    hasWalletAddress,
+    hasAccountAddress,
+    wagmiAddress,
+    reloadWallet,
+    reloadIdentity,
+  ]);
+
+  // * we are in our bug case
+  useAsync(async () => {
+    if (wagmiAddress === accountAddress && !hasWalletAddress) {
+      await invalidateAllQueries({
+        masa,
+        signer,
+        walletAddress,
+      });
+      // reloadWallet?.();
+      // reloadIdentity?.();
+    }
+  }, [
+    hasWalletAddress,
+    accountAddress,
+    wagmiAddress,
+    reloadWallet,
+    reloadIdentity,
+  ]);
+
+  console.log({
+    accountAddress,
+    signer,
     isConnected,
     isConnecting,
     isDisconnected,
     identity,
+    isLoggedIn,
+    hasLoggedOut,
+    isLoggingOut,
+
+    hasWalletAddress,
+    hasAccountAddress,
+    walletAddress,
+  });
+
+  return {
+    accountAddress,
+    signer,
+    isConnected,
+    isConnecting,
+    isDisconnected,
+    identity,
+    soulnames,
     isLoggedIn,
     hasLoggedOut,
     isLoggingOut,

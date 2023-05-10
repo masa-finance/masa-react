@@ -30,8 +30,9 @@ export const useRainbowKit = () => {
   useEffect(() => {
     if (modalCallback && openAccountModal && openChainModal) {
       // we open the original modal of useMasa now
+      console.log('calling modal callback');
       modalCallback();
-      setRainbowKitModalCallback(undefined);
+      // setRainbowKitModalCallback(undefined);
     }
   }, [modalCallback, openAccountModal, openChainModal, openConnectModal]);
 

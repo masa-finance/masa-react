@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { Masa, NetworkName, PaymentMethod } from '@masa-finance/masa-sdk';
@@ -37,7 +37,7 @@ export const useIdentityQuery = ({
     queryKey,
     () => masa?.identity.load(walletAddress),
     {
-      enabled: false, // !!masa && !!walletAddress,
+      enabled: true, // !!masa && !!walletAddress,
       retry: false,
       onSuccess: (identity?: { identityId?: BigNumber; address?: string }) => {
         if (masa?.config.verbose) {
@@ -85,7 +85,7 @@ export const useIdentity = (
   ) => Promise<boolean>;
   status: string;
   isIdentityLoading: boolean;
-  reloadIdentity: () => void;
+  reloadIdentity: () => Promise<unknown>;
   error: unknown;
 } => {
   const {
@@ -123,6 +123,10 @@ export const useIdentity = (
     },
     [masa, invalidateIdentity, invalidateSoulnames]
   );
+
+  useEffect(() => {
+    reloadIdentity();
+  }, [walletAddress, reloadIdentity]);
 
   return {
     identity,

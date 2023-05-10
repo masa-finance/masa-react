@@ -6,6 +6,7 @@ import {
   getIdentityQueryKey,
   getSessionDataQueryKey,
   getSessionQueryKey,
+  getSoulnamesQueryKey,
   getWalletQueryKey,
 } from './modules';
 import { Masa } from '@masa-finance/masa-sdk';
@@ -16,9 +17,9 @@ const QUERIES = [
   'wallet',
   'session',
   'sessionData',
+  'soulnames',
   //   'credit-scores',
   //   'green',
-  //   'soulnames',
 ];
 
 export type QueryKeyRetrievalInput = {
@@ -36,6 +37,8 @@ export const getQueryKeys = () => ({
     getSessionDataQueryKey({ masa, signer, walletAddress }),
   wallet: ({ masa, signer, walletAddress }: QueryKeyRetrievalInput) =>
     getWalletQueryKey({ masa, signer, walletAddress }),
+  soulnames: ({ masa, signer, walletAddress }: QueryKeyRetrievalInput) =>
+    getSoulnamesQueryKey({ masa, signer, walletAddress }),
 });
 
 export const invalidateAllQueries = async ({

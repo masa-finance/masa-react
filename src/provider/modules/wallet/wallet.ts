@@ -1,7 +1,9 @@
 import { useQuery } from 'react-query';
 import { Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { Signer, Wallet } from 'ethers';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useAsync } from 'react-use';
+import { queryClient } from '../../masa-query-client';
 
 export const getWalletQueryKey = ({
   masa,
@@ -33,7 +35,7 @@ export const useWalletQuery = ({
     error,
     refetch,
   } = useQuery<string | undefined>(queryKey, () => signer?.getAddress(), {
-    enabled: !!masa, //  && !!signer,
+    enabled: false, // !!masa, //  && !!signer,
     retry: false,
     onSuccess: (address: string | undefined) => {
       if (masa?.config.verbose) {
@@ -42,6 +44,11 @@ export const useWalletQuery = ({
     },
   });
 
+  const invalidateIdentity = useCallback(
+    async () => await queryClient.invalidateQueries(['identity']),
+    []
+  );
+
   return {
     walletAddress,
     status,
@@ -49,24 +56,28 @@ export const useWalletQuery = ({
     isFetching,
     error,
     refetch,
+    invalidateIdentity,
   };
 };
 
-export const useWallet = (
-  masa?: Masa,
-  signer?: Wallet | Signer
-): {
+export type UseWalletReturnType = {
   walletAddress?: string;
   isWalletLoading: boolean;
   hasWalletAddress: boolean;
   status: string;
   error: unknown;
-} => {
+  reloadWallet: () => Promise<unknown>;
+};
+
+export const useWallet = (
+  masa?: Masa,
+  signer?: Wallet | Signer
+): UseWalletReturnType => {
   const { walletAddress, status, isLoading, isFetching, error, refetch } =
     useWalletQuery({ masa, signer });
 
-  useEffect(() => {
-    void refetch();
+  useAsync(async () => {
+    await refetch();
   }, [refetch, signer]);
 
   const hasWalletAddress = useMemo(() => {
@@ -79,5 +90,6 @@ export const useWallet = (
     hasWalletAddress,
     status,
     error,
+    reloadWallet: refetch,
   };
 };

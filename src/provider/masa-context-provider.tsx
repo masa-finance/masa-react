@@ -69,10 +69,8 @@ export const MasaContextProvider = ({
   const [signer, setSigner] = useState<Signer | undefined>();
 
   // wallet
-  const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
-    masaInstance,
-    signer
-  );
+  const { walletAddress, isWalletLoading, hasWalletAddress, reloadWallet } =
+    useWallet(masaInstance, signer);
 
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
@@ -102,19 +100,23 @@ export const MasaContextProvider = ({
   } = useIdentity(masaInstance, walletAddress);
 
   const {
-    isDisconnected,
-    isLoggedIn: loggedIn,
-    isLoggingOut,
+    // isDisconnected,
+    // isLoggedIn: loggedIn,
+    // isLoggingOut,
     hasAccountAddress,
+    accountAddress,
   } = useAccountState({
     masa: masaInstance,
+    identity,
+    reloadIdentity,
     walletAddress,
     signer,
     isLoggedIn,
     hasWalletAddress,
+    reloadWallet,
   });
 
-  console.log({ isDisconnected, loggedIn, isLoggingOut });
+  // console.log({ isDisconnected, loggedIn, isLoggingOut, identity });
   // soul names
   const { soulnames, isSoulnamesLoading, reloadSoulnames } = useSoulnames(
     masaInstance,
@@ -247,7 +249,10 @@ export const MasaContextProvider = ({
       if (useRainbowKitWalletConnect) {
         // * set the callback to open masa modal after rainbowkit modal is closed
         setRainbowKitModalCallback(() => {
-          return () => setModalOpen(true);
+          return () => {
+            setModalOpen(true);
+            // setForcedPage?.(null);
+          };
         });
 
         openConnectModal?.();
@@ -255,9 +260,8 @@ export const MasaContextProvider = ({
       } else {
         setModalOpen(true);
       }
-
+      console.log('set forced page null');
       setForcedPage?.(null);
-
       if (options?.scope) {
         setScope(options.scope);
       }
@@ -339,7 +343,8 @@ export const MasaContextProvider = ({
     walletAddress,
     isWalletLoading,
     hasWalletAddress,
-
+    accountAddress,
+    hasAccountAddress,
     // identity
     identity,
     isIdentityLoading,

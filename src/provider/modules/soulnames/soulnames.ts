@@ -8,6 +8,17 @@ import {
 import { useCallback, useMemo } from 'react';
 import { queryClient } from '../../masa-query-client';
 
+export const getSoulnamesQueryKey = ({
+  walletAddress,
+  masa,
+}: {
+  walletAddress?: string;
+  masa?: Masa;
+  signer?: any; // unused here
+}) => {
+  return ['soulnames', walletAddress, masa?.config.networkName];
+};
+
 export const useSoulnamesQuery = ({
   masa,
   walletAddress,
@@ -30,7 +41,7 @@ export const useSoulnamesQuery = ({
     queryKey,
     () => masa?.soulName.list(),
     {
-      enabled: !!masa && !!walletAddress,
+      enabled: true, // !!masa && !!walletAddress,
       retry: false,
       onSuccess: (soulNames?: SoulNameDetails[]) => {
         if (masa?.config.verbose) {

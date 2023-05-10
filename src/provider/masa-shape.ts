@@ -51,6 +51,8 @@ export interface MasaShape {
   walletAddress?: string;
   isWalletLoading?: boolean;
   hasWalletAddress?: boolean;
+  accountAddress?: string;
+  hasAccountAddress?: boolean;
 
   // identity
   identity?: {

@@ -7,7 +7,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   const {
     company,
     handleLogin,
-    walletAddress,
+    accountAddress,
     isLoading,
     // setModalOpen,
     // openConnectModal,
@@ -47,18 +47,18 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   }, [company]);
 
   const shortAddress = useMemo(() => {
-    return `${walletAddress?.substring(0, 2)}...${walletAddress?.substring(
-      walletAddress.length - 4,
-      walletAddress.length
+    return `${accountAddress?.substring(0, 2)}...${accountAddress?.substring(
+      accountAddress.length - 4,
+      accountAddress.length
     )}`;
-  }, [walletAddress]);
+  }, [accountAddress]);
 
   const handleClipboard = useCallback(() => {
-    if (walletAddress) {
-      void navigator.clipboard.writeText(walletAddress);
+    if (accountAddress) {
+      void navigator.clipboard.writeText(accountAddress);
       setCopied(true);
     }
-  }, [walletAddress]);
+  }, [accountAddress]);
 
   if (isLoading) {
     return <Spinner />;

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { ISession, Masa } from '@masa-finance/masa-sdk';
@@ -42,6 +42,7 @@ export const useSessionQuery = ({
     isLoading: isSessionCheckLoading,
     isFetching: isSessionCheckFetching,
     error,
+    refetch: reloadSession,
   } = useQuery<boolean | undefined>(
     queryKeySession,
     () => masa?.session.checkLogin(),
@@ -57,6 +58,7 @@ export const useSessionQuery = ({
     isSessionCheckLoading,
     isSessionCheckFetching,
     error,
+    reloadSession,
   };
 };
 
@@ -75,6 +77,7 @@ export const useSessionDataQuery = ({
     data: sessionData,
     isLoading: isSessionDataLoading,
     isFetching: isSessionDataFetching,
+    refetch: reloadSessionData,
   } = useQuery<ISession | undefined>(
     queryKeySessionData,
     () => masa?.session.getSession(),
@@ -87,12 +90,15 @@ export const useSessionDataQuery = ({
     sessionData,
     isSessionDataFetching,
     isSessionDataLoading,
+    reloadSessionData,
   };
 };
 
 export type UseSessionReturnType = {
   isLoggedIn?: boolean;
   isSessionLoading: boolean;
+  reloadSession: () => void;
+  reloadSessionData: () => void;
   handleLogin: () => void;
   handleLogout: (logoutCallback?: () => void) => Promise<void>;
   status: string;
@@ -103,13 +109,18 @@ export const useSession = (
   masa?: Masa,
   walletAddress?: string
 ): UseSessionReturnType => {
-  const { sessionData, isSessionDataFetching, isSessionDataLoading } =
-    useSessionDataQuery({ masa, walletAddress });
+  const {
+    sessionData,
+    isSessionDataFetching,
+    isSessionDataLoading,
+    reloadSessionData,
+  } = useSessionDataQuery({ masa, walletAddress });
   const {
     isLoggedIn,
     status,
     isSessionCheckLoading,
     isSessionCheckFetching,
+    reloadSession,
     error,
   } = useSessionQuery({ masa, walletAddress });
 
@@ -147,6 +158,10 @@ export const useSession = (
     }
   }, [masa, clearSession]);
 
+  useEffect(() => {
+    // reloadSession();
+    reloadSessionData();
+  }, [walletAddress, reloadSession, reloadSessionData]);
   // useEffect(() => {
   //   (async () => {
   //     console.log({ sessionData });
@@ -182,6 +197,8 @@ export const useSession = (
       isSessionDataFetching,
     handleLogin,
     handleLogout,
+    reloadSession,
+    reloadSessionData,
     status,
     error,
   };
