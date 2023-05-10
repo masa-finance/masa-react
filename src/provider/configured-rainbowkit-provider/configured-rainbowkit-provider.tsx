@@ -103,9 +103,7 @@ const walletConnectorsList = {
 export const ConfiguredRainbowKitProvider = ({
   children,
   chainsToUse,
-  walletsToUse = [
-    'metamask'
-  ],
+  walletsToUse = ['metamask'],
 }: ConfiguredRainbowKitProviderProps) => {
   const rainbowkitChains = getRainbowkitChains(chainsToUse);
   const { chains, provider } = configureChains(rainbowkitChains, [
@@ -116,11 +114,12 @@ export const ConfiguredRainbowKitProvider = ({
     }),
   ]);
 
-  const walletConnectors = walletsToUse?.map((wallet) => {
-    if (walletConnectorsList[wallet]) {
-      return walletConnectorsList[wallet](chains);
-    }
-  }) ?? [];
+  const walletConnectors =
+    walletsToUse?.map((wallet) => {
+      if (walletConnectorsList[wallet]) {
+        return walletConnectorsList[wallet](chains);
+      }
+    }) ?? [];
 
   const celoConnectors = connectorsForWallets(walletConnectors);
   const wagmiClient = createClient({

@@ -23,7 +23,10 @@ export const MasaProvider = ({
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ConfiguredRainbowKitProvider chainsToUse={chainsToUse} walletsToUse={walletsToUse}>
+        <ConfiguredRainbowKitProvider
+          chainsToUse={chainsToUse}
+          walletsToUse={walletsToUse}
+        >
           <MasaContextProvider {...args}>
             <div id="modal-mount" />
             <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />
