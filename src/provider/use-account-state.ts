@@ -106,20 +106,16 @@ export const useAccountState = ({
     signer,
   ]);
 
-  console.log('renderaccountstate', {
-    wagmiAddress,
-    hasAccountAddress,
-    hasWalletAddress,
-    identity,
-    soulnames,
-  });
   // * weird edge case
   useAsync(async () => {
+    if (isDisconnected) {
+      await invalidateAllQueries({ masa, signer, walletAddress });
+      return;
+    }
     if (isConnected) {
       if (hasAccountAddress && hasWalletAddress) return;
       if (wagmiAddress) setAccountAddress(wagmiAddress);
       await invalidateAllQueries({ masa, signer, walletAddress });
-      console.log();
     }
   }, [
     masa,
@@ -153,7 +149,7 @@ export const useAccountState = ({
     reloadIdentity,
   ]);
 
-  console.log({
+  console.log('use-account-state', {
     accountAddress,
     signer,
     isConnected,

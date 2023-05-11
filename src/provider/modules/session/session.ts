@@ -124,8 +124,6 @@ export const useSession = (
     error,
   } = useSessionQuery({ masa, walletAddress });
 
-  console.log('SESSION', { walletAddress, sessionData });
-
   const { disconnectAsync } = useDisconnect();
   const clearSession = useCallback(async () => {
     await queryClient.invalidateQueries(['wallet']);
@@ -134,7 +132,7 @@ export const useSession = (
 
   const handleLogout = useCallback(
     async (logoutCallback?: () => void): Promise<void> => {
-      console.log('logging outtt!!');
+      console.log('logging outtt!! in session.ts');
       if (!isLoggedIn) {
         return;
       }

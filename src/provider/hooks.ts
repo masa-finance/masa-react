@@ -46,25 +46,7 @@ export const invalidateAllQueries = async ({
   signer,
   walletAddress,
 }: QueryKeyRetrievalInput) => {
-  console.log('invalidate all queries start');
-  const res = await Promise.all(
-    QUERIES.map((query: string) =>
-      queryClient.getQueriesData(
-        getQueryKeys()[query]({
-          masa,
-          signer,
-          walletAddress,
-        })
-      )
-    )
-  );
-
-  console.log(
-    'res inv queries',
-    res.map((r) => r[0])
-  );
-
-  const resTwo = await Promise.all(
+  await Promise.all(
     QUERIES.map(async (query: string) =>
       queryClient.invalidateQueries(
         getQueryKeys()[query]({
@@ -75,7 +57,6 @@ export const invalidateAllQueries = async ({
       )
     )
   );
-  console.log('res after invalidation', resTwo);
 };
 
 export const useLogout = (
