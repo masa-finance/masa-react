@@ -5,7 +5,12 @@
 import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
 import { ConnectorData, useAccount } from 'wagmi';
-import { invalidateAllQueries, useLogout } from './hooks';
+import {
+  invalidateAllQueries,
+  invalidateIdentity,
+  invalidateWallet,
+  useLogout,
+} from './hooks';
 import { useMemo, useState } from 'react';
 import { useAsync } from 'react-use';
 
@@ -14,9 +19,7 @@ export const useAccountState = ({
   walletAddress,
   signer,
   identity,
-  isLoggedIn,
   hasWalletAddress,
-  reloadIdentity,
   reloadWallet,
   soulnames,
 }: {
@@ -74,14 +77,7 @@ export const useAccountState = ({
     return () => {
       activeConnector?.off('change', handleConnectorUpdate);
     };
-  }, [
-    activeConnector,
-    reloadIdentity,
-    reloadWallet,
-    masa,
-    signer,
-    walletAddress,
-  ]);
+  }, [activeConnector, reloadWallet, masa, signer, walletAddress]);
 
   const hasAccountAddress = useMemo(() => {
     return !!accountAddress;
@@ -101,7 +97,6 @@ export const useAccountState = ({
     accountAddress,
     wagmiAddress,
     isDisconnected,
-    reloadIdentity,
     reloadWallet,
     masa,
     signer,
@@ -113,10 +108,13 @@ export const useAccountState = ({
       await invalidateAllQueries({ masa, signer, walletAddress });
       return;
     }
+
     if (isConnected) {
       if (hasAccountAddress && hasWalletAddress) return;
       if (wagmiAddress) setAccountAddress(wagmiAddress);
-      await invalidateAllQueries({ masa, signer, walletAddress });
+
+      await invalidateIdentity({ masa, signer, walletAddress });
+      await invalidateWallet({ masa, signer, walletAddress });
     }
   }, [
     masa,
@@ -128,7 +126,6 @@ export const useAccountState = ({
     hasAccountAddress,
     wagmiAddress,
     reloadWallet,
-    reloadIdentity,
   ]);
 
   // * we are in our bug case
@@ -139,16 +136,8 @@ export const useAccountState = ({
         signer,
         walletAddress,
       });
-      // reloadWallet?.();
-      // reloadIdentity?.();
     }
-  }, [
-    hasWalletAddress,
-    accountAddress,
-    wagmiAddress,
-    reloadWallet,
-    reloadIdentity,
-  ]);
+  }, [hasWalletAddress, accountAddress, wagmiAddress, reloadWallet]);
 
   console.log('use-account-state', {
     accountAddress,
@@ -156,8 +145,7 @@ export const useAccountState = ({
     isConnected,
     isConnecting,
     isDisconnected,
-    identity,
-    isLoggedIn,
+
     hasLoggedOut,
     isLoggingOut,
 
@@ -179,7 +167,7 @@ export const useAccountState = ({
     isDisconnected,
     identity,
     soulnames,
-    isLoggedIn,
+
     hasLoggedOut,
     isLoggingOut,
 

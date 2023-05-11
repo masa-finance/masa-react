@@ -59,6 +59,48 @@ export const invalidateAllQueries = async ({
   );
 };
 
+export const invalidateSession = async ({
+  masa,
+  signer,
+  walletAddress,
+}: QueryKeyRetrievalInput) => {
+  await queryClient.invalidateQueries(
+    getQueryKeys().session({
+      masa,
+      signer,
+      walletAddress,
+    })
+  );
+};
+
+export const invalidateWallet = async ({
+  masa,
+  signer,
+  walletAddress,
+}: QueryKeyRetrievalInput) => {
+  await queryClient.invalidateQueries(
+    getQueryKeys().wallet({
+      masa,
+      signer,
+      walletAddress,
+    })
+  );
+};
+
+export const invalidateIdentity = async ({
+  masa,
+  signer,
+  walletAddress,
+}: QueryKeyRetrievalInput) => {
+  await queryClient.invalidateQueries(
+    getQueryKeys().identity({
+      masa,
+      signer,
+      walletAddress,
+    })
+  );
+};
+
 export const useLogout = (
   options: {
     masa?: Masa;

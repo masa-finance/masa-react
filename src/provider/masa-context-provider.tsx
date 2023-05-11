@@ -73,9 +73,25 @@ export const MasaContextProvider = ({
   const { walletAddress, isWalletLoading, hasWalletAddress, reloadWallet } =
     useWallet(masaInstance, signer);
 
+  const {
+    isConnected,
+    isDisconnected,
+    // isDisconnected,
+    // isLoggedIn: loggedIn,
+    // isLoggingOut,
+    hasAccountAddress,
+    accountAddress,
+  } = useAccountState({
+    masa: masaInstance,
+    walletAddress,
+    signer,
+    hasWalletAddress,
+    reloadWallet,
+  });
+
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
-    useSession(masaInstance, walletAddress);
+    useSession(masaInstance, accountAddress);
 
   // provider
   const { isLoading: wagmiLoading } = useWagmi({
@@ -99,25 +115,6 @@ export const MasaContextProvider = ({
     isIdentityLoading,
     reloadIdentity,
   } = useIdentity(masaInstance, walletAddress);
-
-  const {
-    isConnected,
-    isDisconnected,
-    // isDisconnected,
-    // isLoggedIn: loggedIn,
-    // isLoggingOut,
-    hasAccountAddress,
-    accountAddress,
-  } = useAccountState({
-    masa: masaInstance,
-    identity,
-    reloadIdentity,
-    walletAddress,
-    signer,
-    isLoggedIn,
-    hasWalletAddress,
-    reloadWallet,
-  });
 
   // console.log({ isDisconnected, loggedIn, isLoggingOut, identity });
   // soul names
