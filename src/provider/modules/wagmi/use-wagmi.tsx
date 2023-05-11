@@ -54,6 +54,7 @@ export const useWagmi = ({
 
   useEffect(() => {
     setSigner(signer as Signer);
+    console.log('setSigner wagmi', { setSigner, signer });
   }, [setSigner, signer]);
 
   return {

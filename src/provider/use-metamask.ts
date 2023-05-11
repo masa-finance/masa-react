@@ -66,6 +66,7 @@ export const useMetamask = ({
         const signer = getWeb3Provider()?.getSigner();
 
         if (signer && accounts.length > 0 && setSigner) {
+          console.log('setsigner', connectMetamask);
           setSigner(signer);
           metamaskConnected = true;
           localStorageSet<boolean>(metamaskStorageKey, true);
@@ -177,6 +178,7 @@ export const useMetamask = ({
             // no accounts, disconnect metamask
             await disconnectMetamask();
             // drop provider
+            console.log('removing signer metamask', { setSigner });
             setSigner?.();
           }
 
@@ -191,6 +193,7 @@ export const useMetamask = ({
       (window.ethereum as unknown as MetaMaskInpageProvider)?.on(
         'chainChanged',
         () => {
+          console.log('set signer use meta mask', { setSigner });
           setSigner?.(getWeb3Provider()?.getSigner());
         }
       );

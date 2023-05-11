@@ -136,7 +136,7 @@ export const useAccountState = ({
 
   // * we are in our bug case
   useAsync(async () => {
-    if (wagmiAddress === accountAddress && !hasWalletAddress) {
+    if (wagmiAddress === accountAddress && !hasWalletAddress && !signer) {
       await invalidateAllQueries({
         masa,
         signer,
