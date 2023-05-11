@@ -123,7 +123,8 @@ export interface MasaShape {
   >;
   switchNetworkNew?: (forcedNetworkParam: NetworkName) => void;
   currentNetworkNew?: GetNetworkResult;
-
+  isConnected?: boolean;
+  isDisconnected?: boolean;
   // new-modal
   openModal?: ({
     name,

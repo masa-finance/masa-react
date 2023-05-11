@@ -101,6 +101,8 @@ export const MasaContextProvider = ({
   } = useIdentity(masaInstance, walletAddress);
 
   const {
+    isConnected,
+    isDisconnected,
     // isDisconnected,
     // isLoggedIn: loggedIn,
     // isLoggingOut,
@@ -392,7 +394,8 @@ export const MasaContextProvider = ({
     // wagmi
     switchNetworkNew,
     currentNetworkNew,
-
+    isConnected,
+    isDisconnected,
     // // new-modal
     // openModal,
     // openAuthenticateModal,

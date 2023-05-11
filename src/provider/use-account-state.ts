@@ -169,6 +169,11 @@ export const useAccountState = ({
     walletAddress,
   });
 
+  // useAsync(async () => {
+  //   if (isDisconnected) {
+  //     await invalidateAllQueries({ masa, signer, walletAddress });
+  //   }
+  // }, [isDisconnected, masa, signer, walletAddress]);
   return {
     accountAddress,
     signer,
