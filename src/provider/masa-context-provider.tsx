@@ -259,11 +259,11 @@ export const MasaContextProvider = ({
         });
 
         openConnectModal?.();
-        console.log('OPENING MODAL');
+        console.log('OPENING RK MODAL');
       } else {
         setModalOpen(true);
       }
-      console.log('set forced page null');
+      // console.log('set forced page null');
       setForcedPage?.(null);
       if (options?.scope) {
         setScope(options.scope);

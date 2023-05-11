@@ -309,7 +309,6 @@ export const MasaInterface = ({
     return ['createIdentity', 'successIdentityCreate'].includes(String(page));
   }, [page]);
 
-  console.log('PAGE', page);
   return (
     <>
       <ModalComponent

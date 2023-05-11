@@ -28,6 +28,7 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
     isLoggedIn,
     handleLogout,
     switchNetwork,
+    switchNetworkNew,
     openMintSoulnameModal,
     openMintMasaGreen,
     openConnectModal,
@@ -145,29 +146,29 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
           width: '50%',
         }}
       >
-        <button onClick={(): void => switchNetwork?.('ethereum')}>
+        <button onClick={(): void => switchNetworkNew?.('ethereum')}>
           Switch to Ethereum
         </button>
-        <button onClick={(): void => switchNetwork?.('goerli')}>
+        <button onClick={(): void => switchNetworkNew?.('goerli')}>
           Switch to Goerli
         </button>
 
-        <button onClick={(): void => switchNetwork?.('polygon')}>
+        <button onClick={(): void => switchNetworkNew?.('polygon')}>
           Switch to Polygon
         </button>
-        <button onClick={(): void => switchNetwork?.('mumbai')}>
+        <button onClick={(): void => switchNetworkNew?.('mumbai')}>
           Switch to Mumbai
         </button>
-        <button onClick={(): void => switchNetwork?.('bsc')}>
+        <button onClick={(): void => switchNetworkNew?.('bsc')}>
           Switch to BSC
         </button>
-        <button onClick={(): void => switchNetwork?.('bsctest')}>
+        <button onClick={(): void => switchNetworkNew?.('bsctest')}>
           Switch to BSC Test
         </button>
-        <button onClick={(): void => switchNetwork?.('celo')}>
+        <button onClick={(): void => switchNetworkNew?.('celo')}>
           Switch to Celo
         </button>
-        <button onClick={(): void => switchNetwork?.('alfajores')}>
+        <button onClick={(): void => switchNetworkNew?.('alfajores')}>
           Switch to Alfajores
         </button>
       </div>

@@ -2,22 +2,23 @@ import React, { useCallback, useMemo } from 'react';
 import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
 import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
-import {
-  // useNetwork,
-  // useNetwork,
-  useSwitchNetwork,
-} from 'wagmi';
+// import {
+//   // useNetwork,
+//   // useNetwork,
+//   useSwitchNetwork,
+// } from 'wagmi';
 
 export const InterfaceSwitchChain = (): JSX.Element => {
   const {
     isLoading,
     // switchNetwork,
     forceNetwork,
+    switchNetworkNew,
   } = useMasa();
   // const { chain } = useNetwork();
-  const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
-    onError: (err) => console.error('Wagmi Network switch failed', err),
-  });
+  // const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
+  //   onError: (err) => console.error('Wagmi Network switch failed', err),
+  // });
 
   const networkData: Network | undefined = useMemo(() => {
     if (forceNetwork) {
@@ -29,9 +30,9 @@ export const InterfaceSwitchChain = (): JSX.Element => {
 
   const handleSwitch = useCallback(() => {
     if (networkData) {
-      switchNetworkWagmi?.(networkData.chainId);
+      switchNetworkNew?.(networkData.networkName);
     }
-  }, [switchNetworkWagmi, networkData]);
+  }, [switchNetworkNew, networkData]);
 
   if (isLoading) return <MasaLoading />;
 

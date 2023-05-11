@@ -15,6 +15,7 @@ export const useNetworkSwitch = () => {
         if (networkToSwitchTo.chainId === currentNetwork.chain?.id) {
           return;
         }
+        console.log('switchnetwork wagmi in useNetworkswitch ( new)');
         switchNetworkWagmi?.(networkToSwitchTo.chainId);
         return;
       }

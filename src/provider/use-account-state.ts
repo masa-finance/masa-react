@@ -54,16 +54,17 @@ export const useAccountState = ({
 
   // * detects if we have a new account or chain
   useAsync(async () => {
-    const handleConnectorUpdate = async ({ account, chain }: ConnectorData) => {
+    const handleConnectorUpdate = async ({ account }: ConnectorData) => {
       if (account) {
         console.log('new account', account);
         setAccountAddress(account);
         await invalidateAllQueries({ masa, signer, walletAddress });
         // reloadIdentity?.();
         // reloadWallet?.();
-      } else if (chain) {
-        console.log('new chain', chain);
       }
+      //  else if (chain) {
+      //   console.log('new chain', chain);
+      // }
     };
 
     if (activeConnector) {

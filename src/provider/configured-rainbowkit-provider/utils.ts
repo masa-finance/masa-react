@@ -44,7 +44,6 @@ export type MasaNetworks = Partial<{
 export const getRainbowkitChains = (
   networkList?: Array<keyof MasaNetworks>
 ) => {
-  console.log({ networkList });
   if (!networkList || (networkList && !networkList.length)) {
     return rainbowkitChains;
   }

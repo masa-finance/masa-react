@@ -31,7 +31,7 @@ export const useNetwork = ({
     async (networkDetails: Network) => {
       if (useRainbowKitWalletConnect) {
         console.log(
-          'switching network wagmi',
+          'switching network wagmi in useNetwork',
           getNetworkNameByChainId(networkDetails.chainId)
         );
         switchNetworkWagmi?.(networkDetails.chainId);

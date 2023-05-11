@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { ISession, Masa } from '@masa-finance/masa-sdk';
-import { useDisconnect } from 'wagmi';
+// import { useDisconnect } from 'wagmi';
 import { useAsync } from 'react-use';
 
 export const getSessionQueryKey = ({
@@ -124,7 +124,7 @@ export const useSession = (
     error,
   } = useSessionQuery({ masa, walletAddress });
 
-  const { disconnectAsync } = useDisconnect();
+  // const { disconnectAsync } = useDisconnect();
   const clearSession = useCallback(async () => {
     await queryClient.invalidateQueries(['wallet']);
     await queryClient.invalidateQueries(['session']);
@@ -138,14 +138,14 @@ export const useSession = (
       }
 
       try {
-        await disconnectAsync();
+        // await disconnectAsync();
         await masa?.session.sessionLogout();
       } finally {
         await clearSession();
         logoutCallback?.();
       }
     },
-    [masa, clearSession, isLoggedIn, disconnectAsync]
+    [masa, clearSession, isLoggedIn]
   );
 
   const handleLogin = useCallback(async (): Promise<void> => {
