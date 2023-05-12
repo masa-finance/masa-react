@@ -19,10 +19,7 @@ export const useWagmi = ({
 }) => {
   const provider = useProvider();
   const { chain, chains } = useNetwork();
-  const {
-    isLoading: isLoadingNetwork,
-    status,
-  } = useSwitchNetwork();
+  const { isLoading: isLoadingNetwork, status } = useSwitchNetwork();
 
   const {
     data: signer,
