@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { ISession, Masa } from '@masa-finance/masa-sdk';
-// import { useDisconnect } from 'wagmi';
 import { useAsync } from 'react-use';
 
 export const getSessionQueryKey = ({
@@ -132,13 +131,11 @@ export const useSession = (
 
   const handleLogout = useCallback(
     async (logoutCallback?: () => void): Promise<void> => {
-      console.log('logging outtt!! in session.ts');
       if (!isLoggedIn) {
         return;
       }
 
       try {
-        // await disconnectAsync();
         await masa?.session.sessionLogout();
       } finally {
         await clearSession();
@@ -157,25 +154,10 @@ export const useSession = (
   }, [masa, clearSession]);
 
   useEffect(() => {
-    // reloadSession();
     reloadSessionData();
   }, [walletAddress, reloadSession, reloadSessionData]);
-  // useEffect(() => {
-  //   (async () => {
-  //     console.log({ sessionData });
-  //     if (
-  //       isLoggedIn &&
-  //       sessionData &&
-  //       sessionData.user.address !== walletAddress
-  //     ) {
-  //       console.error('Session mismatch detected, logging out!');
-  //       void handleLogout();
-  //     }
-  //   })();
-  // }, [sessionData, walletAddress, handleLogout, isLoggedIn]);
 
   useAsync(async () => {
-    console.log({ sessionData });
     if (
       isLoggedIn &&
       sessionData &&

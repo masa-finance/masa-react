@@ -6,7 +6,7 @@ import React, { useCallback, useMemo } from 'react';
 
 const SwitchChainModal = () => {
   const { isLoading, switchNetwork, forceNetwork } = useMasa();
-  console.log({ isLoading, switchNetwork, forceNetwork });
+
   const networkData: Network | undefined = useMemo(() => {
     if (forceNetwork) {
       return SupportedNetworks[forceNetwork];

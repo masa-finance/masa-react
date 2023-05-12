@@ -120,9 +120,7 @@ export const useLogout = (
       try {
         onLogoutStart?.();
         await masa?.session.sessionLogout();
-        console.log('before query');
         await invalidateAllQueries({ masa, signer, walletAddress });
-        console.log('after query');
         await disconnectAsync();
         return true;
       } catch (error: unknown) {

@@ -57,7 +57,6 @@ export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
       wrapperProps?: WrapperModalProps;
       contentProps: any;
     }) => {
-      console.log('abo');
       setTitle(title);
       setCurrentModal(name);
       setModalContentProps(contentProps);

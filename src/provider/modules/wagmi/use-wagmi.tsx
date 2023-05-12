@@ -1,6 +1,5 @@
 import {
   Chain,
-  // ConnectorData,
   useAccount,
   useDisconnect,
   useNetwork,
@@ -23,7 +22,6 @@ export const useWagmi = ({
   const {
     isLoading: isLoadingNetwork,
     status,
-    // pendingChainId,
   } = useSwitchNetwork();
 
   const {
@@ -37,39 +35,7 @@ export const useWagmi = ({
   });
   const { disconnect } = useDisconnect();
 
-  // const { connector: activeConnector } = useAccount();
-
-  // // * detects if we have a new account or chain
-  // useEffect(() => {
-  //   const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
-  //     if (account) {
-  //       console.log('new account', account);
-  //       // TODO: set variables that are needed when account is changed
-  //     } else if (chain) {
-  //       console.log('new chain', chain);
-  //     }
-  //   };
-
-  //   if (activeConnector) {
-  //     activeConnector.on('change', handleConnectorUpdate);
-  //   }
-
-  //   return () => {
-  //     activeConnector?.off('change', handleConnectorUpdate);
-  //   };
-  // }, [activeConnector]);
-
   useEffect(() => {
-    console.log('ISLOADING NETWORK', {
-      ...{
-        isLoadingNetwork,
-        status,
-        isReconnecting,
-        provider,
-        isSignerLoading,
-        chain: chain?.network,
-      },
-    });
     if (isReconnecting) {
       return;
     }
@@ -78,7 +44,6 @@ export const useWagmi = ({
     }
 
     setSigner(signer as Signer);
-    // console.log('setSigner wagmi', { setSigner, signer });
   }, [
     setSigner,
     chain,

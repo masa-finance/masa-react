@@ -79,12 +79,6 @@ export const useNetwork = ({
   const switchNetwork = useCallback(
     async (networkName: NetworkName) => {
       const network = SupportedNetworks[networkName];
-
-      console.log({
-        network,
-
-        chainId: utils.hexValue(network?.chainId ?? 1),
-      });
       try {
         if (typeof window !== 'undefined' && network) {
           await window?.ethereum?.request({

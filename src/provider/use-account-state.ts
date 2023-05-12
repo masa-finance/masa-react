@@ -59,7 +59,6 @@ export const useAccountState = ({
   useAsync(async () => {
     const handleConnectorUpdate = async ({ account }: ConnectorData) => {
       if (account) {
-        console.log('new account', account);
         setAccountAddress(account);
         await invalidateAllQueries({ masa, signer, walletAddress });
         // reloadIdentity?.();
@@ -88,7 +87,6 @@ export const useAccountState = ({
     // * if we are initializing
     // * TODO: remove this logic once proper walletAddress scoping is in place
     if (walletAddress && !accountAddress && !isDisconnected) {
-      console.log('setting account address to wallet address', walletAddress);
       setAccountAddress(walletAddress);
       await invalidateAllQueries({ masa, signer, walletAddress });
     }
@@ -139,26 +137,23 @@ export const useAccountState = ({
     }
   }, [hasWalletAddress, accountAddress, wagmiAddress, reloadWallet]);
 
-  console.log('use-account-state', {
-    accountAddress,
-    signer,
-    isConnected,
-    isConnecting,
-    isDisconnected,
+  if (masa?.config.verbose) {
+    console.log('use-account-state', {
+      accountAddress,
+      signer,
+      isConnected,
+      isConnecting,
+      isDisconnected,
 
-    hasLoggedOut,
-    isLoggingOut,
+      hasLoggedOut,
+      isLoggingOut,
 
-    hasWalletAddress,
-    hasAccountAddress,
-    walletAddress,
-  });
+      hasWalletAddress,
+      hasAccountAddress,
+      walletAddress,
+    });
+  }
 
-  // useAsync(async () => {
-  //   if (isDisconnected) {
-  //     await invalidateAllQueries({ masa, signer, walletAddress });
-  //   }
-  // }, [isDisconnected, masa, signer, walletAddress]);
   return {
     accountAddress,
     signer,

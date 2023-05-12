@@ -116,7 +116,6 @@ export const MasaContextProvider = ({
     reloadIdentity,
   } = useIdentity(masaInstance, walletAddress);
 
-  // console.log({ isDisconnected, loggedIn, isLoggingOut, identity });
   // soul names
   const { soulnames, isSoulnamesLoading, reloadSoulnames } = useSoulnames(
     masaInstance,
