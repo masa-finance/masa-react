@@ -22,21 +22,22 @@ const meta: Meta = {
 
 export default meta;
 
-const Component = (): JSX.Element => {
+const Component = ({ name }: { name?: string }): JSX.Element => {
   const {
     connect,
     isLoggedIn,
     handleLogout,
     switchNetwork,
+    switchNetworkNew,
     openMintSoulnameModal,
     openMintMasaGreen,
     openConnectModal,
     openAccountModal,
     openChainModal,
-    isNewModalOpen,
-    domNode,
-    openModal,
-    toggleModal,
+    // isNewModalOpen,
+    // domNode,
+    // openModal,
+    // toggleModal,
 
     openAuthenticateModal,
     openConnectedModal,
@@ -45,6 +46,8 @@ const Component = (): JSX.Element => {
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
+    openInterfaceMasaGreen,
+    logout,
   } = useMasa();
 
   const ModalOpens = {
@@ -55,6 +58,7 @@ const Component = (): JSX.Element => {
     openCreateSoulnameModal,
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
+    openInterfaceMasaGreen,
   };
 
   const handleConnect = useCallback(() => {
@@ -91,7 +95,7 @@ const Component = (): JSX.Element => {
           width: '50%',
         }}
       >
-        <h1>SDK Tester!</h1>
+        <h1>SDK Tester for {name}!</h1>
 
         <button onClick={handleConnect}>Use Masa!</button>
         <button
@@ -130,6 +134,7 @@ const Component = (): JSX.Element => {
         >
           Rainbowkit switch chain modal
         </button>
+        <button onClick={logout}>New Logout</button>
       </div>
       <div
         style={{
@@ -141,60 +146,99 @@ const Component = (): JSX.Element => {
           width: '50%',
         }}
       >
-        <button onClick={(): void => switchNetwork?.('ethereum')}>
+        <button onClick={(): void => switchNetworkNew?.('ethereum')}>
           Switch to Ethereum
         </button>
-        <button onClick={(): void => switchNetwork?.('goerli')}>
+        <button onClick={(): void => switchNetworkNew?.('goerli')}>
           Switch to Goerli
         </button>
-        <button onClick={(): void => switchNetwork?.('polygon')}>
+
+        <button onClick={(): void => switchNetworkNew?.('polygon')}>
           Switch to Polygon
         </button>
-        <button onClick={(): void => switchNetwork?.('mumbai')}>
+        <button onClick={(): void => switchNetworkNew?.('mumbai')}>
           Switch to Mumbai
         </button>
-        <button onClick={(): void => switchNetwork?.('bsc')}>
+        <button onClick={(): void => switchNetworkNew?.('bsc')}>
           Switch to BSC
         </button>
-        <button onClick={(): void => switchNetwork?.('bsctest')}>
+        <button onClick={(): void => switchNetworkNew?.('bsctest')}>
           Switch to BSC Test
         </button>
-        <button onClick={(): void => switchNetwork?.('celo')}>
+        <button onClick={(): void => switchNetworkNew?.('celo')}>
           Switch to Celo
         </button>
-        <button onClick={(): void => switchNetwork?.('alfajores')}>
+        <button onClick={(): void => switchNetworkNew?.('alfajores')}>
           Switch to Alfajores
         </button>
       </div>
 
+      <div
+        style={{
+          padding: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '50%',
+        }}
+      >
+        {Object.keys(ModalOpens).map((key: string) => {
+          return (
+            <button key={key} onClick={() => ModalOpens[key]()}>
+              {key}
+            </button>
+          );
+        })}
+      </div>
       {isLoggedIn && (
-        <button onClick={(): void => handleLogout?.()}>Logout</button>
+        <button onClick={(): Promise<void> => handleLogout?.()}>Logout</button>
       )}
     </div>
   );
 };
 
-const Template: Story = (props: Args) => {
+const TemplateNoRainbowkit: Story = (props: Args) => {
   return (
     <>
       <MasaProvider
         company="Masa"
-        useRainbowKitWalletConnect={true}
-        forceNetwork={'goerli'}
+        walletsToUse={['metamask']}
+        useRainbowKitWalletConnect={false}
+        forceNetwork={'alfajores'}
       >
-        <Component {...props} />
+        <Component name="Old Connection" {...props} />
       </MasaProvider>
     </>
   );
 };
 
-// By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
-// https://storybook.js.org/docs/react/workflows/unit-testing
-export const Default = Template.bind({
+const TemplateWithRainbowKit: Story = (props: Args) => {
+  return (
+    <>
+      <MasaProvider
+        company="Masa"
+        walletsToUse={['metamask', 'valora']}
+        useRainbowKitWalletConnect={true}
+        forceNetwork={'alfajores'}
+      >
+        <Component name="Rainbow Kit" {...props} />
+      </MasaProvider>
+    </>
+  );
+};
+
+export const RainbowkitInterface = TemplateWithRainbowKit.bind({
   options: { scope: [] },
 });
 
-Default.args = {};
+// By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
+// https://storybook.js.org/docs/react/workflows/unit-testing
+export const NoRainbowkitInterface = TemplateNoRainbowkit.bind({
+  options: { scope: [] },
+});
+
+NoRainbowkitInterface.args = {};
 
 const MasaGreenTemplate: Story = (props: Args) => {
   return (

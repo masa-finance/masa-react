@@ -1,8 +1,8 @@
 import {
   EnvironmentName,
   Masa,
-  SupportedNetworks,
   SoulNameErrorCodes,
+  SupportedNetworks,
 } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa } from '../helpers';
@@ -21,6 +21,11 @@ import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 import { useRainbowKit } from './use-rainbowkit';
+import { useWagmi } from './modules/wagmi';
+import { useNetworkSwitch } from './use-network-switch';
+import { MasaNetworks } from './configured-rainbowkit-provider/utils';
+import { useLogout } from './hooks';
+import { useAccountState } from './use-account-state';
 
 export { SoulNameErrorCodes };
 
@@ -39,6 +44,8 @@ export interface MasaContextProviderProps extends MasaShape {
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   useRainbowKitWalletConnect?: boolean;
+  chainsToUse?: Array<keyof MasaNetworks>;
+  walletsToUse?: string[];
 }
 
 export const MasaContextProvider = ({
@@ -46,9 +53,8 @@ export const MasaContextProvider = ({
   // masa-react branding
   company,
   // use no wallet
-  noWallet,
   // signer used in masa instance
-  signer,
+  // signer,
   // env used in masa instance
   environmentName = 'dev' as EnvironmentNameEx,
   // arweave config used in masa instance
@@ -61,21 +67,45 @@ export const MasaContextProvider = ({
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
-
-  // provider
-  const [provider, setProvider] = useState<Wallet | Signer | undefined>(signer);
+  const [signer, setSigner] = useState<Signer | undefined>();
 
   // wallet
-  const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
-    masaInstance,
-    provider
-  );
+  const { walletAddress, isWalletLoading, hasWalletAddress, reloadWallet } =
+    useWallet(masaInstance, signer);
+
+  const {
+    isConnected,
+    isDisconnected,
+    // isDisconnected,
+    // isLoggedIn: loggedIn,
+    // isLoggingOut,
+    hasAccountAddress,
+    accountAddress,
+  } = useAccountState({
+    masa: masaInstance,
+    walletAddress,
+    signer,
+    hasWalletAddress,
+    reloadWallet,
+  });
+
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
-    useSession(masaInstance, walletAddress);
+    useSession(masaInstance, accountAddress);
+
+  // provider
+  const { isLoading: wagmiLoading } = useWagmi({
+    setSigner,
+    logout: handleLogout,
+  });
 
   // network
-  const { switchNetwork, currentNetwork } = useNetwork(provider);
+  const { switchNetwork, currentNetwork } = useNetwork({
+    provider: signer,
+    useRainbowKitWalletConnect,
+  });
+  const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
+    useNetworkSwitch();
 
   // identity
   const {
@@ -123,7 +153,15 @@ export const MasaContextProvider = ({
     openConnectModal,
     openAccountModal,
     setRainbowKitModalCallback,
-  } = useRainbowKit(setProvider);
+  } = useRainbowKit();
+
+  const { logout } = useLogout({
+    onLogoutStart: handleLogout,
+    onLogoutFinish: () => console.log('finished logout'),
+    walletAddress,
+    masa: masaInstance,
+    signer,
+  });
 
   // modal
   const {
@@ -137,7 +175,11 @@ export const MasaContextProvider = ({
     openMintMasaGreen,
     useModalSize,
     modalSize,
-  } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
+  } = useModal(
+    isLoggedIn,
+    hasAccountAddress, // used to be hasWalletAddress
+    areScopesFullfiled
+  );
 
   // global loading flag
   const isLoading = useMemo(() => {
@@ -148,7 +190,8 @@ export const MasaContextProvider = ({
       isIdentityLoading ||
       isSoulnamesLoading ||
       isCreditScoresLoading ||
-      isGreensLoading
+      isGreensLoading ||
+      wagmiLoading
     );
   }, [
     masaInstance,
@@ -158,27 +201,66 @@ export const MasaContextProvider = ({
     isSoulnamesLoading,
     isCreditScoresLoading,
     isGreensLoading,
+    wagmiLoading,
   ]);
+
   // const providerWagmi = useProvider();
+
+  // useEffect(() => {
+  //   if (forceNetwork && currentNetwork?.networkName !== forceNetwork)
+  //     openSwitchChainModal();
+  //   else if (!isLoggedIn && provider) openAuthenticateModal();
+  //   if (isLoggedIn) {
+  //     if (!soulnames || (soulnames && soulnames.length === 0)) {
+  //       // TODO: add scopes
+  //       openCreateSoulnameModal();
+  //     }
+  //   }
+  // }, [
+  //   isLoggedIn,
+  //   provider,
+  //   forceNetwork,
+  //   soulnames,
+  //   currentNetwork,
+  //   // openAuthenticateModal,
+  //   // openSwitchChainModal,
+  //   // openCreateSoulnameModal,
+  // ]);
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
+      // if (useRainbowKitWalletConnect) {
+      //   openConnectModal?.();
+      //   // setRainbowKitModalCallback(() => {
+      //   //   return () => {
+      //   //     openAuthenticateModal();
+      //   //     openConnectedModal();
+      //   //   };
+      //   // });
+      //   // return;
+      // }
+
       if (verbose) {
-        console.info({ forcedPage });
+        console.info({ forcedPage, useRainbowKitWalletConnect, options });
       }
 
       // * feature toggle, to be removed soon
       if (useRainbowKitWalletConnect) {
         // * set the callback to open masa modal after rainbowkit modal is closed
         setRainbowKitModalCallback(() => {
-          return () => setModalOpen(true);
+          return () => {
+            setModalOpen(true);
+            // setForcedPage?.(null);
+          };
         });
 
         openConnectModal?.();
-      } else setModalOpen(true);
-
+        console.log('OPENING RK MODAL');
+      } else {
+        setModalOpen(true);
+      }
+      // console.log('set forced page null');
       setForcedPage?.(null);
-
       if (options?.scope) {
         setScope(options.scope);
       }
@@ -200,15 +282,18 @@ export const MasaContextProvider = ({
       openConnectModal,
       verbose,
       useRainbowKitWalletConnect,
+      // openAuthenticateModal,
+      // openConnectedModal,
+      // wagmiSigner,
     ]
   );
 
   useEffect(() => {
     const loadMasa = (): void => {
-      if (!provider) return;
+      if (!signer) return;
 
       const masa: Masa | undefined = createNewMasa({
-        signer: provider,
+        wallet: signer,
         environmentName,
         networkName: currentNetwork?.networkName,
         arweaveConfig,
@@ -219,15 +304,7 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-  }, [
-    provider,
-    noWallet,
-    walletAddress,
-    arweaveConfig,
-    environmentName,
-    verbose,
-    currentNetwork,
-  ]);
+  }, [arweaveConfig, environmentName, verbose, currentNetwork, signer]);
 
   const context: MasaShape = {
     // masa instance
@@ -239,6 +316,7 @@ export const MasaContextProvider = ({
 
     // masa-react global connect
     connect,
+    logout,
 
     // general config
     scope,
@@ -246,8 +324,8 @@ export const MasaContextProvider = ({
     company,
 
     // provider handling
-    provider,
-    setProvider,
+    signer,
+    setSigner,
 
     // modal
     isModalOpen,
@@ -264,7 +342,8 @@ export const MasaContextProvider = ({
     walletAddress,
     isWalletLoading,
     hasWalletAddress,
-
+    accountAddress,
+    hasAccountAddress,
     // identity
     identity,
     isIdentityLoading,
@@ -303,9 +382,26 @@ export const MasaContextProvider = ({
     forceNetwork,
 
     // rainbowkit
+    useRainbowKit: useRainbowKitWalletConnect,
     openConnectModal,
     openChainModal,
     openAccountModal,
+
+    // wagmi
+    switchNetworkNew,
+    currentNetworkNew,
+    isConnected,
+    isDisconnected,
+    // // new-modal
+    // openModal,
+    // openAuthenticateModal,
+    // openConnectedModal,
+    // openCreateCreditScoreModal,
+    // openCreateIdentityModal,
+    // openCreateSoulnameModal,
+    // openSuccessCreateIdentityModal,
+    // openSwitchChainModal,
+    // openInterfaceMasaGreen,
   };
 
   return (

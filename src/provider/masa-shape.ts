@@ -10,7 +10,9 @@ import {
   SoulNameDetails,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
-import { BigNumber, Signer, Wallet } from 'ethers';
+import { BigNumber, Signer } from 'ethers';
+import { GetNetworkResult } from '@wagmi/core';
+import { ModalName, WrapperModalProps } from '../components';
 
 export interface MasaShape {
   children?: React.ReactNode;
@@ -24,15 +26,15 @@ export interface MasaShape {
 
   // global connect
   connect?: (options?: { scope?: string[]; callback?: () => void }) => void;
-
+  logout?: () => Promise<boolean>;
   // general config
   scope?: string[];
   areScopesFullfiled?: boolean;
   company?: string;
 
   // provider
-  provider?: Wallet | Signer;
-  setProvider?: (provider?: Wallet | Signer) => void;
+  signer?: Signer;
+  setSigner?: (signer?: Signer) => void;
 
   // modal
   isModalOpen?: boolean;
@@ -49,6 +51,8 @@ export interface MasaShape {
   walletAddress?: string;
   isWalletLoading?: boolean;
   hasWalletAddress?: boolean;
+  accountAddress?: string;
+  hasAccountAddress?: boolean;
 
   // identity
   identity?: {
@@ -112,4 +116,34 @@ export interface MasaShape {
   openConnectModal?: (() => void) | undefined;
   openChainModal?: (() => void) | undefined;
   openAccountModal?: (() => void) | undefined;
+  setRainbowkKitModalCallback?: React.Dispatch<
+    React.SetStateAction<
+      ((modalOpen?: boolean | undefined) => void) | undefined
+    >
+  >;
+  switchNetworkNew?: (forcedNetworkParam: NetworkName) => void;
+  currentNetworkNew?: GetNetworkResult;
+  isConnected?: boolean;
+  isDisconnected?: boolean;
+  // new-modal
+  openModal?: ({
+    name,
+    title,
+    wrapperProps,
+    contentProps,
+  }: {
+    name: ModalName;
+    title?: React.ReactNode;
+    wrapperProps?: WrapperModalProps | undefined;
+    contentProps: any;
+  }) => void;
+
+  openAuthenticateModal?: () => void;
+  openConnectedModal?: () => void;
+  openCreateCreditScoreModal?: () => void;
+  openCreateIdentityModal?: () => void;
+  openCreateSoulnameModal?: () => void;
+  openSuccessCreateIdentityModal?: () => void;
+  openSwitchChainModal?: () => void;
+  openInterfaceMasaGreen?: () => void;
 }

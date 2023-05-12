@@ -1,10 +1,33 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useMasa } from '../../../../provider';
 import { Spinner } from '../../../spinner';
+import { useAccount, useDisconnect } from 'wagmi';
 
 export const InterfaceAuthenticate = (): JSX.Element => {
-  const { company, handleLogin, walletAddress, isLoading } = useMasa();
+  const {
+    company,
+    handleLogin,
+    accountAddress,
+    isLoading,
+    // setModalOpen,
+    // openConnectModal,
+    isLoggedIn,
+    useRainbowKit,
+    connect,
+    isModalOpen,
+  } = useMasa();
+  const { isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
+  const switchWallet = useCallback(() => {
+    console.log({ disconnect });
+    disconnect();
+  }, [disconnect]);
 
+  useEffect(() => {
+    if (isModalOpen && isConnected && !isLoggedIn) {
+      connect?.();
+    }
+  }, [connect, isConnected, isLoggedIn, isModalOpen]);
   const [copied, setCopied] = useState(false);
 
   const message = useMemo(() => {
@@ -24,18 +47,18 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   }, [company]);
 
   const shortAddress = useMemo(() => {
-    return `${walletAddress?.substring(0, 2)}...${walletAddress?.substring(
-      walletAddress.length - 4,
-      walletAddress.length
+    return `${accountAddress?.substring(0, 2)}...${accountAddress?.substring(
+      accountAddress.length - 4,
+      accountAddress.length
     )}`;
-  }, [walletAddress]);
+  }, [accountAddress]);
 
   const handleClipboard = useCallback(() => {
-    if (walletAddress) {
-      void navigator.clipboard.writeText(walletAddress);
+    if (accountAddress) {
+      void navigator.clipboard.writeText(accountAddress);
       setCopied(true);
     }
-  }, [walletAddress]);
+  }, [accountAddress]);
 
   if (isLoading) {
     return <Spinner />;
@@ -61,12 +84,31 @@ export const InterfaceAuthenticate = (): JSX.Element => {
         >
           {isLoading ? 'loading...' : 'Get Started'}
         </button>
-        <div className="dont-have-a-wallet">
-          <p>
-            Want to use a different wallet? Close this window and disconnect
-            your wallet in Metamask to connect a new wallet
-          </p>
-        </div>
+
+        {useRainbowKit ? (
+          <div className="dont-have-a-wallet">
+            <p>
+              Want to use a different wallet?
+              {!isLoggedIn && isConnected && (
+                <span className={'connected-wallet'}>
+                  <span
+                    className={'authenticate-button'}
+                    onClick={switchWallet}
+                  >
+                    Switch Wallet
+                  </span>
+                </span>
+              )}
+            </p>
+          </div>
+        ) : (
+          <div className="dont-have-a-wallet">
+            <p>
+              Want to use a different wallet? Close this window and disconnect
+              your wallet in Metamask to connect a new wallet
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,7 @@
-import { MetaMaskInpageProvider } from '@metamask/providers';
+import './index';
 
 declare global {
   interface Window {
-    ethereum?: MetaMaskInpageProvider;
     RF?: {
       qualify: ({ code: string }) => void;
     };
