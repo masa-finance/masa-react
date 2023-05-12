@@ -10,27 +10,24 @@ import {
 } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
-export const useGreen = (
-  masa?: Masa,
-  walletAddress?: string
-): {
-  greens?: {
-    tokenId: BigNumber;
-    tokenUri: string;
-    metadata?: IGreen;
-  }[];
-  handleGenerateGreen: (
-    phoneNumber: string
-  ) => Promise<GenerateGreenResult | undefined>;
-  handleCreateGreen: (
-    phoneNumber: string,
-    code: string
-  ) => Promise<VerifyGreenResult | undefined>;
-  status: string;
-  isGreensLoading: boolean;
-  reloadGreens: () => void;
-  error: unknown;
-} => {
+export const getGreenQueryKey = ({
+  masa,
+  walletAddress,
+}: {
+  masa?: Masa;
+  walletAddress?: string;
+  signer?: any; // unused here
+}) => {
+  return ['green', walletAddress, masa?.config.networkName];
+};
+
+export const useGreenQuery = ({
+  masa,
+  walletAddress,
+}: {
+  masa?: Masa;
+  walletAddress?: string;
+}) => {
   const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
     return ['green', walletAddress, masa?.config.networkName];
   }, [masa, walletAddress]);
@@ -65,16 +62,66 @@ export const useGreen = (
     },
   });
 
+  const invalidateGreen = useCallback(
+    async () => await queryClient.invalidateQueries(['green']),
+    []
+  );
+
+  return {
+    greens,
+    status,
+    isLoading,
+    isFetching,
+    reloadGreens,
+    invalidateGreen,
+    error,
+  };
+};
+
+export type UseGreenReturnValue = {
+  greens?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: IGreen;
+  }[];
+  handleGenerateGreen: (
+    phoneNumber: string
+  ) => Promise<GenerateGreenResult | undefined>;
+  handleCreateGreen: (
+    phoneNumber: string,
+    code: string
+  ) => Promise<VerifyGreenResult | undefined>;
+  status: string;
+  isGreensLoading: boolean;
+  reloadGreens: () => void;
+  error: unknown;
+  invalidateGreen: () => void;
+};
+
+export const useGreen = (
+  masa?: Masa,
+  walletAddress?: string
+): UseGreenReturnValue => {
+  const {
+    greens,
+    status,
+    isLoading,
+    isFetching,
+    reloadGreens,
+    error,
+    invalidateGreen,
+  } = useGreenQuery({ masa, walletAddress });
+
   const handleCreateGreen = useCallback(
     async (
       phoneNumber: string,
       code: string
     ): Promise<VerifyGreenResult | undefined> => {
       const response = await masa?.green.create('ETH', phoneNumber, code);
-      await queryClient.invalidateQueries(queryKey);
+      await invalidateGreen();
       return response;
     },
-    [masa, queryKey]
+    [masa, invalidateGreen]
   );
 
   const handleGenerateGreen = useCallback(
@@ -97,5 +144,6 @@ export const useGreen = (
     reloadGreens,
     status,
     error,
+    invalidateGreen,
   };
 };

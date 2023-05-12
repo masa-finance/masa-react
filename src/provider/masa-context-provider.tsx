@@ -73,21 +73,14 @@ export const MasaContextProvider = ({
   const { walletAddress, isWalletLoading, hasWalletAddress, reloadWallet } =
     useWallet(masaInstance, signer);
 
-  const {
-    isConnected,
-    isDisconnected,
-    // isDisconnected,
-    // isLoggedIn: loggedIn,
-    // isLoggingOut,
-    hasAccountAddress,
-    accountAddress,
-  } = useAccountState({
-    masa: masaInstance,
-    walletAddress,
-    signer,
-    hasWalletAddress,
-    reloadWallet,
-  });
+  const { isConnected, isDisconnected, hasAccountAddress, accountAddress } =
+    useAccountState({
+      masa: masaInstance,
+      walletAddress,
+      signer,
+      hasWalletAddress,
+      reloadWallet,
+    });
 
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
@@ -128,7 +121,7 @@ export const MasaContextProvider = ({
     isCreditScoresLoading,
     handleCreateCreditScore,
     reloadCreditScores,
-  } = useCreditScores(masaInstance, walletAddress, identity);
+  } = useCreditScores(masaInstance, accountAddress, identity);
 
   // greens
   const {
@@ -137,7 +130,7 @@ export const MasaContextProvider = ({
     handleGenerateGreen,
     handleCreateGreen,
     reloadGreens,
-  } = useGreen(masaInstance, walletAddress);
+  } = useGreen(masaInstance, accountAddress);
 
   // scope
   const { scope, setScope, areScopesFullfiled } = useScopes(
@@ -204,42 +197,8 @@ export const MasaContextProvider = ({
     wagmiLoading,
   ]);
 
-  // const providerWagmi = useProvider();
-
-  // useEffect(() => {
-  //   if (forceNetwork && currentNetwork?.networkName !== forceNetwork)
-  //     openSwitchChainModal();
-  //   else if (!isLoggedIn && provider) openAuthenticateModal();
-  //   if (isLoggedIn) {
-  //     if (!soulnames || (soulnames && soulnames.length === 0)) {
-  //       // TODO: add scopes
-  //       openCreateSoulnameModal();
-  //     }
-  //   }
-  // }, [
-  //   isLoggedIn,
-  //   provider,
-  //   forceNetwork,
-  //   soulnames,
-  //   currentNetwork,
-  //   // openAuthenticateModal,
-  //   // openSwitchChainModal,
-  //   // openCreateSoulnameModal,
-  // ]);
-
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
-      // if (useRainbowKitWalletConnect) {
-      //   openConnectModal?.();
-      //   // setRainbowKitModalCallback(() => {
-      //   //   return () => {
-      //   //     openAuthenticateModal();
-      //   //     openConnectedModal();
-      //   //   };
-      //   // });
-      //   // return;
-      // }
-
       if (verbose) {
         console.info({ forcedPage, useRainbowKitWalletConnect, options });
       }
@@ -255,7 +214,6 @@ export const MasaContextProvider = ({
         });
 
         openConnectModal?.();
-        console.log('OPENING RK MODAL');
       } else {
         setModalOpen(true);
       }
@@ -306,6 +264,7 @@ export const MasaContextProvider = ({
     void loadMasa();
   }, [arweaveConfig, environmentName, verbose, currentNetwork, signer]);
 
+  if (verbose) console.log('MASA STATE', { greens, soulnames, creditScores });
   const context: MasaShape = {
     // masa instance
     masa: masaInstance,

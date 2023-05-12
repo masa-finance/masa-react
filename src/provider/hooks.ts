@@ -3,6 +3,8 @@ import { queryClient } from './masa-query-client';
 import { useAsyncFn } from 'react-use';
 import { DependencyList } from 'react';
 import {
+  getCreditScoresQueryKey,
+  getGreenQueryKey,
   getIdentityQueryKey,
   getSessionDataQueryKey,
   getSessionQueryKey,
@@ -18,8 +20,8 @@ const QUERIES = [
   'session',
   'sessionData',
   'soulnames',
-  //   'credit-scores',
-  //   'green',
+  'green',
+  'credit-scores',
 ];
 
 export type QueryKeyRetrievalInput = {
@@ -39,6 +41,10 @@ export const getQueryKeys = () => ({
     getWalletQueryKey({ masa, signer, walletAddress }),
   soulnames: ({ masa, signer, walletAddress }: QueryKeyRetrievalInput) =>
     getSoulnamesQueryKey({ masa, signer, walletAddress }),
+  green: ({ masa, signer, walletAddress }: QueryKeyRetrievalInput) =>
+    getGreenQueryKey({ masa, signer, walletAddress }),
+  'credit-scores': ({ masa, signer, walletAddress }: QueryKeyRetrievalInput) =>
+    getCreditScoresQueryKey({ masa, signer, walletAddress }),
 });
 
 export const invalidateAllQueries = async ({
@@ -94,6 +100,34 @@ export const invalidateIdentity = async ({
 }: QueryKeyRetrievalInput) => {
   await queryClient.invalidateQueries(
     getQueryKeys().identity({
+      masa,
+      signer,
+      walletAddress,
+    })
+  );
+};
+
+export const invalidateCreditScores = async ({
+  masa,
+  signer,
+  walletAddress,
+}: QueryKeyRetrievalInput) => {
+  await queryClient.invalidateQueries(
+    getQueryKeys()['credit-scores']({
+      masa,
+      signer,
+      walletAddress,
+    })
+  );
+};
+
+export const invalidateGreen = async ({
+  masa,
+  signer,
+  walletAddress,
+}: QueryKeyRetrievalInput) => {
+  await queryClient.invalidateQueries(
+    getQueryKeys().green({
       masa,
       signer,
       walletAddress,

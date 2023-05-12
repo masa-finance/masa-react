@@ -9,6 +9,9 @@ import {
   invalidateAllQueries,
   invalidateIdentity,
   invalidateWallet,
+  invalidateCreditScores,
+  invalidateGreen,
+  // invalidateSession,
   useLogout,
 } from './hooks';
 import { useMemo, useState } from 'react';
@@ -57,16 +60,20 @@ export const useAccountState = ({
 
   // * detects if we have a new account or chain
   useAsync(async () => {
-    const handleConnectorUpdate = async ({ account }: ConnectorData) => {
+    const handleConnectorUpdate = async ({ account, chain }: ConnectorData) => {
       if (account) {
         setAccountAddress(account);
         await invalidateAllQueries({ masa, signer, walletAddress });
         // reloadIdentity?.();
         // reloadWallet?.();
+      } else if (chain) {
+        console.log('new chain', chain);
+        await Promise.all([
+          invalidateIdentity({ masa, signer, walletAddress }),
+          invalidateCreditScores({ masa, signer, walletAddress }),
+          invalidateGreen({ masa, signer, walletAddress }),
+        ]);
       }
-      //  else if (chain) {
-      //   console.log('new chain', chain);
-      // }
     };
 
     if (activeConnector) {
