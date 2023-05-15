@@ -60,7 +60,7 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
     openInterfaceMasaGreen,
-  }
+  };
 
   const mintBadge = async () => {
     if (masa && masa.config) {
