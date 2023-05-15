@@ -1,8 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useMasa } from './use-masa';
-import { getWeb3Provider } from '../helpers';
 import { Maybe } from '@metamask/providers/dist/utils';
 import { useLocalStorage } from './use-local-storage';
+import { MetaMaskInpageProvider } from '@metamask/providers';
+import { providers } from 'ethers';
+
+export const getWeb3Provider = (): providers.Web3Provider | undefined => {
+  if (
+    typeof window !== 'undefined' &&
+    typeof window?.ethereum !== 'undefined'
+  ) {
+    return new providers.Web3Provider(
+      window?.ethereum as unknown as providers.ExternalProvider
+    );
+  }
+
+  return;
+};
 
 export const useMetamask = ({
   disabled,
@@ -10,7 +24,7 @@ export const useMetamask = ({
   disabled?: boolean;
 }): { connectMetamask: () => void } => {
   const [connectedAccounts, setConnectedAccounts] = useState<string[]>([]);
-  const { setProvider, handleLogout, walletAddress, verbose, isLoggedIn } =
+  const { setSigner, handleLogout, walletAddress, verbose, isLoggedIn } =
     useMasa();
   const { localStorageSet, localStorageGet } = useLocalStorage();
 
@@ -51,8 +65,8 @@ export const useMetamask = ({
       if (accounts && Array.isArray(accounts)) {
         const signer = getWeb3Provider()?.getSigner();
 
-        if (signer && accounts.length > 0 && setProvider) {
-          setProvider(signer);
+        if (signer && accounts.length > 0 && setSigner) {
+          setSigner(signer);
           metamaskConnected = true;
           localStorageSet<boolean>(metamaskStorageKey, true);
         } else {
@@ -71,7 +85,7 @@ export const useMetamask = ({
   }, [
     disabled,
     verbose,
-    setProvider,
+    setSigner,
     localStorageGet,
     localStorageSet,
     walletAddress,
@@ -81,18 +95,26 @@ export const useMetamask = ({
    * Disconnect from metamask
    */
   const disconnectMetamask = useCallback(async (): Promise<void> => {
+    const metamaskConnected: boolean =
+      localStorageGet<boolean>(metamaskStorageKey) || false;
+
+    // Check that metamask was connected ( This may need a refactor, this disconnect was disconnecting valora when signin in )
+    if (!metamaskConnected) return;
+
     localStorageSet<boolean>(metamaskStorageKey, false);
 
     if (isLoggedIn) {
       await handleLogout?.();
     }
-  }, [isLoggedIn, handleLogout, localStorageSet]);
+  }, [isLoggedIn, handleLogout, localStorageSet, localStorageGet]);
 
   /**
    * try to connect metamask on page load
    */
   useEffect(() => {
     const connectMetamaskOnPageLoad = async (): Promise<void> => {
+      if (disabled) return;
+
       const metamaskConnected: boolean | undefined =
         localStorageGet<boolean>(metamaskStorageKey);
 
@@ -110,13 +132,14 @@ export const useMetamask = ({
     };
 
     void connectMetamaskOnPageLoad();
-  }, [connectMetamask, localStorageGet]);
+  }, [connectMetamask, localStorageGet, disabled]);
 
   /**
    * disconnect metamask on wallet change
    */
   useEffect(() => {
     const disconnectMetamaskOnWalletChange = async (): Promise<void> => {
+      if (disabled) return;
       if (
         walletAddress &&
         connectedAccounts.length > 0 &&
@@ -129,17 +152,23 @@ export const useMetamask = ({
     };
 
     void disconnectMetamaskOnWalletChange();
-  }, [connectedAccounts, disconnectMetamask, walletAddress, setProvider]);
+  }, [
+    connectedAccounts,
+    disconnectMetamask,
+    walletAddress,
+    setSigner,
+    disabled,
+  ]);
 
   /**
    * wire up metamask event listeners
    */
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (!disabled && typeof window !== 'undefined') {
       /**
        * on accounts change
        */
-      window.ethereum?.on(
+      (window.ethereum as unknown as MetaMaskInpageProvider)?.on(
         'accountsChanged',
         async (accounts: unknown): Promise<void> => {
           const accountsArray = accounts as string[];
@@ -148,7 +177,7 @@ export const useMetamask = ({
             // no accounts, disconnect metamask
             await disconnectMetamask();
             // drop provider
-            setProvider?.();
+            setSigner?.();
           }
 
           // update accounts
@@ -159,11 +188,14 @@ export const useMetamask = ({
       /**
        * on network / chain changed
        */
-      window.ethereum?.on('chainChanged', () => {
-        setProvider?.(getWeb3Provider()?.getSigner());
-      });
+      (window.ethereum as unknown as MetaMaskInpageProvider)?.on(
+        'chainChanged',
+        () => {
+          setSigner?.(getWeb3Provider()?.getSigner());
+        }
+      );
     }
-  }, [setProvider, setConnectedAccounts, disconnectMetamask]);
+  }, [setSigner, setConnectedAccounts, disconnectMetamask, disabled]);
 
   return { connectMetamask };
 };

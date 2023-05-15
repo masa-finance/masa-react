@@ -1,4 +1,5 @@
 'use strict';
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { paths } = require('./webpack.parts.js');
 
@@ -15,19 +16,35 @@ module.exports = {
     extensions: ['.js'],
     modules: ['node_modules'],
     fallback: {
-      os: false,
-      crypto: false,
-      url: false,
-      https: false,
-      http: false,
-      assert: false,
-      path: false,
-      stream: false,
-      zlib: false,
+      // assert: false,
+      // crypto: false,
+      // http: false,
+      // https: false,
+      // os: false,
+      // url: false,
+      // stream: require.resolve('stream-browserify'),
+
       fs: false,
+      path: false,
+      zlib: false,
+      buffer: require.resolve('buffer'),
+      'process/browser': require.resolve('process/browser'),
+      assert: require.resolve('assert'),
+      crypto: require.resolve('crypto-browserify'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
+      os: require.resolve('os-browserify'),
+      stream: require.resolve('stream-browserify'),
+      url: require.resolve('url'),
     },
   },
-  plugins: [new MiniCssExtractPlugin()],
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
+    }),
+  ],
   module: {
     rules: [
       {

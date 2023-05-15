@@ -1,8 +1,8 @@
 import {
   EnvironmentName,
   Masa,
-  SupportedNetworks,
   SoulNameErrorCodes,
+  SupportedNetworks,
 } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { createNewMasa } from '../helpers';
@@ -23,6 +23,11 @@ import { useScopes } from './modules/scopes/scopes';
 import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
 import { useCustomSBT, useCustomGallerySBT } from './modules/custom-sbts';
 import { useRainbowKit } from './use-rainbowkit';
+import { useWagmi } from './modules/wagmi';
+import { useNetworkSwitch } from './use-network-switch';
+import { MasaNetworks } from './configured-rainbowkit-provider/utils';
+import { useLogout } from './hooks';
+import { useAccountState } from './use-account-state';
 
 export { SoulNameErrorCodes };
 
@@ -44,6 +49,8 @@ export interface MasaContextProviderProps extends MasaShape {
   fullScreenGallery?: boolean;
   apiUrl?: string;
   useRainbowKitWalletConnect?: boolean;
+  chainsToUse?: Array<keyof MasaNetworks>;
+  walletsToUse?: string[];
 }
 
 export const MasaContextProvider = ({
@@ -51,9 +58,8 @@ export const MasaContextProvider = ({
   // masa-react branding
   company,
   // use no wallet
-  noWallet,
   // signer used in masa instance
-  signer,
+  // signer,
   // env used in masa instance
   environmentName = 'dev' as EnvironmentNameEx,
   // arweave config used in masa instance
@@ -72,21 +78,38 @@ export const MasaContextProvider = ({
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
-
-  // provider
-  const [provider, setProvider] = useState<Wallet | Signer | undefined>(signer);
+  const [signer, setSigner] = useState<Signer | undefined>();
 
   // wallet
-  const { walletAddress, isWalletLoading, hasWalletAddress } = useWallet(
-    masaInstance,
-    provider
-  );
+  const { walletAddress, isWalletLoading, hasWalletAddress, reloadWallet } =
+    useWallet(masaInstance, signer);
+
+  const { isConnected, isDisconnected, hasAccountAddress, accountAddress } =
+    useAccountState({
+      masa: masaInstance,
+      walletAddress,
+      signer,
+      hasWalletAddress,
+      reloadWallet,
+    });
+
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
-    useSession(masaInstance, walletAddress);
+    useSession(masaInstance, accountAddress);
+
+  // provider
+  const { isLoading: wagmiLoading } = useWagmi({
+    setSigner,
+    logout: handleLogout,
+  });
 
   // network
-  const { switchNetwork, currentNetwork } = useNetwork(provider);
+  const { switchNetwork, currentNetwork } = useNetwork({
+    provider: signer,
+    useRainbowKitWalletConnect,
+  });
+  const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
+    useNetworkSwitch();
 
   // identity
   const {
@@ -109,7 +132,7 @@ export const MasaContextProvider = ({
     isCreditScoresLoading,
     handleCreateCreditScore,
     reloadCreditScores,
-  } = useCreditScores(masaInstance, walletAddress, identity);
+  } = useCreditScores(masaInstance, accountAddress, identity);
 
   // greens
   const {
@@ -118,7 +141,7 @@ export const MasaContextProvider = ({
     handleGenerateGreen,
     handleCreateGreen,
     reloadGreens,
-  } = useGreen(masaInstance, walletAddress);
+  } = useGreen(masaInstance, accountAddress);
 
   // scope
   const { scope, setScope, areScopesFullfiled } = useScopes(
@@ -134,7 +157,15 @@ export const MasaContextProvider = ({
     openConnectModal,
     openAccountModal,
     setRainbowKitModalCallback,
-  } = useRainbowKit(setProvider);
+  } = useRainbowKit();
+
+  const { logout } = useLogout({
+    onLogoutStart: handleLogout,
+    onLogoutFinish: () => console.log('finished logout'),
+    walletAddress,
+    masa: masaInstance,
+    signer,
+  });
 
   // modal
   const {
@@ -149,7 +180,11 @@ export const MasaContextProvider = ({
     useModalSize,
     openGallery,
     modalSize,
-  } = useModal(isLoggedIn, hasWalletAddress, areScopesFullfiled);
+  } = useModal(
+    isLoggedIn,
+    hasAccountAddress, // used to be hasWalletAddress
+    areScopesFullfiled
+  );
 
   // custom SBTs
   const { customContracts, handleAddSBT } = useCustomGallerySBT(
@@ -167,7 +202,8 @@ export const MasaContextProvider = ({
       isIdentityLoading ||
       isSoulnamesLoading ||
       isCreditScoresLoading ||
-      isGreensLoading
+      isGreensLoading ||
+      wagmiLoading
     );
   }, [
     masaInstance,
@@ -177,27 +213,31 @@ export const MasaContextProvider = ({
     isSoulnamesLoading,
     isCreditScoresLoading,
     isGreensLoading,
+    wagmiLoading,
   ]);
-  // const providerWagmi = useProvider();
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
       if (verbose) {
-        console.info({ forcedPage });
+        console.info({ forcedPage, useRainbowKitWalletConnect, options });
       }
 
       // * feature toggle, to be removed soon
       if (useRainbowKitWalletConnect) {
         // * set the callback to open masa modal after rainbowkit modal is closed
         setRainbowKitModalCallback(() => {
-          return () => setModalOpen(true);
+          return () => {
+            setModalOpen(true);
+            // setForcedPage?.(null);
+          };
         });
 
         openConnectModal?.();
-      } else setModalOpen(true);
-
+      } else {
+        setModalOpen(true);
+      }
+      // console.log('set forced page null');
       setForcedPage?.(null);
-
       if (options?.scope) {
         setScope(options.scope);
       }
@@ -219,15 +259,18 @@ export const MasaContextProvider = ({
       openConnectModal,
       verbose,
       useRainbowKitWalletConnect,
+      // openAuthenticateModal,
+      // openConnectedModal,
+      // wagmiSigner,
     ]
   );
 
   useEffect(() => {
     const loadMasa = (): void => {
-      if (!provider) return;
+      if (!signer) return;
 
       const masa: Masa | undefined = createNewMasa({
-        signer: provider,
+        wallet: signer,
         environmentName,
         networkName: currentNetwork?.networkName,
         arweaveConfig,
@@ -239,16 +282,9 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-  }, [
-    provider,
-    noWallet,
-    walletAddress,
-    arweaveConfig,
-    environmentName,
-    verbose,
-    currentNetwork,
-  ]);
+  }, [arweaveConfig, environmentName, verbose, currentNetwork, signer]);
 
+  if (verbose) console.log('MASA STATE', { greens, soulnames, creditScores });
   const context: MasaShape = {
     // masa instance
     masa: masaInstance,
@@ -259,6 +295,7 @@ export const MasaContextProvider = ({
 
     // masa-react global connect
     connect,
+    logout,
 
     // general config
     scope,
@@ -266,8 +303,8 @@ export const MasaContextProvider = ({
     company,
 
     // provider handling
-    provider,
-    setProvider,
+    signer,
+    setSigner,
 
     // modal
     isModalOpen,
@@ -285,7 +322,8 @@ export const MasaContextProvider = ({
     walletAddress,
     isWalletLoading,
     hasWalletAddress,
-
+    accountAddress,
+    hasAccountAddress,
     // identity
     identity,
     isIdentityLoading,
@@ -332,9 +370,26 @@ export const MasaContextProvider = ({
     handleAddSBT,
 
     // rainbowkit
+    useRainbowKit: useRainbowKitWalletConnect,
     openConnectModal,
     openChainModal,
     openAccountModal,
+
+    // wagmi
+    switchNetworkNew,
+    currentNetworkNew,
+    isConnected,
+    isDisconnected,
+    // // new-modal
+    // openModal,
+    // openAuthenticateModal,
+    // openConnectedModal,
+    // openCreateCreditScoreModal,
+    // openCreateIdentityModal,
+    // openCreateSoulnameModal,
+    // openSuccessCreateIdentityModal,
+    // openSwitchChainModal,
+    // openInterfaceMasaGreen,
   };
 
   return (

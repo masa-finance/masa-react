@@ -6,6 +6,7 @@
   align-items: center;
   border-radius: 24px;
 }
+
 .masa-modal {
   display: flex;
   flex-direction: column;
@@ -538,9 +539,13 @@
   .interface-connected {
     .title {
       text-align: center;
+      color: black;
     }
 
     .connected-wallet {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
       font-size: 18px;
       color: rgba(0, 0, 0, 0.6);

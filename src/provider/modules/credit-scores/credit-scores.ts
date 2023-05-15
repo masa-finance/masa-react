@@ -2,28 +2,31 @@ import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { queryClient } from '../../masa-query-client';
 import { ICreditScore, Masa, NetworkName } from '@masa-finance/masa-sdk';
-import { BigNumber } from 'ethers';
+import { BigNumber, Signer } from 'ethers';
 
-export const useCreditScores = (
-  masa?: Masa,
-  walletAddress?: string,
+export const getCreditScoresQueryKey = ({
+  masa,
+  walletAddress,
+}: {
+  masa?: Masa;
+  signer?: Signer; // unused
+  walletAddress?: string; // unused
+}) => {
+  return ['credit-scores', walletAddress, masa?.config.networkName];
+};
+
+export const useCreditScoresQuery = ({
+  masa,
+  walletAddress,
+  identity,
+}: {
+  masa?: Masa;
+  walletAddress?: string;
   identity?: {
     identityId?: BigNumber;
     address?: string;
-  }
-): {
-  creditScores?:
-    | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: ICreditScore;
-      }[];
-  handleCreateCreditScore: () => Promise<boolean | undefined>;
-  status: string;
-  isCreditScoresLoading: boolean;
-  reloadCreditScores: () => void;
-  error: unknown;
-} => {
+  };
+}) => {
   const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
     return ['credit-scores', walletAddress, masa?.config.networkName];
   }, [walletAddress, masa]);
@@ -58,19 +61,69 @@ export const useCreditScores = (
     },
   });
 
+  const invalidateCreditScores = useCallback(
+    async () => await queryClient.invalidateQueries(['credit-scores']),
+    []
+  );
+
+  return {
+    creditScores,
+    status,
+    isLoading,
+    isFetching,
+    reloadCreditScores,
+    invalidateCreditScores,
+    error,
+  };
+};
+
+export type UseCreditScoresReturnType = {
+  creditScores?:
+    | {
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata?: ICreditScore;
+      }[];
+  handleCreateCreditScore: () => Promise<boolean | undefined>;
+  status: string;
+  isCreditScoresLoading: boolean;
+  reloadCreditScores: () => void;
+  invalidateCreditScores: () => void;
+  error: unknown;
+};
+
+export const useCreditScores = (
+  masa?: Masa,
+  walletAddress?: string,
+  identity?: {
+    identityId?: BigNumber;
+    address?: string;
+  }
+): UseCreditScoresReturnType => {
+  const {
+    creditScores,
+    status,
+    isLoading,
+    isFetching,
+    reloadCreditScores,
+    invalidateCreditScores,
+    error,
+  } = useCreditScoresQuery({ masa, walletAddress, identity });
+
   const handleCreateCreditScore = useCallback(async (): Promise<
     boolean | undefined
   > => {
     const response = await masa?.creditScore.create();
-    await queryClient.invalidateQueries(queryKey);
+    await invalidateCreditScores();
     return response?.success;
-  }, [masa, queryKey]);
+  }, [masa, invalidateCreditScores]);
 
   return {
     creditScores,
     isCreditScoresLoading: isLoading || isFetching,
     handleCreateCreditScore,
     reloadCreditScores,
+    invalidateCreditScores,
     status,
     error,
   };

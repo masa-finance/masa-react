@@ -1,18 +1,28 @@
 import { useQuery } from 'react-query';
 import { Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { Signer, Wallet } from 'ethers';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useAsync } from 'react-use';
+import { queryClient } from '../../masa-query-client';
 
-export const useWallet = (
-  masa?: Masa,
-  provider?: Wallet | Signer
-): {
-  walletAddress?: string;
-  isWalletLoading: boolean;
-  hasWalletAddress: boolean;
-  status: string;
-  error: unknown;
-} => {
+export const getWalletQueryKey = ({
+  masa,
+}: {
+  masa?: Masa;
+  signer?: Signer; // unused
+  walletAddress?: string; // unused
+}) => {
+  return ['wallet', masa?.config.networkName];
+};
+
+export const useWalletQuery = ({
+  masa,
+  signer,
+}: {
+  masa?: Masa;
+  signer?: Signer;
+  walletAddress?: string; // unused
+}) => {
   const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
     return ['wallet', masa?.config.networkName];
   }, [masa]);
@@ -23,24 +33,63 @@ export const useWallet = (
     isLoading,
     isFetching,
     error,
-  } = useQuery<string | undefined>(
-    queryKey,
-    () => masa?.config.wallet.getAddress(),
-    {
-      enabled: !!masa && !!provider,
-      retry: false,
-    }
+    refetch,
+  } = useQuery<string | undefined>(queryKey, () => signer?.getAddress(), {
+    enabled: false, // !!masa, //  && !!signer,
+    retry: false,
+    onSuccess: (address: string | undefined) => {
+      if (masa?.config.verbose) {
+        console.info('wallet address', address);
+      }
+    },
+  });
+
+  const invalidateIdentity = useCallback(
+    async () => await queryClient.invalidateQueries(['identity']),
+    []
   );
+
+  return {
+    walletAddress,
+    status,
+    isLoading,
+    isFetching,
+    error,
+    refetch,
+    invalidateIdentity,
+  };
+};
+
+export type UseWalletReturnType = {
+  walletAddress?: string;
+  isWalletLoading: boolean;
+  hasWalletAddress: boolean;
+  status: string;
+  error: unknown;
+  reloadWallet: () => Promise<unknown>;
+};
+
+export const useWallet = (
+  masa?: Masa,
+  signer?: Wallet | Signer
+): UseWalletReturnType => {
+  const { walletAddress, status, isLoading, isFetching, error, refetch } =
+    useWalletQuery({ masa, signer });
+
+  useAsync(async () => {
+    await refetch();
+  }, [refetch, signer]);
 
   const hasWalletAddress = useMemo(() => {
     return !!walletAddress;
   }, [walletAddress]);
 
   return {
-    walletAddress: !provider ? undefined : walletAddress,
+    walletAddress: !signer ? undefined : walletAddress,
     isWalletLoading: isLoading || isFetching,
     hasWalletAddress,
     status,
     error,
+    reloadWallet: refetch,
   };
 };

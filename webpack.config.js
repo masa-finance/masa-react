@@ -53,6 +53,7 @@ module.exports = (env, argv) => {
       new ProvidePlugin({
         React: 'react',
       }),
+      
       new ForkTsCheckerWebpackPlugin(),
     ].concat(
       isProduction

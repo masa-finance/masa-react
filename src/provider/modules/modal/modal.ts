@@ -41,6 +41,7 @@ export const useModal = (
         isConnected
       ) {
         modalCallback();
+        console.log(modalCallback.name);
       } else if (forceCallback && modalCallback) {
         modalCallback();
       }
