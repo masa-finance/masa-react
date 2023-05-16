@@ -36,7 +36,7 @@
     "@babel/preset-typescript": "^7.21.5",
     "@celo/rainbowkit-celo": "^0.11.1",
     "@masa-finance/masa-sdk": "^2.0.3",
-    "@metamask/providers": "^10.2.1",
+    "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "^0.12.12",
     "babel-loader": "^9.1.2",
     "babel-plugin-import": "^1.13.6",
