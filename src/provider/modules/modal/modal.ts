@@ -19,6 +19,7 @@ export const useModal = (
   } | null;
   setModalSize: (size: { width: number; height: number }) => void;
   useModalSize: (size: { width: number; height: number }) => void;
+  openGallery: (callback?: () => void) => void;
 } => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalCallback, setModalCallback] = useState<(() => void) | null>(null);
@@ -90,6 +91,20 @@ export const useModal = (
     [setForcedPage, setModalOpen, setModalCallback]
   );
 
+  const openGallery = useCallback(
+    (mintCallback?: () => void) => {
+      setForcedPage?.('gallery');
+      setModalOpen(true);
+      const cb = () => {
+        setForcedPage?.(null);
+        if (mintCallback) mintCallback();
+      };
+
+      setModalCallback(() => cb);
+    },
+    [setForcedPage, setModalOpen, setModalCallback]
+  );
+
   return {
     isModalOpen,
     closeModal,
@@ -102,5 +117,6 @@ export const useModal = (
     modalSize,
     setModalSize,
     useModalSize,
+    openGallery,
   };
 };

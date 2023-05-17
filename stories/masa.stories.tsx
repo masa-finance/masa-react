@@ -4,6 +4,9 @@ import React, { useCallback } from 'react';
 import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
+import { Masa, Messages, loadSBTContract } from '@masa-finance/masa-sdk';
+import { Contract } from 'ethers';
+import { abi } from '../src/helpers/ASBT';
 
 const meta: Meta = {
   title: 'SDK Test',
@@ -34,11 +37,9 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
     openConnectModal,
     openAccountModal,
     openChainModal,
-    // isNewModalOpen,
-    // domNode,
-    // openModal,
-    // toggleModal,
 
+    openGallery,
+    masa,
     openAuthenticateModal,
     openConnectedModal,
     openCreateCreditScoreModal,
@@ -59,6 +60,69 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
     openInterfaceMasaGreen,
+  };
+
+  const mintBadge = async () => {
+    if (masa && masa.config) {
+      const sbtContract = await loadSBTContract(
+        masa?.config,
+        '0x120AEBA02b9e125b8C148F466B6417Bb88Cf3bDE'
+      );
+
+      console.log({ sbtContract });
+      if (sbtContract)
+        mintASBT(
+          masa,
+          sbtContract,
+          '0x988055AA2038Fc8aB06E90CBB3E6BF5aEBe7b5Dc'
+        );
+    }
+  };
+
+  const mintASBT = async (masa: Masa, sbtContract: any, receiver: string) => {
+    const [name, symbol] = await Promise.all([
+      sbtContract.name(),
+      sbtContract.symbol(),
+    ]);
+
+    console.log('Minting SBT on:');
+    console.log(`Contract Name: '${name}'`);
+    console.log(`Contract Symbol: '${symbol}'`);
+    console.log(`Contract Address: '${sbtContract.address}'`);
+    console.log(`To receiver: '${receiver}'`);
+
+    const asbt = await new Contract(
+      sbtContract.address,
+      abi,
+      masa.config.wallet
+    ).deployed();
+
+    const { wait, hash } = await asbt.mint(receiver);
+    console.log(Messages.WaitingToFinalize(hash));
+
+    const { logs } = await wait();
+
+    const parsedLogs = masa.contracts.parseLogs(logs, [asbt]);
+
+    const mintEvent = parsedLogs.find((log: any) => log.name === 'Mint');
+
+    if (mintEvent) {
+      const { args } = mintEvent;
+      console.log(
+        `Minted to token with ID: ${args._tokenId} receiver '${args._owner}'`
+      );
+    }
+  };
+
+  const deployASBT = async () => {
+    const address = await masa?.sbt.ASBT.deploy(
+      'Masa Ambassador',
+      'AMASADOR',
+      'https://i.imgur.com/bteC57K.png?token=',
+      '0x988055AA2038Fc8aB06E90CBB3E6BF5aEBe7b5Dc'
+    );
+
+    console.log({ address });
   };
 
   const handleConnect = useCallback(() => {
@@ -98,6 +162,7 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
         <h1>SDK Tester for {name}!</h1>
 
         <button onClick={handleConnect}>Use Masa!</button>
+        <button onClick={() => openGallery?.()}> Open gallery </button>
         <button
           onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
         >
@@ -108,6 +173,9 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
         >
           Mint a MGX
         </button>
+        <button onClick={deployASBT}>Deploy ASBT</button>
+        <button onClick={mintBadge}>Mint BADGE</button>
+
         <button onClick={loadCR}>Invalidate Wallet</button>
         <button onClick={mintGreen}>Mint green</button>
         <button
@@ -204,7 +272,7 @@ const TemplateNoRainbowkit: Story = (props: Args) => {
       <MasaProvider
         company="Masa"
         walletsToUse={['metamask']}
-        useRainbowKitWalletConnect={false}
+        useRainbowKitWalletConnect={true}
         forceNetwork={'alfajores'}
       >
         <Component name="Old Connection" {...props} />
@@ -246,7 +314,7 @@ const MasaGreenTemplate: Story = (props: Args) => {
       <MasaProvider
         company="Masa"
         useRainbowKitWalletConnect={true}
-        forceNetwork={'goerli'}
+        forceNetwork={'alfajores'}
       >
         <ModalComponent
           open={true}

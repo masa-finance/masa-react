@@ -20,6 +20,8 @@ import { Signer, Wallet } from 'ethers';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
+import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
+import { useCustomSBT, useCustomGallerySBT } from './modules/custom-sbts';
 import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
 import { useNetworkSwitch } from './use-network-switch';
@@ -43,6 +45,9 @@ export interface MasaContextProviderProps extends MasaShape {
   signer?: Wallet | Signer;
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
+  customGallerySBT?: CustomGallerySBT[];
+  fullScreenGallery?: boolean;
+  apiUrl?: string;
   useRainbowKitWalletConnect?: boolean;
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: string[];
@@ -63,6 +68,12 @@ export const MasaContextProvider = ({
   verbose = false,
   // force specific network
   forceNetwork,
+  // custom SBT render for gallery
+  customGallerySBT,
+  // render gallery in full screen
+  fullScreenGallery,
+  // api url override
+  apiUrl,
   useRainbowKitWalletConnect = false,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
@@ -167,12 +178,20 @@ export const MasaContextProvider = ({
     openMintSoulnameModal,
     openMintMasaGreen,
     useModalSize,
+    openGallery,
     modalSize,
   } = useModal(
     isLoggedIn,
     hasAccountAddress, // used to be hasWalletAddress
     areScopesFullfiled
   );
+
+  // custom SBTs
+  const { customContracts, handleAddSBT } = useCustomGallerySBT(
+    masaInstance,
+    customGallerySBT
+  );
+  const { customSBTs, badges } = useCustomSBT(masaInstance, customContracts);
 
   // global loading flag
   const isLoading = useMemo(() => {
@@ -256,6 +275,7 @@ export const MasaContextProvider = ({
         networkName: currentNetwork?.networkName,
         arweaveConfig,
         verbose,
+        apiUrl,
       });
 
       setMasaInstance(masa);
@@ -295,6 +315,7 @@ export const MasaContextProvider = ({
     openMintSoulnameModal,
     openMintMasaGreen,
     useModalSize,
+    openGallery,
     modalSize,
 
     // wallet
@@ -339,6 +360,14 @@ export const MasaContextProvider = ({
     SupportedNetworks,
     switchNetwork,
     forceNetwork,
+
+    // gallery
+    customGallerySBT,
+    fullScreenGallery,
+    // custom SBTs
+    customSBTs,
+    badges,
+    handleAddSBT,
 
     // rainbowkit
     useRainbowKit: useRainbowKitWalletConnect,

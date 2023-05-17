@@ -13,6 +13,7 @@ import {
 import { BigNumber, Signer } from 'ethers';
 import { GetNetworkResult } from '@wagmi/core';
 import { ModalName, WrapperModalProps } from '../components';
+import { CustomGallerySBT } from '../components/masa-interface/pages/gallery/gallery';
 
 export interface MasaShape {
   children?: React.ReactNode;
@@ -46,6 +47,7 @@ export interface MasaShape {
   openMintMasaGreen?: (callback?: () => void) => void;
   modalSize?: { width: number; height: number } | null;
   useModalSize?: (size: { width: number; height: number }) => void;
+  openGallery?: (callback?: () => void) => void;
 
   // wallet
   walletAddress?: string;
@@ -110,6 +112,15 @@ export interface MasaShape {
   SupportedNetworks?: Partial<{ [index in NetworkName]: Network }>;
   switchNetwork?: (networkName: NetworkName) => void;
   forceNetwork?: NetworkName;
+
+  // gallery
+  customGallerySBT?: CustomGallerySBT[];
+  fullScreenGallery?: boolean;
+
+  // customSBTs
+  customSBTs?: any[];
+  badges?: any[];
+  handleAddSBT?: (isCollection: boolean, name: string, address: string) => void;
 
   // rainbowkit
   useRainbowKit?: boolean;

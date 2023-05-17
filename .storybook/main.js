@@ -1,34 +1,36 @@
 module.exports = {
-  stories: ['../stories/**/*.stories.@(ts|tsx|js|jsx)'],
-  addons: ['@storybook/addon-links', '@storybook/addon-essentials', {
-    name: 'storybook-addon-sass-postcss',
-    options: {
-      loadSassAfterPostCSS: true,
-      postcssLoaderOptions: {
-        implementation: require('postcss')
+  stories: [
+    '../stories/**/*.stories.@(ts|tsx|js|jsx)',
+    '../src/**/*.stories.@(ts|tsx|js|jsx)',
+  ],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    {
+      name: 'storybook-addon-sass-postcss',
+      options: {
+        loadSassAfterPostCSS: true,
+        postcssLoaderOptions: {
+          implementation: require('postcss'),
+        },
+        rule: {
+          test: /\.(scss|sass)$/i,
+        },
       },
-      rule: {
-        test: /\.(scss|sass)$/i
-      }
-    }
-  }, {
-    name: '@storybook/addon-postcss',
-    options: {
-      postcssLoaderOptions: {
-        implementation: require('postcss')
-      }
-    }
-  }, '@storybook/addon-mdx-gfm'],
+    },
+    '@storybook/addon-mdx-gfm',
+    '@storybook/addon-styling',
+  ],
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
   typescript: {
-    check: true // type-check stories during Storybook build
+    check: true, // type-check stories during Storybook build
   },
 
   framework: {
     name: '@storybook/react-webpack5',
-    options: {}
+    options: {},
   },
   docs: {
-    autodocs: true
-  }
+    autodocs: true,
+  },
 };
