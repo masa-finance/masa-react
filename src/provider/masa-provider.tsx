@@ -1,4 +1,4 @@
-import './styles.scss';
+// import './styles.scss';
 
 import {
   MasaContextProvider,
@@ -12,7 +12,7 @@ import { MasaInterface } from '../components';
 import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider/configured-rainbowkit-provider';
 
 // needs to be imported using require. Otherwise, it will not load!
-require('@rainbow-me/rainbowkit/styles.css');
+// require('@rainbow-me/rainbowkit/styles.css');
 
 export const MasaProvider = ({
   children,

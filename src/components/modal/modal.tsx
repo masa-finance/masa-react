@@ -1,7 +1,7 @@
 import Rodal from 'rodal';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import './styles.scss';
+// import './styles.scss';
 import { useMasa } from '../../provider';
 
 function getWindowDimensions() {

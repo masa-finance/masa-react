@@ -1,0 +1,5 @@
+# remove unnnecessary files from npm release
+
+.*
+**/webpack.config.js
+node_modules

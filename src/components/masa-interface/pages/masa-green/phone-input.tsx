@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import Reaptcha from 'reaptcha';
 import { useMasa } from '../../../../provider';
-import 'react-phone-number-input/style.css';
+// import 'react-phone-number-input/style.css';
 
 export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
   next,

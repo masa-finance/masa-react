@@ -4,6 +4,7 @@ import React, { useCallback } from 'react';
 import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
+import '../src/styles.scss';
 
 const meta: Meta = {
   title: 'SDK Test',
