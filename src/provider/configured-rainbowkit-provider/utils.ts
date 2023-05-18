@@ -5,11 +5,11 @@ import {
 } from '@masa-finance/masa-sdk';
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 import {
+  Chain,
+  goerli,
   baseGoerli,
   bsc,
   bscTestnet,
-  Chain,
-  goerli,
   mainnet,
   polygon,
   polygonMumbai,

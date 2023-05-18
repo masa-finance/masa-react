@@ -13,6 +13,8 @@ import {
   invalidateGreen,
   // invalidateSession,
   useLogout,
+  invalidateCustomSBTs,
+  invalidateCustomSBTContracts,
 } from './hooks';
 import { useMemo, useState } from 'react';
 import { useAsync } from 'react-use';
@@ -40,6 +42,7 @@ export const useAccountState = ({
   hasWalletAddress?: boolean;
   reloadIdentity?: () => void;
   reloadWallet?: () => void;
+  invalidateCustomSBTs?: () => void;
 }) => {
   const [accountAddress, setAccountAddress] = useState<string | undefined>(
     walletAddress
@@ -72,6 +75,9 @@ export const useAccountState = ({
           invalidateIdentity({ masa, signer, walletAddress }),
           invalidateCreditScores({ masa, signer, walletAddress }),
           invalidateGreen({ masa, signer, walletAddress }),
+          invalidateCustomSBTs(),
+          invalidateCustomSBTContracts(),
+
         ]);
       }
     };

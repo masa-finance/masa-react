@@ -43,7 +43,7 @@ export const Gallery = ({ setIndex, context }) => {
   const { masa, connect } = useMasa();
   return (
     <div className="masa-gallery-container">
-      {masa ? (
+      {masa && context.tabs && context.tabs.length > 0 ? (
         <Tabs
           tabs={context.tabs}
           wrapperClassName={'masa-gallery'}

@@ -4,12 +4,40 @@ import { Meta, StoryObj } from '@storybook/react';
 import { Gallery } from '.';
 import { GalleryItem } from './galleryItem';
 
-const customRenderPokeSBT = {
+const customRenderWhaleSBT = {
+  name: 'Solid World Whale SBT',
+  address: '0xd843fB69473F77fF45502e1EB8733B6DD7feC98F',
+  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
+    const apiUrl = sbt.tokenUri.replace('.json', '');
+
+    return {
+      name: 'Solid World Whale SBT',
+      image: apiUrl,
+      description: 'Verified Discord member',
+    };
+  },
+};
+
+const customRenderWhaleSBTProduction = {
+  name: 'Solid World Whale SBT Production',
+  address: '0xbf060cdfc820cbdafa6313fdb0807944b99a03b7',
+  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
+    const apiUrl = sbt.tokenUri.replace('.json', '');
+
+    return {
+      name: 'Solid World Whale SBT',
+      image: apiUrl,
+      description: 'Verified Discord member',
+    };
+  },
+};
+
+const customPokeSBT = {
   name: 'PokeSBT',
   address: '0xa0f3c1971a4d4ec4Ef3983cce75B567a9004eF1B',
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     const apiUrl = sbt.tokenUri.replace('.json', '');
-    const apiResponse = await fetch(apiUrl);
+    const apiResponse = await fetch(apiUrl, { mode: 'cors' });
     const data = await apiResponse.json();
 
     return {
@@ -19,6 +47,7 @@ const customRenderPokeSBT = {
     };
   },
 };
+
 const meta: Meta = {
   title: 'Gallery',
   component: Gallery,
@@ -29,7 +58,11 @@ const meta: Meta = {
         <MasaProvider
           company={'Masa'}
           forceNetwork={'alfajores'}
-          customGallerySBT={[customRenderPokeSBT]}
+          customGallerySBT={[
+            customRenderWhaleSBTProduction,
+            customPokeSBT,
+            customRenderWhaleSBT,
+          ]}
         >
           <div className="masa-modal">
             <Story />

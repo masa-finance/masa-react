@@ -111,6 +111,20 @@ export const MasaContextProvider = ({
   const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
     useNetworkSwitch();
 
+  // custom SBTs
+  const { customContracts, handleAddSBT, refetchContracts } =
+    useCustomGallerySBT({
+      masa: masaInstance,
+      customGallerySBT,
+      walletAddress: accountAddress,
+    });
+
+  const { customSBTs, isLoading: isLoadingCustomSBTs } = useCustomSBT({
+    masa: masaInstance,
+    customContracts,
+    walletAddress: accountAddress,
+  });
+
   // identity
   const {
     identity,
@@ -185,13 +199,6 @@ export const MasaContextProvider = ({
     hasAccountAddress, // used to be hasWalletAddress
     areScopesFullfiled
   );
-
-  // custom SBTs
-  const { customContracts, handleAddSBT } = useCustomGallerySBT(
-    masaInstance,
-    customGallerySBT
-  );
-  const { customSBTs, badges } = useCustomSBT(masaInstance, customContracts);
 
   // global loading flag
   const isLoading = useMemo(() => {
@@ -282,9 +289,8 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-  }, [arweaveConfig, environmentName, verbose, currentNetwork, signer]);
+  }, [arweaveConfig, environmentName, verbose,currentNetwork, signer]);
 
-  if (verbose) console.log('MASA STATE', { greens, soulnames, creditScores });
   const context: MasaShape = {
     // masa instance
     masa: masaInstance,
@@ -364,10 +370,12 @@ export const MasaContextProvider = ({
     // gallery
     customGallerySBT,
     fullScreenGallery,
+
     // custom SBTs
     customSBTs,
-    badges,
     handleAddSBT,
+    refetchContracts,
+    isLoadingCustomSBTs,
 
     // rainbowkit
     useRainbowKit: useRainbowKitWalletConnect,
