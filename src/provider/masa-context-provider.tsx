@@ -289,7 +289,7 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-  }, [arweaveConfig, environmentName, verbose,currentNetwork, signer]);
+  }, [arweaveConfig, environmentName, verbose, currentNetwork, signer]);
 
   const context: MasaShape = {
     // masa instance

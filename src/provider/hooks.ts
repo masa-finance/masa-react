@@ -124,15 +124,11 @@ export const invalidateCreditScores = async ({
 };
 
 export const invalidateCustomSBTs = async () => {
-  await queryClient.invalidateQueries(
-    getQueryKeys()['custom-sbt']()
-  );
+  await queryClient.invalidateQueries(getQueryKeys()['custom-sbt']());
 };
 
 export const invalidateCustomSBTContracts = async () => {
-  await queryClient.invalidateQueries(
-    getQueryKeys()['custom-sbt-contracts']()
-  );
+  await queryClient.invalidateQueries(getQueryKeys()['custom-sbt-contracts']());
 };
 
 export const invalidateGreen = async ({

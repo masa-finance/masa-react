@@ -77,7 +77,6 @@ export const useAccountState = ({
           invalidateGreen({ masa, signer, walletAddress }),
           invalidateCustomSBTs(),
           invalidateCustomSBTContracts(),
-
         ]);
       }
     };

@@ -96,10 +96,7 @@ const useTabs = () => {
 
 const GalleryContainer = () => {
   const pages = [Gallery];
-  const {
-    useModalSize,
-    fullScreenGallery,
-  } = useMasa();
+  const { useModalSize, fullScreenGallery } = useMasa();
 
   useModalSize?.(
     fullScreenGallery
