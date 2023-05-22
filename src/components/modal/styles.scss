@@ -12,7 +12,7 @@
   flex-direction: column;
   align-items: flex-start;
   box-sizing: border-box;
-
+  overflow-y: scroll;
   padding: 1.2em;
 
   width: 100%;
@@ -33,6 +33,10 @@
     padding: 1em 2em;
 
     box-sizing: border-box;
+
+    @media (max-width: 600px) {
+      padding: 0;
+    }
   }
 
   .error-message {
