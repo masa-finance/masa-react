@@ -1,9 +1,9 @@
-import { useLocalStorage } from '../../../provider/use-local-storage';
+import { useLocalStorage } from '../../use-local-storage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { Signer } from 'ethers';
 import { useQuery } from 'react-query';
-import { queryClient } from '../../../provider/masa-query-client';
+import { queryClient } from '../../masa-query-client';
 
 function getLocalStorageRecordsByPrefix(
   prefix: string
