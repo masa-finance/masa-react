@@ -8,6 +8,7 @@ import { PhoneInputInterface } from './phone-input';
 import { Success } from './success';
 import { VerifyAndMintInterface } from './verifiy-and-mint';
 
+export interface MasaGreenProps {}
 const InterfaceMasaGreen = () => {
   const pages = [
     AirdropPage,

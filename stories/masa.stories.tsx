@@ -28,18 +28,15 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
     connect,
     isLoggedIn,
     handleLogout,
-    switchNetwork,
     switchNetworkNew,
     openMintSoulnameModal,
     openMintMasaGreen,
     openConnectModal,
     openAccountModal,
     openChainModal,
-    // isNewModalOpen,
-    // domNode,
-    // openModal,
-    // toggleModal,
 
+    openGallery,
+    masa,
     openAuthenticateModal,
     openConnectedModal,
     openCreateCreditScoreModal,
@@ -60,6 +57,28 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
     openSuccessCreateIdentityModal,
     openSwitchChainModal,
     openInterfaceMasaGreen,
+  };
+
+  const mintBadge = async () => {
+    if (masa && masa.config) {
+      const { mint } = await masa.asbt.connect(
+        '0x120AEBA02b9e125b8C148F466B6417Bb88Cf3bDE'
+      );
+
+      console.log({ mint });
+      if (mint) await mint('0x988055AA2038Fc8aB06E90CBB3E6BF5aEBe7b5Dc');
+    }
+  };
+
+  const deployASBT = async () => {
+    const address = await masa?.asbt.deploy(
+      'Masa Ambassador',
+      'AMASADOR',
+      'https://i.imgur.com/bteC57K.png?token=',
+      '0x988055AA2038Fc8aB06E90CBB3E6BF5aEBe7b5Dc'
+    );
+
+    console.log({ address });
   };
 
   const handleConnect = useCallback(() => {
@@ -99,6 +118,7 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
         <h1>SDK Tester for {name}!</h1>
 
         <button onClick={handleConnect}>Use Masa!</button>
+        <button onClick={() => openGallery?.()}> Open gallery</button>
         <button
           onClick={() => openMintSoulnameModal?.(() => alert('MINTED HURRAY!'))}
         >
@@ -109,6 +129,9 @@ const Component = ({ name }: { name?: string }): JSX.Element => {
         >
           Mint a MGX
         </button>
+        <button onClick={deployASBT}>Deploy ASBT</button>
+        <button onClick={mintBadge}>Mint BADGE</button>
+
         <button onClick={loadCR}>Invalidate Wallet</button>
         <button onClick={mintGreen}>Mint green</button>
         <button
@@ -205,7 +228,7 @@ const TemplateNoRainbowkit: Story = (props: Args) => {
       <MasaProvider
         company="Masa"
         walletsToUse={['metamask']}
-        useRainbowKitWalletConnect={false}
+        useRainbowKitWalletConnect={true}
         forceNetwork={'alfajores'}
       >
         <Component name="Old Connection" {...props} />
@@ -247,7 +270,7 @@ const MasaGreenTemplate: Story = (props: Args) => {
       <MasaProvider
         company="Masa"
         useRainbowKitWalletConnect={true}
-        forceNetwork={'goerli'}
+        forceNetwork={'alfajores'}
       >
         <ModalComponent
           open={true}

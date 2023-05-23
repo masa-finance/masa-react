@@ -1,5 +1,8 @@
 module.exports = {
-  stories: ['../stories/**/*.stories.@(ts|tsx|js|jsx)'],
+  stories: [
+    '../stories/**/*.stories.@(ts|tsx|js|jsx)',
+    '../src/**/*.stories.@(ts|tsx|js|jsx)',
+  ],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -24,6 +27,7 @@ module.exports = {
       },
     },
     '@storybook/addon-mdx-gfm',
+    '@storybook/addon-styling',
   ],
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
   typescript: {
@@ -37,12 +41,4 @@ module.exports = {
   docs: {
     autodocs: true,
   },
-  // webpackFinal: async (config, { configType }) => {
-  //   if (configType === 'DEVELOPMENT') {
-  //     return {
-  //       ...config,
-  //       ...devConfig,
-  //     };
-  //   }
-  // },
 };

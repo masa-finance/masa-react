@@ -1,5 +1,5 @@
 [# Masa React
- - v1.1.40](../README.md) / [Exports](../modules.md) / MasaShape
+ - v1.6.0](../README.md) / [Exports](../modules.md) / MasaShape
 
 # Interface: MasaShape
 
@@ -14,16 +14,23 @@
 ### Properties
 
 - [SupportedNetworks](MasaShape.md#supportednetworks)
+- [accountAddress](MasaShape.md#accountaddress)
 - [areScopesFullfiled](MasaShape.md#arescopesfullfiled)
+- [badges](MasaShape.md#badges)
 - [children](MasaShape.md#children)
 - [closeModal](MasaShape.md#closemodal)
 - [company](MasaShape.md#company)
 - [connect](MasaShape.md#connect)
 - [creditScores](MasaShape.md#creditscores)
 - [currentNetwork](MasaShape.md#currentnetwork)
+- [currentNetworkNew](MasaShape.md#currentnetworknew)
+- [customGallerySBT](MasaShape.md#customgallerysbt)
+- [customSBTs](MasaShape.md#customsbts)
 - [forceNetwork](MasaShape.md#forcenetwork)
 - [forcedPage](MasaShape.md#forcedpage)
+- [fullScreenGallery](MasaShape.md#fullscreengallery)
 - [greens](MasaShape.md#greens)
+- [handleAddSBT](MasaShape.md#handleaddsbt)
 - [handleCreateCreditScore](MasaShape.md#handlecreatecreditscore)
 - [handleCreateGreen](MasaShape.md#handlecreategreen)
 - [handleGenerateGreen](MasaShape.md#handlegenerategreen)
@@ -31,25 +38,40 @@
 - [handleLogout](MasaShape.md#handlelogout)
 - [handlePurchaseIdentity](MasaShape.md#handlepurchaseidentity)
 - [handlePurchaseIdentityWithSoulname](MasaShape.md#handlepurchaseidentitywithsoulname)
+- [hasAccountAddress](MasaShape.md#hasaccountaddress)
 - [hasWalletAddress](MasaShape.md#haswalletaddress)
 - [identity](MasaShape.md#identity)
+- [isConnected](MasaShape.md#isconnected)
 - [isCreditScoresLoading](MasaShape.md#iscreditscoresloading)
+- [isDisconnected](MasaShape.md#isdisconnected)
 - [isGreensLoading](MasaShape.md#isgreensloading)
 - [isIdentityLoading](MasaShape.md#isidentityloading)
 - [isLoading](MasaShape.md#isloading)
+- [isLoadingCustomSBTs](MasaShape.md#isloadingcustomsbts)
 - [isLoggedIn](MasaShape.md#isloggedin)
 - [isModalOpen](MasaShape.md#ismodalopen)
 - [isSessionLoading](MasaShape.md#issessionloading)
 - [isSoulnamesLoading](MasaShape.md#issoulnamesloading)
 - [isWalletLoading](MasaShape.md#iswalletloading)
+- [logout](MasaShape.md#logout)
 - [masa](MasaShape.md#masa)
 - [modalSize](MasaShape.md#modalsize)
 - [openAccountModal](MasaShape.md#openaccountmodal)
+- [openAuthenticateModal](MasaShape.md#openauthenticatemodal)
 - [openChainModal](MasaShape.md#openchainmodal)
 - [openConnectModal](MasaShape.md#openconnectmodal)
+- [openConnectedModal](MasaShape.md#openconnectedmodal)
+- [openCreateCreditScoreModal](MasaShape.md#opencreatecreditscoremodal)
+- [openCreateIdentityModal](MasaShape.md#opencreateidentitymodal)
+- [openCreateSoulnameModal](MasaShape.md#opencreatesoulnamemodal)
+- [openGallery](MasaShape.md#opengallery)
+- [openInterfaceMasaGreen](MasaShape.md#openinterfacemasagreen)
 - [openMintMasaGreen](MasaShape.md#openmintmasagreen)
 - [openMintSoulnameModal](MasaShape.md#openmintsoulnamemodal)
-- [provider](MasaShape.md#provider)
+- [openModal](MasaShape.md#openmodal)
+- [openSuccessCreateIdentityModal](MasaShape.md#opensuccesscreateidentitymodal)
+- [openSwitchChainModal](MasaShape.md#openswitchchainmodal)
+- [refetchContracts](MasaShape.md#refetchcontracts)
 - [reloadCreditScores](MasaShape.md#reloadcreditscores)
 - [reloadGreens](MasaShape.md#reloadgreens)
 - [reloadIdentity](MasaShape.md#reloadidentity)
@@ -57,9 +79,12 @@
 - [scope](MasaShape.md#scope)
 - [setForcedPage](MasaShape.md#setforcedpage)
 - [setModalOpen](MasaShape.md#setmodalopen)
-- [setProvider](MasaShape.md#setprovider)
+- [setRainbowkKitModalCallback](MasaShape.md#setrainbowkkitmodalcallback)
+- [setSigner](MasaShape.md#setsigner)
+- [signer](MasaShape.md#signer)
 - [soulnames](MasaShape.md#soulnames)
 - [switchNetwork](MasaShape.md#switchnetwork)
+- [switchNetworkNew](MasaShape.md#switchnetworknew)
 - [useModalSize](MasaShape.md#usemodalsize)
 - [useRainbowKit](MasaShape.md#userainbowkit)
 - [verbose](MasaShape.md#verbose)
@@ -73,9 +98,21 @@
 
 ___
 
+### accountAddress
+
+• `Optional` **accountAddress**: `string`
+
+___
+
 ### areScopesFullfiled
 
 • `Optional` **areScopesFullfiled**: `boolean`
+
+___
+
+### badges
+
+• `Optional` **badges**: `any`[]
 
 ___
 
@@ -145,6 +182,24 @@ ___
 
 ___
 
+### currentNetworkNew
+
+• `Optional` **currentNetworkNew**: `GetNetworkResult`
+
+___
+
+### customGallerySBT
+
+• `Optional` **customGallerySBT**: `CustomGallerySBT`[]
+
+___
+
+### customSBTs
+
+• `Optional` **customSBTs**: `any`[]
+
+___
+
 ### forceNetwork
 
 • `Optional` **forceNetwork**: `NetworkName`
@@ -157,9 +212,37 @@ ___
 
 ___
 
+### fullScreenGallery
+
+• `Optional` **fullScreenGallery**: `boolean`
+
+___
+
 ### greens
 
 • `Optional` **greens**: { `metadata?`: `IGreen` ; `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]
+
+___
+
+### handleAddSBT
+
+• `Optional` **handleAddSBT**: (`isCollection`: `boolean`, `name`: `string`, `address`: `string`) => `void`
+
+#### Type declaration
+
+▸ (`isCollection`, `name`, `address`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `isCollection` | `boolean` |
+| `name` | `string` |
+| `address` | `string` |
+
+##### Returns
+
+`void`
 
 ___
 
@@ -288,6 +371,12 @@ ___
 
 ___
 
+### hasAccountAddress
+
+• `Optional` **hasAccountAddress**: `boolean`
+
+___
+
 ### hasWalletAddress
 
 • `Optional` **hasWalletAddress**: `boolean`
@@ -307,9 +396,21 @@ ___
 
 ___
 
+### isConnected
+
+• `Optional` **isConnected**: `boolean`
+
+___
+
 ### isCreditScoresLoading
 
 • `Optional` **isCreditScoresLoading**: `boolean`
+
+___
+
+### isDisconnected
+
+• `Optional` **isDisconnected**: `boolean`
 
 ___
 
@@ -328,6 +429,12 @@ ___
 ### isLoading
 
 • `Optional` **isLoading**: `boolean`
+
+___
+
+### isLoadingCustomSBTs
+
+• `Optional` **isLoadingCustomSBTs**: `boolean`
 
 ___
 
@@ -361,6 +468,20 @@ ___
 
 ___
 
+### logout
+
+• `Optional` **logout**: () => `Promise`<`boolean`\>
+
+#### Type declaration
+
+▸ (): `Promise`<`boolean`\>
+
+##### Returns
+
+`Promise`<`boolean`\>
+
+___
+
 ### masa
 
 • `Optional` **masa**: `default`
@@ -376,6 +497,20 @@ ___
 ### openAccountModal
 
 • `Optional` **openAccountModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openAuthenticateModal
+
+• `Optional` **openAuthenticateModal**: () => `void`
 
 #### Type declaration
 
@@ -404,6 +539,96 @@ ___
 ### openConnectModal
 
 • `Optional` **openConnectModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openConnectedModal
+
+• `Optional` **openConnectedModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openCreateCreditScoreModal
+
+• `Optional` **openCreateCreditScoreModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openCreateIdentityModal
+
+• `Optional` **openCreateIdentityModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openCreateSoulnameModal
+
+• `Optional` **openCreateSoulnameModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openGallery
+
+• `Optional` **openGallery**: (`callback?`: () => `void`) => `void`
+
+#### Type declaration
+
+▸ (`callback?`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `callback?` | () => `void` |
+
+##### Returns
+
+`void`
+
+___
+
+### openInterfaceMasaGreen
+
+• `Optional` **openInterfaceMasaGreen**: () => `void`
 
 #### Type declaration
 
@@ -455,9 +680,69 @@ ___
 
 ___
 
-### provider
+### openModal
 
-• `Optional` **provider**: `Wallet` \| `Signer`
+• `Optional` **openModal**: (`__namedParameters`: { `contentProps`: `any` ; `name`: [`ModalName`](../modules.md#modalname) ; `title?`: `ReactNode` ; `wrapperProps?`: [`WrapperModalProps`](WrapperModalProps.md)  }) => `void`
+
+#### Type declaration
+
+▸ (`«destructured»`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `contentProps` | `any` |
+| › `name` | [`ModalName`](../modules.md#modalname) |
+| › `title?` | `ReactNode` |
+| › `wrapperProps?` | [`WrapperModalProps`](WrapperModalProps.md) |
+
+##### Returns
+
+`void`
+
+___
+
+### openSuccessCreateIdentityModal
+
+• `Optional` **openSuccessCreateIdentityModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### openSwitchChainModal
+
+• `Optional` **openSwitchChainModal**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+___
+
+### refetchContracts
+
+• `Optional` **refetchContracts**: () => `void`
+
+#### Type declaration
+
+▸ (): `void`
+
+##### Returns
+
+`void`
 
 ___
 
@@ -563,23 +848,35 @@ ___
 
 ___
 
-### setProvider
+### setRainbowkKitModalCallback
 
-• `Optional` **setProvider**: (`provider?`: `Wallet` \| `Signer`) => `void`
+• `Optional` **setRainbowkKitModalCallback**: `Dispatch`<`SetStateAction`<`undefined` \| (`modalOpen?`: `boolean`) => `void`\>\>
+
+___
+
+### setSigner
+
+• `Optional` **setSigner**: (`signer?`: `Signer`) => `void`
 
 #### Type declaration
 
-▸ (`provider?`): `void`
+▸ (`signer?`): `void`
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `provider?` | `Wallet` \| `Signer` |
+| `signer?` | `Signer` |
 
 ##### Returns
 
 `void`
+
+___
+
+### signer
+
+• `Optional` **signer**: `Signer`
 
 ___
 
@@ -602,6 +899,26 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `networkName` | `NetworkName` |
+
+##### Returns
+
+`void`
+
+___
+
+### switchNetworkNew
+
+• `Optional` **switchNetworkNew**: (`forcedNetworkParam`: `NetworkName`) => `void`
+
+#### Type declaration
+
+▸ (`forcedNetworkParam`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `forcedNetworkParam` | `NetworkName` |
 
 ##### Returns
 

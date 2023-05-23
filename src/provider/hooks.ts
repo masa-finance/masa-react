@@ -45,6 +45,8 @@ export const getQueryKeys = () => ({
     getGreenQueryKey({ masa, signer, walletAddress }),
   'credit-scores': ({ masa, signer, walletAddress }: QueryKeyRetrievalInput) =>
     getCreditScoresQueryKey({ masa, signer, walletAddress }),
+  'custom-sbt': () => ['custom-sbt'],
+  'custom-sbt-contracts': () => ['custom-sbt-contracts'],
 });
 
 export const invalidateAllQueries = async ({
@@ -119,6 +121,14 @@ export const invalidateCreditScores = async ({
       walletAddress,
     })
   );
+};
+
+export const invalidateCustomSBTs = async () => {
+  await queryClient.invalidateQueries(getQueryKeys()['custom-sbt']());
+};
+
+export const invalidateCustomSBTContracts = async () => {
+  await queryClient.invalidateQueries(getQueryKeys()['custom-sbt-contracts']());
 };
 
 export const invalidateGreen = async ({
