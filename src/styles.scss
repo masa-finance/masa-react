@@ -246,11 +246,20 @@
   flex-direction: column;
   align-items: flex-start;
   box-sizing: border-box;
-
+  overflow-y: scroll;
   padding: 1.2em;
 
   width: 100%;
   height: 100%;
+
+  &.story {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 
   .masa-modal-container {
     width: 100%;
@@ -258,6 +267,10 @@
     padding: 1em 2em;
 
     box-sizing: border-box;
+
+    @media (max-width: 600px) {
+      padding: 0;
+    }
   }
 
   .error-message {
@@ -790,8 +803,232 @@
       }
     }
   }
-}
 
+  .add-sbt-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: black;
+
+    h2 {
+      font-family: Ezra;
+    }
+
+    p {
+      font-family: Inter;
+    }
+
+    .sbt-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .add-sbt-button {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .masa-button {
+      font-weight: 500;
+    }
+
+    .toggle-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      margin-top: 12px;
+
+      label {
+        font-family: inter;
+      }
+    }
+  }
+
+  .masa-gallery-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    .not-connected-message {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+
+      h2 {
+        font-family: Ezra;
+      }
+
+      button {
+        font-weight: 500;
+        width: 50%;
+      }
+    }
+    .masa-gallery {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start; /* Change from 'center' to 'flex-start' */
+      gap: 12px 20px;
+      padding-left: 12px;
+      margin-top: 12px;
+
+      .gallery-item {
+        position: relative;
+        padding: 12px 18px;
+        border-radius: 8px;
+        box-sizing: border-box;
+        background-color: black;
+
+        width: calc((100% - 80px) / 4);
+        max-width: 250px;
+        max-height: 340px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        img {
+          width: 100%;
+          max-width: 280px;
+          border-radius: 12px;
+          z-index: 20;
+        }
+
+        .gallery-item-info {
+          z-index: 20;
+
+          padding: 16px 0;
+          font-size: 21px;
+          font-family: Inter;
+          font-weight: 500;
+          color: white;
+
+          width: 100%;
+
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          transition: color 300ms ease-in-out;
+
+          .gallery-item-title {
+            margin: 0;
+            word-wrap: break-word;
+            font-size: 18px;
+          }
+
+          .gallery-item-description {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .tabs-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    flex-direction: column;
+    grid-template-rows: 60px 1fr;
+
+    .tabs-header {
+      height: 100%;
+    }
+
+    .tab-content {
+      height: 100%;
+      overflow: auto;
+    }
+  }
+  .tabs-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .tabs-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+  }
+  .tabs {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .tab-content {
+    width: 100%;
+  }
+  .tab {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s ease;
+    font-family: Ezra, 'Helvetica Neue';
+
+    &:hover {
+      color: black;
+    }
+  }
+
+  .active {
+    color: black;
+  }
+
+  .active::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    transition: transform 0.3s ease;
+  }
+
+  .plus-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 8px;
+    font-size: 24px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:hover {
+      background-color: black;
+      color: #fff;
+    }
+  }
+}
 // RODAL STYLES
 /* -- container -- */
 .rodal,
@@ -1182,7 +1419,7 @@
 @-webkit-keyframes rodal-rotate-enter {
   from {
     -webkit-transform: rotate3d(0, 0, 1, -180deg) scale3d(0.3, 0.3, 0.3);
-    transform: rotate3d(0, 0, 1, -180deg) scale 3d (0.3, 0.3, 0.3);
+    transform: rotate3d(0, 0, 1, -180deg) scale3d(0.3, 0.3, 0.3);
   }
 }
 
