@@ -36,7 +36,7 @@ export const ModalManagerContext = createContext(
   {} as ModalManagerProviderValue
 );
 
-export function ModalManagerProvider({ children }: { children: ReactNode }) {
+export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
   const [isModalOpen, toggleModal] = useToggle(false);
   const [title, setTitle] = useState<ReactNode>('');
   const [currentModal, setCurrentModal] =

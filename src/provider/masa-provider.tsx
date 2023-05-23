@@ -9,13 +9,12 @@ import { queryClient } from './masa-query-client';
 import { MasaInterface } from '../components';
 import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider/configured-rainbowkit-provider';
 
-export function MasaProvider({
+export const MasaProvider = ({
   children,
   chainsToUse,
   walletsToUse,
   ...args
-}: MasaContextProviderProps): JSX.Element {
-  return (
+}: MasaContextProviderProps): JSX.Element => (
     <QueryClientProvider client={queryClient}>
       <ConfiguredRainbowKitProvider
         chainsToUse={chainsToUse}
@@ -28,5 +27,4 @@ export function MasaProvider({
         </MasaContextProvider>
       </ConfiguredRainbowKitProvider>
     </QueryClientProvider>
-  );
-}
+  )

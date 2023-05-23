@@ -50,7 +50,7 @@ export interface MasaContextProviderProps extends MasaShape {
   walletsToUse?: string[];
 }
 
-export function MasaContextProvider({
+export const MasaContextProvider = ({
   children,
   // masa-react branding
   company,
@@ -72,7 +72,7 @@ export function MasaContextProvider({
   // api url override
   apiUrl,
   useRainbowKitWalletConnect = false,
-}: MasaContextProviderProps): JSX.Element {
+}: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
   const [signer, setSigner] = useState<Signer | undefined>();

@@ -100,11 +100,11 @@ const walletConnectorsList = {
   }),
 };
 
-export function ConfiguredRainbowKitProvider({
+export const ConfiguredRainbowKitProvider = ({
   children,
   chainsToUse,
   walletsToUse = ['metamask'],
-}: ConfiguredRainbowKitProviderProps) {
+}: ConfiguredRainbowKitProviderProps) => {
   const rainbowkitChains = getRainbowkitChains(chainsToUse);
   const { chains, provider } = configureChains(rainbowkitChains, [
     // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),

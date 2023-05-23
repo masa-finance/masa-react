@@ -36,6 +36,12 @@
     "react/jsx-props-no-spreading": 0,
     "react/require-default-props": 0,
     "react-hooks/rules-of-hooks": "error",
+    "react/function-component-definition": [
+      1,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
     "react-hooks/exhaustive-deps": "warn",
     "unicorn/prefer-node-protocol": "off",
     "unicorn/prevent-abbreviations": "off",
