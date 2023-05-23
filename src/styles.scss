@@ -246,11 +246,14 @@
   flex-direction: column;
   align-items: flex-start;
   box-sizing: border-box;
-  overflow-y: scroll;
   padding: 1.2em;
 
   width: 100%;
   height: 100%;
+
+  @media (max-width: 600px) {
+    overflow-y: scroll;
+  }
 
   &.story {
     width: 100%;
