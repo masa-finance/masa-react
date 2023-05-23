@@ -5,6 +5,8 @@
 import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
 import { ConnectorData, useAccount } from 'wagmi';
+import { useMemo, useState } from 'react';
+import { useAsync } from 'react-use';
 import {
   invalidateAllQueries,
   invalidateIdentity,
@@ -16,8 +18,6 @@ import {
   invalidateCustomSBTs,
   invalidateCustomSBTContracts,
 } from './hooks';
-import { useMemo, useState } from 'react';
-import { useAsync } from 'react-use';
 
 export const useAccountState = ({
   masa,
@@ -90,9 +90,7 @@ export const useAccountState = ({
     };
   }, [activeConnector, reloadWallet, masa, signer, walletAddress]);
 
-  const hasAccountAddress = useMemo(() => {
-    return !!accountAddress;
-  }, [accountAddress]);
+  const hasAccountAddress = useMemo(() => !!accountAddress, [accountAddress]);
 
   useAsync(async () => {
     // * initial state, just make sure walletAddress is passed to account address

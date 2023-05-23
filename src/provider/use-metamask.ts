@@ -1,21 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useMasa } from './use-masa';
 import { Maybe } from '@metamask/providers/dist/utils';
-import { useLocalStorage } from './use-local-storage';
 import { MetaMaskInpageProvider } from '@metamask/providers';
 import { providers } from 'ethers';
+import { useLocalStorage } from './use-local-storage';
+import { useMasa } from './use-masa';
 
 export const getWeb3Provider = (): providers.Web3Provider | undefined => {
-  if (
-    typeof window !== 'undefined' &&
-    typeof window?.ethereum !== 'undefined'
-  ) {
+  if (typeof window !== 'undefined' && window?.ethereum !== undefined) {
     return new providers.Web3Provider(
       window?.ethereum as unknown as providers.ExternalProvider
     );
   }
-
-  return;
 };
 
 export const useMetamask = ({
@@ -32,7 +27,7 @@ export const useMetamask = ({
 
   // use metamask can only be used inside the scope of masa-react
   // otherwise everything from useMasa is undefined
-  if (Object.keys(useMasa()).length < 1) {
+  if (Object.keys(useMasa()).length === 0) {
     throw new Error(
       'useMetamask() must be used inside the Masa provider scope!'
     );

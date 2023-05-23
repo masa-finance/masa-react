@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
-import { queryClient } from '../../masa-query-client';
 import { ICreditScore, Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
+import { queryClient } from '../../masa-query-client';
 
 export const getCreditScoresQueryKey = ({
   masa,
@@ -11,9 +11,7 @@ export const getCreditScoresQueryKey = ({
   masa?: Masa;
   signer?: Signer; // unused
   walletAddress?: string; // unused
-}) => {
-  return ['credit-scores', walletAddress, masa?.config.networkName];
-};
+}) => ['credit-scores', walletAddress, masa?.config.networkName];
 
 export const useCreditScoresQuery = ({
   masa,
@@ -27,9 +25,10 @@ export const useCreditScoresQuery = ({
     address?: string;
   };
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return ['credit-scores', walletAddress, masa?.config.networkName];
-  }, [walletAddress, masa]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => ['credit-scores', walletAddress, masa?.config.networkName],
+    [walletAddress, masa]
+  );
 
   const {
     data: creditScores,
@@ -62,7 +61,7 @@ export const useCreditScoresQuery = ({
   });
 
   const invalidateCreditScores = useCallback(
-    async () => await queryClient.invalidateQueries(['credit-scores']),
+    async () => queryClient.invalidateQueries(['credit-scores']),
     []
   );
 

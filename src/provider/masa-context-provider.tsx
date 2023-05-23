@@ -1,10 +1,11 @@
 import {
   EnvironmentName,
   Masa,
-  SoulNameErrorCodes,
   SupportedNetworks,
 } from '@masa-finance/masa-sdk';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Signer } from 'ethers';
+import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
 import { createNewMasa } from '../helpers';
 import {
   useCreditScores,
@@ -16,11 +17,9 @@ import {
   useSoulnames,
   useWallet,
 } from './modules';
-import { Signer } from 'ethers';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
-import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
 import { useCustomGallerySBT, useCustomSBT } from './modules/custom-sbts';
 import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
@@ -28,8 +27,6 @@ import { useNetworkSwitch } from './use-network-switch';
 import { MasaNetworks } from './configured-rainbowkit-provider/utils';
 import { useLogout } from './hooks';
 import { useAccountState } from './use-account-state';
-
-export { SoulNameErrorCodes };
 
 export interface ArweaveConfig {
   port?: string;
@@ -53,7 +50,7 @@ export interface MasaContextProviderProps extends MasaShape {
   walletsToUse?: string[];
 }
 
-export const MasaContextProvider = ({
+export function MasaContextProvider({
   children,
   // masa-react branding
   company,
@@ -75,7 +72,7 @@ export const MasaContextProvider = ({
   // api url override
   apiUrl,
   useRainbowKitWalletConnect = false,
-}: MasaContextProviderProps): JSX.Element => {
+}: MasaContextProviderProps): JSX.Element {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
   const [signer, setSigner] = useState<Signer | undefined>();
@@ -201,8 +198,8 @@ export const MasaContextProvider = ({
   );
 
   // global loading flag
-  const isLoading = useMemo(() => {
-    return (
+  const isLoading = useMemo(
+    () =>
       !masaInstance ||
       isWalletLoading ||
       isSessionLoading ||
@@ -210,18 +207,18 @@ export const MasaContextProvider = ({
       isSoulnamesLoading ||
       isCreditScoresLoading ||
       isGreensLoading ||
-      wagmiLoading
-    );
-  }, [
-    masaInstance,
-    isWalletLoading,
-    isSessionLoading,
-    isIdentityLoading,
-    isSoulnamesLoading,
-    isCreditScoresLoading,
-    isGreensLoading,
-    wagmiLoading,
-  ]);
+      wagmiLoading,
+    [
+      masaInstance,
+      isWalletLoading,
+      isSessionLoading,
+      isIdentityLoading,
+      isSoulnamesLoading,
+      isCreditScoresLoading,
+      isGreensLoading,
+      wagmiLoading,
+    ]
+  );
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
@@ -232,11 +229,9 @@ export const MasaContextProvider = ({
       // * feature toggle, to be removed soon
       if (useRainbowKitWalletConnect) {
         // * set the callback to open masa modal after rainbowkit modal is closed
-        setRainbowKitModalCallback(() => {
-          return () => {
-            setModalOpen(true);
-            // setForcedPage?.(null);
-          };
+        setRainbowKitModalCallback(() => () => {
+          setModalOpen(true);
+          // setForcedPage?.(null);
         });
 
         openConnectModal?.();
@@ -403,4 +398,6 @@ export const MasaContextProvider = ({
   return (
     <MasaContext.Provider value={context}>{children}</MasaContext.Provider>
   );
-};
+}
+
+export { SoulNameErrorCodes } from '@masa-finance/masa-sdk';

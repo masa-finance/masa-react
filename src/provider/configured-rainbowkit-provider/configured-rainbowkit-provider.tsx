@@ -100,11 +100,11 @@ const walletConnectorsList = {
   }),
 };
 
-export const ConfiguredRainbowKitProvider = ({
+export function ConfiguredRainbowKitProvider({
   children,
   chainsToUse,
   walletsToUse = ['metamask'],
-}: ConfiguredRainbowKitProviderProps) => {
+}: ConfiguredRainbowKitProviderProps) {
   const rainbowkitChains = getRainbowkitChains(chainsToUse);
   const { chains, provider } = configureChains(rainbowkitChains, [
     // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
@@ -139,7 +139,7 @@ export const ConfiguredRainbowKitProvider = ({
       </RainbowKitProvider>
     </WagmiConfig>
   );
-};
+}
 
 export const ConfiguredRainbowKitContext = createContext(
   {} as ConfiguredRainbowKitProviderValue

@@ -43,7 +43,7 @@ export type MasaNetworks = Partial<{
 export const getRainbowkitChains = (
   networkList?: Array<keyof MasaNetworks>
 ) => {
-  if (!networkList || (networkList && !networkList.length)) {
+  if (!networkList || (networkList && networkList.length === 0)) {
     return rainbowkitChains;
   }
 
@@ -61,10 +61,11 @@ export const getRainbowkitChains = (
   );
 
   const userNetworksMasa = userNetworksFiltered.map((un) => masaNetworks[un]);
-  const userNetworksRainbowkit = userNetworksMasa.map((unm) => unm?.chainId);
+  const userNetworksRainbowkit = new Set(
+    userNetworksMasa.map((unm) => unm?.chainId)
+  );
   const userChainsRainbowkit = rainbowkitChains.filter(
-    (rainbowkitChain: Chain) =>
-      userNetworksRainbowkit.includes(rainbowkitChain.id)
+    (rainbowkitChain: Chain) => userNetworksRainbowkit.has(rainbowkitChain.id)
   );
 
   return userChainsRainbowkit;

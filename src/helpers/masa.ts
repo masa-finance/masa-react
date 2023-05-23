@@ -38,9 +38,9 @@ export const createNewMasa = ({
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
-      port: parseInt(arweaveConfig?.port || '443'),
+      port: Number.parseInt(arweaveConfig?.port || '443'),
       protocol: arweaveConfig?.protocol || 'https',
-      logging: (!!arweaveConfig?.logging as boolean) || false,
+      logging: !!arweaveConfig?.logging || false,
     },
     verbose,
   });

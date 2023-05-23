@@ -1,7 +1,8 @@
 import { useDisconnect } from 'wagmi';
-import { queryClient } from './masa-query-client';
 import { useAsyncFn } from 'react-use';
 import { DependencyList } from 'react';
+import { Masa } from '@masa-finance/masa-sdk';
+import { Signer } from 'ethers';
 import {
   getCreditScoresQueryKey,
   getGreenQueryKey,
@@ -11,8 +12,7 @@ import {
   getSoulnamesQueryKey,
   getWalletQueryKey,
 } from './modules';
-import { Masa } from '@masa-finance/masa-sdk';
-import { Signer } from 'ethers';
+import { queryClient } from './masa-query-client';
 
 const QUERIES = [
   'identity',

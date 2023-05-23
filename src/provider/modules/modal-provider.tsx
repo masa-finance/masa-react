@@ -1,18 +1,18 @@
-import {
-  ModalContent,
-  ModalName,
-  Modals,
-  WrapperModalProps,
-} from '../../components/new-modal';
 import React, {
   ReactNode,
   createContext,
   useCallback,
   useContext,
   useMemo,
+  useState,
 } from 'react';
-import { useState } from 'react';
 import { useToggle } from 'react-use';
+import {
+  ModalContent,
+  ModalName,
+  Modals,
+  WrapperModalProps,
+} from '../../components/new-modal';
 
 export interface ModalManagerProviderValue {
   domNode: Element | DocumentFragment | HTMLElement | null;
@@ -36,7 +36,7 @@ export const ModalManagerContext = createContext(
   {} as ModalManagerProviderValue
 );
 
-export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
+export function ModalManagerProvider({ children }: { children: ReactNode }) {
   const [isModalOpen, toggleModal] = useToggle(false);
   const [title, setTitle] = useState<ReactNode>('');
   const [currentModal, setCurrentModal] =
@@ -78,9 +78,9 @@ export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
     setModalWrapperProps({});
   }, [setTitle, setCurrentModal, setModalContentProps, setModalWrapperProps]);
 
-  const domNode = document.getElementById('modal-mount');
+  const domNode = document.querySelector('#modal-mount');
   let Content = ModalContent[currentModal];
-  if (!Content) Content = ModalContent['Default'];
+  if (!Content) Content = ModalContent.Default;
 
   const modalManagerProviderValue = useMemo(
     () => ({
@@ -93,23 +93,21 @@ export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
     [isModalOpen, toggleModal, domNode, openModal, reset]
   );
   return (
-    <>
-      <ModalManagerContext.Provider value={modalManagerProviderValue}>
-        {children}
-        {isModalOpen && (
-          <Modals.ModalWrapper
-            title={title}
-            isOpen={isModalOpen}
-            onClose={() => toggleModal(false)}
-            {...modalWrapperProps}
-          >
-            <Content {...modalContentProps} />
-          </Modals.ModalWrapper>
-        )}
-      </ModalManagerContext.Provider>
-    </>
+    <ModalManagerContext.Provider value={modalManagerProviderValue}>
+      {children}
+      {isModalOpen && (
+        <Modals.ModalWrapper
+          title={title}
+          isOpen={isModalOpen}
+          onClose={() => toggleModal(false)}
+          {...modalWrapperProps}
+        >
+          <Content {...modalContentProps} />
+        </Modals.ModalWrapper>
+      )}
+    </ModalManagerContext.Provider>
   );
-};
+}
 
 export const useModalManager = (): ModalManagerProviderValue =>
   useContext(ModalManagerContext);

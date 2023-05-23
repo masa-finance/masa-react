@@ -1,8 +1,8 @@
-import { useLocalStorage } from '../../use-local-storage';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { Signer } from 'ethers';
 import { useQuery } from 'react-query';
+import { useLocalStorage } from '../../use-local-storage';
 import { queryClient } from '../../masa-query-client';
 
 function getLocalStorageRecordsByPrefix(
@@ -40,7 +40,7 @@ export const useSavedSbts = (masa, prefix): { savedContracts: any[] } => {
 };
 
 const fetchContracts = async (masa, customGallerySBT) => {
-  if (customGallerySBT && customGallerySBT.length) {
+  if (customGallerySBT && customGallerySBT.length > 0) {
     const newContracts: any[] = [];
     for (const sbt of customGallerySBT) {
       const sbtContract = await masa?.sbt.connect(sbt.address);
@@ -50,9 +50,8 @@ const fetchContracts = async (masa, customGallerySBT) => {
       newContracts.push(contractObject);
     }
     return newContracts;
-  } else {
-    return [];
   }
+  return [];
 };
 
 export const useCustomGallerySBT = ({
@@ -69,9 +68,10 @@ export const useCustomGallerySBT = ({
     });
   }, []);
 
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return getCustomSBTsContractsQueryKey({ masa, walletAddress });
-  }, [walletAddress, masa, customGallerySBT]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => getCustomSBTsContractsQueryKey({ masa, walletAddress }),
+    [walletAddress, masa, customGallerySBT]
+  );
 
   const {
     data: contracts,
@@ -117,13 +117,13 @@ export const fetchCustomSBTs = async (customContracts) => {
           try {
             const metadata = await contract.getMetadata(token);
             hidratatedTokens.push({ metadata, ...token });
-          } catch (e) {
-            console.log('METADTA ERROR', e);
+          } catch (error) {
+            console.log('METADTA ERROR', error);
           }
         }
       }
-    } catch (e) {
-      console.log('LIST TOKENS ERROR', e);
+    } catch (error) {
+      console.log('LIST TOKENS ERROR', error);
     }
 
     hidratatedContracts.push({ ...contract, tokens: hidratatedTokens });
@@ -141,9 +141,10 @@ export const useCustomSBTsQuery = ({
   walletAddress?: string;
   customContracts?: any[];
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return getCustomSBTsQueryKey({ masa, walletAddress });
-  }, [walletAddress, masa, customContracts]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => getCustomSBTsQueryKey({ masa, walletAddress }),
+    [walletAddress, masa, customContracts]
+  );
 
   const {
     data: customSBTs,
@@ -163,7 +164,7 @@ export const useCustomSBTsQuery = ({
   });
 
   const invalidateCustomSBTs = useCallback(
-    async () => await queryClient.invalidateQueries(['custom-sbt']),
+    async () => queryClient.invalidateQueries(['custom-sbt']),
     []
   );
 
@@ -185,9 +186,7 @@ export const getCustomSBTsQueryKey = ({
   masa?: Masa;
   signer?: Signer; // unused
   walletAddress?: string; // unused
-}) => {
-  return ['custom-sbt', walletAddress, masa?.config.networkName];
-};
+}) => ['custom-sbt', walletAddress, masa?.config.networkName];
 
 export const getCustomSBTsContractsQueryKey = ({
   masa,
@@ -196,9 +195,7 @@ export const getCustomSBTsContractsQueryKey = ({
   masa?: Masa;
   signer?: Signer; // unused
   walletAddress?: string; // unused
-}) => {
-  return ['custom-sbt-contracts', walletAddress, masa?.config.networkName];
-};
+}) => ['custom-sbt-contracts', walletAddress, masa?.config.networkName];
 
 export const useCustomSBT = ({ masa, customContracts, walletAddress }) => {
   // const { savedContracts: savedBadgeContracts } = useSavedSbts(

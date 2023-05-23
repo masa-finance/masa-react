@@ -21,9 +21,10 @@ export const useSBT = ({
   reloadSBTs: () => void;
   error: unknown;
 } => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return ['sbt', tokenAddress, walletAddress, masa?.config.networkName];
-  }, [masa, tokenAddress, walletAddress]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => ['sbt', tokenAddress, walletAddress, masa?.config.networkName],
+    [masa, tokenAddress, walletAddress]
+  );
 
   const {
     data: SBTs,
