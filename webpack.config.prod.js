@@ -6,6 +6,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
@@ -109,12 +110,13 @@ module.exports =
         path: path.resolve('dist/css'),
       },
       optimization: {
-        minimize: true,
-        minimizer: [new CssMinimizerPlugin()],
+        // minimize: true,
+        // minimizer: [new CssMinimizerPlugin()],
       },
       plugins: [
+        new RemoveEmptyScriptsPlugin(),
         new MiniCssExtractPlugin({
-          filename: '[name].css',
+          filename: 'styles.css',
         }),
       ],
       module: {
@@ -123,7 +125,17 @@ module.exports =
             // Assets loader
             // bundle assets with css so they can be loaded by css
             // More information here https://webpack.js.org/guides/asset-modules/
-            test: /\.(gif|jpe?g|tiff|png|webp|bmp|svg|eot|otf|ttf|woff|woff2)$/i,
+            test: /\.(eot|otf|ttf|woff|woff2)$/i,
+            type: 'asset',
+            generator: {
+              filename: '../fonts/[name].[hash][ext][query]',
+            },
+          },
+          {
+            // Assets loader
+            // bundle assets with css so they can be loaded by css
+            // More information here https://webpack.js.org/guides/asset-modules/
+            test: /\.(gif|jpe?g|tiff|png|webp|bmp|svg)$/i,
             type: 'asset',
             generator: {
               filename: '../assets/[name].[hash][ext][query]',
