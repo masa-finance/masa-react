@@ -1,4 +1,4 @@
-import { Signer, utils, Wallet } from 'ethers';
+import { Signer, utils } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import {
   getNetworkNameByChainId,
@@ -16,7 +16,7 @@ export type UseNetworkReturnValue = {
 };
 
 export type UseNetworkInputValue = {
-  provider?: Wallet | Signer;
+  provider?: Signer;
   useRainbowKitWalletConnect?: boolean;
 };
 

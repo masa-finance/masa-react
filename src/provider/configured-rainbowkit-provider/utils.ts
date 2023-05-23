@@ -5,24 +5,24 @@ import {
 } from '@masa-finance/masa-sdk';
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 import {
-  Chain,
-  goerli,
   baseGoerli,
   bsc,
   bscTestnet,
-  mainnet,
+  Chain,
+  goerli,
+  mainnet as ethereum,
   polygon,
   polygonMumbai,
 } from 'wagmi/chains';
 
 const rainbowkitChains = [
   Alfajores,
+  Celo,
   baseGoerli,
   bsc,
   bscTestnet,
-  Celo,
   goerli,
-  mainnet,
+  ethereum,
   polygon,
   polygonMumbai,
 ];
@@ -30,7 +30,6 @@ const rainbowkitChains = [
 export type MasaNetworks = Partial<{
   goerli: Network;
   ethereum: Network;
-  mainnet: Network;
   alfajores: Network;
   celo: Network;
   mumbai: Network;

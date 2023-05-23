@@ -4,18 +4,18 @@ import {
   Masa,
   NetworkName,
 } from '@masa-finance/masa-sdk';
-import { ethers } from 'ethers';
+import { Signer } from 'ethers';
 import { ArweaveConfig } from '../provider';
 
 export const createNewMasa = ({
-  wallet,
+  signer,
   environmentName,
   networkName = 'unknown',
   arweaveConfig,
   verbose,
   apiUrl,
 }: {
-  wallet: ethers.Signer | ethers.Wallet;
+  signer: Signer;
   environmentName: string;
   networkName?: NetworkName;
   arweaveConfig?: ArweaveConfig;
@@ -25,13 +25,14 @@ export const createNewMasa = ({
   const environment = environments.find(
     (environment: Environment) => environment.name === environmentName
   );
+
   if (!environment) {
     console.error(`Unable to find environment ${environmentName}`);
     return;
   }
 
   return new Masa({
-    wallet,
+    signer,
     apiUrl: apiUrl ?? environment.apiUrl,
     networkName,
     environment: environment.environment,

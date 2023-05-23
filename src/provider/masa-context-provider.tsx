@@ -16,12 +16,12 @@ import {
   useSoulnames,
   useWallet,
 } from './modules';
-import { Signer, Wallet } from 'ethers';
+import { Signer } from 'ethers';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
 import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
-import { useCustomSBT, useCustomGallerySBT } from './modules/custom-sbts';
+import { useCustomGallerySBT, useCustomSBT } from './modules/custom-sbts';
 import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
 import { useNetworkSwitch } from './use-network-switch';
@@ -42,7 +42,7 @@ export type EnvironmentNameEx = EnvironmentName & ('local' | 'stage');
 
 export interface MasaContextProviderProps extends MasaShape {
   noWallet?: boolean;
-  signer?: Wallet | Signer;
+  signer?: Signer;
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   customGallerySBT?: CustomGallerySBT[];
@@ -277,7 +277,7 @@ export const MasaContextProvider = ({
       if (!signer) return;
 
       const masa: Masa | undefined = createNewMasa({
-        wallet: signer,
+        signer,
         environmentName,
         networkName: currentNetwork?.networkName,
         arweaveConfig,

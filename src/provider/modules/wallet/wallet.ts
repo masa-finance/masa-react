@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { Masa, NetworkName } from '@masa-finance/masa-sdk';
-import { Signer, Wallet } from 'ethers';
+import { Signer } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { useAsync } from 'react-use';
 import { queryClient } from '../../masa-query-client';
@@ -71,7 +71,7 @@ export type UseWalletReturnType = {
 
 export const useWallet = (
   masa?: Masa,
-  signer?: Wallet | Signer
+  signer?: Signer
 ): UseWalletReturnType => {
   const { walletAddress, status, isLoading, isFetching, error, refetch } =
     useWalletQuery({ masa, signer });

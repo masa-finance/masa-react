@@ -7,7 +7,7 @@ import {
   useSigner,
   useSwitchNetwork,
 } from 'wagmi';
-import { Signer } from 'ethers';
+import { Signer, Wallet } from 'ethers';
 import { useEffect } from 'react';
 
 export const useWagmi = ({
@@ -25,7 +25,7 @@ export const useWagmi = ({
     data: signer,
     isError: isSignerError,
     isLoading: isSignerLoading,
-  } = useSigner();
+  } = useSigner<Wallet>();
 
   const { isConnecting, isDisconnected, isReconnecting } = useAccount({
     onDisconnect: () => logout(),
@@ -33,14 +33,11 @@ export const useWagmi = ({
   const { disconnect } = useDisconnect();
 
   useEffect(() => {
-    if (isReconnecting) {
-      return;
-    }
-    if (isSignerLoading) {
+    if (isReconnecting || isSignerLoading) {
       return;
     }
 
-    setSigner(signer as Signer);
+    setSigner(signer as Wallet);
   }, [
     setSigner,
     chain,
