@@ -18,6 +18,14 @@ module.exports = {
         },
       },
     },
+    {
+      name: '@storybook/addon-postcss',
+      options: {
+        postcssLoaderOptions: {
+          implementation: require('postcss'),
+        },
+      },
+    },
     '@storybook/addon-mdx-gfm',
     '@storybook/addon-styling',
   ],
