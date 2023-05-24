@@ -1,18 +1,11 @@
 {
   // see https://www.typescriptlang.org/tsconfig to better understand tsconfigs
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "compilerOptions": {
     "target": "ES2015",
     "module": "ES6",
-    "lib": [
-      "DOM",
-      "ESNext"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "lib": ["DOM", "ESNext"],
+    "typeRoots": ["node_modules/@types"],
     "importHelpers": true,
     "baseUrl": "./src",
     // output .d.ts declaration files for consumers
