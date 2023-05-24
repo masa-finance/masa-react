@@ -6,3 +6,5 @@ typedoc.js
 test
 src/components
 src/provider/modules/custom-sbts
+jest.config.js
+scripts/buildUtils.js
