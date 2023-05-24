@@ -17,7 +17,7 @@ export const MasaProvider = ({
   ...args
 }: MasaContextProviderProps & {
   chainsToUse?: Array<keyof MasaNetworks>;
-  walletsToUse?: string[];
+  walletsToUse?: ('metamask' | 'valora' | 'walletconnect')[];
 }): JSX.Element => (
   <QueryClientProvider client={queryClient}>
     <ConfiguredRainbowKitProvider

@@ -7,7 +7,11 @@ import {
 
 // Import known recommended wallets
 import { Valora } from '@celo/rainbowkit-celo/wallets';
-import { injectedWallet, metaMaskWallet } from '@rainbow-me/rainbowkit/wallets';
+import {
+  injectedWallet,
+  metaMaskWallet,
+  walletConnectWallet,
+} from '@rainbow-me/rainbowkit/wallets';
 
 import { Chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
@@ -29,6 +33,7 @@ export interface ConfiguredRainbowKitProviderProps {
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: string[];
 }
+const PROJECT_ID = '04a4088bf7ff775c3de808412c291cc0';
 
 const walletConnectorsList: Record<
   string,
@@ -41,6 +46,11 @@ const walletConnectorsList: Record<
   valora: (chains: Chain[]) => ({
     groupName: 'Celo',
     wallets: [Valora({ chains })],
+  }),
+
+  walletconnect: (chains: Chain[]) => ({
+    groupName: 'WalletConnect',
+    wallets: [walletConnectWallet({ projectId: PROJECT_ID, chains })],
   }),
 };
 
