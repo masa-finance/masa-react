@@ -25,7 +25,8 @@
     "size": "size-limit",
     "lint": "eslint --config .eslintrc --ignore-path .eslintignore .",
     "lint:fix": "eslint --config .eslintrc --fix --ignore-path .eslintignore .",
-    "prettier": "prettier ./src ./test ./stories --write",
+    "prettier": "prettier --config ./.prettierrc --write \"**/*.{js,json,ts,yml}\"",
+    "prettier:check": "prettier --check --config ./.prettierrc --ignore-path .prettierignore \"**/*.{js,json,ts,yml}\"",
     "test": "jest --passWithNoTests",
     "doc": "typedoc"
   },
@@ -106,6 +107,7 @@
     "https-browserify": "^1.0.0",
     "husky": "^8.0.2",
     "jest": "^29.5.0",
+    "lint-staged": "^13.2.2",
     "mini-css-extract-plugin": "^2.7.6",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "node-sass": "^8.0.0",
