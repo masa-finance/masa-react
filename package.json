@@ -36,7 +36,7 @@
     "@acusti/react-code-input": "^3.11.0",
     "@babel/preset-typescript": "^7.21.5",
     "@celo/rainbowkit-celo": "^0.11.1",
-    "@masa-finance/masa-sdk": "^3.0.4",
+    "@masa-finance/masa-sdk": "^3.0.5",
     "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "^0.12.12",
     "babel-loader": "^9.1.2",
