@@ -376,7 +376,15 @@
   .authenticate-button {
     margin: 20px 0;
     font-weight: 500;
-    cursor: pointer;
+    &:hover {
+    cursor: pointer;}
+    &:disabled {
+      &:hover {
+        cursor: not-allowed;
+      }
+
+      background-color: #ccc;
+    }
   }
 
   .input-row {

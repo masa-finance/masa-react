@@ -5,6 +5,14 @@ import { useNetwork, useSwitchNetwork } from 'wagmi';
 export const useNetworkSwitch = () => {
   const currentNetwork = useNetwork();
   const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
+    onSettled(data, error, variables, context) {
+      console.log('switchnetwork wagmi in useNetxworkswitch ( onSettled)', {
+        data,
+        error,
+        variables,
+        context,
+      });
+    },
     onError: (err) => console.error('Wagmi Network switch failed', err),
   });
 
@@ -15,7 +23,11 @@ export const useNetworkSwitch = () => {
         if (networkToSwitchTo.chainId === currentNetwork.chain?.id) {
           return;
         }
-        console.log('switchnetwork wagmi in useNetworkswitch ( new)');
+        console.log(
+          'switchnetwork wagmi in useNetworkswitch ( new)',
+          switchNetworkWagmi,
+          networkToSwitchTo
+        );
         switchNetworkWagmi?.(networkToSwitchTo.chainId);
       }
     },

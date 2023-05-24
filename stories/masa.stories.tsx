@@ -245,6 +245,7 @@ const TemplateWithRainbowKit: Story = (props: Args) => {
         company="Masa"
         walletsToUse={['metamask', 'valora', 'walletconnect']}
         useRainbowKitWalletConnect
+        forceNetwork="alfajores"
         verbose
       >
         <Component name="Rainbow Kit" {...props} />

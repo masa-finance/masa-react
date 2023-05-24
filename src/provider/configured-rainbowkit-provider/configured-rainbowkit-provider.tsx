@@ -60,13 +60,16 @@ export const ConfiguredRainbowKitProvider = ({
   walletsToUse = ['metamask'],
 }: ConfiguredRainbowKitProviderProps) => {
   const rainbowkitChains = getRainbowkitChains(chainsToUse);
-  const { chains, provider } = configureChains(rainbowkitChains, [
-    // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
-    publicProvider(),
-    jsonRpcProvider({
-      rpc: (chain: Chain) => ({ http: chain.rpcUrls.default.http[0] }),
-    }),
-  ]);
+  const { chains, provider, webSocketProvider } = configureChains(
+    rainbowkitChains,
+    [
+      // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
+      publicProvider(),
+      jsonRpcProvider({
+        rpc: (chain: Chain) => ({ http: chain.rpcUrls.default.http[0] }),
+      }),
+    ]
+  );
 
   const walletConnectors =
     walletsToUse?.map((wallet: string) => {
@@ -84,6 +87,7 @@ export const ConfiguredRainbowKitProvider = ({
     autoConnect: true,
     connectors: celoConnectors,
     provider,
+    webSocketProvider,
   });
 
   const contextValue = useMemo(() => ({}), []);

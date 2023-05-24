@@ -4,7 +4,7 @@
 
 import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
-import { ConnectorData, useAccount } from 'wagmi';
+import { ConnectorData, useAccount, useProvider } from 'wagmi';
 import { useMemo, useState } from 'react';
 import { useAsync } from 'react-use';
 import {
@@ -55,6 +55,9 @@ export const useAccountState = ({
     connector: activeConnector,
     address: wagmiAddress,
   } = useAccount();
+
+  const provider = useProvider();
+
   const { isLoggingOut, hasLoggedOut } = useLogout({
     masa,
     signer,
@@ -84,8 +87,28 @@ export const useAccountState = ({
       activeConnector.on('change', () => async () => handleConnectorUpdate);
     }
 
+    // * walletconnect
+
+    // Subscribe to accounts change
+    provider.on('accountsChanged', (accounts: string[]) => {
+      console.log('for wc acc changed', accounts);
+    });
+
+    // Subscribe to chainId change
+    provider.on('chainChanged', (chainId: number) => {
+      console.log('for wc chainid changed', chainId);
+    });
+
+    // Subscribe to session disconnection
+    provider.on('disconnect', (code: number, reason: string) => {
+      console.log('for wc disc', code, reason);
+    });
+
     return () => {
       activeConnector?.off('change', () => async () => handleConnectorUpdate);
+      provider.off('accountsChanged', () => {});
+      provider.off('chainChanged', () => {});
+      provider.off('disconnect', () => {});
     };
   }, [activeConnector, reloadWallet, masa, signer, walletAddress]);
 

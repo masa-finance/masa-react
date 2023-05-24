@@ -44,7 +44,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
+          justifyContent: 'space-evenly',
         }}
       >
         <h3 className="title">
@@ -53,12 +53,20 @@ export const InterfaceSwitchChain = (): JSX.Element => {
         <button
           className="masa-button authenticate-button"
           onClick={handleSwitch}
+          disabled={!!switchNetworkNew}
         >
           Switch to{' '}
           <span style={{ textTransform: 'capitalize' }}>
             {networkData?.chainName}
           </span>
         </button>
+        <div className="dont-have-a-wallet">
+          <p>
+            If you are connected using WalletConnect, please switch the network
+            in your app as for some apps, it may not be possible to switch
+            networks from the browser.
+          </p>
+        </div>
       </div>
     </div>
   );
