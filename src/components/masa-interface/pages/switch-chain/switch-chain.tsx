@@ -14,6 +14,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
     // switchNetwork,
     forceNetwork,
     switchNetworkNew,
+    canProgramaticallySwitchNetwork,
   } = useMasa();
   // const { chain } = useNetwork();
   // const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
@@ -53,20 +54,22 @@ export const InterfaceSwitchChain = (): JSX.Element => {
         <button
           className="masa-button authenticate-button"
           onClick={handleSwitch}
-          disabled={!!switchNetworkNew}
+          disabled={!canProgramaticallySwitchNetwork}
         >
           Switch to{' '}
           <span style={{ textTransform: 'capitalize' }}>
             {networkData?.chainName}
           </span>
         </button>
-        <div className="dont-have-a-wallet">
-          <p>
-            If you are connected using WalletConnect, please switch the network
-            in your app as for some apps, it may not be possible to switch
-            networks from the browser.
-          </p>
-        </div>
+        {!canProgramaticallySwitchNetwork && (
+          <div className="dont-have-a-wallet">
+            <p>
+              If you are connected using WalletConnect, please switch the
+              network in your app as for some apps, it may not be possible to
+              switch networks from the browser. Tottenham
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -106,8 +106,11 @@ export const MasaContextProvider = ({
     provider: signer,
     useRainbowKitWalletConnect,
   });
-  const { switchNetwork: switchNetworkNew, currentNetwork: currentNetworkNew } =
-    useNetworkSwitch();
+  const {
+    switchNetwork: switchNetworkNew,
+    currentNetwork: currentNetworkNew,
+    canProgramaticallySwitchNetwork,
+  } = useNetworkSwitch();
 
   // custom SBTs
   const { customContracts, handleAddSBT, refetchContracts } =
@@ -287,8 +290,8 @@ export const MasaContextProvider = ({
     void loadMasa();
   }, [arweaveConfig, environmentName, verbose, currentNetwork, signer, apiUrl]);
 
-  const context: MasaShape = useMemo(
-    () => ({
+  const context: MasaShape = useMemo(() => {
+    const masaShape: MasaShape = {
       // masa instance
       masa: masaInstance,
       verbose: masaInstance?.config.verbose,
@@ -385,104 +388,106 @@ export const MasaContextProvider = ({
       currentNetworkNew,
       isConnected,
       isDisconnected,
-    }),
-    [
-      // masa instance
-      masaInstance,
+      canProgramaticallySwitchNetwork,
+    };
+    return masaShape;
+  }, [
+    // masa instance
+    masaInstance,
 
-      // global loading
-      isLoading,
+    // global loading
+    isLoading,
 
-      // masa-react global connect
-      connect,
-      logout,
+    // masa-react global connect
+    connect,
+    logout,
 
-      // general config
-      scope,
-      areScopesFullfiled,
-      company,
+    // general config
+    scope,
+    areScopesFullfiled,
+    company,
 
-      // provider handling
-      signer,
-      setSigner,
+    // provider handling
+    signer,
+    setSigner,
 
-      // modal
-      isModalOpen,
-      setModalOpen,
-      closeModal,
-      forcedPage,
-      setForcedPage,
-      openMintSoulnameModal,
-      openMintMasaGreen,
-      useModalSize,
-      openGallery,
-      modalSize,
+    // modal
+    isModalOpen,
+    setModalOpen,
+    closeModal,
+    forcedPage,
+    setForcedPage,
+    openMintSoulnameModal,
+    openMintMasaGreen,
+    useModalSize,
+    openGallery,
+    modalSize,
 
-      // wallet
-      walletAddress,
-      isWalletLoading,
-      hasWalletAddress,
-      accountAddress,
-      hasAccountAddress,
-      // identity
-      identity,
-      isIdentityLoading,
-      handlePurchaseIdentity,
-      handlePurchaseIdentityWithSoulname,
-      reloadIdentity,
+    // wallet
+    walletAddress,
+    isWalletLoading,
+    hasWalletAddress,
+    accountAddress,
+    hasAccountAddress,
+    // identity
+    identity,
+    isIdentityLoading,
+    handlePurchaseIdentity,
+    handlePurchaseIdentityWithSoulname,
+    reloadIdentity,
 
-      // session
-      isLoggedIn,
-      isSessionLoading,
-      handleLogin,
-      handleLogout,
+    // session
+    isLoggedIn,
+    isSessionLoading,
+    handleLogin,
+    handleLogout,
 
-      // credit scores
-      creditScores,
-      isCreditScoresLoading,
-      handleCreateCreditScore,
-      reloadCreditScores,
+    // credit scores
+    creditScores,
+    isCreditScoresLoading,
+    handleCreateCreditScore,
+    reloadCreditScores,
 
-      // soul names
-      soulnames,
-      isSoulnamesLoading,
-      reloadSoulnames,
+    // soul names
+    soulnames,
+    isSoulnamesLoading,
+    reloadSoulnames,
 
-      // greens
-      greens,
-      isGreensLoading,
-      handleGenerateGreen,
-      handleCreateGreen,
-      reloadGreens,
+    // greens
+    greens,
+    isGreensLoading,
+    handleGenerateGreen,
+    handleCreateGreen,
+    reloadGreens,
 
-      // network
-      currentNetwork,
-      switchNetwork,
-      forceNetwork,
+    // network
+    currentNetwork,
+    switchNetwork,
+    forceNetwork,
 
-      // gallery
-      customGallerySBT,
-      fullScreenGallery,
+    // gallery
+    customGallerySBT,
+    fullScreenGallery,
 
-      // custom SBTs
-      customSBTs,
-      handleAddSBT,
-      refetchContracts,
-      isLoadingCustomSBTs,
+    // custom SBTs
+    customSBTs,
+    handleAddSBT,
+    refetchContracts,
+    isLoadingCustomSBTs,
 
-      // rainbowkit
-      useRainbowKitWalletConnect,
-      openConnectModal,
-      openChainModal,
-      openAccountModal,
+    // rainbowkit
+    useRainbowKitWalletConnect,
+    openConnectModal,
+    openChainModal,
+    openAccountModal,
 
-      // wagmi
-      switchNetworkNew,
-      currentNetworkNew,
-      isConnected,
-      isDisconnected,
-    ]
-  );
+    // wagmi
+    switchNetworkNew,
+    currentNetworkNew,
+    isConnected,
+    isDisconnected,
+    canProgramaticallySwitchNetwork,
+  ]);
 
   return (
     <MasaContext.Provider value={context}>{children}</MasaContext.Provider>

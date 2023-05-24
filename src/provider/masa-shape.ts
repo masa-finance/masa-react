@@ -136,6 +136,7 @@ export interface MasaShape {
   >;
   switchNetworkNew?: (forcedNetworkParam: NetworkName) => void;
   currentNetworkNew?: GetNetworkResult;
+  canProgramaticallySwitchNetwork?: boolean;
   isConnected?: boolean;
   isDisconnected?: boolean;
   // new-modal

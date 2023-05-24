@@ -1,5 +1,5 @@
 import { NetworkName, SupportedNetworks } from '@masa-finance/masa-sdk';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNetwork, useSwitchNetwork } from 'wagmi';
 
 export const useNetworkSwitch = () => {
@@ -33,7 +33,14 @@ export const useNetworkSwitch = () => {
     },
     [switchNetworkWagmi, currentNetwork.chain?.id]
   );
+
+  const canProgramaticallySwitchNetwork = useMemo(
+    () => !!switchNetworkWagmi,
+    [switchNetworkWagmi]
+  );
+
   return {
+    canProgramaticallySwitchNetwork,
     currentNetwork,
     switchNetwork,
   };
