@@ -14,13 +14,6 @@ export const useRainbowKit = () => {
   const [modalCallback, setRainbowKitModalCallback] =
     useState<(modalOpen?: boolean) => void>();
 
-  // NOTE: needs refactor ASAP, quick fix to set global provider
-  // useEffect(() => {
-  //   if (signer) {
-  //     setProvider(signer);
-  //   }
-  // }, [signer, setProvider]);
-
   const openRainbowkitConnectModal = useCallback(() => {
     if (!openConnectModal) return undefined;
     return () => openConnectModal();

@@ -4,6 +4,14 @@ import { ICreditScore, Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
 import { queryClient } from '../../masa-query-client';
 
+export type OnSuccessInput = {
+  creditScores?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: ICreditScore;
+  }[];
+};
+
 export const getCreditScoresQueryKey = ({
   masa,
   walletAddress,
@@ -48,14 +56,17 @@ export const useCreditScoresQuery = ({
     enabled: !!masa && !!walletAddress && !!identity?.identityId,
     retry: false,
     onSuccess: (
-      creditScores?: {
+      credScores?: {
         tokenId: BigNumber;
         tokenUri: string;
         metadata?: ICreditScore;
       }[]
     ) => {
       if (masa?.config.verbose) {
-        console.info({ creditScores, network: masa?.config.networkName });
+        console.info({
+          creditScores: credScores,
+          network: masa?.config.networkName,
+        });
       }
     },
   });

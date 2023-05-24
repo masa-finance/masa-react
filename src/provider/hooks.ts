@@ -3,6 +3,7 @@ import { useAsyncFn } from 'react-use';
 import { DependencyList } from 'react';
 import { Masa } from '@masa-finance/masa-sdk';
 import { Signer } from 'ethers';
+import { InvalidateQueryFilters } from 'react-query';
 import {
   getCreditScoresQueryKey,
   getGreenQueryKey,
@@ -14,6 +15,20 @@ import {
 } from './modules';
 import { queryClient } from './masa-query-client';
 
+export type QueryKey =
+  | 'identity'
+  | 'wallet'
+  | 'session'
+  | 'sessionData'
+  | 'soulnames'
+  | 'green'
+  | 'credit-scores';
+export type QueryKeyRetrievalInput = {
+  masa?: Masa;
+  signer?: Signer;
+  walletAddress?: string;
+};
+
 const QUERIES = [
   'identity',
   'wallet',
@@ -22,15 +37,16 @@ const QUERIES = [
   'soulnames',
   'green',
   'credit-scores',
-];
+] as QueryKey[];
 
-export type QueryKeyRetrievalInput = {
-  masa?: Masa;
-  signer?: Signer;
-  walletAddress?: string;
-};
-
-export const getQueryKeys = () => ({
+export const getQueryKeys: () => Record<
+  QueryKey,
+  ({
+    masa,
+    signer,
+    walletAddress,
+  }: QueryKeyRetrievalInput) => (string | undefined)[]
+> = () => ({
   identity: ({ masa, signer, walletAddress }: QueryKeyRetrievalInput) =>
     getIdentityQueryKey({ masa, signer, walletAddress }),
   session: ({ masa, signer, walletAddress }: QueryKeyRetrievalInput) =>
@@ -55,13 +71,13 @@ export const invalidateAllQueries = async ({
   walletAddress,
 }: QueryKeyRetrievalInput) => {
   await Promise.all(
-    QUERIES.map(async (query: string) =>
+    QUERIES.map(async (query: QueryKey) =>
       queryClient.invalidateQueries(
         getQueryKeys()[query]({
           masa,
           signer,
           walletAddress,
-        })
+        } as QueryKeyRetrievalInput) as InvalidateQueryFilters
       )
     )
   );
@@ -124,11 +140,15 @@ export const invalidateCreditScores = async ({
 };
 
 export const invalidateCustomSBTs = async () => {
-  await queryClient.invalidateQueries(getQueryKeys()['custom-sbt']());
+  await queryClient.invalidateQueries(
+    getQueryKeys()['custom-sbt' as QueryKey]({})
+  );
 };
 
 export const invalidateCustomSBTContracts = async () => {
-  await queryClient.invalidateQueries(getQueryKeys()['custom-sbt-contracts']());
+  await queryClient.invalidateQueries(
+    getQueryKeys()['custom-sbt-contracts' as QueryKey]({})
+  );
 };
 
 export const invalidateGreen = async ({
@@ -167,8 +187,8 @@ export const useLogout = (
         await invalidateAllQueries({ masa, signer, walletAddress });
         await disconnectAsync();
         return true;
-      } catch (error: unknown) {
-        console.error(error);
+      } catch (error_: unknown) {
+        console.error(error_);
         return false;
       } finally {
         onLogoutFinish?.();

@@ -40,8 +40,8 @@ export const useAccountState = ({
     | undefined;
   soulnames?: SoulNameDetails[] | undefined;
   hasWalletAddress?: boolean;
-  reloadIdentity?: () => void;
-  reloadWallet?: () => void;
+  reloadIdentity?: () => Promise<unknown>;
+  reloadWallet?: () => Promise<unknown>;
   invalidateCustomSBTs?: () => void;
 }) => {
   const [accountAddress, setAccountAddress] = useState<string | undefined>(
@@ -66,9 +66,8 @@ export const useAccountState = ({
     const handleConnectorUpdate = async ({ account, chain }: ConnectorData) => {
       if (account) {
         setAccountAddress(account);
+        console.log('new account', account);
         await invalidateAllQueries({ masa, signer, walletAddress });
-        // reloadIdentity?.();
-        // reloadWallet?.();
       } else if (chain) {
         console.log('new chain', chain);
         await Promise.all([
@@ -82,11 +81,11 @@ export const useAccountState = ({
     };
 
     if (activeConnector) {
-      activeConnector.on('change', handleConnectorUpdate);
+      activeConnector.on('change', () => async () => handleConnectorUpdate);
     }
 
     return () => {
-      activeConnector?.off('change', handleConnectorUpdate);
+      activeConnector?.off('change', () => async () => handleConnectorUpdate);
     };
   }, [activeConnector, reloadWallet, masa, signer, walletAddress]);
 

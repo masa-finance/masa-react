@@ -69,6 +69,9 @@ export const useErrors = () => {
         setError(Errors.unknown);
         break;
       }
+      default: {
+        setError(Errors.unknown);
+      }
     }
   };
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { ISession, Masa } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
@@ -91,21 +91,18 @@ export const useSessionDataQuery = ({
   };
 };
 
-export type UseSessionReturnType = {
-  isLoggedIn?: boolean;
-  isSessionLoading: boolean;
-  reloadSession: () => void;
-  reloadSessionData: () => void;
-  handleLogin: () => void;
-  handleLogout: (logoutCallback?: () => void) => Promise<void>;
-  status: string;
-  error: unknown;
-};
+// export type UseSessionReturnType = {
+//   isLoggedIn?: boolean;
+//   isSessionLoading: boolean;
+//   reloadSession: () => Promise<void>;
+//   reloadSessionData: () => Promise<void>;
+//   handleLogin: () => Promise<void>;
+//   handleLogout: (logoutCallback?: () => void) => Promise<void>;
+//   status: string;
+//   error: unknown;
+// };
 
-export const useSession = (
-  masa?: Masa,
-  walletAddress?: string
-): UseSessionReturnType => {
+export const useSession = (masa?: Masa, walletAddress?: string) => {
   const {
     sessionData,
     isSessionDataFetching,
@@ -144,15 +141,15 @@ export const useSession = (
   );
 
   const handleLogin = useCallback(async (): Promise<void> => {
-    const isLoggedIn = await masa?.session.login();
+    const loggedIn = await masa?.session.login();
 
-    if (isLoggedIn) {
+    if (loggedIn) {
       await clearSession();
     }
   }, [masa, clearSession]);
 
-  useEffect(() => {
-    reloadSessionData();
+  useAsync(async () => {
+    await reloadSessionData();
   }, [walletAddress, reloadSession, reloadSessionData]);
 
   useAsync(async () => {

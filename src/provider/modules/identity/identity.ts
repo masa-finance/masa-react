@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { Masa, NetworkName, PaymentMethod } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
+import { useAsync } from 'react-use';
 import { queryClient } from '../../masa-query-client';
 
 export const getIdentityQueryKey = ({
@@ -38,9 +39,15 @@ export const useIdentityQuery = ({
     {
       enabled: true, // !!masa && !!walletAddress,
       retry: false,
-      onSuccess: (identity?: { identityId?: BigNumber; address?: string }) => {
+      onSuccess: (identityFromQuery?: {
+        identityId?: BigNumber;
+        address?: string;
+      }) => {
         if (masa?.config.verbose) {
-          console.info({ identity, network: masa?.config.networkName });
+          console.info({
+            identity: identityFromQuery,
+            network: masa?.config.networkName,
+          });
         }
       },
     }
@@ -123,8 +130,8 @@ export const useIdentity = (
     [masa, invalidateIdentity, invalidateSoulnames]
   );
 
-  useEffect(() => {
-    reloadIdentity();
+  useAsync(async () => {
+    await reloadIdentity();
   }, [walletAddress, reloadIdentity]);
 
   return {

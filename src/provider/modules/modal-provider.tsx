@@ -41,14 +41,14 @@ export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
   const [title, setTitle] = useState<ReactNode>('');
   const [currentModal, setCurrentModal] =
     useState<ModalName>('AuthenticateModal');
-  const [modalContentProps, setModalContentProps] = useState({});
+  const [modalContentProps, setModalContentProps] = useState<object>({});
   const [modalWrapperProps, setModalWrapperProps] = useState<WrapperModalProps>(
     {}
   );
   const openModal = useCallback(
     ({
       name,
-      title,
+      title: passedTitle,
       wrapperProps,
       contentProps,
     }: {
@@ -57,9 +57,9 @@ export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
       wrapperProps?: WrapperModalProps;
       contentProps: any;
     }) => {
-      setTitle(title);
+      setTitle(passedTitle);
       setCurrentModal(name);
-      setModalContentProps(contentProps);
+      setModalContentProps(contentProps as unknown as object);
       setModalWrapperProps(wrapperProps || {});
       toggleModal(true);
     },
@@ -79,8 +79,8 @@ export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
   }, [setTitle, setCurrentModal, setModalContentProps, setModalWrapperProps]);
 
   const domNode = document.querySelector('#modal-mount');
-  let Content = ModalContent[currentModal];
-  if (!Content) Content = ModalContent.Default;
+  let Content: () => JSX.Element = ModalContent[currentModal];
+  if (!Content) Content = ModalContent.Default as () => JSX.Element;
 
   const modalManagerProviderValue = useMemo(
     () => ({
@@ -107,7 +107,7 @@ export const ModalManagerProvider = ({ children }: { children: ReactNode }) => {
       )}
     </ModalManagerContext.Provider>
   );
-}
+};
 
 export const useModalManager = (): ModalManagerProviderValue =>
   useContext(ModalManagerContext);

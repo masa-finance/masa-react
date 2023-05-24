@@ -49,14 +49,17 @@ export const useGreenQuery = ({
     enabled: !!masa && !!walletAddress,
     retry: false,
     onSuccess: (
-      greens?: {
+      greensFromQuery?: {
         tokenId: BigNumber;
         tokenUri: string;
         metadata?: IGreen;
       }[]
     ) => {
       if (masa?.config.verbose) {
-        console.info({ greens, network: masa?.config.networkName });
+        console.info({
+          greens: greensFromQuery,
+          network: masa?.config.networkName,
+        });
       }
     },
   });
@@ -125,7 +128,7 @@ export const useGreen = (
 
   const handleGenerateGreen = useCallback(
     async (phoneNumber: string): Promise<GenerateGreenResult | undefined> => {
-      let response;
+      let response: GenerateGreenResult | undefined;
       if (masa) {
         response = await masa?.green.generate(phoneNumber);
       }

@@ -24,7 +24,7 @@ import { useCustomGallerySBT, useCustomSBT } from './modules/custom-sbts';
 import { useRainbowKit } from './use-rainbowkit';
 import { useWagmi } from './modules/wagmi';
 import { useNetworkSwitch } from './use-network-switch';
-import { MasaNetworks } from './configured-rainbowkit-provider/utils';
+
 import { useLogout } from './hooks';
 import { useAccountState } from './use-account-state';
 
@@ -38,16 +38,17 @@ export interface ArweaveConfig {
 export type EnvironmentNameEx = EnvironmentName & ('local' | 'stage');
 
 export interface MasaContextProviderProps extends MasaShape {
-  noWallet?: boolean;
-  signer?: Signer;
   environmentName?: EnvironmentNameEx;
   arweaveConfig?: ArweaveConfig;
   customGallerySBT?: CustomGallerySBT[];
   fullScreenGallery?: boolean;
   apiUrl?: string;
   useRainbowKitWalletConnect?: boolean;
-  chainsToUse?: Array<keyof MasaNetworks>;
-  walletsToUse?: string[];
+
+  // noWallet?: boolean;
+  // signer?: Signer;
+  // chainsToUse?: Array<keyof MasaNetworks>;
+  // walletsToUse?: string[];
 }
 
 export const MasaContextProvider = ({
@@ -284,120 +285,208 @@ export const MasaContextProvider = ({
     };
 
     void loadMasa();
-  }, [arweaveConfig, environmentName, verbose, currentNetwork, signer]);
+  }, [arweaveConfig, environmentName, verbose, currentNetwork, signer, apiUrl]);
 
-  const context: MasaShape = {
-    // masa instance
-    masa: masaInstance,
-    verbose: masaInstance?.config.verbose,
+  const context: MasaShape = useMemo(
+    () => ({
+      // masa instance
+      masa: masaInstance,
+      verbose: masaInstance?.config.verbose,
 
-    // global loading
-    isLoading,
+      // global loading
+      isLoading,
 
-    // masa-react global connect
-    connect,
-    logout,
+      // masa-react global connect
+      connect,
+      logout,
 
-    // general config
-    scope,
-    areScopesFullfiled,
-    company,
+      // general config
+      scope,
+      areScopesFullfiled,
+      company,
 
-    // provider handling
-    signer,
-    setSigner,
+      // provider handling
+      signer,
+      setSigner,
 
-    // modal
-    isModalOpen,
-    setModalOpen,
-    closeModal,
-    forcedPage,
-    setForcedPage,
-    openMintSoulnameModal,
-    openMintMasaGreen,
-    useModalSize,
-    openGallery,
-    modalSize,
+      // modal
+      isModalOpen,
+      setModalOpen,
+      closeModal,
+      forcedPage,
+      setForcedPage,
+      openMintSoulnameModal,
+      openMintMasaGreen,
+      useModalSize,
+      openGallery,
+      modalSize,
 
-    // wallet
-    walletAddress,
-    isWalletLoading,
-    hasWalletAddress,
-    accountAddress,
-    hasAccountAddress,
-    // identity
-    identity,
-    isIdentityLoading,
-    handlePurchaseIdentity,
-    handlePurchaseIdentityWithSoulname,
-    reloadIdentity,
+      // wallet
+      walletAddress,
+      isWalletLoading,
+      hasWalletAddress,
+      accountAddress,
+      hasAccountAddress,
+      // identity
+      identity,
+      isIdentityLoading,
+      handlePurchaseIdentity,
+      handlePurchaseIdentityWithSoulname,
+      reloadIdentity,
 
-    // session
-    isLoggedIn,
-    isSessionLoading,
-    handleLogin,
-    handleLogout,
+      // session
+      isLoggedIn,
+      isSessionLoading,
+      handleLogin,
+      handleLogout,
 
-    // credit scores
-    creditScores,
-    isCreditScoresLoading,
-    handleCreateCreditScore,
-    reloadCreditScores,
+      // credit scores
+      creditScores,
+      isCreditScoresLoading,
+      handleCreateCreditScore,
+      reloadCreditScores,
 
-    // soul names
-    soulnames,
-    isSoulnamesLoading,
-    reloadSoulnames,
+      // soul names
+      soulnames,
+      isSoulnamesLoading,
+      reloadSoulnames,
 
-    // greens
-    greens,
-    isGreensLoading,
-    handleGenerateGreen,
-    handleCreateGreen,
-    reloadGreens,
+      // greens
+      greens,
+      isGreensLoading,
+      handleGenerateGreen,
+      handleCreateGreen,
+      reloadGreens,
 
-    // network
-    currentNetwork,
-    SupportedNetworks,
-    switchNetwork,
-    forceNetwork,
+      // network
+      currentNetwork,
+      SupportedNetworks,
+      switchNetwork,
+      forceNetwork,
 
-    // gallery
-    customGallerySBT,
-    fullScreenGallery,
+      // gallery
+      customGallerySBT,
+      fullScreenGallery,
 
-    // custom SBTs
-    customSBTs,
-    handleAddSBT,
-    refetchContracts,
-    isLoadingCustomSBTs,
+      // custom SBTs
+      customSBTs,
+      handleAddSBT,
+      refetchContracts,
+      isLoadingCustomSBTs,
 
-    // rainbowkit
-    useRainbowKit: useRainbowKitWalletConnect,
-    openConnectModal,
-    openChainModal,
-    openAccountModal,
+      // rainbowkit
+      useRainbowKit: useRainbowKitWalletConnect,
+      openConnectModal,
+      openChainModal,
+      openAccountModal,
 
-    // wagmi
-    switchNetworkNew,
-    currentNetworkNew,
-    isConnected,
-    isDisconnected,
-    // // new-modal
-    // openModal,
-    // openAuthenticateModal,
-    // openConnectedModal,
-    // openCreateCreditScoreModal,
-    // openCreateIdentityModal,
-    // openCreateSoulnameModal,
-    // openSuccessCreateIdentityModal,
-    // openSwitchChainModal,
-    // openInterfaceMasaGreen,
-  };
+      // wagmi
+      switchNetworkNew,
+      currentNetworkNew,
+      isConnected,
+      isDisconnected,
+    }),
+    [
+      // masa instance
+      masaInstance,
+
+      // global loading
+      isLoading,
+
+      // masa-react global connect
+      connect,
+      logout,
+
+      // general config
+      scope,
+      areScopesFullfiled,
+      company,
+
+      // provider handling
+      signer,
+      setSigner,
+
+      // modal
+      isModalOpen,
+      setModalOpen,
+      closeModal,
+      forcedPage,
+      setForcedPage,
+      openMintSoulnameModal,
+      openMintMasaGreen,
+      useModalSize,
+      openGallery,
+      modalSize,
+
+      // wallet
+      walletAddress,
+      isWalletLoading,
+      hasWalletAddress,
+      accountAddress,
+      hasAccountAddress,
+      // identity
+      identity,
+      isIdentityLoading,
+      handlePurchaseIdentity,
+      handlePurchaseIdentityWithSoulname,
+      reloadIdentity,
+
+      // session
+      isLoggedIn,
+      isSessionLoading,
+      handleLogin,
+      handleLogout,
+
+      // credit scores
+      creditScores,
+      isCreditScoresLoading,
+      handleCreateCreditScore,
+      reloadCreditScores,
+
+      // soul names
+      soulnames,
+      isSoulnamesLoading,
+      reloadSoulnames,
+
+      // greens
+      greens,
+      isGreensLoading,
+      handleGenerateGreen,
+      handleCreateGreen,
+      reloadGreens,
+
+      // network
+      currentNetwork,
+      switchNetwork,
+      forceNetwork,
+
+      // gallery
+      customGallerySBT,
+      fullScreenGallery,
+
+      // custom SBTs
+      customSBTs,
+      handleAddSBT,
+      refetchContracts,
+      isLoadingCustomSBTs,
+
+      // rainbowkit
+      useRainbowKitWalletConnect,
+      openConnectModal,
+      openChainModal,
+      openAccountModal,
+
+      // wagmi
+      switchNetworkNew,
+      currentNetworkNew,
+      isConnected,
+      isDisconnected,
+    ]
+  );
 
   return (
     <MasaContext.Provider value={context}>{children}</MasaContext.Provider>
   );
-}
+};
 
 export { SoulNameErrorCodes } from '@masa-finance/masa-sdk';

@@ -11,6 +11,8 @@ export const getWeb3Provider = (): providers.Web3Provider | undefined => {
       window?.ethereum as unknown as providers.ExternalProvider
     );
   }
+
+  return undefined;
 };
 
 export const useMetamask = ({
