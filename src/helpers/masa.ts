@@ -1,15 +1,17 @@
 import {
   Environment,
   environments,
+  IIdentityContracts,
   Masa,
   NetworkName,
 } from '@masa-finance/masa-sdk';
 import { Signer } from 'ethers';
-import { ArweaveConfig } from '../provider';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {
   SoulName__factory,
   SoulStore__factory,
 } from '@masa-finance/masa-contracts-identity';
+import { ArweaveConfig } from '../provider';
 
 export const createNewMasa = ({
   signer,
@@ -32,15 +34,17 @@ export const createNewMasa = ({
   };
 }): Masa | undefined => {
   const environment = environments.find(
-    (environment: Environment) => environment.name === environmentName
+    (singleEnvironment: Environment) =>
+      singleEnvironment.name === environmentName
   );
 
   if (!environment) {
     console.error(`Unable to find environment ${environmentName}`);
-    return;
+    return undefined;
   }
 
-  let contractOverrides;
+  let contractOverrides: Partial<IIdentityContracts> | undefined;
+
   if (contractAddressOverrides) {
     console.log({ contractAddressOverrides });
 
@@ -65,9 +69,9 @@ export const createNewMasa = ({
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
-      port: parseInt(arweaveConfig?.port || '443'),
+      port: Number.parseInt(arweaveConfig?.port || '443', 10),
       protocol: arweaveConfig?.protocol || 'https',
-      logging: (!!arweaveConfig?.logging as boolean) || false,
+      logging: !!arweaveConfig?.logging || false,
     },
     contractOverrides,
     verbose,

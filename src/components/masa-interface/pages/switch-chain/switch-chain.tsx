@@ -14,6 +14,8 @@ export const InterfaceSwitchChain = (): JSX.Element => {
     // switchNetwork,
     forceNetwork,
     switchNetworkNew,
+    canProgramaticallySwitchNetwork,
+    walletName,
   } = useMasa();
   // const { chain } = useNetwork();
   // const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
@@ -44,7 +46,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
+          justifyContent: 'space-evenly',
         }}
       >
         <h3 className="title">
@@ -53,12 +55,29 @@ export const InterfaceSwitchChain = (): JSX.Element => {
         <button
           className="masa-button authenticate-button"
           onClick={handleSwitch}
+          disabled={!canProgramaticallySwitchNetwork}
         >
           Switch to{' '}
           <span style={{ textTransform: 'capitalize' }}>
             {networkData?.chainName}
           </span>
         </button>
+        {!canProgramaticallySwitchNetwork && (
+          <div className="dont-have-a-wallet">
+            <p>
+              <b>
+                It seems that your {walletName} wallet is not able to switch
+                networks programmatically.{' '}
+              </b>
+            </p>
+            <p>
+              This means that you have to manually switch networks in your
+              wallet. Please switch to the <b>{networkData?.chainName}</b> in
+              your wallet. This window will update automatically once you
+              switched networks.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

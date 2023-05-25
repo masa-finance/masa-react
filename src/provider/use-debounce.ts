@@ -45,13 +45,12 @@ export const useDebounceIfValue = (
       return (): void => {
         clearTimeout(handler);
       };
-    } else {
-      setDebouncedValue(value);
-
-      return (): void => {
-        // todo delete me!
-      };
     }
+    setDebouncedValue(value);
+
+    return (): void => {
+      // todo delete me!
+    };
   }, [value, delay, target]);
 
   return debouncedValue;

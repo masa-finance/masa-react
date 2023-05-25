@@ -146,9 +146,8 @@ export const MasaInterface = ({
               setModalOpen?.(true);
             };
           });
-          console.log('!isLoggedIn && signer return rainbowkit');
+
           return 'rainbowkitConnect';
-          return;
         }
       }
 
@@ -165,26 +164,13 @@ export const MasaInterface = ({
         }
 
         openConnectModal?.();
-        console.log({
-          openConnectModal,
-          hasAccountAddress,
-          hasWalletAddress,
-          isLoggedIn,
-          signer,
-        });
+
         setRainbowkKitModalCallback?.(() => {
           return () => {
-            console.log(
-              'modalcallback !isLoggedIn && signer && !hasAccountAddress'
-            );
             // setForcedPage?.('authenticate');
             setModalOpen?.(true);
           };
         });
-
-        console.log(
-          '!isLoggedIn && signer && !hasAccountAddress return rainbowkit'
-        );
 
         return 'authenticate';
       }
@@ -204,7 +190,6 @@ export const MasaInterface = ({
         (!identity || !identity?.identityId)
       ) {
         // setForcedPage?.('createIdentity');
-        console.log('returning create identity', { isLoggedIn, identity });
         return 'createIdentity';
       }
 
@@ -220,71 +205,17 @@ export const MasaInterface = ({
       if (hasAccountAddress && isLoggedIn) return 'connectedState';
       // return 'authenticate';
 
-      console.log({ openConnectModal, hasAccountAddress, hasWalletAddress });
       openConnectModal?.();
       setRainbowkKitModalCallback?.(() => {
         return () => {
-          console.log('modalcallback end of function');
           // setForcedPage?.('authenticate');
           setModalOpen?.(true);
         };
       });
-      console.log('end of function return rainbowkit');
+
       if (hasAccountAddress) return 'authenticate';
       return 'rainbowkitConnect';
     }
-    // if (useRainbowKit) {
-
-    // }
-    // if (forcedPage) return forcedPage;
-
-    // if (
-    //   forceNetwork &&
-    //   hasWalletAddress &&
-    //   currentNetwork?.networkName !== forceNetwork
-    // ) {
-    //   return 'switchNetwork';
-    // }
-
-    // if (useRainbowKit && !isLoggedIn && isConnected) return 'authenticate';
-    // if (!useRainbowKit && !isLoggedIn && hasWalletAddress)
-    //   return 'authenticate';
-
-    // if (
-    //   isLoggedIn &&
-    //   (!soulnames || (soulnames && soulnames.length === 0)) &&
-    //   scope?.includes('soulname')
-    // ) {
-    //   return 'createSoulname';
-    // }
-
-    // if (
-    //   scope?.includes('identity') &&
-    //   isLoggedIn &&
-    //   (!identity || !identity?.identityId)
-    // ) {
-    //   return 'createIdentity';
-    // }
-
-    // if (identity && !creditScores?.length && scope?.includes('credit-score')) {
-    //   return 'createCreditScore';
-    // }
-
-    // if (hasWalletAddress && isLoggedIn) {
-    //   return 'connectedState';
-    // }
-
-    // if (
-    //   useRainbowKit &&
-    //   isLoggedIn === false &&
-    //   !isConnected &&
-    //   openConnectModal
-    // ) {
-    //   closeModal?.();
-    //   openConnectModal();
-    //   return 'connector';
-    // }
-    // return 'connector';
   }, [
     hasWalletAddress,
     verbose,

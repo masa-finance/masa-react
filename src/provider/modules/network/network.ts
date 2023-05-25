@@ -59,7 +59,7 @@ export const useNetwork = ({
             }
           );
         }
-      } catch (error) {
+      } catch {
         console.error(
           `error occurred while adding new chain with chainId:${networkDetails?.chainId}`
         );
@@ -91,8 +91,8 @@ export const useNetwork = ({
           });
           console.log(`switched to network: ${networkName} successfully`);
         }
-      } catch (err) {
-        const error = err as { code: number };
+      } catch (error_) {
+        const error = error_ as { code: number };
         if (error.code === 4902) {
           const newNetwork = SupportedNetworks[networkName];
           if (newNetwork) {

@@ -15,9 +15,7 @@ export const getSoulnamesQueryKey = ({
   walletAddress?: string;
   masa?: Masa;
   signer?: any; // unused here
-}) => {
-  return ['soulnames', walletAddress, masa?.config.networkName];
-};
+}) => ['soulnames', walletAddress, masa?.config.networkName];
 
 export const useSoulnamesQuery = ({
   masa,
@@ -26,9 +24,10 @@ export const useSoulnamesQuery = ({
   masa?: Masa;
   walletAddress?: string;
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return ['soulnames', walletAddress, masa?.config.networkName];
-  }, [walletAddress, masa]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => ['soulnames', walletAddress, masa?.config.networkName],
+    [walletAddress, masa]
+  );
 
   const {
     data: soulnames,

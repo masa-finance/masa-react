@@ -1,8 +1,16 @@
 import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
-import { queryClient } from '../../masa-query-client';
 import { ICreditScore, Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
+import { queryClient } from '../../masa-query-client';
+
+export type OnSuccessInput = {
+  creditScores?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: ICreditScore;
+  }[];
+};
 
 export const getCreditScoresQueryKey = ({
   masa,
@@ -11,9 +19,7 @@ export const getCreditScoresQueryKey = ({
   masa?: Masa;
   signer?: Signer; // unused
   walletAddress?: string; // unused
-}) => {
-  return ['credit-scores', walletAddress, masa?.config.networkName];
-};
+}) => ['credit-scores', walletAddress, masa?.config.networkName];
 
 export const useCreditScoresQuery = ({
   masa,
@@ -27,9 +33,10 @@ export const useCreditScoresQuery = ({
     address?: string;
   };
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return ['credit-scores', walletAddress, masa?.config.networkName];
-  }, [walletAddress, masa]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => ['credit-scores', walletAddress, masa?.config.networkName],
+    [walletAddress, masa]
+  );
 
   const {
     data: creditScores,
@@ -49,20 +56,23 @@ export const useCreditScoresQuery = ({
     enabled: !!masa && !!walletAddress && !!identity?.identityId,
     retry: false,
     onSuccess: (
-      creditScores?: {
+      credScores?: {
         tokenId: BigNumber;
         tokenUri: string;
         metadata?: ICreditScore;
       }[]
     ) => {
       if (masa?.config.verbose) {
-        console.info({ creditScores, network: masa?.config.networkName });
+        console.info({
+          creditScores: credScores,
+          network: masa?.config.networkName,
+        });
       }
     },
   });
 
   const invalidateCreditScores = useCallback(
-    async () => await queryClient.invalidateQueries(['credit-scores']),
+    async () => queryClient.invalidateQueries(['credit-scores']),
     []
   );
 

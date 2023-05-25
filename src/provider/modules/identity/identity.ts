@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
-import { queryClient } from '../../masa-query-client';
 import { Masa, NetworkName, PaymentMethod } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
+import { useAsync } from 'react-use';
+import { queryClient } from '../../masa-query-client';
 
 export const getIdentityQueryKey = ({
   walletAddress,
@@ -11,9 +12,7 @@ export const getIdentityQueryKey = ({
   walletAddress?: string;
   masa?: Masa;
   signer?: any; // unused here
-}) => {
-  return ['identity', walletAddress, masa?.config.networkName];
-};
+}) => ['identity', walletAddress, masa?.config.networkName];
 
 export const useIdentityQuery = ({
   masa,
@@ -22,9 +21,10 @@ export const useIdentityQuery = ({
   masa?: Masa;
   walletAddress?: string;
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return ['identity', walletAddress, masa?.config.networkName];
-  }, [walletAddress, masa]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => ['identity', walletAddress, masa?.config.networkName],
+    [walletAddress, masa]
+  );
 
   const {
     data: identity,
@@ -39,21 +39,27 @@ export const useIdentityQuery = ({
     {
       enabled: true, // !!masa && !!walletAddress,
       retry: false,
-      onSuccess: (identity?: { identityId?: BigNumber; address?: string }) => {
+      onSuccess: (identityFromQuery?: {
+        identityId?: BigNumber;
+        address?: string;
+      }) => {
         if (masa?.config.verbose) {
-          console.info({ identity, network: masa?.config.networkName });
+          console.info({
+            identity: identityFromQuery,
+            network: masa?.config.networkName,
+          });
         }
       },
     }
   );
 
   const invalidateIdentity = useCallback(
-    async () => await queryClient.invalidateQueries(['identity']),
+    async () => queryClient.invalidateQueries(['identity']),
     []
   );
 
   const invalidateSoulnames = useCallback(
-    async () => await queryClient.invalidateQueries(['soulnames']),
+    async () => queryClient.invalidateQueries(['soulnames']),
     []
   );
 
@@ -127,8 +133,8 @@ export const useIdentity = (
     [masa, invalidateIdentity, invalidateSoulnames]
   );
 
-  useEffect(() => {
-    void reloadIdentity();
+  useAsync(async () => {
+    await reloadIdentity();
   }, [walletAddress, reloadIdentity]);
 
   return {

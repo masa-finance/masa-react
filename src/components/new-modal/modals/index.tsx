@@ -1,3 +1,4 @@
+import React from 'react';
 import AuthenticateModal from './AuthenticateModal';
 import ConnectedModal from './ConnectedModal';
 import CreateCreditScoreModal from './CreateCreditScoreModal';
@@ -20,6 +21,8 @@ export const Modals = {
   ModalWrapper,
 };
 
+const Default = () => <></>;
+
 export const ModalContent = {
   AuthenticateModal,
   ConnectedModal,
@@ -29,6 +32,7 @@ export const ModalContent = {
   SuccessCreateIdentityModal,
   SwitchChainModal,
   InterfaceMasaGreen,
+  Default,
 };
 export type ModalName =
   | 'AuthenticateModal'
@@ -38,4 +42,5 @@ export type ModalName =
   | 'CreateSoulnameModal'
   | 'SuccessCreateIdentityModal'
   | 'SwitchChainModal'
-  | 'InterfaceMasaGreen';
+  | 'InterfaceMasaGreen'
+  | 'Default';

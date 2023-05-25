@@ -1,6 +1,5 @@
 import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
-import { queryClient } from '../../masa-query-client';
 import {
   GenerateGreenResult,
   IGreen,
@@ -9,6 +8,7 @@ import {
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
+import { queryClient } from '../../masa-query-client';
 
 export const getGreenQueryKey = ({
   masa,
@@ -17,9 +17,7 @@ export const getGreenQueryKey = ({
   masa?: Masa;
   walletAddress?: string;
   signer?: any; // unused here
-}) => {
-  return ['green', walletAddress, masa?.config.networkName];
-};
+}) => ['green', walletAddress, masa?.config.networkName];
 
 export const useGreenQuery = ({
   masa,
@@ -28,9 +26,10 @@ export const useGreenQuery = ({
   masa?: Masa;
   walletAddress?: string;
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return ['green', walletAddress, masa?.config.networkName];
-  }, [masa, walletAddress]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => ['green', walletAddress, masa?.config.networkName],
+    [masa, walletAddress]
+  );
 
   const {
     data: greens,
@@ -50,20 +49,23 @@ export const useGreenQuery = ({
     enabled: !!masa && !!walletAddress,
     retry: false,
     onSuccess: (
-      greens?: {
+      greensFromQuery?: {
         tokenId: BigNumber;
         tokenUri: string;
         metadata?: IGreen;
       }[]
     ) => {
       if (masa?.config.verbose) {
-        console.info({ greens, network: masa?.config.networkName });
+        console.info({
+          greens: greensFromQuery,
+          network: masa?.config.networkName,
+        });
       }
     },
   });
 
   const invalidateGreen = useCallback(
-    async () => await queryClient.invalidateQueries(['green']),
+    async () => queryClient.invalidateQueries(['green']),
     []
   );
 
@@ -126,7 +128,7 @@ export const useGreen = (
 
   const handleGenerateGreen = useCallback(
     async (phoneNumber: string): Promise<GenerateGreenResult | undefined> => {
-      let response;
+      let response: GenerateGreenResult | undefined;
       if (masa) {
         response = await masa?.green.generate(phoneNumber);
       }

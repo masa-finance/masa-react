@@ -1,4 +1,5 @@
 import * as buffer from 'buffer';
+
 window.Buffer = buffer.Buffer;
 
 export * from './components';
