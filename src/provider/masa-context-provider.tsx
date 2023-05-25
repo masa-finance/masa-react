@@ -82,14 +82,19 @@ export const MasaContextProvider = ({
   const { walletAddress, isWalletLoading, hasWalletAddress, reloadWallet } =
     useWallet(masaInstance, signer);
 
-  const { isConnected, isDisconnected, hasAccountAddress, accountAddress } =
-    useAccountState({
-      masa: masaInstance,
-      walletAddress,
-      signer,
-      hasWalletAddress,
-      reloadWallet,
-    });
+  const {
+    isConnected,
+    isDisconnected,
+    hasAccountAddress,
+    accountAddress,
+    walletName,
+  } = useAccountState({
+    masa: masaInstance,
+    walletAddress,
+    signer,
+    hasWalletAddress,
+    reloadWallet,
+  });
 
   // session
   const { isLoggedIn, handleLogin, handleLogout, isSessionLoading } =
@@ -389,6 +394,7 @@ export const MasaContextProvider = ({
       isConnected,
       isDisconnected,
       canProgramaticallySwitchNetwork,
+      walletName,
     };
     return masaShape;
   }, [
@@ -487,6 +493,7 @@ export const MasaContextProvider = ({
     isConnected,
     isDisconnected,
     canProgramaticallySwitchNetwork,
+    walletName,
   ]);
 
   return (

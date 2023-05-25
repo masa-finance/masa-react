@@ -56,6 +56,8 @@ export const useAccountState = ({
     address: wagmiAddress,
   } = useAccount();
 
+  const walletName = useMemo(() => activeConnector?.name, [activeConnector]);
+
   const provider = useProvider();
 
   const { isLoggingOut, hasLoggedOut } = useLogout({
@@ -202,5 +204,6 @@ export const useAccountState = ({
     hasWalletAddress,
     hasAccountAddress,
     walletAddress,
+    walletName,
   };
 };

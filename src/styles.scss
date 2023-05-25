@@ -321,12 +321,14 @@
 
   .dont-have-a-wallet {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
 
     text-align: center;
     p {
       font-size: 16px;
+      padding: 8px;
+      margin: 0;
     }
   }
   .masa-input-container {

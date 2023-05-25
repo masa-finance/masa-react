@@ -15,6 +15,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
     forceNetwork,
     switchNetworkNew,
     canProgramaticallySwitchNetwork,
+    walletName,
   } = useMasa();
   // const { chain } = useNetwork();
   // const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
@@ -64,9 +65,16 @@ export const InterfaceSwitchChain = (): JSX.Element => {
         {!canProgramaticallySwitchNetwork && (
           <div className="dont-have-a-wallet">
             <p>
-              If you are connected using WalletConnect, please switch the
-              network in your app as for some apps, it may not be possible to
-              switch networks from the browser. Tottenham
+              <b>
+                It seems that your {walletName} wallet is not able to switch
+                networks programmatically.{' '}
+              </b>
+            </p>
+            <p>
+              This means that you have to manually switch networks in your
+              wallet. Please switch to the <b>{networkData?.chainName}</b> in
+              your wallet. This window will update automatically once you
+              switched networks.
             </p>
           </div>
         )}
