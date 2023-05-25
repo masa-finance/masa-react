@@ -1,10 +1,16 @@
 import {
   Environment,
   environments,
+  IIdentityContracts,
   Masa,
   NetworkName,
 } from '@masa-finance/masa-sdk';
 import { Signer } from 'ethers';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  SoulName__factory,
+  SoulStore__factory,
+} from '@masa-finance/masa-contracts-identity';
 import { ArweaveConfig } from '../provider';
 
 export const createNewMasa = ({
@@ -14,6 +20,7 @@ export const createNewMasa = ({
   arweaveConfig,
   verbose,
   apiUrl,
+  contractAddressOverrides,
 }: {
   signer: Signer;
   environmentName: string;
@@ -21,6 +28,10 @@ export const createNewMasa = ({
   arweaveConfig?: ArweaveConfig;
   verbose: boolean;
   apiUrl?: string;
+  contractAddressOverrides?: {
+    SoulNameAddress: string;
+    SoulStoreAddress: string;
+  };
 }): Masa | undefined => {
   const environment = environments.find(
     (singleEnvironment: Environment) =>
@@ -30,6 +41,25 @@ export const createNewMasa = ({
   if (!environment) {
     console.error(`Unable to find environment ${environmentName}`);
     return undefined;
+  }
+
+  let contractOverrides: Partial<IIdentityContracts> | undefined;
+
+  if (contractAddressOverrides) {
+    console.log({ contractAddressOverrides });
+
+    contractOverrides = {};
+    contractOverrides.SoulStoreContract = SoulStore__factory.connect(
+      contractAddressOverrides.SoulStoreAddress,
+      signer
+    );
+    contractOverrides.SoulStoreContract.hasAddress = true;
+
+    contractOverrides.SoulNameContract = SoulName__factory.connect(
+      contractAddressOverrides.SoulNameAddress,
+      signer
+    );
+    contractOverrides.SoulNameContract.hasAddress = true;
   }
 
   return new Masa({
@@ -43,6 +73,7 @@ export const createNewMasa = ({
       protocol: arweaveConfig?.protocol || 'https',
       logging: !!arweaveConfig?.logging || false,
     },
+    contractOverrides,
     verbose,
   });
 };

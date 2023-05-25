@@ -66,7 +66,8 @@ export interface MasaShape {
   handlePurchaseIdentityWithSoulname?: (
     paymentMethod: PaymentMethod,
     soulname: string,
-    registrationPrice: number
+    registrationPrice: number,
+    style?: string
   ) => Promise<boolean>;
   reloadIdentity?: () => void;
 
@@ -90,6 +91,7 @@ export interface MasaShape {
   soulnames?: SoulNameDetails[];
   isSoulnamesLoading?: boolean;
   reloadSoulnames?: () => void;
+  soulNameStyle?: string;
 
   // greens
   greens?: {

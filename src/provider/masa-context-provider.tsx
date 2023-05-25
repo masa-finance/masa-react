@@ -44,11 +44,15 @@ export interface MasaContextProviderProps extends MasaShape {
   fullScreenGallery?: boolean;
   apiUrl?: string;
   useRainbowKitWalletConnect?: boolean;
-
   // noWallet?: boolean;
   // signer?: Signer;
   // chainsToUse?: Array<keyof MasaNetworks>;
   // walletsToUse?: string[];
+  contractAddressOverrides?: {
+    SoulNameAddress: string;
+    SoulStoreAddress: string;
+  };
+  soulNameStyle?: string;
 }
 
 export const MasaContextProvider = ({
@@ -73,6 +77,8 @@ export const MasaContextProvider = ({
   // api url override
   apiUrl,
   useRainbowKitWalletConnect = false,
+  contractAddressOverrides,
+  soulNameStyle,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -287,6 +293,7 @@ export const MasaContextProvider = ({
         arweaveConfig,
         verbose,
         apiUrl,
+        contractAddressOverrides,
       });
 
       setMasaInstance(masa);
@@ -358,6 +365,7 @@ export const MasaContextProvider = ({
       soulnames,
       isSoulnamesLoading,
       reloadSoulnames,
+      soulNameStyle,
 
       // greens
       greens,

@@ -23,6 +23,7 @@ const CreateSoulnameModal = (): JSX.Element => {
     forcedPage,
     setForcedPage,
     reloadSoulnames,
+    soulNameStyle,
   } = useMasa();
   const [enabledMethods, setEnabledMethods] = useState<string[]>([]);
 
@@ -162,13 +163,16 @@ const CreateSoulnameModal = (): JSX.Element => {
         await masa?.soulName.create(
           paymentMethod,
           soulname,
-          registrationPeriod
+          registrationPeriod,
+          undefined,
+          soulNameStyle
         );
       } else {
         await handlePurchaseIdentityWithSoulname?.(
           paymentMethod,
           soulname,
-          registrationPeriod
+          registrationPeriod,
+          soulNameStyle
         );
       }
 
