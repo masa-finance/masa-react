@@ -1,6 +1,3 @@
-@import '~@rainbow-me/rainbowkit/styles.css';
-@import '~react-phone-number-input/style.css';
-
 :root {
   --z-index-back: 1;
   --z-index-middle: 100;
@@ -8,6 +5,11 @@
   --color-secondary: black;
   --color-primary: white;
 }
+
+
+@import '~@rainbow-me/rainbowkit/styles.css';
+@import '~react-phone-number-input/style.css';
+
 
 @font-face {
   font-family: 'Proxima Nova';
@@ -77,10 +79,6 @@
   margin: auto;
   justify-content: center;
   align-items: center;
-
-  * {
-    all: revert;
-  }
 
   h1,
   h2,
