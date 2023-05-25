@@ -51,6 +51,10 @@ export interface MasaContextProviderProps extends MasaShape {
   useRainbowKitWalletConnect?: boolean;
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: string[];
+  contractAddressOverrides?: {
+    SoulNameAddress: string;
+    SoulStoreAddress: string;
+  };
 }
 
 export const MasaContextProvider = ({
@@ -75,6 +79,7 @@ export const MasaContextProvider = ({
   // api url override
   apiUrl,
   useRainbowKitWalletConnect = false,
+  contractAddressOverrides,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -283,6 +288,7 @@ export const MasaContextProvider = ({
         arweaveConfig,
         verbose,
         apiUrl,
+        contractAddressOverrides,
       });
 
       setMasaInstance(masa);
