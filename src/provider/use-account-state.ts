@@ -69,10 +69,8 @@ export const useAccountState = ({
     const handleConnectorUpdate = async ({ account, chain }: ConnectorData) => {
       if (account) {
         setAccountAddress(account);
-        console.log('new account', account);
         await invalidateAllQueries({ masa, signer, walletAddress });
       } else if (chain) {
-        console.log('new chain', chain);
         await Promise.all([
           invalidateIdentity({ masa, signer, walletAddress }),
           invalidateCreditScores({ masa, signer, walletAddress }),
@@ -84,7 +82,7 @@ export const useAccountState = ({
     };
 
     if (activeConnector) {
-      activeConnector.on('change', () => async () => handleConnectorUpdate);
+      activeConnector.on('change', handleConnectorUpdate);
     }
 
     // * walletconnect
