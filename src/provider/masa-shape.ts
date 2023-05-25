@@ -123,7 +123,7 @@ export interface MasaShape {
   handleAddSBT?: (isCollection: boolean, name: string, address: string) => void;
   refetchContracts?: () => void;
   isLoadingCustomSBTs?: boolean;
-
+  walletName?: string | undefined;
   // rainbowkit
   useRainbowKit?: boolean;
   openConnectModal?: (() => void) | undefined;
@@ -136,6 +136,8 @@ export interface MasaShape {
   >;
   switchNetworkNew?: (forcedNetworkParam: NetworkName) => void;
   currentNetworkNew?: GetNetworkResult;
+  canProgramaticallySwitchNetwork?: boolean;
+
   isConnected?: boolean;
   isDisconnected?: boolean;
   // new-modal

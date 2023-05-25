@@ -45,24 +45,33 @@ export const useErrors = () => {
     if (!(errorCode in SoulNameErrorCodes)) return;
 
     switch (errorCode) {
-      case SoulNameErrorCodes.NoError:
+      case SoulNameErrorCodes.NoError: {
         setError(null);
         break;
-      case SoulNameErrorCodes.ArweaveError:
+      }
+      case SoulNameErrorCodes.ArweaveError: {
         setError(Errors.arweave);
         break;
-      case SoulNameErrorCodes.NetworkError:
+      }
+      case SoulNameErrorCodes.NetworkError: {
         setError(Errors.network);
         break;
-      case SoulNameErrorCodes.CryptoError:
+      }
+      case SoulNameErrorCodes.CryptoError: {
         setError(Errors.crypto);
         break;
-      case SoulNameErrorCodes.SoulNameError:
+      }
+      case SoulNameErrorCodes.SoulNameError: {
         setError(Errors.soulname);
         break;
-      case SoulNameErrorCodes.UnknownError:
+      }
+      case SoulNameErrorCodes.UnknownError: {
         setError(Errors.unknown);
         break;
+      }
+      default: {
+        setError(Errors.unknown);
+      }
     }
   };
 

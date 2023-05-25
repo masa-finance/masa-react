@@ -1,3 +1,10 @@
 webpack.config.prod.js
 node_modules
 dist
+stories
+typedoc.js
+test
+src/components
+src/provider/modules/custom-sbts
+jest.config.js
+scripts/buildUtils.js

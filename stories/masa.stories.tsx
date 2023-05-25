@@ -5,6 +5,7 @@ import { MasaProvider, ModalComponent, queryClient, useMasa } from '../src';
 import { Args, Meta, Story } from '@storybook/react';
 import InterfaceMasaGreen from '../src/components/masa-interface/pages/masa-green';
 import '../dist/css/styles.css';
+// import '../src/styles.scss';
 
 const meta: Meta = {
   title: 'SDK Test',
@@ -242,9 +243,10 @@ const TemplateWithRainbowKit: Story = (props: Args) => {
     <>
       <MasaProvider
         company="Masa"
-        walletsToUse={['metamask', 'valora']}
+        walletsToUse={['metamask', 'valora', 'walletconnect']}
         useRainbowKitWalletConnect
-        verbose
+        forceNetwork="alfajores"
+        verbose={false}
       >
         <Component name="Rainbow Kit" {...props} />
       </MasaProvider>

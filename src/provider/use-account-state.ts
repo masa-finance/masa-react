@@ -4,7 +4,9 @@
 
 import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
-import { ConnectorData, useAccount } from 'wagmi';
+import { ConnectorData, useAccount, useProvider } from 'wagmi';
+import { useMemo, useState } from 'react';
+import { useAsync } from 'react-use';
 import {
   invalidateAllQueries,
   invalidateIdentity,
@@ -16,8 +18,6 @@ import {
   invalidateCustomSBTs,
   invalidateCustomSBTContracts,
 } from './hooks';
-import { useMemo, useState } from 'react';
-import { useAsync } from 'react-use';
 
 export const useAccountState = ({
   masa,
@@ -40,8 +40,8 @@ export const useAccountState = ({
     | undefined;
   soulnames?: SoulNameDetails[] | undefined;
   hasWalletAddress?: boolean;
-  reloadIdentity?: () => void;
-  reloadWallet?: () => void;
+  reloadIdentity?: () => Promise<unknown>;
+  reloadWallet?: () => Promise<unknown>;
   invalidateCustomSBTs?: () => void;
 }) => {
   const [accountAddress, setAccountAddress] = useState<string | undefined>(
@@ -55,6 +55,11 @@ export const useAccountState = ({
     connector: activeConnector,
     address: wagmiAddress,
   } = useAccount();
+
+  const walletName = useMemo(() => activeConnector?.name, [activeConnector]);
+
+  const provider = useProvider();
+
   const { isLoggingOut, hasLoggedOut } = useLogout({
     masa,
     signer,
@@ -67,10 +72,7 @@ export const useAccountState = ({
       if (account) {
         setAccountAddress(account);
         await invalidateAllQueries({ masa, signer, walletAddress });
-        // reloadIdentity?.();
-        // reloadWallet?.();
       } else if (chain) {
-        console.log('new chain', chain);
         await Promise.all([
           invalidateIdentity({ masa, signer, walletAddress }),
           invalidateCreditScores({ masa, signer, walletAddress }),
@@ -85,14 +87,32 @@ export const useAccountState = ({
       activeConnector.on('change', handleConnectorUpdate);
     }
 
+    // * walletconnect
+
+    // Subscribe to accounts change
+    provider.on('accountsChanged', (accounts: string[]) => {
+      console.log('for wc acc changed', accounts);
+    });
+
+    // Subscribe to chainId change
+    provider.on('chainChanged', (chainId: number) => {
+      console.log('for wc chainid changed', chainId);
+    });
+
+    // Subscribe to session disconnection
+    provider.on('disconnect', (code: number, reason: string) => {
+      console.log('for wc disc', code, reason);
+    });
+
     return () => {
-      activeConnector?.off('change', handleConnectorUpdate);
+      activeConnector?.off('change', () => async () => handleConnectorUpdate);
+      provider.off('accountsChanged', () => {});
+      provider.off('chainChanged', () => {});
+      provider.off('disconnect', () => {});
     };
   }, [activeConnector, reloadWallet, masa, signer, walletAddress]);
 
-  const hasAccountAddress = useMemo(() => {
-    return !!accountAddress;
-  }, [accountAddress]);
+  const hasAccountAddress = useMemo(() => !!accountAddress, [accountAddress]);
 
   useAsync(async () => {
     // * initial state, just make sure walletAddress is passed to account address
@@ -100,6 +120,9 @@ export const useAccountState = ({
     // * TODO: remove this logic once proper walletAddress scoping is in place
     if (walletAddress && !accountAddress && !isDisconnected) {
       setAccountAddress(walletAddress);
+      await invalidateAllQueries({ masa, signer, walletAddress });
+    } else if (accountAddress && !walletAddress && isDisconnected) {
+      setAccountAddress(undefined);
       await invalidateAllQueries({ masa, signer, walletAddress });
     }
   }, [
@@ -181,5 +204,6 @@ export const useAccountState = ({
     hasWalletAddress,
     hasAccountAddress,
     walletAddress,
+    walletName,
   };
 };

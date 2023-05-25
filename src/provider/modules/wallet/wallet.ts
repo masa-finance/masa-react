@@ -11,9 +11,7 @@ export const getWalletQueryKey = ({
   masa?: Masa;
   signer?: Signer; // unused
   walletAddress?: string; // unused
-}) => {
-  return ['wallet', masa?.config.networkName];
-};
+}) => ['wallet', masa?.config.networkName];
 
 export const useWalletQuery = ({
   masa,
@@ -23,9 +21,10 @@ export const useWalletQuery = ({
   signer?: Signer;
   walletAddress?: string; // unused
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(() => {
-    return ['wallet', masa?.config.networkName];
-  }, [masa]);
+  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+    () => ['wallet', masa?.config.networkName],
+    [masa]
+  );
 
   const {
     data: walletAddress,
@@ -45,7 +44,7 @@ export const useWalletQuery = ({
   });
 
   const invalidateIdentity = useCallback(
-    async () => await queryClient.invalidateQueries(['identity']),
+    async () => queryClient.invalidateQueries(['identity']),
     []
   );
 
@@ -80,12 +79,10 @@ export const useWallet = (
     await refetch();
   }, [refetch, signer]);
 
-  const hasWalletAddress = useMemo(() => {
-    return !!walletAddress;
-  }, [walletAddress]);
+  const hasWalletAddress = useMemo(() => !!walletAddress, [walletAddress]);
 
   return {
-    walletAddress: !signer ? undefined : walletAddress,
+    walletAddress: signer ? walletAddress : undefined,
     isWalletLoading: isLoading || isFetching,
     hasWalletAddress,
     status,

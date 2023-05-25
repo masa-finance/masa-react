@@ -15,8 +15,8 @@ export const useMasaModals = () => {
       contentProps: {},
       wrapperProps: {
         confirm: 'Get Started',
-        onConfirm: () => {
-          handleLogin();
+        onConfirm: async () => {
+          await handleLogin();
           console.log('Authenticated');
         },
       },

@@ -23,12 +23,13 @@ export const createNewMasa = ({
   apiUrl?: string;
 }): Masa | undefined => {
   const environment = environments.find(
-    (environment: Environment) => environment.name === environmentName
+    (singleEnvironment: Environment) =>
+      singleEnvironment.name === environmentName
   );
 
   if (!environment) {
     console.error(`Unable to find environment ${environmentName}`);
-    return;
+    return undefined;
   }
 
   return new Masa({
@@ -38,9 +39,9 @@ export const createNewMasa = ({
     environment: environment.environment,
     arweave: {
       host: arweaveConfig?.host || 'arweave.net',
-      port: parseInt(arweaveConfig?.port || '443'),
+      port: Number.parseInt(arweaveConfig?.port || '443', 10),
       protocol: arweaveConfig?.protocol || 'https',
-      logging: (!!arweaveConfig?.logging as boolean) || false,
+      logging: !!arweaveConfig?.logging || false,
     },
     verbose,
   });
