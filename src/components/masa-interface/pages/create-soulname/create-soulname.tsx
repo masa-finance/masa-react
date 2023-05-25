@@ -164,6 +164,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
           paymentMethod,
           soulname,
           registrationPeriod,
+          undefined,
           soulNameStyle
         );
       } else {

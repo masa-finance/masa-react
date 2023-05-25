@@ -110,12 +110,14 @@ export const useIdentity = (
     async (
       paymentMethod: PaymentMethod,
       soulname: string,
-      registrationPeriod: number
+      registrationPeriod: number,
+      style?: string
     ) => {
       const result = await masa?.identity.createWithSoulName(
         paymentMethod,
         soulname,
-        registrationPeriod
+        registrationPeriod,
+        style
       );
       await invalidateIdentity();
       await invalidateSoulnames();
@@ -126,7 +128,7 @@ export const useIdentity = (
   );
 
   useEffect(() => {
-    reloadIdentity();
+    void reloadIdentity();
   }, [walletAddress, reloadIdentity]);
 
   return {

@@ -164,6 +164,7 @@ const CreateSoulnameModal = (): JSX.Element => {
           paymentMethod,
           soulname,
           registrationPeriod,
+          undefined,
           soulNameStyle
         );
       } else {
