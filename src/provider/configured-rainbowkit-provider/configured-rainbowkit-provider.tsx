@@ -41,7 +41,10 @@ const walletConnectorsList: Record<
 > = {
   metamask: (chains: Chain[]) => ({
     groupName: 'Recommended',
-    wallets: [injectedWallet({ chains }), metaMaskWallet({ chains })],
+    wallets: [
+      injectedWallet({ chains }),
+      metaMaskWallet({ chains, projectId: PROJECT_ID }),
+    ],
   }),
   valora: (chains: Chain[]) => ({
     groupName: 'Celo',

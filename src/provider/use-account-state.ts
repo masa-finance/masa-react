@@ -121,6 +121,9 @@ export const useAccountState = ({
     if (walletAddress && !accountAddress && !isDisconnected) {
       setAccountAddress(walletAddress);
       await invalidateAllQueries({ masa, signer, walletAddress });
+    } else if (accountAddress && !walletAddress && isDisconnected) {
+      setAccountAddress(undefined);
+      await invalidateAllQueries({ masa, signer, walletAddress });
     }
   }, [
     walletAddress,
