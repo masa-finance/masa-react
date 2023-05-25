@@ -81,7 +81,8 @@ export const useIdentity = (
   handlePurchaseIdentityWithSoulname: (
     paymentMethod: PaymentMethod,
     soulname: string,
-    registrationPeriod: number
+    registrationPeriod: number,
+    style?: string
   ) => Promise<boolean>;
   status: string;
   isIdentityLoading: boolean;

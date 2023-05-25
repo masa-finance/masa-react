@@ -55,6 +55,7 @@ export interface MasaContextProviderProps extends MasaShape {
     SoulNameAddress: string;
     SoulStoreAddress: string;
   };
+  soulNameStyle?: string;
 }
 
 export const MasaContextProvider = ({
@@ -80,6 +81,7 @@ export const MasaContextProvider = ({
   apiUrl,
   useRainbowKitWalletConnect = false,
   contractAddressOverrides,
+  soulNameStyle,
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
@@ -359,6 +361,7 @@ export const MasaContextProvider = ({
     soulnames,
     isSoulnamesLoading,
     reloadSoulnames,
+    soulNameStyle,
 
     // greens
     greens,

@@ -72,7 +72,8 @@ export const useSoulnames = (
   handlePurchaseSoulname: (
     soulname: string,
     registrationPeriod: number,
-    paymentMethod: PaymentMethod
+    paymentMethod: PaymentMethod,
+    style?: string
   ) => Promise<boolean>;
   error: unknown;
 } => {
@@ -83,12 +84,14 @@ export const useSoulnames = (
     async (
       soulname: string,
       registrationPeriod: number,
-      paymentMethod: PaymentMethod
+      paymentMethod: PaymentMethod,
+      style?: string
     ) => {
       const result = await masa?.soulName.create(
         paymentMethod,
         soulname,
-        registrationPeriod
+        registrationPeriod,
+        style
       );
 
       await queryClient.invalidateQueries(['soulnames']);
