@@ -98,14 +98,18 @@ const GalleryContainer = () => {
   const pages = [Gallery];
   const { useModalSize, fullScreenGallery } = useMasa();
 
-  useModalSize?.(
-    fullScreenGallery
-      ? {
-          width: window.innerWidth * 0.95,
-          height: window.innerHeight * 0.95,
-        }
-      : { width: 1100, height: 800 }
-  );
+  if (typeof window !== 'undefined') {
+    useModalSize?.(
+      fullScreenGallery
+        ? {
+            width: window.innerWidth * 0.95,
+            height: window.innerHeight * 0.95,
+          }
+        : { width: 1100, height: 800 }
+    );
+  } else {
+    useModalSize?.({ width: 1100, height: 800 });
+  }
 
   const { sbts } = useTabs();
 
