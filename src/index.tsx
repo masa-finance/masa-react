@@ -1,8 +1,8 @@
-// import * as buffer from 'buffer';
+import * as buffer from 'buffer';
 
-// if (typeof window !== 'undefined') {
-//   window.Buffer = buffer.Buffer;
-// }
+if (typeof window !== 'undefined') {
+  window.Buffer = buffer.Buffer;
+}
 
 export * from './components';
 export * from './helpers';
