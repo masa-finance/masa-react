@@ -1,8 +1,4 @@
-import {
-  useAccountModal,
-  useChainModal,
-  useConnectModal,
-} from '@rainbow-me/rainbowkit';
+import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useMemo } from 'react';
 
 import { useAccount, useDisconnect, useProvider, useSigner } from 'wagmi';
