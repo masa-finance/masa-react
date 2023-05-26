@@ -3,17 +3,16 @@ import { useMemo } from 'react';
 
 import { useAccount, useDisconnect, useProvider, useSigner } from 'wagmi';
 
-export interface UseWalletClientReturn {}
 
 export const useWalletClient = () => {
   const { openConnectModal } = useConnectModal();
   const { isConnected, isConnecting, isDisconnected, connector, address } =
     useAccount();
   const provider = useProvider();
-  const signer = useSigner();
+  const { data: signer, isLoading: isLoadingSigner } = useSigner();
   const { disconnect, disconnectAsync } = useDisconnect();
 
-  const useWalletClientReturn: UseWalletClientReturn = useMemo(
+  const useWalletClientReturn = useMemo(
     () => ({
       address,
       provider,
@@ -25,6 +24,7 @@ export const useWalletClient = () => {
       openConnectModal,
       disconnect,
       disconnectAsync,
+      isLoadingSigner,
     }),
     [
       address,
@@ -37,8 +37,10 @@ export const useWalletClient = () => {
       openConnectModal,
       disconnect,
       disconnectAsync,
+      isLoadingSigner,
     ]
   );
 
   return useWalletClientReturn;
 };
+
