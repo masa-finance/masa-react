@@ -52,13 +52,13 @@ const DackieSBT = {
   name: 'Dackies SBT',
   address: '0xbA444542E493Ed497D9Ef7f2ed596244a1952Ba2',
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
-      return {
-          name: 'Dackie quack SBT',
-          image: sbt.tokenUri,
-          description: 'Verified Discord member',
-      }
+    return {
+      name: 'Dackie quack SBT',
+      image: sbt.tokenUri,
+      description: 'Verified Discord member',
+    };
   },
-}
+};
 
 const meta: Meta = {
   title: 'Gallery',
