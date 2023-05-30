@@ -16,6 +16,8 @@ import {
 import { Chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+// import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+// import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
 
 import type { ReactNode } from 'react';
 import React, { createContext, useContext, useMemo } from 'react';
@@ -33,6 +35,7 @@ export interface ConfiguredRainbowKitProviderProps {
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: string[];
 }
+
 const PROJECT_ID = '04a4088bf7ff775c3de808412c291cc0';
 
 const walletConnectorsList: Record<
@@ -53,7 +56,16 @@ const walletConnectorsList: Record<
 
   walletconnect: (chains: Chain[]) => ({
     groupName: 'WalletConnect',
-    wallets: [walletConnectWallet({ projectId: PROJECT_ID, chains })],
+    wallets: [
+      walletConnectWallet({
+        projectId: PROJECT_ID,
+        chains,
+        options: {
+          qrcode: true,
+          projectId: PROJECT_ID,
+        },
+      }),
+    ],
   }),
 };
 
@@ -86,6 +98,7 @@ export const ConfiguredRainbowKitProvider = ({
   const celoConnectors = connectorsForWallets(
     walletConnectors as unknown as WalletList
   );
+
   const wagmiClient = createClient({
     autoConnect: true,
     connectors: celoConnectors,
