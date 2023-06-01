@@ -218,7 +218,6 @@ export const MasaInterface = ({
       });
 
       if (hasAccountAddress) {
-        console.log('im ehre');
         return 'authenticate';
       }
       return 'rainbowkitConnect';
