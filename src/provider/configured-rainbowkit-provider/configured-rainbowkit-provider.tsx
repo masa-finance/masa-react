@@ -34,6 +34,7 @@ export interface ConfiguredRainbowKitProviderProps {
   children: ReactNode;
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: string[];
+  rainbowKitModalSize?: 'compact' | 'wide';
 }
 
 const PROJECT_ID = '04a4088bf7ff775c3de808412c291cc0';
@@ -73,6 +74,7 @@ export const ConfiguredRainbowKitProvider = ({
   children,
   chainsToUse,
   walletsToUse = ['metamask'],
+  rainbowKitModalSize = 'compact',
 }: ConfiguredRainbowKitProviderProps) => {
   const rainbowkitChains = getRainbowkitChains(chainsToUse);
   const { chains, provider, webSocketProvider } = configureChains(
@@ -110,7 +112,10 @@ export const ConfiguredRainbowKitProvider = ({
 
   return (
     <WagmiConfig client={wagmiClient}>
-      <RainbowKitProvider modalSize="compact" chains={rainbowkitChains}>
+      <RainbowKitProvider
+        modalSize={rainbowKitModalSize}
+        chains={rainbowkitChains}
+      >
         <ConfiguredRainbowKitContext.Provider value={contextValue}>
           {children}
         </ConfiguredRainbowKitContext.Provider>

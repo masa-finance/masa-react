@@ -76,7 +76,7 @@ export const useNetwork = ({
       const network = SupportedNetworks[getNetworkNameByChainId(chainId)];
 
       setCurrentNetwork(network);
-    } catch (e) {
+    } catch {
       console.log('You are trying to switch to an unsupported network');
     }
   }, [provider]);
