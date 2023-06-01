@@ -187,8 +187,13 @@ export const MasaContextProvider = ({
 
   const { logout } = useLogout({
     onLogoutStart: handleLogout,
-    onLogoutFinish: () => console.log('finished logout'),
-    walletAddress,
+    onLogoutFinish: () =>
+      console.log('finished logout', {
+        accountAddress,
+        openConnectModal,
+        isLoggedIn,
+      }),
+    walletAddress: accountAddress,
     masa: masaInstance,
     signer,
   });
