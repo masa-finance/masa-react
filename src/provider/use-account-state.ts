@@ -63,7 +63,7 @@ export const useAccountState = ({
   const { isLoggingOut, hasLoggedOut } = useLogout({
     masa,
     signer,
-    walletAddress,
+    walletAddress: accountAddress,
   });
 
   // * detects if we have a new account or chain
@@ -83,10 +83,15 @@ export const useAccountState = ({
       }
     };
 
-    if (activeConnector) {
-      activeConnector.on('change', handleConnectorUpdate);
-    }
-
+    activeConnector?.on('change', handleConnectorUpdate);
+    activeConnector?.on('disconnect', async () => {
+      console.log('disconnect');
+      await invalidateAllQueries({
+        masa,
+        signer,
+        walletAddress: accountAddress,
+      });
+    });
     // * walletconnect
 
     // Subscribe to accounts change
@@ -105,7 +110,7 @@ export const useAccountState = ({
     });
 
     return () => {
-      activeConnector?.off('change', () => async () => handleConnectorUpdate);
+      activeConnector?.off('change', handleConnectorUpdate);
       provider.off('accountsChanged', () => {});
       provider.off('chainChanged', () => {});
       provider.off('disconnect', () => {});

@@ -13,9 +13,12 @@ export const InterfaceSwitchChain = (): JSX.Element => {
     isLoading,
     // switchNetwork,
     forceNetwork,
+    isLoggedIn,
+    isConnected,
     switchNetworkNew,
     canProgramaticallySwitchNetwork,
     walletName,
+    logout,
   } = useMasa();
   // const { chain } = useNetwork();
   // const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
@@ -63,20 +66,38 @@ export const InterfaceSwitchChain = (): JSX.Element => {
           </span>
         </button>
         {!canProgramaticallySwitchNetwork && (
-          <div className="dont-have-a-wallet">
-            <p>
-              <b>
-                It seems that your {walletName} wallet is not able to switch
-                networks programmatically.{' '}
-              </b>
-            </p>
-            <p>
-              This means that you have to manually switch networks in your
-              wallet. Please switch to the <b>{networkData?.chainName}</b> in
-              your wallet. This window will update automatically once you
-              switched networks.
-            </p>
-          </div>
+          <>
+            <div className="dont-have-a-wallet">
+              <p>
+                <b>
+                  It seems that your {walletName} wallet is not able to switch
+                  networks programmatically.{' '}
+                </b>
+              </p>
+              <p>
+                This means that you have to manually switch networks in your
+                wallet. Please switch to the <b>{networkData?.chainName}</b> in
+                your wallet. This window will update automatically once you
+                switched networks.
+              </p>
+            </div>
+            <div className="dont-have-a-wallet">
+              <p>
+                Want to use a different wallet?
+                {!isLoggedIn && isConnected && (
+                  <span className={'connected-wallet'}>
+                    <span className={'authenticate-button'} onClick={logout}>
+                      Switch Wallet
+                    </span>
+                    <span>or </span>
+                    <span className="authenticate-button" onClick={logout}>
+                      Logout
+                    </span>
+                  </span>
+                )}
+              </p>
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -133,6 +133,7 @@ export const MasaInterface = ({
         // * user does not have a wallet
         if (!hasAccountAddress) {
           openConnectModal?.();
+          setModalOpen?.(false);
           console.log('user does not have wallet but is connected', {
             openConnectModal,
             hasAccountAddress,
@@ -149,12 +150,14 @@ export const MasaInterface = ({
 
           return 'rainbowkitConnect';
         }
-      }
 
-      if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
-        // switchNetworkNew?.(forceNetwork);
-        // return null;
-        return 'switchNetwork';
+        if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
+          // switchNetworkNew?.(forceNetwork);
+          // return null;
+          if (!isModalOpen) setModalOpen?.(true);
+          console.log('return switchnetwork');
+          return 'switchNetwork';
+        }
       }
 
       // * connected with wallet but not logged in to masa
@@ -163,6 +166,7 @@ export const MasaInterface = ({
           return 'authenticate';
         }
 
+        setModalOpen?.(false);
         openConnectModal?.();
 
         setRainbowkKitModalCallback?.(() => {
@@ -204,7 +208,7 @@ export const MasaInterface = ({
 
       if (hasAccountAddress && isLoggedIn) return 'connectedState';
       // return 'authenticate';
-
+      setModalOpen?.(false);
       openConnectModal?.();
       setRainbowkKitModalCallback?.(() => {
         return () => {
