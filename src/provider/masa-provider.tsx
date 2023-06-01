@@ -14,15 +14,18 @@ export const MasaProvider = ({
   children,
   chainsToUse,
   walletsToUse,
+  rainbowKitModalSize,
   ...args
 }: MasaContextProviderProps & {
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: ('metamask' | 'valora' | 'walletconnect')[];
+  rainbowKitModalSize?: 'compact' | 'wide';
 }): JSX.Element => (
   <QueryClientProvider client={queryClient}>
     <ConfiguredRainbowKitProvider
       chainsToUse={chainsToUse}
       walletsToUse={walletsToUse}
+      rainbowKitModalSize={rainbowKitModalSize}
     >
       <MasaContextProvider {...args}>
         <div id="modal-mount" />

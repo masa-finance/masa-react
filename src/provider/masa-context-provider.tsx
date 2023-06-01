@@ -488,6 +488,7 @@ export const MasaContextProvider = ({
     handleAddSBT,
     refetchContracts,
     isLoadingCustomSBTs,
+    soulNameStyle,
 
     // rainbowkit
     useRainbowKitWalletConnect,
