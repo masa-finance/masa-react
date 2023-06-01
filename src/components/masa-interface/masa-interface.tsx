@@ -132,8 +132,8 @@ export const MasaInterface = ({
       if (isConnected) {
         // * user does not have a wallet
         if (!hasAccountAddress) {
-          openConnectModal?.();
           setModalOpen?.(false);
+          openConnectModal?.();
           console.log('user does not have wallet but is connected', {
             openConnectModal,
             hasAccountAddress,
@@ -208,7 +208,7 @@ export const MasaInterface = ({
 
       if (hasAccountAddress && isLoggedIn) return 'connectedState';
       // return 'authenticate';
-      setModalOpen?.(false);
+
       openConnectModal?.();
       setRainbowkKitModalCallback?.(() => {
         return () => {
@@ -217,7 +217,9 @@ export const MasaInterface = ({
         };
       });
 
-      if (hasAccountAddress) return 'authenticate';
+      if (hasAccountAddress) {
+        return 'authenticate';
+      }
       return 'rainbowkitConnect';
     }
   }, [
