@@ -61,6 +61,7 @@ export const MasaInterface = ({
     // setForcedPage,
     // switchNetworkNew,
     useRainbowKit,
+    accountAddress,
   } = useMasa();
 
   const page = useMemo(() => {
@@ -68,7 +69,9 @@ export const MasaInterface = ({
       console.log('INTERFACE', {
         hasWalletAddress,
         hasAccountAddress,
+        accountAddress,
         verbose,
+        signer,
         identity,
         isLoggedIn,
         scope,
@@ -129,6 +132,9 @@ export const MasaInterface = ({
       // * rainbowkit logic
       if (forcedPage) return forcedPage;
 
+      if(verbose) {
+        console.log("")
+      }
       if (isConnected) {
         // * user does not have a wallet
         if (!hasAccountAddress) {
@@ -242,6 +248,7 @@ export const MasaInterface = ({
     isModalOpen,
     setModalOpen,
     setRainbowkKitModalCallback,
+    signer
   ]);
 
   const isModal = useMemo(() => {

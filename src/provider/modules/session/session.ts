@@ -143,20 +143,14 @@ export const useSession = (masa?: Masa, walletAddress?: string) => {
   const handleLogin = useCallback(async (): Promise<void> => {
     let loggedIn;
     try {
+      await masa?.session.logout();
       loggedIn = await masa?.session.login();
-    } catch (error_) {
-      console.log('DEBUG Sesssion first catch', {
-        e: error_,
-        masa,
-        walletAddress,
-      });
-    }
-    try {
+
       if (loggedIn) {
         await clearSession();
       }
     } catch (error_) {
-      console.log('DEBUG Sesssion second catch', {
+      console.log('DEBUG Sesssion first catch', {
         e: error_,
         masa,
         walletAddress,
