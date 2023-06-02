@@ -44,7 +44,7 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
       case 'Masa':
         return 'https://app.masa.finance';
       case 'Celo':
-        return soulnames
+        return soulnames && soulnames.length > 0
           ? `https://raregems.io/celo/celo-domain-names/${soulnames[
               soulnames.length - 1
             ].tokenDetails.tokenId.toString()}`
