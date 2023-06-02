@@ -132,8 +132,8 @@ export const MasaInterface = ({
       // * rainbowkit logic
       if (forcedPage) return forcedPage;
 
-      if(verbose) {
-        console.log("")
+      if (verbose) {
+        console.log('');
       }
       if (isConnected) {
         // * user does not have a wallet
@@ -248,7 +248,7 @@ export const MasaInterface = ({
     isModalOpen,
     setModalOpen,
     setRainbowkKitModalCallback,
-    signer
+    signer,
   ]);
 
   const isModal = useMemo(() => {
