@@ -6,10 +6,8 @@
   --color-primary: white;
 }
 
-
 @import '~@rainbow-me/rainbowkit/styles.css';
 @import '~react-phone-number-input/style.css';
-
 
 @font-face {
   font-family: 'Proxima Nova';
@@ -374,10 +372,11 @@
   }
 
   .authenticate-button {
-    margin: 20px 0;
+    margin: 20px 4px;
     font-weight: 500;
     &:hover {
-    cursor: pointer;}
+      cursor: pointer;
+    }
     &:disabled {
       &:hover {
         cursor: not-allowed;
@@ -793,19 +792,24 @@
 
     .connected-wallet {
       display: flex;
+      flex-direction: row;
       justify-content: center;
       align-items: center;
       text-align: center;
       font-size: 18px;
       color: rgba(0, 0, 0, 0.6);
-
       &.with-wallet {
         margin-top: 64px;
         display: flex;
         flex-direction: column;
 
         span {
+          span {
+            padding: 4px;
+          }
           margin-top: 12px;
+          padding-left: 4px;
+          padding-right: 4px;
           font-weight: 800;
           color: #5987a6;
 

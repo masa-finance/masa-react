@@ -1,6 +1,9 @@
 import * as buffer from 'buffer';
 
-window.Buffer = buffer.Buffer;
+// * nextjs fix
+if (typeof window !== 'undefined') {
+  window.Buffer = buffer.Buffer;
+}
 
 export * from './components';
 export * from './helpers';

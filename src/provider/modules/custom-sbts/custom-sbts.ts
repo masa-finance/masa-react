@@ -43,11 +43,15 @@ const fetchContracts = async (masa, customGallerySBT) => {
   if (customGallerySBT && customGallerySBT.length > 0) {
     const newContracts: any[] = [];
     for (const sbt of customGallerySBT) {
-      const sbtContract = await masa?.sbt.connect(sbt.address);
+      try {
+        const sbtContract = await masa?.sbt.connect(sbt.address);
 
-      const contractObject = { ...sbtContract, ...sbt };
+        const contractObject = { ...sbtContract, ...sbt };
 
-      newContracts.push(contractObject);
+        newContracts.push(contractObject);
+      } catch (e) {
+        console.log(e);
+      }
     }
     return newContracts;
   }
@@ -106,7 +110,7 @@ export const fetchCustomSBTs = async (customContracts) => {
   const hidratatedContracts: any[] = [];
 
   for (const contract of contracts) {
-    if (!contract.sbtContract) continue;
+    if (!contract.contract) continue;
     const hidratatedTokens: any[] = [];
 
     try {
@@ -167,7 +171,7 @@ export const useCustomSBTsQuery = ({
     async () => queryClient.invalidateQueries(['custom-sbt']),
     []
   );
-
+  
   return {
     customSBTs,
     status,

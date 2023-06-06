@@ -99,7 +99,7 @@ const GalleryContainer = () => {
   const { useModalSize, fullScreenGallery } = useMasa();
 
   useModalSize?.(
-    fullScreenGallery
+    typeof window !== 'undefined' && fullScreenGallery
       ? {
           width: window.innerWidth * 0.95,
           height: window.innerHeight * 0.95,

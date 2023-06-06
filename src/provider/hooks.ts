@@ -70,6 +70,7 @@ export const invalidateAllQueries = async ({
   signer,
   walletAddress,
 }: QueryKeyRetrievalInput) => {
+  console.log('invalidate all queries', { masa, signer, walletAddress });
   await Promise.all(
     QUERIES.map(async (query: QueryKey) =>
       queryClient.invalidateQueries(
@@ -177,15 +178,15 @@ export const useLogout = (
 ) => {
   const { onLogoutStart, onLogoutFinish, masa, walletAddress, signer } =
     options;
-  const { disconnectAsync } = useDisconnect();
+  const { disconnect } = useDisconnect();
 
   const [{ value: hasLoggedOut, loading: isLoggingOut, error }, logout] =
     useAsyncFn(async () => {
       try {
         onLogoutStart?.();
         await masa?.session.sessionLogout();
+        disconnect();
         await invalidateAllQueries({ masa, signer, walletAddress });
-        await disconnectAsync();
         return true;
       } catch (error_: unknown) {
         console.error(error_);
@@ -193,7 +194,14 @@ export const useLogout = (
       } finally {
         onLogoutFinish?.();
       }
-    }, [disconnectAsync, onLogoutStart, onLogoutFinish, masa, ...(deps ?? [])]);
+    }, [
+      disconnect,
+      onLogoutStart,
+      onLogoutFinish,
+      masa,
+      walletAddress,
+      ...(deps ?? []),
+    ]);
 
   return {
     hasLoggedOut,

@@ -71,14 +71,20 @@ export const useNetwork = ({
   const loadNetwork = useCallback(async (): Promise<void> => {
     if (!provider) return;
 
-    const chainId: number = await provider.getChainId();
-    const network = SupportedNetworks[getNetworkNameByChainId(chainId)];
-    setCurrentNetwork(network);
+    try {
+      const chainId: number = await provider.getChainId();
+      const network = SupportedNetworks[getNetworkNameByChainId(chainId)];
+
+      setCurrentNetwork(network);
+    } catch {
+      console.log('You are trying to switch to an unsupported network');
+    }
   }, [provider]);
 
   const switchNetwork = useCallback(
     async (networkName: NetworkName) => {
       const network = SupportedNetworks[networkName];
+
       try {
         if (typeof window !== 'undefined' && network) {
           await window?.ethereum?.request({

@@ -61,6 +61,7 @@ export const MasaInterface = ({
     // setForcedPage,
     // switchNetworkNew,
     useRainbowKit,
+    accountAddress,
   } = useMasa();
 
   const page = useMemo(() => {
@@ -68,7 +69,9 @@ export const MasaInterface = ({
       console.log('INTERFACE', {
         hasWalletAddress,
         hasAccountAddress,
+        accountAddress,
         verbose,
+        signer,
         identity,
         isLoggedIn,
         scope,
@@ -129,9 +132,13 @@ export const MasaInterface = ({
       // * rainbowkit logic
       if (forcedPage) return forcedPage;
 
+      if (verbose) {
+        console.log('');
+      }
       if (isConnected) {
         // * user does not have a wallet
         if (!hasAccountAddress) {
+          setModalOpen?.(false);
           openConnectModal?.();
           console.log('user does not have wallet but is connected', {
             openConnectModal,
@@ -149,12 +156,14 @@ export const MasaInterface = ({
 
           return 'rainbowkitConnect';
         }
-      }
 
-      if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
-        // switchNetworkNew?.(forceNetwork);
-        // return null;
-        return 'switchNetwork';
+        if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
+          // switchNetworkNew?.(forceNetwork);
+          // return null;
+          if (!isModalOpen) setModalOpen?.(true);
+          console.log('return switchnetwork');
+          return 'switchNetwork';
+        }
       }
 
       // * connected with wallet but not logged in to masa
@@ -163,6 +172,7 @@ export const MasaInterface = ({
           return 'authenticate';
         }
 
+        setModalOpen?.(false);
         openConnectModal?.();
 
         setRainbowkKitModalCallback?.(() => {
@@ -213,7 +223,9 @@ export const MasaInterface = ({
         };
       });
 
-      if (hasAccountAddress) return 'authenticate';
+      if (hasAccountAddress) {
+        return 'authenticate';
+      }
       return 'rainbowkitConnect';
     }
   }, [
@@ -236,6 +248,7 @@ export const MasaInterface = ({
     isModalOpen,
     setModalOpen,
     setRainbowkKitModalCallback,
+    signer,
   ]);
 
   const isModal = useMemo(() => {
