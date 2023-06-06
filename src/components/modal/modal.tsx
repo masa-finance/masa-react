@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useMasa } from '../../provider';
 
 function getWindowDimensions() {
+  if (typeof window === 'undefined') return { width: 0, height: 0 };
   const { innerWidth: width, innerHeight: height } = window;
   return {
     width,
@@ -21,8 +22,12 @@ export default function useWindowDimensions() {
       setWindowDimensions(getWindowDimensions());
     }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    if (typeof window !== 'undefined')
+      window.addEventListener('resize', handleResize);
+    return () => {
+      if (typeof window !== 'undefined')
+        window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return windowDimensions;
