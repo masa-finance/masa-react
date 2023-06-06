@@ -143,7 +143,6 @@ export const useSession = (masa?: Masa, walletAddress?: string) => {
   const handleLogin = useCallback(async (): Promise<void> => {
     let loggedIn;
     try {
-      await masa?.session.logout();
       loggedIn = await masa?.session.login();
 
       if (loggedIn) {
