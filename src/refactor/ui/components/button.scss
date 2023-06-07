@@ -1,0 +1,27 @@
+.masa-button {
+  width: 100%;
+  background: black;
+
+  color: white;
+  text-align: center;
+  padding: 1.5em 1.2em;
+  height: auto;
+
+  border: none;
+
+  transition: background 120ms ease-in-out;
+
+  border-radius: 4px;
+
+  &:hover {
+    background: #000000cc;
+    cursor: pointer;
+  }
+  &:disabled {
+    &:hover {
+      cursor: not-allowed;
+    }
+
+    background-color: #ccc;
+  }
+}

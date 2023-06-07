@@ -1,2 +1,2 @@
-export * from './MasaStateProvider';
+export * from './masa-provider';
 // export * from "./account"

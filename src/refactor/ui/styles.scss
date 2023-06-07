@@ -1,0 +1,15 @@
+@use './scss/fonts.scss';
+@use './components/button.scss';
+:root {
+  --z-index-back: 1;
+  --z-index-middle: 100;
+  --z-index-front: 1000;
+  --color-secondary: black;
+  --color-primary: white;
+}
+
+ul {
+  list-style: none;
+}
+@import '~@rainbow-me/rainbowkit/styles.css';
+@import '~react-phone-number-input/style.css';
