@@ -68,11 +68,19 @@ export const useAccountState = ({
 
   // * detects if we have a new account or chain
   useAsync(async () => {
-    const handleConnectorUpdate = async ({ account, chain }: ConnectorData) => {
+    const handleConnectorUpdate = async ({ chain, account }: ConnectorData) => {
       if (account) {
         setAccountAddress(account);
+
+        if (typeof window !== 'undefined') {
+          window.localStorage.removeItem('walletconnect');
+        }
+
         await invalidateAllQueries({ masa, signer, walletAddress });
       } else if (chain) {
+        if (typeof window !== 'undefined') {
+          window.localStorage.removeItem('walletconnect');
+        }
         await Promise.all([
           invalidateIdentity({ masa, signer, walletAddress }),
           invalidateCreditScores({ masa, signer, walletAddress }),
@@ -85,7 +93,10 @@ export const useAccountState = ({
 
     activeConnector?.on('change', handleConnectorUpdate);
     activeConnector?.on('disconnect', async () => {
-      console.log('disconnect');
+      if (typeof window !== 'undefined') {
+        window.localStorage.removeItem('walletconnect');
+      }
+
       await invalidateAllQueries({
         masa,
         signer,
@@ -115,7 +126,7 @@ export const useAccountState = ({
       provider.off('chainChanged', () => {});
       provider.off('disconnect', () => {});
     };
-  }, [activeConnector, reloadWallet, masa, signer, walletAddress]);
+  }, [activeConnector, reloadWallet, masa, signer, walletAddress, provider]);
 
   const hasAccountAddress = useMemo(() => !!accountAddress, [accountAddress]);
 
