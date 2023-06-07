@@ -71,8 +71,16 @@ export const useAccountState = ({
     const handleConnectorUpdate = async ({ chain, account }: ConnectorData) => {
       if (account) {
         setAccountAddress(account);
+
+        if (typeof window !== 'undefined') {
+          window.localStorage.removeItem('walletconnect');
+        }
+
         await invalidateAllQueries({ masa, signer, walletAddress });
       } else if (chain) {
+        if (typeof window !== 'undefined') {
+          window.localStorage.removeItem('walletconnect');
+        }
         await Promise.all([
           invalidateIdentity({ masa, signer, walletAddress }),
           invalidateCreditScores({ masa, signer, walletAddress }),
@@ -85,6 +93,10 @@ export const useAccountState = ({
 
     activeConnector?.on('change', handleConnectorUpdate);
     activeConnector?.on('disconnect', async () => {
+      if (typeof window !== 'undefined') {
+        window.localStorage.removeItem('walletconnect');
+      }
+
       await invalidateAllQueries({
         masa,
         signer,

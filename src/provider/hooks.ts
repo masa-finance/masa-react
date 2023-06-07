@@ -185,6 +185,11 @@ export const useLogout = (
       try {
         onLogoutStart?.();
         await masa?.session.sessionLogout();
+
+        if (typeof window !== 'undefined') {
+          window.localStorage.removeItem('walletconnect');
+        }
+
         disconnect();
         await invalidateAllQueries({ masa, signer, walletAddress });
         return true;
