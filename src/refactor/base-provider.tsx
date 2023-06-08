@@ -53,5 +53,6 @@ export const MasaBaseProvider = ({
   );
 };
 
-export const useConfig = (): MasaReactConfigBaseProvider => useContext(MasaBaseContext);
+export const useConfig = (): MasaReactConfigBaseProvider =>
+  useContext(MasaBaseContext);
 export default MasaBaseProvider;

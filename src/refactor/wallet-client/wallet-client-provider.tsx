@@ -1,5 +1,10 @@
-import { ReactNode, useCallback } from 'react';
-import React, { createContext, useContext, useMemo } from 'react';
+import React, {
+  ReactNode,
+  useCallback,
+  createContext,
+  useContext,
+  useMemo,
+} from 'react';
 
 import { useWallet } from './wallet/use-wallet';
 import { useNetwork } from './network/use-network';
@@ -28,8 +33,15 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     disconnectAsync,
     isLoadingSigner,
   } = useWallet();
-  const { switchNetwork, canProgramaticallySwitchNetwork, chain, chains } =
-    useNetwork();
+  const {
+    switchNetwork,
+    switchingToChain,
+    canProgramaticallySwitchNetwork,
+    activeChain,
+    isSwitchingChain,
+    chains,
+    isActiveChainUnsupported,
+  } = useNetwork();
 
   const onAccountChange = useCallback(() => console.log('account changed'), []);
   const onChainChange = useCallback(() => console.log('account changed'), []);
@@ -42,6 +54,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
   const walletClientValue = useMemo(
     () =>
       ({
+        // wallet
         address,
         provider,
         signer,
@@ -53,12 +66,18 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         disconnect,
         disconnectAsync,
         isLoadingSigner,
+
+        // network
         switchNetwork,
+        switchingToChain,
         canProgramaticallySwitchNetwork,
-        chain,
+        activeChain,
+        isSwitchingChain,
         chains,
+        isActiveChainUnsupported,
       } as WalletClientValue),
     [
+      // wallet
       address,
       provider,
       signer,
@@ -70,10 +89,15 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       disconnect,
       disconnectAsync,
       isLoadingSigner,
+
+      // network
       switchNetwork,
+      switchingToChain,
       canProgramaticallySwitchNetwork,
-      chain,
+      activeChain,
+      isSwitchingChain,
       chains,
+      isActiveChainUnsupported,
     ]
   );
 

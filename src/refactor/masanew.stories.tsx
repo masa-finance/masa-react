@@ -1,10 +1,13 @@
 import type { Args, Meta } from '@storybook/react';
+import type { Chain } from 'wagmi';
 import React from 'react';
 import { Button } from './ui';
 import './ui/styles.scss';
 import { useConfig } from './base-provider';
 import MasaProvider from './masa-provider';
-import { useWalletClient } from './wallet-client/wallet-client-provider';
+// import { useWalletClient } from './wallet-client/wallet-client-provider';
+import { useWallet } from './wallet-client/wallet/use-wallet';
+import { useNetwork } from './wallet-client/network/use-network';
 
 const meta: Meta = {
   title: 'Refactor Test',
@@ -20,60 +23,141 @@ const meta: Meta = {
 
 export default meta;
 
-const Component = ({ name }: { name?: string }): JSX.Element => {
-  const { openConnectModal, address, connector, isConnected } =
-    useWalletClient();
+const NetworkInfo = () => {
+  const {
+    switchNetwork,
+    switchingToChain,
+    canProgramaticallySwitchNetwork,
+    activeChain,
+    isSwitchingChain,
+    chains,
+    isActiveChainUnsupported,
+  } = useNetwork();
+  return (
+    <ul>
+      <h3>Chain / Network</h3>
+      <li>Chain: {activeChain?.name}</li>
+      <li>isSwitchingChain: {String(isSwitchingChain)}</li>
+      <li>switchingToChain: {String(switchingToChain)}</li>
+      <li>
+        canProgramaticallySwitchNetwork:{' '}
+        {String(canProgramaticallySwitchNetwork)}
+      </li>
+      <li>isActiveChainUnsupported: {String(isActiveChainUnsupported)}</li>
+      <li>
+        <ul style={{ flexDirection: 'row' }}>
+          {chains.map((chain: Chain) => (
+            <li key={chain.name}>
+              <Button
+                style={{ maxWidth: '48px', fontSize: '10px' }}
+                disabled={!canProgramaticallySwitchNetwork}
+                type="button"
+                onClick={() => switchNetwork?.(chain.id)}
+              >
+                Switch to {chain.name}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </li>
+    </ul>
+  );
+};
+
+const WalletInfo = () => {
+  const {
+    address,
+    // provider,
+    // signer,
+    connector,
+    isConnected,
+    isConnecting,
+    isDisconnected,
+    openConnectModal,
+    openChainModal,
+    openAccountModal,
+    disconnect,
+    // disconnectAsync,
+    isLoadingSigner,
+  } = useWallet();
+
+  return (
+    <ul>
+      <h3>Wallet</h3>
+      <li>address: {address}</li>
+      <li>isConnected: {String(isConnected)}</li>
+      <li>isConnecting: {String(isConnecting)}</li>
+      <li>isDisconnected: {String(isDisconnected)}</li>
+      <li>isLoadingSigner: {String(isLoadingSigner)}</li>
+      <li>activeConnector: {connector?.name}</li>
+      <li>
+        <Button
+          type="button"
+          disabled={isDisconnected}
+          onClick={() => {
+            disconnect?.();
+          }}
+        >
+          Disconnect
+        </Button>
+      </li>
+
+      <li>
+        <ul>
+          <h3>RainbowKit</h3>
+          <li>
+            <Button
+              type="button"
+              disabled={!openConnectModal}
+              onClick={() => {
+                openConnectModal?.();
+              }}
+            >
+              Open ConnectModal
+            </Button>
+          </li>
+          <li>
+            <Button
+              type="button"
+              disabled={!openAccountModal}
+              onClick={() => {
+                openAccountModal?.();
+              }}
+            >
+              Open AccountModal
+            </Button>
+          </li>
+          <li>
+            <Button
+              type="button"
+              disabled={!openChainModal}
+              onClick={() => {
+                openChainModal?.();
+              }}
+            >
+              Open ChainModal
+            </Button>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  );
+};
+
+const Component = (): JSX.Element => {
   const config = useConfig();
   return (
-    <section
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <h1>{name}</h1>
-      <ul
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-
-          padding: '4px',
-        }}
-      >
-        <li>Address: {address}</li>
-        <li>Connector: {connector?.name}</li>
-        <li>isConnected?: {String(isConnected)}</li>
-      </ul>
-      <ul
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-
-          padding: '4px',
-        }}
-      >
+    <section>
+      <WalletInfo />
+      <NetworkInfo />
+      <ul>
+        <h3>Config</h3>
         <li>
           <Button
             type="button"
             onClick={() => console.log('config', { config })}
           >
             Log Config
-          </Button>
-        </li>
-        <li>
-          <Button
-            type="button"
-            onClick={() => {
-              openConnectModal?.();
-            }}
-          >
-            Open ConnectModal
           </Button>
         </li>
       </ul>

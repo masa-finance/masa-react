@@ -1,10 +1,16 @@
-import { useConnectModal } from '@rainbow-me/rainbowkit';
+import {
+  useConnectModal,
+  useChainModal,
+  useAccountModal,
+} from '@rainbow-me/rainbowkit';
 import { useMemo } from 'react';
 
 import { useAccount, useDisconnect, useProvider, useSigner } from 'wagmi';
 
 const useWallet = () => {
   const { openConnectModal } = useConnectModal();
+  const { openChainModal } = useChainModal();
+  const { openAccountModal } = useAccountModal();
   const { isConnected, isConnecting, isDisconnected, connector, address } =
     useAccount();
   const provider = useProvider();
@@ -21,6 +27,8 @@ const useWallet = () => {
       isConnecting,
       isDisconnected,
       openConnectModal,
+      openChainModal,
+      openAccountModal,
       disconnect,
       disconnectAsync,
       isLoadingSigner,
@@ -34,6 +42,8 @@ const useWallet = () => {
       isConnecting,
       isDisconnected,
       openConnectModal,
+      openChainModal,
+      openAccountModal,
       disconnect,
       disconnectAsync,
       isLoadingSigner,
