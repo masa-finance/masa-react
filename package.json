@@ -37,7 +37,7 @@
   "dependencies": {
     "@acusti/react-code-input": "^3.11.0",
     "@babel/preset-typescript": "^7.21.5",
-    "@celo/rainbowkit-celo": "^0.11.1",
+    "@celo/rainbowkit-celo": "^0.11.2",
     "@masa-finance/masa-sdk": "^3.2.1",
     "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "0.12.14",

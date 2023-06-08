@@ -8,26 +8,25 @@ import { Chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import type { ReactNode } from 'react';
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { getRainbowkitChains } from './utils';
 import { walletConnectorsList } from './constants';
 import { useConfig } from '../base-provider';
-import { useWalletClient } from './wallet-client';
-import { useAccountChangeListen } from './account-change';
 
-type WalletProviderValue = ReturnType<typeof useWalletClient>;
-
-export const WalletContext = createContext({} as WalletProviderValue);
-
-export interface WalletProviderProps {
+export interface WagmiRainbowkitProviderProps {
   children: ReactNode;
 }
 
-export const WalletProvider = ({ children }: WalletProviderProps) => {
+export const WagmiRainbowkitProvider = ({
+  children,
+}: WagmiRainbowkitProviderProps) => {
   const { allowedNetworkNames, allowedWallets, rainbowkitConfig } = useConfig();
+  const rainbowkitChains = useMemo(
+    () => getRainbowkitChains(allowedNetworkNames),
+    [allowedNetworkNames]
+  );
 
-  const rainbowkitChains = getRainbowkitChains(allowedNetworkNames);
   const { chains, provider, webSocketProvider } = configureChains(
     rainbowkitChains,
     [
@@ -59,33 +58,16 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
     webSocketProvider,
   });
 
-  const wallet = useWalletClient();
-  useAccountChangeListen({
-    onAccountChange: () => console.log('account changed'),
-    onChainChange: () => console.log('chain changed'),
-  });
-  const walletProviderValue = useMemo(
-    () =>
-      ({
-        ...wallet,
-      } as WalletProviderValue),
-    [wallet]
-  );
-
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider
         modalSize={rainbowkitConfig?.modalSize}
         chains={rainbowkitChains}
       >
-        <WalletContext.Provider value={walletProviderValue}>
-          {children}
-        </WalletContext.Provider>
+        {children}
       </RainbowKitProvider>
     </WagmiConfig>
   );
 };
 
-export const useWallet = (): WalletProviderValue => useContext(WalletContext);
-
-export default WalletProvider;
+export default WagmiRainbowkitProvider;

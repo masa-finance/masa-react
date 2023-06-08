@@ -1,7 +1,8 @@
 import React, { ReactNode, createContext, useContext, useMemo } from 'react';
 import MasaBaseProvider from './base-provider';
 import { MasaReactConfig } from './config';
-import WalletProvider from './wallet-client/wallet-provider';
+import WalletProvider from './wallet-client/wallet-client-provider';
+import WagmiRainbowkitProvider from './wallet-client/wagmi-rainbowkit-provider';
 
 export interface MasaProviderValue {}
 
@@ -15,13 +16,17 @@ export const MasaProvider = ({
   config: MasaReactConfig;
 }) => {
   const masaProviderValue = useMemo(() => ({} as MasaProviderValue), []);
+
   return (
-    <MasaContext.Provider value={masaProviderValue}>
-      <MasaBaseProvider config={config}>
-        <WalletProvider>{children}</WalletProvider>
-        {children}
-      </MasaBaseProvider>
-    </MasaContext.Provider>
+    <MasaBaseProvider config={config}>
+      <WagmiRainbowkitProvider>
+        <WalletProvider>
+          <MasaContext.Provider value={masaProviderValue}>
+            {children}
+          </MasaContext.Provider>
+        </WalletProvider>
+      </WagmiRainbowkitProvider>
+    </MasaBaseProvider>
   );
 };
 

@@ -1,6 +1,5 @@
 import { useAsync } from 'react-use';
-import type { ConnectorData } from 'wagmi';
-import { useWallet } from './wallet-provider';
+import { ConnectorData, useAccount, useProvider } from 'wagmi';
 
 export const useAccountChangeListen = ({
   onAccountChange,
@@ -9,7 +8,8 @@ export const useAccountChangeListen = ({
   onAccountChange?: () => void;
   onChainChange?: () => void;
 }>) => {
-  const { provider, connector } = useWallet();
+  const provider = useProvider();
+  const { connector } = useAccount();
 
   useAsync(async () => {
     const handleConnectorUpdate = async ({ chain, account }: ConnectorData) => {
@@ -74,5 +74,5 @@ export const useAccountChangeListen = ({
       provider.off('chainChanged', () => {});
       provider.off('disconnect', () => {});
     };
-  }, [connector, provider, onAccountChange, onChainChange]);
+  }, [connector, provider]);
 };

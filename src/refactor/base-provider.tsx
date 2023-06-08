@@ -1,7 +1,20 @@
-import React, { ReactNode, createContext, useContext, useMemo } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
+import { SupportedNetworks } from '@masa-finance/masa-sdk';
 import { MasaReactConfig } from './config';
 
-export const MasaBaseContext = createContext({} as MasaReactConfig);
+export interface MasaReactConfigBaseProvider extends MasaReactConfig {
+  updateConfig: (newConfig: Partial<MasaReactConfig>) => void;
+  SupportedNetworks: typeof SupportedNetworks;
+}
+
+export const MasaBaseContext = createContext({} as MasaReactConfigBaseProvider);
 
 export const MasaBaseProvider = ({
   children,
@@ -10,13 +23,29 @@ export const MasaBaseProvider = ({
   children: ReactNode;
   config: MasaReactConfig;
 }) => {
-  const masaBaseProviderValue: MasaReactConfig = useMemo(
+  console.log('provider param', { config });
+  const [masaConfig, setConfig] = useState<MasaReactConfig>(config);
+
+  const updateConfig = useCallback(
+    (newConfig: Partial<MasaReactConfig>) => {
+      setConfig((prevConfig: MasaReactConfig) => ({
+        ...prevConfig,
+        ...newConfig,
+      }));
+    },
+    [setConfig]
+  );
+
+  const masaBaseProviderValue = useMemo(
     () =>
       ({
-        ...config,
-      } as MasaReactConfig),
-    [config]
+        ...masaConfig,
+        SupportedNetworks,
+        updateConfig,
+      } as MasaReactConfigBaseProvider),
+    [masaConfig, updateConfig]
   );
+
   return (
     <MasaBaseContext.Provider value={masaBaseProviderValue}>
       {children}
@@ -24,5 +53,5 @@ export const MasaBaseProvider = ({
   );
 };
 
-export const useConfig = (): MasaReactConfig => useContext(MasaBaseContext);
+export const useConfig = (): MasaReactConfigBaseProvider => useContext(MasaBaseContext);
 export default MasaBaseProvider;
