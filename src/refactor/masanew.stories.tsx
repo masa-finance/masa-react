@@ -99,6 +99,14 @@ const NetworkInfo = () => {
               </Button>
             </li>
           ))}
+          <ul>
+            <h3>Availible Chains</h3>
+            {chains.map((chain) => (
+              <li key={chain.name}>
+                <span>{chain.name}</span>
+              </li>
+            ))}
+          </ul>
         </ul>
         <ul className="width-50">
           <h3>Availible Chains</h3>
