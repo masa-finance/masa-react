@@ -1,3 +1,5 @@
+import * as buffer from 'buffer';
+
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React from 'react';
@@ -8,6 +10,12 @@ import MasaProvider from './masa-provider';
 // import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
+
+// * nextjs fix
+// * TODO: move this to index.ts file at some point
+if (typeof window !== 'undefined') {
+  window.Buffer = buffer.Buffer;
+}
 
 const meta: Meta = {
   title: 'Refactor Test',
@@ -37,6 +45,7 @@ const NetworkInfo = () => {
     <ul>
       <h3>Chain / Network</h3>
       <li>Chain: {activeChain?.name}</li>
+      <li>chain-id: {activeChain?.id}</li>
       <li>isSwitchingChain: {String(isSwitchingChain)}</li>
       <li>switchingToChain: {String(switchingToChain)}</li>
       <li>
@@ -44,18 +53,58 @@ const NetworkInfo = () => {
         {String(canProgramaticallySwitchNetwork)}
       </li>
       <li>isActiveChainUnsupported: {String(isActiveChainUnsupported)}</li>
-      <li>
-        <ul style={{ flexDirection: 'row' }}>
+      <li style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+        <ul
+          className="width-50"
+          style={{
+            flexDirection: 'row',
+            width: '50%',
+            alignItems: 'center',
+            justifyContent: 'center',
+
+            flexWrap: 'wrap',
+          }}
+        >
+          <h3 className="flex-100">Switch Network</h3>
           {chains.map((chain: Chain) => (
-            <li key={chain.name}>
+            <li
+              style={{
+                fontSize: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              key={chain.name}
+            >
               <Button
-                style={{ maxWidth: '48px', fontSize: '10px' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+
+                  fontSize: '16px',
+                }}
                 disabled={!canProgramaticallySwitchNetwork}
                 type="button"
-                onClick={() => switchNetwork?.(chain.id)}
+                onClick={() => {
+                  console.log({ chain });
+                  try {
+                    switchNetwork?.(chain.id);
+                  } catch (error: unknown) {
+                    console.log({ e: error });
+                  }
+                }}
               >
-                Switch to {chain.name}
+                Switch to {chain.testnet ? 'Testnet' : ''} {chain.name}
               </Button>
+            </li>
+          ))}
+        </ul>
+        <ul className="width-50">
+          <h3>Availible Chains</h3>
+          {chains.map((chain) => (
+            <li key={chain.name}>
+              <span>{chain.name}</span>
             </li>
           ))}
         </ul>
@@ -79,27 +128,40 @@ const WalletInfo = () => {
     disconnect,
     // disconnectAsync,
     isLoadingSigner,
+    isLoadingBalance,
+    balance,
   } = useWallet();
 
   return (
-    <ul>
-      <h3>Wallet</h3>
-      <li>address: {address}</li>
-      <li>isConnected: {String(isConnected)}</li>
-      <li>isConnecting: {String(isConnecting)}</li>
-      <li>isDisconnected: {String(isDisconnected)}</li>
-      <li>isLoadingSigner: {String(isLoadingSigner)}</li>
-      <li>activeConnector: {connector?.name}</li>
+    <ul className="row wrap">
+      <li className="flex-50">
+        <ul>
+          <h3>Wallet</h3>
+          <li>address: {address}</li>
+          <li>activeConnector: {connector?.name}</li>
+          <li>isConnected: {String(isConnected)}</li>
+          <li>isConnecting: {String(isConnecting)}</li>
+          <li>isDisconnected: {String(isDisconnected)}</li>
+          <li>isLoadingSigner: {String(isLoadingSigner)}</li>
+          <li>isLoadingBalance: {String(isLoadingBalance)}</li>
+          <li>balance: {balance}</li>
+        </ul>
+      </li>
       <li>
-        <Button
-          type="button"
-          disabled={isDisconnected}
-          onClick={() => {
-            disconnect?.();
-          }}
-        >
-          Disconnect
-        </Button>
+        <ul>
+          <h3>Wagmi Functions</h3>
+          <li>
+            <Button
+              type="button"
+              disabled={isDisconnected}
+              onClick={() => {
+                disconnect?.();
+              }}
+            >
+              Disconnect
+            </Button>
+          </li>
+        </ul>
       </li>
 
       <li>

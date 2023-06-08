@@ -29,9 +29,13 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     isConnecting,
     isDisconnected,
     openConnectModal,
+    openChainModal,
+    openAccountModal,
     disconnect,
     disconnectAsync,
     isLoadingSigner,
+    isLoadingBalance,
+    balance,
   } = useWallet();
   const {
     switchNetwork,
@@ -63,9 +67,13 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         isConnecting,
         isDisconnected,
         openConnectModal,
+        openChainModal,
+        openAccountModal,
         disconnect,
         disconnectAsync,
         isLoadingSigner,
+        isLoadingBalance,
+        balance,
 
         // network
         switchNetwork,
@@ -86,9 +94,13 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       isConnecting,
       isDisconnected,
       openConnectModal,
+      openChainModal,
+      openAccountModal,
       disconnect,
       disconnectAsync,
       isLoadingSigner,
+      isLoadingBalance,
+      balance,
 
       // network
       switchNetwork,
