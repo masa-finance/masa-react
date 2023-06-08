@@ -1,3 +1,5 @@
+import * as buffer from 'buffer';
+
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React from 'react';
@@ -8,6 +10,12 @@ import MasaProvider from './masa-provider';
 // import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
+
+// * nextjs fix
+// * TODO: move this to index.ts file at some point
+if (typeof window !== 'undefined') {
+  window.Buffer = buffer.Buffer;
+}
 
 const meta: Meta = {
   title: 'Refactor Test',
@@ -45,19 +53,52 @@ const NetworkInfo = () => {
       </li>
       <li>isActiveChainUnsupported: {String(isActiveChainUnsupported)}</li>
       <li>
-        <ul style={{ flexDirection: 'row' }}>
+        <ul style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          <h3>Switch Network</h3>
           {chains.map((chain: Chain) => (
-            <li key={chain.name}>
+            <li
+              style={{
+                maxWidth: '64px',
+                maxHeight: '64px',
+                fontSize: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              key={chain.name}
+            >
               <Button
-                style={{ maxWidth: '48px', fontSize: '10px' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  maxWidth: '64px',
+                  maxHeight: '64px',
+                  fontSize: '8px',
+                }}
                 disabled={!canProgramaticallySwitchNetwork}
                 type="button"
-                onClick={() => switchNetwork?.(chain.id)}
+                onClick={() => {
+                  console.log({ chain });
+                  try {
+                    switchNetwork?.(chain.id);
+                  } catch (error: unknown) {
+                    console.log({ e: error });
+                  }
+                }}
               >
                 Switch to {chain.name}
               </Button>
             </li>
           ))}
+          <ul>
+            <h3>Availible Chains</h3>
+            {chains.map((chain) => (
+              <li key={chain.name}>
+                <span>{chain.name}</span>
+              </li>
+            ))}
+          </ul>
         </ul>
       </li>
     </ul>
@@ -79,17 +120,21 @@ const WalletInfo = () => {
     disconnect,
     // disconnectAsync,
     isLoadingSigner,
+    isLoadingBalance,
+    balance,
   } = useWallet();
 
   return (
     <ul>
       <h3>Wallet</h3>
       <li>address: {address}</li>
+      <li>activeConnector: {connector?.name}</li>
       <li>isConnected: {String(isConnected)}</li>
       <li>isConnecting: {String(isConnecting)}</li>
       <li>isDisconnected: {String(isDisconnected)}</li>
       <li>isLoadingSigner: {String(isLoadingSigner)}</li>
-      <li>activeConnector: {connector?.name}</li>
+      <li>isLoadingBalance: {String(isLoadingBalance)}</li>
+      <li>balance: {balance}</li>
       <li>
         <Button
           type="button"

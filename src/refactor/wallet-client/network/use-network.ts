@@ -4,15 +4,22 @@ import {
   useSwitchNetwork,
   useNetwork as useNetworkWagmi,
   useAccount,
+  useConnect,
 } from 'wagmi';
 
 export const useNetwork = () => {
   const { switchNetwork: switchNetworkWagmi, error: networkError } =
     useSwitchNetwork();
   const { connector: activeConnector } = useAccount();
+  const { connectors, pendingConnector } = useConnect();
   const { chains, chain: activeChain } = useNetworkWagmi();
   const [switchingToChain, setSwitchingToChain] = useState<number | null>();
-  console.log({ switchingToChain });
+
+  const availibleConnectors = useMemo(
+    () => connectors.map((c) => c.chains),
+    [connectors]
+  );
+  console.log({ pendingConnector, connectors, availibleConnectors });
   const isSwitchingChain = useMemo(
     () => !!switchingToChain,
     [switchingToChain]

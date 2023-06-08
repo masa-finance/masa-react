@@ -5,7 +5,13 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { useMemo } from 'react';
 
-import { useAccount, useDisconnect, useProvider, useSigner } from 'wagmi';
+import {
+  useAccount,
+  useBalance,
+  useDisconnect,
+  useProvider,
+  useSigner,
+} from 'wagmi';
 
 const useWallet = () => {
   const { openConnectModal } = useConnectModal();
@@ -16,6 +22,21 @@ const useWallet = () => {
   const provider = useProvider();
   const { data: signer, isLoading: isLoadingSigner } = useSigner();
   const { disconnect, disconnectAsync } = useDisconnect();
+  const {
+    data: balanceResult,
+    // isError: isErrorBalance,
+    isLoading: isLoadingBalance,
+  } = useBalance({
+    address,
+  });
+
+  const balance = useMemo(
+    () =>
+      `${balanceResult?.formatted as string} ${
+        balanceResult?.symbol as string
+      }`,
+    [balanceResult]
+  );
 
   const useWalletValue = useMemo(
     () => ({
@@ -32,6 +53,8 @@ const useWallet = () => {
       disconnect,
       disconnectAsync,
       isLoadingSigner,
+      isLoadingBalance,
+      balance,
     }),
     [
       address,
@@ -47,6 +70,8 @@ const useWallet = () => {
       disconnect,
       disconnectAsync,
       isLoadingSigner,
+      isLoadingBalance,
+      balance,
     ]
   );
 
