@@ -3,6 +3,7 @@ import MasaBaseProvider from './base-provider';
 import { MasaReactConfig } from './config';
 import WalletProvider from './wallet-client/wallet-client-provider';
 import WagmiRainbowkitProvider from './wallet-client/wagmi-rainbowkit-provider';
+import MasaClientProvider from './masa-client/masa-client-provider';
 
 export interface MasaProviderValue {}
 
@@ -21,9 +22,11 @@ export const MasaProvider = ({
     <MasaBaseProvider config={config}>
       <WagmiRainbowkitProvider>
         <WalletProvider>
-          <MasaContext.Provider value={masaProviderValue}>
-            {children}
-          </MasaContext.Provider>
+          <MasaClientProvider>
+            <MasaContext.Provider value={masaProviderValue}>
+              {children}
+            </MasaContext.Provider>
+          </MasaClientProvider>
         </WalletProvider>
       </WagmiRainbowkitProvider>
     </MasaBaseProvider>

@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { SupportedNetworks } from '@masa-finance/masa-sdk';
-import { MasaReactConfig } from './config';
+import { MasaReactConfig, mergeConfigWithDefault } from './config';
 
 export interface MasaReactConfigBaseProvider extends MasaReactConfig {
   updateConfig: (newConfig: Partial<MasaReactConfig>) => void;
@@ -23,8 +23,9 @@ export const MasaBaseProvider = ({
   children: ReactNode;
   config: MasaReactConfig;
 }) => {
-  console.log('provider param', { config });
-  const [masaConfig, setConfig] = useState<MasaReactConfig>(config);
+  const [masaConfig, setConfig] = useState<MasaReactConfig>(
+    mergeConfigWithDefault(config)
+  );
 
   const updateConfig = useCallback(
     (newConfig: Partial<MasaReactConfig>) => {

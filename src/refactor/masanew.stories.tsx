@@ -7,7 +7,7 @@ import { Button } from './ui';
 import './ui/styles.scss';
 import { useConfig } from './base-provider';
 import MasaProvider from './masa-provider';
-// import { useWalletClient } from './wallet-client/wallet-client-provider';
+
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
 
@@ -225,7 +225,9 @@ const Component = (): JSX.Element => {
         <li>
           <Button
             type="button"
-            onClick={() => console.log('config', { config })}
+            onClick={() =>
+              console.log('config', { config, masaConfig: config.masaConfig })
+            }
           >
             Log Config
           </Button>
