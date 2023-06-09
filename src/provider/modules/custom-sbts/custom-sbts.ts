@@ -43,6 +43,11 @@ const fetchContracts = async (masa, customGallerySBT) => {
   if (customGallerySBT && customGallerySBT.length > 0) {
     const newContracts: any[] = [];
     for (const sbt of customGallerySBT) {
+      if (sbt.networks) {
+        if (sbt.network !== masa.config.networkName) {
+          continue;
+        }
+      }
       try {
         const sbtContract = await masa?.sbt.connect(sbt.address);
 
@@ -171,7 +176,7 @@ export const useCustomSBTsQuery = ({
     async () => queryClient.invalidateQueries(['custom-sbt']),
     []
   );
-  
+
   return {
     customSBTs,
     status,

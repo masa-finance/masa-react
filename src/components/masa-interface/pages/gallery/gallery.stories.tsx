@@ -7,6 +7,7 @@ import { GalleryItem } from './galleryItem';
 const customRenderWhaleSBT = {
   name: 'Solid World Whale SBT',
   address: '0xd843fB69473F77fF45502e1EB8733B6DD7feC98F',
+  network: "polygon",
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     const apiUrl = sbt.tokenUri.replace('.json', '');
 
@@ -14,36 +15,6 @@ const customRenderWhaleSBT = {
       name: 'Solid World Whale SBT',
       image: apiUrl,
       description: 'Verified Discord member',
-    };
-  },
-};
-
-const customRenderWhaleSBTProduction = {
-  name: 'Solid World Whale SBT Production',
-  address: '0xbf060cdfc820cbdafa6313fdb0807944b99a03b7',
-  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
-    const apiUrl = sbt.tokenUri.replace('.json', '');
-
-    return {
-      name: 'Solid World Whale SBT',
-      image: apiUrl,
-      description: 'Verified Discord member',
-    };
-  },
-};
-
-const customPokeSBT = {
-  name: 'PokeSBT',
-  address: '0xa0f3c1971a4d4ec4Ef3983cce75B567a9004eF1B',
-  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
-    const apiUrl = sbt.tokenUri.replace('.json', '');
-    const apiResponse = await fetch(apiUrl, { mode: 'cors' });
-    const data = await apiResponse.json();
-
-    return {
-      name: data.name,
-      image: data.image,
-      description: '',
     };
   },
 };
@@ -51,11 +22,51 @@ const customPokeSBT = {
 const DackieSBT = {
   name: 'Dackies SBT',
   address: '0xbA444542E493Ed497D9Ef7f2ed596244a1952Ba2',
+  network: "polygon",
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     return {
       name: 'Dackie quack SBT',
       image: sbt.tokenUri,
       description: 'Verified Discord member',
+    };
+  },
+};
+
+const AmbassadorOGSBT = {
+  name: 'Masa Ambassador OG SBT',
+  address: '0x376f5039Df4e9E9c864185d8FaBad4f04A7E394A',
+  network: 'polygon',
+  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
+    return {
+      name: 'Masa Ambassador OG SBT',
+      image: sbt.tokenUri,
+      description: 'Ambassador Token',
+    };
+  },
+};
+
+const AmbassadorSBT = {
+  name: 'Masa Ambassador SBT',
+  address: '0x3F1EFED96Eb7f98F0618136133D795F5997ECEf4',
+  network: 'polygon',
+  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
+    return {
+      name: 'Masa Ambassador SBT',
+      image: sbt.tokenUri,
+      description: 'Ambassador Token',
+    };
+  },
+};
+
+const GoodDollarSBT = {
+  name: 'Good Dollar SBT',
+  address: '0x3F1EFED96Eb7f98F0618136133D795F5997ECEf4',
+  network: 'celo',
+  getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
+    return {
+      name: 'Good Dollar SBT',
+      image: sbt.tokenUri,
+      description: 'Good Dollar Token',
     };
   },
 };
@@ -71,9 +82,10 @@ const meta: Meta = {
           company={'Masa'}
           customGallerySBT={[
             DackieSBT,
-            customRenderWhaleSBTProduction,
-            customPokeSBT,
             customRenderWhaleSBT,
+            GoodDollarSBT,
+            AmbassadorSBT,
+            AmbassadorOGSBT,
           ]}
         >
           <div className="masa-modal">
