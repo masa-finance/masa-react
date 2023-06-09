@@ -1,7 +1,13 @@
 {
   "parser": "@typescript-eslint/parser",
 
-  "plugins": ["@typescript-eslint", "promise", "unicorn", "react-hooks"],
+  "plugins": [
+    "@typescript-eslint",
+    "promise",
+    "unicorn",
+    "react-hooks",
+    "@tanstack/query"
+  ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },

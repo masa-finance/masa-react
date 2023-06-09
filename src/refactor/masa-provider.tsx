@@ -1,9 +1,12 @@
 import React, { ReactNode, createContext, useContext, useMemo } from 'react';
+import { QueryClientProvider } from '@tanstack/react-query';
+
 import MasaBaseProvider from './base-provider';
 import { MasaReactConfig } from './config';
 import WalletProvider from './wallet-client/wallet-client-provider';
 import WagmiRainbowkitProvider from './wallet-client/wagmi-rainbowkit-provider';
 import MasaClientProvider from './masa-client/masa-client-provider';
+import { createQueryClient } from './masa-client/query-client';
 
 export interface MasaProviderValue {}
 
@@ -19,18 +22,21 @@ export const MasaProvider = ({
   verbose?: boolean;
 }) => {
   const masaProviderValue = useMemo(() => ({} as MasaProviderValue), []);
-
+  const queryClient = useMemo(() => createQueryClient(), []);
   return (
     <MasaBaseProvider
       config={{ ...config, masaConfig: { ...config.masaConfig, verbose } }}
     >
       <WagmiRainbowkitProvider>
         <WalletProvider>
-          <MasaClientProvider>
-            <MasaContext.Provider value={masaProviderValue}>
-              {children}
-            </MasaContext.Provider>
-          </MasaClientProvider>
+          <QueryClientProvider client={queryClient}>
+            <MasaClientProvider>
+              <MasaContext.Provider value={masaProviderValue}>
+                {children}
+              </MasaContext.Provider>
+            </MasaClientProvider>
+            
+          </QueryClientProvider>
         </WalletProvider>
       </WagmiRainbowkitProvider>
     </MasaBaseProvider>

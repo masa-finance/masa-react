@@ -80,6 +80,7 @@
     "@storybook/addons": "^7.0.2",
     "@storybook/react": "^7.0.18",
     "@storybook/react-webpack5": "^7.0.12",
+    "@tanstack/eslint-plugin-query": "^4.29.9",
     "@tanstack/react-query-devtools": "^4.29.12",
     "@types/jest": "^29.5.0",
     "@types/mocha": "^10.0.1",

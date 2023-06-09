@@ -34,6 +34,7 @@ export const useMasaClient = () => {
   const masaClient = useMemo(
     () => ({
       sdk: masa,
+      masa,
     }),
     [masa]
   );

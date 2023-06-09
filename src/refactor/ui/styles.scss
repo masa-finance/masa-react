@@ -48,7 +48,9 @@ section {
 
   justify-content: center;
 }
-
+code {
+  color: white;
+}
 ul {
   width: 100%;
   margin: var(--base-margin);
@@ -74,7 +76,15 @@ ul {
     padding: 4px;
   }
 }
-
+.rq-debug {
+  * {
+    color: white;
+  }
+  color: white;
+  code {
+    color: white;
+  }
+}
 .flex-100 {
   flex-basis: 100%;
 }

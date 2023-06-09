@@ -1,5 +1,5 @@
 import * as buffer from 'buffer';
-
+import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React from 'react';
@@ -10,6 +10,8 @@ import MasaProvider from './masa-provider';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
+// import { useIdentity } from './masa-feature/use-identity';
+import { useSession } from './masa-feature/use-session';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -53,15 +55,23 @@ const NetworkInfo = () => {
         {String(canProgramaticallySwitchNetwork)}
       </li>
       <li>isActiveChainUnsupported: {String(isActiveChainUnsupported)}</li>
+
       <li style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+        <ul style={{ flexBasis: '30%' }}>
+          <h3>Availible Chains</h3>
+          {chains.map((chain) => (
+            <li key={chain.name}>
+              <span>{chain.name}</span>
+            </li>
+          ))}
+        </ul>
         <ul
-          className="width-50"
           style={{
             flexDirection: 'row',
-            width: '50%',
+
             alignItems: 'center',
             justifyContent: 'center',
-
+            flexBasis: '66%',
             flexWrap: 'wrap',
           }}
         >
@@ -102,23 +112,15 @@ const NetworkInfo = () => {
               </Button>
             </li>
           ))}
-          <ul>
-            <h3>Availible Chains</h3>
-            {chains.map((chain) => (
-              <li key={chain.name}>
-                <span>{chain.name}</span>
-              </li>
-            ))}
-          </ul>
         </ul>
-        <ul className="width-50">
+        {/* <ul className="width-50" style={{ justifyContent: 'flex-start' }}>
           <h3>Availible Chains</h3>
           {chains.map((chain) => (
             <li key={chain.name}>
               <span>{chain.name}</span>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </li>
     </ul>
   );
@@ -217,11 +219,68 @@ const WalletInfo = () => {
   );
 };
 
+const MasaInfo = () => {
+  // const { identity, isLoadingIdentity } = useIdentity();
+  const {
+    session,
+    loginSession,
+    logoutSession,
+    isLoggingIn,
+    isLoggingOut,
+    hasSession,
+  } = useSession();
+  return (
+    <>
+      <ul>
+        <h3>Masa</h3>
+        <li>
+          <ul>
+            {/* <h3>Identity</h3>
+            <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
+            <li>Identity Address: {identity?.address}</li>
+            <li>Identity Id: {identity?.identityId?.toString()}</li> */}
+          </ul>
+        </li>
+        <li>
+          <ul>
+            <h3>Session</h3>
+            <li>hasSession: {String(hasSession)}</li>
+            <li>isLoggingIn: {String(isLoggingIn)}</li>
+            <li>isLoggingOut: {String(isLoggingOut)}</li>
+            <li>Session User: {JSON.stringify(session?.user, null, 2)}</li>
+            <li>Session Challenge: {session?.challenge}</li>
+            <li>session cookie: {JSON.stringify(session?.cookie, null, 2)}</li>
+          </ul>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <Button disabled={hasSession} type="button" onClick={loginSession}>
+            Login Session
+          </Button>
+        </li>
+        <li>
+          <Button disabled={!hasSession} type="button" onClick={logoutSession}>
+            Logout Session
+          </Button>
+        </li>
+      </ul>
+      <ReactQueryDevtoolsPanel
+        setIsOpen={() => {}}
+        onDragStart={() => {}}
+        isOpen
+        className="rq-debug"
+        style={{ color: 'white' }}
+      />
+    </>
+  );
+};
 const Component = (): JSX.Element => {
   const config = useConfig();
   return (
     <section>
       <WalletInfo />
+      <MasaInfo />
       <NetworkInfo />
       <ul>
         <h3>Config</h3>
