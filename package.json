@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "2.3.14",
+  "version": "2.3.17",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
@@ -38,7 +38,7 @@
     "@acusti/react-code-input": "^3.11.0",
     "@babel/preset-typescript": "^7.21.5",
     "@celo/rainbowkit-celo": "^0.11.2",
-    "@masa-finance/masa-sdk": "^3.2.1",
+    "@masa-finance/masa-sdk": "^3.2.3",
     "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "0.12.14",
     "@tanstack/query-sync-storage-persister": "^4.27.1",
