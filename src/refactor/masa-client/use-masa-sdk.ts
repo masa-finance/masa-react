@@ -42,7 +42,6 @@ export const useMasaSDK = (
   const masa = useMemo(() => {
     if (!signer) return undefined;
 
-    console.log({ environmentName });
     const environment: Environment | undefined = environments.find(
       (singleEnvironment: Environment) =>
         singleEnvironment.name === environmentName
@@ -56,7 +55,7 @@ export const useMasaSDK = (
     let contractOverrides: Partial<IIdentityContracts> | undefined;
 
     if (contractAddressOverrides) {
-      console.log({ contractAddressOverrides });
+      if (verbose) console.log({ contractAddressOverrides });
 
       contractOverrides = {} as Partial<IIdentityContracts>;
       contractOverrides.SoulStoreContract = SoulStore__factory.connect(
@@ -71,6 +70,19 @@ export const useMasaSDK = (
       );
       contractOverrides.SoulNameContract.hasAddress = true;
     }
+    signer
+      .getAddress()
+      .then((s) => {
+        if (verbose)
+          console.log('DEBUG: creating new masa', {
+            signer: s,
+            environment,
+            networkName,
+            verbose,
+            apiUrl,
+          });
+      })
+      .catch((error: unknown) => console.error({ error }));
 
     return new Masa({
       signer,

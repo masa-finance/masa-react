@@ -15,11 +15,11 @@ export const useNetwork = () => {
   const { chains, chain: activeChain } = useNetworkWagmi();
   const [switchingToChain, setSwitchingToChain] = useState<number | null>();
 
-  const availibleConnectors = useMemo(
-    () => connectors.map((c) => c.chains),
+  const availibleChains = useMemo(
+    () => connectors.flatMap((c) => c.chains),
     [connectors]
   );
-  console.log({ pendingConnector, connectors, availibleConnectors });
+
   const isSwitchingChain = useMemo(
     () => !!switchingToChain,
     [switchingToChain]
@@ -27,8 +27,9 @@ export const useNetwork = () => {
   const isActiveChainUnsupported = activeChain?.unsupported ?? false;
 
   const switchNetwork = useCallback(
-    (chainId: number) => {
+    (chainId?: number) => {
       setSwitchingToChain(chainId);
+      if (!chainId) return;
       switchNetworkWagmi?.(chainId);
     },
     [switchNetworkWagmi]
@@ -43,10 +44,6 @@ export const useNetwork = () => {
     if (!activeConnector) {
       return undefined;
     }
-
-    // const stopSwitchingHandle = () => {
-    //   setSwitchingToChain(null);
-    // };
 
     let provider: Provider;
 
@@ -77,12 +74,15 @@ export const useNetwork = () => {
   );
 
   return {
+    connectors,
     switchNetwork,
     switchingToChain,
     canProgramaticallySwitchNetwork,
     activeChain,
     isSwitchingChain,
     chains,
+    availibleChains,
+    pendingConnector,
     isActiveChainUnsupported,
   };
 };

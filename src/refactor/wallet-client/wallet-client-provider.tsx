@@ -4,11 +4,16 @@ import React, {
   createContext,
   useContext,
   useMemo,
+  useEffect,
 } from 'react';
 
+import type { Chain } from 'wagmi';
 import { useWallet } from './wallet/use-wallet';
 import { useNetwork } from './network/use-network';
 import { useAccountChangeListen } from './wallet/use-account-change-listen';
+import { useConfig } from '../base-provider';
+import { getChainIdNetworkMap } from './utils';
+import { useDebug } from '../hooks/use-debug';
 
 type WalletClientValue = ReturnType<typeof useWallet> &
   ReturnType<typeof useNetwork>;
@@ -20,6 +25,8 @@ export interface WalletClientProps {
 }
 
 export const WalletClientProvider = ({ children }: WalletClientProps) => {
+  const { forceChain } = useConfig();
+
   const {
     address,
     provider,
@@ -38,6 +45,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     balance,
   } = useWallet();
   const {
+    connectors,
     switchNetwork,
     switchingToChain,
     canProgramaticallySwitchNetwork,
@@ -45,6 +53,8 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     isSwitchingChain,
     chains,
     isActiveChainUnsupported,
+    availibleChains,
+    pendingConnector,
   } = useNetwork();
 
   const onAccountChange = useCallback(() => console.log('account changed'), []);
@@ -54,6 +64,25 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     onAccountChange,
     onChainChange,
   });
+
+  const chainIdsByNetwork = useMemo(() => {
+    if (!chains || chains.length === 0) return {};
+
+    return getChainIdNetworkMap([...chains, activeChain as Chain]);
+  }, [chains, activeChain]);
+
+  useEffect(() => {
+    if (!forceChain) return;
+    if (canProgramaticallySwitchNetwork) {
+      switchNetwork?.(chainIdsByNetwork[forceChain] as number);
+    }
+  }, [
+    forceChain,
+    canProgramaticallySwitchNetwork,
+    switchNetwork,
+    chainIdsByNetwork,
+    chains,
+  ]);
 
   const walletClientValue = useMemo(
     () =>
@@ -76,6 +105,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         balance,
 
         // network
+        connectors,
         switchNetwork,
         switchingToChain,
         canProgramaticallySwitchNetwork,
@@ -83,6 +113,8 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         isSwitchingChain,
         chains,
         isActiveChainUnsupported,
+        availibleChains,
+        pendingConnector,
       } as WalletClientValue),
     [
       // wallet
@@ -103,6 +135,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       balance,
 
       // network
+      connectors,
       switchNetwork,
       switchingToChain,
       canProgramaticallySwitchNetwork,
@@ -110,8 +143,12 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       isSwitchingChain,
       chains,
       isActiveChainUnsupported,
+      availibleChains,
+      pendingConnector,
     ]
   );
+
+  useDebug({ name: 'WalletClientProvider', value: walletClientValue }, []);
 
   return (
     <WalletContext.Provider value={walletClientValue}>

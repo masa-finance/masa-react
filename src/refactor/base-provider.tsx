@@ -20,7 +20,7 @@ export const MasaBaseProvider = ({
   children,
   config,
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   config: MasaReactConfig;
 }) => {
   const [masaConfig, setConfig] = useState<MasaReactConfig>(

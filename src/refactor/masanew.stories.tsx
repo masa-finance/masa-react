@@ -84,7 +84,10 @@ const NetworkInfo = () => {
 
                   fontSize: '16px',
                 }}
-                disabled={!canProgramaticallySwitchNetwork}
+                disabled={
+                  !canProgramaticallySwitchNetwork ||
+                  chain.id === activeChain?.id
+                }
                 type="button"
                 onClick={() => {
                   console.log({ chain });
@@ -241,7 +244,23 @@ const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
       allowedWallets: ['metamask', 'valora', 'walletconnect'],
-      masaConfig: {},
+      forceChain: 'ethereum',
+      allowedNetworkNames: [
+        'goerli',
+        'ethereum',
+        'alfajores',
+        'celo',
+        'mumbai',
+        'polygon',
+        'bsctest',
+        'bsc',
+        'basegoerli',
+        'unknown',
+      ],
+      masaConfig: {
+        networkName: 'ethereum',
+        verbose: true,
+      },
     }}
   >
     <Component {...props} />
