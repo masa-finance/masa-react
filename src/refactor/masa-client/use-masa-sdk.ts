@@ -59,7 +59,7 @@ export const useMasaSDK = (
     let contractOverrides: Partial<IIdentityContracts> | undefined;
 
     if (contractAddressOverrides) {
-      if (verbose) console.log({ contractAddressOverrides });
+      if (verbose) console.log('DEBUG:', { contractAddressOverrides });
 
       contractOverrides = {} as Partial<IIdentityContracts>;
       contractOverrides.SoulStoreContract = SoulStore__factory.connect(

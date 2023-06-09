@@ -1,5 +1,6 @@
 import type { Signer } from 'ethers';
 import type { NetworkName } from '@masa-finance/masa-sdk';
+import { useMemo } from 'react';
 import { useConfig } from '../base-provider';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaSDK } from './use-masa-sdk';
@@ -30,5 +31,12 @@ export const useMasaClient = () => {
     ]
   );
 
-  return masa;
+  const masaClient = useMemo(
+    () => ({
+      sdk: masa,
+    }),
+    [masa]
+  );
+
+  return masaClient;
 };

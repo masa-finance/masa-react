@@ -1,15 +1,14 @@
 import React, { ReactNode, createContext, useContext, useMemo } from 'react';
-import type { Masa } from '@masa-finance/masa-sdk';
 import { useMasaClient } from './masa-client';
 
 export interface MasaClientProviderValue {
-  masa?: Masa;
+  masa?: ReturnType<typeof useMasaClient>['sdk'];
 }
 
 export const MasaClientContext = createContext({} as MasaClientProviderValue);
 
 export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
-  const masa = useMasaClient();
+  const { sdk: masa } = useMasaClient();
 
   const masaClientProviderValue = useMemo(
     () => ({
