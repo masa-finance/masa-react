@@ -19,9 +19,9 @@ const useWallet = () => {
   const { openAccountModal } = useAccountModal();
   const { isConnected, isConnecting, isDisconnected, connector, address } =
     useAccount();
-  const provider = useProvider();
   const { data: signer, isLoading: isLoadingSigner } = useSigner();
   const { disconnect, disconnectAsync } = useDisconnect();
+  const provider = useProvider();
   const {
     data: balanceResult,
     // isError: isErrorBalance,

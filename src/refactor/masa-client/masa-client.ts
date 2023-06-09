@@ -15,7 +15,11 @@ export const useMasaClient = () => {
       signer: isDisconnected ? undefined : (signer as Signer | undefined),
       ...masaConfig,
       environmentName: masaConfig.environment,
-      networkName: activeChain?.network as NetworkName | undefined,
+      // NOTE: mismatch of homestead (wagmi) vs ethereum (masa)
+      networkName:
+        activeChain?.network === 'homestead'
+          ? 'ethereum'
+          : (activeChain?.network as NetworkName | undefined),
     },
     [
       signer,

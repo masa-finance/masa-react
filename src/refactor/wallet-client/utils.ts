@@ -129,7 +129,7 @@ export const getChainIdNetworkMap = (chains?: Chain[]) => {
   if (!chains) return chainIdNetworkMap;
 
   for (const chain of chains) {
-    chainIdNetworkMap[chain.network] = chain.id;
+    if (chain) chainIdNetworkMap[chain.network] = chain.id;
   }
 
   return chainIdNetworkMap;
