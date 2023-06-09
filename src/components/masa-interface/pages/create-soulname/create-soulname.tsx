@@ -36,7 +36,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       setEnabledMethods(enabledMethodsres as string[]);
     })();
   }, [masa]);
-  
+
   const paymentMethods = useMemo(() => {
     const tokensAvailable = {
       ...masa?.config.network?.addresses.tokens,
@@ -223,22 +223,26 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       default:
         return `Register a ${extension} Name`;
     }
-  }, [company, extension])
+  }, [company, extension]);
 
   const createSoulnameSubtitle = useMemo(() => {
     switch (company) {
       case 'Base Universe':
-        return (<>
-          Claim your <b>{extension}</b> domain name before it's taken!. Domains are{' '}
-          <b>FREE on testnet,</b> only pay the gas to mint.
-        </>)
+        return (
+          <>
+            Claim your <b>{extension}</b> domain name before it's taken!.
+            Domains are <b>FREE on testnet,</b> only pay the gas to mint.
+          </>
+        );
       default:
-        return (<>
-          Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
-          <b>FREE,</b> only pay the gas fee.
-        </>)
+        return (
+          <>
+            Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
+            <b>FREE,</b> only pay the gas fee.
+          </>
+        );
     }
-  }, [company, extension])
+  }, [company, extension]);
 
   if (isLoading) return <MasaLoading />;
 
