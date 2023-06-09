@@ -12,7 +12,7 @@ export const useMasaClient = () => {
 
   const masa = useMasaSDK(
     {
-      signer: signer as Signer | undefined,
+      signer: isDisconnected ? undefined : (signer as Signer | undefined),
       ...masaConfig,
       environmentName: masaConfig.environment,
       networkName: activeChain?.network as NetworkName | undefined,

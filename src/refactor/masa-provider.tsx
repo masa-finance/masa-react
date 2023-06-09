@@ -12,14 +12,18 @@ export const MasaContext = createContext({} as MasaProviderValue);
 export const MasaProvider = ({
   children,
   config,
+  verbose,
 }: {
   children: ReactNode;
   config: MasaReactConfig;
+  verbose?: boolean;
 }) => {
   const masaProviderValue = useMemo(() => ({} as MasaProviderValue), []);
 
   return (
-    <MasaBaseProvider config={config}>
+    <MasaBaseProvider
+      config={{ ...config, masaConfig: { ...config.masaConfig, verbose } }}
+    >
       <WagmiRainbowkitProvider>
         <WalletProvider>
           <MasaClientProvider>

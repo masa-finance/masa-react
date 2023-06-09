@@ -40,7 +40,11 @@ export const useMasaSDK = (
   deps: Array<unknown>
 ): Masa | undefined => {
   const masa = useMemo(() => {
-    if (!signer) return undefined;
+    if (!signer) {
+      if (verbose)
+        console.log('DEBUG: no signer, returning undefined for masa object');
+      return undefined;
+    }
 
     const environment: Environment | undefined = environments.find(
       (singleEnvironment: Environment) =>
@@ -70,19 +74,21 @@ export const useMasaSDK = (
       );
       contractOverrides.SoulNameContract.hasAddress = true;
     }
-    signer
-      .getAddress()
-      .then((s) => {
-        if (verbose)
+    if (verbose) {
+      signer
+        .getAddress()
+        .then((s) => {
           console.log('DEBUG: creating new masa', {
-            signer: s,
+            signerAddress: s,
+            signer,
             environment,
             networkName,
             verbose,
             apiUrl,
           });
-      })
-      .catch((error: unknown) => console.error({ error }));
+        })
+        .catch((error: unknown) => console.error({ error }));
+    }
 
     return new Masa({
       signer,
@@ -106,7 +112,7 @@ export const useMasaSDK = (
     arweaveConfig,
     verbose,
     contractAddressOverrides,
-    ...deps,
+    ...deps, // eslint-disable-line react-hooks/exhaustive-deps
   ]);
 
   return masa;

@@ -30,13 +30,10 @@ const useWallet = () => {
     address,
   });
 
-  const balance = useMemo(
-    () =>
-      `${balanceResult?.formatted as string} ${
-        balanceResult?.symbol as string
-      }`,
-    [balanceResult]
-  );
+  const balance = useMemo(() => {
+    if (!balanceResult) return '';
+    return `${balanceResult?.formatted} ${balanceResult?.symbol}`;
+  }, [balanceResult]);
 
   const useWalletValue = useMemo(
     () => ({
