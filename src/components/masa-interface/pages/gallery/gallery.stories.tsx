@@ -7,7 +7,7 @@ import { GalleryItem } from './galleryItem';
 const customRenderWhaleSBT = {
   name: 'Solid World Whale SBT',
   address: '0xd843fB69473F77fF45502e1EB8733B6DD7feC98F',
-  network: "polygon",
+  network: 'polygon',
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     const apiUrl = sbt.tokenUri.replace('.json', '');
 
@@ -22,7 +22,7 @@ const customRenderWhaleSBT = {
 const DackieSBT = {
   name: 'Dackies SBT',
   address: '0xbA444542E493Ed497D9Ef7f2ed596244a1952Ba2',
-  network: "polygon",
+  network: 'polygon',
   getMetadata: async function (sbt: { tokenId: string; tokenUri: string }) {
     return {
       name: 'Dackie quack SBT',
