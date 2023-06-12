@@ -19,6 +19,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     isLoading,
     identity,
     closeModal,
+    company,
     masa,
     forcedPage,
     setForcedPage,
@@ -215,6 +216,34 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     setPaymentMethod(event.target?.value);
   };
 
+  const createSoulnameTitle = useMemo(() => {
+    switch (company) {
+      case 'Base Universe':
+        return `Register a ${company} ${extension} Name`;
+      default:
+        return `Register a ${extension} Name`;
+    }
+  }, [company, extension]);
+
+  const createSoulnameSubtitle = useMemo(() => {
+    switch (company) {
+      case 'Base Universe':
+        return (
+          <>
+            Claim your <b>{extension}</b> domain name before it&apos;s taken!.
+            Domains are <b>FREE on testnet,</b> only pay the gas to mint.
+          </>
+        );
+      default:
+        return (
+          <>
+            Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
+            <b>FREE,</b> only pay the gas fee.
+          </>
+        );
+    }
+  }, [company, extension]);
+
   if (isLoading) return <MasaLoading />;
 
   if (isLoadingMint)
@@ -251,13 +280,8 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   return (
     <div className="interface-create-soulname">
       <div className="title-container">
-        <h3 className="title">
-          Register a <span>{extension}</span> name
-        </h3>
-        <p className="subtitle">
-          Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
-          <b>FREE,</b> only pay the gas fee.
-        </p>
+        <h3 className="title">{createSoulnameTitle}</h3>
+        <p className="subtitle">{createSoulnameSubtitle}</p>
       </div>
 
       <div className="soulname-purchase-container">

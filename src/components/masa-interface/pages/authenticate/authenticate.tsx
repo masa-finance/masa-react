@@ -39,7 +39,8 @@ export const InterfaceAuthenticate = (): JSX.Element => {
         return `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`;
       case 'Base':
         return 'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.';
-
+      case 'Base Universe':
+        return 'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.';
       default:
         return `Your wallet is now connected. Start your soulbound journey by minting
           a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
