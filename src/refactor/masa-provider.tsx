@@ -35,7 +35,6 @@ export const MasaProvider = ({
                 {children}
               </MasaContext.Provider>
             </MasaClientProvider>
-            
           </QueryClientProvider>
         </WalletProvider>
       </WagmiRainbowkitProvider>
