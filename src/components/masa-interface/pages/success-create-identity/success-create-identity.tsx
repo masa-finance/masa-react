@@ -53,7 +53,7 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
       case 'Base':
         return 'https://app.basecamp.global';
       case 'Base Universe':
-        return 'https://app.masa.finance/sbts/base-universe-soulname-token';
+        return 'https://masa.finance/sbts/base-universe-soulname-token';
       default:
         return 'https://app.masa.finance';
     }
