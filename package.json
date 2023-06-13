@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "2.4.9",
+  "version": "2.4.10",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
