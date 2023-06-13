@@ -230,7 +230,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       case 'Base Universe':
         return (
           <>
-            Claim your <b>{extension}</b> domain name before it&apos;s taken!.
+            Claim your <b>{extension}</b> domain name before it&apos;s taken!
             Domains are <b>FREE on testnet,</b> only pay the gas to mint.
           </>
         );
