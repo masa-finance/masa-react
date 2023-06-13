@@ -4,6 +4,7 @@ import { Signer } from 'ethers';
 import { useQuery } from 'react-query';
 import { useLocalStorage } from '../../use-local-storage';
 import { queryClient } from '../../masa-query-client';
+import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
 
 function getLocalStorageRecordsByPrefix(
   prefix: string
@@ -39,15 +40,17 @@ export const useSavedSbts = (masa, prefix): { savedContracts: any[] } => {
   return { savedContracts };
 };
 
-const fetchContracts = async (masa, customGallerySBT) => {
+const fetchContracts = async (
+  masa: Masa,
+  customGallerySBT: CustomGallerySBT[]
+) => {
   if (customGallerySBT && customGallerySBT.length > 0) {
     const newContracts: any[] = [];
     for (const sbt of customGallerySBT) {
-      if (sbt.networks) {
-        if (sbt.network !== masa.config.networkName) {
-          continue;
-        }
+      if (sbt.network && sbt.network !== masa.config.networkName) {
+        continue;
       }
+
       try {
         const sbtContract = await masa?.sbt.connect(sbt.address);
 
