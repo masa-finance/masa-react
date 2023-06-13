@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useContext, useMemo } from 'react';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import MasaBaseProvider from './base-provider';
 import { MasaReactConfig } from './config';
@@ -11,7 +11,9 @@ import { createQueryClient } from './masa-client/query-client';
 export interface MasaProviderValue {}
 
 export const MasaContext = createContext({} as MasaProviderValue);
-
+export const QcContext = React.createContext<QueryClient | undefined>(
+  undefined
+);
 export const MasaProvider = ({
   children,
   config,
@@ -22,14 +24,14 @@ export const MasaProvider = ({
   verbose?: boolean;
 }) => {
   const masaProviderValue = useMemo(() => ({} as MasaProviderValue), []);
-  const queryClient = useMemo(() => createQueryClient(), []);
+  const queryClient = useMemo(() => createQueryClient() as QueryClient, []);
   return (
     <MasaBaseProvider
       config={{ ...config, masaConfig: { ...config.masaConfig, verbose } }}
     >
       <WagmiRainbowkitProvider>
         <WalletProvider>
-          <QueryClientProvider client={queryClient}>
+          <QueryClientProvider client={queryClient} context={QcContext}>
             <MasaClientProvider>
               <MasaContext.Provider value={masaProviderValue}>
                 {children}

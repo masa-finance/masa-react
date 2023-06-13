@@ -33,6 +33,7 @@ export interface Tabs {
 export interface CustomGallerySBT {
   name: string;
   address: string;
+  network: string;
   getMetadata: (item: { tokenId; tokenUri }) => Promise<{
     image: string;
     name: string;

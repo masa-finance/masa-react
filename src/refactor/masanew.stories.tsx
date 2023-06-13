@@ -6,7 +6,7 @@ import React from 'react';
 import { Button } from './ui';
 import './ui/styles.scss';
 import { useConfig } from './base-provider';
-import MasaProvider from './masa-provider';
+import MasaProvider, { QcContext } from './masa-provider';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
@@ -228,7 +228,10 @@ const MasaInfo = () => {
     isLoggingIn,
     isLoggingOut,
     hasSession,
+    checkLogin,
   } = useSession();
+
+  console.log('STORY', { hasSession, session });
   return (
     <>
       <ul>
@@ -255,7 +258,7 @@ const MasaInfo = () => {
       </ul>
       <ul>
         <li>
-          <Button disabled={hasSession} type="button" onClick={loginSession}>
+          <Button disabled={!!hasSession} type="button" onClick={loginSession}>
             Login Session
           </Button>
         </li>
@@ -264,8 +267,14 @@ const MasaInfo = () => {
             Logout Session
           </Button>
         </li>
+        <li>
+          <Button type="button" onClick={() => checkLogin()}>
+            Check Login
+          </Button>
+        </li>
       </ul>
       <ReactQueryDevtoolsPanel
+        context={QcContext}
         setIsOpen={() => {}}
         onDragStart={() => {}}
         isOpen
