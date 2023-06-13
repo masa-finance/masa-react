@@ -6,6 +6,7 @@ import { MasaReactConfig } from './config';
 import WalletProvider from './wallet-client/wallet-client-provider';
 import WagmiRainbowkitProvider from './wallet-client/wagmi-rainbowkit-provider';
 import MasaClientProvider from './masa-client/masa-client-provider';
+
 import { createQueryClient } from './masa-client/query-client';
 
 export interface MasaProviderValue {}
@@ -14,6 +15,9 @@ export const MasaContext = createContext({} as MasaProviderValue);
 export const QcContext = React.createContext<QueryClient | undefined>(
   undefined
 );
+
+// const queryClient = createQueryClient();
+
 export const MasaProvider = ({
   children,
   config,
@@ -24,22 +28,22 @@ export const MasaProvider = ({
   verbose?: boolean;
 }) => {
   const masaProviderValue = useMemo(() => ({} as MasaProviderValue), []);
-  const queryClient = useMemo(() => createQueryClient() as QueryClient, []);
+  const queryClient = useMemo(() => createQueryClient(), []);
   return (
     <MasaBaseProvider
       config={{ ...config, masaConfig: { ...config.masaConfig, verbose } }}
     >
-      <WagmiRainbowkitProvider>
-        <WalletProvider>
-          <QueryClientProvider client={queryClient} context={QcContext}>
+      <QueryClientProvider client={queryClient} context={QcContext}>
+        <WagmiRainbowkitProvider>
+          <WalletProvider>
             <MasaClientProvider>
               <MasaContext.Provider value={masaProviderValue}>
                 {children}
               </MasaContext.Provider>
             </MasaClientProvider>
-          </QueryClientProvider>
-        </WalletProvider>
-      </WagmiRainbowkitProvider>
+          </WalletProvider>
+        </WagmiRainbowkitProvider>
+      </QueryClientProvider>
     </MasaBaseProvider>
   );
 };

@@ -2,10 +2,13 @@ import { useAsync, useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 
+
+
+
 export const useIdentity = () => {
   const { sdk: masa } = useMasaClient();
   const { address } = useWallet();
-  
+
   const [{ value: identity, loading: isLoadingIdentity }, loadIdentity] =
     useAsyncFn(async () => {
       try {

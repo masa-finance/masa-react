@@ -223,15 +223,16 @@ const MasaInfo = () => {
   // const { identity, isLoadingIdentity } = useIdentity();
   const {
     session,
-    loginSession,
+    // loginSession,
     logoutSession,
     isLoggingIn,
     isLoggingOut,
     hasSession,
+    getSession,
     checkLogin,
   } = useSession();
 
-  console.log('STORY', { hasSession, session });
+  // console.log('STORY', { hasSession, session });
   return (
     <>
       <ul>
@@ -250,18 +251,35 @@ const MasaInfo = () => {
             <li>hasSession: {String(hasSession)}</li>
             <li>isLoggingIn: {String(isLoggingIn)}</li>
             <li>isLoggingOut: {String(isLoggingOut)}</li>
-            <li>Session User: {JSON.stringify(session?.user, null, 2)}</li>
+            <li>
+              Session: <br />
+              <code>{JSON.stringify(session, null, 4)}</code>
+            </li>
+            {/* <li>Session User: {JSON.stringify(session?.user, null, 2)}</li>
             <li>Session Challenge: {session?.challenge}</li>
-            <li>session cookie: {JSON.stringify(session?.cookie, null, 2)}</li>
+            <li>session cookie: {JSON.stringify(session?.cookie, null, 2)}</li> */}
           </ul>
         </li>
       </ul>
       <ul>
         <li>
-          <Button disabled={!!hasSession} type="button" onClick={loginSession}>
-            Login Session
+          <Button
+            disabled={!!hasSession}
+            type="button"
+            onClick={() => getSession() as unknown as () => void}
+          >
+            Login Session RQ
           </Button>
         </li>
+        {/* <li>
+          <Button
+            disabled={!!hasSession}
+            type="button"
+            onClick={() => loginSession() as unknown as () => void}
+          >
+            Login Session
+          </Button>
+        </li> */}
         <li>
           <Button disabled={!hasSession} type="button" onClick={logoutSession}>
             Logout Session
@@ -310,7 +328,6 @@ const Component = (): JSX.Element => {
 
 const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
-    verbose
     config={{
       allowedWallets: ['metamask', 'valora', 'walletconnect'],
       forceChain: 'ethereum',

@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "2.4.7",
+  "version": "2.4.8",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
@@ -136,7 +136,7 @@
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "tsconfig-paths-webpack-plugin": "^4.0.1",
-    "typedoc": "^0.24.4",
+    "typedoc": "^0.24.8",
     "typedoc-plugin-markdown": "^3.15.3",
     "typescript": "^5.0.4",
     "url": "^0.11.0",
