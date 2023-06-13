@@ -121,7 +121,7 @@
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "size-limit": "^8.1.0",
-    "storybook": "^7.0.5",
+    "storybook": "^7.0.20",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "style-loader": "^3.3.3",
