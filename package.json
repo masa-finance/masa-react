@@ -75,7 +75,7 @@
     "@storybook/addon-styling": "^1.0.1",
     "@storybook/addons": "^7.0.2",
     "@storybook/react": "^7.0.18",
-    "@storybook/react-webpack5": "^7.0.12",
+    "@storybook/react-webpack5": "^7.0.20",
     "@types/jest": "^29.5.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.1.5",
