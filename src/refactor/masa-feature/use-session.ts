@@ -38,7 +38,6 @@ export const useSession = () => {
   }, [masa, address]);
 
   const [, getSessionAsync] = useAsyncFn(async () => {
-    console.log('GET SESSION CB');
     if (!masa) return null;
     if (!address) return null;
 
@@ -62,20 +61,12 @@ export const useSession = () => {
     onSuccess: async (data: ISession | null) => {
       if (data) {
         const resultCheck = await checkSession();
-        console.log('ON SUCESS RESULTCHECk', { resultCheck });
         if (!resultCheck) {
-          console.log('NO SESSION IN ONSUCCESS, invalidating session-check', {
-            resultCheck,
-          });
           //   await queryClient.invalidateQueries(['session-check', address]);
         }
-        console.log('session-obj onSuccess', data);
       }
     },
-    queryFn: async () => {
-      console.log('SESSION OBJ QUERY FUNC START');
-      return getSessionAsync();
-    },
+    queryFn: async () => getSessionAsync(),
   });
 
   const { data: hasSession, refetch: checkLogin } = useQuery({
@@ -83,15 +74,11 @@ export const useSession = () => {
     enabled: !!masa,
     context: QcContext,
     onSuccess: async (data: boolean) => {
-      console.log('ON SUCCESS checkLogin');
       switch (data) {
         case true: {
-          console.log('AM I HERE CASE TRUE?');
-          //   await getSessionCB();
           const checkedLogin = await checkSession();
-          console.log({ checkedLogin }, 'BRUV');
+
           if (!checkedLogin) {
-            console.log(' NO CHECKECD LOGIN, invalidating and returning');
             await queryClient.invalidateQueries(['session-obj', address]);
             await queryClient.invalidateQueries(['session-check', address]);
             await queryClient.invalidateQueries(['session', address]);
@@ -99,37 +86,20 @@ export const useSession = () => {
           }
 
           if (sessionFromGet && address === sessionFromGet?.user.address) {
-            console.log('returning cause addresses metched', {
-              address,
-              sesAddr: sessionFromGet?.user.address,
-            });
             return;
           }
 
-          console.log('address mismatch');
           await queryClient.invalidateQueries(['session-obj', address]);
           await queryClient.fetchQuery(['session-obj', address]);
-          //   await queryClient.refetchQueries({
-          //     queryKey: ['session-obj', address],
-          //     // type: 'all',
-          //   });
-          //   await queryClient.refetchQueries({ queryKey: ['session', address] });
-          //   await queryClient.invalidateQueries(['session', address]);
-          //   await queryClient.fetchQuery(['session', address]);
-
           break;
         }
+
         case false: {
-          console.log('CASE FALSE');
-          //   await queryClient.invalidateQueries(['session', address]);
-          //   await queryClient.invalidateQueries(['session-obj', address]);
           queryClient.setQueryData(['session', address], null);
           queryClient.setQueryData(['session-obj', address], null);
           break;
         }
         case undefined: {
-          //   await queryClient.invalidateQueries(['session', address]);
-          //   await queryClient.invalidateQueries(['session-obj', address]);
           queryClient.setQueryData(['session', address], null);
           queryClient.setQueryData(['session-obj', address], null);
           break;
@@ -139,14 +109,12 @@ export const useSession = () => {
         }
       }
     },
-    // refetchOnMount: true,
-    // refetchOnReconnect: 'always',
+
     queryFn: async () => {
-      console.log('CHECK SESSION QUERY FUNC START');
       if (!address) return false;
       if (!masa) return false;
+
       const hasSesh = await checkSession();
-      console.log('CHECK SESSION QUERY FUNC', { hasSesh });
 
       if (hasSesh) {
         return hasSesh;
@@ -168,39 +136,18 @@ export const useSession = () => {
 
   const { data: session, refetch: getSession } = useQuery({
     queryKey: ['session', address],
-    // enabled: !!masa && !!address,
     enabled: false,
-
     context: QcContext,
     refetchOnMount: false,
-    onSuccess: async (data: ISession | null) => {
-      if (data) {
-        console.log('We have data onsuccess SESSION QUERY FUNC');
-      } else {
-        console.log('We DONT have data onsuccess SESSION QUERY FUNC');
-      }
-    },
-    onSettled: async (data, error) => {
-      console.log('SETTLED WITH', data);
+
+    onSettled: async () => {
       await checkLogin();
-      if (error) console.log('ERROR QUERY', error);
     },
-    // onSuccess: async () => checkLogin(),
 
     queryFn: async () => {
-      //   return {};
-      console.log('SESSION QUERY FUNC START');
       const hasIt = await checkSession();
-      console.log({ hasIt });
-      if (hasIt) {
-        // if (session) return session;
-        // if (session?.user?.address !== address) {
-        //   console.log('ADDRESS MISMATCH');
-        //   await queryClient.invalidateQueries(['session', address]);
-        //   await queryClient.invalidateQueries(['session-check', address]);
-        //   return null;
-        // }
 
+      if (hasIt) {
         const sesshFromGet = await masa?.session.getSession();
 
         if (sesshFromGet === undefined || sesshFromGet === null) {
@@ -210,7 +157,6 @@ export const useSession = () => {
         return sesshFromGet;
       }
 
-      console.log('SESSION QUERY FUNC, DONT HAVE SESSION, LOGGING IN ');
       const sesh = await loginSession();
 
       if (sesh === undefined || sesh === null) return null;
@@ -220,71 +166,15 @@ export const useSession = () => {
   });
 
   useAsync(async () => {
-    console.log('USE ASYNC TO SWITCH ACCS ON LOGUOt', {
-      hasSession,
-      address,
-      previousAddress,
-      seshAddress: session?.user.address,
-      session,
-    });
-
-    console.log('USE ASYNC TO SWITCH ACCS ON LOGUOt', {
-      hasSession,
-      address,
-      seshFromGetAddress: sessionFromGet?.user.address,
-      sessionFromGet,
-    });
-
-    if (!address) return;
-    if (isDisconnected) return;
-    if (!hasSession) {
-      const { data: isLogged } = await checkLogin();
-
-      if (isLogged) {
-        console.log('LOGGING OUT USEASYNC');
-        // await logoutSession();
-        // await queryClient.invalidateQueries(['session-check', address]);
-      }
-      return;
+    if (isDisconnected) {
+      await logoutSession();
     }
-
-    if (hasSession) {
-      if (sessionFromGet === null) {
-        console.log('SESSION FROM GET IS NULL');
-        console.log('LOGGING OUT USEASYNC');
-        // await logoutSession();
-        // await queryClient.invalidateQueries(['session-check', address]);
-        return;
-      }
-      console.log("hasSession && sessionFromGet !== null, don't logout");
+    if (previousAddress !== address) {
+      await checkLogin();
     }
-
-    if (
-      sessionFromGet?.user.address &&
-      sessionFromGet?.user.address !== address
-    ) {
-      console.log('HOPEFULLY CHANGED ACCOUNTS TWO');
-      console.log('HERE logging out', sessionFromGet?.user.address, address);
-      const { data: isLgd } = await checkLogin();
-      if (isLgd) {
-        // await logoutSession();
-        // await queryClient.invalidateQueries(['session-check', address]);
-      }
-    }
-  }, [
-    // queryClient,
-    hasSession,
-    address,
-    session,
-    previousAddress,
-    // logoutSession,
-    isDisconnected,
-    sessionFromGet,
-    checkLogin,
-  ]);
+  }, [address, previousAddress, checkLogin, isDisconnected, logoutSession]);
 
   return {
-    // checkLogin,
     session,
     sessionFromGet,
     getSessionCB,

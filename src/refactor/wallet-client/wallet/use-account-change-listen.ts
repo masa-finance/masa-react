@@ -9,7 +9,7 @@ export const useAccountChangeListen = ({
   onChainChange?: () => void;
 }>) => {
   const provider = useProvider();
-  const { connector, address } = useAccount();
+  const { connector } = useAccount();
 
   useAsync(async () => {
     const handleConnectorUpdate = async ({ chain, account }: ConnectorData) => {
@@ -73,5 +73,5 @@ export const useAccountChangeListen = ({
       provider.off('chainChanged', () => {});
       provider.off('disconnect', () => {});
     };
-  }, [address, onAccountChange, onChainChange, connector, provider]);
+  }, [onAccountChange, onChainChange, connector, provider]);
 };
