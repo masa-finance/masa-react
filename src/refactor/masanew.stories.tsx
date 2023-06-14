@@ -227,6 +227,7 @@ const MasaInfo = () => {
     logoutSession,
     isLoggingIn,
     isLoggingOut,
+    sessionFromGet,
     hasSession,
     getSession,
     checkLogin,
@@ -254,6 +255,10 @@ const MasaInfo = () => {
             <li>
               Session: <br />
               <code>{JSON.stringify(session, null, 4)}</code>
+            </li>
+            <li>
+              Session From Get: <br />
+              <code>{JSON.stringify(sessionFromGet, null, 4)}</code>
             </li>
             {/* <li>Session User: {JSON.stringify(session?.user, null, 2)}</li>
             <li>Session Challenge: {session?.challenge}</li>
