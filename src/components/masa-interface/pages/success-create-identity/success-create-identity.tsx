@@ -76,8 +76,8 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
 
   const buttonText = useMemo(() => {
     switch (company) {
-        /* case 'Base Universe':
-         *   return 'Mint more names'; */
+      /* case 'Base Universe':
+       *   return 'Mint more names'; */
       default:
         return 'Go to dashboard';
     }
