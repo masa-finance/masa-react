@@ -129,6 +129,7 @@ const NetworkInfo = () => {
 const WalletInfo = () => {
   const {
     address,
+    previousAddress,
     // provider,
     // signer,
     connector,
@@ -150,8 +151,9 @@ const WalletInfo = () => {
       <li className="flex-50">
         <ul>
           <h3>Wallet</h3>
-          <li>address: {address}</li>
-          <li>activeConnector: {connector?.name}</li>
+          <li>address: {String(address)}</li>
+          <li>previousAddress: {String(previousAddress)}</li>
+          <li>activeConnector: {String(connector?.name)}</li>
           <li>isConnected: {String(isConnected)}</li>
           <li>isConnecting: {String(isConnecting)}</li>
           <li>isDisconnected: {String(isDisconnected)}</li>

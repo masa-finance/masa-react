@@ -9,7 +9,7 @@ export const useAccountChangeListen = ({
   onChainChange?: () => void;
 }>) => {
   const provider = useProvider();
-  const { connector } = useAccount();
+  const { connector, address } = useAccount();
 
   useAsync(async () => {
     const handleConnectorUpdate = async ({ chain, account }: ConnectorData) => {
@@ -21,7 +21,6 @@ export const useAccountChangeListen = ({
           window.localStorage.removeItem('walletconnect');
         }
 
-        // await invalidateAllQueries({ masa, signer, walletAddress });
         onAccountChange?.();
       } else if (chain) {
         // NOTE: this is a hack to fix the walletconnect issue
@@ -74,5 +73,5 @@ export const useAccountChangeListen = ({
       provider.off('chainChanged', () => {});
       provider.off('disconnect', () => {});
     };
-  }, [connector, provider]);
+  }, [address, onAccountChange, onChainChange, connector, provider]);
 };

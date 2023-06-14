@@ -6,10 +6,10 @@ import { useMasaClient } from '../masa-client/use-masa-client';
 import { QcContext } from '../masa-provider';
 
 export const useSession = () => {
-  const { address, isDisconnected } = useWallet();
+  const { address, isDisconnected, previousAddress } = useWallet();
   const { masa } = useMasaClient();
   const queryClient = useQueryClient({ context: QcContext });
-
+  //   console.log({ address, previousAddress });
   const [{ loading: isCheckingSession }, checkSession] =
     useAsyncFn(async () => {
       if (!address) return null;
@@ -80,7 +80,7 @@ export const useSession = () => {
 
   const { data: hasSession, refetch: checkLogin } = useQuery({
     queryKey: ['session-check', address],
-    enabled: !!masa && !!address,
+    enabled: !!masa,
     context: QcContext,
     onSuccess: async (data: boolean) => {
       console.log('ON SUCCESS checkLogin');
@@ -223,6 +223,7 @@ export const useSession = () => {
     console.log('USE ASYNC TO SWITCH ACCS ON LOGUOt', {
       hasSession,
       address,
+      previousAddress,
       seshAddress: session?.user.address,
       session,
     });
@@ -271,10 +272,11 @@ export const useSession = () => {
       }
     }
   }, [
-    queryClient,
+    // queryClient,
     hasSession,
     address,
     session,
+    previousAddress,
     // logoutSession,
     isDisconnected,
     sessionFromGet,

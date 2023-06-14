@@ -43,6 +43,8 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     isLoadingSigner,
     isLoadingBalance,
     balance,
+    previousAddress,
+    setPreviousAddress,
   } = useWallet();
   const {
     connectors,
@@ -103,6 +105,8 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         isLoadingSigner,
         isLoadingBalance,
         balance,
+        previousAddress,
+        setPreviousAddress,
 
         // network
         connectors,
@@ -133,6 +137,8 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       isLoadingSigner,
       isLoadingBalance,
       balance,
+      previousAddress,
+      setPreviousAddress,
 
       // network
       connectors,

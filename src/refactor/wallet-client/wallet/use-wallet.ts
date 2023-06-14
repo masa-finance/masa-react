@@ -3,7 +3,7 @@ import {
   useChainModal,
   useAccountModal,
 } from '@rainbow-me/rainbowkit';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   useAccount,
@@ -19,6 +19,8 @@ const useWallet = () => {
   const { openAccountModal } = useAccountModal();
   const { isConnected, isConnecting, isDisconnected, connector, address } =
     useAccount();
+  const [previousAddress, setPreviousAddress] = useState(address);
+  const [compareAddress, setCompareAddress] = useState(address);
   const { data: signer, isLoading: isLoadingSigner } = useSigner();
   const { disconnect, disconnectAsync } = useDisconnect();
   const provider = useProvider();
@@ -30,6 +32,27 @@ const useWallet = () => {
     address,
   });
 
+  useEffect(() => {
+    if (isDisconnected) {
+      setPreviousAddress(undefined);
+      setCompareAddress(undefined);
+      setPreviousAddress(undefined);
+    }
+
+    console.log('addr changed', { address });
+
+    if (compareAddress !== address) {
+      setPreviousAddress(compareAddress);
+      setCompareAddress(address);
+    }
+  }, [
+    address,
+    setPreviousAddress,
+    isDisconnected,
+    previousAddress,
+    compareAddress,
+    setCompareAddress,
+  ]);
   const balance = useMemo(() => {
     if (!balanceResult) return '';
     return `${balanceResult?.formatted} ${balanceResult?.symbol}`;
@@ -38,6 +61,8 @@ const useWallet = () => {
   const useWalletValue = useMemo(
     () => ({
       address,
+      previousAddress,
+      compareAddress,
       provider,
       signer,
       connector,
@@ -52,9 +77,13 @@ const useWallet = () => {
       isLoadingSigner,
       isLoadingBalance,
       balance,
+      setPreviousAddress,
+      setCompareAddress,
     }),
     [
       address,
+      previousAddress,
+      compareAddress,
       provider,
       signer,
       connector,
@@ -69,6 +98,8 @@ const useWallet = () => {
       isLoadingSigner,
       isLoadingBalance,
       balance,
+      setPreviousAddress,
+      setCompareAddress,
     ]
   );
 
