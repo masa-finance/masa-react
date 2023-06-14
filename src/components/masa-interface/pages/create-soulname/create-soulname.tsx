@@ -177,7 +177,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
         );
       }
 
-      if (!forcedPage && setForcedPage) {
+      if (setForcedPage) {
         reloadSoulnames?.();
         setForcedPage('successIdentityCreate');
       } else {
