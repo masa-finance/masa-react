@@ -5,26 +5,32 @@ import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { QcContext } from '../masa-provider';
 
+// * NOTE: react-query does not allow us to pass undefined as a function return,
+// * NOTE: so we need to convert an undefined result in every query to null
+// * TODO: split up the queries, pass context via function variable to avoid dependency cycle
+// * FIXME: we are getting the session 3 times on every change, we should only get it once
 export const useSession = () => {
   const { address, isDisconnected, previousAddress } = useWallet();
   const { masa } = useMasaClient();
   const queryClient = useQueryClient({ context: QcContext });
-  //   console.log({ address, previousAddress });
-  const [{ loading: isCheckingSession }, checkSession] =
+
+  // * callbacks
+  const [{ loading: isCheckingSession }, checkSessionAsync] =
     useAsyncFn(async () => {
       if (!address) return null;
       if (!masa) return null;
+      if (isDisconnected) return null;
 
       const hasSesh = await masa?.session.checkLogin();
       if (hasSesh !== undefined || hasSesh !== null) return hasSesh;
 
       return null;
-    }, [masa, address]);
+    }, [masa, address, isDisconnected]);
 
-  const [{ loading: isLoggingIn }, loginSession] = useAsyncFn(async () => {
+  const [, loginSessionAsync] = useAsyncFn(async () => {
     if (!masa) return null;
     if (!address) return null;
-
+    if (isDisconnected) return null;
     const loginObj = await masa.session.login();
 
     if (!loginObj) {
@@ -35,7 +41,7 @@ export const useSession = () => {
       userId: string;
       address: string;
     };
-  }, [masa, address]);
+  }, [masa, address, isDisconnected]);
 
   const [, getSessionAsync] = useAsyncFn(async () => {
     if (!masa) return null;
@@ -50,17 +56,19 @@ export const useSession = () => {
     return seshFromGet;
   }, [address, masa]);
 
+  // * queries
   const {
-    data: sessionFromGet,
+    data: session,
     isLoading: isFetchingSession,
-    refetch: getSessionCB,
+    refetch: getSession,
+    isRefetching: isRefetchingSession,
   } = useQuery({
-    queryKey: ['session-obj', address],
+    queryKey: ['session', address],
     enabled: false,
     context: QcContext,
     onSuccess: async (data: ISession | null) => {
       if (data) {
-        const resultCheck = await checkSession();
+        const resultCheck = await checkSessionAsync();
         if (!resultCheck) {
           //   await queryClient.invalidateQueries(['session-check', address]);
         }
@@ -69,39 +77,43 @@ export const useSession = () => {
     queryFn: async () => getSessionAsync(),
   });
 
-  const { data: hasSession, refetch: checkLogin } = useQuery({
+  const {
+    data: hasSession,
+    refetch: checkLogin,
+    isRefetching: isCheckingLogin,
+  } = useQuery({
     queryKey: ['session-check', address],
     enabled: !!masa,
     context: QcContext,
     onSuccess: async (data: boolean) => {
       switch (data) {
         case true: {
-          const checkedLogin = await checkSession();
+          const checkedLogin = await checkSessionAsync();
 
           if (!checkedLogin) {
-            await queryClient.invalidateQueries(['session-obj', address]);
-            await queryClient.invalidateQueries(['session-check', address]);
             await queryClient.invalidateQueries(['session', address]);
+            await queryClient.invalidateQueries(['session-check', address]);
+            await queryClient.invalidateQueries(['session-login', address]);
             return;
           }
 
-          if (sessionFromGet && address === sessionFromGet?.user.address) {
+          if (session && address === session?.user.address) {
             return;
           }
 
-          await queryClient.invalidateQueries(['session-obj', address]);
-          await queryClient.fetchQuery(['session-obj', address]);
+          await queryClient.invalidateQueries(['session', address]);
+          await queryClient.fetchQuery(['session', address]);
           break;
         }
 
         case false: {
+          queryClient.setQueryData(['session-login', address], null);
           queryClient.setQueryData(['session', address], null);
-          queryClient.setQueryData(['session-obj', address], null);
           break;
         }
         case undefined: {
+          queryClient.setQueryData(['session-login', address], null);
           queryClient.setQueryData(['session', address], null);
-          queryClient.setQueryData(['session-obj', address], null);
           break;
         }
         default: {
@@ -114,7 +126,7 @@ export const useSession = () => {
       if (!address) return false;
       if (!masa) return false;
 
-      const hasSesh = await checkSession();
+      const hasSesh = await checkSessionAsync();
 
       if (hasSesh) {
         return hasSesh;
@@ -124,18 +136,19 @@ export const useSession = () => {
     },
   });
 
+  // * logout callback
   const [{ loading: isLoggingOut }, logoutSession] = useAsyncFn(async () => {
     if (hasSession) {
       await masa?.session.logout();
     }
 
     await queryClient.invalidateQueries(['session-check', address]);
+    await queryClient.invalidateQueries(['session-login', address]);
     await queryClient.invalidateQueries(['session', address]);
-    await queryClient.invalidateQueries(['session-obj', address]);
   }, [masa, queryClient, address, hasSession]);
 
-  const { data: session, refetch: getSession } = useQuery({
-    queryKey: ['session', address],
+  const { refetch: loginSession, isRefetching: isLoggingIn } = useQuery({
+    queryKey: ['session-login', address],
     enabled: false,
     context: QcContext,
     refetchOnMount: false,
@@ -145,23 +158,13 @@ export const useSession = () => {
     },
 
     queryFn: async () => {
-      const hasIt = await checkSession();
+      if (isDisconnected) return null;
+      const hasIt = await checkSessionAsync();
 
-      if (hasIt) {
-        const sesshFromGet = await masa?.session.getSession();
+      if (hasIt) return null;
 
-        if (sesshFromGet === undefined || sesshFromGet === null) {
-          return null;
-        }
-
-        return sesshFromGet;
-      }
-
-      const sesh = await loginSession();
-
-      if (sesh === undefined || sesh === null) return null;
-
-      return sesh;
+      await loginSessionAsync();
+      return null;
     },
   });
 
@@ -169,6 +172,7 @@ export const useSession = () => {
     if (isDisconnected) {
       await logoutSession();
     }
+
     if (previousAddress !== address) {
       await checkLogin();
     }
@@ -176,17 +180,25 @@ export const useSession = () => {
 
   return {
     session,
-    sessionFromGet,
-    getSessionCB,
+    getSession,
     isFetchingSession,
+    isRefetchingSession,
     hasSession,
-    checkSession,
+    checkSessionAsync,
     isCheckingSession,
+    isCheckingLogin,
     loginSession,
     logoutSession,
     isLoggingIn,
     isLoggingOut,
-    getSession,
+    isLoggedIn: hasSession,
     checkLogin,
+    isLoadingSession:
+      isLoggingIn ||
+      isLoggingOut ||
+      isFetchingSession ||
+      isCheckingLogin ||
+      isCheckingSession ||
+      isRefetchingSession,
   };
 };

@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext, useContext, useMemo } from 'react';
-import { useMasaClient } from './use-masa-client';
-import { useIdentity } from '../masa-feature/use-identity';
-import { useSession } from '../masa-feature/use-session';
+import { useMasaClient } from './masa-client/use-masa-client';
+import { useIdentity } from './masa-feature/use-identity';
+import { useSession } from './masa-feature/use-session';
 
 export interface MasaClientProviderValue {
   masa?: ReturnType<typeof useMasaClient>['sdk'];

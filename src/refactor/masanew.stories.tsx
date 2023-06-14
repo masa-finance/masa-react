@@ -225,15 +225,16 @@ const MasaInfo = () => {
   // const { identity, isLoadingIdentity } = useIdentity();
   const {
     session,
-    // loginSession,
+    loginSession,
     logoutSession,
     isLoggingIn,
     isLoggingOut,
-    sessionFromGet,
+
     hasSession,
-    getSession,
+    isLoadingSession,
     checkLogin,
   } = useSession();
+  const { isDisconnected } = useWallet();
 
   // console.log('STORY', { hasSession, session });
   return (
@@ -251,6 +252,7 @@ const MasaInfo = () => {
         <li>
           <ul>
             <h3>Session</h3>
+            <li>isLoadingSession: {String(isLoadingSession)}</li>
             <li>hasSession: {String(hasSession)}</li>
             <li>isLoggingIn: {String(isLoggingIn)}</li>
             <li>isLoggingOut: {String(isLoggingOut)}</li>
@@ -258,10 +260,7 @@ const MasaInfo = () => {
               Session: <br />
               <code>{JSON.stringify(session, null, 4)}</code>
             </li>
-            <li>
-              Session From Get: <br />
-              <code>{JSON.stringify(sessionFromGet, null, 4)}</code>
-            </li>
+
             {/* <li>Session User: {JSON.stringify(session?.user, null, 2)}</li>
             <li>Session Challenge: {session?.challenge}</li>
             <li>session cookie: {JSON.stringify(session?.cookie, null, 2)}</li> */}
@@ -271,9 +270,9 @@ const MasaInfo = () => {
       <ul>
         <li>
           <Button
-            disabled={!!hasSession}
+            disabled={!!hasSession || isDisconnected || isLoadingSession}
             type="button"
-            onClick={() => getSession() as unknown as () => void}
+            onClick={() => loginSession() as unknown as () => void}
           >
             Login Session RQ
           </Button>
@@ -288,12 +287,20 @@ const MasaInfo = () => {
           </Button>
         </li> */}
         <li>
-          <Button disabled={!hasSession} type="button" onClick={logoutSession}>
+          <Button
+            disabled={!hasSession || isLoadingSession}
+            type="button"
+            onClick={logoutSession}
+          >
             Logout Session
           </Button>
         </li>
         <li>
-          <Button type="button" onClick={() => checkLogin()}>
+          <Button
+            disabled={isDisconnected || isLoadingSession}
+            type="button"
+            onClick={() => checkLogin()}
+          >
             Check Login
           </Button>
         </li>

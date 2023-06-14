@@ -19,7 +19,9 @@ const useWallet = () => {
   const { openAccountModal } = useAccountModal();
   const { isConnected, isConnecting, isDisconnected, connector, address } =
     useAccount();
-  const [previousAddress, setPreviousAddress] = useState(address);
+  const [previousAddress, setPreviousAddress] = useState<
+    `0x${string}` | undefined
+  >(undefined);
   const [compareAddress, setCompareAddress] = useState(address);
   const { data: signer, isLoading: isLoadingSigner } = useSigner();
   const { disconnect, disconnectAsync } = useDisconnect();
@@ -38,8 +40,6 @@ const useWallet = () => {
       setCompareAddress(undefined);
       setPreviousAddress(undefined);
     }
-
-    console.log('addr changed', { address });
 
     if (compareAddress !== address) {
       setPreviousAddress(compareAddress);
