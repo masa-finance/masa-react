@@ -38,7 +38,7 @@
     "@acusti/react-code-input": "^3.11.0",
     "@babel/preset-typescript": "^7.21.5",
     "@celo/rainbowkit-celo": "^0.11.1",
-    "@masa-finance/masa-sdk": "^3.4.6",
+    "@masa-finance/masa-sdk": "^3.4.10",
     "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "0.12.14",
     "@wagmi/core": "0.10.11",
