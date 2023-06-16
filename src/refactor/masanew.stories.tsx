@@ -11,7 +11,8 @@ import MasaProvider, { QcContext } from './masa-provider';
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
 // import { useIdentity } from './masa-feature/use-identity';
-import { useSession } from './masa-feature/use-session';
+import { useSession } from './masa-feature/session/use-session';
+import { useMasaClient } from './masa-client/use-masa-client';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -229,13 +230,13 @@ const MasaInfo = () => {
     logoutSession,
     isLoggingIn,
     isLoggingOut,
-
+    sessionAddress,
     hasSession,
     isLoadingSession,
     checkLogin,
   } = useSession();
   const { isDisconnected } = useWallet();
-
+  const { masaAddress } = useMasaClient();
   // console.log('STORY', { hasSession, session });
   return (
     <>
@@ -243,6 +244,9 @@ const MasaInfo = () => {
         <h3>Masa</h3>
         <li>
           <ul>
+            <h3>Masa</h3>
+            <li>masaAddress: {masaAddress}</li>
+            <li>sessionAddress: {sessionAddress}</li>
             {/* <h3>Identity</h3>
             <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
             <li>Identity Address: {identity?.address}</li>
@@ -290,7 +294,7 @@ const MasaInfo = () => {
           <Button
             disabled={!hasSession || isLoadingSession}
             type="button"
-            onClick={logoutSession}
+            onClick={() => logoutSession()}
           >
             Logout Session
           </Button>

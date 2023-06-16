@@ -17,7 +17,7 @@ export const createQueryClient = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+        cacheTime: 0, // 1000 * 60 * 60 * 24, // 24 hours
         networkMode: 'offlineFirst',
         refetchOnWindowFocus: false,
         retry: 0,
@@ -58,7 +58,8 @@ export const createQueryClient = () => {
           query.cacheTime !== 0 &&
           // Note: adding a `persist` flag to a query key will instruct the
           // persister whether or not to persist the response of the query.
-          (query.queryKey[0] as { persist?: boolean }).persist !== false,
+          (query.queryKey[1] as { persist?: boolean } & Record<string, unknown>)
+            .persist !== false,
       },
     });
 

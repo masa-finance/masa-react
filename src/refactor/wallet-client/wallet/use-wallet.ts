@@ -22,6 +22,7 @@ const useWallet = () => {
   const [previousAddress, setPreviousAddress] = useState<
     `0x${string}` | undefined
   >(undefined);
+  // * NOTE: internal state to compare addresses
   const [compareAddress, setCompareAddress] = useState(address);
   const { data: signer, isLoading: isLoadingSigner } = useSigner();
   const { disconnect, disconnectAsync } = useDisconnect();

@@ -5,7 +5,7 @@ export const useAccountChangeListen = ({
   onAccountChange,
   onChainChange,
 }: Partial<{
-  onAccountChange?: () => void;
+  onAccountChange?: (account: `0x${string}`) => void;
   onChainChange?: () => void;
 }>) => {
   const provider = useProvider();
@@ -21,7 +21,7 @@ export const useAccountChangeListen = ({
           window.localStorage.removeItem('walletconnect');
         }
 
-        onAccountChange?.();
+        onAccountChange?.(account);
       } else if (chain) {
         // NOTE: this is a hack to fix the walletconnect issue
         if (typeof window !== 'undefined') {

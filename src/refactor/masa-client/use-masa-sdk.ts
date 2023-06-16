@@ -36,10 +36,12 @@ export const useMasaSDK = (
     verbose,
     apiUrl,
     contractAddressOverrides,
-  }: UseMasaSdkArgs,
+    address,
+  }: UseMasaSdkArgs & { address: `0x${string}` | undefined },
   deps: Array<unknown>
 ): Masa | undefined => {
   const masa = useMemo(() => {
+    if (!address) return undefined;
     if (!signer) {
       if (verbose)
         console.log('DEBUG: no signer, returning undefined for masa object');
