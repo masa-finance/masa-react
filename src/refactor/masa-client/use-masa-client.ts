@@ -47,7 +47,9 @@ export const useMasaClient = () => {
   const { value: masaChainId } = useAsync(async () => {
     if (masa) {
       const mChainId = await masa.config.signer?.getChainId();
+
       if (mChainId !== activeChainId) return undefined;
+
       return mChainId;
     }
 
@@ -56,10 +58,12 @@ export const useMasaClient = () => {
 
   const { value: masaNetwork } = useAsync(async () => {
     if (!masa) return undefined;
+    if (masaChainId !== activeChainId) return undefined;
+
     const network = await masa.config.signer?.provider?.getNetwork();
-    if (network?.name !== activeNetwork) return undefined;
-    return network?.name;
-  }, [masa, activeNetwork]);
+
+    return network?.name === 'unknown' ? activeNetwork : network?.name;
+  }, [masa, activeNetwork, activeChainId, masaChainId]);
 
   const masaClient = useMemo(() => {
     if (address !== masaAddress) {

@@ -107,6 +107,7 @@ export const useMasaSDK = (
       verbose,
     });
   }, [
+    address,
     signer,
     apiUrl,
     environmentName,

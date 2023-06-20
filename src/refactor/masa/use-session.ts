@@ -1,18 +1,18 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 import type { ISession } from '@masa-finance/masa-sdk';
 import { useMemo } from 'react';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaClient } from '../masa-client/use-masa-client';
+import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 import { QcContext } from '../masa-provider';
 
 // * NOTE: react-query does not allow us to pass undefined as a function return,
 // * NOTE: so we need to convert an undefined result in every query to null
-// * TODO: split up the queries, pass context via function variable to avoid dependency cycle
 export const useSession = () => {
   const { address, isDisconnected, previousAddress, isConnected } = useWallet();
   const { masa, masaAddress } = useMasaClient();
-  const queryClient = useQueryClient({ context: QcContext });
+  const queryClient = useMasaQueryClient();
 
   // * callbacks
   const [{ loading: isCheckingSession }, checkSessionAsync] =

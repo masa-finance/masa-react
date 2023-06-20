@@ -11,9 +11,10 @@ import MasaProvider, { QcContext } from './masa-provider';
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
 // import { useIdentity } from './masa-feature/use-identity';
-import { useSession } from './masa-feature/use-session';
+import { useSession } from './masa/use-session';
 import { useMasaClient } from './masa-client/use-masa-client';
-import { useIdentity } from './masa-feature/use-identity';
+import { useIdentity } from './masa/use-identity';
+import { useSoulNames } from './masa/use-soulnames';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -237,12 +238,23 @@ const MasaInfo = () => {
     checkLogin,
   } = useSession();
   const { isDisconnected } = useWallet();
-  const { activeChain, activeNetwork, activeChainId } = useNetwork();
+  const { activeNetwork, activeChainId } = useNetwork();
   const { masaAddress, masaNetwork } = useMasaClient();
-  const { identity, isLoadingIdentity } = useIdentity();
+  const { identity, isLoadingIdentity, isIdentityAvailibleInNetwork } =
+    useIdentity();
+  const { soulnames } = useSoulNames();
+  console.log({ soulnames });
   // console.log('STORY', { hasSession, session });
   return (
     <>
+      <ReactQueryDevtoolsPanel
+        context={QcContext}
+        setIsOpen={() => {}}
+        onDragStart={() => {}}
+        isOpen
+        className="rq-debug"
+        style={{ color: 'white' }}
+      />
       <ul>
         <h3>Masa</h3>
         <li>
@@ -251,7 +263,6 @@ const MasaInfo = () => {
             <li>masaAddress: {masaAddress}</li>
             <li>sessionAddress: {sessionAddress}</li>
             <li>masaNetwork: {masaNetwork}</li>
-            <li>activeChain: {JSON.stringify(activeChain, null, 4)}</li>
             <li>activeNetwork: {activeNetwork}</li>
             <li>activeChainId: {activeChainId}</li>
             {/* <h3>Identity</h3>
@@ -280,10 +291,26 @@ const MasaInfo = () => {
       </ul>
       <ul>
         <h3>Identity</h3>
+        <li>
+          isIdentityAvailibleInNetwork: {String(isIdentityAvailibleInNetwork)}
+        </li>
         <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
         <li>Identity: {String(JSON.stringify(identity, null, 4))}</li>
       </ul>
       <ul>
+        <h3>Soulnames</h3>
+        <li>
+          <ul>
+            {soulnames?.map((sn) => (
+              <li key={sn.metadata.name}>
+                <code>{JSON.stringify(sn, null, 4)}</code>
+              </li>
+            ))}
+          </ul>
+        </li>
+      </ul>
+      <ul>
+        <h3>Session</h3>
         <li>
           <Button
             disabled={!!hasSession || isDisconnected || isLoadingSession}
@@ -321,15 +348,27 @@ const MasaInfo = () => {
           </Button>
         </li>
       </ul>
-
-      <ReactQueryDevtoolsPanel
-        context={QcContext}
-        setIsOpen={() => {}}
-        onDragStart={() => {}}
-        isOpen
-        className="rq-debug"
-        style={{ color: 'white' }}
-      />
+      <ul>
+        <h3>Identity</h3>
+        <li>
+          <Button
+            disabled={isDisconnected || isLoadingSession}
+            type="button"
+            onClick={() => checkLogin()}
+          >
+            Purchase Identity
+          </Button>
+        </li>
+        <li>
+          <Button
+            disabled={isDisconnected || isLoadingIdentity}
+            type="button"
+            onClick={() => checkLogin()}
+          >
+            Purchase Identity and Soulname
+          </Button>
+        </li>
+      </ul>
     </>
   );
 };

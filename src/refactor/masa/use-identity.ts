@@ -1,19 +1,20 @@
-import { useAsync, useAsyncFn } from 'react-use';
+import { useAsyncFn } from 'react-use';
 import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
 import { QcContext } from '../masa-provider';
 import { useNetwork } from '../wallet-client/network';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
+import { isIdentityContractAvailible } from './utils';
+import { useIdentityListen } from './use-identity-listen';
 // import { useWallet } from '../wallet-client/wallet/use-wallet';
 
 export const useIdentity = () => {
-  // const queryClient = useQueryClient({ context: QcContext });
   const { masaAddress, sdk: masa, masaNetwork } = useMasaClient();
   const { isDisconnected } = useWallet();
   const { sessionAddress, hasSession } = useSession();
   const { activeNetwork } = useNetwork();
-  // const { address } = useWallet();
 
   const [{ loading: isLoadingIdentity }, loadIdentity] =
     useAsyncFn(async () => {
@@ -25,8 +26,8 @@ export const useIdentity = () => {
         if (!hasSession) return null;
         return await masa.identity.load(masaAddress);
       } catch (error) {
-        console.log('IM IN THIS ERROR', { error });
-        throw error;
+        console.error('ERROR loading identity', error);
+        return null;
       }
     }, [
       masaAddress,
@@ -48,32 +49,23 @@ export const useIdentity = () => {
       'identity',
       { masaAddress, sessionAddress, masaNetwork, persist: false },
     ],
-    onSettled: () => console.log('settled identity'),
     queryFn: async () => loadIdentity(),
   });
 
-  useAsync(async () => {
-    if (
-      masaAddress === sessionAddress &&
-      masaNetwork === activeNetwork &&
-      identity?.address !== masaAddress
-    )
-      await loadIdentity();
+  const hasIdentity = useMemo(() => !!identity, [identity]);
+  const isIdentityAvailibleInNetwork = useMemo(
+    () => isIdentityContractAvailible(masa),
+    [masa]
+  );
 
-    return undefined;
-  }, [
-    loadIdentity,
-    masaAddress,
-    activeNetwork,
-    masaNetwork,
-    sessionAddress,
-    identity,
-  ]);
+  useIdentityListen({ identity, getIdentity, sessionAddress });
 
   return {
     identity,
+    hasIdentity,
     isLoadingIdentity,
     isFetchingIdentity,
+    isIdentityAvailibleInNetwork,
     getIdentity,
   };
 };
