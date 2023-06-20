@@ -1,4 +1,5 @@
 import type { Provider } from '@wagmi/core';
+
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   useSwitchNetwork,
@@ -24,6 +25,7 @@ export const useNetwork = () => {
     () => !!switchingToChain,
     [switchingToChain]
   );
+
   const isActiveChainUnsupported = activeChain?.unsupported ?? false;
 
   const switchNetwork = useCallback(
@@ -34,6 +36,9 @@ export const useNetwork = () => {
     },
     [switchNetworkWagmi]
   );
+
+  const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
+  const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
 
   const stopSwitching = useCallback(() => {
     setSwitchingToChain(null);
@@ -79,6 +84,8 @@ export const useNetwork = () => {
     switchingToChain,
     canProgramaticallySwitchNetwork,
     activeChain,
+    activeNetwork,
+    activeChainId,
     isSwitchingChain,
     chains,
     availibleChains,

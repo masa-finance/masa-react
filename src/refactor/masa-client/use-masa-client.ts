@@ -10,7 +10,8 @@ import { useNetwork } from '../wallet-client/network';
 export const useMasaClient = () => {
   const { masaConfig } = useConfig();
   const { signer, isDisconnected, address } = useWallet();
-  const { activeChain } = useNetwork();
+
+  const { activeChainId, activeNetwork } = useNetwork();
 
   const masa = useMasaSDK(
     {
@@ -20,16 +21,16 @@ export const useMasaClient = () => {
       environmentName: masaConfig.environment,
       // NOTE: mismatch of homestead (wagmi) vs ethereum (masa)
       networkName:
-        activeChain?.network === 'homestead'
+        activeNetwork === 'homestead'
           ? 'ethereum'
-          : (activeChain?.network as NetworkName | undefined),
+          : (activeNetwork as NetworkName | undefined),
     },
     [
       address,
       signer,
       masaConfig,
       masaConfig.environment,
-      activeChain?.network,
+      activeNetwork,
       isDisconnected,
     ]
   );
@@ -43,20 +44,40 @@ export const useMasaClient = () => {
     return undefined;
   }, [masa]);
 
+  const { value: masaChainId } = useAsync(async () => {
+    if (masa) {
+      const mChainId = await masa.config.signer?.getChainId();
+      if (mChainId !== activeChainId) return undefined;
+      return mChainId;
+    }
+
+    return undefined;
+  }, [masa, activeChainId]);
+
+  const { value: masaNetwork } = useAsync(async () => {
+    if (!masa) return undefined;
+    const network = await masa.config.signer?.provider?.getNetwork();
+    if (network?.name !== activeNetwork) return undefined;
+    return network?.name;
+  }, [masa, activeNetwork]);
+
   const masaClient = useMemo(() => {
     if (address !== masaAddress) {
       return {
         masaAddress,
+        masaChainId,
         sdk: undefined,
         masa: undefined,
       };
     }
     return {
       masaAddress,
+      masaNetwork,
+      masaChainId,
       sdk: masa,
       masa,
     };
-  }, [masa, masaAddress, address]);
+  }, [masa, masaAddress, masaChainId, masaNetwork, address]);
 
   return masaClient;
 };

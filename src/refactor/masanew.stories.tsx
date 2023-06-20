@@ -11,8 +11,9 @@ import MasaProvider, { QcContext } from './masa-provider';
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
 // import { useIdentity } from './masa-feature/use-identity';
-import { useSession } from './masa-feature/session/use-session';
+import { useSession } from './masa-feature/use-session';
 import { useMasaClient } from './masa-client/use-masa-client';
+import { useIdentity } from './masa-feature/use-identity';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -236,7 +237,9 @@ const MasaInfo = () => {
     checkLogin,
   } = useSession();
   const { isDisconnected } = useWallet();
-  const { masaAddress } = useMasaClient();
+  const { activeChain, activeNetwork, activeChainId } = useNetwork();
+  const { masaAddress, masaNetwork } = useMasaClient();
+  const { identity, isLoadingIdentity } = useIdentity();
   // console.log('STORY', { hasSession, session });
   return (
     <>
@@ -247,6 +250,10 @@ const MasaInfo = () => {
             <h3>Masa</h3>
             <li>masaAddress: {masaAddress}</li>
             <li>sessionAddress: {sessionAddress}</li>
+            <li>masaNetwork: {masaNetwork}</li>
+            <li>activeChain: {JSON.stringify(activeChain, null, 4)}</li>
+            <li>activeNetwork: {activeNetwork}</li>
+            <li>activeChainId: {activeChainId}</li>
             {/* <h3>Identity</h3>
             <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
             <li>Identity Address: {identity?.address}</li>
@@ -270,6 +277,11 @@ const MasaInfo = () => {
             <li>session cookie: {JSON.stringify(session?.cookie, null, 2)}</li> */}
           </ul>
         </li>
+      </ul>
+      <ul>
+        <h3>Identity</h3>
+        <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
+        <li>Identity: {String(JSON.stringify(identity, null, 4))}</li>
       </ul>
       <ul>
         <li>
@@ -309,6 +321,7 @@ const MasaInfo = () => {
           </Button>
         </li>
       </ul>
+
       <ReactQueryDevtoolsPanel
         context={QcContext}
         setIsOpen={() => {}}

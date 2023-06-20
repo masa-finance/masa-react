@@ -2,10 +2,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 import type { ISession } from '@masa-finance/masa-sdk';
 import { useMemo } from 'react';
-import { useWallet } from '../../wallet-client/wallet/use-wallet';
-import { useMasaClient } from '../../masa-client/use-masa-client';
-import { QcContext } from '../../masa-provider';
-// import { useAccountChangeListen } from '../wallet-client/wallet/use-account-change-listen';
+import { useWallet } from '../wallet-client/wallet/use-wallet';
+import { useMasaClient } from '../masa-client/use-masa-client';
+import { QcContext } from '../masa-provider';
 
 // * NOTE: react-query does not allow us to pass undefined as a function return,
 // * NOTE: so we need to convert an undefined result in every query to null
@@ -60,10 +59,6 @@ export const useSession = () => {
 
   const [, onSettledGetSession] = useAsyncFn(
     async (data: ISession | null | undefined) => {
-      console.log('ON SETTLE GETSESSION', {
-        masaAddress,
-        retrAddr: data?.user.address,
-      });
       if (!data) return;
 
       if (data?.user.address !== masaAddress) {

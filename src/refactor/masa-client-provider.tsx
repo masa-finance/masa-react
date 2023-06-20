@@ -4,7 +4,7 @@ import { useMasaClient } from './masa-client/use-masa-client';
 import { useIdentity } from './masa-feature/use-identity';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
-import { useSession } from './masa-feature/session/use-session';
+import { useSession } from './masa-feature/use-session';
 
 export interface MasaClientProviderValue {
   masa?: ReturnType<typeof useMasaClient>['sdk'];
@@ -25,7 +25,7 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
     sessionAddress,
   } = useSession();
   const { isDisconnected } = useWallet();
-
+  const { identity } = useIdentity();
   // * useEffect to handle account switches and disconnect
   useAsync(async () => {
     if (isLoadingSession) return;
@@ -70,8 +70,9 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
         sessionAddress,
         loginSession,
         logoutSession,
+        identity,
       } as MasaClientProviderValue),
-    [masa, session, sessionAddress, loginSession, logoutSession]
+    [masa, session, identity, sessionAddress, loginSession, logoutSession]
   );
   return (
     <MasaClientContext.Provider value={masaClientProviderValue}>
