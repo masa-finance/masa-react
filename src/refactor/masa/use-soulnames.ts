@@ -23,7 +23,7 @@ export const useSoulNames = () => {
       'soulnames',
       { sessionAddress, masaAddress, masaNetwork, persist: false },
     ],
-    queryFn: async () => getSoulnamesAsync(),
+    queryFn: getSoulnamesAsync,
   });
 
   //   useAsync(async () => {

@@ -35,7 +35,7 @@ export const useCreditScores = () => {
       !!masaNetwork &&
       !!identity?.identityId,
     context: MasaQueryClientContext,
-    queryFn: async () => getCreditScoresAsync(),
+    queryFn: getCreditScoresAsync,
   });
 
   return {

@@ -18,7 +18,7 @@ export const useGreen = () => {
       { masaAddress, sessionAddress, masaNetwork, persist: false },
     ],
     enabled: !!sessionAddress && !!hasSession && !!masaAddress && !!masaNetwork,
-    queryFn: async () => getGreensAsync(),
+    queryFn: getGreensAsync,
   });
 
   return {

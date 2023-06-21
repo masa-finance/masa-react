@@ -34,7 +34,7 @@ export const useIdentity = () => {
       'identity',
       { masaAddress, sessionAddress, masaNetwork, persist: false },
     ],
-    queryFn: async () => loadIdentity(),
+    queryFn: loadIdentity,
   });
 
   const hasIdentity = useMemo(() => !!identity, [identity]);

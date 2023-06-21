@@ -34,7 +34,7 @@ export const useSBT = ({ tokenAddress }: { tokenAddress: string }) => {
       { masaAddress, sessionAddress, masaNetwork, persist: false },
     ],
     enabled: !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
-    queryFn: async () => getSBTsAsync(),
+    queryFn: getSBTsAsync,
   });
 
   return {
