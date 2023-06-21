@@ -16,6 +16,7 @@ import { useMasaClient } from './masa-client/use-masa-client';
 import { useIdentity } from './masa/use-identity';
 import { useSoulNames } from './masa/use-soulnames';
 import { useCreditScores } from './masa/use-credit-scores';
+import { useGreen } from './masa/use-green';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -43,6 +44,7 @@ const NetworkInfo = () => {
     switchingToChain,
     canProgramaticallySwitchNetwork,
     activeChain,
+    activeNetwork,
     isSwitchingChain,
     chains,
     isActiveChainUnsupported,
@@ -52,6 +54,7 @@ const NetworkInfo = () => {
       <h3>Chain / Network</h3>
       <li>Chain: {activeChain?.name}</li>
       <li>chain-id: {activeChain?.id}</li>
+      <li>activeNetwork: {String(activeNetwork)}</li>
       <li>isSwitchingChain: {String(isSwitchingChain)}</li>
       <li>switchingToChain: {String(switchingToChain)}</li>
       <li>
@@ -225,14 +228,96 @@ const WalletInfo = () => {
   );
 };
 
+const SessionInfo = () => {
+  const {
+    session,
+    // loginSession,
+    // logoutSession,
+    // sessionAddress,
+    isLoggingIn,
+    isLoggingOut,
+    hasSession,
+    isLoadingSession,
+    // checkLogin,
+  } = useSession();
+
+  return (
+    <ul>
+      <li>
+        <ul>
+          <h3>Session</h3>
+          <li>isLoadingSession: {String(isLoadingSession)}</li>
+          <li>hasSession: {String(hasSession)}</li>
+          <li>isLoggingIn: {String(isLoggingIn)}</li>
+          <li>isLoggingOut: {String(isLoggingOut)}</li>
+          <li>
+            Session: <br />
+            <code>{JSON.stringify(session, null, 4)}</code>
+          </li>
+
+          {/* <li>Session User: {JSON.stringify(session?.user, null, 2)}</li>
+            <li>Session Challenge: {session?.challenge}</li>
+            <li>session cookie: {JSON.stringify(session?.cookie, null, 2)}</li> */}
+        </ul>
+      </li>
+    </ul>
+  );
+};
+
+const IdentityInfo = () => {
+  const { isIdentityAvailibleInNetwork, isLoadingIdentity, identity } =
+    useIdentity();
+  return (
+    <ul>
+      <h3>Identity</h3>
+      <li>
+        isIdentityAvailibleInNetwork: {String(isIdentityAvailibleInNetwork)}
+      </li>
+      <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
+      <li>Identity: {String(JSON.stringify(identity, null, 4))}</li>
+    </ul>
+  );
+};
+
+const SoulnameCreditScoreInfo = () => {
+  const { soulnames, isLoadingSoulnames } = useSoulNames();
+  const { creditScores, isLoadingCreditScores } = useCreditScores();
+  return (
+    <>
+      <ul>
+        <h3>Soulnames</h3>
+        <li>
+          <ul>
+            <li>isLoadingSoulnames: {String(isLoadingSoulnames)}</li>
+            {soulnames?.map((sn) => (
+              <li key={sn.metadata.name}>
+                <code>Owner: {JSON.stringify(sn.owner, null, 4)}</code>
+              </li>
+            ))}
+          </ul>
+        </li>
+      </ul>
+      <ul>
+        <h3>Credit Scores</h3>
+        <li>
+          <ul>
+            <li>isLoadingCreditScores: {String(isLoadingCreditScores)}</li>
+            {creditScores?.map((cs) => (
+              <li key={cs.metadata?.properties.lastUpdated}>
+                <code>{String(JSON.stringify(cs, null, 4))}</code>
+              </li>
+            ))}
+          </ul>
+        </li>
+      </ul>
+    </>
+  );
+};
 const MasaInfo = () => {
   // const { identity, isLoadingIdentity } = useIdentity();
   const {
-    session,
     loginSession,
     logoutSession,
-    isLoggingIn,
-    isLoggingOut,
     sessionAddress,
     hasSession,
     isLoadingSession,
@@ -241,10 +326,7 @@ const MasaInfo = () => {
   const { isDisconnected } = useWallet();
   const { activeNetwork, activeChainId } = useNetwork();
   const { masaAddress, masaNetwork } = useMasaClient();
-  const { identity, isLoadingIdentity, isIdentityAvailibleInNetwork } =
-    useIdentity();
-  const { soulnames } = useSoulNames();
-  const { creditScores } = useCreditScores();
+
   return (
     <>
       <ReactQueryDevtoolsPanel
@@ -271,56 +353,8 @@ const MasaInfo = () => {
             <li>Identity Id: {identity?.identityId?.toString()}</li> */}
           </ul>
         </li>
-        <li>
-          <ul>
-            <h3>Session</h3>
-            <li>isLoadingSession: {String(isLoadingSession)}</li>
-            <li>hasSession: {String(hasSession)}</li>
-            <li>isLoggingIn: {String(isLoggingIn)}</li>
-            <li>isLoggingOut: {String(isLoggingOut)}</li>
-            <li>
-              Session: <br />
-              <code>{JSON.stringify(session, null, 4)}</code>
-            </li>
+      </ul>
 
-            {/* <li>Session User: {JSON.stringify(session?.user, null, 2)}</li>
-            <li>Session Challenge: {session?.challenge}</li>
-            <li>session cookie: {JSON.stringify(session?.cookie, null, 2)}</li> */}
-          </ul>
-        </li>
-      </ul>
-      <ul>
-        <h3>Identity</h3>
-        <li>
-          isIdentityAvailibleInNetwork: {String(isIdentityAvailibleInNetwork)}
-        </li>
-        <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
-        <li>Identity: {String(JSON.stringify(identity, null, 4))}</li>
-      </ul>
-      <ul>
-        <h3>Soulnames</h3>
-        <li>
-          <ul>
-            {soulnames?.map((sn) => (
-              <li key={sn.metadata.name}>
-                <code>{JSON.stringify(sn, null, 4)}</code>
-              </li>
-            ))}
-          </ul>
-        </li>
-      </ul>
-      <ul>
-        <h3>Credit Scores</h3>
-        <li>
-          <ul>
-            {creditScores?.map((cs) => (
-              <li key={cs.metadata?.properties.lastUpdated}>
-                <code>{String(JSON.stringify(cs, null, 4))}</code>
-              </li>
-            ))}
-          </ul>
-        </li>
-      </ul>
       <ul>
         <h3>Session</h3>
         <li>
@@ -360,7 +394,7 @@ const MasaInfo = () => {
           </Button>
         </li>
       </ul>
-      <ul>
+      {/* <ul>
         <h3>Identity</h3>
         <li>
           <Button
@@ -380,8 +414,28 @@ const MasaInfo = () => {
             Purchase Identity and Soulname
           </Button>
         </li>
-      </ul>
+      </ul> */}
     </>
+  );
+};
+
+const GreenInfo = () => {
+  const { greens, isLoadingGreens } = useGreen();
+
+  return (
+    <ul>
+      <h3>Greens</h3>
+      <li>isLoadingGreens: {String(isLoadingGreens)}</li>
+      <li>
+        <ul>
+          {greens?.map((green) => (
+            <li key={green.metadata?.properties.tokenId}>
+              <code>{JSON.stringify(green, null, 4)}</code>
+            </li>
+          ))}
+        </ul>
+      </li>
+    </ul>
   );
 };
 const Component = (): JSX.Element => {
@@ -389,8 +443,12 @@ const Component = (): JSX.Element => {
   return (
     <section>
       <WalletInfo />
-      <MasaInfo />
       <NetworkInfo />
+      <MasaInfo />
+      <SessionInfo />
+      <IdentityInfo />
+      <SoulnameCreditScoreInfo />
+      <GreenInfo />
       <ul>
         <h3>Config</h3>
         <li>

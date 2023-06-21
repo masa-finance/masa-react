@@ -13,3 +13,15 @@ export const isIdentityContractAvailible = (masa?: Masa) => {
 
   return true;
 };
+export const isAnotherContract = (masa?: Masa) => {
+    if (!masa) return false;
+    if (
+      masa?.contracts.instances.SoulboundIdentityContract.address ===
+        constants.AddressZero ||
+      !masa?.contracts.instances.SoulboundIdentityContract.hasAddress
+    ) {
+      return false;
+    }
+  
+    return true;
+  };

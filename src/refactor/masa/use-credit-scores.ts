@@ -3,27 +3,21 @@ import { useAsyncFn } from 'react-use';
 import { QcContext } from '../masa-provider';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useIdentity } from './use-identity';
+import { useCanQuery } from '../hooks/use-can-query';
 import { useSession } from './use-session';
-import { useWallet } from '../wallet-client/wallet/use-wallet';
-import { useNetwork } from '../wallet-client/network';
 
 export const useCreditScores = () => {
   const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
+  const canQuery = useCanQuery();
   const { identity } = useIdentity();
-  const { sessionAddress, hasSession } = useSession();
-  const { isDisconnected } = useWallet();
-  const { activeNetwork } = useNetwork();
-
-  const [, loadCreditScores] = useAsyncFn(async () => {
-    if (!masa) return null;
-    if (!sessionAddress) return null;
-    if (!activeNetwork) return null;
-    if (isDisconnected) return null;
-    if (!hasSession) return null;
+  const { hasSession, sessionAddress } = useSession();
+  const [, getCreditScoresAsync] = useAsyncFn(async () => {
+    if (!canQuery) return null;
     const csResult = await masa?.creditScore.list();
+
     if (!csResult) return null;
     return csResult;
-  }, [masa, sessionAddress, activeNetwork, isDisconnected, hasSession]);
+  }, [masa, canQuery]);
 
   const {
     isFetching: isLoadingCreditScores,
@@ -32,16 +26,16 @@ export const useCreditScores = () => {
   } = useQuery({
     queryKey: [
       'credit-scores',
-      {
-        masaAddress,
-        identityId: identity?.identityId,
-        masaNetwork,
-        persist: false,
-      },
+      { sessionAddress, masaAddress, masaNetwork, persist: false },
     ],
-    enabled: !!masaAddress && !!masaNetwork && !!identity?.identityId,
+    enabled:
+      !!hasSession &&
+      !!sessionAddress &&
+      !!masaAddress &&
+      !!masaNetwork &&
+      !!identity?.identityId,
     context: QcContext,
-    queryFn: async () => loadCreditScores(),
+    queryFn: async () => getCreditScoresAsync(),
   });
 
   return {
