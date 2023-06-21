@@ -95,7 +95,7 @@ export const useSession = () => {
     cacheTime: 0,
     context: MasaQueryClientContext,
     onSettled: onSettledGetSession,
-    queryFn: async () => getSessionAsync(),
+    queryFn: getSessionAsync,
   });
 
   // * logout callback
