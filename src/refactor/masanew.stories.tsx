@@ -321,7 +321,6 @@ const SBTInfo = () => {
     tokenAddress: '0x1fCE0Ae50a8900f09E4A437F33E95313225Bb4b7',
   });
 
-  console.log({ SBTs });
   return (
     <ul>
       <h3>SBTs</h3>
@@ -356,8 +355,12 @@ const MasaInfo = () => {
     <>
       <ReactQueryDevtoolsPanel
         context={MasaQueryClientContext}
-        setIsOpen={() => {}}
-        onDragStart={() => {}}
+        setIsOpen={() => {
+          // empty because it's a noop
+        }}
+        onDragStart={() => {
+          // empty because it's a noop
+        }}
         isOpen
         className="rq-debug"
         style={{ color: 'white' }}

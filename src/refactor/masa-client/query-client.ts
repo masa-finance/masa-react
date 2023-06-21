@@ -6,12 +6,7 @@ import type {
 } from '@tanstack/react-query-persist-client';
 import { persistQueryClient } from '@tanstack/react-query-persist-client';
 import { noopStorage } from '@wagmi/core';
-import { createContext } from 'react';
 import { createStorage } from 'wagmi';
-
-export const MasaQueryClientContext = createContext<QueryClient | undefined>(
-  undefined
-);
 
 export const createQueryClient = () => {
   const queryClient = new QueryClient({

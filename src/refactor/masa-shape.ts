@@ -1,3 +1,5 @@
-// import type { Masa } from '@masa-finance/masa-sdk';
+import type { Masa } from '@masa-finance/masa-sdk';
 
-export interface MasaShape {}
+export interface MasaShape {
+  masa?: Masa;
+}

@@ -6,7 +6,9 @@ import { MasaReactConfig } from './config';
 import { MasaStateProvider } from './provider/masa-state-provider';
 import { MasaWalletProvider } from './provider/masa-wallet-provider';
 
-export interface MasaProviderValue {}
+export interface MasaProviderValue {
+  children?: ReactNode;
+}
 
 export const MasaProvider = ({
   children,

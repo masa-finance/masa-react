@@ -12,7 +12,7 @@ export const useAccountChangeListen = ({
   const { connector } = useAccount();
 
   useAsync(async () => {
-    const handleConnectorUpdate = async ({ chain, account }: ConnectorData) => {
+    const onChangeConnector = async ({ chain, account }: ConnectorData) => {
       if (account) {
         // setAccountAddress(account);
 
@@ -38,40 +38,42 @@ export const useAccountChangeListen = ({
       }
     };
 
-    connector?.on('change', handleConnectorUpdate);
-    connector?.on('disconnect', async () => {
+    const onDisconnectConnector = async () => {
       if (typeof window !== 'undefined') {
         window.localStorage.removeItem('walletconnect');
       }
+    };
 
-      //   await invalidateAllQueries({
-      //     masa,
-      //     signer,
-      //     walletAddress: accountAddress,
-      //   });
-    });
+    connector?.on('change', onChangeConnector);
+    connector?.on('disconnect', onDisconnectConnector);
     // * walletconnect
 
-    // Subscribe to accounts change
-    provider.on('accountsChanged', (accounts: string[]) => {
+    const onAccountsChanged = async (accounts: string[]) => {
       console.log('for wc acc changed', accounts);
-    });
+    };
+
+    const onChainChanged = async (chainId: number) => {
+      console.log('for wc chain changed', chainId);
+    };
+
+    const onDisconnect = async (code: number, reason: string) => {
+      console.log('for wc disc', code, reason);
+    };
+    // Subscribe to accounts change
+    provider.on('accountsChanged', onAccountsChanged);
 
     // Subscribe to chainId change
-    provider.on('chainChanged', (chainId: number) => {
-      console.log('for wc chainid changed', chainId);
-    });
+    provider.on('chainChanged', onChainChanged);
 
     // Subscribe to session disconnection
-    provider.on('disconnect', (code: number, reason: string) => {
-      console.log('for wc disc', code, reason);
-    });
+    provider.on('disconnect', onDisconnect);
 
     return () => {
-      connector?.off('change', handleConnectorUpdate);
-      provider.off('accountsChanged', () => {});
-      provider.off('chainChanged', () => {});
-      provider.off('disconnect', () => {});
+      connector?.off('change', onChangeConnector);
+      connector?.off('disconnect', onDisconnectConnector);
+      provider.off('accountsChanged', onAccountsChanged);
+      provider.off('chainChanged', onChainChanged);
+      provider.off('disconnect', onDisconnect);
     };
   }, [onAccountChange, onChainChange, connector, provider]);
 };
