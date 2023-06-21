@@ -5,7 +5,8 @@ import { useMemo } from 'react';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
-import { QcContext } from '../masa-provider';
+
+import { MasaQueryClientContext } from '../provider/masa-state-provider';
 
 // * NOTE: react-query does not allow us to pass undefined as a function return,
 // * NOTE: so we need to convert an undefined result in every query to null
@@ -92,7 +93,7 @@ export const useSession = () => {
     queryKey: ['session', { masaAddress, persist: false }],
     enabled: false,
     cacheTime: 0,
-    context: QcContext,
+    context: MasaQueryClientContext,
     onSettled: onSettledGetSession,
     queryFn: async () => getSessionAsync(),
   });
@@ -224,7 +225,7 @@ export const useSession = () => {
   } = useQuery({
     queryKey: ['session-check', { masaAddress, persist: false }],
     enabled: !!masa && !!masaAddress,
-    context: QcContext,
+    context: MasaQueryClientContext,
     cacheTime: 0,
     onSuccess: onSuccessLogin,
 
@@ -266,7 +267,7 @@ export const useSession = () => {
   const { refetch: loginSession, isFetching: isLoggingIn } = useQuery({
     queryKey: ['session-login', { masaAddress }],
     enabled: false,
-    context: QcContext,
+    context: MasaQueryClientContext,
     refetchOnMount: false,
     cacheTime: 0,
     onSettled: onSettledLogin,

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
-import { QcContext } from '../masa-provider';
+import { MasaQueryClientContext } from '../provider/masa-state-provider';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useIdentity } from './use-identity';
 import { useCanQuery } from '../hooks/use-can-query';
@@ -34,7 +34,7 @@ export const useCreditScores = () => {
       !!masaAddress &&
       !!masaNetwork &&
       !!identity?.identityId,
-    context: QcContext,
+    context: MasaQueryClientContext,
     queryFn: async () => getCreditScoresAsync(),
   });
 

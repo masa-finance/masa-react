@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
-import { QcContext } from '../masa-provider';
+import { MasaQueryClientContext } from '../provider/masa-state-provider';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
 
@@ -18,7 +18,7 @@ export const useSoulNames = () => {
     refetch: getSoulnames,
   } = useQuery({
     enabled: !!sessionAddress && !!hasSession && !!masaAddress && !!masaNetwork,
-    context: QcContext,
+    context: MasaQueryClientContext,
     queryKey: [
       'soulnames',
       { sessionAddress, masaAddress, masaNetwork, persist: false },

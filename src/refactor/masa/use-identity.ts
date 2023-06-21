@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
-import { QcContext } from '../masa-provider';
+import { MasaQueryClientContext } from '../provider/masa-state-provider';
 import { isIdentityContractAvailible } from './utils';
 import { useIdentityListen } from './use-identity-listen';
 import { useCanQuery } from '../hooks/use-can-query';
@@ -28,7 +28,7 @@ export const useIdentity = () => {
     isFetching: isFetchingIdentity,
     refetch: getIdentity,
   } = useQuery({
-    context: QcContext,
+    context: MasaQueryClientContext,
     enabled: !!hasSession && !!masaAddress && !!masaNetwork && !!sessionAddress,
     queryKey: [
       'identity',

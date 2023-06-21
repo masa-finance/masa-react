@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useAsyncFn } from 'react-use';
-import { QcContext } from '../masa-provider';
+import { MasaQueryClientContext } from '../provider/masa-state-provider';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
 
@@ -12,9 +12,15 @@ export const useSBT = ({ tokenAddress }: { tokenAddress: string }) => {
   const currentTokenAddress = useMemo(() => tokenAddress, [tokenAddress]);
 
   const [, getSBTsAsync] = useAsyncFn(async () => {
-    const { list } = (await masa?.sbt.connect(currentTokenAddress)) || {};
+    try {
+      const { list } = (await masa?.sbt.connect(currentTokenAddress)) || {};
 
-    return list?.(masaAddress) ?? null;
+      return await (list?.(masaAddress) ?? null);
+    } catch (error: unknown) {
+      const err = error as Error;
+      console.warn('ERROR loading SBTs', err.message);
+      return [{ message: err.message }];
+    }
   }, [masa, masaAddress, currentTokenAddress]);
 
   const {
@@ -22,7 +28,7 @@ export const useSBT = ({ tokenAddress }: { tokenAddress: string }) => {
     isFetching: isLoadingSBTs,
     refetch: getSBTs,
   } = useQuery({
-    context: QcContext,
+    context: MasaQueryClientContext,
     queryKey: [
       'sbt',
       { masaAddress, sessionAddress, masaNetwork, persist: false },

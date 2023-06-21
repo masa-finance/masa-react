@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
-import { QcContext } from '../masa-provider';
+import { MasaQueryClientContext } from '../provider/masa-state-provider';
 import { useSession } from './use-session';
 
 export const useGreen = () => {
@@ -12,7 +12,7 @@ export const useGreen = () => {
     return greensResult ?? null;
   }, [masa]);
   const { data: greens, isFetching: isLoadingGreens } = useQuery({
-    context: QcContext,
+    context: MasaQueryClientContext,
     queryKey: [
       'green',
       { masaAddress, sessionAddress, masaNetwork, persist: false },

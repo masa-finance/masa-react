@@ -1,11 +1,12 @@
 import React, { ReactNode, createContext, useContext, useMemo } from 'react';
-import { useMasaClient } from './masa-client/use-masa-client';
-import { useIdentity } from './masa/use-identity';
+import { useMasaClient } from '../masa-client/use-masa-client';
+import { useIdentity } from '../masa/use-identity';
 
-import { useSession } from './masa/use-session';
-import { useCreditScores } from './masa/use-credit-scores';
-import { useSoulNames } from './masa/use-soulnames';
-import { useSessionListen } from './masa/use-session-listen';
+import { useSession } from '../masa/use-session';
+import { useCreditScores } from '../masa/use-credit-scores';
+import { useSoulNames } from '../masa/use-soulnames';
+import { useSessionListen } from '../masa/use-session-listen';
+import { useGreen } from '../masa/use-green';
 
 export interface MasaClientProviderValue {
   masa?: ReturnType<typeof useMasaClient>['sdk'];
@@ -13,6 +14,7 @@ export interface MasaClientProviderValue {
   identity?: ReturnType<typeof useIdentity>['identity'];
   soulnames?: ReturnType<typeof useSoulNames>['soulnames'];
   creditScores?: ReturnType<typeof useCreditScores>['creditScores'];
+  greens?: ReturnType<typeof useGreen>['greens'];
 }
 
 export const MasaClientContext = createContext({} as MasaClientProviderValue);
@@ -23,43 +25,9 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
   const { identity } = useIdentity();
   const { creditScores } = useCreditScores();
   const { soulnames } = useSoulNames();
+  const { greens } = useGreen();
 
   useSessionListen();
-  // * useEffect to handle account switches and disconnect
-  // useAsync(async () => {
-  //   if (isLoadingSession) return;
-
-  //   if (
-  //     session &&
-  //     masaAddress &&
-  //     masaAddress === session?.user.address &&
-  //     hasSession
-  //   ) {
-  //     return;
-  //   }
-
-  //   if (isDisconnected) {
-  //     await logoutSession();
-  //     return;
-  //   }
-
-  //   if (
-  //     hasSession &&
-  //     sessionAddress &&
-  //     masaAddress &&
-  //     sessionAddress !== masaAddress
-  //   ) {
-  //     await logoutSession();
-  //   }
-  // }, [
-  //   isLoadingSession,
-  //   sessionAddress,
-  //   masaAddress,
-  //   isDisconnected,
-  //   logoutSession,
-  //   hasSession,
-  //   session,
-  // ]);
 
   const masaClientProviderValue: MasaClientProviderValue = useMemo(
     () =>
@@ -72,6 +40,7 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
         identity,
         soulnames,
         creditScores,
+        greens,
       } as MasaClientProviderValue),
     [
       masa,
@@ -82,6 +51,7 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
       logoutSession,
       soulnames,
       creditScores,
+      greens,
     ]
   );
   return (

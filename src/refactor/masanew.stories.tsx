@@ -6,7 +6,6 @@ import React from 'react';
 import { Button } from './ui';
 import './ui/styles.scss';
 import { useConfig } from './base-provider';
-import MasaProvider, { QcContext } from './masa-provider';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
@@ -18,6 +17,8 @@ import { useSoulNames } from './masa/use-soulnames';
 import { useCreditScores } from './masa/use-credit-scores';
 import { useGreen } from './masa/use-green';
 import { useSBT } from './masa/use-sbt';
+import MasaProvider from './masa-provider';
+import { MasaQueryClientContext } from './provider/masa-state-provider';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -319,15 +320,17 @@ const SBTInfo = () => {
   const { SBTs, isLoadingSBTs } = useSBT({
     tokenAddress: '0x1fCE0Ae50a8900f09E4A437F33E95313225Bb4b7',
   });
+
+  console.log({ SBTs });
   return (
     <ul>
       <h3>SBTs</h3>
       <li>isLoadingSBTs: {String(isLoadingSBTs)}</li>
       <li>
         <ul>
-          {SBTs?.map((sbt: unknown) => (
-            <li>
-              <code>{JSON.stringify(sbt, null, 4)}</code>
+          {(SBTs ?? []).map((sbt: unknown) => (
+            <li key={String(sbt)}>
+              <code>{JSON.stringify(sbt ?? null, null, 4)}</code>
             </li>
           ))}
         </ul>
@@ -352,7 +355,7 @@ const MasaInfo = () => {
   return (
     <>
       <ReactQueryDevtoolsPanel
-        context={QcContext}
+        context={MasaQueryClientContext}
         setIsOpen={() => {}}
         onDragStart={() => {}}
         isOpen
