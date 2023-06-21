@@ -4,39 +4,24 @@ import { useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
 import { QcContext } from '../masa-provider';
-import { useNetwork } from '../wallet-client/network';
-import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { isIdentityContractAvailible } from './utils';
 import { useIdentityListen } from './use-identity-listen';
-// import { useWallet } from '../wallet-client/wallet/use-wallet';
+import { useCanQuery } from '../hooks/use-can-query';
 
 export const useIdentity = () => {
   const { masaAddress, sdk: masa, masaNetwork } = useMasaClient();
-  const { isDisconnected } = useWallet();
   const { sessionAddress, hasSession } = useSession();
-  const { activeNetwork } = useNetwork();
-
+  const canQuery = useCanQuery();
   const [{ loading: isLoadingIdentity }, loadIdentity] =
     useAsyncFn(async () => {
       try {
-        if (!masa) return null;
-        if (!sessionAddress) return null;
-        if (!activeNetwork) return null;
-        if (isDisconnected) return null;
-        if (!hasSession) return null;
-        return await masa.identity.load(masaAddress);
+        if (!canQuery) return null;
+        return await masa?.identity.load(masaAddress);
       } catch (error) {
         console.error('ERROR loading identity', error);
         return null;
       }
-    }, [
-      masaAddress,
-      masa,
-      activeNetwork,
-      sessionAddress,
-      isDisconnected,
-      hasSession,
-    ]);
+    }, [masaAddress, masa, canQuery]);
 
   const {
     data: identity,

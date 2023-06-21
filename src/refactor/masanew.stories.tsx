@@ -15,6 +15,7 @@ import { useSession } from './masa/use-session';
 import { useMasaClient } from './masa-client/use-masa-client';
 import { useIdentity } from './masa/use-identity';
 import { useSoulNames } from './masa/use-soulnames';
+import { useCreditScores } from './masa/use-credit-scores';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -243,8 +244,7 @@ const MasaInfo = () => {
   const { identity, isLoadingIdentity, isIdentityAvailibleInNetwork } =
     useIdentity();
   const { soulnames } = useSoulNames();
-  console.log({ soulnames });
-  // console.log('STORY', { hasSession, session });
+  const { creditScores } = useCreditScores();
   return (
     <>
       <ReactQueryDevtoolsPanel
@@ -304,6 +304,18 @@ const MasaInfo = () => {
             {soulnames?.map((sn) => (
               <li key={sn.metadata.name}>
                 <code>{JSON.stringify(sn, null, 4)}</code>
+              </li>
+            ))}
+          </ul>
+        </li>
+      </ul>
+      <ul>
+        <h3>Credit Scores</h3>
+        <li>
+          <ul>
+            {creditScores?.map((cs) => (
+              <li key={cs.metadata?.properties.lastUpdated}>
+                <code>{String(JSON.stringify(cs, null, 4))}</code>
               </li>
             ))}
           </ul>

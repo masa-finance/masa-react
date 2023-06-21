@@ -1,66 +1,65 @@
 import React, { ReactNode, createContext, useContext, useMemo } from 'react';
-import { useAsync } from 'react-use';
 import { useMasaClient } from './masa-client/use-masa-client';
 import { useIdentity } from './masa/use-identity';
 
-import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useSession } from './masa/use-session';
+import { useCreditScores } from './masa/use-credit-scores';
+import { useSoulNames } from './masa/use-soulnames';
+import { useSessionListen } from './masa/use-session-listen';
 
 export interface MasaClientProviderValue {
   masa?: ReturnType<typeof useMasaClient>['sdk'];
   session?: ReturnType<typeof useSession>['session'];
   identity?: ReturnType<typeof useIdentity>['identity'];
+  soulnames?: ReturnType<typeof useSoulNames>['soulnames'];
+  creditScores?: ReturnType<typeof useCreditScores>['creditScores'];
 }
 
 export const MasaClientContext = createContext({} as MasaClientProviderValue);
 
 export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
-  const { masa, masaAddress } = useMasaClient();
-  const {
-    session,
-    isLoadingSession,
-    hasSession,
-    loginSession,
-    logoutSession,
-    sessionAddress,
-  } = useSession();
-  const { isDisconnected } = useWallet();
+  const { masa } = useMasaClient();
+  const { session, loginSession, logoutSession, sessionAddress } = useSession();
   const { identity } = useIdentity();
+  const { creditScores } = useCreditScores();
+  const { soulnames } = useSoulNames();
+
+  useSessionListen();
   // * useEffect to handle account switches and disconnect
-  useAsync(async () => {
-    if (isLoadingSession) return;
+  // useAsync(async () => {
+  //   if (isLoadingSession) return;
 
-    if (
-      session &&
-      masaAddress &&
-      masaAddress === session?.user.address &&
-      hasSession
-    ) {
-      return;
-    }
+  //   if (
+  //     session &&
+  //     masaAddress &&
+  //     masaAddress === session?.user.address &&
+  //     hasSession
+  //   ) {
+  //     return;
+  //   }
 
-    if (isDisconnected) {
-      await logoutSession();
-      return;
-    }
+  //   if (isDisconnected) {
+  //     await logoutSession();
+  //     return;
+  //   }
 
-    if (
-      hasSession &&
-      sessionAddress &&
-      masaAddress &&
-      sessionAddress !== masaAddress
-    ) {
-      await logoutSession();
-    }
-  }, [
-    isLoadingSession,
-    sessionAddress,
-    masaAddress,
-    isDisconnected,
-    logoutSession,
-    hasSession,
-    session,
-  ]);
+  //   if (
+  //     hasSession &&
+  //     sessionAddress &&
+  //     masaAddress &&
+  //     sessionAddress !== masaAddress
+  //   ) {
+  //     await logoutSession();
+  //   }
+  // }, [
+  //   isLoadingSession,
+  //   sessionAddress,
+  //   masaAddress,
+  //   isDisconnected,
+  //   logoutSession,
+  //   hasSession,
+  //   session,
+  // ]);
 
   const masaClientProviderValue: MasaClientProviderValue = useMemo(
     () =>
@@ -71,8 +70,19 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
         loginSession,
         logoutSession,
         identity,
+        soulnames,
+        creditScores,
       } as MasaClientProviderValue),
-    [masa, session, identity, sessionAddress, loginSession, logoutSession]
+    [
+      masa,
+      session,
+      identity,
+      sessionAddress,
+      loginSession,
+      logoutSession,
+      soulnames,
+      creditScores,
+    ]
   );
   return (
     <MasaClientContext.Provider value={masaClientProviderValue}>
