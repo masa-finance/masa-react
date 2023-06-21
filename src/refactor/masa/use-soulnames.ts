@@ -13,7 +13,11 @@ export const useSoulNames = () => {
     enabled: !!masa && !!masaAddress && !!masaNetwork,
     context: QcContext,
     queryKey: ['soulnames', { masaAddress, masaNetwork, persist: false }],
-    queryFn: async () => masa?.soulName.list(),
+    queryFn: async () => {
+      const snResult = await masa?.soulName.list();
+      if (snResult) return snResult;
+      return null;
+    },
   });
 
   useAsync(async () => getSoulnames(), [getSoulnames]);
