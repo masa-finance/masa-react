@@ -17,6 +17,7 @@ import { useIdentity } from './masa/use-identity';
 import { useSoulNames } from './masa/use-soulnames';
 import { useCreditScores } from './masa/use-credit-scores';
 import { useGreen } from './masa/use-green';
+import { useSBT } from './masa/use-sbt';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -313,6 +314,27 @@ const SoulnameCreditScoreInfo = () => {
     </>
   );
 };
+
+const SBTInfo = () => {
+  const { SBTs, isLoadingSBTs } = useSBT({
+    tokenAddress: '0x1fCE0Ae50a8900f09E4A437F33E95313225Bb4b7',
+  });
+  return (
+    <ul>
+      <h3>SBTs</h3>
+      <li>isLoadingSBTs: {String(isLoadingSBTs)}</li>
+      <li>
+        <ul>
+          {SBTs?.map((sbt: unknown) => (
+            <li>
+              <code>{JSON.stringify(sbt, null, 4)}</code>
+            </li>
+          ))}
+        </ul>
+      </li>
+    </ul>
+  );
+};
 const MasaInfo = () => {
   // const { identity, isLoadingIdentity } = useIdentity();
   const {
@@ -449,6 +471,7 @@ const Component = (): JSX.Element => {
       <IdentityInfo />
       <SoulnameCreditScoreInfo />
       <GreenInfo />
+      <SBTInfo />
       <ul>
         <h3>Config</h3>
         <li>
