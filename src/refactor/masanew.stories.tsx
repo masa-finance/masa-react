@@ -1,4 +1,3 @@
-// skipcq: JS-0415
 import buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
@@ -52,6 +51,7 @@ const NetworkInfo = () => {
     isActiveChainUnsupported,
   } = useNetwork();
   return (
+    // skipcq: JS-0415
     <ul>
       <h3>Chain / Network</h3>
       <li>Chain: {activeChain?.name}</li>
@@ -152,6 +152,7 @@ const WalletInfo = () => {
   } = useWallet();
 
   return (
+    // skipcq: JS-0415
     <ul className="row wrap">
       <li className="flex-50">
         <ul>
@@ -236,6 +237,7 @@ const SessionInfo = () => {
   } = useSession();
 
   return (
+    // skipcq: JS-0415
     <ul>
       <li>
         <ul>
@@ -278,6 +280,7 @@ const SoulnameCreditScoreInfo = () => {
   const { soulnames, isLoadingSoulnames } = useSoulNames();
   const { creditScores, isLoadingCreditScores } = useCreditScores();
   return (
+    // skipcq: JS-0415
     <>
       <ul>
         <h3>Soulnames</h3>
@@ -315,6 +318,7 @@ const SBTInfo = () => {
   });
 
   return (
+    // skipcq: JS-0415
     <ul>
       <h3>SBTs</h3>
       <li>isLoadingSBTs: {String(isLoadingSBTs)}</li>
@@ -335,6 +339,7 @@ const SessionButtons = () => {
   const { loginSessionAsync, logoutSession, checkLogin } = useSession();
 
   return (
+    // skipcq: JS-0415
     <ul>
       <h3>Session</h3>
       <li>
@@ -389,6 +394,7 @@ const MasaInfo = () => {
   }, []);
 
   return (
+    // skipcq: JS-0415
     <>
       <ReactQueryDevtoolsPanel
         context={MasaQueryClientContext}
