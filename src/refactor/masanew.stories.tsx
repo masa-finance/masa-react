@@ -443,6 +443,7 @@ const GreenInfo = () => {
 const Component = (): JSX.Element => {
   const config = useConfig();
   return (
+    // skipcq: JS-0415
     <section>
       <WalletInfo />
       <NetworkInfo />
