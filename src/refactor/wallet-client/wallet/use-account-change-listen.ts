@@ -42,6 +42,7 @@ export const useAccountChangeListen = ({
       if (typeof window !== 'undefined') {
         window.localStorage.removeItem('walletconnect');
       }
+      await Promise.resolve();
     };
 
     connector?.on('change', onChangeConnector);
@@ -54,13 +55,13 @@ export const useAccountChangeListen = ({
     };
 
     const onChainChanged = async (chainId: number) => {
-      console.log('for wc chain changed', chainId);
       await Promise.resolve();
+      console.log('for wc chain changed', chainId);
     };
 
     const onDisconnect = async (code: number, reason: string) => {
-      console.log('for wc disc', code, reason);
       await Promise.resolve();
+      console.log('for wc disc', code, reason);
     };
     // Subscribe to accounts change
     provider.on('accountsChanged', onAccountsChanged);
@@ -70,6 +71,8 @@ export const useAccountChangeListen = ({
 
     // Subscribe to session disconnection
     provider.on('disconnect', onDisconnect);
+
+    await Promise.resolve();
 
     return () => {
       connector?.off('change', onChangeConnector);
