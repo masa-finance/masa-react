@@ -58,19 +58,5 @@ export const createQueryClient = () => {
       },
     });
 
-  // const test = new QueryClient({
-  //   defaultOptions: {
-  //     queries: {
-  //       refetchOnWindowFocus: false,
-  //       cacheTime: 1000 * 60 * 60 * 24, // 24 hours
-  //     },
-  //   },
-  // });
-
-  // const testPersist = createSyncStoragePersister({
-  //   storage: window.localStorage,
-  // });
-
-  // return test;
   return queryClient;
 };

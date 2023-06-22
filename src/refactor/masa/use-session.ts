@@ -1,318 +1,130 @@
+import { useAsync, useAsyncFn } from 'react-use';
 import { useQuery } from '@tanstack/react-query';
-import { useAsyncFn } from 'react-use';
-import type { ISession } from '@masa-finance/masa-sdk';
 import { useMemo } from 'react';
-import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
-
+import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { MasaQueryClientContext } from '../provider/masa-state-provider';
+import { useSessionConnect } from './use-session-connect';
 
-// * NOTE: react-query does not allow us to pass undefined as a function return,
-// * NOTE: so we need to convert an undefined result in every query to null
 export const useSession = () => {
-  const { address, isDisconnected, previousAddress, isConnected } = useWallet();
-  const { masa, masaAddress } = useMasaClient();
+  const { address } = useWallet();
   const queryClient = useMasaQueryClient();
-
-  // * callbacks
-  const [{ loading: isCheckingSession }, checkSessionAsync] =
-    useAsyncFn(async () => {
-      if (!masaAddress) return null;
-      if (!masa) return null;
-      if (isDisconnected) return null;
-
-      const hasSesh = await masa?.session.checkLogin();
-      if (hasSesh !== undefined || hasSesh !== null) return hasSesh;
-
-      return null;
-    }, [masa, masaAddress, isDisconnected]);
-
-  const [, loginSessionAsync] = useAsyncFn(async () => {
-    if (!masa) return null;
-    if (!masaAddress) return null;
-    if (masaAddress !== address) return null;
-    if (isDisconnected) return null;
-    const loginObj = await masa.session.login();
-
-    if (!loginObj) {
-      return null;
-    }
-
-    return loginObj as unknown as ISession & {
-      userId: string;
-      address: string;
-    };
-  }, [masa, address, masaAddress, isDisconnected]);
-
+  const { sdk: masa, masaAddress } = useMasaClient();
+  const { isLoggingIn, isLoggingOut, loginSessionAsync, logoutSession } =
+    useSessionConnect();
   const [, getSessionAsync] = useAsyncFn(async () => {
-    if (!masa) return null;
-    if (!masaAddress) return null;
-
     const seshFromGet = await masa?.session.getSession();
+    return seshFromGet ?? null;
+  }, [masa]);
 
-    if (seshFromGet === undefined || seshFromGet === null) {
-      return null;
-    }
+  const [, checkSessionAsync] = useAsyncFn(async () => {
+    const hasSesh = await masa?.session.checkLogin();
 
-    return seshFromGet;
-  }, [masaAddress, masa]);
+    return hasSesh ?? null;
+  }, [masa]);
 
-  const [, onSettledGetSession] = useAsyncFn(
-    async (data: ISession | null | undefined) => {
-      if (!data) return;
-
-      if (data?.user.address !== masaAddress) {
-        await queryClient.invalidateQueries([
-          'session',
-          { masaAddress, persist: false },
-        ]);
-        queryClient.setQueryData(
-          ['session', { masaAddress, persist: false }],
-          null
-        );
-
-        await queryClient.invalidateQueries([
-          'session-check',
-          { masaAddress, persist: false },
-        ]);
-        queryClient.setQueryData(
-          ['session', { masaAddress, persist: false }],
-          false
-        );
-      }
-    },
-    [masaAddress, queryClient]
-  );
   // * queries
-  const {
-    data: session,
-    isFetching: isFetchingSession,
-    refetch: getSession,
-  } = useQuery({
-    queryKey: ['session', { masaAddress, persist: false }],
-    enabled: false,
-    cacheTime: 0,
-    context: MasaQueryClientContext,
-    onSettled: onSettledGetSession,
-    queryFn: getSessionAsync,
-  });
-
-  // * logout callback
-  const [{ loading: isLoggingOut }, logoutSession] = useAsyncFn(async () => {
-    await masa?.session.logout();
-
-    await queryClient.invalidateQueries([
-      'session-check',
-      { masaAddress, persist: false },
-    ]);
-    await queryClient.invalidateQueries(['session-login', { masaAddress }]);
-    await queryClient.invalidateQueries([
-      'session',
-      { masaAddress, persist: false },
-    ]);
-    queryClient.setQueryData(
-      ['session-check', { masaAddress, persist: false }],
-      null
-    );
-    queryClient.setQueryData(['session-login', { masaAddress }], null);
-    queryClient.setQueryData(
-      ['session', { masaAddress, persist: false }],
-      null
-    );
-  }, [masa, queryClient, masaAddress]);
-
-  // * session address
-  const sessionAddress = useMemo(() => {
-    if (!session) return undefined;
-    if (!session.user) return undefined;
-    return session.user.address as `0x${string}`;
-  }, [session]);
-
-  // * callback to handle succesful login to sync session state
-  const [, onSuccessLogin] = useAsyncFn(
-    async (data: boolean) => {
-      switch (data) {
-        case true: {
-          if (isLoggingOut) break;
-
-          if (session && masaAddress === session?.user.address) {
-            break;
-          }
-
-          if (
-            previousAddress === undefined ||
-            previousAddress !== masaAddress
-          ) {
-            await queryClient.invalidateQueries([
-              'session',
-              { masaAddress, persist: false },
-            ]);
-            await queryClient.fetchQuery([
-              'session',
-              { masaAddress, persist: false },
-            ]);
-            break;
-          }
-
-          const checkedLogin = await checkSessionAsync();
-
-          if (!checkedLogin) {
-            await logoutSession();
-            break;
-          }
-
-          // * we are in a valid session but our session data needs to be updated.
-          await queryClient.fetchQuery([
-            'session',
-            { masaAddress, persist: false },
-          ]);
-          break;
-        }
-
-        case false: {
-          await queryClient.invalidateQueries([
-            'session',
-            { masaAddress, persist: false },
-          ]);
-          await queryClient.invalidateQueries([
-            'session-login',
-            { masaAddress },
-          ]);
-          queryClient.setQueryData(
-            ['session', { masaAddress, persist: false }],
-            null
-          );
-          queryClient.setQueryData(['session-login', { masaAddress }], null);
-          break;
-        }
-        case undefined: {
-          await queryClient.invalidateQueries([
-            'session',
-            { masaAddress, persist: false },
-          ]);
-          await queryClient.invalidateQueries([
-            'session-login',
-            { masaAddress },
-          ]);
-          queryClient.setQueryData(
-            ['session', { masaAddress, persist: false }],
-            null
-          );
-          queryClient.setQueryData(['session-login', { masaAddress }], null);
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-    },
-    [
-      masaAddress,
-      previousAddress,
-      checkSessionAsync,
-      queryClient,
-      session,
-      isLoggingOut,
-      logoutSession,
-    ]
-  );
-
   const {
     data: hasSession,
     refetch: checkLogin,
     isFetching: isCheckingLogin,
   } = useQuery({
-    queryKey: ['session-check', { masaAddress, persist: false }],
-    enabled: !!masa && !!masaAddress,
+    queryKey: ['session-new-check', { masaAddress, persist: true }],
+    enabled: !!masaAddress,
     context: MasaQueryClientContext,
     cacheTime: 0,
-    onSuccess: onSuccessLogin,
-
     queryFn: async () => {
-      if (!isConnected) return false;
-      if (!masa) return false;
-
-      if (masaAddress !== address) {
-        await queryClient.invalidateQueries([
-          'session',
-          { masaAddress, persist: false },
-        ]);
-        await queryClient.invalidateQueries([
-          'session-login',
-          { masaAddress, persist: false },
-        ]);
-
-        return false;
+      if (!checkSessionAsync) {
+        return null;
       }
 
       const hasSesh = await checkSessionAsync();
 
-      if (hasSesh) {
-        return hasSesh;
-      }
-
-      return false;
+      return hasSesh ?? false;
     },
   });
 
-  const [, onSettledLogin] = useAsyncFn(async () => {
-    if (!masa) return;
-    if (!address) return;
-    if (!masaAddress) return;
-    if (masaAddress === sessionAddress) return;
-    await checkLogin();
-  }, [masa, address, masaAddress, sessionAddress, checkLogin]);
-
-  const { refetch: loginSession, isFetching: isLoggingIn } = useQuery({
-    queryKey: ['session-login', { masaAddress }],
-    enabled: false,
-    context: MasaQueryClientContext,
-    refetchOnMount: false,
+  const {
+    data: session,
+    isFetching: isFetchingSession,
+    refetch: getSession,
+  } = useQuery({
+    queryKey: ['session-new', { masaAddress, persist: false }],
+    enabled:
+      !!hasSession &&
+      masaAddress === address &&
+      !isLoggingOut &&
+      !!getSessionAsync,
     cacheTime: 0,
-    onSettled: onSettledLogin,
-
+    context: MasaQueryClientContext,
     queryFn: async () => {
-      if (isDisconnected) return null;
-      if (hasSession) return null;
+      const sesh = await getSessionAsync();
 
-      await loginSessionAsync();
-
-      return null;
+      return sesh ?? null;
     },
   });
+
+  const sessionAddress = useMemo(() => {
+    if (address === masaAddress && session?.user.address) {
+      return session.user.address;
+    }
+
+    return undefined;
+  }, [session, address, masaAddress]);
+
+  useAsync(async () => {
+    if (!!sessionAddress && sessionAddress !== masaAddress && hasSession) {
+      console.log('useAsync', {
+        sessionAddress,
+        masaAddress,
+        hasSession,
+      });
+      await Promise.all([
+        // queryClient.setQueryData(
+        //   ['session-new', { masaAddress, persist: false }],
+        //   null
+        // ),
+        queryClient.setQueryData(
+          ['session-new-check', { masaAddress, persist: true }],
+          false
+        ),
+      ]);
+
+      await logoutSession();
+      //   await queryClient.invalidateQueries([
+      //     'session-new-check',
+      //     { masaAddress: sessionAddress, persist: true },
+      //   ]);
+
+      await checkLogin();
+    }
+  }, [
+    queryClient,
+    masaAddress,
+    sessionAddress,
+    hasSession,
+    logoutSession,
+    checkLogin,
+  ]);
 
   const isLoadingSession = useMemo(
-    () =>
-      isLoggingIn ||
-      isLoggingOut ||
-      isFetchingSession ||
-      isCheckingLogin ||
-      isCheckingSession,
-    [
-      isLoggingIn,
-      isLoggingOut,
-      isFetchingSession,
-      isCheckingLogin,
-      isCheckingSession,
-    ]
+    () => isFetchingSession || isCheckingLogin || isLoggingIn || isLoggingOut,
+    [isFetchingSession, isCheckingLogin, isLoggingIn, isLoggingOut]
   );
 
   return {
+    hasSession,
     session,
     sessionAddress,
-    getSession,
     isFetchingSession,
-    hasSession,
-    checkSessionAsync,
-    isCheckingSession,
     isCheckingLogin,
-    loginSession,
-    logoutSession,
+    getSession,
+    checkLogin,
     isLoggingIn,
     isLoggingOut,
-    isLoggedIn: hasSession,
-    checkLogin,
+    loginSessionAsync,
+    logoutSession,
     isLoadingSession,
   };
 };

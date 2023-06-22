@@ -1,4 +1,4 @@
-import * as buffer from 'buffer';
+import buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
@@ -9,8 +9,6 @@ import { useConfig } from './base-provider';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
-// import { useIdentity } from './masa-feature/use-identity';
-import { useSession } from './masa/use-session';
 import { useMasaClient } from './masa-client/use-masa-client';
 import { useIdentity } from './masa/use-identity';
 import { useSoulNames } from './masa/use-soulnames';
@@ -19,6 +17,8 @@ import { useGreen } from './masa/use-green';
 import { useSBT } from './masa/use-sbt';
 import MasaProvider from './masa-provider';
 import { MasaQueryClientContext } from './provider/masa-state-provider';
+import { useSession } from './masa/use-session';
+// import { useIdentity } from './masa-feature/use-identity';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -235,7 +235,7 @@ const SessionInfo = () => {
     session,
     // loginSession,
     // logoutSession,
-    // sessionAddress,
+    sessionAddress,
     isLoggingIn,
     isLoggingOut,
     hasSession,
@@ -250,6 +250,7 @@ const SessionInfo = () => {
           <h3>Session</h3>
           <li>isLoadingSession: {String(isLoadingSession)}</li>
           <li>hasSession: {String(hasSession)}</li>
+          <li>sessionAddress: {String(sessionAddress)}</li>
           <li>isLoggingIn: {String(isLoggingIn)}</li>
           <li>isLoggingOut: {String(isLoggingOut)}</li>
           <li>
@@ -337,17 +338,54 @@ const SBTInfo = () => {
     </ul>
   );
 };
+
+const SessionButtons = () => {
+  const { loginSessionAsync, logoutSession, checkLogin } = useSession();
+
+  return (
+    <ul>
+      <h3>Session</h3>
+      <li>
+        <Button
+          // disabled={!!hasSession || isDisconnected || isLoadingSession}
+          type="button"
+          onClick={loginSessionAsync}
+        >
+          Login Session RQ
+        </Button>
+      </li>
+      {/* <li>
+      <Button
+        disabled={!!hasSession}
+        type="button"
+        onClick={() => loginSession() as unknown as () => void}
+      >
+        Login Session
+      </Button>
+    </li> */}
+      <li>
+        <Button
+          // disabled={!hasSession || isLoadingSession}
+          type="button"
+          onClick={logoutSession}
+        >
+          Logout Session
+        </Button>
+      </li>
+      <li>
+        <Button
+          // disabled={isDisconnected || isLoadingSession}
+          type="button"
+          onClick={() => checkLogin()}
+        >
+          Check Login
+        </Button>
+      </li>
+    </ul>
+  );
+};
+
 const MasaInfo = () => {
-  // const { identity, isLoadingIdentity } = useIdentity();
-  const {
-    loginSession,
-    logoutSession,
-    sessionAddress,
-    hasSession,
-    isLoadingSession,
-    checkLogin,
-  } = useSession();
-  const { isDisconnected } = useWallet();
   const { activeNetwork, activeChainId } = useNetwork();
   const { masaAddress, masaNetwork } = useMasaClient();
 
@@ -371,7 +409,7 @@ const MasaInfo = () => {
           <ul>
             <h3>Masa</h3>
             <li>masaAddress: {masaAddress}</li>
-            <li>sessionAddress: {sessionAddress}</li>
+
             <li>masaNetwork: {masaNetwork}</li>
             <li>activeNetwork: {activeNetwork}</li>
             <li>activeChainId: {activeChainId}</li>
@@ -383,45 +421,6 @@ const MasaInfo = () => {
         </li>
       </ul>
 
-      <ul>
-        <h3>Session</h3>
-        <li>
-          <Button
-            disabled={!!hasSession || isDisconnected || isLoadingSession}
-            type="button"
-            onClick={() => loginSession() as unknown as () => void}
-          >
-            Login Session RQ
-          </Button>
-        </li>
-        {/* <li>
-          <Button
-            disabled={!!hasSession}
-            type="button"
-            onClick={() => loginSession() as unknown as () => void}
-          >
-            Login Session
-          </Button>
-        </li> */}
-        <li>
-          <Button
-            disabled={!hasSession || isLoadingSession}
-            type="button"
-            onClick={() => logoutSession()}
-          >
-            Logout Session
-          </Button>
-        </li>
-        <li>
-          <Button
-            disabled={isDisconnected || isLoadingSession}
-            type="button"
-            onClick={() => checkLogin()}
-          >
-            Check Login
-          </Button>
-        </li>
-      </ul>
       {/* <ul>
         <h3>Identity</h3>
         <li>
@@ -473,11 +472,14 @@ const Component = (): JSX.Element => {
       <WalletInfo />
       <NetworkInfo />
       <MasaInfo />
+      {/* <SessionInfoNew /> */}
+      <SessionButtons />
       <SessionInfo />
       <IdentityInfo />
+
+      <SBTInfo />
       <SoulnameCreditScoreInfo />
       <GreenInfo />
-      <SBTInfo />
       <ul>
         <h3>Config</h3>
         <li>
