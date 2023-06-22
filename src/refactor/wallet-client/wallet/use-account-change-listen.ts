@@ -49,15 +49,18 @@ export const useAccountChangeListen = ({
     // * walletconnect
 
     const onAccountsChanged = async (accounts: string[]) => {
+      await Promise.resolve();
       console.log('for wc acc changed', accounts);
     };
 
     const onChainChanged = async (chainId: number) => {
       console.log('for wc chain changed', chainId);
+      await Promise.resolve();
     };
 
     const onDisconnect = async (code: number, reason: string) => {
       console.log('for wc disc', code, reason);
+      await Promise.resolve();
     };
     // Subscribe to accounts change
     provider.on('accountsChanged', onAccountsChanged);
