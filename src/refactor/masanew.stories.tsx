@@ -2,7 +2,7 @@ import buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import React from 'react';
+import React, { MouseEventHandler, useCallback } from 'react';
 import { Button } from './ui';
 import './ui/styles.scss';
 import { useConfig } from './base-provider';
@@ -85,51 +85,47 @@ const NetworkInfo = () => {
           }}
         >
           <h3 className="flex-100">Switch Network</h3>
-          {chains.map((chain: Chain) => (
-            <li
-              style={{
-                fontSize: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              key={chain.name}
-            >
-              <Button
+          {chains.map((chain: Chain) => {
+            const onClick = () => {
+              console.log({ chain });
+              try {
+                switchNetwork?.(chain.id);
+              } catch (error: unknown) {
+                console.log({ e: error });
+              }
+            };
+
+            return (
+              <li
                 style={{
+                  fontSize: '10px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-
-                  fontSize: '16px',
                 }}
-                disabled={
-                  !canProgramaticallySwitchNetwork ||
-                  chain.id === activeChain?.id
-                }
-                type="button"
-                onClick={() => {
-                  console.log({ chain });
-                  try {
-                    switchNetwork?.(chain.id);
-                  } catch (error: unknown) {
-                    console.log({ e: error });
-                  }
-                }}
+                key={chain.name}
               >
-                Switch to {chain.testnet ? 'Testnet' : ''} {chain.name}
-              </Button>
-            </li>
-          ))}
+                <Button
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+
+                    fontSize: '16px',
+                  }}
+                  disabled={
+                    !canProgramaticallySwitchNetwork ||
+                    chain.id === activeChain?.id
+                  }
+                  type="button"
+                  onClick={onClick}
+                >
+                  Switch to {chain.testnet ? 'Testnet' : ''} {chain.name}
+                </Button>
+              </li>
+            );
+          })}
         </ul>
-        {/* <ul className="width-50" style={{ justifyContent: 'flex-start' }}>
-          <h3>Availible Chains</h3>
-          {chains.map((chain) => (
-            <li key={chain.name}>
-              <span>{chain.name}</span>
-            </li>
-          ))}
-        </ul> */}
       </li>
     </ul>
   );
@@ -178,9 +174,11 @@ const WalletInfo = () => {
             <Button
               type="button"
               disabled={isDisconnected}
-              onClick={() => {
-                disconnect?.();
-              }}
+              onClick={
+                disconnect as unknown as
+                  | MouseEventHandler<HTMLButtonElement>
+                  | undefined
+              }
             >
               Disconnect
             </Button>
@@ -195,9 +193,7 @@ const WalletInfo = () => {
             <Button
               type="button"
               disabled={!openConnectModal}
-              onClick={() => {
-                openConnectModal?.();
-              }}
+              onClick={openConnectModal}
             >
               Open ConnectModal
             </Button>
@@ -206,9 +202,7 @@ const WalletInfo = () => {
             <Button
               type="button"
               disabled={!openAccountModal}
-              onClick={() => {
-                openAccountModal?.();
-              }}
+              onClick={openAccountModal}
             >
               Open AccountModal
             </Button>
@@ -217,9 +211,7 @@ const WalletInfo = () => {
             <Button
               type="button"
               disabled={!openChainModal}
-              onClick={() => {
-                openChainModal?.();
-              }}
+              onClick={openChainModal}
             >
               Open ChainModal
             </Button>
@@ -376,7 +368,11 @@ const SessionButtons = () => {
         <Button
           // disabled={isDisconnected || isLoadingSession}
           type="button"
-          onClick={() => checkLogin()}
+          onClick={
+            checkLogin as unknown as
+              | MouseEventHandler<HTMLButtonElement>
+              | undefined
+          }
         >
           Check Login
         </Button>
@@ -388,17 +384,13 @@ const SessionButtons = () => {
 const MasaInfo = () => {
   const { activeNetwork, activeChainId } = useNetwork();
   const { masaAddress, masaNetwork } = useMasaClient();
-
+  const noop = useCallback(() => {}, []);
   return (
     <>
       <ReactQueryDevtoolsPanel
         context={MasaQueryClientContext}
-        setIsOpen={() => {
-          // empty because it's a noop
-        }}
-        onDragStart={() => {
-          // empty because it's a noop
-        }}
+        setIsOpen={noop}
+        onDragStart={noop}
         isOpen
         className="rq-debug"
         style={{ color: 'white' }}
@@ -413,35 +405,9 @@ const MasaInfo = () => {
             <li>masaNetwork: {masaNetwork}</li>
             <li>activeNetwork: {activeNetwork}</li>
             <li>activeChainId: {activeChainId}</li>
-            {/* <h3>Identity</h3>
-            <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
-            <li>Identity Address: {identity?.address}</li>
-            <li>Identity Id: {identity?.identityId?.toString()}</li> */}
           </ul>
         </li>
       </ul>
-
-      {/* <ul>
-        <h3>Identity</h3>
-        <li>
-          <Button
-            disabled={isDisconnected || isLoadingSession}
-            type="button"
-            onClick={() => checkLogin()}
-          >
-            Purchase Identity
-          </Button>
-        </li>
-        <li>
-          <Button
-            disabled={isDisconnected || isLoadingIdentity}
-            type="button"
-            onClick={() => checkLogin()}
-          >
-            Purchase Identity and Soulname
-          </Button>
-        </li>
-      </ul> */}
     </>
   );
 };
@@ -483,14 +449,9 @@ const Component = (): JSX.Element => {
       <ul>
         <h3>Config</h3>
         <li>
-          <Button
-            type="button"
-            onClick={() =>
-              console.log('config', { config, masaConfig: config.masaConfig })
-            }
-          >
-            Log Config
-          </Button>
+          <code>
+            <pre>{JSON.stringify(config, null, 4)}</pre>
+          </code>
         </li>
       </ul>
     </section>
