@@ -4,8 +4,8 @@ import { useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
-import { MasaQueryClientContext } from '../provider/masa-state-provider';
 import { useSessionConnect } from './use-session-connect';
+import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useSession = () => {
   const { address } = useWallet();
@@ -75,11 +75,6 @@ export const useSession = () => {
 
   useAsync(async () => {
     if (!!sessionAddress && sessionAddress !== masaAddress && hasSession) {
-      console.log('useAsync', {
-        sessionAddress,
-        masaAddress,
-        hasSession,
-      });
       await Promise.all([
         // queryClient.setQueryData(
         //   ['session-new', { masaAddress, persist: false }],

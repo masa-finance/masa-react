@@ -16,9 +16,8 @@ import { useCreditScores } from './masa/use-credit-scores';
 import { useGreen } from './masa/use-green';
 import { useSBT } from './masa/use-sbt';
 import MasaProvider from './masa-provider';
-import { MasaQueryClientContext } from './provider/masa-state-provider';
 import { useSession } from './masa/use-session';
-// import { useIdentity } from './masa-feature/use-identity';
+import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -384,7 +383,10 @@ const SessionButtons = () => {
 const MasaInfo = () => {
   const { activeNetwork, activeChainId } = useNetwork();
   const { masaAddress, masaNetwork } = useMasaClient();
-  const noop = useCallback(() => {}, []);
+  const noop = useCallback(() => {
+    // noop
+  }, []);
+
   return (
     <>
       <ReactQueryDevtoolsPanel

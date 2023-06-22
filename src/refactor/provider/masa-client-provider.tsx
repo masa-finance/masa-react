@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext, useContext, useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
-import { useIdentity } from '../masa/use-identity';
 
+import { useIdentity } from '../masa/use-identity';
 import { useSession } from '../masa/use-session';
 import { useCreditScores } from '../masa/use-credit-scores';
 import { useSoulNames } from '../masa/use-soulnames';

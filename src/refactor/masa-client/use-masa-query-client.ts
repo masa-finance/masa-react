@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { MasaQueryClientContext } from '../provider/masa-state-provider';
+import { MasaQueryClientContext } from './masa-query-client-context';
 
 export const useMasaQueryClient = () => {
   const queryClient = useQueryClient({ context: MasaQueryClientContext });

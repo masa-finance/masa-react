@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
-import { MasaQueryClientContext } from '../provider/masa-state-provider';
 import { useSession } from './use-session';
+import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useGreen = () => {
   const { sdk: masa, masaAddress, masaNetwork } = useMasaClient();

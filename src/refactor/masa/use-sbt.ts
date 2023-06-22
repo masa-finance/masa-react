@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useAsyncFn } from 'react-use';
-import { MasaQueryClientContext } from '../provider/masa-state-provider';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
+import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useSBT = ({ tokenAddress }: { tokenAddress: string }) => {
   const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();

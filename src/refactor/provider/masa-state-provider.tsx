@@ -1,14 +1,8 @@
 import React, { ReactNode, useMemo } from 'react';
-import type { QueryClient } from '@tanstack/react-query';
 import { QueryClientProvider } from '@tanstack/react-query';
 import MasaClientProvider from './masa-client-provider';
 import { createQueryClient } from '../masa-client/query-client';
-
-const undef = undefined;
-
-export const MasaQueryClientContext = React.createContext<
-  QueryClient | undefined
->(undef);
+import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const MasaStateProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useMemo(() => createQueryClient(), []);
