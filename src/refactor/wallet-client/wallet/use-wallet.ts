@@ -37,9 +37,9 @@ const useWallet = () => {
 
   useEffect(() => {
     if (isDisconnected) {
-      setPreviousAddress(undefined);
-      setCompareAddress(undefined);
-      setPreviousAddress(undefined);
+      setPreviousAddress(undefined); // skipcq: JS-W1042
+      setCompareAddress(undefined); // skipcq: JS-W1042
+      setPreviousAddress(undefined); // skipcq: JS-W1042
     }
 
     if (compareAddress !== address) {

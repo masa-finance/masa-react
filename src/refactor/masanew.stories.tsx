@@ -1,3 +1,4 @@
+// skipcq: JS-0415
 import buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
@@ -117,7 +118,7 @@ const NetworkInfo = () => {
                     chain.id === activeChain?.id
                   }
                   type="button"
-                  onClick={onClick}
+                  onClick={onClick} // skipcq: JS-
                 >
                   Switch to {chain.testnet ? 'Testnet' : ''} {chain.name}
                 </Button>

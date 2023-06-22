@@ -7,5 +7,3 @@ enabled = true
 [analyzers.meta]
 plugins = ["react"]
 style_guide = "airbnb"
-
-# skipcq: JS-W1042
