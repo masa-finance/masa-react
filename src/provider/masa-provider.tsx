@@ -30,6 +30,7 @@ export const MasaProvider = ({
   //     walletsToUse={walletsToUse}
   //     rainbowKitModalSize={rainbowKitModalSize}
   //   > */}
+
       <MasaRefactorProvider
         config={{
           company,
