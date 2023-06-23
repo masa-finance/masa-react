@@ -1,3 +1,4 @@
+import { NetworkName, SupportedNetworks } from '@masa-finance/masa-sdk';
 import type { Provider } from '@wagmi/core';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -14,6 +15,7 @@ export const useNetwork = () => {
   const { connector: activeConnector } = useAccount();
   const { connectors, pendingConnector } = useConnect();
   const { chains, chain: activeChain } = useNetworkWagmi();
+  const network = useNetworkWagmi();
   const [switchingToChain, setSwitchingToChain] = useState<number | null>();
 
   const availibleChains = useMemo(
@@ -35,6 +37,20 @@ export const useNetwork = () => {
       switchNetworkWagmi?.(chainId);
     },
     [switchNetworkWagmi]
+  );
+
+  const switchNetworkByName = useCallback(
+    (forcedNetworkParam: NetworkName) => {
+      const networkToSwitchTo = SupportedNetworks[forcedNetworkParam];
+      setSwitchingToChain(networkToSwitchTo?.chainId);
+      if (networkToSwitchTo) {
+        if (networkToSwitchTo.chainId === activeChain?.id) {
+          return;
+        }
+        switchNetworkWagmi?.(networkToSwitchTo.chainId);
+      }
+    },
+    [activeChain?.id, switchNetworkWagmi]
   );
 
   const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
@@ -80,6 +96,7 @@ export const useNetwork = () => {
   return {
     connectors,
     switchNetwork,
+    switchNetworkByName,
     switchingToChain,
     canProgramaticallySwitchNetwork,
     activeChain,
@@ -90,5 +107,8 @@ export const useNetwork = () => {
     availibleChains,
     pendingConnector,
     isActiveChainUnsupported,
+
+    // * old
+    currentNetwork: network,
   };
 };

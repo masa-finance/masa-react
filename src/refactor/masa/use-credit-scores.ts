@@ -42,5 +42,8 @@ export const useCreditScores = () => {
     getCreditScores,
     isLoadingCreditScores,
     creditScores,
+
+    isCreditScoresLoading: isLoadingCreditScores,
+    reloadCreditScores: getCreditScores,
   };
 };

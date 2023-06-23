@@ -11,7 +11,11 @@ export const useGreen = () => {
     const greensResult = await masa?.green.list();
     return greensResult ?? null;
   }, [masa]);
-  const { data: greens, isFetching: isLoadingGreens } = useQuery({
+  const {
+    data: greens,
+    isFetching: isLoadingGreens,
+    refetch: reloadGreens,
+  } = useQuery({
     context: MasaQueryClientContext,
     queryKey: [
       'green',
@@ -24,5 +28,7 @@ export const useGreen = () => {
   return {
     greens,
     isLoadingGreens,
+    isGreensLoading: isLoadingGreens,
+    reloadGreens,
   };
 };

@@ -45,9 +45,12 @@ export const useIdentityPurchase = () => {
     purchaseIdentity,
     isPurchasingIdentity,
     hasPurchasedIdentity,
-
     purchaseIdentityWithSoulName,
     isPurchasingIdentityWithSoulName,
     hasPurchasedIdentityWithSoulName,
+
+    // * old version
+    handlePurchaseIdentity: purchaseIdentity,
+    handlePurchaseIdentityWithSoulname: purchaseIdentityWithSoulName,
   };
 };

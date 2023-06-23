@@ -6,9 +6,10 @@ import {
 } from './masa-context-provider';
 
 import { queryClient } from './masa-query-client';
+// import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider/configured-rainbowkit-provider';
 import { MasaInterface } from '../components';
-import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider/configured-rainbowkit-provider';
 import { MasaNetworks } from './configured-rainbowkit-provider/utils';
+import MasaRefactorProvider from '../refactor/masa-provider';
 
 export const MasaProvider = ({
   children,
@@ -21,17 +22,23 @@ export const MasaProvider = ({
   walletsToUse?: ('metamask' | 'valora' | 'walletconnect')[];
   rainbowKitModalSize?: 'compact' | 'wide';
 }): JSX.Element => (
-  <QueryClientProvider client={queryClient}>
-    <ConfiguredRainbowKitProvider
-      chainsToUse={chainsToUse}
-      walletsToUse={walletsToUse}
-      rainbowKitModalSize={rainbowKitModalSize}
+  <QueryClientProvider contextSharing client={queryClient}>
+    {/* //   <ConfiguredRainbowKitProvider
+  //     chainsToUse={chainsToUse}
+  //     walletsToUse={walletsToUse}
+  //     rainbowKitModalSize={rainbowKitModalSize}
+  //   > */}
+    <MasaRefactorProvider
+      config={{
+        masaConfig: {},
+      }}
     >
       <MasaContextProvider {...args}>
         <div id="modal-mount" />
         <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />
         {children}
       </MasaContextProvider>
-    </ConfiguredRainbowKitProvider>
+    </MasaRefactorProvider>
   </QueryClientProvider>
+  //   </ConfiguredRainbowKitProvider>
 );
