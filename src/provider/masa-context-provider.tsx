@@ -45,6 +45,7 @@ import { useNetwork as useNetworkNew } from '../refactor/wallet-client/network/u
 import { useMasaClient } from '../refactor/masa-client/use-masa-client';
 import { useIdentityPurchase } from '../refactor/masa/use-identity-purchase';
 import { useCreditScoreCreate } from '../refactor/masa/use-credit-scores-create';
+import { useSoulNamesPurchase } from '../refactor/masa/use-soulnames-purchase';
 // import { useSoulNamesPurchase } from '../refactor/masa/use-soulnames-purchase';
 
 export interface ArweaveConfig {
@@ -177,6 +178,7 @@ export const MasaContextProvider = ({
 
   // soul names
   const { soulnames, isSoulnamesLoading, reloadSoulnames } = useSoulNamesNew();
+  const { purchaseSoulName } = useSoulNamesPurchase();
 
   // credit scores
   const { creditScores, isCreditScoresLoading, reloadCreditScores } =
@@ -406,6 +408,7 @@ export const MasaContextProvider = ({
       isSoulnamesLoading,
       reloadSoulnames,
       soulNameStyle,
+      purchaseSoulName,
 
       // greens
       greens: greens as
@@ -514,6 +517,7 @@ export const MasaContextProvider = ({
     reloadCreditScores,
 
     // soul names
+    purchaseSoulName,
     soulnames,
     isSoulnamesLoading,
     reloadSoulnames,

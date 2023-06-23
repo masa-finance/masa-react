@@ -160,6 +160,7 @@ export const MasaInterface = ({
         if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
           // switchNetworkNew?.(forceNetwork);
           // return null;
+          console.log({ currentNetwork, forceNetwork });
           if (!isModalOpen) setModalOpen?.(true);
           console.log('return switchnetwork');
           return 'switchNetwork';

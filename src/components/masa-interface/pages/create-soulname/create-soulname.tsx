@@ -16,6 +16,7 @@ const errorMessages = {
 export const InterfaceCreateSoulname = (): JSX.Element => {
   const {
     handlePurchaseIdentityWithSoulname,
+    purchaseSoulName,
     isLoading,
     identity,
     closeModal,
@@ -161,11 +162,10 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
 
     try {
       if (identity && identity.identityId) {
-        await masa?.soulName.create(
-          paymentMethod,
+        await purchaseSoulName?.(
           soulname,
           registrationPeriod,
-          undefined,
+          paymentMethod,
           soulNameStyle
         );
       } else {

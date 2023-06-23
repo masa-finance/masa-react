@@ -55,10 +55,17 @@ export const useNetwork = () => {
 
   const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
   const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
-  const currentNetwork = useMemo(
-    () => SupportedNetworks[activeChain?.network as NetworkName],
-    [activeChain?.network]
-  );
+  const currentNetwork = useMemo(() => {
+    let nw = activeChain?.network;
+    // * NOTE: name mismatch from masa & wagmi
+    if (nw === 'celo-alfajores') {
+      nw = 'alfajores';
+    }
+
+    return SupportedNetworks[nw as NetworkName];
+  }, [activeChain]);
+
+  // console.log({ currentNetwork });
 
   const stopSwitching = useCallback(() => {
     setSwitchingToChain(null);

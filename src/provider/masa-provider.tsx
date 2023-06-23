@@ -22,11 +22,7 @@ export const MasaProvider = ({
   walletsToUse?: ('metamask' | 'valora' | 'walletconnect')[];
   rainbowKitModalSize?: 'compact' | 'wide';
 }): JSX.Element => {
-  const {
-    forceNetwork,
-    // arweaveConfig,
-    // environmentName
-  } = args;
+  const { forceNetwork, environmentName, company, verbose } = args;
   return (
     <QueryClientProvider contextSharing client={queryClient}>
       {/* //   <ConfiguredRainbowKitProvider
@@ -36,9 +32,11 @@ export const MasaProvider = ({
   //   > */}
       <MasaRefactorProvider
         config={{
-          allowedWallets: ['metamask', 'valora', 'walletconnect'],
+          company,
+          verbose,
+          allowedWallets: walletsToUse, // ['metamask', 'valora', 'walletconnect'],
           forceChain: forceNetwork,
-          allowedNetworkNames: [
+          allowedNetworkNames: chainsToUse ?? [
             'goerli',
             'ethereum',
             'alfajores',
@@ -52,8 +50,12 @@ export const MasaProvider = ({
           ],
           masaConfig: {
             networkName: 'ethereum',
+            environment: environmentName ?? 'dev',
             // arweave: arweaveConfig,
             // environment: environmentName,
+          },
+          rainbowkitConfig: {
+            modalSize: rainbowKitModalSize ?? 'wide',
           },
         }}
       >
