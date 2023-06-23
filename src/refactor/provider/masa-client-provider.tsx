@@ -20,7 +20,7 @@ export const MasaClientContext = createContext({} as MasaClientProviderValue);
 
 export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
   const { masa } = useMasaClient();
-  // const { session, loginSession, logoutSession, sessionAddress } = useSession();
+  const { session, loginSession, logoutSession, sessionAddress } = useSession();
   const { identity } = useIdentity();
   const { creditScores } = useCreditScores();
   const { soulnames } = useSoulNames();
@@ -32,10 +32,10 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
     () =>
       ({
         masa,
-        // session,
-        // sessionAddress,
-        // loginSession,
-        // logoutSession,
+        session,
+        sessionAddress,
+        loginSession,
+        logoutSession,
         identity,
         soulnames,
         creditScores,
@@ -44,10 +44,10 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
     [
       masa,
       identity,
-      // session,
-      // sessionAddress,
-      // loginSession,
-      // logoutSession,
+      session,
+      sessionAddress,
+      loginSession,
+      logoutSession,
       soulnames,
       creditScores,
       greens,

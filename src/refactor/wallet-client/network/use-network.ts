@@ -42,7 +42,6 @@ export const useNetwork = () => {
 
   const stopSwitching = useCallback(() => {
     setSwitchingToChain(null);
-    // onClose();
   }, []);
 
   useEffect(() => {

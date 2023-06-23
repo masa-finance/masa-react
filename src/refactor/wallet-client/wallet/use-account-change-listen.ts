@@ -14,8 +14,6 @@ export const useAccountChangeListen = ({
   useAsync(async () => {
     const onChangeConnector = async ({ chain, account }: ConnectorData) => {
       if (account) {
-        // setAccountAddress(account);
-
         // NOTE: this is a hack to fix the walletconnect issue
         if (typeof window !== 'undefined') {
           window.localStorage.removeItem('walletconnect');

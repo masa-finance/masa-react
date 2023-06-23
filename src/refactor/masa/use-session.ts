@@ -76,10 +76,6 @@ export const useSession = () => {
   useAsync(async () => {
     if (!!sessionAddress && sessionAddress !== masaAddress && hasSession) {
       await Promise.all([
-        // queryClient.setQueryData(
-        //   ['session-new', { masaAddress, persist: false }],
-        //   null
-        // ),
         queryClient.setQueryData(
           ['session-new-check', { masaAddress, persist: true }],
           false
@@ -87,11 +83,6 @@ export const useSession = () => {
       ]);
 
       await logoutSession();
-      //   await queryClient.invalidateQueries([
-      //     'session-new-check',
-      //     { masaAddress: sessionAddress, persist: true },
-      //   ]);
-
       await checkLogin();
     }
   }, [
@@ -119,6 +110,7 @@ export const useSession = () => {
     isLoggingIn,
     isLoggingOut,
     loginSessionAsync,
+    loginSession: loginSessionAsync,
     logoutSession,
     isLoadingSession,
   };

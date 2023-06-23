@@ -27,9 +27,6 @@ export const useSoulNames = () => {
     queryFn: getSoulnamesAsync,
   });
 
-  //   useAsync(async () => {
-  //     await getSoulnames();
-  //   }, [getSoulnames]);
   return {
     soulnames,
     isLoadingSoulnames,
