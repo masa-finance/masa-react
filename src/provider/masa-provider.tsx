@@ -21,24 +21,49 @@ export const MasaProvider = ({
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: ('metamask' | 'valora' | 'walletconnect')[];
   rainbowKitModalSize?: 'compact' | 'wide';
-}): JSX.Element => (
-  <QueryClientProvider contextSharing client={queryClient}>
-    {/* //   <ConfiguredRainbowKitProvider
+}): JSX.Element => {
+  const {
+    forceNetwork,
+    // arweaveConfig,
+    // environmentName
+  } = args;
+  return (
+    <QueryClientProvider contextSharing client={queryClient}>
+      {/* //   <ConfiguredRainbowKitProvider
   //     chainsToUse={chainsToUse}
   //     walletsToUse={walletsToUse}
   //     rainbowKitModalSize={rainbowKitModalSize}
   //   > */}
-    <MasaRefactorProvider
-      config={{
-        masaConfig: {},
-      }}
-    >
-      <MasaContextProvider {...args}>
-        <div id="modal-mount" />
-        <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />
-        {children}
-      </MasaContextProvider>
-    </MasaRefactorProvider>
-  </QueryClientProvider>
-  //   </ConfiguredRainbowKitProvider>
-);
+      <MasaRefactorProvider
+        config={{
+          allowedWallets: ['metamask', 'valora', 'walletconnect'],
+          forceChain: forceNetwork,
+          allowedNetworkNames: [
+            'goerli',
+            'ethereum',
+            'alfajores',
+            'celo',
+            'mumbai',
+            'polygon',
+            'bsctest',
+            'bsc',
+            'basegoerli',
+            'unknown',
+          ],
+          masaConfig: {
+            networkName: 'ethereum',
+            // arweave: arweaveConfig,
+            // environment: environmentName,
+          },
+        }}
+      >
+        <MasaContextProvider {...args}>
+          <div id="modal-mount" />
+          <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />
+          {children}
+        </MasaContextProvider>
+      </MasaRefactorProvider>
+    </QueryClientProvider>
+    //   </ConfiguredRainbowKitProvider>
+  );
+};

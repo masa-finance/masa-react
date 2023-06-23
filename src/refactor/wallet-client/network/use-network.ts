@@ -55,6 +55,10 @@ export const useNetwork = () => {
 
   const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
   const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
+  const currentNetwork = useMemo(
+    () => SupportedNetworks[activeChain?.network as NetworkName],
+    [activeChain?.network]
+  );
 
   const stopSwitching = useCallback(() => {
     setSwitchingToChain(null);
@@ -109,6 +113,7 @@ export const useNetwork = () => {
     isActiveChainUnsupported,
 
     // * old
-    currentNetwork: network,
+    currentNetwork,
+    currentNetworkNew: network,
   };
 };

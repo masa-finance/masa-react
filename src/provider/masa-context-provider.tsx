@@ -18,7 +18,7 @@ import {
   // useGreen,
   // useIdentity,
   useModal,
-  useNetwork,
+  // useNetwork,
   // useSession,
   // useSoulnames,
   // useWallet,
@@ -57,8 +57,8 @@ export interface ArweaveConfig {
 export type EnvironmentNameEx = EnvironmentName & ('local' | 'stage');
 
 export interface MasaContextProviderProps extends MasaShape {
-  // environmentName?: EnvironmentNameEx;
-  // arweaveConfig?: ArweaveConfig;
+  environmentName?: EnvironmentNameEx; // eslint-disable-line react/no-unused-prop-types
+  arweaveConfig?: ArweaveConfig; // eslint-disable-line react/no-unused-prop-types
   customGallerySBT?: CustomGallerySBT[];
   fullScreenGallery?: boolean;
   // apiUrl?: string;
@@ -138,14 +138,16 @@ export const MasaContextProvider = ({
     useSessionNew();
 
   // network <-- used for metamask interation
-  const { currentNetwork, switchNetwork } = useNetwork({
-    provider: signer,
-    useRainbowKitWalletConnect,
-  });
+  // const { currentNetwork, switchNetwork } = useNetwork({
+  //   provider: signer,
+  //   useRainbowKitWalletConnect,
+  // });
   const {
-    currentNetwork: currentNetworkNew,
+    currentNetwork,
+    currentNetworkNew,
     // switchNetworkByName: switchNetwork,
     switchNetworkByName: switchNetworkNew,
+    switchNetworkByName: switchNetwork,
     canProgramaticallySwitchNetwork,
   } = useNetworkNew();
   // const {

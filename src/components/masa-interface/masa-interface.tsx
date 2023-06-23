@@ -156,7 +156,7 @@ export const MasaInterface = ({
 
           return 'rainbowkitConnect';
         }
-
+        // console.log({ currentNetwork });
         if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
           // switchNetworkNew?.(forceNetwork);
           // return null;
