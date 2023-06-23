@@ -1,7 +1,13 @@
 {
   "parser": "@typescript-eslint/parser",
 
-  "plugins": ["@typescript-eslint", "promise", "unicorn", "react-hooks"],
+  "plugins": [
+    "@typescript-eslint",
+    "promise",
+    "unicorn",
+    "react-hooks",
+    "@tanstack/query"
+  ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
@@ -50,7 +56,12 @@
         "namedComponents": "arrow-function"
       }
     ],
-    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "additionalHooks": "(useAsync|useAsyncFn)"
+      }
+    ],
     "unicorn/prefer-node-protocol": "off",
     "unicorn/prevent-abbreviations": "off",
     "unicorn/filename-case": "off",

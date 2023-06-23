@@ -7,27 +7,14 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     {
-      name: 'storybook-addon-sass-postcss',
+      name: "@storybook/addon-styling",
       options: {
-        loadSassAfterPostCSS: true,
-        postcssLoaderOptions: {
-          implementation: require('postcss'),
-        },
-        rule: {
-          test: /\.(scss|sass)$/i,
+        sass: {
+          // Require your preprocessor
+          implementation: require("sass"),
         },
       },
     },
-    {
-      name: '@storybook/addon-postcss',
-      options: {
-        postcssLoaderOptions: {
-          implementation: require('postcss'),
-        },
-      },
-    },
-    '@storybook/addon-mdx-gfm',
-    '@storybook/addon-styling',
   ],
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
   typescript: {
