@@ -315,7 +315,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
   //   handlePurchaseIdentityWithSoulname,
   //   identity,
   //   closeModal,
-  //   paymentMethod, 
+  //   paymentMethod,
   //   forcedPage,
   //   setForcedPage,
   //   reloadSoulnames,
