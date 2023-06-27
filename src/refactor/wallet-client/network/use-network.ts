@@ -60,15 +60,19 @@ export const useNetwork = () => {
   const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
   const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
   const currentNetwork = useMemo(() => {
-    const networkId = activeChain?.id;
-    const newNetworkName = getNetworkNameByChainId(
-      networkId as number
-    ) as string;
+    let nw = activeChain?.network;
+    // * NOTE: name mismatch from masa & wagmi
+    if (nw === 'celo-alfajores') {
+      nw = 'alfajores';
+    }
 
-    return SupportedNetworks[newNetworkName as NetworkName];
+    return SupportedNetworks[nw as NetworkName];
   }, [activeChain]);
 
-  // console.log({ currentNetwork });
+  const currentNetworkByChainId = useMemo(() => {
+    if (!activeChainId) return 0;
+    return getNetworkNameByChainId(activeChainId);
+  }, [activeChainId]);
 
   const stopSwitching = useCallback(() => {
     setSwitchingToChain(null);
@@ -124,6 +128,7 @@ export const useNetwork = () => {
 
     // * old
     currentNetwork,
+    currentNetworkByChainId,
     currentNetworkNew: network,
   };
 };
