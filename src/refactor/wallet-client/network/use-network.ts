@@ -1,4 +1,8 @@
-import { NetworkName, SupportedNetworks } from '@masa-finance/masa-sdk';
+import {
+  NetworkName,
+  SupportedNetworks,
+  getNetworkNameByChainId,
+} from '@masa-finance/masa-sdk';
 import type { Provider } from '@wagmi/core';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -56,13 +60,12 @@ export const useNetwork = () => {
   const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
   const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
   const currentNetwork = useMemo(() => {
-    let nw = activeChain?.network;
-    // * NOTE: name mismatch from masa & wagmi
-    if (nw === 'celo-alfajores') {
-      nw = 'alfajores';
-    }
+    const networkId = activeChain?.id;
+    const newNetworkName = getNetworkNameByChainId(
+      networkId as number
+    ) as string;
 
-    return SupportedNetworks[nw as NetworkName];
+    return SupportedNetworks[newNetworkName as NetworkName];
   }, [activeChain]);
 
   // console.log({ currentNetwork });
