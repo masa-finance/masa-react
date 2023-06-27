@@ -243,9 +243,9 @@ const TemplateWithRainbowKit: Story = (props: Args) => {
     <>
       <MasaProvider
         company="Masa"
-        walletsToUse={['metamask', 'valora', 'walletconnect']}
+        walletsToUse={['metamask', 'walletconnect']}
         useRainbowKitWalletConnect
-        forceNetwork="celo"
+        forceNetwork="alfajores"
         rainbowKitModalSize={'wide'}
         verbose={false}
       >

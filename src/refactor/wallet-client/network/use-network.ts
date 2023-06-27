@@ -73,8 +73,8 @@ export const useNetwork = () => {
   }, [networkError, stopSwitching]);
 
   const canProgramaticallySwitchNetwork = useMemo(
-    () => !!switchNetwork,
-    [switchNetwork]
+    () => !!switchNetwork || activeConnector?.name === 'WalletConnect',
+    [switchNetwork, activeConnector]
   );
 
   return {
