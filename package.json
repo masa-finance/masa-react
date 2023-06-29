@@ -36,7 +36,7 @@
     "@babel/preset-typescript": "^7.21.5",
     "@celo/rainbowkit-celo": "^1.0.1",
     "@masa-finance/masa-contracts-identity": "^1.8.0",
-    "@masa-finance/masa-sdk": "^3.4.11",
+    "@masa-finance/masa-sdk": "^3.4.12",
     "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "~0.12.16",
     "@tanstack/query-sync-storage-persister": "^4.29.17",
