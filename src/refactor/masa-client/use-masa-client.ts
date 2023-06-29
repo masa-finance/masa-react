@@ -1,4 +1,3 @@
-import type { Signer } from 'ethers';
 import type { NetworkName } from '@masa-finance/masa-sdk';
 import { useMemo } from 'react';
 import { useAsync } from 'react-use';
@@ -16,7 +15,7 @@ export const useMasaClient = () => {
   const masa = useMasaSDK(
     {
       address,
-      signer: isDisconnected ? undefined : (signer as Signer | undefined),
+      signer: isDisconnected ? undefined : signer,
       ...masaConfig,
       environmentName: masaConfig.environment,
       // NOTE: mismatch of homestead (wagmi) vs ethereum (masa)

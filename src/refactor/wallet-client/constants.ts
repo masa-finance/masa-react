@@ -22,7 +22,7 @@ export const walletConnectorsList: Record<
   }),
   valora: (chains: Chain[]) => ({
     groupName: 'Celo',
-    wallets: [Valora({ chains })],
+    wallets: [Valora({ chains, projectId: PROJECT_ID })],
   }),
 
   walletconnect: (chains: Chain[]) => ({

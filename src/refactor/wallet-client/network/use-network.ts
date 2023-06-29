@@ -1,4 +1,4 @@
-import type { Provider } from '@wagmi/core';
+import type { Chain, Connector, Provider } from '@wagmi/core';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -73,12 +73,12 @@ export const useNetwork = () => {
   }, [networkError, stopSwitching]);
 
   const canProgramaticallySwitchNetwork = useMemo(
-    () => !!switchNetwork,
-    [switchNetwork]
+    () => !!switchNetwork || activeConnector?.name === 'WalletConnect',
+    [switchNetwork, activeConnector]
   );
 
   return {
-    connectors,
+    connectors: connectors as unknown,
     switchNetwork,
     switchingToChain,
     canProgramaticallySwitchNetwork,
@@ -90,5 +90,22 @@ export const useNetwork = () => {
     availibleChains,
     pendingConnector,
     isActiveChainUnsupported,
+  } as {
+    connectors?: Connector[];
+    switchNetwork?: (chainId?: number) => void;
+    switchingToChain: number | null | undefined;
+    canProgramaticallySwitchNetwork: boolean;
+    activeChain:
+      | (Chain & {
+          unsupported?: boolean | undefined;
+        })
+      | undefined;
+    activeNetwork: string;
+    activeChainId: number;
+    isSwitchingChain: boolean;
+    chains: Chain[];
+    availibleChains: Chain[];
+    pendingConnector?: Connector;
+    isActiveChainUnsupported: boolean;
   };
 };

@@ -43,5 +43,9 @@ export const useNetworkSwitch = () => {
     canProgramaticallySwitchNetwork,
     currentNetwork,
     switchNetwork,
+  } as {
+    canProgramaticallySwitchNetwork: boolean;
+    currentNetwork: ReturnType<typeof useNetwork>;
+    switchNetwork: (forcedNetworkParam: NetworkName) => void;
   };
 };

@@ -471,7 +471,7 @@ const Component = (): JSX.Element => {
 const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
-      allowedWallets: ['metamask', 'valora', 'walletconnect'],
+      allowedWallets: ['metamask', 'walletconnect'],
       forceChain: 'ethereum',
       allowedNetworkNames: [
         'goerli',
