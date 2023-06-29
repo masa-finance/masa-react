@@ -42,7 +42,7 @@
     "@masa-finance/masa-sdk": "^3.4.11",
     "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "0.12.14",
-    "@tanstack/query-sync-storage-persister": "^4.27.1",
+    "@tanstack/query-sync-storage-persister": "^4.29.17",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-persist-client": "^4.28.0",
     "@wagmi/core": "0.10.11",
