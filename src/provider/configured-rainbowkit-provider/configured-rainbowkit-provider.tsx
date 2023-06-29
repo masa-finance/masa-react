@@ -1,11 +1,10 @@
 import {
   connectorsForWallets,
   RainbowKitProvider,
-  WalletList,
   Wallet,
+  WalletList,
 } from '@rainbow-me/rainbowkit';
 
-// Import known recommended wallets
 import { Valora } from '@celo/rainbowkit-celo/wallets';
 import {
   injectedWallet,
@@ -13,12 +12,10 @@ import {
   walletConnectWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 
-import { Chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import type { Chain } from 'wagmi';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-// import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
-// import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy';
-
 import type { ReactNode } from 'react';
 import React, { createContext, useContext, useMemo } from 'react';
 
@@ -61,8 +58,8 @@ const walletConnectorsList: Record<
       walletConnectWallet({
         projectId: PROJECT_ID,
         chains,
+        version: '2',
         options: {
-          qrcode: true,
           projectId: PROJECT_ID,
         },
       }),
