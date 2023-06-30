@@ -16,29 +16,40 @@ import {
 } from 'wagmi/chains';
 
 const rainbowkitChains = [
+  // eth
   ethereum,
+  goerli,
+  // celo
   Alfajores,
   Celo,
+  // base
   baseGoerli,
+  // bsc
   bsc,
   bscTestnet,
-  goerli,
+  // polygon
   polygon,
   polygonMumbai,
 ];
 
 export type MasaNetworks = Partial<{
+  // eth
   goerli: Network;
   ethereum: Network;
+  homestead: Network;
+  // celo
   alfajores: Network;
   celo: Network;
+  // polygon
   mumbai: Network;
   polygon: Network;
+  // bsc
   bsctest: Network;
   bsc: Network;
+  // base
   basegoerli: Network;
+  // fallback
   unknown: Network;
-  homestead: Network;
 }>;
 
 type NetworkNameWithHomestead = NetworkName | 'homestead';
@@ -60,19 +71,7 @@ export const getRainbowkitChains = (
     return rainbowkitChains;
   }
 
-  const masaNetworksNew: Partial<{
-    goerli: Network;
-    ethereum: Network;
-    alfajores: Network;
-    celo: Network;
-    mumbai: Network;
-    polygon: Network;
-    bsctest: Network;
-    bsc: Network;
-    basegoerli: Network;
-    unknown: Network;
-    homestead: Network;
-  }> = {};
+  const masaNetworksNew: MasaNetworks = {};
 
   for (const networkName of Object.keys(SupportedNetworks)) {
     if (networkName !== 'unknown' && networkName !== 'ethereum') {

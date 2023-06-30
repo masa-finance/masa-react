@@ -28,15 +28,21 @@ const rainbowkitChains = [
 ];
 
 export type MasaNetworks = Partial<{
+  // eth
   goerli: Network;
   ethereum: Network;
+  // celo
   alfajores: Network;
   celo: Network;
+  // polygon
   mumbai: Network;
   polygon: Network;
+  // bsc
   bsctest: Network;
   bsc: Network;
+  // base
   basegoerli: Network;
+  // fallback
   unknown: Network;
 }>;
 

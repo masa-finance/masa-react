@@ -19,6 +19,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import type { ReactNode } from 'react';
 import React, { createContext, useContext, useMemo } from 'react';
 
+import { NetworkName, SupportedNetworks } from '@masa-finance/masa-sdk';
 import { getRainbowkitChains, MasaNetworks } from './utils';
 
 type ConfiguredRainbowKitProviderValue = Record<string, never>;
@@ -32,18 +33,24 @@ export interface ConfiguredRainbowKitProviderProps {
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: string[];
   rainbowKitModalSize?: 'compact' | 'wide';
+  forceNetwork?: NetworkName;
 }
 
 const PROJECT_ID = '04a4088bf7ff775c3de808412c291cc0';
 
 const walletConnectorsList: Record<
   string,
-  (chains: Chain[]) => { groupName: string; wallets: Wallet[] }
+  (chains: Chain[]) => {
+    groupName: string;
+    wallets: Wallet[];
+  }
 > = {
   metamask: (chains: Chain[]) => ({
     groupName: 'Recommended',
     wallets: [
-      injectedWallet({ chains }),
+      injectedWallet({
+        chains,
+      }),
       metaMaskWallet({
         chains,
         walletConnectVersion: '2',
@@ -54,7 +61,12 @@ const walletConnectorsList: Record<
 
   valora: (chains: Chain[]) => ({
     groupName: 'Celo',
-    wallets: [Valora({ chains, projectId: PROJECT_ID })],
+    wallets: [
+      Valora({
+        chains,
+        projectId: PROJECT_ID,
+      }),
+    ],
   }),
 
   walletconnect: (chains: Chain[]) => ({
@@ -77,6 +89,7 @@ export const ConfiguredRainbowKitProvider = ({
   chainsToUse,
   walletsToUse = ['metamask'],
   rainbowKitModalSize = 'compact',
+  forceNetwork,
 }: ConfiguredRainbowKitProviderProps) => {
   const rainbowkitChains = getRainbowkitChains(chainsToUse);
   const { chains, provider, webSocketProvider } = configureChains(
@@ -85,7 +98,9 @@ export const ConfiguredRainbowKitProvider = ({
       // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
       publicProvider(),
       jsonRpcProvider({
-        rpc: (chain: Chain) => ({ http: chain.rpcUrls.default.http[0] }),
+        rpc: (chain: Chain) => ({
+          http: chain.rpcUrls.default.http[0],
+        }),
       }),
     ]
   );
@@ -117,6 +132,7 @@ export const ConfiguredRainbowKitProvider = ({
       <RainbowKitProvider
         modalSize={rainbowKitModalSize}
         chains={rainbowkitChains}
+        initialChain={SupportedNetworks[forceNetwork || 'unknown']?.chainId}
       >
         <ConfiguredRainbowKitContext.Provider value={contextValue}>
           {children}

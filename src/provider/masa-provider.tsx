@@ -15,6 +15,7 @@ export const MasaProvider = ({
   chainsToUse,
   walletsToUse,
   rainbowKitModalSize,
+  forceNetwork,
   ...args
 }: MasaContextProviderProps & {
   chainsToUse?: Array<keyof MasaNetworks>;
@@ -24,6 +25,7 @@ export const MasaProvider = ({
   <QueryClientProvider client={queryClient}>
     <ConfiguredRainbowKitProvider
       chainsToUse={chainsToUse}
+      forceNetwork={forceNetwork}
       walletsToUse={walletsToUse}
       rainbowKitModalSize={rainbowKitModalSize}
     >
