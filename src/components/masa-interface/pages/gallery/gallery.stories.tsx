@@ -3,8 +3,9 @@ import { MasaProvider } from '../../../../provider';
 import { Meta, StoryObj } from '@storybook/react';
 import { Gallery } from '.';
 import { GalleryItem } from './galleryItem';
+import { CustomGallerySBT } from './gallery';
 
-const customRenderWhaleSBT = {
+const customRenderWhaleSBT: CustomGallerySBT = {
   name: 'Solid World Whale SBT',
   address: '0xd843fB69473F77fF45502e1EB8733B6DD7feC98F',
   network: 'polygon',
@@ -19,7 +20,7 @@ const customRenderWhaleSBT = {
   },
 };
 
-const DackieSBT = {
+const DackieSBT: CustomGallerySBT = {
   name: 'Dackies SBT',
   address: '0xbA444542E493Ed497D9Ef7f2ed596244a1952Ba2',
   network: 'polygon',
@@ -32,7 +33,7 @@ const DackieSBT = {
   },
 };
 
-const AmbassadorOGSBT = {
+const AmbassadorOGSBT: CustomGallerySBT = {
   name: 'Masa Ambassador OG SBT',
   address: '0x376f5039Df4e9E9c864185d8FaBad4f04A7E394A',
   network: 'polygon',
@@ -45,7 +46,7 @@ const AmbassadorOGSBT = {
   },
 };
 
-const AmbassadorSBT = {
+const AmbassadorSBT: CustomGallerySBT = {
   name: 'Masa Ambassador SBT',
   address: '0x3F1EFED96Eb7f98F0618136133D795F5997ECEf4',
   network: 'polygon',
@@ -58,7 +59,7 @@ const AmbassadorSBT = {
   },
 };
 
-const GoodDollarSBT = {
+const GoodDollarSBT: CustomGallerySBT = {
   name: 'Good Dollar SBT',
   address: '0x3F1EFED96Eb7f98F0618136133D795F5997ECEf4',
   network: 'celo',
