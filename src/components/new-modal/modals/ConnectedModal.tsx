@@ -21,14 +21,18 @@ const ConnectedModal = (): JSX.Element => {
 
   const titleText = useMemo(() => {
     switch (company) {
-      case 'Masa':
+      case 'Masa': {
         return 'Starting your soulbound journey';
-      case 'Celo':
+      }
+      case 'Celo': {
         return 'Launching your Prosperity Passport';
-      case 'Base':
+      }
+      case 'Base': {
         return 'Taking you to Base Camp';
-      default:
+      }
+      default: {
         return 'Starting your soulbound journey';
+      }
     }
   }, [company]);
 

@@ -12,60 +12,76 @@ const SuccessCreateIdentityModal = (): JSX.Element => {
 
   const title = useMemo(() => {
     switch (company) {
-      case 'Masa':
+      case 'Masa': {
         return 'You have claimed your .soul domain and your Soulbound Identity has been minted.';
-      case 'Celo':
+      }
+      case 'Celo': {
         return 'You have claimed your .celo domain and your Prosperity Passport has been minted.';
+      }
 
-      case 'Base':
+      case 'Base': {
         return 'You have claimed your .base domain name. Welcome to Base Camp ⛺️';
+      }
 
-      default:
+      default: {
         return 'You have claimed your .soul domain and your Soulbound Identity has been minted.';
+      }
     }
   }, [company]);
 
   const twitterText = useMemo(() => {
     switch (company) {
-      case 'Masa':
+      case 'Masa': {
         return 'Tweet your .soul domain.';
-      case 'Celo':
+      }
+      case 'Celo': {
         return 'Tweet your .celo domain.';
-      case 'Base':
+      }
+      case 'Base': {
         return 'Tweet your .base domain.';
+      }
 
-      default:
+      default: {
         return 'Tweet your .soul domain';
+      }
     }
   }, [company]);
 
   const tweetContentLink = useMemo(() => {
     switch (company) {
-      case 'Masa':
+      case 'Masa': {
         return 'https://app.masa.finance';
-      case 'Celo':
+      }
+      case 'Celo': {
         return soulnames
-          ? `https://raregems.io/celo/celo-domain-names/${soulnames[
-              soulnames.length - 1
-            ].tokenDetails.tokenId.toString()}`
+          ? `https://raregems.io/celo/celo-domain-names/${soulnames.at(
+              -1
+            ).tokenDetails.tokenId.toString()}`
           : undefined;
-      case 'Base':
+      }
+      case 'Base': {
         return 'https://app.basecamp.global';
-      default:
+      }
+      default: {
         return 'https://app.masa.finance';
+      }
     }
   }, [soulnames, company]);
 
   const twitterLink = useMemo(() => {
     switch (company) {
-      case 'Masa':
+      case 'Masa': {
         return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.soul%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=SoulboundIdentity,Masa`;
-      case 'Celo':
+      }
+      case 'Celo': {
         return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.celo%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=ProsperityPassport,Celo,Masa`;
-      case 'Base':
+      }
+      case 'Base': {
         return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.base%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=Basecamp,Base,Masa`;
-      default:
+      }
+      default: {
         return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.soul%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=SoulboundIdentity,Masa`;
+      }
     }
   }, [company, tweetContentLink]);
 

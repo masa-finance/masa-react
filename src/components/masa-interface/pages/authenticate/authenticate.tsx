@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useAccount, useDisconnect } from 'wagmi';
 import { useMasa } from '../../../../provider';
 import { Spinner } from '../../../spinner';
-import { useAccount, useDisconnect } from 'wagmi';
 
 export const InterfaceAuthenticate = (): JSX.Element => {
   const {
@@ -32,27 +32,30 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
   const message = useMemo(() => {
     switch (company) {
-      case 'Masa':
+      case 'Masa': {
         return `Your wallet is now connected. Start your soulbound journey by minting
     a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
-      case 'Celo':
+      }
+      case 'Celo': {
         return `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`;
-      case 'Base':
+      }
+      case 'Base': {
         return 'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.';
-      case 'Base Universe':
+      }
+      case 'Base Universe': {
         return 'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.';
-      default:
+      }
+      default: {
         return `Your wallet is now connected. Start your soulbound journey by minting
           a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
+      }
     }
   }, [company]);
 
-  const shortAddress = useMemo(() => {
-    return `${accountAddress?.substring(0, 2)}...${accountAddress?.substring(
+  const shortAddress = useMemo(() => `${accountAddress?.slice(0, 2)}...${accountAddress?.substring(
       accountAddress.length - 4,
       accountAddress.length
-    )}`;
-  }, [accountAddress]);
+    )}`, [accountAddress]);
 
   const handleClipboard = useCallback(() => {
     if (accountAddress) {
@@ -91,9 +94,9 @@ export const InterfaceAuthenticate = (): JSX.Element => {
             <p>
               Want to use a different wallet?
               {!isLoggedIn && isConnected && (
-                <span className={'connected-wallet'}>
+                <span className="connected-wallet">
                   <span
-                    className={'authenticate-button'}
+                    className="authenticate-button"
                     onClick={switchWallet}
                   >
                     Switch Wallet

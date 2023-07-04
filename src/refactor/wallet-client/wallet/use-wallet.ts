@@ -3,6 +3,7 @@ import {
   useChainModal,
   useAccountModal,
 } from '@rainbow-me/rainbowkit';
+import type { Connector, Provider, Signer } from '@wagmi/core';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -112,7 +113,33 @@ const useWallet = () => {
     ]
   );
 
-  return useWalletValue;
+  return useWalletValue as {
+    address?: `0x${string}`;
+    hasAddress: boolean;
+    walletName?: string;
+    previousAddress?: `0x${string}`;
+    compareAddress?: `0x${string}`;
+    provider?: Provider;
+    signer?: Signer;
+    connector?: Connector;
+    isConnected?: boolean;
+    isConnecting?: boolean;
+    isDisconnected?: boolean;
+    openConnectModal?: () => void;
+    openChainModal?: () => void;
+    openAccountModal?: () => void;
+    disconnect?: () => void;
+    disconnectAsync?: () => void;
+    isLoadingSigner?: boolean;
+    isLoadingBalance?: boolean;
+    balance?: string;
+    setPreviousAddress: React.Dispatch<
+      React.SetStateAction<`0x${string}` | undefined>
+    >;
+    setCompareAddress: React.Dispatch<
+      React.SetStateAction<`0x${string}` | undefined>
+    >;
+  };
 };
 
 export { useWallet };

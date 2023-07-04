@@ -1,2 +1,4 @@
-import Toggle from './toggle';
-export { Toggle };
+
+
+
+export {default as Toggle} from './toggle';

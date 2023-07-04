@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
+import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
 import { useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
-import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
 // import {
 //   // useNetwork,
 //   // useNetwork,
@@ -30,7 +30,7 @@ export const InterfaceSwitchChain = (): JSX.Element => {
       return SupportedNetworks[forceNetwork];
     }
 
-    return;
+    
   }, [forceNetwork]);
 
   const handleSwitch = useCallback(() => {
@@ -85,8 +85,8 @@ export const InterfaceSwitchChain = (): JSX.Element => {
               <p>
                 Want to use a different wallet?
                 {!isLoggedIn && isConnected && (
-                  <span className={'connected-wallet'}>
-                    <span className={'authenticate-button'} onClick={logout}>
+                  <span className="connected-wallet">
+                    <span className="authenticate-button" onClick={logout}>
                       Switch Wallet
                     </span>
                     <span>or </span>

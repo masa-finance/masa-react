@@ -1,3 +1,19 @@
+// import { Ethereum } from '@wagmi/connectors';
+// import {
+//   Address,
+//   TypedData,
+//   TypedDataToPrimitiveTypes,
+//   TypedDataDomain,
+//   ResolvedConfig,
+// } from 'abitype';
+import {
+  // BigNumber,
+  // providers,
+  // Signer as Signer$1,
+  Signer,
+  Wallet,
+} from 'ethers';
+
 import {
   Chain,
   useAccount,
@@ -7,8 +23,15 @@ import {
   useSigner,
   useSwitchNetwork,
 } from 'wagmi';
-import { Signer, Wallet } from 'ethers';
 import { useEffect } from 'react';
+
+// type WebSocketProvider = providers.WebSocketProvider & {
+//   chains?: Chain[];
+// };
+
+// import 'wagmi/node_modules/@wagmi/core/dist/index-35b6525c';
+// import type { F } from 'wagmi';
+// import { type WebSocketProvider } from '@wagmi/core';
 
 export const useWagmi = ({
   setSigner,
@@ -55,9 +78,21 @@ export const useWagmi = ({
     isConnecting,
     isDisconnected,
     provider,
-    signer,
+    signer: signer as Signer,
     chain: chain as Chain,
     chains,
     disconnect,
+  } as {
+    isLoading: boolean;
+    isError: boolean;
+    isConnecting: boolean;
+    signer: Signer;
+    chain: Chain;
+    chains: Chain[];
+    disconnect: () => void;
   };
 };
+
+// export { type Provider, type Signer } from '@wagmi/core';
+// export { type WebSocketProvider };
+// export { type ChainProviderFn, type Chain } from 'wagmi';

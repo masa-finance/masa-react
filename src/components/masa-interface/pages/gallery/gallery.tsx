@@ -1,5 +1,10 @@
 import React from 'react';
-import { ICreditScore, IGreen, SoulNameDetails } from '@masa-finance/masa-sdk';
+import type {
+  ICreditScore,
+  IGreen,
+  NetworkName,
+  SoulNameDetails,
+} from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 import { Tabs } from './tabs';
 import { useMasa } from '../../../../provider';
@@ -23,7 +28,8 @@ interface CreditScores {
   tokenUri: string;
   metadata?: ICreditScore | undefined;
 }
-export interface Tabs {
+
+export interface TabsInterface {
   items: SoulNameDetails[] | Greens[] | CreditScores[];
   render: (SBT: any) => JSX.Element;
   content: () => JSX.Element[];
@@ -33,13 +39,14 @@ export interface Tabs {
 export interface CustomGallerySBT {
   name: string;
   address: string;
-  network: string;
+  network: NetworkName;
   getMetadata: (item: { tokenId; tokenUri }) => Promise<{
     image: string;
     name: string;
     description: string;
   }>;
 }
+
 export const Gallery = ({ setIndex, context }) => {
   const { masa, connect } = useMasa();
   return (
@@ -47,7 +54,7 @@ export const Gallery = ({ setIndex, context }) => {
       {masa && context.tabs && context.tabs.length > 0 ? (
         <Tabs
           tabs={context.tabs}
-          wrapperClassName={'masa-gallery'}
+          wrapperClassName="masa-gallery"
           onAdd={() => setIndex('addSbt')}
         />
       ) : (

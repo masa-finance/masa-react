@@ -1,7 +1,7 @@
-import { SubflowPage } from '../../interface-subflow';
 import React, { useEffect, useMemo, useState } from 'react';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import Reaptcha from 'reaptcha';
+import { SubflowPage } from '../../interface-subflow';
 import { useMasa } from '../../../../provider';
 
 export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
@@ -34,17 +34,17 @@ export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
   const getCode = async () => {
     const result = await handleGenerateGreen?.(phoneNumber);
     if (result) {
-      if (result['status'] === 'pending') {
+      if (result.status === 'pending') {
         next();
       }
 
-      if (result['status'] === '429') {
+      if (result.status === '429') {
         setErrorMsg(
           'Too many requests. Please wait 24hrs before trying again.'
         );
       }
 
-      if (result['status'] === 'failed') {
+      if (result.status === 'failed') {
         setErrorMsg(result?.message ?? '');
       }
     } else {
@@ -87,17 +87,17 @@ export const PhoneInputInterface: React.FunctionComponent<SubflowPage> = ({
         </div>
         <Reaptcha
           className="g-recaptcha"
-          sitekey={'6Lf623YkAAAAALcfUuQnr0NVdUwffckx_OQdfJs6'}
+          sitekey="6Lf623YkAAAAALcfUuQnr0NVdUwffckx_OQdfJs6"
           onVerify={onRecaptchaVerify}
         />
         <button
-          className={'masa-button'}
+          className="masa-button"
           onClick={() => getCode()}
           disabled={!isPhoneValid || !recaptchaVerified}
         >
           Mint Masa Green SBT
         </button>
-        {errorMsg && <p className={'text-center text-red'}>{errorMsg}</p>}
+        {errorMsg && <p className="text-center text-red">{errorMsg}</p>}
       </div>
     </div>
   );

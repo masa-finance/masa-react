@@ -1,5 +1,4 @@
 import ReactCodeInput from '@acusti/react-code-input';
-import { useLocalStorage, useMasa } from '../../../../provider';
 import { SubflowPage } from 'components/masa-interface/interface-subflow';
 import React, {
   useCallback,
@@ -8,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useLocalStorage, useMasa } from '../../../../provider';
 
 const errorMsgs = {
   expired: 'The code is expired. Please click Resend and try again!',
@@ -61,7 +61,7 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
   }, [time]);
 
   useEffect(() => {
-    if (phoneNumber.length < 1) {
+    if (phoneNumber.length === 0) {
       back();
     }
   }, [phoneNumber, back]);
@@ -92,17 +92,21 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
           next();
         } else {
           switch (verifyResponse?.status) {
-            case 'pending':
+            case 'pending': {
               setErrorMsg(errorMsgs.invalid);
               break;
-            case '404':
+            }
+            case '404': {
               setErrorMsg(errorMsgs.expired);
               break;
-            case '429':
+            }
+            case '429': {
               setErrorMsg(errorMsgs.maxAttempts);
               break;
-            default:
+            }
+            default: {
               setErrorMsg(errorMsgs.unexpedted);
+            }
           }
         }
       }
@@ -169,14 +173,14 @@ export const CodeInterface: React.FunctionComponent<SubflowPage> = ({
           isValid={isValid}
         />
       </div>
-      <p className={''}>{errorMsg}</p>
-      <div className={''}>
-        <p className={''}>
+      <p className="">{errorMsg}</p>
+      <div className="">
+        <p className="">
           Didn&apos;t get the code?{' '}
           {showCountDown && time !== 0 ? (
-            <span className={'font-bold ml-2'}>{time}</span>
+            <span className="font-bold ml-2">{time}</span>
           ) : (
-            <span className={'resend'} onClick={() => resendCode()}>
+            <span className="resend" onClick={() => resendCode()}>
               Resend
             </span>
           )}

@@ -1,11 +1,11 @@
-import { Input } from '../../input';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { PaymentMethod } from '@masa-finance/masa-sdk';
+import { Input } from '../../input';
 import { useDebounce, useMasa } from '../../../provider';
 import { MasaLoading } from '../../masa-loading';
-import { PaymentMethod } from '@masa-finance/masa-sdk';
 import { Spinner } from '../../spinner';
 import { Select } from '../../select';
-import { InterfaceErrorModal } from '../../masa-interface/pages/error-modal/';
+import { InterfaceErrorModal } from "../../masa-interface/pages/error-modal";
 
 const errorMessages = {
   UNPREDICTABLE_GAS_LIMIT:
@@ -159,22 +159,18 @@ const CreateSoulnameModal = (): JSX.Element => {
     setLoadingMint(true);
 
     try {
-      if (identity && identity.identityId) {
-        await masa?.soulName.create(
+      await (identity && identity.identityId ? masa?.soulName.create(
           paymentMethod,
           soulname,
           registrationPeriod,
           undefined,
           soulNameStyle
-        );
-      } else {
-        await handlePurchaseIdentityWithSoulname?.(
+        ) : handlePurchaseIdentityWithSoulname?.(
           paymentMethod,
           soulname,
           registrationPeriod,
           soulNameStyle
-        );
-      }
+        ));
 
       if (!forcedPage && setForcedPage) {
         reloadSoulnames?.();
@@ -243,7 +239,7 @@ const CreateSoulnameModal = (): JSX.Element => {
       <InterfaceErrorModal
         {...error}
         handleComplete={handleErrorConfirmed}
-        buttonText={'Try again'}
+        buttonText="Try again"
       />
     );
   }
@@ -290,7 +286,7 @@ const CreateSoulnameModal = (): JSX.Element => {
               </>
             )}
           </p>
-          {soulname !== '' && soulname.length >= 1 ? (
+          {soulname !== '' && soulname.length > 0 ? (
             <>
               {loadingIsAvailable ? (
                 <div className="available-indicator">
@@ -345,14 +341,14 @@ const CreateSoulnameModal = (): JSX.Element => {
               label="Payment asset"
               values={paymentMethods}
               onChange={updatePaymentMethod}
-              readOnly={true}
+              readOnly
             />
             <Input
               label="Registration price"
               value={`${
-                registrationPrice ? registrationPrice.substring(0, 7) : '-.-'
+                registrationPrice ? registrationPrice.slice(0, 7) : '-.-'
               } ${paymentMethod}`}
-              readOnly={true}
+              readOnly
             />
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { MasaProvider } from '../../../../provider';
 import { Meta, StoryObj } from '@storybook/react';
+import { MasaProvider } from '../../../../provider';
 import { ModalComponent } from '../../../modal';
 import InterfaceMasaGreen from '.';
 import { AirdropPage } from './airdrop';
@@ -43,7 +43,7 @@ const pagesParams = {
 
 export const Primary: Story = {
   render: (props: any) => (
-    <MasaProvider company={'Masa'} forceNetwork={'goerli'}>
+    <MasaProvider company="Masa" forceNetwork="goerli">
       <ModalComponent open={props.open} close={() => {}} setOpen={() => {}}>
         <InterfaceMasaGreen />
       </ModalComponent>

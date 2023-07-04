@@ -27,6 +27,7 @@ export interface UseMasaSdkArgs {
     SoulStoreAddress: string;
   };
 }
+
 export const useMasaSDK = (
   {
     signer,

@@ -1,9 +1,10 @@
 import {
+  Network,
   NetworkName,
   SupportedNetworks,
   getNetworkNameByChainId,
 } from '@masa-finance/masa-sdk';
-import type { Provider } from '@wagmi/core';
+import type { Chain, Connector, GetNetworkResult, Provider } from '@wagmi/core';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -60,13 +61,15 @@ export const useNetwork = () => {
   const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
   const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
   const currentNetwork = useMemo(() => {
-    let nw = activeChain?.network;
-    // * NOTE: name mismatch from masa & wagmi
-    if (nw === 'celo-alfajores') {
-      nw = 'alfajores';
-    }
+    const nw = activeChain?.id;
+    // // * NOTE: name mismatch from masa & wagmi
+    // if (nw === 'celo-alfajores') {
+    //   nw = 'alfajores';
+    // }
 
-    return SupportedNetworks[nw as NetworkName];
+    const newNetwork = getNetworkNameByChainId(nw ?? 0);
+
+    return SupportedNetworks[newNetwork];
   }, [activeChain]);
 
   const currentNetworkByChainId = useMemo(() => {
@@ -107,12 +110,12 @@ export const useNetwork = () => {
   }, [networkError, stopSwitching]);
 
   const canProgramaticallySwitchNetwork = useMemo(
-    () => !!switchNetwork,
-    [switchNetwork]
+    () => !!switchNetwork || activeConnector?.name === 'WalletConnect',
+    [switchNetwork, activeConnector]
   );
 
   return {
-    connectors,
+    connectors: connectors as unknown,
     switchNetwork,
     switchNetworkByName,
     switchingToChain,
@@ -130,5 +133,26 @@ export const useNetwork = () => {
     currentNetwork,
     currentNetworkByChainId,
     currentNetworkNew: network,
+  } as {
+    connectors?: Connector[];
+    switchNetwork?: (chainId?: number) => void;
+    switchNetworkByName: (forcedNetworkParam: NetworkName) => void;
+    switchingToChain: number | null | undefined;
+    canProgramaticallySwitchNetwork: boolean;
+    activeChain:
+      | (Chain & {
+          unsupported?: boolean | undefined;
+        })
+      | undefined;
+    activeNetwork: string;
+    activeChainId: number;
+    isSwitchingChain: boolean;
+    chains: Chain[];
+    availibleChains: Chain[];
+    pendingConnector?: Connector;
+    isActiveChainUnsupported: boolean;
+
+    currentNetwork: Network | undefined;
+    currentNetworkNew: GetNetworkResult;
   };
 };

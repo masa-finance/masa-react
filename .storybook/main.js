@@ -7,11 +7,11 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     {
-      name: "@storybook/addon-styling",
+      name: '@storybook/addon-styling',
       options: {
         sass: {
           // Require your preprocessor
-          implementation: require("sass"),
+          implementation: require('sass'),
         },
       },
     },

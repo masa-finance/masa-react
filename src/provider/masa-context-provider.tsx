@@ -146,7 +146,6 @@ export const MasaContextProvider = ({
   const {
     currentNetwork,
     currentNetworkNew,
-    // switchNetworkByName: switchNetwork,
     switchNetworkByName: switchNetworkNew,
     switchNetworkByName: switchNetwork,
     canProgramaticallySwitchNetwork,

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useAccount } from 'wagmi';
 import { useMasa, useMetamask } from '../../provider';
 import { ModalComponent } from '../modal';
 import {
@@ -13,7 +14,6 @@ import { Gallery } from './pages/gallery';
 import InterfaceMasaGreen from './pages/masa-green';
 import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity';
 import { InterfaceSwitchChain } from './pages/switch-chain';
-import { useAccount } from 'wagmi';
 
 const pages = {
   connector: ({
@@ -128,7 +128,7 @@ export const MasaInterface = ({
       if (hasAccountAddress && isLoggedIn) return 'connectedState';
 
       return 'connector';
-    } else {
+    } 
       // * rainbowkit logic
       if (forcedPage) return forcedPage;
 
@@ -146,13 +146,11 @@ export const MasaInterface = ({
             hasWalletAddress,
           });
 
-          setRainbowkKitModalCallback?.(() => {
-            return () => {
+          setRainbowkKitModalCallback?.(() => () => {
               console.log('modalcallback !hasAccountAddress');
               // setForcedPage?.('authenticate');
               setModalOpen?.(true);
-            };
-          });
+            });
 
           return 'rainbowkitConnect';
         }
@@ -176,12 +174,10 @@ export const MasaInterface = ({
         setModalOpen?.(false);
         openConnectModal?.();
 
-        setRainbowkKitModalCallback?.(() => {
-          return () => {
+        setRainbowkKitModalCallback?.(() => () => {
             // setForcedPage?.('authenticate');
             setModalOpen?.(true);
-          };
-        });
+          });
 
         return 'authenticate';
       }
@@ -217,18 +213,16 @@ export const MasaInterface = ({
       // return 'authenticate';
 
       openConnectModal?.();
-      setRainbowkKitModalCallback?.(() => {
-        return () => {
+      setRainbowkKitModalCallback?.(() => () => {
           // setForcedPage?.('authenticate');
           setModalOpen?.(true);
-        };
-      });
+        });
 
       if (hasAccountAddress) {
         return 'authenticate';
       }
       return 'rainbowkitConnect';
-    }
+    
   }, [
     hasWalletAddress,
     verbose,
@@ -252,25 +246,21 @@ export const MasaInterface = ({
     signer,
   ]);
 
-  const isModal = useMemo(() => {
-    return ['createIdentity', 'successIdentityCreate'].includes(String(page));
-  }, [page]);
+  const isModal = useMemo(() => ['createIdentity', 'successIdentityCreate'].includes(String(page)), [page]);
 
   return (
-    <>
-      <ModalComponent
+    <ModalComponent
         open={isModalOpen as boolean}
         close={(): void => closeModal?.()}
         setOpen={setModalOpen as (val: boolean) => void}
         height={isModal ? 340 : undefined}
       >
         <PageSwitcher
-          page={page as string}
+          page={page }
           useRainbowKit={useRainbowKit}
           disableMetamask={disableMetamask}
         />
       </ModalComponent>
-    </>
   );
 };
 
@@ -287,8 +277,8 @@ const PageSwitcher = ({
     return page === 'connector'
       ? pages[page]({ disableMetamask })
       : pages[page];
-  } else {
+  } 
     if (page === 'rainbowkitConnect') return null;
     return page ? pages[page] : null;
-  }
+  
 };

@@ -6,7 +6,7 @@ import {
 } from './masa-context-provider';
 
 import { queryClient } from './masa-query-client';
-// import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider/configured-rainbowkit-provider';
+import ConfiguredRainbowKitProvider from './configured-rainbowkit-provider/configured-rainbowkit-provider';
 import { MasaInterface } from '../components';
 import { MasaNetworks } from './configured-rainbowkit-provider/utils';
 import MasaRefactorProvider from '../refactor/masa-provider';
@@ -25,11 +25,12 @@ export const MasaProvider = ({
   const { forceNetwork, environmentName, company, verbose } = args;
   return (
     <QueryClientProvider contextSharing client={queryClient}>
-      {/* //   <ConfiguredRainbowKitProvider
-  //     chainsToUse={chainsToUse}
-  //     walletsToUse={walletsToUse}
-  //     rainbowKitModalSize={rainbowKitModalSize}
-  //   > */}
+    <ConfiguredRainbowKitProvider
+      chainsToUse={chainsToUse}
+      forceNetwork={forceNetwork}
+      walletsToUse={walletsToUse}
+      rainbowKitModalSize={rainbowKitModalSize}
+    >
 
       <MasaRefactorProvider
         config={{
@@ -66,7 +67,7 @@ export const MasaProvider = ({
           {children}
         </MasaContextProvider>
       </MasaRefactorProvider>
+      </ConfiguredRainbowKitProvider>
     </QueryClientProvider>
-    //   </ConfiguredRainbowKitProvider>
   );
 };

@@ -25,7 +25,6 @@ export interface MasaReactConfig {
   };
 
   masaConfig: Omit<MasaArgs, 'signer'>;
-  
 }
 
 export const defaultConfig: Partial<MasaReactConfig> = {
