@@ -52,10 +52,14 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     }
   }, [company]);
 
-  const shortAddress = useMemo(() => `${accountAddress?.slice(0, 2)}...${accountAddress?.substring(
-      accountAddress.length - 4,
-      accountAddress.length
-    )}`, [accountAddress]);
+  const shortAddress = useMemo(
+    () =>
+      `${accountAddress?.slice(0, 2)}...${accountAddress?.substring(
+        accountAddress.length - 4,
+        accountAddress.length
+      )}`,
+    [accountAddress]
+  );
 
   const handleClipboard = useCallback(() => {
     if (accountAddress) {
@@ -95,10 +99,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
               Want to use a different wallet?
               {!isLoggedIn && isConnected && (
                 <span className="connected-wallet">
-                  <span
-                    className="authenticate-button"
-                    onClick={switchWallet}
-                  >
+                  <span className="authenticate-button" onClick={switchWallet}>
                     Switch Wallet
                   </span>
                 </span>

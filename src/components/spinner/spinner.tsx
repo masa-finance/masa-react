@@ -11,7 +11,7 @@ export const Spinner = ({
   color = '#000',
   ...rest
 }: SpinnerProps): JSX.Element => (
-    <div className="masa-spinner">
-      <MoonLoader color={color} {...rest} />
-    </div>
-  );
+  <div className="masa-spinner">
+    <MoonLoader color={color} {...rest} />
+  </div>
+);

@@ -1,3 +1,4 @@
+import React from 'react';
 import AuthenticateModal from './AuthenticateModal';
 import ConnectedModal from './ConnectedModal';
 import CreateCreditScoreModal from './CreateCreditScoreModal';
@@ -7,7 +8,7 @@ import SuccessCreateIdentityModal from './SuccessCreateIdentityModal';
 import SwitchChainModal from './SwitchChainModal';
 import Backdrop from '../Backdrop';
 import { ModalWrapper } from '../Modal';
-import InterfaceMasaGreen from "../../masa-interface/pages/masa-green";
+import InterfaceMasaGreen from '../../masa-interface/pages/masa-green';
 
 export const Modals = {
   AuthenticateModal,
@@ -21,7 +22,7 @@ export const Modals = {
   ModalWrapper,
 };
 
-const Default = () => null;
+const Default = () => <div></div>;
 
 export const ModalContent = {
   AuthenticateModal,

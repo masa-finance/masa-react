@@ -28,9 +28,9 @@ export const InterfaceSwitchChain = (): JSX.Element => {
   const networkData: Network | undefined = useMemo(() => {
     if (forceNetwork) {
       return SupportedNetworks[forceNetwork];
+    } else {
+      return undefined;
     }
-
-    
   }, [forceNetwork]);
 
   const handleSwitch = useCallback(() => {

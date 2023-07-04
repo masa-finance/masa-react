@@ -5,7 +5,7 @@ import { useDebounce, useMasa } from '../../../provider';
 import { MasaLoading } from '../../masa-loading';
 import { Spinner } from '../../spinner';
 import { Select } from '../../select';
-import { InterfaceErrorModal } from "../../masa-interface/pages/error-modal";
+import { InterfaceErrorModal } from '../../masa-interface/pages/error-modal';
 
 const errorMessages = {
   UNPREDICTABLE_GAS_LIMIT:
@@ -159,18 +159,20 @@ const CreateSoulnameModal = (): JSX.Element => {
     setLoadingMint(true);
 
     try {
-      await (identity && identity.identityId ? masa?.soulName.create(
-          paymentMethod,
-          soulname,
-          registrationPeriod,
-          undefined,
-          soulNameStyle
-        ) : handlePurchaseIdentityWithSoulname?.(
-          paymentMethod,
-          soulname,
-          registrationPeriod,
-          soulNameStyle
-        ));
+      await (identity && identity.identityId
+        ? masa?.soulName.create(
+            paymentMethod,
+            soulname,
+            registrationPeriod,
+            undefined,
+            soulNameStyle
+          )
+        : handlePurchaseIdentityWithSoulname?.(
+            paymentMethod,
+            soulname,
+            registrationPeriod,
+            soulNameStyle
+          ));
 
       if (!forcedPage && setForcedPage) {
         reloadSoulnames?.();

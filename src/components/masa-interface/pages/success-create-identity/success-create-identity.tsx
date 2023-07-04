@@ -56,11 +56,13 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
         return 'https://app.masa.finance';
       }
       case 'Celo': {
-        return soulnames && soulnames.length > 0
-          ? `https://raregems.io/celo/celo-domain-names/${soulnames.at(
-              -1
-            ).tokenDetails.tokenId.toString()}`
-          : undefined;
+        if (soulnames && soulnames.length > 0) {
+          return `https://raregems.io/celo/celo-domain-names/${soulnames[
+            soulnames.length - 1
+          ].tokenDetails.tokenId.toString()}`;
+        } else {
+          return undefined;
+        }
       }
       case 'Base': {
         return 'https://app.basecamp.global';

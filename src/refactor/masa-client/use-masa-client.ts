@@ -1,4 +1,3 @@
-import type { NetworkName } from '@masa-finance/masa-sdk';
 import { useMemo } from 'react';
 import { useAsync } from 'react-use';
 import { useConfig } from '../base-provider';

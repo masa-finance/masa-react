@@ -1,7 +1,7 @@
 import { SubflowPage } from 'components/masa-interface/interface-subflow';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocalStorage, useMasa } from '../../../../provider';
-import { MasaLoading } from "../../../masa-loading";
+import { MasaLoading } from '../../../masa-loading';
 
 export const VerifyAndMintInterface: React.FunctionComponent<SubflowPage> = ({
   next,
@@ -17,7 +17,7 @@ export const VerifyAndMintInterface: React.FunctionComponent<SubflowPage> = ({
   useEffect(() => {
     const startVerification = async () => {
       if (excecute && typeof phone === 'string') {
-        const verificationData = localStorageGet(`${phone}`) ;
+        const verificationData = localStorageGet(`${phone}`) as string;
 
         if (verificationData) {
           const verificationObject = JSON.parse(verificationData);

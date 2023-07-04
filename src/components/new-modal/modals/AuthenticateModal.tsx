@@ -26,10 +26,14 @@ const AuthenticateModal = (): JSX.Element => {
     }
   }, [company]);
 
-  const shortAddress = useMemo(() => `${walletAddress?.slice(0, 2)}...${walletAddress?.substring(
-      walletAddress.length - 4,
-      walletAddress.length
-    )}`, [walletAddress]);
+  const shortAddress = useMemo(
+    () =>
+      `${walletAddress?.slice(0, 2)}...${walletAddress?.substring(
+        walletAddress.length - 4,
+        walletAddress.length
+      )}`,
+    [walletAddress]
+  );
 
   const handleClipboard = useCallback(() => {
     if (walletAddress) {

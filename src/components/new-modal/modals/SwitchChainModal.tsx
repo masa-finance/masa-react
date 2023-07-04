@@ -1,8 +1,7 @@
 import { Network, SupportedNetworks } from '@masa-finance/masa-sdk';
 import React, { useCallback, useMemo } from 'react';
-import { MasaLoading } from "../../masa-loading";
+import { MasaLoading } from '../../masa-loading';
 import { useMasa } from '../../../provider';
-
 
 const SwitchChainModal = () => {
   const { isLoading, switchNetwork, forceNetwork } = useMasa();
@@ -10,9 +9,9 @@ const SwitchChainModal = () => {
   const networkData: Network | undefined = useMemo(() => {
     if (forceNetwork) {
       return SupportedNetworks[forceNetwork];
+    } else {
+      return undefined;
     }
-
-    
   }, [forceNetwork]);
 
   const handleSwitch = useCallback(() => {

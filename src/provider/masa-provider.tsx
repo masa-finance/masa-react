@@ -25,48 +25,47 @@ export const MasaProvider = ({
   const { forceNetwork, environmentName, company, verbose } = args;
   return (
     <QueryClientProvider contextSharing client={queryClient}>
-    <ConfiguredRainbowKitProvider
-      chainsToUse={chainsToUse}
-      forceNetwork={forceNetwork}
-      walletsToUse={walletsToUse}
-      rainbowKitModalSize={rainbowKitModalSize}
-    >
-
-      <MasaRefactorProvider
-        config={{
-          company,
-          verbose,
-          allowedWallets: walletsToUse, // ['metamask', 'valora', 'walletconnect'],
-          forceChain: forceNetwork,
-          allowedNetworkNames: chainsToUse ?? [
-            'goerli',
-            'ethereum',
-            'alfajores',
-            'celo',
-            'mumbai',
-            'polygon',
-            'bsctest',
-            'bsc',
-            'basegoerli',
-            'unknown',
-          ],
-          masaConfig: {
-            networkName: 'ethereum',
-            environment: environmentName ?? 'dev',
-            // arweave: arweaveConfig,
-            // environment: environmentName,
-          },
-          rainbowkitConfig: {
-            modalSize: rainbowKitModalSize ?? 'wide',
-          },
-        }}
+      <ConfiguredRainbowKitProvider
+        chainsToUse={chainsToUse}
+        forceNetwork={forceNetwork}
+        walletsToUse={walletsToUse}
+        rainbowKitModalSize={rainbowKitModalSize}
       >
-        <MasaContextProvider {...args}>
-          <div id="modal-mount" />
-          <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />
-          {children}
-        </MasaContextProvider>
-      </MasaRefactorProvider>
+        <MasaRefactorProvider
+          config={{
+            company,
+            verbose,
+            allowedWallets: walletsToUse, // ['metamask', 'valora', 'walletconnect'],
+            forceChain: forceNetwork,
+            allowedNetworkNames: chainsToUse ?? [
+              'goerli',
+              'ethereum',
+              'alfajores',
+              'celo',
+              'mumbai',
+              'polygon',
+              'bsctest',
+              'bsc',
+              'basegoerli',
+              'unknown',
+            ],
+            masaConfig: {
+              networkName: 'ethereum',
+              environment: environmentName ?? 'dev',
+              // arweave: arweaveConfig,
+              // environment: environmentName,
+            },
+            rainbowkitConfig: {
+              modalSize: rainbowKitModalSize ?? 'wide',
+            },
+          }}
+        >
+          <MasaContextProvider {...args}>
+            <div id="modal-mount" />
+            <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />
+            {children}
+          </MasaContextProvider>
+        </MasaRefactorProvider>
       </ConfiguredRainbowKitProvider>
     </QueryClientProvider>
   );

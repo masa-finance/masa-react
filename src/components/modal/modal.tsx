@@ -61,11 +61,7 @@ export const ModalComponent = ({
     <Rodal
       data-cy="closeMasaModal"
       height={
-        isMobile
-          ? screenHeight
-          : modalSize
-          ? modalSize.height
-          : height || 615
+        isMobile ? screenHeight : modalSize ? modalSize.height : height || 615
       }
       width={isMobile ? screenWidth : modalSize ? modalSize.width : 550}
       visible={open}

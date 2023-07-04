@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useLocalStorage } from '../../../../provider';
-import { Input } from "../../../input";
-import Toggle from "../../../toggle/toggle";
+import { Input } from '../../../input';
+import Toggle from '../../../toggle/toggle';
 
 export const AddSBT = ({ back }) => {
   const { localStorageSet } = useLocalStorage();
