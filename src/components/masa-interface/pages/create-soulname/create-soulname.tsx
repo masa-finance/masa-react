@@ -211,21 +211,25 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     setLoadingMint(true);
 
     try {
-      await (identity && identity.identityId
-        ? purchaseSoulName?.(
-            soulname,
-            registrationPeriod,
-            paymentMethod,
-            soulNameStyle
-          )
-        : handlePurchaseIdentityWithSoulname?.(
-            paymentMethod,
-            soulname,
-            registrationPeriod,
-            soulNameStyle
-          ));
+      let result;
 
-      if (setForcedPage) {
+      if (identity && identity.identityId) {
+        result = await purchaseSoulName?.(
+          soulname,
+          registrationPeriod,
+          paymentMethod,
+          soulNameStyle
+        );
+      } else {
+        result = await handlePurchaseIdentityWithSoulname?.(
+          paymentMethod,
+          soulname,
+          registrationPeriod,
+          soulNameStyle
+        );
+      }
+
+      if (result && setForcedPage) {
         reloadSoulnames?.();
         setForcedPage('successIdentityCreate');
       } else {

@@ -6,6 +6,7 @@ import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 export const useSoulNamesPurchase = () => {
   const { sdk: masa } = useMasaClient();
   const queryClient = useMasaQueryClient();
+
   const [
     { loading: isPurchasingSoulName, value: hasPurchasedSoulName },
     purchaseSoulName,

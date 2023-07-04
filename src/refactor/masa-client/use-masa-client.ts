@@ -11,8 +11,6 @@ export const useMasaClient = () => {
 
   const { activeChainId, currentNetwork } = useNetwork();
 
-  console.log('THE CURRENT NETWORK', currentNetwork);
-
   const masa = useMasaSDK(
     {
       address,
