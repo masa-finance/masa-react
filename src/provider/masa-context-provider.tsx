@@ -9,8 +9,8 @@ import {
   SupportedNetworks,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
-import React, { useCallback, useMemo, useState } from 'react';
-import type { BigNumber, Signer } from 'ethers';
+import React, { useCallback, useMemo } from 'react';
+import type { BigNumber } from 'ethers';
 import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
 // import { createNewMasa } from '../helpers';
 import {
@@ -102,7 +102,7 @@ export const MasaContextProvider = ({
 }: MasaContextProviderProps): JSX.Element => {
   // masa
   // const [masaInstance, setMasaInstance] = useState<Masa | undefined>();
-  const [signer, setSigner] = useState<Signer | undefined>();
+  // const [signer, setSigner] = useState<Signer | undefined>();
   const { sdk: masaInstance } = useMasaClient();
   // wallet
   // const { isWalletLoading, reloadWallet } = useWallet(masaInstance, signer);
@@ -116,6 +116,7 @@ export const MasaContextProvider = ({
     openConnectModal,
     hasAddress: hasWalletAddress,
     walletName,
+    signer,
   } = useWalletNew();
   // const {
   //   // isConnected,
@@ -352,7 +353,6 @@ export const MasaContextProvider = ({
 
       // provider handling
       signer,
-      setSigner,
 
       // modal
       isModalOpen,
@@ -476,7 +476,6 @@ export const MasaContextProvider = ({
 
     // provider handling
     signer,
-    setSigner,
 
     // modal
     isModalOpen,
