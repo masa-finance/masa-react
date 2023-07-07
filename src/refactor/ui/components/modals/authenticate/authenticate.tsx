@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useMasa } from '../../../../provider';
-import { Spinner } from '../spinner';
-import { useWallet } from '../../../wallet-client/wallet/use-wallet';
-import { useSession } from '../../../masa/use-session';
+import { useMasa } from '../../../../../provider';
+import { Spinner } from '../../spinner';
+import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
+import { useSession } from '../../../../masa/use-session';
 
 export const InterfaceAuthenticate = (): JSX.Element => {
   const {
@@ -68,7 +68,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   }
 
   return (
-    <div className="interface-authenticate">
+    <section className="interface-authenticate">
       <section>
         <h3 className="title">Wallet connected!</h3>
         <p className="connected-wallet">{message}</p>
@@ -108,6 +108,6 @@ export const InterfaceAuthenticate = (): JSX.Element => {
           </div>
         )}
       </section>
-    </div>
+    </section>
   );
 };
