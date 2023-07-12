@@ -26,15 +26,15 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
         return 'You have claimed your .base domain name. Welcome to Base Camp ⛺️';
       case 'Base Universe':
         return 'You have claimed your Base Universe .bu domain name. Welcome to Base Universe.';
-      case 'Brozo': 
+      case 'Brozo':
         return 'You have claimed your Brozo .bro domain name. Welcome to the Brozo community!';
-      default: 
+      default:
         return 'You have claimed your .soul domain and your Soulbound Identity has been minted.';
     }
   }, [company]);
 
   const tweetContentLink = useMemo(() => {
-    const companyUrlFormatted = company?.toLowerCase().replaceAll(" ","-")
+    const companyUrlFormatted = company?.toLowerCase().replaceAll(' ', '-');
 
     switch (company) {
       case 'Masa':
@@ -48,15 +48,15 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
       case 'Base':
         return 'https://app.basecamp.global';
       case 'Base Universe':
-      case 'Brozo': 
+      case 'Brozo':
         return `https://masa.finance/sbts/${companyUrlFormatted}-soulname-token`;
       default:
         return 'https://app.masa.finance';
     }
   }, [soulnames, company]);
 
-  const baseTwitterUrl = 'https://twitter.com/intent/tweet?text='
-  
+  const baseTwitterUrl = 'https://twitter.com/intent/tweet?text=';
+
   const twitterLink = useMemo(() => {
     switch (company) {
       case 'Masa':
@@ -67,9 +67,14 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
         return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.base%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=Basecamp,Base,Masa`;
       case 'Base Universe':
         return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20Base%20Universe%20.bu%20domain%2C%20powered%20by%20%40getmasafi!%20The%20process%20is%20super%20simple%2C%20and%20domains%20are%20free%20on%20testnet%20%F0%9F%A4%A9%C2%A0Grab%20yours%20here%3A%20${tweetContentLink}%20%40UniverseOnBase%20%40BuildOnBase`;
-      case 'Brozo': 
-        return baseTwitterUrl + encodeURIComponent(`Just claimed my @BrozoNFT .bro domain, powered by getmasafi! The process is simple, and 5+ character domains are FREE to mint. Grab yours here: ${tweetContentLink} #Brozo #NFT`)
-      default: 
+      case 'Brozo':
+        return (
+          baseTwitterUrl +
+          encodeURIComponent(
+            `Just claimed my @BrozoNFT .bro domain, powered by getmasafi! The process is simple, and 5+ character domains are FREE to mint. Grab yours here: ${tweetContentLink} #Brozo #NFT`
+          )
+        );
+      default:
         return `https://twitter.com/intent/tweet?text=Just%20claimed%20my%20.soul%20domain!%20The%20process%20is%20super%20simple%2C%20and%205%2B%20character%20domains%20are%20free%20%F0%9F%A4%A9.%20Grab%20yours%20here%3A%20&url=${tweetContentLink}&hashtags=SoulboundIdentity,Masa`;
     }
   }, [company, tweetContentLink]);
@@ -101,4 +106,4 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
       </button>
     </div>
   );
-  };
+};

@@ -235,13 +235,14 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             Domains are <b>FREE on testnet,</b> only pay the gas to mint.
           </>
         );
-      case 'Brozo': 
+      case 'Brozo':
         return (
           <>
-            Claim your rare <b>{extension}</b> domain name before it’s taken! 5+ character domains are <b>FREE</b> to mint, only pay the gas fee.
+            Claim your rare <b>{extension}</b> domain name before it’s taken! 5+
+            character domains are <b>FREE</b> to mint, only pay the gas fee.
           </>
         );
-      default: 
+      default:
         return (
           <>
             Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
