@@ -218,6 +218,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
 
   const createSoulnameTitle = useMemo(() => {
     switch (company) {
+      case 'Brozo':
       case 'Base Universe':
         return `Register a ${company} ${extension} Name`;
       default:
@@ -232,6 +233,13 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
           <>
             Claim your <b>{extension}</b> domain name before it&apos;s taken!
             Domains are <b>FREE on testnet,</b> only pay the gas to mint.
+          </>
+        );
+      case 'Brozo':
+        return (
+          <>
+            Claim your rare <b>{extension}</b> domain name before it’s taken! 5+
+            character domains are <b>FREE</b> to mint, only pay the gas fee.
           </>
         );
       default:
