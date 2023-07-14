@@ -47,6 +47,7 @@ export type MasaNetworks = Partial<{
   bsctest: Network;
   bsc: Network;
   // base
+  base: Network;
   basegoerli: Network;
   // fallback
   unknown: Network;
