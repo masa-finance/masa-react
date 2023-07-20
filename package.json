@@ -105,7 +105,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-unicorn": "^47.0.0",
+    "eslint-plugin-unicorn": "^48.0.0",
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "https-browserify": "^1.0.0",
