@@ -3,10 +3,10 @@ import { useMasa } from '../../../../../provider';
 import { Spinner } from '../../spinner';
 import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
 import { useSession } from '../../../../masa/use-session';
+import { useConfig } from '../../../../base-provider';
 
 export const InterfaceAuthenticate = (): JSX.Element => {
   const {
-    company,
     // setModalOpen,
     // openConnectModal,
     useRainbowKit,
@@ -21,6 +21,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     isLoadingSigner,
   } = useWallet();
   const { hasSession, loginSessionAsync } = useSession();
+  const { company } = useConfig();
 
   const [copied, setCopied] = useState(false);
 
@@ -68,7 +69,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
   }
 
   return (
-    <section className="interface-authenticate">
+    <div className="interface-authenticate">
       <section>
         <h3 className="title">Wallet connected!</h3>
         <p className="connected-wallet">{message}</p>
@@ -108,6 +109,6 @@ export const InterfaceAuthenticate = (): JSX.Element => {
           </div>
         )}
       </section>
-    </section>
+    </div>
   );
 };

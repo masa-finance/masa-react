@@ -3,9 +3,11 @@ import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // esl
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React, { MouseEventHandler, useCallback } from 'react';
+import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Button } from './ui';
 import './ui/styles.scss';
 import { useConfig } from './base-provider';
+import { useMasa } from '../provider';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
@@ -18,6 +20,10 @@ import { useSBT } from './masa/use-sbt';
 import MasaProvider from './masa-provider';
 import { useSession } from './masa/use-session';
 import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
+
+import { InterfaceAuthenticate } from './ui/components/modals';
+import { InterfaceConnected } from '../components/masa-interface/pages/connected';
+import { ModalComponent } from './../components/modal';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -457,6 +463,85 @@ const GreenInfo = () => {
     </ul>
   );
 };
+
+const ModalTests = () => {
+  const chainingModal = useModal(ModalComponent);
+
+  const {
+    hasAccountAddress,
+    identity,
+    isLoggedIn,
+    scope,
+    creditScores,
+    soulnames,
+    forcedPage,
+    currentNetwork,
+    forceNetwork,
+    // setForcedPage,
+    // switchNetworkNew,
+  } = useMasa();
+
+  const { hasAddress, signer, connector, openConnectModal } = useWallet();
+  const { hasSession } = useSession();
+
+  const showChainingModal = async () => {
+    // Separate complex conditions into smaller functions
+    const isForcedPage = () => forcedPage;
+    const needsWalletConnection = () => openConnectModal;
+    const needsNetworkSwitch = () =>
+      forceNetwork && currentNetwork?.networkName !== forceNetwork;
+    const needsAuthentication = () => !hasSession && signer;
+    const needsSoulnameCreation = () =>
+      isLoggedIn &&
+      (!soulnames || (soulnames && soulnames.length === 0)) &&
+      scope?.includes('soulname');
+    const needsIdentityCreation = () =>
+      scope?.includes('identity') &&
+      isLoggedIn &&
+      (!identity || !identity?.identityId);
+    const needsCreditScoreCreation = () =>
+      identity && !creditScores?.length && scope?.includes('credit-score');
+    const isConnectedState = () => hasSession && hasAddress;
+    const needsRainbowkitConnect = () => hasAccountAddress;
+
+    // Create a conditions and pages mapping
+    const conditionsAndPages = [
+      { condition: isForcedPage, page: forcedPage },
+      { condition: needsWalletConnection, page: connector },
+      { condition: needsNetworkSwitch, page: 'switchNetwork' },
+      {
+        condition: needsAuthentication,
+        page: <InterfaceAuthenticate />,
+      },
+      { condition: needsSoulnameCreation, page: 'createSoulname' },
+      { condition: needsIdentityCreation, page: 'createIdentity' },
+      { condition: needsCreditScoreCreation, page: 'createCreditScore' },
+      { condition: isConnectedState, page: <InterfaceConnected /> },
+      { condition: needsRainbowkitConnect, page: 'rainbowkitConnect' },
+    ];
+
+    const page = () => {
+      for (const { condition, page } of conditionsAndPages) {
+        if (condition()) {
+          return page;
+        }
+      }
+      return null; // default page or error handling
+    };
+    console.log({ page });
+    await chainingModal.show({
+      children: page(),
+    });
+  };
+  return (
+    <>
+      <Button type="button" onClick={showChainingModal}>
+        Show Authentication Modal
+      </Button>
+    </>
+  );
+};
+
 const Component = (): JSX.Element => {
   const config = useConfig();
   return (
@@ -481,6 +566,8 @@ const Component = (): JSX.Element => {
           </code>
         </li>
       </ul>
+
+      <ModalTests />
     </section>
   );
 };
@@ -507,7 +594,9 @@ const TemplateNewMasaState = (props: Args) => (
       },
     }}
   >
-    <Component {...props} />
+    <NiceModal.Provider>
+      <Component {...props} />
+    </NiceModal.Provider>
   </MasaProvider>
 );
 

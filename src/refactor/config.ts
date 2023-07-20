@@ -42,7 +42,7 @@ export const defaultConfig: Partial<MasaReactConfig> = {
   ],
   allowedWallets: ['metamask', 'valora', 'walletconnect'],
   masaConfig: {
-    environment: 'dev' as EnvironmentName,
+    environment: 'local' as EnvironmentName,
     networkName: 'ethereum' as NetworkName,
     verbose: false,
     arweave: {
