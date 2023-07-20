@@ -238,8 +238,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       case 'Brozo':
         return (
           <>
-            Claim your rare <b>{extension}</b> domain name before it’s taken! 5+
-            character domains are <b>FREE</b> to mint, only pay the gas fee.
+            Claim your rare <b>{extension}</b> domain name before it’s taken!
           </>
         );
       default:

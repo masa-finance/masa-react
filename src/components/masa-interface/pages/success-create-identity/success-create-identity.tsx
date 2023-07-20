@@ -71,7 +71,7 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
         return (
           baseTwitterUrl +
           encodeURIComponent(
-            `Just claimed my @BrozoNFT .bro domain, powered by getmasafi! The process is simple, and 5+ character domains are FREE to mint. Grab yours here: ${tweetContentLink} #Brozo #NFT`
+            `Just claimed my @BrozoNFT .bro domain, powered by getmasafi! The process is simple, and 5+ character domains are under a buck. Grab yours here: ${tweetContentLink} #Brozo #NFT`
           )
         );
       default:
