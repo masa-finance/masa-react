@@ -82,10 +82,7 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
         <p className="connected-wallet with-wallet">
           You are connected with the following wallet
-          <span
-            onClick={handleClipboard}
-            role="presentation"
-          >
+          <span onClick={handleClipboard} role="presentation">
             {copied ? 'Copied!' : shortAddress}
           </span>
         </p>

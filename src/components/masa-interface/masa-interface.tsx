@@ -225,7 +225,7 @@ export const MasaInterface = ({
 
     // Removed this because it was causing a bug where the modal was openning at the beginning of the flow
     // openConnectModal?.();
-    
+
     setRainbowkKitModalCallback?.(() => () => {
       // setForcedPage?.('authenticate');
       setModalOpen?.(true);
