@@ -9,17 +9,20 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     handleLogin,
     accountAddress,
     isLoading,
-    // setModalOpen,
-    // openConnectModal,
     isLoggedIn,
     useRainbowKit,
     connect,
     isModalOpen,
+    setModalOpen,
   } = useMasa();
   const { isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { disconnect } = useDisconnect({
+    onSuccess: () => {
+      setModalOpen?.(false);
+    },
+  });
+
   const switchWallet = useCallback(() => {
-    console.log({ disconnect });
     disconnect();
   }, [disconnect]);
 
@@ -54,10 +57,9 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
   const shortAddress = useMemo(
     () =>
-      `${accountAddress?.slice(0, 2)}...${accountAddress?.substring(
-        accountAddress.length - 4,
-        accountAddress.length
-      )}`,
+      `${accountAddress?.slice(0, 2) ?? ''}...${
+        accountAddress?.slice(-4, accountAddress.length) ?? ''
+      }`,
     [accountAddress]
   );
 
@@ -80,13 +82,17 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
         <p className="connected-wallet with-wallet">
           You are connected with the following wallet
-          <span onClick={handleClipboard}>
+          <span
+            onClick={handleClipboard}
+            role="presentation"
+          >
             {copied ? 'Copied!' : shortAddress}
           </span>
         </p>
       </div>
       <div>
         <button
+          type="button"
           className="masa-button authenticate-button"
           onClick={handleLogin}
         >
@@ -99,7 +105,11 @@ export const InterfaceAuthenticate = (): JSX.Element => {
               Want to use a different wallet?
               {!isLoggedIn && isConnected && (
                 <span className="connected-wallet">
-                  <span className="authenticate-button" onClick={switchWallet}>
+                  <span
+                    className="authenticate-button"
+                    role="presentation"
+                    onClick={switchWallet}
+                  >
                     Switch Wallet
                   </span>
                 </span>
