@@ -5,7 +5,7 @@ import { useSession } from '../../../../masa/use-session';
 import { useConfig } from '../../../../base-provider';
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import Rodal from 'rodal';
+import { Modal } from '../modal';
 
 export const InterfaceAuthenticate = NiceModal.create((): JSX.Element => {
   const modal = useModal();
@@ -158,17 +158,5 @@ export const InterfaceAuthenticate = NiceModal.create((): JSX.Element => {
     return <Spinner />;
   }
 
-  return (
-    <Rodal
-      className="masa-rodal-container"
-      visible={modal.visible}
-      onClose={() => modal.hide()}
-      width={550}
-      height={615}
-    >
-      <div className="masa-modal">
-        <div className="masa-modal-container">{children}</div>
-      </div>
-    </Rodal>
-  );
+  return <Modal children={children} />;
 });

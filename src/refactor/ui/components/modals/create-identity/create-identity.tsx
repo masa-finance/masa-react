@@ -6,7 +6,7 @@ import { useSoulNames } from '../../../../masa/use-soulnames';
 import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import Rodal from 'rodal';
+import { Modal } from '../modal';
 
 interface InterfaceCreateIdentityProps {
   handleComplete: () => void;
@@ -126,18 +126,6 @@ export const InterfaceCreateIdentity = NiceModal.create(
       }
     }, [isSuccessful, isLoading]);
 
-    return (
-      <Rodal
-        className="masa-rodal-container"
-        visible={modal.visible}
-        onClose={() => modal.hide()}
-        width={550}
-        height={615}
-      >
-        <div className="masa-modal">
-          <div className="masa-modal-container">{children}</div>
-        </div>
-      </Rodal>
-    );
+    return <Modal children={children} />;
   }
 );
