@@ -5,50 +5,66 @@ import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
 import { useSession } from '../../../../masa/use-session';
 import { useConfig } from '../../../../base-provider';
 
-export const InterfaceAuthenticate = (): JSX.Element => {
-  const {
-    // setModalOpen,
-    // openConnectModal,
-    useRainbowKit,
-    isModalOpen,
-  } = useMasa();
+import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import Rodal from 'rodal';
+
+export const InterfaceAuthenticate = NiceModal.create((): JSX.Element => {
+  const modal = useModal();
 
   const {
     address,
+    hasAddress,
     disconnect,
     isConnected,
+    signer,
     openConnectModal,
     isLoadingSigner,
   } = useWallet();
-  const { hasSession, loginSessionAsync } = useSession();
+
+  const { isLoadingSession, hasSession, loginSessionAsync } = useSession();
   const { company } = useConfig();
 
+  const needsWalletConnection = !hasSession && !isConnected && !hasAddress;
+  const needsAuthentication =
+    isConnected && !hasSession && signer && hasAddress;
+  const isConnectedState = hasSession && hasAddress;
+
   const [copied, setCopied] = useState(false);
+  const [children, setChildren] = useState(null);
 
   const switchWallet = useCallback(() => {
     disconnect?.();
   }, [disconnect]);
 
-  useEffect(() => {
-    if (isModalOpen && isConnected && !hasSession) {
-      openConnectModal?.();
-    }
-  }, [openConnectModal, isConnected, hasSession, isModalOpen]);
-
-  const message = useMemo(() => {
+  const copy = useMemo(() => {
     switch (company) {
       case 'Masa':
-        return `Your wallet is now connected. Start your soulbound journey by minting
-    a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
+        return {
+          titleText: 'Starting your soulbound journey',
+          message: `Your wallet is now connected. Start your soulbound journey by minting a Masa Soulbound Identity and claiming a unique Masa Soul Name.`,
+        };
       case 'Celo':
-        return `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`;
+        return {
+          titleText: 'Starting your soulbound journey',
+          message: `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`,
+        };
       case 'Base':
-        return 'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.';
+        return {
+          titleText: 'Starting your soulbound journey',
+          mesage:
+            'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.',
+        };
       case 'Base Universe':
-        return 'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.';
+        return {
+          titleText: 'Starting your soulbound journey',
+          message:
+            'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.',
+        };
       default:
-        return `Your wallet is now connected. Start your soulbound journey by minting
-          a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
+        return {
+          titleText: 'Starting your soulbound journey',
+          message: `Your wallet is now connected. Start your soulbound journey by minting a Masa Soulbound Identity and claiming a unique Masa Soul Name.`,
+        };
     }
   }, [company]);
 
@@ -64,15 +80,11 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     }
   }, [address]);
 
-  if (isLoadingSigner) {
-    return <Spinner />;
-  }
-
-  return (
-    <div className="interface-authenticate">
-      <section>
+  const authInterface = (
+    <section className="interface-authenticate">
+      <div>
         <h3 className="title">Wallet connected!</h3>
-        <p className="connected-wallet">{message}</p>
+        <p className="connected-wallet">{copy.message}</p>
 
         <p className="connected-wallet with-wallet">
           You are connected with the following wallet
@@ -80,8 +92,8 @@ export const InterfaceAuthenticate = (): JSX.Element => {
             {copied ? 'Copied!' : shortAddress}
           </span>
         </p>
-      </section>
-      <section>
+      </div>
+      <div>
         <button
           className="masa-button authenticate-button"
           onClick={loginSessionAsync}
@@ -89,9 +101,9 @@ export const InterfaceAuthenticate = (): JSX.Element => {
           {isLoadingSigner ? 'loading...' : 'Get Started'}
         </button>
 
-        {useRainbowKit ? (
-          <div className="dont-have-a-wallet">
-            <p>Want to use a different wallet?</p>
+        <div className="dont-have-a-wallet">
+          <p>
+            Want to use a different wallet?
             {!hasSession && isConnected && (
               <span className="connected-wallet">
                 <span className="authenticate-button" onClick={switchWallet}>
@@ -99,16 +111,64 @@ export const InterfaceAuthenticate = (): JSX.Element => {
                 </span>
               </span>
             )}
-          </div>
-        ) : (
-          <div className="dont-have-a-wallet">
-            <p>
-              Want to use a different wallet? Close this window and disconnect
-              your wallet in Metamask to connect a new wallet
-            </p>
-          </div>
-        )}
-      </section>
-    </div>
+          </p>
+        </div>
+      </div>
+    </section>
   );
-};
+
+  const connectedInterface = (
+    <section className="interface-connected">
+      <section>
+        <h3 className="title">{copy.titleText}</h3>
+        <Spinner />
+      </section>
+    </section>
+  );
+
+  useEffect(() => {
+    if (needsWalletConnection) {
+      modal.hide();
+      openConnectModal?.();
+    }
+    if (needsAuthentication) {
+      setChildren(authInterface);
+    }
+    if (isConnectedState) {
+      setChildren(connectedInterface);
+    }
+  }, [openConnectModal, isConnected, hasSession, hasAddress, modal.visible]);
+
+  useEffect(() => {
+    if (isConnectedState) {
+      let timeout;
+      if (modal.visible && !isLoadingSession) {
+        timeout = setTimeout(() => {
+          modal.hide();
+        }, 3000);
+      }
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [isLoadingSession, modal.visible]);
+
+  if (isLoadingSigner) {
+    return <Spinner />;
+  }
+
+  return (
+    <Rodal
+      className="masa-rodal-container"
+      visible={modal.visible}
+      onClose={() => modal.hide()}
+      width="550"
+      height="615"
+    >
+      <div className="masa-modal">
+        <div className="masa-modal-container">{children}</div>
+      </div>
+    </Rodal>
+  );
+});

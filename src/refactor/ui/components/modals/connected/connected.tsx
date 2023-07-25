@@ -1,25 +1,27 @@
 import React, { useEffect, useMemo } from 'react';
-import { useMasa } from '../../../../../provider';
 import { MasaLoading } from '../../masa-loading';
 import { Spinner } from '../../spinner';
 import { useSession } from '../../../../masa/use-session';
+import { useConfig } from '../../../../base-provider';
+import { useModal } from '@ebay/nice-modal-react';
 
 export const InterfaceConnected = (): JSX.Element => {
-  const { closeModal, company, isModalOpen } = useMasa();
   const { isLoadingSession: isLoading } = useSession();
+  const modal = useModal();
+  const { company } = useConfig();
 
   useEffect(() => {
     let timeout;
-    if (isModalOpen && !isLoading) {
+    if (modal.visible && !isLoading) {
       timeout = setTimeout(() => {
-        closeModal?.();
+        modal.hide();
       }, 3000);
     }
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [isLoading, closeModal, isModalOpen]);
+  }, [isLoading, modal.visible]);
 
   const titleText = useMemo(() => {
     switch (company) {
