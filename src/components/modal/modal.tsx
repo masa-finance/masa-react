@@ -1,6 +1,5 @@
 import Rodal from 'rodal';
 import React, { useEffect, useMemo, useState } from 'react';
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
 
 import { useMasa } from '../../provider';
 
@@ -43,35 +42,35 @@ const useIsMobile = () => {
 };
 export interface ModalProps {
   children: React.ReactNode;
+  open: boolean;
   setOpen: (val: boolean) => void;
+  close: () => void;
   height?: number;
 }
 
-export const ModalComponent = NiceModal.create(
-  ({ children, height }: ModalProps): JSX.Element => {
-    const {
-      isMobile,
-      height: screenHeight,
-      width: screenWidth,
-    } = useIsMobile();
-    const { modalSize } = useMasa();
-    const modal = useModal();
+export const ModalComponent = ({
+  children,
+  open,
+  close,
+  height,
+}: ModalProps): JSX.Element => {
+  const { isMobile, height: screenHeight, width: screenWidth } = useIsMobile();
+  const { modalSize } = useMasa();
 
-    return (
-      <Rodal
-        data-cy="closeMasaModal"
-        height={
-          isMobile ? screenHeight : modalSize ? modalSize.height : height || 615
-        }
-        width={isMobile ? screenWidth : modalSize ? modalSize.width : 550}
-        visible={modal.visible}
-        onClose={() => modal.hide()}
-        className="masa-rodal-container"
-      >
-        <div className="masa-modal">
-          <div className="masa-modal-container">{children}</div>
-        </div>
-      </Rodal>
-    );
-  }
-);
+  return (
+    <Rodal
+      data-cy="closeMasaModal"
+      height={
+        isMobile ? screenHeight : modalSize ? modalSize.height : height || 615
+      }
+      width={isMobile ? screenWidth : modalSize ? modalSize.width : 550}
+      visible={open}
+      onClose={(): void => close()}
+      className="masa-rodal-container"
+    >
+      <div className="masa-modal">
+        <div className="masa-modal-container">{children}</div>
+      </div>
+    </Rodal>
+  );
+};

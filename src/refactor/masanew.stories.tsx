@@ -463,6 +463,7 @@ const GreenInfo = () => {
 
 const ModalFlow = () => {
   const { isDisconnected } = useWallet();
+  const { hasSession } = useSession();
 
   return (
     <ul>
@@ -470,6 +471,7 @@ const ModalFlow = () => {
       <li>
         <Button
           type="button"
+          disabled={!!hasSession}
           onClick={() => NiceModal.show(InterfaceAuthenticate)}
         >
           {isDisconnected ? 'Connect' : 'Authenticate'}

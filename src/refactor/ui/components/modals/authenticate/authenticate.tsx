@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useMasa } from '../../../../../provider';
 import { Spinner } from '../../spinner';
 import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
 import { useSession } from '../../../../masa/use-session';
@@ -30,7 +29,7 @@ export const InterfaceAuthenticate = NiceModal.create((): JSX.Element => {
   const isConnectedState = hasSession && hasAddress;
 
   const [copied, setCopied] = useState(false);
-  const [children, setChildren] = useState(null);
+  const [children, setChildren] = useState<null | JSX.Element>(null);
 
   const switchWallet = useCallback(() => {
     disconnect?.();
@@ -128,7 +127,7 @@ export const InterfaceAuthenticate = NiceModal.create((): JSX.Element => {
 
   useEffect(() => {
     if (needsWalletConnection) {
-      modal.hide();
+      modal.remove();
       openConnectModal?.();
     }
     if (needsAuthentication) {
@@ -152,6 +151,7 @@ export const InterfaceAuthenticate = NiceModal.create((): JSX.Element => {
         clearTimeout(timeout);
       };
     }
+    return;
   }, [isLoadingSession, modal.visible]);
 
   if (isLoadingSigner) {
@@ -163,8 +163,8 @@ export const InterfaceAuthenticate = NiceModal.create((): JSX.Element => {
       className="masa-rodal-container"
       visible={modal.visible}
       onClose={() => modal.hide()}
-      width="550"
-      height="615"
+      width={550}
+      height={615}
     >
       <div className="masa-modal">
         <div className="masa-modal-container">{children}</div>
