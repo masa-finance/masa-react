@@ -46,13 +46,13 @@ export const InterfaceAuthenticate = (): JSX.Element => {
         return 'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.';
       }
       case 'Base Universe': {
-        return 'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.';
-      }
-      default: {
+        return 'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.';      }
+      case 'Brozo':
+        return 'Your wallet is connected. Start your Brozo journey by minting a unique .bro domain name.';
+      default:
         return `Your wallet is now connected. Start your soulbound journey by minting
           a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
       }
-    }
   }, [company]);
 
   const shortAddress = useMemo(

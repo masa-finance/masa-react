@@ -71,6 +71,7 @@
     "unicorn/no-array-reduce": "warn",
     "unicorn/no-await-expression-member": "warn",
     "unicorn/no-array-for-each": "warn",
+    "unicorn/prefer-ternary": "off",
     "unicorn/consistent-function-scoping": [
       "error",
       {
