@@ -65,7 +65,7 @@ export const correctNetworkListForWagmi = (networkList: NetworkName[]) => {
   return networkListCorrectedForWagmi;
 };
 export const getRainbowkitChains = (
-  networkList?: Array<keyof MasaNetworks>
+  networkList?: NetworkName[]
 ) => {
   if (!networkList || (networkList && networkList.length === 0)) {
     return rainbowkitChains;
