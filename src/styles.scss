@@ -785,6 +785,8 @@
 
   .interface-authenticate,
   .interface-connected {
+    align-items: center;
+
     .title {
       text-align: center;
       color: black;
@@ -1036,7 +1038,9 @@
     cursor: pointer;
     border: 1px solid #ccc;
     border-radius: 50%;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
 
     &:hover {
       background-color: black;

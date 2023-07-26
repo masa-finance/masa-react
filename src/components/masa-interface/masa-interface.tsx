@@ -32,6 +32,24 @@ const pages = {
   gallery: <Gallery />,
 };
 
+const PageSwitcher = ({
+  page,
+  useRainbowKit,
+  disableMetamask,
+}: {
+  page: string;
+  useRainbowKit?: boolean;
+  disableMetamask?: boolean;
+}): any => {
+  if (!useRainbowKit) {
+    return page === 'connector'
+      ? pages[page]({ disableMetamask })
+      : pages[page];
+  }
+  if (page === 'rainbowkitConnect') return null;
+  return page ? pages[page] : null;
+};
+
 export const MasaInterface = ({
   disableMetamask,
 }: {
@@ -132,9 +150,6 @@ export const MasaInterface = ({
     // * rainbowkit logic
     if (forcedPage) return forcedPage;
 
-    if (verbose) {
-      console.log('');
-    }
     if (isConnected) {
       // * user does not have a wallet
       if (!hasAccountAddress) {
@@ -208,7 +223,9 @@ export const MasaInterface = ({
     if (hasAccountAddress && isLoggedIn) return 'connectedState';
     // return 'authenticate';
 
-    openConnectModal?.();
+    // Removed this because it was causing a bug where the modal was openning at the beginning of the flow
+    // openConnectModal?.();
+
     setRainbowkKitModalCallback?.(() => () => {
       // setForcedPage?.('authenticate');
       setModalOpen?.(true);
@@ -260,22 +277,4 @@ export const MasaInterface = ({
       />
     </ModalComponent>
   );
-};
-
-const PageSwitcher = ({
-  page,
-  useRainbowKit,
-  disableMetamask,
-}: {
-  page: string;
-  useRainbowKit?: boolean;
-  disableMetamask?: boolean;
-}) => {
-  if (!useRainbowKit) {
-    return page === 'connector'
-      ? pages[page]({ disableMetamask })
-      : pages[page];
-  }
-  if (page === 'rainbowkitConnect') return null;
-  return page ? pages[page] : null;
 };

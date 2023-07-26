@@ -47,6 +47,7 @@ export type MasaNetworks = Partial<{
   bsctest: Network;
   bsc: Network;
   // base
+  base: Network;
   basegoerli: Network;
   // fallback
   unknown: Network;
@@ -65,7 +66,7 @@ export const correctNetworkListForWagmi = (networkList: NetworkName[]) => {
   return networkListCorrectedForWagmi;
 };
 export const getRainbowkitChains = (
-  networkList?: Array<keyof MasaNetworks>
+  networkList?: NetworkName[]
 ) => {
   if (!networkList || (networkList && networkList.length === 0)) {
     return rainbowkitChains;

@@ -23,7 +23,7 @@ const ConnectedView = ({
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [isLoadingSession]);
 
   return (
     <section className="interface-connected">
