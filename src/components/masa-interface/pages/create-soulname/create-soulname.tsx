@@ -255,6 +255,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
         console.error(`Minting failed! ${errorObject.message}`);
       }
     }
+    setSoulname('');
     setLoadingMint(false);
   }, [
     // masa,
