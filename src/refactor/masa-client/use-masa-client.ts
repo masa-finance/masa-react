@@ -9,7 +9,15 @@ export const useMasaClient = () => {
   const { masaConfig } = useConfig();
   const { signer, isDisconnected, address } = useWallet();
 
-  const { activeChainId, currentNetwork } = useNetwork();
+  const { activeChainId, currentNetwork, activeNetwork } = useNetwork();
+
+
+  const networkName = activeNetwork === "homestead"
+  ? 'ethereum'
+  : currentNetwork?.networkName;
+
+
+
 
   const masa = useMasaSDK(
     {
@@ -18,7 +26,7 @@ export const useMasaClient = () => {
       ...masaConfig,
       environmentName: masaConfig.environment,
       // NOTE: mismatch of homestead (wagmi) vs ethereum (masa)
-      networkName: currentNetwork?.networkName ,
+      networkName
     },
     [
       address,

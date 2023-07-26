@@ -27,6 +27,7 @@
         "checksVoidReturn": false
       }
     ],
+    "no-underscore-dangle":"off",
     "import/no-named-as-default": "off",
     "import/no-cycle": "warn",
     "no-restricted-syntax": "off",
