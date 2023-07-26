@@ -391,6 +391,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       </div>
 
       <div style={{ width: '100%' }}>
+        <p id="slippage-disclaimer">Prices may vary slightly due to market price and slippage.</p>
         <button
           id="gtm_register_domain"
           className="masa-button"
