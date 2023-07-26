@@ -20,7 +20,11 @@ import MasaProvider from './masa-provider';
 import { useSession } from './masa/use-session';
 import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
-import { AuthenticateModal, CreateIdentityModal } from './ui/components/modals';
+import {
+  AuthenticateModal,
+  CreateCreditScoreModal,
+  CreateIdentityModal,
+} from './ui/components/modals';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -488,6 +492,14 @@ const ModalFlow = () => {
           onClick={() => NiceModal.show(CreateIdentityModal)}
         >
           Create Identity
+        </Button>
+      </li>
+      <li>
+        <Button
+          type="button"
+          onClick={() => NiceModal.show(CreateCreditScoreModal)}
+        >
+          Create Credit Score
         </Button>
       </li>
       <li>
