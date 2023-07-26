@@ -6,6 +6,8 @@ import { useConfig } from '../../../../base-provider';
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
+import AuthView from './authview';
+import ConnectedView from './connectedview';
 
 export const AuthenticateModal = NiceModal.create((): JSX.Element => {
   const modal = useModal();
@@ -24,12 +26,11 @@ export const AuthenticateModal = NiceModal.create((): JSX.Element => {
   const { company } = useConfig();
 
   const needsWalletConnection = !hasSession && !isConnected && !hasAddress;
-  const needsAuthentication =
+  const showAuthenticateView =
     isConnected && !hasSession && signer && hasAddress;
-  const isConnectedState = hasSession && hasAddress;
+  const showConnectedView = hasSession && hasAddress;
 
   const [copied, setCopied] = useState(false);
-  const [children, setChildren] = useState<null | JSX.Element>(null);
 
   const switchWallet = useCallback(() => {
     disconnect?.();
@@ -79,84 +80,39 @@ export const AuthenticateModal = NiceModal.create((): JSX.Element => {
     }
   }, [address]);
 
-  const authInterface = (
-    <section className="interface-authenticate">
-      <div>
-        <h3 className="title">Wallet connected!</h3>
-        <p className="connected-wallet">{copy.message}</p>
-
-        <p className="connected-wallet with-wallet">
-          You are connected with the following wallet
-          <span onClick={handleClipboard}>
-            {copied ? 'Copied!' : shortAddress}
-          </span>
-        </p>
-      </div>
-      <div>
-        <button
-          className="masa-button authenticate-button"
-          onClick={loginSessionAsync}
-        >
-          {isLoadingSigner ? 'loading...' : 'Get Started'}
-        </button>
-
-        <div className="dont-have-a-wallet">
-          <p>
-            Want to use a different wallet?
-            {!hasSession && isConnected && (
-              <span className="connected-wallet">
-                <span className="authenticate-button" onClick={switchWallet}>
-                  Switch Wallet
-                </span>
-              </span>
-            )}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-
-  const connectedInterface = (
-    <section className="interface-connected">
-      <section>
-        <h3 className="title">{copy.titleText}</h3>
-        <Spinner />
-      </section>
-    </section>
-  );
-
   useEffect(() => {
     if (needsWalletConnection) {
       modal.remove();
       openConnectModal?.();
     }
-    if (needsAuthentication) {
-      setChildren(authInterface);
-    }
-    if (isConnectedState) {
-      setChildren(connectedInterface);
-    }
   }, [openConnectModal, isConnected, hasSession, hasAddress, modal.visible]);
-
-  useEffect(() => {
-    if (isConnectedState) {
-      let timeout;
-      if (modal.visible && !isLoadingSession) {
-        timeout = setTimeout(() => {
-          modal.hide();
-        }, 3000);
-      }
-
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-    return;
-  }, [isLoadingSession, modal.visible]);
 
   if (isLoadingSigner) {
     return <Spinner />;
   }
 
-  return <Modal children={children} />;
+  return (
+    <Modal>
+      {showAuthenticateView && (
+        <AuthView
+          message={copy.message}
+          handleClipboard={handleClipboard}
+          copied={copied}
+          shortAddress={shortAddress}
+          loginSessionAsync={loginSessionAsync}
+          isLoadingSigner={isLoadingSigner}
+          hasSession={hasSession}
+          isConnected={isConnected}
+          switchWallet={switchWallet}
+        />
+      )}
+      {showConnectedView && (
+        <ConnectedView
+          titleText={copy.titleText}
+          modal={modal}
+          isLoadingSession={isLoadingSession}
+        />
+      )}
+    </Modal>
+  );
 });

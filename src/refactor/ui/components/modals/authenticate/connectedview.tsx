@@ -1,0 +1,38 @@
+import React, { useEffect } from 'react';
+import { Spinner } from '../../spinner';
+
+interface ConnectedViewProps {
+  titleText: string;
+  modal: any;
+  isLoadingSession: boolean;
+}
+
+const ConnectedView = ({
+  titleText,
+  modal,
+  isLoadingSession,
+}: ConnectedViewProps): JSX.Element => {
+  useEffect(() => {
+    let timeout;
+    if (modal.visible && !isLoadingSession) {
+      timeout = setTimeout(() => {
+        modal.hide();
+      }, 3000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  return (
+    <section className="interface-connected">
+      <section>
+        <h3 className="title">{titleText}</h3>
+        <Spinner />
+      </section>
+    </section>
+  );
+};
+
+export default ConnectedView;
