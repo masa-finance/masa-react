@@ -6,8 +6,8 @@ import { useConfig } from '../../../../base-provider';
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
-import AuthView from './authview';
-import ConnectedView from './connectedview';
+import AuthView from './auth-view';
+import ConnectedView from './connected-view';
 
 export const AuthenticateModal = NiceModal.create((): JSX.Element => {
   const modal = useModal();

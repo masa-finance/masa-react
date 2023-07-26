@@ -1,12 +1,14 @@
-import React, { useMemo, useState, useEffect, useCallback } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { MasaLoading } from '../../masa-loading';
 import { useConfig } from '../../../../base-provider';
-import { twitterLogo } from '../../../../../assets/twitterLogo';
 import { useSoulNames } from '../../../../masa/use-soulnames';
 import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
+
+import SuccessView from './success-view';
+import HurrayView from './hurray-view';
 
 interface CreateIdentityModalProps {
   handleComplete: () => void;
@@ -14,13 +16,11 @@ interface CreateIdentityModalProps {
 
 export const CreateIdentityModal = NiceModal.create(
   ({ handleComplete }: CreateIdentityModalProps): JSX.Element => {
-    /* const { handlePurchaseIdentity, isLoading, setForcedPage } = useMasa(); */
     const modal = useModal();
     const { company } = useConfig();
     const { soulnames } = useSoulNames();
     const { purchaseIdentity } = useIdentityPurchase();
 
-    const [children, setChildren] = useState<null | JSX.Element>(null);
     const [isSuccessful, setIsSuccessful] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -71,23 +71,6 @@ export const CreateIdentityModal = NiceModal.create(
       }
     }, [company]);
 
-    const successInterface = (
-      <div
-        id="gtm_hurray_identity_minted"
-        className="interface-create-identity"
-      >
-        <h3 className="title">Hurray! 🎉</h3>
-        <p className="subtitle">{copy.titleText}</p>
-        <a className="tweet-domain" target="_blank" rel="noreferrer">
-          <img src={twitterLogo} style={{ width: 40 }} alt="twitter" />{' '}
-          {copy.twitterText}
-        </a>
-        <button className="masa-button" onClick={() => modal.hide()}>
-          Go to dashboard
-        </button>
-      </div>
-    );
-
     const createIdentity = useCallback(async () => {
       setIsLoading(true);
       setTimeout(() => {
@@ -103,29 +86,18 @@ export const CreateIdentityModal = NiceModal.create(
          * } */
     }, [isSuccessful]);
 
-    const hurrayInterface = (
-      <section className="interface-create-identity">
-        <h3 className="title">Hurray! 🎉</h3>
-        <p className="subtitle">
-          Congratulations you already have a Celo Domain Name in your wallet.
-          You must now mint a Celo Prosperity Passport.
-        </p>
-        <button className="masa-button" onClick={createIdentity}>
-          Get Prosperity Passport
-        </button>
-      </section>
+    return (
+      <Modal>
+        {isSuccessful && (
+          <SuccessView
+            titleText={copy.titleText}
+            twitterText={copy.twitterText}
+            modal={modal}
+          />
+        )}
+        {isLoading && <MasaLoading />}
+        <HurrayView createIdentity={createIdentity} />
+      </Modal>
     );
-
-    useEffect(() => {
-      setChildren(hurrayInterface);
-      if (isSuccessful) {
-        setChildren(successInterface);
-      }
-      if (isLoading) {
-        setChildren(MasaLoading);
-      }
-    }, [isSuccessful, isLoading]);
-
-    return <Modal children={children} />;
   }
 );
