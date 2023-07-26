@@ -61,7 +61,9 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
       }
       case 'Base Universe':
       case 'Brozo': {
-        return `https://masa.finance/sbts/${companyUrlFormatted ?? ""}-soulname-token`;
+        return `https://masa.finance/sbts/${
+          companyUrlFormatted ?? ''
+        }-soulname-token`;
       }
       default: {
         return 'https://app.masa.finance';

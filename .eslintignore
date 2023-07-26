@@ -9,3 +9,4 @@ src/provider/modules/custom-sbts
 # !src/components/masa-interface/masa-interface/create-soulname/*
 jest.config.js
 scripts/buildUtils.js
+src/components
