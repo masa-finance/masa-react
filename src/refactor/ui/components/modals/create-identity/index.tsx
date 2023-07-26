@@ -1,1 +1,1 @@
-export { InterfaceCreateIdentity } from './create-identity';
+export { CreateIdentityModal } from './create-identity';

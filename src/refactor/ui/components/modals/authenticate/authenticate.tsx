@@ -7,7 +7,7 @@ import { useConfig } from '../../../../base-provider';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
 
-export const InterfaceAuthenticate = NiceModal.create((): JSX.Element => {
+export const AuthenticateModal = NiceModal.create((): JSX.Element => {
   const modal = useModal();
 
   const {

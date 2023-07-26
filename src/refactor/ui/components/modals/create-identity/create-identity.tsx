@@ -8,12 +8,12 @@ import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
 
-interface InterfaceCreateIdentityProps {
+interface CreateIdentityModalProps {
   handleComplete: () => void;
 }
 
-export const InterfaceCreateIdentity = NiceModal.create(
-  ({ handleComplete }: InterfaceCreateIdentityProps): JSX.Element => {
+export const CreateIdentityModal = NiceModal.create(
+  ({ handleComplete }: CreateIdentityModalProps): JSX.Element => {
     /* const { handlePurchaseIdentity, isLoading, setForcedPage } = useMasa(); */
     const modal = useModal();
     const { company } = useConfig();

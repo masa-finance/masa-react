@@ -1,1 +1,1 @@
-export { InterfaceAuthenticate } from './authenticate';
+export { AuthenticateModal } from './authenticate';

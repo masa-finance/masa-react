@@ -20,10 +20,7 @@ import MasaProvider from './masa-provider';
 import { useSession } from './masa/use-session';
 import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
-import {
-  InterfaceAuthenticate,
-  InterfaceCreateIdentity,
-} from './ui/components/modals';
+import { AuthenticateModal, CreateIdentityModal } from './ui/components/modals';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -475,7 +472,7 @@ const ModalFlow = () => {
         <Button
           type="button"
           disabled={!!hasSession}
-          onClick={() => NiceModal.show(InterfaceAuthenticate)}
+          onClick={() => NiceModal.show(AuthenticateModal)}
         >
           {isDisconnected ? 'Connect' : 'Authenticate'}
         </Button>
@@ -488,7 +485,7 @@ const ModalFlow = () => {
       <li>
         <Button
           type="button"
-          onClick={() => NiceModal.show(InterfaceCreateIdentity)}
+          onClick={() => NiceModal.show(CreateIdentityModal)}
         >
           Create Identity
         </Button>
