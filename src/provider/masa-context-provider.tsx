@@ -68,10 +68,6 @@ export interface MasaContextProviderProps extends MasaShape {
   // signer?: Signer;
   // chainsToUse?: Array<keyof MasaNetworks>;
   // walletsToUse?: string[];
-  // contractAddressOverrides?: {
-  //   SoulNameAddress: string;
-  //   SoulStoreAddress: string;
-  // };
   soulNameStyle?: string;
 }
 
@@ -96,7 +92,7 @@ export const MasaContextProvider = ({
   fullScreenGallery,
   // api url override
   // apiUrl,
-  // contractAddressOverrides,
+
   useRainbowKitWalletConnect = false,
   soulNameStyle,
 }: MasaContextProviderProps): JSX.Element => {

@@ -3,6 +3,7 @@ import type {
   MasaArgs,
   NetworkName,
 } from '@masa-finance/masa-sdk';
+import type { WagmiConfigProps } from 'wagmi';
 
 export interface ArweaveConfig {
   port?: string;
@@ -18,8 +19,11 @@ export interface MasaReactConfig {
   arweaveConfig?: ArweaveConfig;
   forceChain?: NetworkName;
   verbose?: boolean;
-  wagmiConfig?: unknown;
-
+  wagmiConfig?: WagmiConfigProps;
+  contractAddressOverrides?: {
+    SoulNameAddress: string;
+    SoulStoreAddress: string;
+  };
   rainbowkitConfig?: {
     modalSize: 'compact' | 'wide';
   };
@@ -62,4 +66,4 @@ export const mergeConfigWithDefault = (config: Partial<MasaReactConfig>) =>
       ...defaultConfig.masaConfig,
       ...config.masaConfig,
     },
-  } as MasaReactConfig);
+  }) as MasaReactConfig;
