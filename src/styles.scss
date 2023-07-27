@@ -94,6 +94,7 @@
   .title {
     font-family: Ezra;
     font-size: 30px;
+    word-wrap: break-word;
   }
 
   .masa-spinner {
@@ -1525,4 +1526,6 @@
     text-align: center;
     font-style: italic;
     font-size: 12px;
+    padding: 1em 0;
+    margin: 0;
 }

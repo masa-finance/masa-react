@@ -539,10 +539,13 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
         </div>
       </section>
 
-      <div style={{ width: '100%' }}>
+      <section id="disclaimer-section">
         <p id="slippage-disclaimer">
           Prices may vary slightly due to market price and slippage.
         </p>
+      </section>
+
+      <div style={{ width: '100%' }}>
         <button
           type="button"
           id="gtm_register_domain"
