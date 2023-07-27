@@ -539,7 +539,10 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
         </div>
       </section>
 
-      <section style={{ width: '100%' }}>
+      <div style={{ width: '100%' }}>
+        <p id="slippage-disclaimer">
+          Prices may vary slightly due to market price and slippage.
+        </p>
         <button
           type="button"
           id="gtm_register_domain"
@@ -557,7 +560,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
             {soulNameError}
           </p>
         )}
-      </section>
+      </div>
     </article>
   );
 };
