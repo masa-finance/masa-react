@@ -16,5 +16,6 @@ export const useCreditScoreCreate = () => {
   return {
     createCreditScore,
     isCreatingCreditScore,
+    handleCreateCreditScore: createCreditScore,
   };
 };

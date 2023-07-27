@@ -1,4 +1,5 @@
 import React from 'react';
+
 export interface GalleryItemProps {
   image: string;
 }

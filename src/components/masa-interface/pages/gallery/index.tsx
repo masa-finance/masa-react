@@ -1,20 +1,19 @@
-import { useMasa } from '../../../../provider';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useMasa } from '../../../../provider';
 import { InterfaceSubflow } from '../../interface-subflow';
 import { AddSBT } from './add-sbt';
-import { Gallery, Tabs } from './gallery';
+import { Gallery, TabsInterface } from './gallery';
 import { GalleryItem } from './galleryItem';
 
 const handleRender = (SBT: any) => {
   const getMetadata = () => {
     if (SBT.metadata) {
       return SBT.metadata;
-    } else {
-      if (SBT.tokenId) {
-        return {
-          image: SBT.tokenUri,
-        };
-      }
+    }
+    if (SBT.tokenId) {
+      return {
+        image: SBT.tokenUri,
+      };
     }
   };
 
@@ -32,31 +31,31 @@ const handleRender = (SBT: any) => {
 const useTabs = () => {
   const { masa, badges, customSBTs } = useMasa();
 
-  const [savedBadges, setSavedBadges] = useState<Tabs>();
-  const [savedTabs, setSavedTabs] = useState<Tabs[]>();
+  const [savedBadges, setSavedBadges] = useState<TabsInterface>();
+  const [savedTabs, setSavedTabs] = useState<TabsInterface[]>();
 
   const getTabs = useCallback(async () => {
     if (!customSBTs || (customSBTs && customSBTs.length === 0)) return;
 
-    const newTabs: Tabs[] = [];
+    const newTabs: TabsInterface[] = [];
     for (const customSBT of customSBTs) {
       if (customSBT.tokens && customSBT.tokens.length === 0) continue; // Skip when no tokens
 
-      const tokens = customSBT.tokens;
+      const { tokens } = customSBT;
       const hidratatedTokens: any[] = [];
       for (const token of tokens) {
         try {
           const metadata = await customSBT.getMetadata(token);
           hidratatedTokens.push({ metadata, ...token });
-        } catch (e) {
-          console.log('METADTA ERROR', e);
+        } catch (error) {
+          console.log('METADTA ERROR', error);
         }
       }
 
       const tabContent = {
-        items: hidratatedTokens.length ? hidratatedTokens : tokens,
+        items: hidratatedTokens.length > 0 ? hidratatedTokens : tokens,
         render: (item) => handleRender(item),
-        content: function () {
+        content() {
           return this?.items?.map((item) => this.render(item));
         },
         title: customSBT.name,
@@ -79,14 +78,12 @@ const useTabs = () => {
         setSavedBadges({
           items: badges ?? [],
           render: (item) => handleRender(item),
-          content: function () {
-            //@ts-ignore
+          content() {
+            // @ts-ignore
             return this?.items?.map((item) => this?.render(item));
           },
           title: 'Badges',
         });
-
-        return;
       })();
     }
   }, [masa, badges]);
@@ -109,7 +106,7 @@ const GalleryContainer = () => {
 
   const { sbts } = useTabs();
 
-  const tabs: Tabs[] = [
+  const tabs: TabsInterface[] = [
     // {
     //   items: soulnames ?? [],
     //   render: (item) => handleRender(item),
@@ -141,13 +138,11 @@ const GalleryContainer = () => {
 
   const context = { tabs };
   return (
-    <>
-      <InterfaceSubflow
-        pages={pages}
-        context={context}
-        situationalPages={{ addSbt: AddSBT }}
-      />
-    </>
+    <InterfaceSubflow
+      pages={pages}
+      context={context}
+      situationalPages={{ addSbt: AddSBT }}
+    />
   );
 };
 

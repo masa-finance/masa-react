@@ -1,5 +1,6 @@
-import { useMasa } from '../../provider';
 import React, { useCallback, useMemo, useState } from 'react';
+import { useMasa } from '../../provider';
+
 export interface SubflowPage {
   next: () => void;
   back: () => void;
@@ -21,9 +22,7 @@ const Renderer = ({
 }: {
   Render: React.FunctionComponent<SubflowPage>;
   params: SubflowPage;
-}) => {
-  return <Render {...params} />;
-};
+}) => <Render {...params} />;
 
 export const InterfaceSubflow = ({
   pages,

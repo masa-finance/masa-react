@@ -1,8 +1,9 @@
+import React, { useCallback, useMemo, useState } from 'react';
+import { PaymentMethod } from '@masa-finance/masa-sdk';
+import { useAsync, useAsyncFn } from 'react-use';
 import { Input } from '../../../input';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDebounce, useMasa } from '../../../../provider';
 import { MasaLoading } from '../../../masa-loading';
-import { PaymentMethod } from '@masa-finance/masa-sdk';
 import { Spinner } from '../../../spinner';
 import { Select } from '../../../select';
 import { InterfaceErrorModal } from '../error-modal';
@@ -16,26 +17,34 @@ const errorMessages = {
 export const InterfaceCreateSoulname = (): JSX.Element => {
   const {
     handlePurchaseIdentityWithSoulname,
+    purchaseSoulName,
     isLoading,
     identity,
     closeModal,
     company,
     masa,
-    forcedPage,
+    // forcedPage,
     setForcedPage,
     reloadSoulnames,
     soulNameStyle,
   } = useMasa();
   const [enabledMethods, setEnabledMethods] = useState<string[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const enabledMethodsres =
-        await masa?.contracts.instances.SoulStoreContract.getEnabledPaymentMethods();
+  useAsync(async () => {
+    const enabledMethodsres =
+      await masa?.contracts.instances.SoulStoreContract.getEnabledPaymentMethods();
 
-      setEnabledMethods(enabledMethodsres as string[]);
-    })();
-  }, [masa]);
+    setEnabledMethods(enabledMethodsres as string[]);
+  }, [masa, setEnabledMethods]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const enabledMethodsres =
+  //       await masa?.contracts.instances.SoulStoreContract.getEnabledPaymentMethods();
+
+  //     setEnabledMethods(enabledMethodsres as string[]);
+  //   })();
+  // }, [masa]);
 
   const paymentMethods = useMemo(() => {
     const tokensAvailable = {
@@ -51,11 +60,11 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       if (
         tokensAvailable[token] &&
         enabledMethods &&
-        enabledMethods.includes(tokensAvailable[token])
+        enabledMethods.includes(tokensAvailable[token] as string)
       )
         values.push({
           name: token as PaymentMethod,
-          value: tokensAvailable[token],
+          value: tokensAvailable[token] as string,
         });
     }
 
@@ -80,29 +89,43 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
 
   const debounceSearch = useDebounce(soulname, 1000);
 
-  useEffect(() => {
-    const loadExtension = async () => {
-      setExtension(
-        await masa?.contracts.instances.SoulNameContract.extension()
-      );
-    };
-
-    void loadExtension();
+  useAsync(async () => {
+    setExtension(await masa?.contracts.instances.SoulNameContract.extension());
   }, [masa]);
 
-  useEffect(() => {
-    const checkIsAvailable = async () => {
-      if (masa && debounceSearch) {
-        setLoadingIsAvailable(true);
-        setIsAvailable(
-          await masa.contracts.soulName.isAvailable(debounceSearch as string)
-        );
-        setLoadingIsAvailable(false);
-      }
-    };
+  // useEffect(() => {
+  //   const loadExtension = async () => {
+  //     setExtension(
+  //       await masa?.contracts.instances.SoulNameContract.extension()
+  //     );
+  //   };
 
-    void checkIsAvailable();
-  }, [masa, debounceSearch, setLoadingIsAvailable, setIsAvailable]);
+  //   void loadExtension();
+  // }, [masa]);
+
+  useAsync(async () => {
+    if (masa && debounceSearch) {
+      setLoadingIsAvailable(true);
+      setIsAvailable(
+        await masa.contracts.soulName.isAvailable(debounceSearch as string)
+      );
+      setLoadingIsAvailable(false);
+    }
+  }, [masa, debounceSearch, setLoadingIsAvailable]);
+
+  // useEffect(() => {
+  //   const checkIsAvailable = async () => {
+  //     if (masa && debounceSearch) {
+  //       setLoadingIsAvailable(true);
+  //       setIsAvailable(
+  //         await masa.contracts.soulName.isAvailable(debounceSearch as string)
+  //       );
+  //       setLoadingIsAvailable(false);
+  //     }
+  //   };
+
+  //   void checkIsAvailable();
+  // }, [masa, debounceSearch, setLoadingIsAvailable, setIsAvailable]);
 
   const soulNameError = useMemo((): string | undefined => {
     if (masa) {
@@ -122,28 +145,53 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
 
   const handleErrorConfirmed = () => setError(null);
 
-  useEffect(() => {
-    const updatePrice = async () => {
-      if (masa && debounceSearch) {
-        const { length } = masa.soulName.validate(debounceSearch as string);
+  useAsync(async () => {
+    if (masa && debounceSearch) {
+      const { length } = masa.soulName.validate(debounceSearch as string);
 
-        let formattedPrice;
-        try {
-          formattedPrice = (
-            await masa.contracts.soulName.getPrice(
-              paymentMethod,
-              length,
-              registrationPeriod
-            )
-          ).formattedPrice;
-        } finally {
-          setRegistrationPrice(formattedPrice);
-        }
+      let formattedPrice = '';
+
+      try {
+        const formattedPriceResult = await masa.contracts.soulName.getPrice(
+          paymentMethod,
+          length,
+          registrationPeriod
+        );
+        formattedPrice = formattedPriceResult.formattedPrice;
+      } finally {
+        setRegistrationPrice(formattedPrice);
       }
-    };
+    }
+  }, [
+    masa,
+    debounceSearch,
+    paymentMethod,
+    registrationPeriod,
+    setRegistrationPrice,
+  ]);
 
-    void updatePrice();
-  }, [masa, debounceSearch, paymentMethod, registrationPeriod]);
+  // useEffect(() => {
+  //   const updatePrice = async () => {
+  //     if (masa && debounceSearch) {
+  //       const { length } = masa.soulName.validate(debounceSearch as string);
+
+  //       let formattedPrice;
+  //       try {
+  //         formattedPrice = (
+  //           await masa.contracts.soulName.getPrice(
+  //             paymentMethod,
+  //             length,
+  //             registrationPeriod
+  //           )
+  //         ).formattedPrice;
+  //       } finally {
+  //         setRegistrationPrice(formattedPrice);
+  //       }
+  //     }
+  //   };
+
+  //   void updatePrice();
+  // }, [masa, debounceSearch, paymentMethod, registrationPeriod]);
 
   const handleChangeSoulname = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,24 +200,28 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     [setSoulname]
   );
 
-  const updatePeriod = (num: number) => {
-    setRegistrationPeriod(registrationPeriod + num);
-  };
+  const updatePeriod = useCallback(
+    (num: number) => {
+      setRegistrationPeriod(registrationPeriod + num);
+    },
+    [registrationPeriod, setRegistrationPeriod]
+  );
 
-  const handleMinting = useCallback(async () => {
+  const [, handleMinting] = useAsyncFn(async () => {
     setLoadingMint(true);
 
     try {
+      let result;
+
       if (identity && identity.identityId) {
-        await masa?.soulName.create(
-          paymentMethod,
+        result = await purchaseSoulName?.(
           soulname,
           registrationPeriod,
-          undefined,
+          paymentMethod,
           soulNameStyle
         );
       } else {
-        await handlePurchaseIdentityWithSoulname?.(
+        result = await handlePurchaseIdentityWithSoulname?.(
           paymentMethod,
           soulname,
           registrationPeriod,
@@ -177,80 +229,172 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
         );
       }
 
-      if (setForcedPage) {
+      if (result && setForcedPage) {
         reloadSoulnames?.();
         setForcedPage('successIdentityCreate');
       } else {
         closeModal?.(true);
       }
-    } catch (error: unknown) {
-      if (error) {
-        console.log({ error });
-        const errorObject = error as {
+    } catch (error_: unknown) {
+      if (error_) {
+        console.log({ error_ });
+        const errorObject = error_ as {
           code: string;
           message: string;
         };
+
+        const subtitle =
+          (errorMessages?.[errorObject.code] as string | undefined) ??
+          ('Unknown error' as string);
+
         setError({
           title: '',
-          subtitle: errorMessages?.[errorObject.code] ?? 'Unknown error',
+          subtitle,
         });
+
         console.error(`Minting failed! ${errorObject.message}`);
       }
     }
     setSoulname('');
     setLoadingMint(false);
   }, [
-    masa,
+    // masa,
     soulname,
     registrationPeriod,
     handlePurchaseIdentityWithSoulname,
     identity,
     closeModal,
     paymentMethod,
-    forcedPage,
+    // forcedPage,
     setForcedPage,
     reloadSoulnames,
+    purchaseSoulName,
+    soulNameStyle,
   ]);
 
-  const updatePaymentMethod = (e: unknown) => {
+  // const handleMinting = useCallback(async () => {
+  //   setLoadingMint(true);
+
+  //   try {
+  //     if (identity && identity.identityId) {
+  //       await purchaseSoulName?.(
+  //         soulname,
+  //         registrationPeriod,
+  //         paymentMethod,
+  //         soulNameStyle
+  //       );
+  //     } else {
+  //       await handlePurchaseIdentityWithSoulname?.(
+  //         paymentMethod,
+  //         soulname,
+  //         registrationPeriod,
+  //         soulNameStyle
+  //       );
+  //     }
+
+  //     if (setForcedPage) {
+  //       reloadSoulnames?.();
+  //       setForcedPage('successIdentityCreate');
+  //     } else {
+  //       closeModal?.(true);
+  //     }
+  //   } catch (error: unknown) {
+  //     if (error) {
+  //       console.log({ error });
+  //       const errorObject = error as {
+  //         code: string;
+  //         message: string;
+  //       };
+  //       setError({
+  //         title: '',
+  //         subtitle: errorMessages?.[errorObject.code] ?? 'Unknown error',
+  //       });
+  //       console.error(`Minting failed! ${errorObject.message}`);
+  //     }
+  //   }
+  //   setLoadingMint(false);
+  // }, [
+  //   masa,
+  //   soulname,
+  //   registrationPeriod,
+  //   handlePurchaseIdentityWithSoulname,
+  //   identity,
+  //   closeModal,
+  //   paymentMethod,
+  //   forcedPage,
+  //   setForcedPage,
+  //   reloadSoulnames,
+  // ]);
+
+  const updatePaymentMethod = useCallback((e: unknown) => {
     const event = e as { target: { value: PaymentMethod } };
     setPaymentMethod(event.target?.value);
-  };
+  }, []);
 
   const createSoulnameTitle = useMemo(() => {
     switch (company) {
       case 'Brozo':
-      case 'Base Universe':
-        return `Register a ${company} ${extension} Name`;
-      default:
-        return `Register a ${extension} Name`;
+      case 'Base Universe': {
+        return `Register a ${company} ${extension ?? ''} Name`;
+      }
+      default: {
+        return `Register a ${extension ?? ''} Name`;
+      }
     }
   }, [company, extension]);
 
   const createSoulnameSubtitle = useMemo(() => {
     switch (company) {
-      case 'Base Universe':
+      case 'Base Universe': {
         return (
           <>
             Claim your <b>{extension}</b> domain name before it&apos;s taken!
             Domains are <b>FREE on testnet,</b> only pay the gas to mint.
           </>
         );
-      case 'Brozo':
+      }
+      case 'Brozo': {
         return (
           <>
             Claim your rare <b>{extension}</b> domain name before it’s taken!
           </>
         );
-      default:
+      }
+      default: {
         return (
           <>
             Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
             <b>FREE,</b> only pay the gas fee.
           </>
         );
+      }
     }
   }, [company, extension]);
+
+  const LoadingSoulnameAvailible = useMemo(() => {
+    if (soulname !== '' && soulname.length > 0) {
+      if (loadingIsAvailable) {
+        return (
+          <div className="available-indicator">
+            <Spinner color="black" size={12} />
+          </div>
+        );
+      }
+      if (isAvailable) {
+        return (
+          <p className="available-indicator" style={{ color: '#728a74e6' }}>
+            Available
+          </p>
+        );
+      }
+      return (
+        <p className="available-indicator" style={{ color: '#964f4fe6' }}>
+          Unavailable
+        </p>
+      );
+    }
+    return null;
+  }, [soulname, isAvailable, loadingIsAvailable]);
 
   if (isLoading) return <MasaLoading />;
 
@@ -280,19 +424,19 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
       <InterfaceErrorModal
         {...error}
         handleComplete={handleErrorConfirmed}
-        buttonText={'Try again'}
+        buttonText="Try again"
       />
     );
   }
 
   return (
-    <div className="interface-create-soulname">
-      <div className="title-container">
+    <article className="interface-create-soulname">
+      <header className="title-container">
         <h3 className="title">{createSoulnameTitle}</h3>
         <p className="subtitle">{createSoulnameSubtitle}</p>
-      </div>
+      </header>
 
-      <div className="soulname-purchase-container">
+      <section className="soulname-purchase-container">
         <div
           style={{
             width: '100%',
@@ -322,7 +466,8 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
               </>
             )}
           </p>
-          {soulname !== '' && soulname.length >= 1 ? (
+          {LoadingSoulnameAvailible}
+          {/* {soulname !== '' && soulname.length > 0 ? (
             <>
               {loadingIsAvailable ? (
                 <div className="available-indicator">
@@ -344,7 +489,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
                 </p>
               )}
             </>
-          ) : null}
+          ) : null} */}
         </div>
 
         <div style={{ width: '100%' }}>
@@ -369,32 +514,40 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
                 disabled
               />
               <div className="period-buttons">
-                <button onClick={() => updatePeriod(-1)}>-</button>
-                <button onClick={() => updatePeriod(1)}>+</button>
+                <button type="button" onClick={() => updatePeriod(-1)}>
+                  -
+                </button>
+                <button type="button" onClick={() => updatePeriod(1)}>
+                  +
+                </button>
               </div>
             </div>
             <Select
               label="Payment asset"
               values={paymentMethods}
               onChange={updatePaymentMethod}
-              readOnly={true}
+              readOnly
             />
             <Input
               label="Registration price"
               value={`${
-                registrationPrice ? registrationPrice.substring(0, 7) : '-.-'
+                registrationPrice ? registrationPrice.slice(0, 7) : '-.-'
               } ${paymentMethod}`}
-              readOnly={true}
+              readOnly
             />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div style={{ width: '100%' }}>
+      <section id="disclaimer-section">
         <p id="slippage-disclaimer">
           Prices may vary slightly due to market price and slippage.
         </p>
+      </section>
+
+      <div style={{ width: '100%' }}>
         <button
+          type="button"
           id="gtm_register_domain"
           className="masa-button"
           onClick={
@@ -411,6 +564,6 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
           </p>
         )}
       </div>
-    </div>
+    </article>
   );
 };

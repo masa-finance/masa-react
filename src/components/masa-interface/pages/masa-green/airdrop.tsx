@@ -1,5 +1,5 @@
-import { useMasa } from '../../../../provider';
 import React from 'react';
+import { useMasa } from '../../../../provider';
 import { SubflowPage } from '../../interface-subflow';
 
 export const AirdropPage: React.FunctionComponent<SubflowPage> = ({
@@ -23,7 +23,7 @@ export const AirdropPage: React.FunctionComponent<SubflowPage> = ({
       </div>
 
       <div className="">
-        <button className={'masa-button'} onClick={next}>
+        <button className="masa-button" onClick={next}>
           Get verified to start referrals
         </button>
       </div>

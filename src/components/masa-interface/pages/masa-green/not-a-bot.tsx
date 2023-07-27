@@ -1,5 +1,5 @@
-import { useMasa } from '../../../../provider';
 import React, { useEffect } from 'react';
+import { useMasa } from '../../../../provider';
 import { SubflowPage } from '../../interface-subflow';
 
 const BOT_DISCLAIMER_TIMEOUT_SECONDS = 5;

@@ -27,6 +27,7 @@
         "checksVoidReturn": false
       }
     ],
+    "no-underscore-dangle":"off",
     "import/no-named-as-default": "off",
     "import/no-cycle": "warn",
     "no-restricted-syntax": "off",
@@ -71,6 +72,7 @@
     "unicorn/no-array-reduce": "warn",
     "unicorn/no-await-expression-member": "warn",
     "unicorn/no-array-for-each": "warn",
+    "unicorn/prefer-ternary": "off",
     "unicorn/consistent-function-scoping": [
       "error",
       {
