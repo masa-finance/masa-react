@@ -16,11 +16,16 @@ export const MasaProvider = ({
   chainsToUse,
   walletsToUse,
   rainbowKitModalSize,
+  contractAddressOverrides,
   ...args
 }: MasaContextProviderProps & {
   chainsToUse?: Array<keyof MasaNetworks>;
   walletsToUse?: ('metamask' | 'valora' | 'walletconnect')[];
   rainbowKitModalSize?: 'compact' | 'wide';
+  contractAddressOverrides?: {
+    SoulNameAddress: string;
+    SoulStoreAddress: string;
+  };
 }): JSX.Element => {
   const { forceNetwork, environmentName, company, verbose } = args;
   return (
@@ -49,6 +54,7 @@ export const MasaProvider = ({
               'basegoerli',
               'unknown',
             ],
+            contractAddressOverrides,
             masaConfig: {
               networkName: 'ethereum',
               environment: environmentName ?? 'dev',
