@@ -6,18 +6,13 @@ import { useMasaSDK } from './use-masa-sdk';
 import { useNetwork } from '../wallet-client/network';
 
 export const useMasaClient = () => {
-  const { masaConfig } = useConfig();
+  const { masaConfig, contractAddressOverrides } = useConfig();
   const { signer, isDisconnected, address } = useWallet();
 
   const { activeChainId, currentNetwork, activeNetwork } = useNetwork();
 
-
-  const networkName = activeNetwork === "homestead"
-  ? 'ethereum'
-  : currentNetwork?.networkName;
-
-
-
+  const networkName =
+    activeNetwork === 'homestead' ? 'ethereum' : currentNetwork?.networkName;
 
   const masa = useMasaSDK(
     {
@@ -25,8 +20,9 @@ export const useMasaClient = () => {
       signer: isDisconnected ? undefined : signer,
       ...masaConfig,
       environmentName: masaConfig.environment,
+      contractAddressOverrides,
       // NOTE: mismatch of homestead (wagmi) vs ethereum (masa)
-      networkName
+      networkName,
     },
     [
       address,
