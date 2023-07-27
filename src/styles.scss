@@ -1063,6 +1063,7 @@
 /* -- mask -- */
 .rodal-mask {
   position: absolute;
+  pointer-events: none;
   background: rgba(0, 0, 0, 0.3);
 }
 
