@@ -24,6 +24,7 @@ import {
   AuthenticateModal,
   CreateCreditScoreModal,
   CreateIdentityModal,
+  CreateGreenModal,
 } from './ui/components/modals';
 
 // * nextjs fix
@@ -503,7 +504,7 @@ const ModalFlow = () => {
         </Button>
       </li>
       <li>
-        <Button type="button" onClick={() => null}>
+        <Button type="button" onClick={() => NiceModal.show(CreateGreenModal)}>
           Create Masa Green
         </Button>
       </li>
