@@ -140,6 +140,12 @@ export interface MasaShape {
   currentNetworkNew?: GetNetworkResult;
   canProgramaticallySwitchNetwork?: boolean;
 
+  purchaseSoulName?: (
+    soulname: string,
+    registrationPeriod: number,
+    paymentMethod: PaymentMethod,
+    style?: string | undefined
+  ) => Promise<boolean>;
   isConnected?: boolean;
   isDisconnected?: boolean;
   // new-modal

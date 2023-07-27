@@ -52,5 +52,8 @@ export const useIdentity = () => {
     isFetchingIdentity,
     isIdentityAvailibleInNetwork,
     getIdentity,
+
+    isIdentityLoading: isLoadingIdentity,
+    reloadIdentity: getIdentity,
   };
 };

@@ -36,9 +36,7 @@ export default function useWindowDimensions() {
 const useIsMobile = () => {
   const { height, width } = useWindowDimensions();
 
-  const isMobile = useMemo(() => {
-    return width < 480;
-  }, [width]);
+  const isMobile = useMemo(() => width < 480, [width]);
 
   return { isMobile, height, width };
 };
@@ -63,13 +61,7 @@ export const ModalComponent = ({
     <Rodal
       data-cy="closeMasaModal"
       height={
-        isMobile
-          ? screenHeight
-          : modalSize
-          ? modalSize.height
-          : height
-          ? height
-          : 615
+        isMobile ? screenHeight : modalSize ? modalSize.height : height || 615
       }
       width={isMobile ? screenWidth : modalSize ? modalSize.width : 550}
       visible={open}

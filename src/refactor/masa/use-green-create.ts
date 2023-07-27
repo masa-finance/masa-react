@@ -10,20 +10,23 @@ export const useGreenGenerate = () => {
     async (phoneNumber: string, code: string) => {
       const response = await masa?.green.create('ETH', phoneNumber, code);
       await queryClient.invalidateQueries(['green']);
-      return response?.success;
+      return response ?? null;
     },
     [masa, queryClient]
   );
   const [{ loading: isGeneratingGreen }, generateGreen] = useAsyncFn(
     async (phoneNumber: string) => {
       const response = await masa?.green.generate(phoneNumber);
-      return response?.success;
+      return response ?? null;
     },
     [masa]
   );
 
   return {
     isCreatingGreen,
+
+    handleCreateGreen: createGreen,
+    handleGenerateGreen: generateGreen,
     createGreen,
     isGeneratingGreen,
     generateGreen,

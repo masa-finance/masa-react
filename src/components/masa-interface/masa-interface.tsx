@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useAccount } from 'wagmi';
 import { useMasa, useMetamask } from '../../provider';
 import { ModalComponent } from '../modal';
 import {
@@ -13,7 +14,6 @@ import { Gallery } from './pages/gallery';
 import InterfaceMasaGreen from './pages/masa-green';
 import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity';
 import { InterfaceSwitchChain } from './pages/switch-chain';
-import { useAccount } from 'wagmi';
 
 const pages = {
   connector: ({
@@ -30,6 +30,24 @@ const pages = {
   switchNetwork: <InterfaceSwitchChain />,
   masaGreen: <InterfaceMasaGreen />,
   gallery: <Gallery />,
+};
+
+const PageSwitcher = ({
+  page,
+  useRainbowKit,
+  disableMetamask,
+}: {
+  page: string;
+  useRainbowKit?: boolean;
+  disableMetamask?: boolean;
+}): any => {
+  if (!useRainbowKit) {
+    return page === 'connector'
+      ? pages[page]({ disableMetamask })
+      : pages[page];
+  }
+  if (page === 'rainbowkitConnect') return null;
+  return page ? pages[page] : null;
 };
 
 export const MasaInterface = ({
@@ -128,106 +146,95 @@ export const MasaInterface = ({
       if (hasAccountAddress && isLoggedIn) return 'connectedState';
 
       return 'connector';
-    } else {
-      // * rainbowkit logic
-      if (forcedPage) return forcedPage;
+    }
+    // * rainbowkit logic
+    if (forcedPage) return forcedPage;
 
-      if (verbose) {
-        console.log('');
-      }
-      if (isConnected) {
-        // * user does not have a wallet
-        if (!hasAccountAddress) {
-          setModalOpen?.(false);
-          openConnectModal?.();
-          console.log('user does not have wallet but is connected', {
-            openConnectModal,
-            hasAccountAddress,
-            hasWalletAddress,
-          });
-
-          setRainbowkKitModalCallback?.(() => {
-            return () => {
-              console.log('modalcallback !hasAccountAddress');
-              // setForcedPage?.('authenticate');
-              setModalOpen?.(true);
-            };
-          });
-
-          return 'rainbowkitConnect';
-        }
-
-        if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
-          // switchNetworkNew?.(forceNetwork);
-          // return null;
-          if (!isModalOpen) setModalOpen?.(true);
-          console.log('return switchnetwork');
-          return 'switchNetwork';
-        }
-      }
-
-      // * connected with wallet but not logged in to masa
-      if (!isLoggedIn && signer && !hasAccountAddress) {
-        if (!openConnectModal) {
-          return 'authenticate';
-        }
-
+    if (isConnected) {
+      // * user does not have a wallet
+      if (!hasAccountAddress) {
         setModalOpen?.(false);
         openConnectModal?.();
-
-        setRainbowkKitModalCallback?.(() => {
-          return () => {
-            // setForcedPage?.('authenticate');
-            setModalOpen?.(true);
-          };
+        console.log('user does not have wallet but is connected', {
+          openConnectModal,
+          hasAccountAddress,
+          hasWalletAddress,
         });
 
-        return 'authenticate';
-      }
-
-      if (
-        isLoggedIn &&
-        (!soulnames || (soulnames && soulnames.length === 0)) &&
-        scope?.includes('soulname')
-      ) {
-        // setForcedPage?.('createSoulname');
-        return 'createSoulname';
-      }
-
-      if (
-        scope?.includes('identity') &&
-        isLoggedIn &&
-        (!identity || !identity?.identityId)
-      ) {
-        // setForcedPage?.('createIdentity');
-        return 'createIdentity';
-      }
-
-      if (
-        identity &&
-        !creditScores?.length &&
-        scope?.includes('credit-score')
-      ) {
-        // setForcedPage?.('createCreditScore');
-        return 'createCreditScore';
-      }
-
-      if (hasAccountAddress && isLoggedIn) return 'connectedState';
-      // return 'authenticate';
-
-      openConnectModal?.();
-      setRainbowkKitModalCallback?.(() => {
-        return () => {
+        setRainbowkKitModalCallback?.(() => () => {
+          console.log('modalcallback !hasAccountAddress');
           // setForcedPage?.('authenticate');
           setModalOpen?.(true);
-        };
-      });
+        });
 
-      if (hasAccountAddress) {
+        return 'rainbowkitConnect';
+      }
+      // console.log({ currentNetwork });
+      if (forceNetwork && currentNetwork?.networkName !== forceNetwork) {
+        // switchNetworkNew?.(forceNetwork);
+        // return null;
+        console.log({ currentNetwork, forceNetwork });
+        if (!isModalOpen) setModalOpen?.(true);
+        console.log('return switchnetwork');
+        return 'switchNetwork';
+      }
+    }
+
+    // * connected with wallet but not logged in to masa
+    if (!isLoggedIn && signer && !hasAccountAddress) {
+      if (!openConnectModal) {
         return 'authenticate';
       }
-      return 'rainbowkitConnect';
+
+      setModalOpen?.(false);
+      openConnectModal?.();
+
+      setRainbowkKitModalCallback?.(() => () => {
+        // setForcedPage?.('authenticate');
+        setModalOpen?.(true);
+      });
+
+      return 'authenticate';
     }
+
+    if (
+      isLoggedIn &&
+      (!soulnames || (soulnames && soulnames.length === 0)) &&
+      scope?.includes('soulname')
+    ) {
+      // setForcedPage?.('createSoulname');
+      return 'createSoulname';
+    }
+
+    if (
+      scope?.includes('identity') &&
+      isLoggedIn &&
+      (!identity || !identity?.identityId)
+    ) {
+      // setForcedPage?.('createIdentity');
+      return 'createIdentity';
+    }
+
+    if (identity && !creditScores?.length && scope?.includes('credit-score')) {
+      // setForcedPage?.('createCreditScore');
+      return 'createCreditScore';
+    }
+
+    if (hasAccountAddress && isLoggedIn) return 'connectedState';
+    // return 'authenticate';
+
+    // Removed this because it was causing a bug where the modal was openning at the beginning of the flow
+    // openConnectModal?.();
+
+    setRainbowkKitModalCallback?.(() => () => {
+      // setForcedPage?.('authenticate');
+      setModalOpen?.(true);
+    });
+
+    if (hasAccountAddress) {
+      return 'authenticate';
+    }
+    return 'rainbowkitConnect';
   }, [
     hasWalletAddress,
     verbose,
@@ -251,43 +258,23 @@ export const MasaInterface = ({
     signer,
   ]);
 
-  const isModal = useMemo(() => {
-    return ['createIdentity', 'successIdentityCreate'].includes(String(page));
-  }, [page]);
+  const isModal = useMemo(
+    () => ['createIdentity', 'successIdentityCreate'].includes(String(page)),
+    [page]
+  );
 
   return (
-    <>
-      <ModalComponent
-        open={isModalOpen as boolean}
-        close={(): void => closeModal?.()}
-        setOpen={setModalOpen as (val: boolean) => void}
-        height={isModal ? 340 : undefined}
-      >
-        <PageSwitcher
-          page={page as string}
-          useRainbowKit={useRainbowKit}
-          disableMetamask={disableMetamask}
-        />
-      </ModalComponent>
-    </>
+    <ModalComponent
+      open={isModalOpen as boolean}
+      close={(): void => closeModal?.()}
+      setOpen={setModalOpen as (val: boolean) => void}
+      height={isModal ? 340 : undefined}
+    >
+      <PageSwitcher
+        page={page}
+        useRainbowKit={useRainbowKit}
+        disableMetamask={disableMetamask}
+      />
+    </ModalComponent>
   );
-};
-
-const PageSwitcher = ({
-  page,
-  useRainbowKit,
-  disableMetamask,
-}: {
-  page: string;
-  useRainbowKit?: boolean;
-  disableMetamask?: boolean;
-}) => {
-  if (!useRainbowKit) {
-    return page === 'connector'
-      ? pages[page]({ disableMetamask })
-      : pages[page];
-  } else {
-    if (page === 'rainbowkitConnect') return null;
-    return page ? pages[page] : null;
-  }
 };

@@ -31,5 +31,8 @@ export const useSoulNames = () => {
     soulnames,
     isLoadingSoulnames,
     getSoulnames,
+
+    isSoulnamesLoading: isLoadingSoulnames,
+    reloadSoulnames: getSoulnames,
   };
 };

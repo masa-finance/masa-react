@@ -99,6 +99,21 @@ export const useSession = () => {
     [isFetchingSession, isCheckingLogin, isLoggingIn, isLoggingOut]
   );
 
+  const [, handleLogout] = useAsyncFn(
+    async (logoutCallback?: () => void): Promise<void> => {
+      if (!hasSession) {
+        return;
+      }
+
+      try {
+        await logoutSession();
+      } finally {
+        logoutCallback?.();
+      }
+    },
+    [logoutSession, hasSession]
+  );
+
   return {
     hasSession,
     session,
@@ -113,5 +128,11 @@ export const useSession = () => {
     loginSession: loginSessionAsync,
     logoutSession,
     isLoadingSession,
+
+    // * deprecated
+    isLoggedIn: hasSession,
+    isSessionLoading: isLoadingSession,
+    handleLogin: loginSessionAsync,
+    handleLogout,
   };
 };

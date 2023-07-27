@@ -1,6 +1,6 @@
 import { SubflowPage } from 'components/masa-interface/interface-subflow';
-import { useMasa } from '../../../../provider';
 import React from 'react';
+import { useMasa } from '../../../../provider';
 
 export const Success: React.FunctionComponent<SubflowPage> = ({
   complete,

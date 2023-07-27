@@ -55,14 +55,20 @@ const useWallet = () => {
     compareAddress,
     setCompareAddress,
   ]);
+
   const balance = useMemo(() => {
     if (!balanceResult) return '';
     return `${balanceResult?.formatted} ${balanceResult?.symbol}`;
   }, [balanceResult]);
 
+  const hasAddress = useMemo(() => !!address, [address]);
+  const walletName = useMemo(() => connector?.name, [connector]);
+
   const useWalletValue = useMemo(
     () => ({
       address,
+      hasAddress,
+      walletName,
       previousAddress,
       compareAddress,
       provider,
@@ -84,6 +90,8 @@ const useWallet = () => {
     }),
     [
       address,
+      hasAddress,
+      walletName,
       previousAddress,
       compareAddress,
       provider,
@@ -107,6 +115,8 @@ const useWallet = () => {
 
   return useWalletValue as {
     address?: `0x${string}`;
+    hasAddress: boolean;
+    walletName?: string;
     previousAddress?: `0x${string}`;
     compareAddress?: `0x${string}`;
     provider?: Provider;

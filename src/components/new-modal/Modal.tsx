@@ -1,8 +1,8 @@
-import { useModalManager } from '../../provider/modules/modal-provider';
 import React, { ReactNode, SyntheticEvent } from 'react';
 import { createPortal } from 'react-dom';
-import Backdrop from './Backdrop';
 import cx from 'classnames';
+import Backdrop from './Backdrop';
+import { useModalManager } from '../../provider/modules/modal-provider';
 
 export interface WrapperModalProps {
   children?: ReactNode;

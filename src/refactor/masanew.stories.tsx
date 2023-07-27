@@ -287,11 +287,28 @@ const SoulnameCreditScoreInfo = () => {
         <li>
           <ul>
             <li>isLoadingSoulnames: {String(isLoadingSoulnames)}</li>
-            {soulnames?.map((sn) => (
-              <li key={sn.metadata.name}>
-                <code>Owner: {JSON.stringify(sn.owner, null, 4)}</code>
-              </li>
-            ))}
+            {soulnames?.map((sn) => {
+              const randomColor = `#${Math.floor(
+                Math.random() * 16_777_215
+              ).toString(16)}`;
+              return (
+                <li
+                  key={sn.metadata.name}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'start',
+                  }}
+                >
+                  <code style={{ color: randomColor }}>
+                    Soulname: {JSON.stringify(sn.metadata.name, null, 4)}
+                  </code>
+                  <code style={{ color: randomColor }}>
+                    Owner: {JSON.stringify(sn.owner, null, 4)}
+                  </code>
+                </li>
+              );
+            })}
           </ul>
         </li>
       </ul>

@@ -1,4 +1,3 @@
-import type { NetworkName } from '@masa-finance/masa-sdk';
 import { useMemo } from 'react';
 import { useAsync } from 'react-use';
 import { useConfig } from '../base-provider';
@@ -10,7 +9,15 @@ export const useMasaClient = () => {
   const { masaConfig } = useConfig();
   const { signer, isDisconnected, address } = useWallet();
 
-  const { activeChainId, activeNetwork } = useNetwork();
+  const { activeChainId, currentNetwork, activeNetwork } = useNetwork();
+
+
+  const networkName = activeNetwork === "homestead"
+  ? 'ethereum'
+  : currentNetwork?.networkName;
+
+
+
 
   const masa = useMasaSDK(
     {
@@ -19,17 +26,14 @@ export const useMasaClient = () => {
       ...masaConfig,
       environmentName: masaConfig.environment,
       // NOTE: mismatch of homestead (wagmi) vs ethereum (masa)
-      networkName:
-        activeNetwork === 'homestead'
-          ? 'ethereum'
-          : (activeNetwork as NetworkName | undefined),
+      networkName
     },
     [
       address,
       signer,
       masaConfig,
       masaConfig.environment,
-      activeNetwork,
+      currentNetwork,
       isDisconnected,
     ]
   );
@@ -61,8 +65,10 @@ export const useMasaClient = () => {
 
     const network = await masa.config.signer?.provider?.getNetwork();
 
-    return network?.name === 'unknown' ? activeNetwork : network?.name;
-  }, [masa, activeNetwork, activeChainId, masaChainId]);
+    return network?.name === 'unknown'
+      ? currentNetwork?.networkName
+      : network?.name;
+  }, [masa, currentNetwork, activeChainId, masaChainId]);
 
   const masaClient = useMemo(() => {
     if (address !== masaAddress) {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useAccount, useDisconnect } from 'wagmi';
 import { useMasa } from '../../../../provider';
 import { Spinner } from '../../../spinner';
-import { useAccount, useDisconnect } from 'wagmi';
 
 export const InterfaceAuthenticate = (): JSX.Element => {
   const {
@@ -9,17 +9,20 @@ export const InterfaceAuthenticate = (): JSX.Element => {
     handleLogin,
     accountAddress,
     isLoading,
-    // setModalOpen,
-    // openConnectModal,
     isLoggedIn,
     useRainbowKit,
     connect,
     isModalOpen,
+    setModalOpen,
   } = useMasa();
   const { isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { disconnect } = useDisconnect({
+    onSuccess: () => {
+      setModalOpen?.(false);
+    },
+  });
+
   const switchWallet = useCallback(() => {
-    console.log({ disconnect });
     disconnect();
   }, [disconnect]);
 
@@ -32,29 +35,36 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
   const message = useMemo(() => {
     switch (company) {
-      case 'Masa':
+      case 'Masa': {
         return `Your wallet is now connected. Start your soulbound journey by minting
     a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
-      case 'Celo':
+      }
+      case 'Celo': {
         return `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`;
-      case 'Base':
+      }
+      case 'Base': {
         return 'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.';
-      case 'Base Universe':
+      }
+      case 'Base Universe': {
         return 'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.';
-      case 'Brozo':
+      }
+      case 'Brozo': {
         return 'Your wallet is connected. Start your Brozo journey by minting a unique .bro domain name.';
-      default:
+      }
+      default: {
         return `Your wallet is now connected. Start your soulbound journey by minting
           a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
+      }
     }
   }, [company]);
 
-  const shortAddress = useMemo(() => {
-    return `${accountAddress?.substring(0, 2)}...${accountAddress?.substring(
-      accountAddress.length - 4,
-      accountAddress.length
-    )}`;
-  }, [accountAddress]);
+  const shortAddress = useMemo(
+    () =>
+      `${accountAddress?.slice(0, 2) ?? ''}...${
+        accountAddress?.slice(-4, accountAddress.length) ?? ''
+      }`,
+    [accountAddress]
+  );
 
   const handleClipboard = useCallback(() => {
     if (accountAddress) {
@@ -75,13 +85,14 @@ export const InterfaceAuthenticate = (): JSX.Element => {
 
         <p className="connected-wallet with-wallet">
           You are connected with the following wallet
-          <span onClick={handleClipboard}>
+          <span onClick={handleClipboard} role="presentation">
             {copied ? 'Copied!' : shortAddress}
           </span>
         </p>
       </div>
       <div>
         <button
+          type="button"
           className="masa-button authenticate-button"
           onClick={handleLogin}
         >
@@ -93,9 +104,10 @@ export const InterfaceAuthenticate = (): JSX.Element => {
             <p>
               Want to use a different wallet?
               {!isLoggedIn && isConnected && (
-                <span className={'connected-wallet'}>
+                <span className="connected-wallet">
                   <span
-                    className={'authenticate-button'}
+                    className="authenticate-button"
+                    role="presentation"
                     onClick={switchWallet}
                   >
                     Switch Wallet

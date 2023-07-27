@@ -1,4 +1,10 @@
-import type { Chain, Connector, Provider } from '@wagmi/core';
+import {
+  Network,
+  NetworkName,
+  SupportedNetworks,
+  getNetworkNameByChainId,
+} from '@masa-finance/masa-sdk';
+import type { Chain, Connector, GetNetworkResult, Provider } from '@wagmi/core';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -14,6 +20,7 @@ export const useNetwork = () => {
   const { connector: activeConnector } = useAccount();
   const { connectors, pendingConnector } = useConnect();
   const { chains, chain: activeChain } = useNetworkWagmi();
+  const network = useNetworkWagmi();
   const [switchingToChain, setSwitchingToChain] = useState<number | null>();
 
   const availibleChains = useMemo(
@@ -37,8 +44,38 @@ export const useNetwork = () => {
     [switchNetworkWagmi]
   );
 
+  const switchNetworkByName = useCallback(
+    (forcedNetworkParam: NetworkName) => {
+      const networkToSwitchTo = SupportedNetworks[forcedNetworkParam];
+      setSwitchingToChain(networkToSwitchTo?.chainId);
+      if (networkToSwitchTo) {
+        if (networkToSwitchTo.chainId === activeChain?.id) {
+          return;
+        }
+        switchNetworkWagmi?.(networkToSwitchTo.chainId);
+      }
+    },
+    [activeChain?.id, switchNetworkWagmi]
+  );
+
   const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
   const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
+  const currentNetwork = useMemo(() => {
+    const nw = activeChain?.id;
+    // // * NOTE: name mismatch from masa & wagmi
+    // if (nw === 'celo-alfajores') {
+    //   nw = 'alfajores';
+    // }
+
+    const newNetwork = getNetworkNameByChainId(nw ?? 0);
+
+    return SupportedNetworks[newNetwork];
+  }, [activeChain]);
+
+  const currentNetworkByChainId = useMemo(() => {
+    if (!activeChainId) return 0;
+    return getNetworkNameByChainId(activeChainId);
+  }, [activeChainId]);
 
   const stopSwitching = useCallback(() => {
     setSwitchingToChain(null);
@@ -80,6 +117,7 @@ export const useNetwork = () => {
   return {
     connectors: connectors as unknown,
     switchNetwork,
+    switchNetworkByName,
     switchingToChain,
     canProgramaticallySwitchNetwork,
     activeChain,
@@ -90,9 +128,15 @@ export const useNetwork = () => {
     availibleChains,
     pendingConnector,
     isActiveChainUnsupported,
+
+    // * old
+    currentNetwork,
+    currentNetworkByChainId,
+    currentNetworkNew: network,
   } as {
     connectors?: Connector[];
     switchNetwork?: (chainId?: number) => void;
+    switchNetworkByName: (forcedNetworkParam: NetworkName) => void;
     switchingToChain: number | null | undefined;
     canProgramaticallySwitchNetwork: boolean;
     activeChain:
@@ -107,5 +151,8 @@ export const useNetwork = () => {
     availibleChains: Chain[];
     pendingConnector?: Connector;
     isActiveChainUnsupported: boolean;
+
+    currentNetwork: Network | undefined;
+    currentNetworkNew: GetNetworkResult;
   };
 };
