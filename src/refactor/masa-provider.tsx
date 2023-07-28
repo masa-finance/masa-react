@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 
+import NiceModal from '@ebay/nice-modal-react';
 import MasaBaseProvider from './base-provider';
 import { MasaReactConfig } from './config';
 
@@ -23,7 +24,9 @@ export const MasaProvider = ({
     config={{ ...config, masaConfig: { ...config.masaConfig, verbose } }}
   >
     <MasaWalletProvider>
-      <MasaStateProvider>{children}</MasaStateProvider>
+      <MasaStateProvider>
+        <NiceModal.Provider>{children}</NiceModal.Provider>
+      </MasaStateProvider>
     </MasaWalletProvider>
   </MasaBaseProvider>
 );

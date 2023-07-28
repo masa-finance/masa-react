@@ -12,8 +12,7 @@ export const Modal = ({
   const modal = useModal();
   const handleClose = useCallback(async () => {
     onClose?.();
-    // await modal.hide();
-    console.log('closed modal');
+    await modal.hide();
   }, [modal, onClose]);
 
   return (
@@ -21,6 +20,7 @@ export const Modal = ({
       className="masa-rodal-container"
       visible={modal.visible}
       onClose={handleClose}
+      closeOnEsc
       width={550}
       height={615}
     >
