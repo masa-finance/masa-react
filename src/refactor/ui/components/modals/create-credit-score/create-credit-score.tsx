@@ -1,9 +1,6 @@
 import React, { useCallback, useState } from 'react';
-/* import { MasaLoading } from '../../masa-loading'; */
-/* import { useCreditScores } from '../../../../masa/use-credit-scores'; */
 import NiceModal from '@ebay/nice-modal-react';
 import { useCreditScoreCreate } from '../../../../masa/use-credit-scores-create';
-/* import { useIdentity } from '../../../../masa/use-identity'; */
 
 import { Modal } from '../modal';
 

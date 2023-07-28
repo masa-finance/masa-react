@@ -43,6 +43,9 @@ const useWallet = () => {
       setPreviousAddress(undefined); // skipcq: JS-W1042
       setCompareAddress(undefined); // skipcq: JS-W1042
       setPreviousAddress(undefined); // skipcq: JS-W1042
+      if (typeof window !== 'undefined') {
+        window.localStorage.removeItem('walletconnect');
+      }
     }
 
     if (compareAddress !== address) {

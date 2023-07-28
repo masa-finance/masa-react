@@ -564,7 +564,7 @@ const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
-      forceChain: 'celo',
+      forceChain: 'alfajores',
       allowedNetworkNames: [
         'goerli',
         'ethereum',

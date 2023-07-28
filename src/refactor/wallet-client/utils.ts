@@ -65,9 +65,7 @@ export const correctNetworkListForWagmi = (networkList: NetworkName[]) => {
 
   return networkListCorrectedForWagmi;
 };
-export const getRainbowkitChains = (
-  networkList?: NetworkName[]
-) => {
+export const getRainbowkitChains = (networkList?: NetworkName[]) => {
   if (!networkList || (networkList && networkList.length === 0)) {
     return rainbowkitChains;
   }
@@ -133,4 +131,28 @@ export const getChainIdNetworkMap = (chains?: Chain[]) => {
   }
 
   return chainIdNetworkMap;
+};
+
+export const getWagmiNetworkName = (masaNetworkName?: NetworkName) => {
+  if (masaNetworkName === 'ethereum') return 'homestead';
+  if (masaNetworkName === 'alfajores') return 'celo-alfajores';
+  return masaNetworkName;
+};
+
+export const getChainsSortedByForcedNetwork = (
+  chains: Chain[],
+  forceChain?: NetworkName
+) => {
+  if (!forceChain) return chains;
+  const singleChain = chains.filter(
+    (ch: Chain) => ch.network === getWagmiNetworkName(forceChain)
+  );
+  const sortedChains = [
+    ...singleChain,
+    ...chains.filter(
+      (ch: Chain) => ch.network !== getWagmiNetworkName(forceChain)
+    ),
+  ];
+
+  return sortedChains;
 };
