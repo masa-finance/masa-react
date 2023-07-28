@@ -24,8 +24,8 @@ import {
   AuthenticateModal,
   CreateCreditScoreModal,
   CreateIdentityModal,
-  CreateGreenModal,
 } from './ui/components/modals';
+import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -469,6 +469,7 @@ const GreenInfo = () => {
 const ModalFlow = () => {
   const { isDisconnected } = useWallet();
   const { hasSession } = useSession();
+  const { showChainingModal } = useGreenModal();
 
   return (
     <ul>
@@ -504,7 +505,7 @@ const ModalFlow = () => {
         </Button>
       </li>
       <li>
-        <Button type="button" onClick={() => NiceModal.show(CreateGreenModal)}>
+        <Button type="button" onClick={showChainingModal}>
           Create Masa Green
         </Button>
       </li>
