@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
-import { useSoulnameInterface, useSoulnameModal } from './use-soulname-modal';
 import { Input } from '../../Input';
 import { Spinner } from '../../spinner';
 import { Select } from '../../Select';
+import { useCreateSoulnameModal } from './CreateSoulnameProvider';
 
 const CreateSoulnameForm = () => {
-  const { extension, paymentMethods } = useSoulnameModal();
   const {
+    extension,
+    paymentMethods,
     soulname,
     paymentMethod,
     handleChangeSoulname,
@@ -16,7 +17,7 @@ const CreateSoulnameForm = () => {
     updatePaymentMethod,
     registrationPrice,
     updatePeriod,
-  } = useSoulnameInterface();
+  } = useCreateSoulnameModal();
 
   const LoadingSoulnameAvailible = useMemo(() => {
     if (soulname !== '' && soulname.length > 0) {

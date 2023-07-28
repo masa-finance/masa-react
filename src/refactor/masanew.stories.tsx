@@ -486,6 +486,7 @@ const ModalFlow = () => {
     openCreateSoulnameModal({
       onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
       onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
+      onRegisterFinish: () => console.log('REGISTER SOULNAME FINISHED OUTSIDE'),
     });
   }, []);
   return (
@@ -577,7 +578,7 @@ const TemplateNewMasaState = (props: Args) => (
         'unknown',
       ],
       masaConfig: {
-        networkName: 'celo',
+        networkName: 'goerli',
       },
     }}
   >

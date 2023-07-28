@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react';
 /* import { MasaLoading } from '../../masa-loading'; */
 /* import { useCreditScores } from '../../../../masa/use-credit-scores'; */
+import NiceModal from '@ebay/nice-modal-react';
 import { useCreditScoreCreate } from '../../../../masa/use-credit-scores-create';
 /* import { useIdentity } from '../../../../masa/use-identity'; */
 
-import NiceModal from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
 
 export const CreateCreditScoreModal = NiceModal.create((): JSX.Element => {
@@ -38,11 +38,15 @@ export const CreateCreditScoreModal = NiceModal.create((): JSX.Element => {
           )}
         </div>
         <div>
-          <button className="masa-button" onClick={createCreditScore}>
+          <button
+            type="button"
+            className="masa-button"
+            onClick={createCreditScore}
+          >
             Create now!
           </button>
           <div className="dont-have-a-wallet">
-            <p>I don't want to use this wallet</p>
+            <p>I don&apos;t want to use this wallet</p>
           </div>
         </div>
       </section>

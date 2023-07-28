@@ -61,7 +61,6 @@ export const MasaProvider = ({
               // networkName: 'ethereum',
               environment: environmentName ?? 'dev',
               // arweave: arweaveConfig,
-              // environment: environmentName,
             },
             rainbowkitConfig: {
               modalSize: rainbowKitModalSize ?? 'wide',

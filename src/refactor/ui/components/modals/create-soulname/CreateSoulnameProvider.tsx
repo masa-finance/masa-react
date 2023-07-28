@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useMemo,
   useState,
+  useEffect,
 } from 'react';
 import { useAsync } from 'react-use';
 import type { PaymentMethod } from '@masa-finance/masa-sdk';
@@ -36,6 +37,8 @@ export interface CreateSoulnameProviderValue {
   updatePaymentMethod: (e: unknown) => void;
   handleChangeSoulname: (event: React.ChangeEvent<HTMLInputElement>) => void;
   updatePeriod: (num: number) => void;
+  showError: boolean;
+  setShowError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CreateSoulnameContext = createContext(
@@ -94,6 +97,7 @@ export const CreateSoulnameProvider = ({
     paymentMethods[0]?.name
   );
   const [soulname, setSoulname] = useState<string>('');
+  const [showError, setShowError] = useState(false);
 
   const debounceSearch = useDebounce(soulname, 1000);
   const { value: isAvailable, loading: isLoadingAvailability } =
@@ -139,8 +143,7 @@ export const CreateSoulnameProvider = ({
           );
           formattedPrice = formattedPriceResult.formattedPrice;
           return formattedPrice;
-        } catch (error) {
-          console.log(error);
+        } catch {
           return '';
         }
       }
@@ -148,9 +151,16 @@ export const CreateSoulnameProvider = ({
       return '';
     }, [masa, debounceSearch, paymentMethod, registrationPeriod]);
 
+  // * make sure we do not get an undefined currency
+  useEffect(() => {
+    if (paymentMethod === undefined && paymentMethods.length > 0) {
+      setPaymentMethod(paymentMethods[0].name);
+    }
+  }, [paymentMethod, paymentMethods]);
   // * onChange handlers
   const updatePaymentMethod = useCallback((e: unknown) => {
     const event = e as { target: { value: PaymentMethod } };
+
     setPaymentMethod(event.target?.value);
   }, []);
 
@@ -163,7 +173,7 @@ export const CreateSoulnameProvider = ({
 
   const updatePeriod = useCallback(
     (num: number) => {
-      setRegistrationPeriod(registrationPeriod + num);
+      setRegistrationPeriod(Math.max(1, registrationPeriod + num));
     },
     [registrationPeriod, setRegistrationPeriod]
   );
@@ -193,6 +203,8 @@ export const CreateSoulnameProvider = ({
         updatePaymentMethod,
         handleChangeSoulname,
         updatePeriod,
+        showError,
+        setShowError,
       }) as CreateSoulnameProviderValue,
     [
       enabledMethods,
@@ -212,6 +224,8 @@ export const CreateSoulnameProvider = ({
       updatePaymentMethod,
       handleChangeSoulname,
       updatePeriod,
+      showError,
+      setShowError,
     ]
   );
   return (

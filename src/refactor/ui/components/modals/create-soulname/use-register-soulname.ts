@@ -1,11 +1,13 @@
 // import React, { useCallback, useMemo, useState } from 'react';
 import { useAsyncFn } from 'react-use';
 
+import NiceModal from '@ebay/nice-modal-react';
 import { useSoulNamesPurchase } from '../../../../masa/use-soulnames-purchase';
 import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
 import { useConfig } from '../../../../base-provider';
-import { useSoulnameInterface } from './use-soulname-modal';
 import { useIdentity } from '../../../../masa/use-identity';
+import { useCreateSoulnameModal } from './CreateSoulnameProvider';
+import { ModalSuccess } from '../ModalSuccess';
 
 const errorMessages = {
   UNPREDICTABLE_GAS_LIMIT:
@@ -16,9 +18,11 @@ const errorMessages = {
 export const useRegisterSoulname = ({
   onMintSuccess,
   onMintError,
+  onRegisterFinish,
 }: Partial<{
   onMintSuccess?: () => void;
   onMintError?: () => void;
+  onRegisterFinish?: () => void;
 }>) => {
   const { soulNameStyle } = useConfig();
   const { identity } = useIdentity();
@@ -30,18 +34,27 @@ export const useRegisterSoulname = ({
     paymentMethod,
     soulNameError,
     registrationPrice,
-  } = useSoulnameInterface();
+    setShowError,
+  } = useCreateSoulnameModal();
   const [
     { value: hasRegisteredSoulname, loading: isRegisteringSoulname },
     onRegisterSoulname,
   ] = useAsyncFn(async () => {
     if (soulNameError || !registrationPrice) {
-      // setShowError(true);
+      console.log('soulanmee error', { soulNameError, registrationPrice });
+      setShowError(true);
+      onMintError?.();
       return undefined;
     }
 
     try {
       if (identity && identity.identityId) {
+        console.log('creating soulname', {
+          soulname,
+          registrationPeriod,
+          paymentMethod,
+          soulNameStyle,
+        });
         const result = await purchaseSoulName(
           soulname,
           registrationPeriod,
@@ -50,10 +63,26 @@ export const useRegisterSoulname = ({
           soulNameStyle
         );
 
-        console.log({ result });
-        onMintSuccess?.();
+        if (result) {
+          onMintSuccess?.();
+          await NiceModal.show(ModalSuccess, {
+            onFinish: () => console.log('onFinish'),
+          });
+        }
+
+        if (!result) onMintError?.();
+
+        onRegisterFinish?.();
+
         return result;
       }
+
+      console.log('creating identity with soulname', {
+        soulname,
+        registrationPeriod,
+        paymentMethod,
+        soulNameStyle,
+      });
 
       const result = await purchaseIdentityWithSoulName(
         paymentMethod,
@@ -62,8 +91,11 @@ export const useRegisterSoulname = ({
         soulNameStyle
       );
 
-      console.log({ result });
-      onMintSuccess?.();
+      if (result) {
+        onMintSuccess?.();
+      }
+      if (!result) onMintError?.();
+      onRegisterFinish?.();
 
       return result;
     } catch (error: unknown) {
@@ -98,6 +130,7 @@ export const useRegisterSoulname = ({
     soulNameStyle,
     onMintSuccess,
     onMintError,
+    setShowError,
   ]);
 
   return {

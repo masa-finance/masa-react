@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
 // import Rodal from 'rodal';
 import { useConfig } from '../../../../base-provider';
@@ -10,70 +10,82 @@ import {
   CreateSoulnameProvider,
   useCreateSoulnameModal,
 } from './CreateSoulnameProvider';
+import { ModalError } from '../ModalError';
+import { useWalletClient } from '../../../../wallet-client/wallet-client-provider';
 
-const SoulnameModal = NiceModal.create(
-  ({
-    onMintSuccess,
+const SoulnameModal = ({
+  onMintError,
+  onMintSuccess,
+  onRegisterFinish,
+}: {
+  onMintError?: () => void;
+  onMintSuccess?: () => void;
+  onRegisterFinish?: () => void;
+}) => {
+  const { company } = useConfig();
+  const { isLoadingSigner } = useWalletClient();
+  // const modal = useModal();
+  // const { extension } = useSoulnameModal();
+  const { extension, soulname, soulNameError } = useCreateSoulnameModal();
+  // const { soulname, soulNameError } = useSoulnameInterface();
+  const [error, setError] = useState<null | {
+    title: string;
+    subtitle: string;
+  }>(null);
+
+  const handleErrorConfirmed = useCallback(() => setError(null), []);
+
+  const [showError] = useState(false);
+  const { onRegisterSoulname, isRegisteringSoulname } = useRegisterSoulname({
     onMintError,
-  }: {
-    onMintSuccess?: () => void;
-    onMintError?: () => void;
-  }) => {
-    const { company } = useConfig();
-    // const modal = useModal();
-    // const { extension } = useSoulnameModal();
-    const { extension, soulname, soulNameError } = useCreateSoulnameModal();
-    // const { soulname, soulNameError } = useSoulnameInterface();
+    onMintSuccess,
+    onRegisterFinish,
+  });
+  // * handlers
 
-    const [showError] = useState(false);
-    const { onRegisterSoulname, isRegisteringSoulname } = useRegisterSoulname({
-      onMintError,
-      onMintSuccess,
-    });
-    // * handlers
-
-    const SoulnameTitle = useMemo(() => {
-      switch (company) {
-        case 'Brozo':
-        case 'Base Universe': {
-          return `Register a ${company} ${extension ?? ''} Name`;
-        }
-        default: {
-          return `Register a ${extension ?? ''} Name`;
-        }
+  const SoulnameTitle = useMemo(() => {
+    switch (company) {
+      case 'Brozo':
+      case 'Base Universe': {
+        return `Register a ${company} ${extension ?? ''} Name`;
       }
-    }, [company, extension]);
-
-    const SoulnameSubtitle = useMemo(() => {
-      switch (company) {
-        case 'Base Universe': {
-          return (
-            <>
-              Claim your <b>{extension}</b> domain name before it&apos;s taken!
-              Domains are <b>FREE on testnet,</b> only pay the gas to mint.
-            </>
-          );
-        }
-        case 'Brozo': {
-          return (
-            <>
-              Claim your rare <b>{extension}</b> domain name before it’s taken!
-            </>
-          );
-        }
-        default: {
-          return (
-            <>
-              Claim your <b>{extension}</b> domain name. 5+ character domains
-              are <b>FREE,</b> only pay the gas fee.
-            </>
-          );
-        }
+      default: {
+        return `Register a ${extension ?? ''} Name`;
       }
-    }, [company, extension]);
+    }
+  }, [company, extension]);
 
-    if (isRegisteringSoulname) {
-      return (
+  const SoulnameSubtitle = useMemo(() => {
+    switch (company) {
+      case 'Base Universe': {
+        return (
+          <>
+            Claim your <b>{extension}</b> domain name before it&apos;s taken!
+            Domains are <b>FREE on testnet,</b> only pay the gas to mint.
+          </>
+        );
+      }
+      case 'Brozo': {
+        return (
+          <>
+            Claim your rare <b>{extension}</b> domain name before it’s taken!
+          </>
+        );
+      }
+      default: {
+        return (
+          <>
+            Claim your <b>{extension}</b> domain name. 5+ character domains are{' '}
+            <b>FREE,</b> only pay the gas fee.
+          </>
+        );
+      }
+    }
+  }, [company, extension]);
+
+  if (isRegisteringSoulname) {
+    return (
+      <Modal>
         <div
           style={{
             height: '100%',
@@ -91,114 +103,97 @@ const SoulnameModal = NiceModal.create(
             <MasaLoading />
           </div>
         </div>
-      );
-    }
-
-    // if (error) {
-
-    // }
-    // if (isLoading) {
-    //   return <div className='spinner'></Spinner></div>
-    // }
-
-    return (
-      <Modal
-      // className="masa-rodal-container"
-      // visible={modal.visible}
-      // onClose={() => modal.hide()}
-      // width={550}
-      // height={615}
-      >
-        <article className="interface-create-soulname">
-          <header className="title-container">
-            <h3 className="title">{SoulnameTitle}</h3>
-            <p className="subtitle">{SoulnameSubtitle}</p>
-          </header>
-
-          <CreateSoulnameForm />
-
-          <div style={{ width: '100%' }}>
-            <p id="slippage-disclaimer">
-              Prices may vary slightly due to market price and slippage.
-            </p>
-            <button
-              type="button"
-              id="gtm_register_domain"
-              className="masa-button"
-              onClick={
-                onRegisterSoulname
-                // soulNameError || !registrationPrice
-                //   ? () => setShowError(true)
-                //   : handleMinting
-              }
-            >
-              Register your domain
-            </button>
-            {showError && soulNameError && (
-              <p style={{ color: 'red', width: '100%', textAlign: 'center' }}>
-                {soulNameError}
-              </p>
-            )}
-          </div>
-        </article>
       </Modal>
     );
   }
+
+  if (error) {
+    return (
+      <Modal>
+        <ModalError
+          {...error}
+          handleComplete={handleErrorConfirmed}
+          buttonText="Try again"
+        />
+      </Modal>
+    );
+  }
+
+  // }
+  if (isLoadingSigner) {
+    return (
+      <Modal>
+        <MasaLoading />
+      </Modal>
+    );
+  }
+
+  return (
+    <Modal>
+      <article className="interface-create-soulname">
+        <header className="title-container">
+          <h3 className="title">{SoulnameTitle}</h3>
+          <p className="subtitle">{SoulnameSubtitle}</p>
+        </header>
+
+        <CreateSoulnameForm />
+
+        <div style={{ width: '100%' }}>
+          <p id="slippage-disclaimer">
+            Prices may vary slightly due to market price and slippage.
+          </p>
+          <button
+            type="button"
+            id="gtm_register_domain"
+            className="masa-button"
+            onClick={onRegisterSoulname}
+          >
+            Register your domain
+          </button>
+          {showError && soulNameError && (
+            <p style={{ color: 'red', width: '100%', textAlign: 'center' }}>
+              {soulNameError}
+            </p>
+          )}
+        </div>
+      </article>
+    </Modal>
+  );
+};
+
+export const CreateSoulnameModal = NiceModal.create(
+  ({
+    onMintSuccess,
+    onMintError,
+    onRegisterFinish,
+  }: {
+    onMintSuccess?: () => void;
+    onMintError?: () => void;
+    onRegisterFinish?: () => void;
+  }) => (
+    <CreateSoulnameProvider>
+      <SoulnameModal
+        onMintError={onMintError}
+        onMintSuccess={onMintSuccess}
+        onRegisterFinish={onRegisterFinish}
+      />
+    </CreateSoulnameProvider>
+  )
 );
-
-// export const useCreateSoulnameModal = ({
-//   onMintSuccess,
-//   onMintError,
-// }: {
-//   onMintSuccess?: () => void;
-//   onMintError?: () => void;
-// }) => {
-//   const [, openCreateSoulnameModal] = useAsyncFn(
-//     async () =>
-//       NiceModal.show(SoulnameModal, {
-//         onMintError,
-//         onMintSuccess,
-//       }),
-//     [onMintError, onMintSuccess]
-//   );
-
-//   const closeCreateSoulnameModal = useCallback(
-//     () => NiceModal.hide(SoulnameModal),
-//     []
-//   );
-
-//   return {
-//     openCreateSoulnameModal,
-//     closeCreateSoulnameModal,
-//   };
-// };
 
 export const openCreateSoulnameModal = ({
   onMintSuccess,
   onMintError,
+  onRegisterFinish,
 }: {
   onMintSuccess?: () => void;
   onMintError?: () => void;
+  onRegisterFinish?: () => void;
 }) =>
-  NiceModal.show('create-soulname-modal', {
+  NiceModal.show(CreateSoulnameModal, {
     onMintError,
     onMintSuccess,
+    onRegisterFinish,
   });
-
-export const CreateSoulnameModal = ({
-  onMintSuccess,
-  onMintError,
-}: {
-  onMintSuccess?: () => void;
-  onMintError?: () => void;
-}) => (
-  <CreateSoulnameProvider>
-    <SoulnameModal
-      id="create-soulname-modal"
-      onMintError={onMintError}
-      onMintSuccess={onMintSuccess}
-    />
-  </CreateSoulnameProvider>
-);
 
 export default CreateSoulnameModal;

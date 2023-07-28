@@ -36,7 +36,7 @@ const useWallet = () => {
     address,
   });
 
-  useEffect(() => console.log({ provider, signer }), [provider, signer]);
+  // useEffect(() => console.log({ provider, signer }), [provider, signer]);
 
   useEffect(() => {
     if (isDisconnected) {

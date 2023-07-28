@@ -25,17 +25,23 @@ export const walletConnectorsList: Record<
     wallets: [Valora({ chains, projectId: PROJECT_ID })],
   }),
 
-  walletconnect: (chains: Chain[]) => ({
-    groupName: 'WalletConnect',
-    wallets: [
-      walletConnectWallet({
-        projectId: PROJECT_ID,
-        chains,
-        options: {
-          qrcode: true,
+  walletconnect: (chains: Chain[]) => {
+    console.log('CHAINS', {
+      chains,
+      filtered: chains.filter((ch) => ch.name === 'Celo'),
+    });
+    return {
+      groupName: 'WalletConnect',
+      wallets: [
+        walletConnectWallet({
           projectId: PROJECT_ID,
-        },
-      }),
-    ],
-  }),
+          chains: chains.filter((chain: Chain) => chain.name === 'Celo'),
+          options: {
+            qrcode: true,
+            projectId: PROJECT_ID,
+          },
+        }),
+      ],
+    };
+  },
 };
