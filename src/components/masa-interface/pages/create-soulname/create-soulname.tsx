@@ -272,60 +272,6 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
     soulNameStyle,
   ]);
 
-  // const handleMinting = useCallback(async () => {
-  //   setLoadingMint(true);
-
-  //   try {
-  //     if (identity && identity.identityId) {
-  //       await purchaseSoulName?.(
-  //         soulname,
-  //         registrationPeriod,
-  //         paymentMethod,
-  //         soulNameStyle
-  //       );
-  //     } else {
-  //       await handlePurchaseIdentityWithSoulname?.(
-  //         paymentMethod,
-  //         soulname,
-  //         registrationPeriod,
-  //         soulNameStyle
-  //       );
-  //     }
-
-  //     if (setForcedPage) {
-  //       reloadSoulnames?.();
-  //       setForcedPage('successIdentityCreate');
-  //     } else {
-  //       closeModal?.(true);
-  //     }
-  //   } catch (error: unknown) {
-  //     if (error) {
-  //       console.log({ error });
-  //       const errorObject = error as {
-  //         code: string;
-  //         message: string;
-  //       };
-  //       setError({
-  //         title: '',
-  //         subtitle: errorMessages?.[errorObject.code] ?? 'Unknown error',
-  //       });
-  //       console.error(`Minting failed! ${errorObject.message}`);
-  //     }
-  //   }
-  //   setLoadingMint(false);
-  // }, [
-  //   masa,
-  //   soulname,
-  //   registrationPeriod,
-  //   handlePurchaseIdentityWithSoulname,
-  //   identity,
-  //   closeModal,
-  //   paymentMethod,
-  //   forcedPage,
-  //   setForcedPage,
-  //   reloadSoulnames,
-  // ]);
-
   const updatePaymentMethod = useCallback((e: unknown) => {
     const event = e as { target: { value: PaymentMethod } };
     setPaymentMethod(event.target?.value);

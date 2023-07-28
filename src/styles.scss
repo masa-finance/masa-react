@@ -786,6 +786,8 @@
 
   .interface-authenticate,
   .interface-connected {
+    align-items: center;
+
     .title {
       text-align: center;
       color: black;
@@ -869,6 +871,7 @@
     }
   }
 
+  // GALLERY STARTING
   .masa-gallery-container {
     display: flex;
     flex-direction: column;
@@ -1037,7 +1040,9 @@
     cursor: pointer;
     border: 1px solid #ccc;
     border-radius: 50%;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
 
     &:hover {
       background-color: black;
@@ -1524,9 +1529,9 @@
 
 // Create Soulname page
 #slippage-disclaimer {
-    text-align: center;
-    font-style: italic;
-    font-size: 12px;
-    padding: 1em 0;
-    margin: 0;
+  text-align: center;
+  font-style: italic;
+  font-size: 12px;
+  padding: 1em 0;
+  margin: 0;
 }

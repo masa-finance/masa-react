@@ -10,7 +10,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import type { ReactNode } from 'react';
 import React, { useMemo } from 'react';
 
-import { getRainbowkitChains } from './utils';
+import { getChainsSortedByForcedNetwork, getRainbowkitChains } from './utils';
 import { walletConnectorsList } from './constants';
 import { useConfig } from '../base-provider';
 
@@ -21,10 +21,15 @@ export interface WagmiRainbowkitProviderProps {
 export const WagmiRainbowkitProvider = ({
   children,
 }: WagmiRainbowkitProviderProps) => {
-  const { allowedNetworkNames, allowedWallets, rainbowkitConfig } = useConfig();
+  const { allowedNetworkNames, allowedWallets, rainbowkitConfig, forceChain } =
+    useConfig();
   const rainbowkitChains = useMemo(
-    () => getRainbowkitChains(allowedNetworkNames),
-    [allowedNetworkNames]
+    () =>
+      getChainsSortedByForcedNetwork(
+        getRainbowkitChains(allowedNetworkNames),
+        forceChain
+      ),
+    [allowedNetworkNames, forceChain]
   );
 
   const { chains, provider, webSocketProvider } = configureChains(
@@ -39,8 +44,14 @@ export const WagmiRainbowkitProvider = ({
   );
 
   const walletConnectors =
-    allowedWallets?.map((wallet: string) => {
+    allowedWallets?.map((wallet: 'metamask' | 'valora' | 'walletconnect') => {
       if (walletConnectorsList[wallet]) {
+        // if (wallet === 'walletconnect') {
+        //   return walletConnectorsList.walletconnect(
+        //     chains,
+        //     forceChain
+        //   ) as unknown as WalletList;
+        // }
         const walletListFunc = walletConnectorsList[wallet];
         return walletListFunc(chains) as unknown as WalletList;
       }

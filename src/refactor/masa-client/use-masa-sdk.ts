@@ -93,17 +93,19 @@ export const useMasaSDK = (
         .catch((error: unknown) => console.error({ error }));
     }
 
+    const arweaveConfigToPass = {
+      host: arweaveConfig?.host || 'arweave.net',
+      port: Number.parseInt(arweaveConfig?.port || '443', 10),
+      protocol: arweaveConfig?.protocol || 'https',
+      logging: !!arweaveConfig?.logging || true,
+    };
+    // console.log({ arweaveConfigToPass });
     return new Masa({
       signer,
       apiUrl: apiUrl ?? environment.apiUrl,
       networkName,
       environment: environment.environment,
-      arweave: {
-        host: arweaveConfig?.host || 'arweave.net',
-        port: Number.parseInt(arweaveConfig?.port || '443', 10),
-        protocol: arweaveConfig?.protocol || 'https',
-        logging: !!arweaveConfig?.logging || false,
-      },
+      arweave: arweaveConfigToPass,
       contractOverrides,
       verbose,
     });

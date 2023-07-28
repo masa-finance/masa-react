@@ -18,6 +18,7 @@ export interface MasaReactConfig {
   allowedWallets?: Array<'metamask' | 'valora' | 'walletconnect'>;
   arweaveConfig?: ArweaveConfig;
   forceChain?: NetworkName;
+  soulNameStyle?: string;
   verbose?: boolean;
   wagmiConfig?: WagmiConfigProps;
   contractAddressOverrides?: {
