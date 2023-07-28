@@ -12,22 +12,25 @@ import {
 } from './CreateSoulnameProvider';
 import { ModalError } from '../ModalError';
 import { useWalletClient } from '../../../../wallet-client/wallet-client-provider';
+import { ModalSuccess } from './ModalSuccess';
 
 const SoulnameModal = ({
   onMintError,
   onMintSuccess,
   onRegisterFinish,
+  onSuccess,
+  closeOnSuccess,
 }: {
   onMintError?: () => void;
   onMintSuccess?: () => void;
   onRegisterFinish?: () => void;
+  onSuccess?: () => void;
+  closeOnSuccess?: boolean;
 }) => {
   const { company } = useConfig();
   const { isLoadingSigner } = useWalletClient();
-  // const modal = useModal();
-  // const { extension } = useSoulnameModal();
   const { extension, soulname, soulNameError } = useCreateSoulnameModal();
-  // const { soulname, soulNameError } = useSoulnameInterface();
+
   const [error, setError] = useState<null | {
     title: string;
     subtitle: string;
@@ -36,11 +39,12 @@ const SoulnameModal = ({
   const handleErrorConfirmed = useCallback(() => setError(null), []);
 
   const [showError] = useState(false);
-  const { onRegisterSoulname, isRegisteringSoulname } = useRegisterSoulname({
-    onMintError,
-    onMintSuccess,
-    onRegisterFinish,
-  });
+  const { hasRegisteredSoulname, onRegisterSoulname, isRegisteringSoulname } =
+    useRegisterSoulname({
+      onMintError,
+      onMintSuccess,
+      onRegisterFinish,
+    });
   // * handlers
 
   const SoulnameTitle = useMemo(() => {
@@ -107,6 +111,16 @@ const SoulnameModal = ({
     );
   }
 
+  if (hasRegisteredSoulname) {
+    return (
+      <ModalSuccess
+        extension={extension}
+        closeOnSuccess={closeOnSuccess}
+        onFinish={onSuccess}
+      />
+    );
+  }
+
   if (error) {
     return (
       <Modal>
@@ -166,16 +180,22 @@ export const CreateSoulnameModal = NiceModal.create(
     onMintSuccess,
     onMintError,
     onRegisterFinish,
+    onSuccess,
+    closeOnSuccess,
   }: {
     onMintSuccess?: () => void;
     onMintError?: () => void;
     onRegisterFinish?: () => void;
+    onSuccess?: () => void;
+    closeOnSuccess?: boolean;
   }) => (
     <CreateSoulnameProvider>
       <SoulnameModal
+        closeOnSuccess={closeOnSuccess}
         onMintError={onMintError}
         onMintSuccess={onMintSuccess}
         onRegisterFinish={onRegisterFinish}
+        onSuccess={onSuccess}
       />
     </CreateSoulnameProvider>
   )
@@ -185,15 +205,21 @@ export const openCreateSoulnameModal = ({
   onMintSuccess,
   onMintError,
   onRegisterFinish,
+  onSuccess,
+  closeOnSuccess,
 }: {
   onMintSuccess?: () => void;
   onMintError?: () => void;
   onRegisterFinish?: () => void;
+  onSuccess?: () => void;
+  closeOnSuccess?: boolean;
 }) =>
   NiceModal.show(CreateSoulnameModal, {
     onMintError,
     onMintSuccess,
     onRegisterFinish,
+    onSuccess,
+    closeOnSuccess,
   });
 
 export default CreateSoulnameModal;

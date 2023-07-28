@@ -12,7 +12,7 @@ export const Modal = ({
   const modal = useModal();
   const handleClose = useCallback(async () => {
     onClose?.();
-    await modal.hide();
+    // await modal.hide();
     console.log('closed modal');
   }, [modal, onClose]);
 

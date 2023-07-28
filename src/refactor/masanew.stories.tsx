@@ -487,6 +487,8 @@ const ModalFlow = () => {
       onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
       onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
       onRegisterFinish: () => console.log('REGISTER SOULNAME FINISHED OUTSIDE'),
+      onSuccess: () => console.log('EVERYTHING WAS SUCCESSFUL'),
+      closeOnSuccess: true,
     });
   }, []);
   return (

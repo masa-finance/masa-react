@@ -1,13 +1,9 @@
-// import React, { useCallback, useMemo, useState } from 'react';
 import { useAsyncFn } from 'react-use';
-
-import NiceModal from '@ebay/nice-modal-react';
 import { useSoulNamesPurchase } from '../../../../masa/use-soulnames-purchase';
 import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
 import { useConfig } from '../../../../base-provider';
 import { useIdentity } from '../../../../masa/use-identity';
 import { useCreateSoulnameModal } from './CreateSoulnameProvider';
-import { ModalSuccess } from '../ModalSuccess';
 
 const errorMessages = {
   UNPREDICTABLE_GAS_LIMIT:
@@ -25,6 +21,7 @@ export const useRegisterSoulname = ({
   onRegisterFinish?: () => void;
 }>) => {
   const { soulNameStyle } = useConfig();
+
   const { identity } = useIdentity();
   const { purchaseSoulName } = useSoulNamesPurchase();
   const { purchaseIdentityWithSoulName } = useIdentityPurchase();
@@ -36,12 +33,12 @@ export const useRegisterSoulname = ({
     registrationPrice,
     setShowError,
   } = useCreateSoulnameModal();
+
   const [
     { value: hasRegisteredSoulname, loading: isRegisteringSoulname },
     onRegisterSoulname,
   ] = useAsyncFn(async () => {
     if (soulNameError || !registrationPrice) {
-      console.log('soulanmee error', { soulNameError, registrationPrice });
       setShowError(true);
       onMintError?.();
       return undefined;
@@ -49,25 +46,15 @@ export const useRegisterSoulname = ({
 
     try {
       if (identity && identity.identityId) {
-        console.log('creating soulname', {
-          soulname,
-          registrationPeriod,
-          paymentMethod,
-          soulNameStyle,
-        });
         const result = await purchaseSoulName(
           soulname,
           registrationPeriod,
-
           paymentMethod,
           soulNameStyle
         );
 
         if (result) {
           onMintSuccess?.();
-          await NiceModal.show(ModalSuccess, {
-            onFinish: () => console.log('onFinish'),
-          });
         }
 
         if (!result) onMintError?.();
@@ -76,13 +63,6 @@ export const useRegisterSoulname = ({
 
         return result;
       }
-
-      console.log('creating identity with soulname', {
-        soulname,
-        registrationPeriod,
-        paymentMethod,
-        soulNameStyle,
-      });
 
       const result = await purchaseIdentityWithSoulName(
         paymentMethod,
@@ -94,12 +74,13 @@ export const useRegisterSoulname = ({
       if (result) {
         onMintSuccess?.();
       }
+
       if (!result) onMintError?.();
+
       onRegisterFinish?.();
 
       return result;
     } catch (error: unknown) {
-      console.log({ error });
       const errorObject = error as {
         code: string;
         message: string;
@@ -119,6 +100,7 @@ export const useRegisterSoulname = ({
       };
     }
   }, [
+    onRegisterFinish,
     soulname,
     identity,
     paymentMethod,

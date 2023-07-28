@@ -1,31 +1,36 @@
-import { useAsync } from 'react-use';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import { twitterLogo } from '../../../../assets/twitterLogo';
-import { MasaLoading } from '../masa-loading';
-import { useMasaClient } from '../../../masa-client/use-masa-client';
-import { useSoulNames } from '../../../masa/use-soulnames';
-import { useConfig } from '../../../base-provider';
-import { Modal } from './modal';
+import { useModal } from '@ebay/nice-modal-react';
+import { twitterLogo } from '../../../../../assets/twitterLogo';
+
+import { useSoulNames } from '../../../../masa/use-soulnames';
+import { useConfig } from '../../../../base-provider';
+import { Modal } from '../modal';
 
 export const ModalSuccess = ({
   onFinish,
+  closeOnSuccess,
+  extension,
 }: {
   onFinish?: () => void;
-}): JSX.Element => {
-  const [extension, setExtension] = useState<string>();
-  const { sdk: masa } = useMasaClient();
+  closeOnSuccess?: boolean;
+  extension?: string;
+}) => {
+  const modal = useModal();
+  //   const [extension, setExtension] = useState<string>();
+  //   const { sdk: masa } = useMasaClient();
   const { company } = useConfig();
-  const { soulnames, isLoadingSoulnames } = useSoulNames();
+  const { soulnames } = useSoulNames();
   //   const { masa, isLoading, setForcedPage, soulnames, company } = useMasa();
 
-  useAsync(async () => {
-    setExtension(await masa?.contracts.instances.SoulNameContract.extension());
-  }, [masa]);
+  //   useAsync(async () => {
+  //     setExtension(await masa?.contracts.instances.SoulNameContract.extension());
+  //   }, [masa]);
 
-  const handleComplete = useCallback(() => {
+  const handleComplete = useCallback(async () => {
     onFinish?.();
-  }, [onFinish]);
+    if (closeOnSuccess) await modal.hide();
+  }, [onFinish, closeOnSuccess, modal]);
 
   const title = useMemo(() => {
     switch (company) {
@@ -119,15 +124,15 @@ export const ModalSuccess = ({
     }
   }, [company]);
 
-  if (isLoadingSoulnames)
-    return (
-      <Modal>
-        <MasaLoading />;
-      </Modal>
-    );
+  //   if (isLoadingSoulnames)
+  //     return (
+  //       <Modal>
+  //         <MasaLoading />;
+  //       </Modal>
+  //     );
 
   return (
-    <Modal onClose={onFinish}>
+    <Modal>
       <div
         id="gtm_hurray_identity_minted"
         className="interface-create-identity"
