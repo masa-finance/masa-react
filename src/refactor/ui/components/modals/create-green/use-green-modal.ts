@@ -1,14 +1,31 @@
 import { useModal } from '@ebay/nice-modal-react';
 import { CreateGreenModal } from './create-green';
 
+import { AirDropModal } from './air-drop';
+import { NotABotModal } from './not-a-bot-modal';
+import { PhoneNumberModal } from './phone-number-modal';
+import { TwoFAModal } from './twofa-modal';
+import { VerifyMintModal } from './verify-and-mint';
+import { SuccessModal } from './success-modal';
+
 export const useGreenModal = () => {
   const chainingModal = useModal(CreateGreenModal);
+
   const showChainingModal = async () => {
-    for (let i = 0; i < 3; i += 1) {
-      console.log({ i });
-      await chainingModal.show({ currentStep: i }); // eslint-disable-line no-await-in-loop
-      await chainingModal.hide(); // eslint-disable-line no-await-in-loop
+    const steps = [
+      AirDropModal,
+      NotABotModal,
+      PhoneNumberModal,
+      TwoFAModal,
+      VerifyMintModal,
+      SuccessModal,
+    ];
+
+    for (const step of steps) {
+      await chainingModal.show({ children: step });
     }
+    await chainingModal.hide();
   };
+
   return { showChainingModal };
 };
