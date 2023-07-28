@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Spinner } from '../../spinner';
 import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
 import { useSession } from '../../../../masa/use-session';
 import { useConfig } from '../../../../base-provider';
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
 import AuthView from './auth-view';
 import ConnectedView from './connected-view';
@@ -38,40 +38,50 @@ export const AuthenticateModal = NiceModal.create((): JSX.Element => {
 
   const copy = useMemo(() => {
     switch (company) {
-      case 'Masa':
+      case 'Masa': {
         return {
           titleText: 'Starting your soulbound journey',
           message: `Your wallet is now connected. Start your soulbound journey by minting a Masa Soulbound Identity and claiming a unique Masa Soul Name.`,
         };
-      case 'Celo':
+      }
+      case 'Celo': {
         return {
           titleText: 'Starting your soulbound journey',
           message: `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`,
         };
-      case 'Base':
+      }
+      case 'Base': {
         return {
           titleText: 'Starting your soulbound journey',
           mesage:
             'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.',
         };
-      case 'Base Universe':
+      }
+      case 'Base Universe': {
         return {
           titleText: 'Starting your soulbound journey',
           message:
             'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.',
         };
-      default:
+      }
+      default: {
         return {
           titleText: 'Starting your soulbound journey',
           message: `Your wallet is now connected. Start your soulbound journey by minting a Masa Soulbound Identity and claiming a unique Masa Soul Name.`,
         };
+      }
     }
   }, [company]);
 
-  const shortAddress = `${address?.slice(0, 2)}...${address?.substring(
-    address?.length - 4,
-    address?.length
-  )}`;
+  const shortAddress = useMemo(() => {
+    if (!address) return '';
+
+    // eslint-disable-next-line unicorn/prefer-string-slice
+    return `${address?.slice(0, 2) ?? ''}...${address.substring(
+      address.length - 4,
+      address.length
+    )}`;
+  }, [address]);
 
   const handleClipboard = useCallback(() => {
     if (address) {
@@ -85,7 +95,15 @@ export const AuthenticateModal = NiceModal.create((): JSX.Element => {
       modal.remove();
       openConnectModal?.();
     }
-  }, [openConnectModal, isConnected, hasSession, hasAddress, modal.visible]);
+  }, [
+    modal,
+    openConnectModal,
+    isConnected,
+    hasSession,
+    hasAddress,
+    modal.visible,
+    needsWalletConnection
+  ]);
 
   if (isLoadingSigner) {
     return <Spinner />;

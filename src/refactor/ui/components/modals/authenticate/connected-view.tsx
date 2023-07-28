@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
+import type { NiceModalHandler } from '@ebay/nice-modal-react';
 import { Spinner } from '../../spinner';
 
 interface ConnectedViewProps {
   titleText: string;
-  modal: any;
+  modal: NiceModalHandler<Record<string, unknown>>;
   isLoadingSession: boolean;
 }
 
@@ -13,17 +14,17 @@ const ConnectedView = ({
   isLoadingSession,
 }: ConnectedViewProps): JSX.Element => {
   useEffect(() => {
-    let timeout;
+    let timeout: NodeJS.Timeout;
     if (modal.visible && !isLoadingSession) {
       timeout = setTimeout(() => {
-        modal.hide();
+        modal.hide().catch(() => {});
       }, 3000);
     }
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [isLoadingSession]);
+  }, [isLoadingSession, modal]);
 
   return (
     <section className="interface-connected">

@@ -1,5 +1,8 @@
 @use './scss/fonts.scss';
+@use './scss/rodal.scss';
+@use './scss/modal.scss';
 @use './components/button.scss';
+
 :root {
   --z-index-back: 1;
   --z-index-middle: 100;

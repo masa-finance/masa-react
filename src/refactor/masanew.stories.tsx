@@ -6,6 +6,7 @@ import React, { MouseEventHandler, useCallback } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
 import { Button } from './ui';
 import './ui/styles.scss';
+import '../styles.scss';
 import { useConfig } from './base-provider';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
@@ -26,6 +27,8 @@ import {
   CreateIdentityModal,
 } from './ui/components/modals';
 import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
+import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
+import { useWalletClient } from './wallet-client/wallet-client-provider';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -361,15 +364,21 @@ const SBTInfo = () => {
 };
 
 const SessionButtons = () => {
-  const { loginSessionAsync, logoutSession, checkLogin } = useSession();
-
+  const {
+    loginSessionAsync,
+    logoutSession,
+    checkLogin,
+    hasSession,
+    isLoadingSession,
+  } = useSession();
+  const { isDisconnected } = useWalletClient();
   return (
     // skipcq: JS-0415
     <ul>
       <h3>Session</h3>
       <li>
         <Button
-          // disabled={!!hasSession || isDisconnected || isLoadingSession}
+          disabled={!!hasSession || isDisconnected || isLoadingSession}
           type="button"
           onClick={loginSessionAsync}
         >
@@ -387,7 +396,7 @@ const SessionButtons = () => {
     </li> */}
       <li>
         <Button
-          // disabled={!hasSession || isLoadingSession}
+          disabled={!hasSession || isLoadingSession}
           type="button"
           onClick={logoutSession}
         >
@@ -396,7 +405,7 @@ const SessionButtons = () => {
       </li>
       <li>
         <Button
-          // disabled={isDisconnected || isLoadingSession}
+          disabled={isDisconnected || isLoadingSession}
           type="button"
           onClick={
             checkLogin as unknown as
@@ -471,6 +480,14 @@ const ModalFlow = () => {
   const { hasSession } = useSession();
   const { showChainingModal } = useGreenModal();
 
+  // const _hook = useCreateSoulnameModal({});
+
+  const onClickSoulname = useCallback(() => {
+    openCreateSoulnameModal({
+      onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
+      onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
+    });
+  }, []);
   return (
     <ul>
       <h3>Modal Flows</h3>
@@ -484,7 +501,7 @@ const ModalFlow = () => {
         </Button>
       </li>
       <li>
-        <Button type="button" onClick={() => null}>
+        <Button type="button" onClick={onClickSoulname}>
           Create Soul Name
         </Button>
       </li>
@@ -529,6 +546,7 @@ const Component = (): JSX.Element => {
       <SBTInfo />
       <SoulnameCreditScoreInfo />
       <GreenInfo />
+      <ModalFlow />
       <ul>
         <h3>Config</h3>
         <li>
@@ -537,8 +555,6 @@ const Component = (): JSX.Element => {
           </code>
         </li>
       </ul>
-
-      <ModalFlow />
     </section>
   );
 };
@@ -547,7 +563,7 @@ const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
-      forceChain: 'ethereum',
+      forceChain: 'celo',
       allowedNetworkNames: [
         'goerli',
         'ethereum',
@@ -561,7 +577,7 @@ const TemplateNewMasaState = (props: Args) => (
         'unknown',
       ],
       masaConfig: {
-        networkName: 'ethereum',
+        networkName: 'celo',
       },
     }}
   >

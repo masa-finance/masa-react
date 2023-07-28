@@ -36,6 +36,8 @@ const useWallet = () => {
     address,
   });
 
+  useEffect(() => console.log({ provider, signer }), [provider, signer]);
+
   useEffect(() => {
     if (isDisconnected) {
       setPreviousAddress(undefined); // skipcq: JS-W1042

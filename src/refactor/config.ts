@@ -18,6 +18,7 @@ export interface MasaReactConfig {
   allowedWallets?: Array<'metamask' | 'valora' | 'walletconnect'>;
   arweaveConfig?: ArweaveConfig;
   forceChain?: NetworkName;
+  soulNameStyle?: string;
   verbose?: boolean;
   wagmiConfig?: WagmiConfigProps;
   contractAddressOverrides?: {
@@ -46,7 +47,7 @@ export const defaultConfig: Partial<MasaReactConfig> = {
   ],
   allowedWallets: ['metamask', 'valora', 'walletconnect'],
   masaConfig: {
-    environment: 'local' as EnvironmentName,
+    environment: 'dev' as EnvironmentName,
     networkName: 'ethereum' as NetworkName,
     verbose: false,
     arweave: {

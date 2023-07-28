@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Rodal from 'rodal';
 import { useModal } from '@ebay/nice-modal-react';
 
-export const Modal = ({ children }) => {
+export const Modal = ({ children }: { children: ReactNode }) => {
   const modal = useModal();
   return (
     <Rodal

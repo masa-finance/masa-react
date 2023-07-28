@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { useModal } from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
 
 const BOT_DISCLAIMER_TIMEOUT_SECONDS = 5;

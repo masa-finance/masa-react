@@ -4,7 +4,7 @@ dist
 stories
 typedoc.js
 test
-src/refactor/ui/components/modals/
+# src/refactor/ui/components/modals/
 src/refactor/masanew.stories.tsx
 src/provider/modules/custom-sbts
 # !src/components/masa-interface/masa-interface/create-soulname/*

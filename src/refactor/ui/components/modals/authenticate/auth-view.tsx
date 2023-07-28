@@ -22,43 +22,53 @@ const AuthView = ({
   hasSession,
   isConnected,
   switchWallet,
-}: AuthViewProps): JSX.Element => {
-  return (
-    <section className="interface-authenticate">
-      <div>
-        <h3 className="title">Wallet connected!</h3>
-        <p className="connected-wallet">{message}</p>
+}: AuthViewProps): JSX.Element => (
+  <section className="interface-authenticate">
+    <div>
+      <h3 className="title">Wallet connected!</h3>
+      <p className="connected-wallet">{message}</p>
 
-        <p className="connected-wallet with-wallet">
-          You are connected with the following wallet
-          <span onClick={handleClipboard}>
-            {copied ? 'Copied!' : shortAddress}
-          </span>
+      <p className="connected-wallet with-wallet">
+        You are connected with the following wallet
+        <span
+          role="button"
+          tabIndex={0}
+          onClick={handleClipboard}
+          onKeyDown={() => {}}
+        >
+          {copied ? 'Copied!' : shortAddress}
+        </span>
+      </p>
+    </div>
+    <div>
+      <button
+        type="button"
+        className="masa-button authenticate-button"
+        onClick={loginSessionAsync}
+      >
+        {isLoadingSigner ? 'loading...' : 'Get Started'}
+      </button>
+
+      <div className="dont-have-a-wallet">
+        <p>
+          Want to use a different wallet?
+          {!hasSession && isConnected && (
+            <span className="connected-wallet">
+              <span
+                role="button"
+                tabIndex={0}
+                className="authenticate-button"
+                onClick={switchWallet}
+                onKeyDown={() => {}}
+              >
+                Switch Wallet
+              </span>
+            </span>
+          )}
         </p>
       </div>
-      <div>
-        <button
-          className="masa-button authenticate-button"
-          onClick={loginSessionAsync}
-        >
-          {isLoadingSigner ? 'loading...' : 'Get Started'}
-        </button>
-
-        <div className="dont-have-a-wallet">
-          <p>
-            Want to use a different wallet?
-            {!hasSession && isConnected && (
-              <span className="connected-wallet">
-                <span className="authenticate-button" onClick={switchWallet}>
-                  Switch Wallet
-                </span>
-              </span>
-            )}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default AuthView;

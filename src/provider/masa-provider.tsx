@@ -17,6 +17,7 @@ export const MasaProvider = ({
   walletsToUse,
   rainbowKitModalSize,
   contractAddressOverrides,
+  soulNameStyle,
   ...args
 }: MasaContextProviderProps & {
   chainsToUse?: Array<keyof MasaNetworks>;
@@ -55,8 +56,9 @@ export const MasaProvider = ({
               'unknown',
             ],
             contractAddressOverrides,
+            soulNameStyle,
             masaConfig: {
-              networkName: 'ethereum',
+              // networkName: 'ethereum',
               environment: environmentName ?? 'dev',
               // arweave: arweaveConfig,
               // environment: environmentName,

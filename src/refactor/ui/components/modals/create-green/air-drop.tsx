@@ -20,7 +20,11 @@ export const AirDropModal = () => {
         </div>
 
         <div className="">
-          <button className="masa-button" onClick={() => modal.resolve()}>
+          <button
+            type="button"
+            className="masa-button"
+            onClick={() => modal.resolve()}
+          >
             Get verified to start referrals
           </button>
         </div>
