@@ -231,7 +231,7 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
 
       if (result) {
         if (result.code) {
-          throw {code: result.code, message: result}
+          throw { code: result.code, message: result };
         } else if (setForcedPage) {
           reloadSoulnames?.();
           setForcedPage('successIdentityCreate');
