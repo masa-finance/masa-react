@@ -94,6 +94,7 @@
   .title {
     font-family: Ezra;
     font-size: 30px;
+    word-wrap: break-word;
   }
 
   .masa-spinner {
@@ -1067,6 +1068,7 @@
 /* -- mask -- */
 .rodal-mask {
   position: absolute;
+  pointer-events: none;
   background: rgba(0, 0, 0, 0.3);
 }
 
@@ -1530,4 +1532,6 @@
   text-align: center;
   font-style: italic;
   font-size: 12px;
+  padding: 1em 0;
+  margin: 0;
 }
