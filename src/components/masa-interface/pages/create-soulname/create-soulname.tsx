@@ -229,11 +229,15 @@ export const InterfaceCreateSoulname = (): JSX.Element => {
         );
       }
 
-      if (result && setForcedPage) {
-        reloadSoulnames?.();
-        setForcedPage('successIdentityCreate');
-      } else {
-        closeModal?.(true);
+      if (result) {
+        if (result.code) {
+          throw { code: result.code, message: result };
+        } else if (setForcedPage) {
+          reloadSoulnames?.();
+          setForcedPage('successIdentityCreate');
+        } else {
+          closeModal?.(true);
+        }
       }
     } catch (error_: unknown) {
       if (error_) {
