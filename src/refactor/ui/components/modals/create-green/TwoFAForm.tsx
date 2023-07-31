@@ -32,8 +32,9 @@ export const TwoFAForm = () => {
   };
 
   return (
-    <section className="code-input input invalid">
+    <section>
       <ReactCodeInput
+        className="code-input-interface code-input input invalid"
         ref={codeRef}
         name="green"
         value={code}
