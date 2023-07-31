@@ -7,9 +7,7 @@ export const TwoFAModal = () => {
       <div>
         <h2>Enter 2FA 6-digit code</h2>
       </div>
-      <div className="code-input">
-        <TwoFAForm />
-      </div>
+      <TwoFAForm />
     </section>
   );
 };

@@ -32,7 +32,7 @@ export const TwoFAForm = () => {
   };
 
   return (
-    <>
+    <section className="code-input input invalid">
       <ReactCodeInput
         ref={codeRef}
         name="green"
@@ -54,6 +54,6 @@ export const TwoFAForm = () => {
           )}
         </p>
       </div>
-    </>
+    </section>
   );
 };

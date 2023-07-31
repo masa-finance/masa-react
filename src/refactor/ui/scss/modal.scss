@@ -310,6 +310,7 @@
     h2 {
       font-size: 30px;
       font-family: ezra;
+      text-align: center;
     }
 
     p {
@@ -388,6 +389,20 @@
         padding-right: 4px;
         &:focus {
           outline: none;
+        }
+        borderradius: 4px;
+        border: 1px solid;
+        paddingleft: 22px;
+        margin: 6px;
+        width: 60px;
+        height: 60px;
+        fontsize: 22px;
+        color: black;
+        backgroundcolor: white;
+        bordercolor: lightgrey;
+        invalid: {
+          backgroundcolor: white;
+          bordercolor: red;
         }
       }
     }
