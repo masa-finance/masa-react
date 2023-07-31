@@ -580,13 +580,11 @@ const TemplateNewMasaState = (props: Args) => (
         'unknown',
       ],
       masaConfig: {
-        networkName: 'goerli',
+        networkName: 'alfajores',
       },
     }}
   >
-    <NiceModal.Provider>
-      <Component {...props} />
-    </NiceModal.Provider>
+    <Component {...props} />
   </MasaProvider>
 );
 

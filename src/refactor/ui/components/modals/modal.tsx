@@ -18,10 +18,10 @@ export const Modal = ({
 
   return (
     <Rodal
-      closeOnEsc
       className="masa-rodal-container"
       visible={modal.visible}
       onClose={handleClose}
+      closeOnEsc
       width={550}
       height={615}
     >
