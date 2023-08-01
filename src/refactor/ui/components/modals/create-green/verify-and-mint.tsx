@@ -13,7 +13,9 @@ export const VerifyMintModal = () => {
         Now mint your Masa Green SBT
       </h2>
 
-      <MasaLoading />
+      <div>
+        <MasaLoading />
+      </div>
 
       <div className="w-full flex justify-center mt-12">
         <p className="w-3/5 leading-relaxed text-lightBlack text-center">

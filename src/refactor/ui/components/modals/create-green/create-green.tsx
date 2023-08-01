@@ -10,6 +10,10 @@ interface CreateGreenModalProps {
 
 export const CreateGreenModal = NiceModal.create(
   ({ step }: { step: CreateGreenModalProps }) => {
-    return <Modal>{step.component()}</Modal>;
+    return (
+      <Modal width={800} height={400}>
+        {step.component()}
+      </Modal>
+    );
   }
 );
