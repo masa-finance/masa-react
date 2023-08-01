@@ -13,12 +13,12 @@ export const useGreenModal = () => {
 
   const showChainingModal = async () => {
     const steps = [
-      { name: 'AirDrop', component: AirDropModal },
-      { name: 'NotABotModal', component: NotABotModal },
-      { name: 'PhoneNumberModal', component: PhoneNumberModal },
-      { name: 'TwoFAModal', component: TwoFAModal },
-      { name: 'VerifyMint', component: VerifyMintModal },
-      { name: 'SuccessModal', component: SuccessModal },
+      { name: 'AirDrop', Component: AirDropModal },
+      { name: 'NotABotModal', Component: NotABotModal },
+      { name: 'PhoneNumberModal', Component: PhoneNumberModal },
+      { name: 'TwoFAModal', Component: TwoFAModal },
+      { name: 'VerifyMint', Component: VerifyMintModal },
+      { name: 'SuccessModal', Component: SuccessModal },
     ];
 
     for (const step of steps) {

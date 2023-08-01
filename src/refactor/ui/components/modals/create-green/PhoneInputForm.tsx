@@ -1,45 +1,52 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import { useModal } from '@ebay/nice-modal-react';
+import { useGreenGenerate } from '../../../../masa/use-green-create';
 
-export const PhoneInputForm = () => {
+export const PhoneInputForm = ({ context }: any) => {
   const modal = useModal();
+  const { handleGenerateGreen } = useGreenGenerate();
 
   const [isPhoneValid, setIsPhoneValid] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  /* const setContextPhoneNumber = useMemo(
-   *   () => context.setPhoneNumber,
-   *   [context]
-   * );
-   */
-  /* useEffect(() => {
-   *   if (isPhoneValid) {
-   *     setContextPhoneNumber(phoneNumber);
-   *   }
-   * }, [isPhoneValid, phoneNumber, setContextPhoneNumber]);
-   */
+  const setContextPhoneNumber = useMemo(
+    () => context.setPhoneNumber,
+    [context]
+  );
+
+  useEffect(() => {
+    if (isPhoneValid) {
+      setContextPhoneNumber(phoneNumber);
+    }
+  }, [isPhoneValid, phoneNumber, setContextPhoneNumber]);
+
   const getCode = async () => {
-    modal.resolve();
     /* const result = await handleGenerateGreen?.(phoneNumber); */
-    /* if (result) {
-       *   if (result.status === 'pending') {
-       *     next();
-       *   }
 
-       *   if (result.status === '429') {
-       *     setErrorMsg(
-       *       'Too many requests. Please wait 24hrs before trying again.'
-       *     );
-       *   }
+    const result = {
+      status: 'pending',
+      message: 'success',
+    };
 
-       *   if (result.status === 'failed') {
-       *     setErrorMsg(result?.message ?? '');
-       *   }
-       * } else {
-       *   setIndex('error');
-       * } */
+    if (result) {
+      if (result.status === 'pending') {
+        modal.resolve();
+      }
+
+      if (result.status === '429') {
+        setErrorMsg(
+          'Too many requests. Please wait 24hrs before trying again.'
+        );
+      }
+
+      if (result.status === 'failed') {
+        setErrorMsg(result?.message ?? '');
+      }
+    } else {
+      modal.reject(new Error('Rejected'));
+    }
   };
 
   return (
@@ -57,7 +64,11 @@ export const PhoneInputForm = () => {
           }}
         />
       </div>
-      <button className="masa-button" onClick={() => getCode()}>
+      <button
+        className="masa-button"
+        onClick={() => getCode()}
+        disabled={!isPhoneValid}
+      >
         Mint Masa Green SBT
       </button>
       {errorMsg && <p className="text-center text-red">{errorMsg}</p>}
