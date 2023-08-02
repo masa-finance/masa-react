@@ -1,7 +1,7 @@
 import React from 'react';
 import { PhoneInputForm } from './PhoneInputForm';
 
-export const PhoneNumberModal = (context: any) => {
+export const PhoneNumberModal = () => {
   return (
     <section className="phone-input-interface">
       <div>
@@ -17,7 +17,7 @@ export const PhoneNumberModal = (context: any) => {
           verification attempts.
         </p>
 
-        <PhoneInputForm context={context} />
+        <PhoneInputForm />
       </div>
     </section>
   );

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import NiceModal from '@ebay/nice-modal-react';
 import { Modal } from '../modal';
+import { CreateGreenProvider } from './CreateGreenProvider';
 
 interface CreateGreenModalProps {
   name: string;
@@ -10,17 +11,12 @@ interface CreateGreenModalProps {
 
 export const CreateGreenModal = NiceModal.create(
   ({ step }: { step: CreateGreenModalProps }) => {
-    const [phoneNumber, setPhoneNumber] = useState<string | undefined>();
-
-    const context = {
-      phoneNumber,
-      setPhoneNumber,
-    };
-
     return (
-      <Modal width={800} height={450}>
-        <step.Component context={context} />
-      </Modal>
+      <CreateGreenProvider>
+        <Modal width={800} height={450}>
+          <step.Component />
+        </Modal>
+      </CreateGreenProvider>
     );
   }
 );

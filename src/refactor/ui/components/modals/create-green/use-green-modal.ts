@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useModal } from '@ebay/nice-modal-react';
 import { CreateGreenModal } from './create-green';
 
@@ -9,6 +10,10 @@ import { VerifyMintModal } from './verify-and-mint';
 import { SuccessModal } from './success-modal';
 
 export const useGreenModal = () => {
+  const [contextPhoneNumber, setContextPhoneNumber] = useState<
+    string | undefined
+  >();
+
   const chainingModal = useModal(CreateGreenModal);
 
   const showChainingModal = async () => {
@@ -27,5 +32,5 @@ export const useGreenModal = () => {
     await chainingModal.hide();
   };
 
-  return { showChainingModal };
+  return { contextPhoneNumber, setContextPhoneNumber, showChainingModal };
 };

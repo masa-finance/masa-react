@@ -1,26 +1,23 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import { useModal } from '@ebay/nice-modal-react';
 import { useGreenGenerate } from '../../../../masa/use-green-create';
+import { useCreateGreenModal } from './CreateGreenProvider';
 
-export const PhoneInputForm = ({ context }: any) => {
+export const PhoneInputForm = () => {
   const modal = useModal();
   const { handleGenerateGreen } = useGreenGenerate();
+  const { setPhoneNumberContext } = useCreateGreenModal();
 
   const [isPhoneValid, setIsPhoneValid] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const setContextPhoneNumber = useMemo(
-    () => context.setPhoneNumber,
-    [context]
-  );
-
   useEffect(() => {
     if (isPhoneValid) {
-      setContextPhoneNumber(phoneNumber);
+      setPhoneNumberContext(phoneNumber);
     }
-  }, [isPhoneValid, phoneNumber, setContextPhoneNumber]);
+  }, [isPhoneValid, phoneNumber, setPhoneNumberContext]);
 
   const getCode = async () => {
     /* const result = await handleGenerateGreen?.(phoneNumber); */
