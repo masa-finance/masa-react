@@ -43,7 +43,7 @@ export const MasaBaseProvider = ({
         ...masaConfig,
         SupportedNetworks,
         updateConfig,
-      } as MasaReactConfigBaseProvider),
+      }) as MasaReactConfigBaseProvider,
     [masaConfig, updateConfig]
   );
 

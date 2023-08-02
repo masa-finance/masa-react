@@ -31,6 +31,7 @@ import CreateSoulnameModal, {
 } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { openAuthenticateModal } from './ui/components/modals/authenticate/authenticate';
+import { SupportedNetworks } from '@masa-finance/masa-sdk';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -546,6 +547,8 @@ const ModalFlow = () => {
 
 const Component = (): JSX.Element => {
   const config = useConfig();
+  const { masaConfig } = config;
+  // SupportedNetworks
   return (
     // skipcq: JS-0415
     <section>
@@ -564,8 +567,15 @@ const Component = (): JSX.Element => {
       <ul>
         <h3>Config</h3>
         <li>
+          <h4>Masa Config</h4>
           <code>
-            <pre>{JSON.stringify(config, null, 4)}</pre>
+            <pre>{JSON.stringify(masaConfig, null, 4)}</pre>
+          </code>
+        </li>
+        <li>
+          <h4>SupportedNetworks</h4>
+          <code>
+            <pre>{JSON.stringify(SupportedNetworks, null, 4)}</pre>
           </code>
         </li>
       </ul>
@@ -577,7 +587,7 @@ const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
-      forceChain: 'alfajores',
+      forceChain: 'goerli',
       allowedNetworkNames: [
         'goerli',
         'ethereum',
@@ -591,7 +601,7 @@ const TemplateNewMasaState = (props: Args) => (
         'unknown',
       ],
       masaConfig: {
-        networkName: 'alfajores',
+        networkName: 'goerli',
       },
     }}
   >

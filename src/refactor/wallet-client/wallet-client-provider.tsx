@@ -77,12 +77,12 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     if (!forceChain) return;
     // * NOTE: comment the following 3 lines out to disable automatic network switching for forced network
     if (canProgramaticallySwitchNetwork) {
-      switchNetwork?.(chainIdsByNetwork[forceChain] as number);
+      // switchNetwork?.(chainIdsByNetwork[forceChain] as number);
     }
   }, [
     forceChain,
     canProgramaticallySwitchNetwork,
-    switchNetwork,
+    // switchNetwork,
     chainIdsByNetwork,
     chains,
   ]);
@@ -120,7 +120,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         isActiveChainUnsupported,
         availibleChains,
         pendingConnector,
-      } as WalletClientValue),
+      }) as WalletClientValue,
     [
       // wallet
       address,
