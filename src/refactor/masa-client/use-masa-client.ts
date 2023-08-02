@@ -10,9 +10,9 @@ export const useMasaClient = () => {
   const { masaConfig, contractAddressOverrides } = useConfig();
   const { signer, isDisconnected, address } = useWallet();
 
-  const { activeChainId, currentNetwork, currentNetworkNew } = useNetwork();
+  const { activeChainId, currentNetwork } = useNetwork();
 
-  const networkName = getMasaNetworkName(currentNetworkNew?.chain?.name);
+  const networkName = getMasaNetworkName(currentNetwork?.networkName);
 
   const masa = useMasaSDK(
     {
