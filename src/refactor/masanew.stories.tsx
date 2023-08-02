@@ -26,9 +26,7 @@ import {
   CreateIdentityModal,
 } from './ui/components/modals';
 import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
-import CreateSoulnameModal, {
-  openCreateSoulnameModal,
-} from './ui/components/modals/create-soulname/CreateSoulnameModal';
+import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { openAuthenticateModal } from './ui/components/modals/authenticate/authenticate';
 import { SupportedNetworks } from '@masa-finance/masa-sdk';
@@ -159,6 +157,7 @@ const WalletInfo = () => {
     openChainModal,
     openAccountModal,
     disconnect,
+    shortAddress,
     // disconnectAsync,
     isLoadingSigner,
     isLoadingBalance,
@@ -173,6 +172,7 @@ const WalletInfo = () => {
           <h3>Wallet</h3>
           <li>address: {String(address)}</li>
           <li>previousAddress: {String(previousAddress)}</li>
+          <li>shortAddress: {String(shortAddress)}</li>
           <li>activeConnector: {String(connector?.name)}</li>
           <li>isConnected: {String(isConnected)}</li>
           <li>isConnecting: {String(isConnecting)}</li>
@@ -503,12 +503,12 @@ const ModalFlow = () => {
           disabled={!!hasSession}
           onClick={() =>
             openAuthenticateModal({
-              onAuthenticate: () => console.log('AUTHENTICATE SUCCESS'),
-              onClose: () => console.log('AUTHENTICATE CLOSED'),
-              onError: () => console.log('AUTHENTICATE ERROR'),
-              closeOnSuccess: false,
+              onAuthenticateSuccess: () => console.log('AUTHENTICATE SUCCESS'),
+              // onClose: () => console.log('AUTHENTICATE CLOSED'),
+              onAuthenticateError: () => console.log('AUTHENTICATE ERROR'),
+              // closeOnSuccess: false,
               // TODO: Didn't know how to handle this type, lets fix is later
-              next: CreateSoulnameModal as any,
+              // next: CreateSoulnameModal as any,
             })
           }
         >

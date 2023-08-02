@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import type { NiceModalHandler } from '@ebay/nice-modal-react';
 import { Spinner } from '../../spinner';
+import { Modal } from '../modal';
 
 interface ConnectedViewProps {
   titleText: string;
@@ -29,12 +30,14 @@ const ConnectedView = ({
   }, [isLoadingSession, modal]);
 
   return (
-    <section className="interface-connected">
-      <section>
-        <h3 className="title">{titleText}</h3>
-        <Spinner />
+    <Modal>
+      <section className="interface-connected">
+        <section>
+          <h3 className="title">{titleText}</h3>
+          <Spinner />
+        </section>
       </section>
-    </section>
+    </Modal>
   );
 };
 

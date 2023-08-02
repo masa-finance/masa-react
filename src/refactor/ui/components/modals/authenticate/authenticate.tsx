@@ -1,217 +1,180 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import { Spinner } from '../../spinner';
+// import { useAsync } from 'react-use';
 import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
 import { useSession } from '../../../../masa/use-session';
-import { useConfig } from '../../../../base-provider';
 
 import { Modal } from '../modal';
-import AuthView from './auth-view';
 import ConnectedView from './connected-view';
+import { useAuthenticateModal } from './use-authenticate-modal';
+import { ModalLoading } from '../ModalLoading';
 
 export interface AuthenticateProps {
-  onAuthenticate?: (payload: unknown) => void;
-  onClose?: () => void;
-  onError?: () => void;
-  next?: FC<unknown>;
-  closeOnSuccess?: boolean;
+  onAuthenticateSuccess?: () => void;
+  onAuthenticateError?: () => void;
+  // onClose?: () => void;
+  // next?: FC<unknown>;
+  // closeOnSuccess?: boolean;
 }
 
 export const Authenticate = ({
-  onAuthenticate,
-  onClose,
-  onError,
-  closeOnSuccess,
-  next,
+  onAuthenticateSuccess,
+  onAuthenticateError,
 }: AuthenticateProps): JSX.Element => {
   const modal = useModal();
 
   const {
     address,
-    hasAddress,
+    shortAddress,
     disconnect,
-    isConnected,
-    signer,
     openConnectModal,
     isLoadingSigner,
   } = useWallet();
 
-  const { isLoadingSession, hasSession, loginSessionAsync } = useSession();
-  const { company } = useConfig();
+  const { isLoadingSession } = useSession();
 
-  const needsWalletConnection = !hasSession && !isConnected && !hasAddress;
-  const showAuthenticateView =
-    isConnected && !hasSession && signer && hasAddress;
-  const showConnectedView = hasSession && hasAddress;
+  // const needsWalletConnection = !hasSession && !isConnected && !hasAddress;
+  // const showAuthenticateView =
+  //   isConnected && !hasSession && signer && hasAddress;
+  // const showConnectedView = hasSession && hasAddress;
 
   const [copied, setCopied] = useState(false);
 
-  const handleLoginSession = useCallback(async () => {
-    const result = await loginSessionAsync?.();
-
-    if (!result) {
-      return onError?.();
-    }
-
-    if (result && result.address) {
-      onAuthenticate?.(result);
-
-      if (closeOnSuccess) {
-        await modal.hide();
-        return onClose?.();
-      }
-
-      if (next) {
-        await modal.hide();
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        await NiceModal.show(next);
-      }
-    }
-    return result;
-  }, [
-    loginSessionAsync,
-    onError,
-    onAuthenticate,
-    closeOnSuccess,
-    next,
-    modal,
-    onClose,
-  ]);
-
-  const switchWallet = useCallback(() => {
+  const switchWallet = useCallback(async () => {
     disconnect?.();
-  }, [disconnect]);
-
-  const copy = useMemo(() => {
-    switch (company) {
-      case 'Masa': {
-        return {
-          titleText: 'Starting your soulbound journey',
-          message: `Your wallet is now connected. Start your soulbound journey by minting a Masa Soulbound Identity and claiming a unique Masa Soul Name.`,
-        };
-      }
-      case 'Celo': {
-        return {
-          titleText: 'Starting your soulbound journey',
-          message: `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`,
-        };
-      }
-      case 'Base': {
-        return {
-          titleText: 'Starting your soulbound journey',
-          mesage:
-            'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.',
-        };
-      }
-      case 'Base Universe': {
-        return {
-          titleText: 'Starting your soulbound journey',
-          message:
-            'Your wallet is now connected. Start your Base Universe journey by claiming a unique .bu domain name.',
-        };
-      }
-      default: {
-        return {
-          titleText: 'Starting your soulbound journey',
-          message: `Your wallet is now connected. Start your soulbound journey by minting a Masa Soulbound Identity and claiming a unique Masa Soul Name.`,
-        };
-      }
-    }
-  }, [company]);
-
-  const shortAddress = useMemo(() => {
-    if (!address) return '';
-
-    // eslint-disable-next-line unicorn/prefer-string-slice
-    return `${address?.slice(0, 2) ?? ''}...${address.substring(
-      address.length - 4,
-      address.length
-    )}`;
-  }, [address]);
+    await modal?.hide();
+    openConnectModal?.();
+  }, [modal, disconnect, openConnectModal]);
 
   const handleClipboard = useCallback(() => {
     if (address) {
-      void navigator.clipboard.writeText(address);
+      void navigator?.clipboard?.writeText?.(address);
       setCopied(true);
     }
   }, [address]);
 
-  useEffect(() => {
-    if (needsWalletConnection) {
-      modal.remove();
-      openConnectModal?.();
-    }
-  }, [
-    modal,
-    openConnectModal,
-    isConnected,
-    hasSession,
-    hasAddress,
-    modal.visible,
+  const {
+    isAuthenticating,
+    onAuthenticateStart,
+    successMessage,
     needsWalletConnection,
-  ]);
+    showAuthenticateView,
+    showConnectedView,
+    showSwitchWalletButton,
+  } = useAuthenticateModal({
+    onAuthenticateError,
+    onAuthenticateSuccess,
+  });
 
-  if (isLoadingSigner) {
-    return <Spinner />;
+  // useAsync(async () => {
+  //   if (needsWalletConnection) {
+  //     modal.remove();
+  //     openConnectModal?.();
+  //   }
+  // }, [modal, needsWalletConnection, openConnectModal]);
+
+  if (needsWalletConnection) {
+    return <>No Modal</>;
   }
 
-  return (
-    <Modal>
-      {showAuthenticateView && (
-        <AuthView
-          message={copy.message}
-          handleClipboard={handleClipboard}
-          copied={copied}
-          shortAddress={shortAddress}
-          loginSessionAsync={handleLoginSession}
-          isLoadingSigner={isLoadingSigner}
-          hasSession={hasSession}
-          isConnected={isConnected}
-          switchWallet={switchWallet}
-        />
-      )}
-      {showConnectedView && (
+  if (isLoadingSigner) {
+    return (
+      <Modal>
+        BRUDER
+        <ModalLoading titleText="Loading..." />
+      </Modal>
+    );
+  }
+
+  if (showConnectedView) {
+    return (
+      <Modal>
         <ConnectedView
-          titleText={copy.titleText}
+          titleText="Starting your soulbound journey"
           modal={modal}
           isLoadingSession={isLoadingSession}
         />
-      )}
-    </Modal>
-  );
+      </Modal>
+    );
+  }
+
+  if (showAuthenticateView) {
+    <Modal>
+      <article className="interface-authenticate">
+        <header>
+          <h3 className="title">
+            {isAuthenticating ? 'Signing you in ...' : 'Wallet connected!'}
+          </h3>
+          <p className="connected-wallet">{successMessage}</p>
+
+          <p className="connected-wallet with-wallet">
+            You are connected with the following wallet
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={handleClipboard}
+              onKeyDown={() => {}}
+            >
+              {copied ? 'Copied!' : shortAddress}
+            </span>
+          </p>
+        </header>
+        <section>
+          <button
+            type="button"
+            className="masa-button authenticate-button"
+            onClick={onAuthenticateStart}
+          >
+            {isLoadingSigner ? 'loading...' : 'Get Started'}
+          </button>
+
+          <div className="dont-have-a-wallet">
+            <p>
+              Want to use a different wallet?
+              {showSwitchWalletButton && (
+                <span className="connected-wallet">
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    className="authenticate-button"
+                    onClick={switchWallet}
+                    onKeyDown={() => {}}
+                  >
+                    Switch Wallet
+                  </span>
+                </span>
+              )}
+            </p>
+          </div>
+        </section>
+      </article>
+    </Modal>;
+  }
+
+  return <>ERROR</>;
 };
 
 export const AuthenticateModal = NiceModal.create(
   ({
-    onAuthenticate,
-    onClose,
-    onError,
-    closeOnSuccess,
-    next,
+    onAuthenticateSuccess,
+    // onClose,
+    onAuthenticateError,
   }: AuthenticateProps) => (
     <Authenticate
-      onAuthenticate={onAuthenticate}
-      onClose={onClose}
-      onError={onError}
-      closeOnSuccess={closeOnSuccess}
-      next={next}
+      onAuthenticateSuccess={onAuthenticateSuccess}
+      onAuthenticateError={onAuthenticateError}
+      // onClose={onClose}
     />
   )
 );
 
 export const openAuthenticateModal = ({
-  onAuthenticate,
-  onClose,
-  onError,
-  closeOnSuccess,
-  next,
+  onAuthenticateSuccess,
+  onAuthenticateError,
 }: AuthenticateProps) =>
   NiceModal.show(AuthenticateModal, {
-    onAuthenticate,
-    onClose,
-    onError,
-    closeOnSuccess,
-    next,
+    onAuthenticateSuccess,
+    onAuthenticateError,
   });
 
 export default AuthenticateModal;

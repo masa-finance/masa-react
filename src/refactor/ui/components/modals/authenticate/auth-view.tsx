@@ -4,7 +4,7 @@ interface AuthViewProps {
   message: string | undefined;
   handleClipboard: () => void;
   copied: boolean;
-  shortAddress: string;
+  shortAddress?: string;
   loginSessionAsync: () => void;
   isLoadingSigner?: boolean;
   hasSession: boolean | undefined | null;
@@ -23,8 +23,8 @@ const AuthView = ({
   isConnected,
   switchWallet,
 }: AuthViewProps): JSX.Element => (
-  <section className="interface-authenticate">
-    <div>
+  <article className="interface-authenticate">
+    <header>
       <h3 className="title">Wallet connected!</h3>
       <p className="connected-wallet">{message}</p>
 
@@ -39,8 +39,8 @@ const AuthView = ({
           {copied ? 'Copied!' : shortAddress}
         </span>
       </p>
-    </div>
-    <div>
+    </header>
+    <section>
       <button
         type="button"
         className="masa-button authenticate-button"
@@ -67,8 +67,8 @@ const AuthView = ({
           )}
         </p>
       </div>
-    </div>
-  </section>
+    </section>
+  </article>
 );
 
 export default AuthView;
