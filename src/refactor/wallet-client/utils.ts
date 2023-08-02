@@ -87,6 +87,7 @@ export const getRainbowkitChains = (networkList?: NetworkName[]) => {
   //   const nw = SupportedNetworks[supportedNetworkKey];
   //   console.log('BRUDER', nw);
   // }
+
   const masaNetworks = Object.keys(SupportedNetworks)
     .filter((x: string) => x !== 'unknown') // remove unused network
     .reduce(
