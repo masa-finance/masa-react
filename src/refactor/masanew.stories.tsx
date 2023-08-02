@@ -26,7 +26,9 @@ import {
   CreateIdentityModal,
 } from './ui/components/modals';
 import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
-import CreateSoulnameModal, { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
+import CreateSoulnameModal, {
+  openCreateSoulnameModal,
+} from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { openAuthenticateModal } from './ui/components/modals/authenticate/authenticate';
 
@@ -505,7 +507,7 @@ const ModalFlow = () => {
               onError: () => console.log('AUTHENTICATE ERROR'),
               closeOnSuccess: false,
               // TODO: Didn't know how to handle this type, lets fix is later
-              next: CreateSoulnameModal as any
+              next: CreateSoulnameModal as any,
             })
           }
         >
