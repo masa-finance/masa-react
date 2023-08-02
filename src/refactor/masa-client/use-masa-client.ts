@@ -4,15 +4,15 @@ import { useConfig } from '../base-provider';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaSDK } from './use-masa-sdk';
 import { useNetwork } from '../wallet-client/network';
+import { getMasaNetworkName } from '../wallet-client/utils';
 
 export const useMasaClient = () => {
   const { masaConfig, contractAddressOverrides } = useConfig();
   const { signer, isDisconnected, address } = useWallet();
 
-  const { activeChainId, currentNetwork, activeNetwork } = useNetwork();
+  const { activeChainId, currentNetwork } = useNetwork();
 
-  const networkName =
-    activeNetwork === 'homestead' ? 'ethereum' : currentNetwork?.networkName;
+  const networkName = getMasaNetworkName(currentNetwork?.networkName);
 
   const masa = useMasaSDK(
     {
@@ -61,9 +61,10 @@ export const useMasaClient = () => {
 
     const network = await masa.config.signer?.provider?.getNetwork();
 
-    return network?.name === 'unknown'
-      ? currentNetwork?.networkName
-      : network?.name;
+    if (network?.name === 'unknown') {
+      return getMasaNetworkName(currentNetwork?.networkName);
+    }
+    return getMasaNetworkName(network?.name);
   }, [masa, currentNetwork, activeChainId, masaChainId]);
 
   const masaClient = useMemo(() => {
