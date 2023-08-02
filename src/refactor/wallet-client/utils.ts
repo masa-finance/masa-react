@@ -139,6 +139,20 @@ export const getWagmiNetworkName = (masaNetworkName?: NetworkName) => {
   return masaNetworkName;
 };
 
+export const getMasaNetworkName = (
+  wagmiNetworkName:
+    | NetworkName
+    | 'homestead'
+    | 'celo-alfajores'
+    | undefined
+    | string
+) => {
+  if (wagmiNetworkName === 'homestead') return 'ethereum';
+  if (wagmiNetworkName === 'celo-alfajores') return 'alfajores';
+
+  return wagmiNetworkName;
+};
+
 export const getChainsSortedByForcedNetwork = (
   chains: Chain[],
   forceChain?: NetworkName

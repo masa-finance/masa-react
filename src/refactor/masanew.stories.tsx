@@ -566,7 +566,7 @@ const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
-      forceChain: 'alfajores',
+      forceChain: 'ethereum',
       allowedNetworkNames: [
         'goerli',
         'ethereum',
@@ -580,7 +580,7 @@ const TemplateNewMasaState = (props: Args) => (
         'unknown',
       ],
       masaConfig: {
-        networkName: 'alfajores',
+        networkName: 'ethereum',
       },
     }}
   >
