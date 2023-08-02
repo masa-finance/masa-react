@@ -81,6 +81,12 @@ export const getRainbowkitChains = (networkList?: NetworkName[]) => {
       masaNetworksNew.homestead = SupportedNetworks.ethereum as Network;
     }
   }
+
+  // const supportedNetworkKeys = Object.keys(SupportedNetworks);
+  // for (const supportedNetworkKey of supportedNetworkKeys) {
+  //   const nw = SupportedNetworks[supportedNetworkKey];
+  //   console.log('BRUDER', nw);
+  // }
   const masaNetworks = Object.keys(SupportedNetworks)
     .filter((x: string) => x !== 'unknown') // remove unused network
     .reduce(
@@ -88,7 +94,7 @@ export const getRainbowkitChains = (networkList?: NetworkName[]) => {
         acc[val] = SupportedNetworks[val] as Network;
         if (val === 'ethereum') {
           // NOTE: ethereum is called homestead in wagmi so we have to adjust our networks a bit
-          acc.homestead = SupportedNetworks.ethereum as Network;
+          acc.homestead = { ...(SupportedNetworks.ethereum as Network) };
           acc.homestead.networkName = 'homestead' as NetworkName;
         }
         return acc;
@@ -150,7 +156,7 @@ export const getMasaNetworkName = (
   if (wagmiNetworkName === 'homestead') return 'ethereum';
   if (wagmiNetworkName === 'celo-alfajores') return 'alfajores';
 
-  return wagmiNetworkName;
+  return wagmiNetworkName as NetworkName;
 };
 
 export const getChainsSortedByForcedNetwork = (

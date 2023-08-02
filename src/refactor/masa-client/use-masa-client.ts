@@ -10,10 +10,9 @@ export const useMasaClient = () => {
   const { masaConfig, contractAddressOverrides } = useConfig();
   const { signer, isDisconnected, address } = useWallet();
 
-  const { activeChainId, currentNetwork, activeNetwork } = useNetwork();
+  const { activeChainId, currentNetwork, currentNetworkNew } = useNetwork();
 
-  const networkName =
-    activeNetwork === 'homestead' ? 'ethereum' : currentNetwork?.networkName;
+  const networkName = getMasaNetworkName(currentNetworkNew?.chain?.name);
 
   const masa = useMasaSDK(
     {
@@ -64,9 +63,8 @@ export const useMasaClient = () => {
 
     if (network?.name === 'unknown') {
       return getMasaNetworkName(currentNetwork?.networkName);
-    } 
-      return getMasaNetworkName(network?.name);
-    
+    }
+    return getMasaNetworkName(network?.name);
   }, [masa, currentNetwork, activeChainId, masaChainId]);
 
   const masaClient = useMemo(() => {
