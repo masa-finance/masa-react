@@ -21,6 +21,7 @@ export const ModalSuccess = ({
   //   const { sdk: masa } = useMasaClient();
   const { company } = useConfig();
   const { soulnames } = useSoulNames();
+  
   //   const { masa, isLoading, setForcedPage, soulnames, company } = useMasa();
 
   //   useAsync(async () => {

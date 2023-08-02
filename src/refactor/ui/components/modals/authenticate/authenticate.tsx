@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { Spinner } from '../../spinner';
 import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
@@ -9,7 +9,21 @@ import { Modal } from '../modal';
 import AuthView from './auth-view';
 import ConnectedView from './connected-view';
 
-export const AuthenticateModal = NiceModal.create((): JSX.Element => {
+export interface AuthenticateProps {
+  onAuthenticate?: (payload: unknown) => void;
+  onClose?: () => void;
+  onError?: () => void;
+  next?: FC<unknown>;
+  closeOnSuccess?: boolean;
+}
+
+export const Authenticate = ({
+  onAuthenticate,
+  onClose,
+  onError,
+  closeOnSuccess,
+  next,
+}: AuthenticateProps): JSX.Element => {
   const modal = useModal();
 
   const {
@@ -31,6 +45,38 @@ export const AuthenticateModal = NiceModal.create((): JSX.Element => {
   const showConnectedView = hasSession && hasAddress;
 
   const [copied, setCopied] = useState(false);
+
+  const handleLoginSession = useCallback(async () => {
+    const result = await loginSessionAsync?.();
+
+    if (!result) {
+      return onError?.();
+    }
+
+    if (result && result.address) {
+      onAuthenticate?.(result);
+
+      if (closeOnSuccess) {
+        await modal.hide();
+        return onClose?.();
+      }
+
+      if (next) {
+        await modal.hide();
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        await NiceModal.show(next);
+      }
+    }
+    return result;
+  }, [
+    loginSessionAsync,
+    onError,
+    onAuthenticate,
+    closeOnSuccess,
+    next,
+    modal,
+    onClose,
+  ]);
 
   const switchWallet = useCallback(() => {
     disconnect?.();
@@ -102,7 +148,7 @@ export const AuthenticateModal = NiceModal.create((): JSX.Element => {
     hasSession,
     hasAddress,
     modal.visible,
-    needsWalletConnection
+    needsWalletConnection,
   ]);
 
   if (isLoadingSigner) {
@@ -117,7 +163,7 @@ export const AuthenticateModal = NiceModal.create((): JSX.Element => {
           handleClipboard={handleClipboard}
           copied={copied}
           shortAddress={shortAddress}
-          loginSessionAsync={loginSessionAsync}
+          loginSessionAsync={handleLoginSession}
           isLoadingSigner={isLoadingSigner}
           hasSession={hasSession}
           isConnected={isConnected}
@@ -133,4 +179,39 @@ export const AuthenticateModal = NiceModal.create((): JSX.Element => {
       )}
     </Modal>
   );
-});
+};
+
+export const AuthenticateModal = NiceModal.create(
+  ({
+    onAuthenticate,
+    onClose,
+    onError,
+    closeOnSuccess,
+    next,
+  }: AuthenticateProps) => (
+    <Authenticate
+      onAuthenticate={onAuthenticate}
+      onClose={onClose}
+      onError={onError}
+      closeOnSuccess={closeOnSuccess}
+      next={next}
+    />
+  )
+);
+
+export const openAuthenticateModal = ({
+  onAuthenticate,
+  onClose,
+  onError,
+  closeOnSuccess,
+  next,
+}: AuthenticateProps) =>
+  NiceModal.show(AuthenticateModal, {
+    onAuthenticate,
+    onClose,
+    onError,
+    closeOnSuccess,
+    next,
+  });
+
+export default AuthenticateModal;

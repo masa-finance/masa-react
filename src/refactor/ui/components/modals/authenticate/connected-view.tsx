@@ -15,6 +15,8 @@ const ConnectedView = ({
 }: ConnectedViewProps): JSX.Element => {
   useEffect(() => {
     let timeout: NodeJS.Timeout;
+    
+    // TODO: This wont be needed anymore
     if (modal.visible && !isLoadingSession) {
       timeout = setTimeout(() => {
         modal.hide().catch(() => {});
