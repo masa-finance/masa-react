@@ -47,8 +47,9 @@ export const useAuthenticate = ({
       onAuthenticateSuccess,
       onAuthenticateError,
       onAuthenticateFinish: async () => {
-        const identityRefetched = await reloadIdentity();
-        if (!identityRefetched) await openSoulnameModal();
+        const { data: identityRefetched } = await reloadIdentity();
+        if (!identityRefetched || !identityRefetched.identityId)
+          await openSoulnameModal();
       },
     });
     // await openSoulnameModal();
