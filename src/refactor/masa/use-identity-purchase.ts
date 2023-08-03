@@ -28,15 +28,27 @@ export const useIdentityPurchase = () => {
       registrationPeriod: number,
       style?: string
     ) => {
-      const result = await masa?.identity.createWithSoulName(
+      console.log('YOYOYOO', {
         paymentMethod,
         soulname,
         registrationPeriod,
-        style
-      );
-      await queryClient.invalidateQueries(['identity']);
-      await queryClient.invalidateQueries(['soulnames']);
-      return !!result?.success;
+        style,
+      });
+      try {
+        const result = await masa?.identity.createWithSoulName(
+          paymentMethod,
+          soulname,
+          registrationPeriod
+          // style
+        );
+
+        await queryClient.invalidateQueries(['identity']);
+        await queryClient.invalidateQueries(['soulnames']);
+        return !!result?.success;
+      } catch (error: unknown) {
+        console.log('ERROR IS IT =', { error });
+        return error as Error;
+      }
     },
     [queryClient, masa]
   );
