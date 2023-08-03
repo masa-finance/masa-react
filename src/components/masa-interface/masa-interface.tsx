@@ -14,6 +14,7 @@ import { Gallery } from './pages/gallery';
 import InterfaceMasaGreen from './pages/masa-green';
 import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity';
 import { InterfaceSwitchChain } from './pages/switch-chain';
+import { openCreateSoulnameModal } from '../../refactor';
 
 const pages = {
   connector: ({
@@ -203,7 +204,9 @@ export const MasaInterface = ({
       scope?.includes('soulname')
     ) {
       // setForcedPage?.('createSoulname');
-      return 'createSoulname';
+      // return 'createSoulname';
+      setModalOpen?.(false);
+      return openCreateSoulnameModal?.({})
     }
 
     if (
