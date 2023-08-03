@@ -246,9 +246,9 @@ const TemplateWithRainbowKit: Story = (props: Args) => {
         walletsToUse={['metamask', 'walletconnect', 'valora']}
         useRainbowKitWalletConnect
         rainbowKitModalSize={'wide'}
-        contractAddressOverrides={ {
-          SoulNameAddress: "0x9C78Bf97A6abf185C8878C13F1Fd5976C41dDCfa",
-          SoulStoreAddress: "0xFA2e8C51c2fa4BF544eb76eB294Df9a1CF581b01",
+        contractAddressOverrides={{
+          SoulNameAddress: '0x9C78Bf97A6abf185C8878C13F1Fd5976C41dDCfa',
+          SoulStoreAddress: '0xFA2e8C51c2fa4BF544eb76eB294Df9a1CF581b01',
         }}
         verbose={false}
       >
