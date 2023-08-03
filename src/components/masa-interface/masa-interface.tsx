@@ -203,10 +203,9 @@ export const MasaInterface = ({
       (!soulnames || (soulnames && soulnames.length === 0)) &&
       scope?.includes('soulname')
     ) {
-      // setForcedPage?.('createSoulname');
-      // return 'createSoulname';
       setModalOpen?.(false);
-      return openCreateSoulnameModal?.({})
+      openCreateSoulnameModal?.({});
+      return 'createSoulname';
     }
 
     if (
