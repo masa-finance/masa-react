@@ -34,14 +34,15 @@ export const useMasaClient = () => {
     ]
   );
 
-  const { value: masaAddress } = useAsync(async () => {
-    if (masa) {
-      const masaAddr = await masa.config.signer.getAddress();
-      return masaAddr as `0x${string}`;
-    }
+  const { value: masaAddress, loading: isLoadingMasaAddress } =
+    useAsync(async () => {
+      if (masa) {
+        const masaAddr = await masa.config.signer.getAddress();
+        return masaAddr as `0x${string}`;
+      }
 
-    return undefined;
-  }, [masa]);
+      return undefined;
+    }, [masa]);
 
   const { value: masaChainId } = useAsync(async () => {
     if (masa) {
@@ -55,17 +56,18 @@ export const useMasaClient = () => {
     return undefined;
   }, [masa, activeChainId]);
 
-  const { value: masaNetwork } = useAsync(async () => {
-    if (!masa) return undefined;
-    if (masaChainId !== activeChainId) return undefined;
+  const { value: masaNetwork, loading: isLoadingMasaNetwork } =
+    useAsync(async () => {
+      if (!masa) return undefined;
+      if (masaChainId !== activeChainId) return undefined;
 
-    const network = await masa.config.signer?.provider?.getNetwork();
+      const network = await masa.config.signer?.provider?.getNetwork();
 
-    if (network?.name === 'unknown') {
-      return getMasaNetworkName(currentNetwork?.networkName);
-    }
-    return getMasaNetworkName(network?.name);
-  }, [masa, currentNetwork, activeChainId, masaChainId]);
+      if (network?.name === 'unknown') {
+        return getMasaNetworkName(currentNetwork?.networkName);
+      }
+      return getMasaNetworkName(network?.name);
+    }, [masa, currentNetwork, activeChainId, masaChainId]);
 
   const masaClient = useMemo(() => {
     if (address !== masaAddress) {
@@ -82,8 +84,17 @@ export const useMasaClient = () => {
       masaChainId,
       sdk: masa,
       masa,
+      isLoadingMasa: isLoadingMasaAddress || isLoadingMasaNetwork,
     };
-  }, [masa, masaAddress, masaChainId, masaNetwork, address]);
+  }, [
+    masa,
+    masaAddress,
+    masaChainId,
+    masaNetwork,
+    address,
+    isLoadingMasaAddress,
+    isLoadingMasaNetwork,
+  ]);
 
   return masaClient;
 };

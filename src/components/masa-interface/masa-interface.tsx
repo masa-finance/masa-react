@@ -14,6 +14,7 @@ import { Gallery } from './pages/gallery';
 import InterfaceMasaGreen from './pages/masa-green';
 import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity';
 import { InterfaceSwitchChain } from './pages/switch-chain';
+import { openCreateSoulnameModal } from '../../refactor';
 
 const pages = {
   connector: ({
@@ -76,6 +77,7 @@ export const MasaInterface = ({
     verbose,
     openConnectModal,
     setRainbowkKitModalCallback,
+    modalCallback,
     // setForcedPage,
     // switchNetworkNew,
     useRainbowKit,
@@ -202,7 +204,13 @@ export const MasaInterface = ({
       (!soulnames || (soulnames && soulnames.length === 0)) &&
       scope?.includes('soulname')
     ) {
-      // setForcedPage?.('createSoulname');
+      setModalOpen?.(false);
+      openCreateSoulnameModal?.({
+        onSuccess: () => {
+          if (modalCallback) modalCallback();
+        },
+        closeOnSuccess: true,
+      });
       return 'createSoulname';
     }
 
@@ -254,6 +262,7 @@ export const MasaInterface = ({
     signer,
     isModalOpen,
     setModalOpen,
+    modalCallback,
     setRainbowkKitModalCallback,
     signer,
   ]);

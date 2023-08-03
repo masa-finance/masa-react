@@ -17,20 +17,12 @@ export const ModalSuccess = ({
   extension?: string;
 }) => {
   const modal = useModal();
-  //   const [extension, setExtension] = useState<string>();
-  //   const { sdk: masa } = useMasaClient();
   const { company } = useConfig();
   const { soulnames } = useSoulNames();
 
-  //   const { masa, isLoading, setForcedPage, soulnames, company } = useMasa();
-
-  //   useAsync(async () => {
-  //     setExtension(await masa?.contracts.instances.SoulNameContract.extension());
-  //   }, [masa]);
-
-  const handleComplete = useCallback(async () => {
+  const handleComplete = useCallback(() => {
     onFinish?.();
-    if (closeOnSuccess) await modal.hide();
+    if (closeOnSuccess) modal.remove();
   }, [onFinish, closeOnSuccess, modal]);
 
   const title = useMemo(() => {
@@ -124,13 +116,6 @@ export const ModalSuccess = ({
       }
     }
   }, [company]);
-
-  //   if (isLoadingSoulnames)
-  //     return (
-  //       <Modal>
-  //         <MasaLoading />;
-  //       </Modal>
-  //     );
 
   return (
     <Modal>

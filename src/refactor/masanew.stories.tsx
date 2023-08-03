@@ -26,12 +26,10 @@ import {
   CreateIdentityModal,
 } from './ui/components/modals';
 import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
-import CreateSoulnameModal, {
-  openCreateSoulnameModal,
-} from './ui/components/modals/create-soulname/CreateSoulnameModal';
+import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
-import { openAuthenticateModal } from './ui/components/modals/authenticate/authenticate';
 import { SupportedNetworks } from '@masa-finance/masa-sdk';
+import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -159,6 +157,7 @@ const WalletInfo = () => {
     openChainModal,
     openAccountModal,
     disconnect,
+    shortAddress,
     // disconnectAsync,
     isLoadingSigner,
     isLoadingBalance,
@@ -173,6 +172,7 @@ const WalletInfo = () => {
           <h3>Wallet</h3>
           <li>address: {String(address)}</li>
           <li>previousAddress: {String(previousAddress)}</li>
+          <li>shortAddress: {String(shortAddress)}</li>
           <li>activeConnector: {String(connector?.name)}</li>
           <li>isConnected: {String(isConnected)}</li>
           <li>isConnecting: {String(isConnecting)}</li>
@@ -479,11 +479,22 @@ const GreenInfo = () => {
 };
 
 const ModalFlow = () => {
-  const { isDisconnected } = useWallet();
-  const { hasSession } = useSession();
+  const { isDisconnected, disconnect } = useWallet();
+  const { hasSession, logoutSession } = useSession();
   const { showChainingModal } = useGreenModal();
 
-  // const _hook = useCreateSoulnameModal({});
+  const onLogout = useCallback(() => {
+    if (hasSession) logoutSession();
+    disconnect?.();
+  }, [logoutSession, hasSession, disconnect]);
+
+  const { openAuthModal } = useAuthenticate({
+    onAuthenticateSuccess: () => console.log('SUCCESS IN USEAUTH'),
+    onAuthenticateError: () => console.log('AUTHENTICATE ERROR'),
+    onRegisterFinish: () => console.log('FINISH FROM OUTSIDE ?????'),
+    onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
+    onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
+  });
 
   const onClickSoulname = useCallback(() => {
     openCreateSoulnameModal({
@@ -494,25 +505,18 @@ const ModalFlow = () => {
       closeOnSuccess: true,
     });
   }, []);
+
   return (
     <ul>
       <h3>Modal Flows</h3>
       <li>
-        <Button
-          type="button"
-          disabled={!!hasSession}
-          onClick={() =>
-            openAuthenticateModal({
-              onAuthenticate: () => console.log('AUTHENTICATE SUCCESS'),
-              onClose: () => console.log('AUTHENTICATE CLOSED'),
-              onError: () => console.log('AUTHENTICATE ERROR'),
-              closeOnSuccess: false,
-              // TODO: Didn't know how to handle this type, lets fix is later
-              next: CreateSoulnameModal as any,
-            })
-          }
-        >
+        <Button onClick={openAuthModal} type="button" disabled={!!hasSession}>
           {isDisconnected ? 'Connect' : 'Authenticate'}
+        </Button>
+      </li>
+      <li>
+        <Button type="button" disabled={isDisconnected} onClick={onLogout}>
+          Disconnect
         </Button>
       </li>
       <li>
