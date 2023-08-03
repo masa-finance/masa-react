@@ -1,6 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-// import { useAsync } from 'react-use';
 import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
 import { useSession } from '../../../../masa/use-session';
 
@@ -12,14 +11,13 @@ import { ModalLoading } from '../ModalLoading';
 export interface AuthenticateProps {
   onAuthenticateSuccess?: () => void;
   onAuthenticateError?: () => void;
-  // onClose?: () => void;
-  // next?: FC<unknown>;
-  // closeOnSuccess?: boolean;
+  onAuthenticateFinish?: () => void;
 }
 
 export const Authenticate = ({
   onAuthenticateSuccess,
   onAuthenticateError,
+  onAuthenticateFinish,
 }: AuthenticateProps): JSX.Element => {
   const modal = useModal();
 
@@ -32,12 +30,6 @@ export const Authenticate = ({
   } = useWallet();
 
   const { isLoadingSession } = useSession();
-
-  // const needsWalletConnection = !hasSession && !isConnected && !hasAddress;
-  // const showAuthenticateView =
-  //   isConnected && !hasSession && signer && hasAddress;
-  // const showConnectedView = hasSession && hasAddress;
-
   const [copied, setCopied] = useState(false);
 
   const switchWallet = useCallback(async () => {
@@ -66,103 +58,108 @@ export const Authenticate = ({
     onAuthenticateSuccess,
   });
 
-  // useAsync(async () => {
-  //   if (needsWalletConnection) {
-  //     modal.remove();
-  //     openConnectModal?.();
-  //   }
-  // }, [modal, needsWalletConnection, openConnectModal]);
+  useEffect(() => {
+    if (needsWalletConnection && modal.visible) {
+      openConnectModal?.();
+    }
+  }, [needsWalletConnection, modal, openConnectModal]);
 
   if (needsWalletConnection) {
-    return <>No Modal</>;
-  }
-
-  if (isLoadingSigner) {
     return (
       <Modal>
-        BRUDER
-        <ModalLoading titleText="Loading..." />
+        <ModalLoading titleText="Please connect your wallet" />
+      </Modal>
+    );
+  }
+
+  if (isAuthenticating) {
+    return (
+      <Modal>
+        <ModalLoading titleText="Signing you in..." />
       </Modal>
     );
   }
 
   if (showConnectedView) {
     return (
-      <Modal>
-        <ConnectedView
-          titleText="Starting your soulbound journey"
-          modal={modal}
-          isLoadingSession={isLoadingSession}
-        />
-      </Modal>
+      <ConnectedView
+        titleText="Starting your soulbound journey"
+        modal={modal}
+        loading={isLoadingSession}
+        closeTimeoutMS={3000}
+        onClose={onAuthenticateFinish}
+      />
     );
   }
 
   if (showAuthenticateView) {
-    <Modal>
-      <article className="interface-authenticate">
-        <header>
-          <h3 className="title">
-            {isAuthenticating ? 'Signing you in ...' : 'Wallet connected!'}
-          </h3>
-          <p className="connected-wallet">{successMessage}</p>
+    return (
+      <Modal>
+        <article className="interface-authenticate">
+          <header>
+            <h3 className="title">
+              {isAuthenticating ? 'Signing you in ...' : 'Wallet connected!'}
+            </h3>
+            <p className="connected-wallet">{successMessage}</p>
 
-          <p className="connected-wallet with-wallet">
-            You are connected with the following wallet
-            <span
-              role="button"
-              tabIndex={0}
-              onClick={handleClipboard}
-              onKeyDown={() => {}}
-            >
-              {copied ? 'Copied!' : shortAddress}
-            </span>
-          </p>
-        </header>
-        <section>
-          <button
-            type="button"
-            className="masa-button authenticate-button"
-            onClick={onAuthenticateStart}
-          >
-            {isLoadingSigner ? 'loading...' : 'Get Started'}
-          </button>
-
-          <div className="dont-have-a-wallet">
-            <p>
-              Want to use a different wallet?
-              {showSwitchWalletButton && (
-                <span className="connected-wallet">
-                  <span
-                    role="button"
-                    tabIndex={0}
-                    className="authenticate-button"
-                    onClick={switchWallet}
-                    onKeyDown={() => {}}
-                  >
-                    Switch Wallet
-                  </span>
-                </span>
-              )}
+            <p className="connected-wallet with-wallet">
+              You are connected with the following wallet
+              <span
+                role="button"
+                tabIndex={0}
+                onClick={handleClipboard}
+                onKeyDown={() => {}}
+              >
+                {copied ? 'Copied!' : shortAddress}
+              </span>
             </p>
-          </div>
-        </section>
-      </article>
-    </Modal>;
+          </header>
+          <section>
+            <button
+              type="button"
+              className="masa-button authenticate-button"
+              onClick={onAuthenticateStart}
+            >
+              {isLoadingSigner ? 'loading...' : 'Get Started'}
+            </button>
+
+            <div className="dont-have-a-wallet">
+              <p>
+                Want to use a different wallet?
+                {showSwitchWalletButton && (
+                  <span className="connected-wallet">
+                    <span
+                      role="button"
+                      tabIndex={0}
+                      className="authenticate-button"
+                      onClick={switchWallet}
+                      onKeyDown={() => {}}
+                    >
+                      Switch Wallet
+                    </span>
+                  </span>
+                )}
+              </p>
+            </div>
+          </section>
+        </article>
+      </Modal>
+    );
   }
 
-  return <>ERROR</>;
+  return <div />;
 };
 
 export const AuthenticateModal = NiceModal.create(
   ({
     onAuthenticateSuccess,
-    // onClose,
+    onAuthenticateFinish,
     onAuthenticateError,
   }: AuthenticateProps) => (
     <Authenticate
       onAuthenticateSuccess={onAuthenticateSuccess}
       onAuthenticateError={onAuthenticateError}
+      onAuthenticateFinish={onAuthenticateFinish}
       // onClose={onClose}
     />
   )
@@ -171,10 +168,15 @@ export const AuthenticateModal = NiceModal.create(
 export const openAuthenticateModal = ({
   onAuthenticateSuccess,
   onAuthenticateError,
+  onAuthenticateFinish,
 }: AuthenticateProps) =>
   NiceModal.show(AuthenticateModal, {
     onAuthenticateSuccess,
+    onAuthenticateFinish,
     onAuthenticateError,
   });
+
+export const hideAuthenticateModal = async () =>
+  NiceModal.hide(AuthenticateModal);
 
 export default AuthenticateModal;

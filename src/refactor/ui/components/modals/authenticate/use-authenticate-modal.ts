@@ -78,6 +78,7 @@ export const useAuthenticateModal = ({
         //     await NiceModal.show(next);
         //   }
       }
+
       return result;
     }, [
       loginSession,

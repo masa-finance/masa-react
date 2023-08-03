@@ -14,7 +14,7 @@ export const useMasaLoading = () => {
   const { isLoadingSoulnames } = useSoulNames();
   const { isLoadingCreditScores } = useCreditScores();
   const { isLoadingGreens } = useGreen();
-  const { sdk: masa } = useMasaClient();
+  const { isLoadingMasa } = useMasaClient();
 
   const isLoading = useMemo(
     () =>
@@ -25,14 +25,14 @@ export const useMasaLoading = () => {
       isLoadingGreens ||
       isLoadingSigner ||
       isConnecting ||
-      !masa,
+      isLoadingMasa,
     [
       isLoadingSession,
       isLoadingIdentity,
       isLoadingSoulnames,
       isLoadingCreditScores,
       isLoadingGreens,
-      masa,
+      isLoadingMasa,
       isLoadingSigner,
       isConnecting,
     ]

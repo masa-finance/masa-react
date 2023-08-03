@@ -6,28 +6,35 @@ import { Modal } from '../modal';
 interface ConnectedViewProps {
   titleText: string;
   modal: NiceModalHandler<Record<string, unknown>>;
-  isLoadingSession: boolean;
+  loading: boolean;
+  closeTimeoutMS?: number;
+  onClose?: () => void;
 }
 
 const ConnectedView = ({
   titleText,
   modal,
-  isLoadingSession,
-}: ConnectedViewProps): JSX.Element => {
+  loading,
+  closeTimeoutMS = 3000,
+  onClose,
+}: ConnectedViewProps) => {
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
-    // TODO: This wont be needed anymore
-    if (modal.visible && !isLoadingSession) {
+    if (modal.visible && !loading) {
       timeout = setTimeout(() => {
-        modal.hide().catch(() => {});
-      }, 3000);
+        console.log('OR HERE ?');
+        modal.remove();
+
+        console.log('AM I HERE', onClose);
+        onClose?.();
+      }, closeTimeoutMS);
     }
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [isLoadingSession, modal]);
+  }, [loading, modal, closeTimeoutMS, onClose]);
 
   return (
     <Modal>
