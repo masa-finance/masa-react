@@ -77,6 +77,7 @@ export const MasaInterface = ({
     verbose,
     openConnectModal,
     setRainbowkKitModalCallback,
+    modalCallback,
     // setForcedPage,
     // switchNetworkNew,
     useRainbowKit,
@@ -204,7 +205,12 @@ export const MasaInterface = ({
       scope?.includes('soulname')
     ) {
       setModalOpen?.(false);
-      openCreateSoulnameModal?.({});
+      openCreateSoulnameModal?.({
+        onSuccess: () => {
+          if(modalCallback) modalCallback();
+        },
+        closeOnSuccess: true
+      });
       return 'createSoulname';
     }
 
@@ -256,6 +262,7 @@ export const MasaInterface = ({
     signer,
     isModalOpen,
     setModalOpen,
+    modalCallback,
     setRainbowkKitModalCallback,
     signer,
   ]);

@@ -226,6 +226,7 @@ export const MasaContextProvider = ({
     isModalOpen,
     setModalOpen,
     setModalCallback,
+    modalCallback,
     closeModal,
     forcedPage,
     setForcedPage,
@@ -361,6 +362,7 @@ export const MasaContextProvider = ({
       useModalSize,
       openGallery,
       modalSize,
+      modalCallback,
 
       // wallet
       walletAddress: accountAddress,
@@ -484,6 +486,7 @@ export const MasaContextProvider = ({
     useModalSize,
     openGallery,
     modalSize,
+    modalCallback,
 
     // wallet
 
