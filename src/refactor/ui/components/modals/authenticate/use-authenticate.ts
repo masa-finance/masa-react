@@ -41,31 +41,33 @@ export const useAuthenticate = ({
     [onMintSuccess, onMintError, onRegisterFinish, onSuccess, onError]
   );
 
-  const [, openAuthModal] = useAsyncFn(async () => {
-    if (isDisconnected) {
-      openConnectModal?.();
-    }
+  const [{ loading: isAuthenticateModalOpen }, openAuthModal] =
+    useAsyncFn(async () => {
+      if (isDisconnected) {
+        openConnectModal?.();
+      }
 
-    await openAuthenticateModal({
+      await openAuthenticateModal({
+        onAuthenticateSuccess,
+        onAuthenticateError,
+        onAuthenticateFinish: async () => {
+          const { data: identityRefetched } = await reloadIdentity();
+          if (!identityRefetched || !identityRefetched.identityId)
+            await openSoulnameModal();
+        },
+      });
+      // await openSoulnameModal();
+    }, [
+      reloadIdentity,
+      openSoulnameModal,
+      isDisconnected,
+      openConnectModal,
       onAuthenticateSuccess,
       onAuthenticateError,
-      onAuthenticateFinish: async () => {
-        const { data: identityRefetched } = await reloadIdentity();
-        if (!identityRefetched || !identityRefetched.identityId)
-          await openSoulnameModal();
-      },
-    });
-    // await openSoulnameModal();
-  }, [
-    reloadIdentity,
-    openSoulnameModal,
-    isDisconnected,
-    openConnectModal,
-    onAuthenticateSuccess,
-    onAuthenticateError,
-  ]);
+    ]);
 
   return {
     openAuthModal,
+    isAuthenticateModalOpen,
   };
 };
