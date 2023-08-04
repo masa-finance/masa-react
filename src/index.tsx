@@ -7,6 +7,7 @@ if (typeof window !== 'undefined') {
 
 export {
   openCreateSoulnameModal,
+  openAuthenticateModal,
   MasaProvider as MasaRefactorProvider,
 } from './refactor';
 

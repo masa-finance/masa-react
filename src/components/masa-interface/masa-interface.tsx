@@ -53,8 +53,10 @@ const PageSwitcher = ({
 
 export const MasaInterface = ({
   disableMetamask,
+  hideLegacyModal,
 }: {
   disableMetamask?: boolean;
+  hideLegacyModal?: boolean;
 }): JSX.Element => {
   useMetamask({ disabled: disableMetamask });
   const { isConnected } = useAccount();
@@ -85,6 +87,8 @@ export const MasaInterface = ({
   } = useMasa();
 
   const page = useMemo(() => {
+    if (hideLegacyModal) return '';
+
     if (verbose) {
       console.log('INTERFACE', {
         hasWalletAddress,
@@ -207,9 +211,9 @@ export const MasaInterface = ({
       setModalOpen?.(false);
       openCreateSoulnameModal?.({
         onSuccess: () => {
-          if(modalCallback) modalCallback();
+          if (modalCallback) modalCallback();
         },
-        closeOnSuccess: true
+        closeOnSuccess: true,
       });
       return 'createSoulname';
     }
@@ -271,6 +275,8 @@ export const MasaInterface = ({
     () => ['createIdentity', 'successIdentityCreate'].includes(String(page)),
     [page]
   );
+
+  if (hideLegacyModal) return <div />;
 
   return (
     <ModalComponent

@@ -69,7 +69,12 @@ export const MasaProvider = ({
         >
           <MasaContextProvider {...args}>
             <div id="modal-mount" />
-            <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />
+            {!args.hideLegacyModal && (
+              <MasaInterface
+                hideLegacyModal={args.hideLegacyModal}
+                disableMetamask={args.useRainbowKitWalletConnect}
+              />
+            )}
             {children}
           </MasaContextProvider>
         </MasaRefactorProvider>

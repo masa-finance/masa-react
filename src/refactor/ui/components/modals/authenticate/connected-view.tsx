@@ -1,38 +1,47 @@
 import React, { useEffect } from 'react';
 import type { NiceModalHandler } from '@ebay/nice-modal-react';
 import { Spinner } from '../../spinner';
+import { Modal } from '../modal';
 
 interface ConnectedViewProps {
   titleText: string;
   modal: NiceModalHandler<Record<string, unknown>>;
-  isLoadingSession: boolean;
+  loading: boolean;
+  closeTimeoutMS?: number;
+  onClose?: () => void;
 }
 
 const ConnectedView = ({
   titleText,
   modal,
-  isLoadingSession,
-}: ConnectedViewProps): JSX.Element => {
+  loading,
+  closeTimeoutMS = 3000,
+  onClose,
+}: ConnectedViewProps) => {
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    if (modal.visible && !isLoadingSession) {
+
+    if (modal.visible && !loading) {
       timeout = setTimeout(() => {
-        modal.hide().catch(() => {});
-      }, 3000);
+        modal.remove();
+        onClose?.();
+      }, closeTimeoutMS);
     }
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [isLoadingSession, modal]);
+  }, [loading, modal, closeTimeoutMS, onClose]);
 
   return (
-    <section className="interface-connected">
-      <section>
-        <h3 className="title">{titleText}</h3>
-        <Spinner />
+    <Modal>
+      <section className="interface-connected">
+        <section>
+          <h3 className="title">{titleText}</h3>
+          <Spinner />
+        </section>
       </section>
-    </section>
+    </Modal>
   );
 };
 
