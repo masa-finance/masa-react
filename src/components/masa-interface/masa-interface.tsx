@@ -53,10 +53,10 @@ const PageSwitcher = ({
 
 export const MasaInterface = ({
   disableMetamask,
-  hideLegacyModals,
+  hideLegacyModal,
 }: {
   disableMetamask?: boolean;
-  hideLegacyModals?: boolean;
+  hideLegacyModal?: boolean;
 }): JSX.Element => {
   useMetamask({ disabled: disableMetamask });
   const { isConnected } = useAccount();
@@ -274,7 +274,7 @@ export const MasaInterface = ({
     [page]
   );
 
-  return hideLegacyModals ? (
+  return hideLegacyModal ? (
     <></>
   ) : (
     <ModalComponent
