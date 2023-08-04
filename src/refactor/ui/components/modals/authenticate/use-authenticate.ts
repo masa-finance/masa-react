@@ -12,6 +12,7 @@ export const useAuthenticate = ({
   onMintError,
   onRegisterFinish,
   onSuccess,
+  onError,
 }: {
   onAuthenticateSuccess?: () => void;
   onAuthenticateError?: () => void;
@@ -19,6 +20,7 @@ export const useAuthenticate = ({
   onMintError?: () => void;
   onRegisterFinish?: () => void;
   onSuccess?: () => void;
+  onError?: () => void;
 }) => {
   const { openConnectModal, isDisconnected } = useWallet();
   const { reloadIdentity } = useIdentity();
@@ -33,9 +35,10 @@ export const useAuthenticate = ({
         onMintError,
         onRegisterFinish,
         onSuccess,
+        onError,
         closeOnSuccess: true,
       }),
-    [onMintSuccess, onMintError, onRegisterFinish, onSuccess]
+    [onMintSuccess, onMintError, onRegisterFinish, onSuccess, onError]
   );
 
   const [, openAuthModal] = useAsyncFn(async () => {

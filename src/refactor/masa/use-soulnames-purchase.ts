@@ -8,7 +8,11 @@ export const useSoulNamesPurchase = () => {
   const queryClient = useMasaQueryClient();
 
   const [
-    { loading: isPurchasingSoulName, value: hasPurchasedSoulName },
+    {
+      loading: isPurchasingSoulName,
+      value: hasPurchasedSoulName,
+      error: errorPurchaseSoulName,
+    },
     purchaseSoulName,
   ] = useAsyncFn(
     async (
@@ -17,15 +21,20 @@ export const useSoulNamesPurchase = () => {
       paymentMethod: PaymentMethod,
       style?: string
     ) => {
-      const result = await masa?.soulName.create(
-        paymentMethod,
-        soulname,
-        registrationPeriod,
-        undefined,
-        style
-      );
-      await queryClient.invalidateQueries(['soulnames']);
-      return !!result?.success;
+      try {
+        const result = await masa?.soulName.create(
+          paymentMethod,
+          soulname,
+          registrationPeriod,
+          undefined,
+          style
+        );
+        await queryClient.invalidateQueries(['soulnames']);
+        return !!result?.success;
+      } catch (error: unknown) {
+        console.log('ERROR purchaseSoulName', { error });
+        return error as Error;
+      }
     },
     [masa, queryClient]
   );
@@ -34,5 +43,6 @@ export const useSoulNamesPurchase = () => {
     isPurchasingSoulName,
     hasPurchasedSoulName,
     purchaseSoulName,
+    errorPurchaseSoulName,
   };
 };

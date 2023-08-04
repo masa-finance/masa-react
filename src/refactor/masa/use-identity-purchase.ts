@@ -10,15 +10,21 @@ export const useIdentityPurchase = () => {
     { loading: isPurchasingIdentity, value: hasPurchasedIdentity },
     purchaseIdentity,
   ] = useAsyncFn(async () => {
-    const purchasedIdentity = await masa?.identity.create();
-    await queryClient.invalidateQueries(['identity']);
-    return purchasedIdentity?.success;
+    try {
+      const purchasedIdentity = await masa?.identity.create();
+      await queryClient.invalidateQueries(['identity']);
+      return purchasedIdentity?.success;
+    } catch (error: unknown) {
+      console.log('ERROR purchaseIdentity', error);
+      return error as Error;
+    }
   }, [queryClient, masa]);
 
   const [
     {
       value: hasPurchasedIdentityWithSoulName,
       loading: isPurchasingIdentityWithSoulName,
+      error: purchaseIdentityError,
     },
     purchaseIdentityWithSoulName,
   ] = useAsyncFn(
@@ -28,25 +34,19 @@ export const useIdentityPurchase = () => {
       registrationPeriod: number,
       style?: string
     ) => {
-      console.log('YOYOYOO', {
-        paymentMethod,
-        soulname,
-        registrationPeriod,
-        style,
-      });
       try {
         const result = await masa?.identity.createWithSoulName(
           paymentMethod,
           soulname,
-          registrationPeriod
-          // style
+          registrationPeriod,
+          style
         );
 
         await queryClient.invalidateQueries(['identity']);
         await queryClient.invalidateQueries(['soulnames']);
         return !!result?.success;
       } catch (error: unknown) {
-        console.log('ERROR IS IT =', { error });
+        console.log('ERROR purchaseIdentityWithSoulName', { error });
         return error as Error;
       }
     },
@@ -60,7 +60,7 @@ export const useIdentityPurchase = () => {
     purchaseIdentityWithSoulName,
     isPurchasingIdentityWithSoulName,
     hasPurchasedIdentityWithSoulName,
-
+    purchaseIdentityError,
     // * old version
     handlePurchaseIdentity: purchaseIdentity,
     handlePurchaseIdentityWithSoulname: purchaseIdentityWithSoulName,

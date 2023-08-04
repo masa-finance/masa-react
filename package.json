@@ -124,6 +124,7 @@
     "prettier": "^3.0.0",
     "process": "^0.11.10",
     "react-dom": "^18.2.0",
+    "react-json-view-lite": "^0.9.7",
     "rimraf": "^5.0.0",
     "sass": "^1.62.1",
     "sass-loader": "^13.3.2",

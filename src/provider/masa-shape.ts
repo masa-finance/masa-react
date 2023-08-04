@@ -50,7 +50,7 @@ export interface MasaShape {
   openGallery?: (callback?: () => void) => void;
   modalCallback?: (() => void) | null;
   hideLegacyModal?: boolean;
-  
+
   // wallet
   walletAddress?: string;
   isWalletLoading?: boolean;
@@ -64,13 +64,13 @@ export interface MasaShape {
     address?: string;
   };
   isIdentityLoading?: boolean;
-  handlePurchaseIdentity?: () => Promise<boolean | undefined>;
+  handlePurchaseIdentity?: () => Promise<boolean | undefined | Error>;
   handlePurchaseIdentityWithSoulname?: (
     paymentMethod: PaymentMethod,
     soulname: string,
     registrationPrice: number,
     style?: string
-  ) => Promise<boolean  | Error>;
+  ) => Promise<boolean | Error>;
   reloadIdentity?: () => void;
 
   // session
@@ -147,7 +147,7 @@ export interface MasaShape {
     registrationPeriod: number,
     paymentMethod: PaymentMethod,
     style?: string | undefined
-  ) => Promise<boolean>;
+  ) => Promise<boolean | Error>;
   isConnected?: boolean;
   isDisconnected?: boolean;
   // new-modal

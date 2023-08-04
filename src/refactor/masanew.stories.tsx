@@ -8,6 +8,8 @@ import { Button } from './ui';
 import './ui/styles.scss';
 import '../styles.scss';
 import { useConfig } from './base-provider';
+import { JsonView, darkStyles } from 'react-json-view-lite';
+import 'react-json-view-lite/dist/index.css';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
@@ -28,7 +30,6 @@ import {
 import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
-import { SupportedNetworks } from '@masa-finance/masa-sdk';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
 
 // * nextjs fix
@@ -551,7 +552,7 @@ const ModalFlow = () => {
 
 const Component = (): JSX.Element => {
   const config = useConfig();
-  const { masaConfig } = config;
+  const { sdk: masa } = useMasaClient();
   // SupportedNetworks
   return (
     // skipcq: JS-0415
@@ -568,19 +569,41 @@ const Component = (): JSX.Element => {
       <SoulnameCreditScoreInfo />
       <GreenInfo />
       <ModalFlow />
-      <ul>
-        <h3>Config</h3>
+      <h3>Config</h3>
+      <ul
+        style={{
+          flexDirection: 'row',
+        }}
+      >
         <li>
           <h4>Masa Config</h4>
-          <code>
-            <pre>{JSON.stringify(masaConfig, null, 4)}</pre>
-          </code>
+          <div
+            style={{
+              textAlign: 'left',
+              alignSelf: 'flex-start',
+            }}
+          >
+            <JsonView
+              data={config}
+              shouldInitiallyExpand={(number) => number <= 0 && true}
+              style={{ ...darkStyles, ...{ alignItems: 'flex-start' } }}
+            />
+          </div>
         </li>
         <li>
-          <h4>SupportedNetworks</h4>
-          <code>
-            <pre>{JSON.stringify(SupportedNetworks, null, 4)}</pre>
-          </code>
+          <h4>Masa SDK</h4>
+          <div
+            style={{
+              textAlign: 'left',
+              alignSelf: 'flex-start',
+            }}
+          >
+            <JsonView
+              data={masa ?? {}}
+              shouldInitiallyExpand={(number) => number <= 0 && true}
+              style={{ ...darkStyles, ...{ alignItems: 'flex-start' } }}
+            />
+          </div>
         </li>
       </ul>
     </section>
@@ -604,6 +627,10 @@ const TemplateNewMasaState = (props: Args) => (
         'basegoerli',
         'unknown',
       ],
+      contractAddressOverrides: {
+        SoulNameAddress: '0x9C78Bf97A6abf185C8878C13F1Fd5976C41dDCfa',
+        SoulStoreAddress: '0xFA2e8C51c2fa4BF544eb76eB294Df9a1CF581b01',
+      },
       masaConfig: {
         networkName: 'goerli',
       },
