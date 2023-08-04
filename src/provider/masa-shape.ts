@@ -49,7 +49,8 @@ export interface MasaShape {
   useModalSize?: (size: { width: number; height: number }) => void;
   openGallery?: (callback?: () => void) => void;
   modalCallback?: (() => void) | null;
-
+  hideLegacyModal?: boolean;
+  
   // wallet
   walletAddress?: string;
   isWalletLoading?: boolean;
