@@ -58,12 +58,10 @@ export const useRegisterSoulname = ({
           soulNameStyle
         );
 
-        console.log({ type: typeof result, isError: result instanceof Error });
-
         if (result instanceof Error) {
-          // onMintError?.();
           throw result;
         }
+
         if (result) {
           onMintSuccess?.();
         }
@@ -87,11 +85,13 @@ export const useRegisterSoulname = ({
         soulNameStyle
       );
 
+      if (result instanceof Error) {
+        throw result;
+      }
+
       if (result) {
         onMintSuccess?.();
       }
-
-      if (!result) onMintError?.();
 
       onRegisterFinish?.();
 
@@ -111,7 +111,7 @@ export const useRegisterSoulname = ({
       console.log('ERROR registerSoulname catch2', error);
       onMintError?.();
 
-      return error as Error;
+      throw error as Error;
       // return {
       //   title: '',
       //   subtitle,

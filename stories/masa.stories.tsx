@@ -245,7 +245,6 @@ const TemplateWithRainbowKit: Story = (props: Args) => {
         company="Masa"
         walletsToUse={['metamask', 'walletconnect', 'valora']}
         useRainbowKitWalletConnect
-        hideLegacyModal
         rainbowKitModalSize={'wide'}
         contractAddressOverrides={{
           SoulNameAddress: '0x9C78Bf97A6abf185C8878C13F1Fd5976C41dDCfa',

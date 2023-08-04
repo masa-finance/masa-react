@@ -76,6 +76,8 @@ export const useMasaSDK = (
         signer
       );
       contractOverrides.SoulNameContract.hasAddress = true;
+
+      console.log('END OF OVERRIDES', { contractOverrides });
     }
     if (verbose) {
       signer

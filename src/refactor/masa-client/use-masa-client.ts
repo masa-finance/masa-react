@@ -13,7 +13,7 @@ export const useMasaClient = () => {
   const { activeChainId, currentNetwork } = useNetwork();
 
   const networkName = getMasaNetworkName(currentNetwork?.networkName);
-
+  // console.log({ contractAddressOverrides });
   const masa = useMasaSDK(
     {
       address,

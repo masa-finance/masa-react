@@ -495,6 +495,7 @@ const ModalFlow = () => {
     onRegisterFinish: () => console.log('FINISH FROM OUTSIDE ?????'),
     onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
     onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
+    onError: () => console.log('CREATE SOULNAME ERROR'),
   });
 
   const onClickSoulname = useCallback(() => {
@@ -503,6 +504,7 @@ const ModalFlow = () => {
       onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
       onRegisterFinish: () => console.log('REGISTER SOULNAME FINISHED OUTSIDE'),
       onSuccess: () => console.log('EVERYTHING WAS SUCCESSFUL'),
+      onError: () => console.log('CREATE SOULNAME ERROR'),
       closeOnSuccess: true,
     });
   }, []);
