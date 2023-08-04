@@ -60,7 +60,7 @@ export const MasaInterface = ({
 }): JSX.Element => {
   useMetamask({ disabled: disableMetamask });
   const { isConnected } = useAccount();
-
+  console.log({ hideLegacyModal });
   const {
     isModalOpen,
     setModalOpen,
@@ -274,9 +274,8 @@ export const MasaInterface = ({
     [page]
   );
 
-  return hideLegacyModal ? (
-    <></>
-  ) : (
+  if (hideLegacyModal) return <div />;
+  return (
     <ModalComponent
       open={isModalOpen as boolean}
       close={(): void => closeModal?.()}

@@ -267,6 +267,7 @@ export const MasaContextProvider = ({
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
+      if (hideLegacyModal) return;
       if (verbose) {
         console.info({ forcedPage, useRainbowKitWalletConnect, options });
       }
@@ -306,6 +307,7 @@ export const MasaContextProvider = ({
       openConnectModal,
       verbose,
       useRainbowKitWalletConnect,
+      hideLegacyModal,
       // openAuthenticateModal,
       // openConnectedModal,
       // wagmiSigner,
