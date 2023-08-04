@@ -24,10 +24,7 @@ export const useAuthenticate = ({
 }) => {
   const { openConnectModal, isDisconnected } = useWallet();
   const { reloadIdentity } = useIdentity();
-  // const [, onFinishAuthenticate] = useAsyncFn(async () => {
-  //   console.log('ON FINISH AUTH START');
-  //   await
-  // }, [onMintSuccess, onMintError, onRegisterFinish, onSuccess]);
+
   const openSoulnameModal = useCallback(
     () =>
       openCreateSoulnameModal({
@@ -56,7 +53,6 @@ export const useAuthenticate = ({
             await openSoulnameModal();
         },
       });
-      // await openSoulnameModal();
     }, [
       reloadIdentity,
       openSoulnameModal,

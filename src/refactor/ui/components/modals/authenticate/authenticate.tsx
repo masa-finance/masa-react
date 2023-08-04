@@ -160,7 +160,6 @@ export const AuthenticateModal = NiceModal.create(
       onAuthenticateSuccess={onAuthenticateSuccess}
       onAuthenticateError={onAuthenticateError}
       onAuthenticateFinish={onAuthenticateFinish}
-      // onClose={onClose}
     />
   )
 );

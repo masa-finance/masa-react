@@ -483,7 +483,7 @@ const ModalFlow = () => {
   const { isDisconnected, disconnect } = useWallet();
   const { hasSession, logoutSession } = useSession();
   const { showChainingModal } = useGreenModal();
-
+  const { identity } = useIdentity();
   const onLogout = useCallback(() => {
     if (hasSession) logoutSession();
     disconnect?.();
@@ -513,7 +513,11 @@ const ModalFlow = () => {
     <ul>
       <h3>Modal Flows</h3>
       <li>
-        <Button onClick={openAuthModal} type="button" disabled={!!hasSession}>
+        <Button
+          onClick={openAuthModal}
+          type="button"
+          disabled={!!hasSession && !!identity?.identityId}
+        >
           {isDisconnected ? 'Connect' : 'Authenticate'}
         </Button>
       </li>

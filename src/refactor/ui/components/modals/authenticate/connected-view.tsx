@@ -23,10 +23,7 @@ const ConnectedView = ({
 
     if (modal.visible && !loading) {
       timeout = setTimeout(() => {
-        console.log('OR HERE ?');
         modal.remove();
-
-        console.log('AM I HERE', onClose);
         onClose?.();
       }, closeTimeoutMS);
     }

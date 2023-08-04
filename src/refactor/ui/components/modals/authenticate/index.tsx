@@ -1,2 +1,2 @@
-export { AuthenticateModal } from './authenticate';
+export { AuthenticateModal, openAuthenticateModal } from './authenticate';
 export { useAuthenticate } from './use-authenticate';

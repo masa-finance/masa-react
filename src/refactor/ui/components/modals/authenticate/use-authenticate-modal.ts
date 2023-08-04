@@ -66,30 +66,10 @@ export const useAuthenticateModal = ({
 
       if (result && result.address) {
         onAuthenticateSuccess?.();
-
-        //   if (closeOnSuccess) {
-        //     await modal.hide();
-        //     return onClose?.();
-        //   }
-
-        //   if (next) {
-        //     await modal.hide();
-
-        //     await NiceModal.show(next);
-        //   }
       }
 
       return result;
-    }, [
-      loginSession,
-      // onError,
-      onAuthenticateError,
-      onAuthenticateSuccess,
-      // closeOnSuccess,
-      // next,
-      // modal,
-      // onClose,
-    ]);
+    }, [loginSession, onAuthenticateError, onAuthenticateSuccess]);
 
   const showSwitchWalletButton = useMemo(
     () => !hasSession && isConnected,

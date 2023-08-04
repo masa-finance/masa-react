@@ -41,15 +41,7 @@ export const useRegisterSoulname = ({
     },
     onRegisterSoulname,
   ] = useAsyncFn(async () => {
-    // if (!registrationPrice) {
-    //   console.log('ERROR START registerSoulname', registrationPrice);
-
-    //   onMintError?.();
-    //   return undefined;
-    // }
-    console.log('hey1');
     try {
-      console.log('hey2');
       if (identity && identity.identityId) {
         const result = await purchaseSoulName(
           soulname,
@@ -71,7 +63,7 @@ export const useRegisterSoulname = ({
         return result;
       }
     } catch (error_: unknown) {
-      console.log('ERROR registerSoulname 1', error_);
+      console.log('ERROR registerSoulname', error_);
       onMintError?.();
 
       throw error_ as Error;
