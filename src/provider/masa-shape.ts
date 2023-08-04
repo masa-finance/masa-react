@@ -69,7 +69,7 @@ export interface MasaShape {
     soulname: string,
     registrationPrice: number,
     style?: string
-  ) => Promise<boolean>;
+  ) => Promise<boolean  | Error>;
   reloadIdentity?: () => void;
 
   // session
