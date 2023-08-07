@@ -13501,10 +13501,10 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-json-view-lite@^0.9.7:
-  version "0.9.7"
-  resolved "https://registry.yarnpkg.com/react-json-view-lite/-/react-json-view-lite-0.9.7.tgz#45b948c23a8ad748c151196dd7b3aced5cad8b35"
-  integrity sha512-JWdrKYWac+sGO8aIFJ0tZw/cTSdgab7pS5Rnmv2yTjt/yEz2Ej4OvKYUe1ZXJlQDj7YaoZPUDF88NTk2Oubucg==
+react-json-view-lite@^0.9.8:
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/react-json-view-lite/-/react-json-view-lite-0.9.8.tgz#d3d91bc16d62ef774a7b5c4ad95ccaaa623362d6"
+  integrity sha512-4D0UgQ5SjanNi2KzgEsEKOb9kj0L9HQz/3IshwIZN5reZsSU62t6sp8c+vskV42lXjGQCi7qGfoXIpNRsON7LA==
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
