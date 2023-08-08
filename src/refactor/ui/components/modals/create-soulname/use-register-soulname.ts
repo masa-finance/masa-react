@@ -1,4 +1,5 @@
 import { useAsyncFn } from 'react-use';
+import { CreateSoulNameResult } from '@masa-finance/masa-sdk';
 import { useSoulNamesPurchase } from '../../../../masa/use-soulnames-purchase';
 import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
 import { useConfig } from '../../../../base-provider';
@@ -16,7 +17,9 @@ export const useRegisterSoulname = ({
   onMintError,
   onRegisterFinish,
 }: Partial<{
-  onMintSuccess?: () => void;
+  onMintSuccess?: (
+    result: CreateSoulNameResult
+  ) => void;
   onMintError?: () => void;
   onRegisterFinish?: () => void;
 }>) => {
@@ -55,7 +58,7 @@ export const useRegisterSoulname = ({
         }
 
         if (result) {
-          onMintSuccess?.();
+          onMintSuccess?.(result);
         }
 
         onRegisterFinish?.();
@@ -82,7 +85,7 @@ export const useRegisterSoulname = ({
       }
 
       if (result) {
-        onMintSuccess?.();
+        onMintSuccess?.(result);
       }
 
       onRegisterFinish?.();

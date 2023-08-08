@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CreateSoulNameResult,
   GenerateGreenResult,
   ICreditScore,
   IGreen,
@@ -147,7 +148,7 @@ export interface MasaShape {
     registrationPeriod: number,
     paymentMethod: PaymentMethod,
     style?: string | undefined
-  ) => Promise<boolean | Error>;
+  ) => Promise<CreateSoulNameResult | (Error & { code?: string | undefined; }) | undefined>;
   isConnected?: boolean;
   isDisconnected?: boolean;
   // new-modal
