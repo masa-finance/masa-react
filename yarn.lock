@@ -4236,10 +4236,10 @@
     "@swc/core-win32-ia32-msvc" "1.3.73"
     "@swc/core-win32-x64-msvc" "1.3.73"
 
-"@tanstack/eslint-plugin-query@^4.29.9":
-  version "4.32.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-4.32.1.tgz#9ec6e3ac91d0e8ca00ac96180573d7f5ef23dd20"
-  integrity sha512-29oveq5n7momN+/d0SheNccnp1qws4JRG/PdeiPHwWAVQ9HxwtZTFxhFJxvMzVk7UsY3LsQB0keIajC+K9ZJ7w==
+"@tanstack/eslint-plugin-query@^4.32.5":
+  version "4.32.5"
+  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-4.32.5.tgz#ace2098e9b37267ecc61172cd60a058641cba521"
+  integrity sha512-lXgOi5jWsCx8szS4bgKPEBZiCnsxIeVlW5VpJo9JwlEhq7fiUWcTR8IJ+66sAFFfV7dpLj3R6MQjjnDGjlU9xg==
 
 "@tanstack/match-sorter-utils@^8.7.0":
   version "8.8.4"
