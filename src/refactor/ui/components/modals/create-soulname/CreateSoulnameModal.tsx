@@ -35,6 +35,7 @@ const SoulnameModal = ({
   const { isLoadingSigner, address } = useWalletClient();
   const { sdk: masa } = useMasaClient();
   const { extension, soulname } = useCreateSoulnameModal();
+  const {connector} = useWalletClient();
 
   const { fireMintEvent } = useCookieMonster({
     clientApp: 'Masa React', // TODO: Forward from MasaClient a client name
@@ -46,7 +47,7 @@ const SoulnameModal = ({
     setShouldRestart(true);
     onError?.();
   }, [onError]);
-  
+
   // const [error, setError] = useState<null | {
   //   title: string;
   //   subtitle: string;
@@ -54,15 +55,12 @@ const SoulnameModal = ({
 
   // const handleErrorConfirmed = useCallback(() => setError(null), []);
 
-  const handleMintSuccess = async (
-    result: CreateSoulNameResult
-  ) => {
-    
+  const handleMintSuccess = async (result: CreateSoulNameResult) => {
     // TODO: Remove lint disable
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const price = result?.metadata?.value;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-    const priceValue = price?.toNumber() as number ?? '';
+    const priceValue = (price?.toNumber() as number) ?? '';
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const paymentMethod = result?.metadata?.paymentMethod as string;
 
@@ -84,6 +82,7 @@ const SoulnameModal = ({
       priceValue.toString(),
       {
         soulname,
+        wallet_type: connector?.name ?? "Unknown"
       }
     );
     onMintSuccess?.();

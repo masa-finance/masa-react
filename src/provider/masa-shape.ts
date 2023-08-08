@@ -69,9 +69,13 @@ export interface MasaShape {
   handlePurchaseIdentityWithSoulname?: (
     paymentMethod: PaymentMethod,
     soulname: string,
-    registrationPrice: number,
+    registrationPeriod: number,
     style?: string
-  ) => Promise<boolean | Error>;
+  ) => Promise<
+    | ({ identityId?: string | BigNumber | undefined } & CreateSoulNameResult)
+    | Error
+    | undefined
+  >;
   reloadIdentity?: () => void;
 
   // session
@@ -148,7 +152,9 @@ export interface MasaShape {
     registrationPeriod: number,
     paymentMethod: PaymentMethod,
     style?: string | undefined
-  ) => Promise<CreateSoulNameResult | (Error & { code?: string | undefined; }) | undefined>;
+  ) => Promise<
+    CreateSoulNameResult | (Error & { code?: string | undefined }) | undefined
+  >;
   isConnected?: boolean;
   isDisconnected?: boolean;
   // new-modal
