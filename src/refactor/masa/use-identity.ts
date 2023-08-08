@@ -37,7 +37,11 @@ export const useIdentity = () => {
     queryFn: loadIdentity,
   });
 
-  const hasIdentity = useMemo(() => !!identity, [identity]);
+  const hasIdentity = useMemo(
+    () => !!identity && identity?.identityId,
+    [identity]
+  );
+
   const isIdentityAvailibleInNetwork = useMemo(
     () => isIdentityContractAvailible(masa),
     [masa]
