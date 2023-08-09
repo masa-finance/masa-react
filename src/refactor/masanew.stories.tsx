@@ -621,6 +621,7 @@ const TemplateNewMasaState = (props: Args) => (
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
       forceChain: 'base',
+      // contractAddressOverrides: {},
       allowedNetworkNames: [
         'goerli',
         'ethereum',

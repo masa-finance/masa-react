@@ -64,7 +64,11 @@ export const useAuthenticateModal = ({
         return result;
       }
 
+      console.log({ result });
       if (result && result.address) {
+        console.log('should be here onAuthenticatESuccess', {
+          onAuthenticateSuccess,
+        });
         onAuthenticateSuccess?.();
       }
 
