@@ -53,6 +53,7 @@ export const MasaProvider = ({
               'bsctest',
               'bsc',
               'basegoerli',
+              'base',
               'unknown',
             ],
             contractAddressOverrides,
