@@ -58,13 +58,14 @@ export const useAuthenticateModal = ({
   const [{ loading: isAuthenticating }, onAuthenticateStart] =
     useAsyncFn(async () => {
       const result = await loginSession?.();
-
+      console.log('RESULT OF SESSION', { result });
       if (!result) {
         onAuthenticateError?.();
         return result;
       }
 
-      console.log({ result });
+      console.log('RESULT AFTER CHECK', { result });
+
       if (result && result.address) {
         console.log('should be here onAuthenticatESuccess', {
           onAuthenticateSuccess,
