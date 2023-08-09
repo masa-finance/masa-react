@@ -100,6 +100,9 @@ const SoulnameModal = ({
           </>
         );
       }
+      case 'Base': {
+        return <>Claim your <b>.base</b> domain name. Mint your rare gems 💎</>;
+      }
       default: {
         return (
           <>
