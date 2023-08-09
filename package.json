@@ -10,6 +10,7 @@
   "engines": {
     "node": ">=16"
   },
+  "author": "hide-on-bush",
   "scripts": {
     "prepare": "husky install && yarn build",
     "clean": "rimraf ./dist",
@@ -30,14 +31,12 @@
     "test": "jest --passWithNoTests",
     "doc": "typedoc"
   },
-  "author": "hide-on-bush",
   "dependencies": {
     "@acusti/react-code-input": "^3.11.0",
     "@babel/preset-typescript": "^7.21.5",
     "@celo/rainbowkit-celo": "^1.0.2",
     "@ebay/nice-modal-react": "^1.2.10",
     "@masa-finance/masa-contracts-identity": "^1.8.0",
-    "@masa-finance/zksbt-cookie": "^0.5.4",
     "@masa-finance/masa-sdk": "^3.5.8",
     "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "~0.12.17",

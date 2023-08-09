@@ -60,7 +60,7 @@ export const MasaProvider = ({
             soulNameStyle,
             masaConfig: {
               // networkName: 'ethereum',
-              environment: environmentName ?? 'dev',
+              environment: environmentName ?? 'production',
               // arweave: arweaveConfig,
             },
             rainbowkitConfig: {

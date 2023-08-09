@@ -17,9 +17,7 @@ export const useRegisterSoulname = ({
   onMintError,
   onRegisterFinish,
 }: Partial<{
-  onMintSuccess?: (
-    result: CreateSoulNameResult
-  ) => void;
+  onMintSuccess?: (result: CreateSoulNameResult) => void;
   onMintError?: () => void;
   onRegisterFinish?: () => void;
 }>) => {
@@ -53,11 +51,15 @@ export const useRegisterSoulname = ({
           soulNameStyle
         );
 
-        if (result instanceof Error) {
-          throw result;
+        if (result instanceof Error || !result || !result.success) {
+          onMintError?.();
+          if (result instanceof Error) throw result;
+
+          throw new Error('Unexpected error');
         }
 
-        if (result) {
+        if (result && result.success) {
+          console.log({ result });
           onMintSuccess?.(result);
         }
 
@@ -80,11 +82,14 @@ export const useRegisterSoulname = ({
         soulNameStyle
       );
 
-      if (result instanceof Error) {
-        throw result;
+      if (result instanceof Error || !result || !result.success) {
+        onMintError?.();
+        if (result instanceof Error) throw result;
+
+        throw new Error('Unexpected error');
       }
 
-      if (result) {
+      if (result && result.success) {
         onMintSuccess?.(result);
       }
 

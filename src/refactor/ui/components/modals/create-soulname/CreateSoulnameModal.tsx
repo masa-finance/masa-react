@@ -1,8 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
-import { useCookieMonster } from '@masa-finance/zksbt-cookie';
 import { CreateSoulNameResult } from '@masa-finance/masa-sdk';
-import { useMasaClient } from '../../../../masa-client';
 import { useConfig } from '../../../../base-provider';
 import CreateSoulnameForm from './CreateSoulnameForm';
 import { useRegisterSoulname } from './use-register-soulname';
@@ -25,22 +23,15 @@ const SoulnameModal = ({
   closeOnSuccess,
 }: {
   onMintError?: () => void;
-  onMintSuccess?: () => void;
+  onMintSuccess?: (result: CreateSoulNameResult) => void;
   onRegisterFinish?: () => void;
   onSuccess?: () => void;
   onError?: () => void;
   closeOnSuccess?: boolean;
 }) => {
   const { company } = useConfig();
-  const { isLoadingSigner, address } = useWalletClient();
-  const { sdk: masa } = useMasaClient();
+  const { isLoadingSigner } = useWalletClient();
   const { extension, soulname } = useCreateSoulnameModal();
-  const {connector} = useWalletClient();
-
-  const { fireMintEvent } = useCookieMonster({
-    clientApp: 'Masa React', // TODO: Forward from MasaClient a client name
-    clientName: 'Masa',
-  });
 
   const [shouldRestart, setShouldRestart] = useState(false);
   const handleError = useCallback(() => {
@@ -56,36 +47,36 @@ const SoulnameModal = ({
   // const handleErrorConfirmed = useCallback(() => setError(null), []);
 
   const handleMintSuccess = async (result: CreateSoulNameResult) => {
-    // TODO: Remove lint disable
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const price = result?.metadata?.value;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-    const priceValue = (price?.toNumber() as number) ?? '';
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const paymentMethod = result?.metadata?.paymentMethod as string;
+    // // TODO: Remove lint disable
+    // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    // const price = result?.metadata?.value;
+    // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+    // const priceValue = (price?.toNumber() as number) ?? '';
+    // // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    // const paymentMethod = result?.metadata?.paymentMethod as string;
 
-    const [symbol, name] = await Promise.all([
-      masa?.contracts.instances.SoulNameContract.symbol(),
-      masa?.contracts.instances.SoulNameContract.name(),
-    ]);
+    // const [symbol, name] = await Promise.all([
+    //   masa?.contracts.instances.SoulNameContract.symbol(),
+    //   masa?.contracts.instances.SoulNameContract.name(),
+    // ]);
 
-    fireMintEvent(
-      address ?? '',
-      masa?.config.networkName ?? '',
-      masa?.contracts.instances.SoulNameContract.address ?? '',
-      name ?? '',
-      symbol ?? '',
-      'Soulname',
-      '0', // TODO: Value in USD
-      'USD',
-      paymentMethod,
-      priceValue.toString(),
-      {
-        soulname,
-        wallet_type: connector?.name ?? "Unknown"
-      }
-    );
-    onMintSuccess?.();
+    // fireMintEvent(
+    //   address ?? '',
+    //   masa?.config.networkName ?? '',
+    //   masa?.contracts.instances.SoulNameContract.address ?? '',
+    //   name ?? '',
+    //   symbol ?? '',
+    //   'Soulname',
+    //   '0', // TODO: Value in USD
+    //   'USD',
+    //   paymentMethod,
+    //   priceValue.toString(),
+    //   {
+    //     soulname,
+    //     wallet_type: connector?.name ?? "Unknown"
+    //   }
+    // );
+    onMintSuccess?.(result);
   };
 
   const {
@@ -98,6 +89,7 @@ const SoulnameModal = ({
     onMintSuccess: handleMintSuccess,
     onRegisterFinish,
   });
+  
   // * handlers
   const handleRegisterSoulname = useCallback(async () => {
     setShouldRestart(false);
