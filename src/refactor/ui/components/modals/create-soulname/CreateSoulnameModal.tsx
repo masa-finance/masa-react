@@ -89,7 +89,7 @@ const SoulnameModal = ({
     onMintSuccess: handleMintSuccess,
     onRegisterFinish,
   });
-  
+
   // * handlers
   const handleRegisterSoulname = useCallback(async () => {
     setShouldRestart(false);
