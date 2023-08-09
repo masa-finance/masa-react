@@ -44,6 +44,7 @@ export const defaultConfig: Partial<MasaReactConfig> = {
     'bsctest',
     'bsc',
     'basegoerli',
+    'base'
   ],
   allowedWallets: ['metamask', 'valora', 'walletconnect'],
   masaConfig: {
