@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "3.0.14",
+  "version": "3.0.17",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
@@ -10,6 +10,7 @@
   "engines": {
     "node": ">=16"
   },
+  "author": "hide-on-bush",
   "scripts": {
     "prepare": "husky install && yarn build",
     "clean": "rimraf ./dist",
@@ -30,7 +31,6 @@
     "test": "jest --passWithNoTests",
     "doc": "typedoc"
   },
-  "author": "hide-on-bush",
   "dependencies": {
     "@acusti/react-code-input": "^3.11.0",
     "@babel/preset-typescript": "^7.21.5",

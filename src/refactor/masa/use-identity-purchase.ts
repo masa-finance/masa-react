@@ -56,7 +56,7 @@ export const useIdentityPurchase = () => {
 
         await queryClient.invalidateQueries(['identity']);
         await queryClient.invalidateQueries(['soulnames']);
-        return !!result?.success;
+        return result;
       } catch (error: unknown) {
         const returnError = error as Error & {
           code?: string;

@@ -1,4 +1,5 @@
 import { useAsyncFn } from 'react-use';
+import { CreateSoulNameResult } from '@masa-finance/masa-sdk';
 import { useSoulNamesPurchase } from '../../../../masa/use-soulnames-purchase';
 import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
 import { useConfig } from '../../../../base-provider';
@@ -16,7 +17,7 @@ export const useRegisterSoulname = ({
   onMintError,
   onRegisterFinish,
 }: Partial<{
-  onMintSuccess?: () => void;
+  onMintSuccess?: (result: CreateSoulNameResult) => void;
   onMintError?: () => void;
   onRegisterFinish?: () => void;
 }>) => {
@@ -50,12 +51,16 @@ export const useRegisterSoulname = ({
           soulNameStyle
         );
 
-        if (result instanceof Error) {
-          throw result;
+        if (result instanceof Error || !result || !result.success) {
+          onMintError?.();
+          if (result instanceof Error) throw result;
+
+          throw new Error('Unexpected error');
         }
 
-        if (result) {
-          onMintSuccess?.();
+        if (result && result.success) {
+          console.log({ result });
+          onMintSuccess?.(result);
         }
 
         onRegisterFinish?.();
@@ -77,12 +82,15 @@ export const useRegisterSoulname = ({
         soulNameStyle
       );
 
-      if (result instanceof Error) {
-        throw result;
+      if (result instanceof Error || !result || !result.success) {
+        onMintError?.();
+        if (result instanceof Error) throw result;
+
+        throw new Error('Unexpected error');
       }
 
-      if (result) {
-        onMintSuccess?.();
+      if (result && result.success) {
+        onMintSuccess?.(result);
       }
 
       onRegisterFinish?.();
