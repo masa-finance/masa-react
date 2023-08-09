@@ -14,7 +14,10 @@ export const useAuthenticate = ({
   onSuccess,
   onError,
 }: {
-  onAuthenticateSuccess?: () => void;
+  onAuthenticateSuccess?: (payload: {
+    address?: string;
+    walletType?: string;
+  }) => void;
   onAuthenticateError?: () => void;
   onMintSuccess?: () => void;
   onMintError?: () => void;
@@ -22,8 +25,8 @@ export const useAuthenticate = ({
   onSuccess?: () => void;
   onError?: () => void;
 }) => {
-  const { openConnectModal, isDisconnected } = useWallet();
-  const { hasSession, checkLogin } = useSession();
+  const { openConnectModal, isDisconnected, connector } = useWallet();
+  const { hasSession, checkLogin, getSession } = useSession();
   const { reloadIdentity } = useIdentity();
 
   const openSoulnameModal = useCallback(
@@ -59,7 +62,12 @@ export const useAuthenticate = ({
           const { data: hasSessionCheck } = await checkLogin();
           console.log('ONAUTHENTICATE FINSIH', { hasSessionCheck });
           if (hasSessionCheck) {
-            onAuthenticateSuccess?.();
+            const { data: session } = await getSession();
+            console.log('BEFORE AUTH SUCCESS', { session });
+            onAuthenticateSuccess?.({
+              address: session?.user.address,
+              walletType: connector?.name,
+            });
           }
 
           if (!identityRefetched || !identityRefetched.identityId)
@@ -75,6 +83,8 @@ export const useAuthenticate = ({
       onAuthenticateError,
       checkLogin,
       hasSession,
+      getSession,
+      connector?.name,
     ]);
 
   return {
