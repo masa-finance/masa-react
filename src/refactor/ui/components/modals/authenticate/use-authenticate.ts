@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
 import { openAuthenticateModal } from './authenticate';
 import { openCreateSoulnameModal } from '../create-soulname';
-import { useIdentity } from '../../../../masa';
+import { useIdentity, useSession } from '../../../../masa';
 
 export const useAuthenticate = ({
   onAuthenticateSuccess,
@@ -23,6 +23,7 @@ export const useAuthenticate = ({
   onError?: () => void;
 }) => {
   const { openConnectModal, isDisconnected } = useWallet();
+  const { hasSession, checkLogin } = useSession();
   const { reloadIdentity } = useIdentity();
 
   const openSoulnameModal = useCallback(
@@ -49,7 +50,18 @@ export const useAuthenticate = ({
         onAuthenticateError,
         onAuthenticateFinish: async () => {
           const { data: identityRefetched } = await reloadIdentity();
-          console.log({ identityRefetched });
+          console.log('in ONAUTHENTICATEFINISH', {
+            identityRefetched,
+            hasSession,
+          });
+
+          // TODO: this is a quick fix that shoudl be removed soon
+          const { data: hasSessionCheck } = await checkLogin();
+          console.log('ONAUTHENTICATE FINSIH', { hasSessionCheck });
+          if (hasSessionCheck) {
+            onAuthenticateSuccess?.();
+          }
+
           if (!identityRefetched || !identityRefetched.identityId)
             await openSoulnameModal();
         },
@@ -61,6 +73,8 @@ export const useAuthenticate = ({
       openConnectModal,
       onAuthenticateSuccess,
       onAuthenticateError,
+      checkLogin,
+      hasSession,
     ]);
 
   return {
