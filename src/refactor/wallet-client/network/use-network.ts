@@ -149,7 +149,7 @@ export const useNetwork = () => {
     isSwitchingChain: boolean;
     chains: Chain[];
     availibleChains: Chain[];
-    pendingConnector?: Connector;
+    pendingConnector?: Connector<any, any, any> | undefined;
     isActiveChainUnsupported: boolean;
 
     currentNetwork: Network | undefined;
