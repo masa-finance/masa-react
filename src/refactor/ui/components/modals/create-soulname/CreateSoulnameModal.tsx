@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
+import { CreateSoulNameResult } from '@masa-finance/masa-sdk';
+import { Connector } from 'wagmi';
 import { useConfig } from '../../../../base-provider';
 import CreateSoulnameForm from './CreateSoulnameForm';
 import { useRegisterSoulname } from './use-register-soulname';
@@ -22,7 +24,9 @@ const SoulnameModal = ({
   closeOnSuccess,
 }: {
   onMintError?: () => void;
-  onMintSuccess?: () => void;
+  onMintSuccess?: (
+    result: CreateSoulNameResult & { soulname?: string; connector?: Connector }
+  ) => void;
   onRegisterFinish?: () => void;
   onSuccess?: () => void;
   onError?: () => void;
@@ -31,18 +35,24 @@ const SoulnameModal = ({
   const { company } = useConfig();
   const { isLoadingSigner } = useWalletClient();
   const { extension, soulname } = useCreateSoulnameModal();
+  const { connector } = useWalletClient();
 
   const [shouldRestart, setShouldRestart] = useState(false);
   const handleError = useCallback(() => {
     setShouldRestart(true);
     onError?.();
   }, [onError]);
+
   // const [error, setError] = useState<null | {
   //   title: string;
   //   subtitle: string;
   // }>(null);
 
   // const handleErrorConfirmed = useCallback(() => setError(null), []);
+
+  const handleMintSuccess = async (result: CreateSoulNameResult) => {
+    onMintSuccess?.({ ...result, soulname, connector });
+  };
 
   const {
     hasRegisteredSoulname,
@@ -51,9 +61,10 @@ const SoulnameModal = ({
     errorRegisterSoulname,
   } = useRegisterSoulname({
     onMintError,
-    onMintSuccess,
+    onMintSuccess: handleMintSuccess,
     onRegisterFinish,
   });
+
   // * handlers
   const handleRegisterSoulname = useCallback(async () => {
     setShouldRestart(false);
@@ -197,7 +208,7 @@ export const CreateSoulnameModal = NiceModal.create(
     onError,
     closeOnSuccess,
   }: {
-    onMintSuccess?: () => void;
+    onMintSuccess?: (result: CreateSoulNameResult) => void;
     onMintError?: () => void;
     onRegisterFinish?: () => void;
     onSuccess?: () => void;
@@ -225,7 +236,7 @@ export const openCreateSoulnameModal = ({
   onError,
   closeOnSuccess,
 }: {
-  onMintSuccess?: () => void;
+  onMintSuccess?: (result: CreateSoulNameResult) => void;
   onMintError?: () => void;
   onRegisterFinish?: () => void;
   onSuccess?: () => void;

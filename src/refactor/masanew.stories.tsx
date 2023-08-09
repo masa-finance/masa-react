@@ -620,7 +620,7 @@ const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
-      forceChain: 'goerli',
+      forceChain: 'base',
       allowedNetworkNames: [
         'goerli',
         'ethereum',
@@ -630,15 +630,12 @@ const TemplateNewMasaState = (props: Args) => (
         'polygon',
         'bsctest',
         'bsc',
+        'base',
         'basegoerli',
         'unknown',
       ],
-      contractAddressOverrides: {
-        SoulNameAddress: '0x9C78Bf97A6abf185C8878C13F1Fd5976C41dDCfa',
-        SoulStoreAddress: '0xFA2e8C51c2fa4BF544eb76eB294Df9a1CF581b01',
-      },
       masaConfig: {
-        networkName: 'goerli',
+        networkName: 'base',
       },
     }}
   >

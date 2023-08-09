@@ -36,7 +36,7 @@ export const useSoulNamesPurchase = () => {
           style
         );
         await queryClient.invalidateQueries(['soulnames']);
-        return !!result?.success;
+        return result;
       } catch (error: unknown) {
         const returnError = error as Error & {
           code?: string;
