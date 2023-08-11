@@ -26,8 +26,8 @@ export const useAuthenticate = ({
   onSuccess?: () => void;
   onError?: () => void;
 }) => {
-  const { openConnectModal, isDisconnected, signer } = useWallet();
-  const { hasSession, checkLogin, getSession } = useSession();
+  const { openConnectModal, isDisconnected } = useWallet();
+  const { checkLogin, getSession } = useSession();
   const { pendingConnector } = useNetwork();
   const { reloadIdentity } = useIdentity();
 
@@ -55,22 +55,11 @@ export const useAuthenticate = ({
         onAuthenticateError,
         onAuthenticateFinish: async () => {
           const { data: identityRefetched } = await reloadIdentity();
-          console.log('in ONAUTHENTICATEFINISH', {
-            identityRefetched,
-            hasSession,
-          });
 
           // TODO: this is a quick fix that shoudl be removed soon
           const { data: hasSessionCheck } = await checkLogin();
-          console.log('ONAUTHENTICATE FINSIH', { hasSessionCheck });
           if (hasSessionCheck) {
             const { data: session } = await getSession();
-            console.log('BEFORE AUTH SUCCESS', {
-              session,
-              pendingConnector,
-              name: pendingConnector?.name,
-              signer,
-            });
             onAuthenticateSuccess?.({
               address: session?.user.address,
               walletType: pendingConnector?.name,
@@ -83,16 +72,13 @@ export const useAuthenticate = ({
       });
     }, [
       reloadIdentity,
-      signer,
       openSoulnameModal,
       isDisconnected,
       openConnectModal,
       onAuthenticateSuccess,
       onAuthenticateError,
       checkLogin,
-      hasSession,
       getSession,
-      // connector?.name,
       pendingConnector,
     ]);
 
