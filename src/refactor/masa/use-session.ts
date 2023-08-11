@@ -1,15 +1,18 @@
-import { useAsync, useAsyncFn } from 'react-use';
+import {
+  // useAsync,
+  useAsyncFn,
+} from 'react-use';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
-import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
+// import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useSessionConnect } from './use-session-connect';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useSession = () => {
   const { address } = useWallet();
-  const queryClient = useMasaQueryClient();
+  // const queryClient = useMasaQueryClient();
   const { sdk: masa, masaAddress } = useMasaClient();
   const { isLoggingIn, isLoggingOut, loginSessionAsync, logoutSession } =
     useSessionConnect();
@@ -73,26 +76,27 @@ export const useSession = () => {
     return undefined;
   }, [session, address, masaAddress]);
 
-  useAsync(async () => {
-    if (!!sessionAddress && sessionAddress !== masaAddress && hasSession) {
-      await Promise.all([
-        queryClient.setQueryData(
-          ['session-new-check', { masaAddress, persist: true }],
-          false
-        ),
-      ]);
+  // // session-listens
+  // useAsync(async () => {
+  //   if (!!sessionAddress && sessionAddress !== masaAddress && hasSession) {
+  //     await Promise.all([
+  //       queryClient.setQueryData(
+  //         ['session-new-check', { masaAddress, persist: true }],
+  //         false
+  //       ),
+  //     ]);
 
-      await logoutSession();
-      await checkLogin();
-    }
-  }, [
-    queryClient,
-    masaAddress,
-    sessionAddress,
-    hasSession,
-    logoutSession,
-    checkLogin,
-  ]);
+  //     await logoutSession();
+  //     await checkLogin();
+  //   }
+  // }, [
+  //   queryClient,
+  //   masaAddress,
+  //   sessionAddress,
+  //   hasSession,
+  //   logoutSession,
+  //   checkLogin,
+  // ]);
 
   const isLoadingSession = useMemo(
     () => isFetchingSession || isCheckingLogin || isLoggingIn || isLoggingOut,
