@@ -46,6 +46,7 @@ const CreateSoulnameModal = (): JSX.Element => {
       name: masa?.config.network?.nativeCurrency?.name as PaymentMethod,
       value: masa?.config.network?.nativeCurrency?.name as string,
     });
+
     for (const token in tokensAvailable) {
       if (
         tokensAvailable[token] &&

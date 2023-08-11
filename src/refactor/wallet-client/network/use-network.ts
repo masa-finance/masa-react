@@ -24,7 +24,7 @@ export const useNetwork = () => {
   const [switchingToChain, setSwitchingToChain] = useState<number | null>();
 
   const availibleChains = useMemo(
-    () => connectors.flatMap((c) => c.chains),
+    () => connectors.flatMap((c: Connector) => c.chains),
     [connectors]
   );
 
