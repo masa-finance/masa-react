@@ -514,7 +514,7 @@ const ModalFlow = () => {
       <h3>Modal Flows</h3>
       <li>
         <Button
-          onClick={openAuthModal}
+          onClick={() => openAuthModal()}
           type="button"
           disabled={!!hasSession && !!identity?.identityId}
         >

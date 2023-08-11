@@ -45,7 +45,14 @@ export const useAuthenticate = ({
   );
 
   const [{ loading: isAuthenticateModalOpen }, openAuthModal] = useAsyncFn(
-    async (disableSoulnamePurchase: boolean) => {
+    async (config?: { disableSoulnamePurchase?: boolean }) => {
+      const disable = Boolean(config?.disableSoulnamePurchase);
+
+      console.log({
+        disable,
+        disablePurchase: config?.disableSoulnamePurchase,
+      });
+      
       if (isDisconnected) {
         openConnectModal?.();
       }
@@ -66,10 +73,7 @@ export const useAuthenticate = ({
             });
           }
 
-          if (
-            !disableSoulnamePurchase &&
-            (!identityRefetched || !identityRefetched.identityId)
-          )
+          if (!disable && (!identityRefetched || !identityRefetched.identityId))
             await openSoulnameModal();
         },
       });
