@@ -64,7 +64,7 @@
     "react-use-pagination": "^2.0.1",
     "reaptcha": "^1.12.1",
     "rodal": "^2.0.0",
-    "storybook": "^7.1.1",
+    "storybook": "^7.2.3",
     "wagmi": "~0.12.19"
   },
   "devDependencies": {
