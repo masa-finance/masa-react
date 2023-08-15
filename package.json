@@ -41,7 +41,7 @@
     "@metamask/providers": "^11.0.0",
     "@rainbow-me/rainbowkit": "~0.12.17",
     "@storybook/react": "^7.2.1",
-    "@tanstack/query-sync-storage-persister": "^4.32.0",
+    "@tanstack/query-sync-storage-persister": "^4.32.6",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-persist-client": "^4.28.0",
     "@wagmi/chains": "^1.6.0",
