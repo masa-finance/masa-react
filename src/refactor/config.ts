@@ -44,10 +44,11 @@ export const defaultConfig: Partial<MasaReactConfig> = {
     'bsctest',
     'bsc',
     'basegoerli',
+    'base'
   ],
   allowedWallets: ['metamask', 'valora', 'walletconnect'],
   masaConfig: {
-    environment: 'dev' as EnvironmentName,
+    environment: 'production' as EnvironmentName,
     networkName: 'ethereum' as NetworkName,
     verbose: false,
     arweave: {

@@ -13,7 +13,7 @@ export const useIdentityListen = ({
   sessionAddress?: ReturnType<typeof useSession>['sessionAddress'];
 }) => {
   const { masaAddress } = useMasaClient();
-  useAsync(async () => {
+  return useAsync(async () => {
     // * NOTE: we need to make sure the states are in sync before loading the identity
     if (masaAddress === sessionAddress && identity?.address !== masaAddress) {
       await getIdentity();

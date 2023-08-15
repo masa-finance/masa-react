@@ -53,13 +53,14 @@ export const MasaProvider = ({
               'bsctest',
               'bsc',
               'basegoerli',
+              'base',
               'unknown',
             ],
             contractAddressOverrides,
             soulNameStyle,
             masaConfig: {
               // networkName: 'ethereum',
-              environment: environmentName ?? 'dev',
+              environment: environmentName ?? 'production',
               // arweave: arweaveConfig,
             },
             rainbowkitConfig: {
@@ -69,7 +70,12 @@ export const MasaProvider = ({
         >
           <MasaContextProvider {...args}>
             <div id="modal-mount" />
-            <MasaInterface disableMetamask={args.useRainbowKitWalletConnect} />
+            {!args.hideLegacyModal && (
+              <MasaInterface
+                hideLegacyModal={args.hideLegacyModal}
+                disableMetamask={args.useRainbowKitWalletConnect}
+              />
+            )}
             {children}
           </MasaContextProvider>
         </MasaRefactorProvider>

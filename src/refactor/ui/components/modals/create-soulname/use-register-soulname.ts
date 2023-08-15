@@ -1,22 +1,23 @@
 import { useAsyncFn } from 'react-use';
+import { CreateSoulNameResult } from '@masa-finance/masa-sdk';
 import { useSoulNamesPurchase } from '../../../../masa/use-soulnames-purchase';
 import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
 import { useConfig } from '../../../../base-provider';
 import { useIdentity } from '../../../../masa/use-identity';
 import { useCreateSoulnameModal } from './CreateSoulnameProvider';
 
-const errorMessages = {
-  UNPREDICTABLE_GAS_LIMIT:
-    'You do not have sufficient funds in you wallet. Please add funds to your wallet and try again',
-  ACTION_REJECTED: 'Transaction rejected by the user.',
-};
+// const errorMessages = {
+//   UNPREDICTABLE_GAS_LIMIT:
+//     'You do not have sufficient funds in you wallet. Please add funds to your wallet and try again',
+//   ACTION_REJECTED: 'Transaction rejected by the user.',
+// };
 
 export const useRegisterSoulname = ({
   onMintSuccess,
   onMintError,
   onRegisterFinish,
 }: Partial<{
-  onMintSuccess?: () => void;
+  onMintSuccess?: (result: CreateSoulNameResult) => void;
   onMintError?: () => void;
   onRegisterFinish?: () => void;
 }>) => {
@@ -29,21 +30,18 @@ export const useRegisterSoulname = ({
     soulname,
     registrationPeriod,
     paymentMethod,
-    soulNameError,
-    registrationPrice,
-    setShowError,
+    // soulNameError,
+    // registrationPrice,
   } = useCreateSoulnameModal();
 
   const [
-    { value: hasRegisteredSoulname, loading: isRegisteringSoulname },
+    {
+      value: hasRegisteredSoulname,
+      loading: isRegisteringSoulname,
+      error: errorRegisterSoulname,
+    },
     onRegisterSoulname,
   ] = useAsyncFn(async () => {
-    if (soulNameError || !registrationPrice) {
-      setShowError(true);
-      onMintError?.();
-      return undefined;
-    }
-
     try {
       if (identity && identity.identityId) {
         const result = await purchaseSoulName(
@@ -53,17 +51,30 @@ export const useRegisterSoulname = ({
           soulNameStyle
         );
 
-        if (result) {
-          onMintSuccess?.();
+        if (result instanceof Error || !result || !result.success) {
+          onMintError?.();
+          if (result instanceof Error) throw result;
+
+          throw new Error('Unexpected error');
         }
 
-        if (!result) onMintError?.();
+        if (result && result.success) {
+          console.log({ result });
+          onMintSuccess?.(result);
+        }
 
         onRegisterFinish?.();
 
         return result;
       }
+    } catch (error_: unknown) {
+      console.log('ERROR registerSoulname', error_);
+      onMintError?.();
 
+      throw error_ as Error;
+    }
+
+    try {
       const result = await purchaseIdentityWithSoulName(
         paymentMethod,
         soulname,
@@ -71,33 +82,40 @@ export const useRegisterSoulname = ({
         soulNameStyle
       );
 
-      if (result) {
-        onMintSuccess?.();
+      if (result instanceof Error || !result || !result.success) {
+        onMintError?.();
+        if (result instanceof Error) throw result;
+
+        throw new Error('Unexpected error');
       }
 
-      if (!result) onMintError?.();
+      if (result && result.success) {
+        onMintSuccess?.(result);
+      }
 
       onRegisterFinish?.();
 
       return result;
     } catch (error: unknown) {
-      const errorObject = error as {
-        code: string;
-        message: string;
-      };
+      // const errorObject = error as {
+      //   code: string;
+      //   message: string;
+      // };
 
-      const subtitle =
-        (errorMessages?.[errorObject.code] as string | undefined) ??
-        ('Unknown error' as string);
+      // const subtitle =
+      //   (errorMessages?.[errorObject.code] as string | undefined) ??
+      //   ('Unknown error' as string);
 
-      console.error(`Minting failed! ${errorObject.message}`);
+      // console.error(`Minting failed! ${errorObject.message}`);
 
+      console.log('ERROR registerSoulname catch2', error);
       onMintError?.();
 
-      return {
-        title: '',
-        subtitle,
-      };
+      throw error as Error;
+      // return {
+      //   title: '',
+      //   subtitle,
+      // };
     }
   }, [
     onRegisterFinish,
@@ -105,19 +123,19 @@ export const useRegisterSoulname = ({
     identity,
     paymentMethod,
     registrationPeriod,
-    registrationPrice,
-    soulNameError,
+    // registrationPrice,
+    // soulNameError,
     purchaseIdentityWithSoulName,
     purchaseSoulName,
     soulNameStyle,
     onMintSuccess,
     onMintError,
-    setShowError,
   ]);
 
   return {
     onRegisterSoulname,
     hasRegisteredSoulname,
     isRegisteringSoulname,
+    errorRegisterSoulname,
   };
 };

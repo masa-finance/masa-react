@@ -36,6 +36,16 @@ const useWallet = () => {
     address,
   });
 
+  const shortAddress = useMemo(() => {
+    if (!address) return '';
+
+    // eslint-disable-next-line unicorn/prefer-string-slice
+    return `${address?.slice(0, 2) ?? ''}...${address.substring(
+      address.length - 4,
+      address.length
+    )}`;
+  }, [address]);
+
   // useEffect(() => console.log({ provider, signer }), [provider, signer]);
 
   useEffect(() => {
@@ -72,6 +82,7 @@ const useWallet = () => {
   const useWalletValue = useMemo(
     () => ({
       address,
+      shortAddress,
       hasAddress,
       walletName,
       previousAddress,
@@ -95,6 +106,7 @@ const useWallet = () => {
     }),
     [
       address,
+      shortAddress,
       hasAddress,
       walletName,
       previousAddress,
@@ -124,6 +136,7 @@ const useWallet = () => {
     walletName?: string;
     previousAddress?: `0x${string}`;
     compareAddress?: `0x${string}`;
+    shortAddress?: `0x${string}`;
     provider?: Provider;
     signer?: Signer;
     connector?: Connector;

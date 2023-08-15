@@ -14,6 +14,7 @@ import { useAccountChangeListen } from './wallet/use-account-change-listen';
 import { useConfig } from '../base-provider';
 import { getChainIdNetworkMap } from './utils';
 import { useDebug } from '../hooks/use-debug';
+import { useNetworkSwitchListen } from './network/use-network-switch-listen';
 
 type WalletClientValue = ReturnType<typeof useWallet> &
   ReturnType<typeof useNetwork>;
@@ -50,6 +51,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     connectors,
     switchNetwork,
     switchingToChain,
+    stopSwitching,
     canProgramaticallySwitchNetwork,
     activeChain,
     isSwitchingChain,
@@ -57,6 +59,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     isActiveChainUnsupported,
     availibleChains,
     pendingConnector,
+    networkError,
   } = useNetwork();
 
   const onAccountChange = useCallback(() => console.log('account changed'), []);
@@ -65,6 +68,12 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
   useAccountChangeListen({
     onAccountChange,
     onChainChange,
+  });
+
+  useNetworkSwitchListen({
+    activeConnector: connector,
+    stopSwitching,
+    networkError,
   });
 
   const chainIdsByNetwork = useMemo(() => {

@@ -5,6 +5,7 @@ import {
 } from '@masa-finance/masa-sdk';
 import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 import {
+  base,
   baseGoerli,
   bsc,
   bscTestnet,
@@ -13,7 +14,7 @@ import {
   mainnet as ethereum,
   polygon,
   polygonMumbai,
-} from 'wagmi/chains';
+} from '@wagmi/chains';
 
 const rainbowkitChains = [
   // eth
@@ -23,6 +24,7 @@ const rainbowkitChains = [
   Alfajores,
   Celo,
   // base
+  base,
   baseGoerli,
   // bsc
   bsc,

@@ -8,6 +8,8 @@ import { Button } from './ui';
 import './ui/styles.scss';
 import '../styles.scss';
 import { useConfig } from './base-provider';
+import { JsonView, darkStyles } from 'react-json-view-lite';
+import 'react-json-view-lite/dist/index.css';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
@@ -22,14 +24,13 @@ import { useSession } from './masa/use-session';
 import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
 import {
-  AuthenticateModal,
   CreateCreditScoreModal,
   CreateIdentityModal,
 } from './ui/components/modals';
 import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
-import { SupportedNetworks } from '@masa-finance/masa-sdk';
+import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -157,6 +158,7 @@ const WalletInfo = () => {
     openChainModal,
     openAccountModal,
     disconnect,
+    shortAddress,
     // disconnectAsync,
     isLoadingSigner,
     isLoadingBalance,
@@ -171,6 +173,7 @@ const WalletInfo = () => {
           <h3>Wallet</h3>
           <li>address: {String(address)}</li>
           <li>previousAddress: {String(previousAddress)}</li>
+          <li>shortAddress: {String(shortAddress)}</li>
           <li>activeConnector: {String(connector?.name)}</li>
           <li>isConnected: {String(isConnected)}</li>
           <li>isConnecting: {String(isConnecting)}</li>
@@ -477,11 +480,23 @@ const GreenInfo = () => {
 };
 
 const ModalFlow = () => {
-  const { isDisconnected } = useWallet();
-  const { hasSession } = useSession();
+  const { isDisconnected, disconnect } = useWallet();
+  const { hasSession, logoutSession } = useSession();
   const { showChainingModal } = useGreenModal();
+  const { identity } = useIdentity();
+  const onLogout = useCallback(() => {
+    if (hasSession) logoutSession();
+    disconnect?.();
+  }, [logoutSession, hasSession, disconnect]);
 
-  // const _hook = useCreateSoulnameModal({});
+  const { openAuthModal } = useAuthenticate({
+    onAuthenticateSuccess: () => console.log('SUCCESS IN USEAUTH'),
+    onAuthenticateError: () => console.log('AUTHENTICATE ERROR'),
+    onRegisterFinish: () => console.log('FINISH FROM OUTSIDE ?????'),
+    onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
+    onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
+    onError: () => console.log('CREATE SOULNAME ERROR'),
+  });
 
   const onClickSoulname = useCallback(() => {
     openCreateSoulnameModal({
@@ -489,19 +504,26 @@ const ModalFlow = () => {
       onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
       onRegisterFinish: () => console.log('REGISTER SOULNAME FINISHED OUTSIDE'),
       onSuccess: () => console.log('EVERYTHING WAS SUCCESSFUL'),
+      onError: () => console.log('CREATE SOULNAME ERROR'),
       closeOnSuccess: true,
     });
   }, []);
+
   return (
     <ul>
       <h3>Modal Flows</h3>
       <li>
         <Button
+          onClick={() => openAuthModal()}
           type="button"
-          disabled={!!hasSession}
-          onClick={() => NiceModal.show(AuthenticateModal)}
+          disabled={!!hasSession && !!identity?.identityId}
         >
           {isDisconnected ? 'Connect' : 'Authenticate'}
+        </Button>
+      </li>
+      <li>
+        <Button type="button" disabled={isDisconnected} onClick={onLogout}>
+          Disconnect
         </Button>
       </li>
       <li>
@@ -536,7 +558,7 @@ const ModalFlow = () => {
 
 const Component = (): JSX.Element => {
   const config = useConfig();
-  const { masaConfig } = config;
+  const { sdk: masa } = useMasaClient();
   // SupportedNetworks
   return (
     // skipcq: JS-0415
@@ -553,19 +575,41 @@ const Component = (): JSX.Element => {
       <SoulnameCreditScoreInfo />
       <GreenInfo />
       <ModalFlow />
-      <ul>
-        <h3>Config</h3>
+      <h3>Config</h3>
+      <ul
+        style={{
+          flexDirection: 'row',
+        }}
+      >
         <li>
           <h4>Masa Config</h4>
-          <code>
-            <pre>{JSON.stringify(masaConfig, null, 4)}</pre>
-          </code>
+          <div
+            style={{
+              textAlign: 'left',
+              alignSelf: 'flex-start',
+            }}
+          >
+            <JsonView
+              data={config}
+              shouldInitiallyExpand={(number) => number <= 0 && true}
+              style={{ ...darkStyles, ...{ alignItems: 'flex-start' } }}
+            />
+          </div>
         </li>
         <li>
-          <h4>SupportedNetworks</h4>
-          <code>
-            <pre>{JSON.stringify(SupportedNetworks, null, 4)}</pre>
-          </code>
+          <h4>Masa SDK</h4>
+          <div
+            style={{
+              textAlign: 'left',
+              alignSelf: 'flex-start',
+            }}
+          >
+            <JsonView
+              data={masa ?? {}}
+              shouldInitiallyExpand={(number) => number <= 0 && true}
+              style={{ ...darkStyles, ...{ alignItems: 'flex-start' } }}
+            />
+          </div>
         </li>
       </ul>
     </section>
@@ -576,7 +620,8 @@ const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
-      forceChain: 'goerli',
+      forceChain: 'base',
+      // contractAddressOverrides: {},
       allowedNetworkNames: [
         'goerli',
         'ethereum',
@@ -586,11 +631,12 @@ const TemplateNewMasaState = (props: Args) => (
         'polygon',
         'bsctest',
         'bsc',
+        'base',
         'basegoerli',
         'unknown',
       ],
       masaConfig: {
-        networkName: 'goerli',
+        networkName: 'base',
       },
     }}
   >

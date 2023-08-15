@@ -14,6 +14,7 @@ import { Gallery } from './pages/gallery';
 import InterfaceMasaGreen from './pages/masa-green';
 import { InterfaceSuccessCreateIdentity } from './pages/success-create-identity';
 import { InterfaceSwitchChain } from './pages/switch-chain';
+import { openCreateSoulnameModal } from '../../refactor';
 
 const pages = {
   connector: ({
@@ -52,8 +53,10 @@ const PageSwitcher = ({
 
 export const MasaInterface = ({
   disableMetamask,
+  hideLegacyModal,
 }: {
   disableMetamask?: boolean;
+  hideLegacyModal?: boolean;
 }): JSX.Element => {
   useMetamask({ disabled: disableMetamask });
   const { isConnected } = useAccount();
@@ -76,6 +79,7 @@ export const MasaInterface = ({
     verbose,
     openConnectModal,
     setRainbowkKitModalCallback,
+    modalCallback,
     // setForcedPage,
     // switchNetworkNew,
     useRainbowKit,
@@ -83,6 +87,8 @@ export const MasaInterface = ({
   } = useMasa();
 
   const page = useMemo(() => {
+    if (hideLegacyModal) return '';
+
     if (verbose) {
       console.log('INTERFACE', {
         hasWalletAddress,
@@ -202,7 +208,13 @@ export const MasaInterface = ({
       (!soulnames || (soulnames && soulnames.length === 0)) &&
       scope?.includes('soulname')
     ) {
-      // setForcedPage?.('createSoulname');
+      setModalOpen?.(false);
+      openCreateSoulnameModal?.({
+        onSuccess: () => {
+          if (modalCallback) modalCallback();
+        },
+        closeOnSuccess: true,
+      });
       return 'createSoulname';
     }
 
@@ -254,6 +266,7 @@ export const MasaInterface = ({
     signer,
     isModalOpen,
     setModalOpen,
+    modalCallback,
     setRainbowkKitModalCallback,
     signer,
   ]);
@@ -262,6 +275,8 @@ export const MasaInterface = ({
     () => ['createIdentity', 'successIdentityCreate'].includes(String(page)),
     [page]
   );
+
+  if (hideLegacyModal) return <div />;
 
   return (
     <ModalComponent

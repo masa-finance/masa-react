@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
-// import Rodal from 'rodal';
+import { CreateSoulNameResult } from '@masa-finance/masa-sdk';
+import { Connector } from 'wagmi';
 import { useConfig } from '../../../../base-provider';
 import CreateSoulnameForm from './CreateSoulnameForm';
 import { useRegisterSoulname } from './use-register-soulname';
@@ -19,33 +20,56 @@ const SoulnameModal = ({
   onMintSuccess,
   onRegisterFinish,
   onSuccess,
+  onError,
   closeOnSuccess,
 }: {
   onMintError?: () => void;
-  onMintSuccess?: () => void;
+  onMintSuccess?: (
+    result: CreateSoulNameResult & { soulname?: string; connector?: Connector }
+  ) => void;
   onRegisterFinish?: () => void;
   onSuccess?: () => void;
+  onError?: () => void;
   closeOnSuccess?: boolean;
 }) => {
   const { company } = useConfig();
   const { isLoadingSigner } = useWalletClient();
-  const { extension, soulname, soulNameError } = useCreateSoulnameModal();
+  const { extension, soulname } = useCreateSoulnameModal();
+  const { connector } = useWalletClient();
 
-  const [error, setError] = useState<null | {
-    title: string;
-    subtitle: string;
-  }>(null);
+  const [shouldRestart, setShouldRestart] = useState(false);
+  const handleError = useCallback(() => {
+    setShouldRestart(true);
+    onError?.();
+  }, [onError]);
 
-  const handleErrorConfirmed = useCallback(() => setError(null), []);
+  // const [error, setError] = useState<null | {
+  //   title: string;
+  //   subtitle: string;
+  // }>(null);
 
-  const [showError] = useState(false);
-  const { hasRegisteredSoulname, onRegisterSoulname, isRegisteringSoulname } =
-    useRegisterSoulname({
-      onMintError,
-      onMintSuccess,
-      onRegisterFinish,
-    });
+  // const handleErrorConfirmed = useCallback(() => setError(null), []);
+
+  const handleMintSuccess = async (result: CreateSoulNameResult) => {
+    onMintSuccess?.({ ...result, soulname, connector });
+  };
+
+  const {
+    hasRegisteredSoulname,
+    onRegisterSoulname,
+    isRegisteringSoulname,
+    errorRegisterSoulname,
+  } = useRegisterSoulname({
+    onMintError,
+    onMintSuccess: handleMintSuccess,
+    onRegisterFinish,
+  });
+
   // * handlers
+  const handleRegisterSoulname = useCallback(async () => {
+    setShouldRestart(false);
+    await onRegisterSoulname();
+  }, [onRegisterSoulname]);
 
   const SoulnameTitle = useMemo(() => {
     switch (company) {
@@ -73,6 +97,13 @@ const SoulnameModal = ({
         return (
           <>
             Claim your rare <b>{extension}</b> domain name before it’s taken!
+          </>
+        );
+      }
+      case 'Base': {
+        return (
+          <>
+            Claim your <b>.base</b> domain name. Mint your rare gems 💎
           </>
         );
       }
@@ -111,25 +142,25 @@ const SoulnameModal = ({
     );
   }
 
-  if (hasRegisteredSoulname) {
+  if (errorRegisterSoulname && !shouldRestart) {
+    return (
+      <Modal>
+        <ModalError
+          subtitle={errorRegisterSoulname.message}
+          onComplete={handleError}
+          buttonText="Try again"
+        />
+      </Modal>
+    );
+  }
+
+  if (hasRegisteredSoulname && !shouldRestart) {
     return (
       <ModalSuccess
         extension={extension}
         closeOnSuccess={closeOnSuccess}
         onFinish={onSuccess}
       />
-    );
-  }
-
-  if (error) {
-    return (
-      <Modal>
-        <ModalError
-          {...error}
-          handleComplete={handleErrorConfirmed}
-          buttonText="Try again"
-        />
-      </Modal>
     );
   }
 
@@ -160,15 +191,15 @@ const SoulnameModal = ({
             type="button"
             id="gtm_register_domain"
             className="masa-button"
-            onClick={onRegisterSoulname}
+            onClick={handleRegisterSoulname}
           >
             Register your domain
           </button>
-          {showError && soulNameError && (
+          {/* {showError && soulNameError && (
             <p style={{ color: 'red', width: '100%', textAlign: 'center' }}>
-              {soulNameError}
+              {errorRegisterSoulname}
             </p>
-          )}
+          )} */}
         </div>
       </article>
     </Modal>
@@ -181,12 +212,14 @@ export const CreateSoulnameModal = NiceModal.create(
     onMintError,
     onRegisterFinish,
     onSuccess,
+    onError,
     closeOnSuccess,
   }: {
-    onMintSuccess?: () => void;
+    onMintSuccess?: (result: CreateSoulNameResult) => void;
     onMintError?: () => void;
     onRegisterFinish?: () => void;
     onSuccess?: () => void;
+    onError?: () => void;
     closeOnSuccess?: boolean;
   }) => (
     <CreateSoulnameProvider>
@@ -196,6 +229,7 @@ export const CreateSoulnameModal = NiceModal.create(
         onMintSuccess={onMintSuccess}
         onRegisterFinish={onRegisterFinish}
         onSuccess={onSuccess}
+        onError={onError}
       />
     </CreateSoulnameProvider>
   )
@@ -206,12 +240,14 @@ export const openCreateSoulnameModal = ({
   onMintError,
   onRegisterFinish,
   onSuccess,
+  onError,
   closeOnSuccess,
 }: {
-  onMintSuccess?: () => void;
+  onMintSuccess?: (result: CreateSoulNameResult) => void;
   onMintError?: () => void;
   onRegisterFinish?: () => void;
   onSuccess?: () => void;
+  onError?: () => void;
   closeOnSuccess?: boolean;
 }) =>
   NiceModal.show(CreateSoulnameModal, {
@@ -219,6 +255,7 @@ export const openCreateSoulnameModal = ({
     onMintSuccess,
     onRegisterFinish,
     onSuccess,
+    onError,
     closeOnSuccess,
   });
 

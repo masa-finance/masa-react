@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  CreateSoulNameResult,
   GenerateGreenResult,
   ICreditScore,
   IGreen,
@@ -48,6 +49,8 @@ export interface MasaShape {
   modalSize?: { width: number; height: number } | null;
   useModalSize?: (size: { width: number; height: number }) => void;
   openGallery?: (callback?: () => void) => void;
+  modalCallback?: (() => void) | null;
+  hideLegacyModal?: boolean;
 
   // wallet
   walletAddress?: string;
@@ -62,13 +65,17 @@ export interface MasaShape {
     address?: string;
   };
   isIdentityLoading?: boolean;
-  handlePurchaseIdentity?: () => Promise<boolean | undefined>;
+  handlePurchaseIdentity?: () => Promise<boolean | undefined | Error>;
   handlePurchaseIdentityWithSoulname?: (
     paymentMethod: PaymentMethod,
     soulname: string,
-    registrationPrice: number,
+    registrationPeriod: number,
     style?: string
-  ) => Promise<boolean>;
+  ) => Promise<
+    | ({ identityId?: string | BigNumber | undefined } & CreateSoulNameResult)
+    | Error
+    | undefined
+  >;
   reloadIdentity?: () => void;
 
   // session
@@ -145,7 +152,9 @@ export interface MasaShape {
     registrationPeriod: number,
     paymentMethod: PaymentMethod,
     style?: string | undefined
-  ) => Promise<boolean>;
+  ) => Promise<
+    CreateSoulNameResult | (Error & { code?: string | undefined }) | undefined
+  >;
   isConnected?: boolean;
   isDisconnected?: boolean;
   // new-modal

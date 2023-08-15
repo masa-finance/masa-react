@@ -8,6 +8,7 @@ export const useModal = (
   isModalOpen: boolean;
   closeModal: (forceCallback?: boolean) => void;
   setModalOpen: (modalOpen: boolean) => void;
+  modalCallback: (() => void) | null;
   setModalCallback: (callback: () => void) => void;
   forcedPage: string | null;
   setForcedPage?: (page: null | string) => void;
@@ -110,6 +111,7 @@ export const useModal = (
     closeModal,
     setModalOpen,
     setModalCallback,
+    modalCallback,
     forcedPage,
     setForcedPage,
     openMintSoulnameModal,

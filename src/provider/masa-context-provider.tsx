@@ -69,6 +69,7 @@ export interface MasaContextProviderProps extends MasaShape {
   // chainsToUse?: Array<keyof MasaNetworks>;
   // walletsToUse?: string[];
   soulNameStyle?: string;
+  hideLegacyModal?: boolean;
 }
 
 export const MasaContextProvider = ({
@@ -93,6 +94,7 @@ export const MasaContextProvider = ({
   // api url override
   // apiUrl,
 
+  hideLegacyModal,
   useRainbowKitWalletConnect = false,
   soulNameStyle,
 }: MasaContextProviderProps): JSX.Element => {
@@ -226,6 +228,7 @@ export const MasaContextProvider = ({
     isModalOpen,
     setModalOpen,
     setModalCallback,
+    modalCallback,
     closeModal,
     forcedPage,
     setForcedPage,
@@ -264,6 +267,7 @@ export const MasaContextProvider = ({
 
   const connect = useCallback(
     (options?: { scope?: string[]; callback?: () => void }) => {
+      if (hideLegacyModal) return;
       if (verbose) {
         console.info({ forcedPage, useRainbowKitWalletConnect, options });
       }
@@ -303,6 +307,7 @@ export const MasaContextProvider = ({
       openConnectModal,
       verbose,
       useRainbowKitWalletConnect,
+      hideLegacyModal,
       // openAuthenticateModal,
       // openConnectedModal,
       // wagmiSigner,
@@ -361,6 +366,8 @@ export const MasaContextProvider = ({
       useModalSize,
       openGallery,
       modalSize,
+      modalCallback,
+      hideLegacyModal,
 
       // wallet
       walletAddress: accountAddress,
@@ -484,6 +491,8 @@ export const MasaContextProvider = ({
     useModalSize,
     openGallery,
     modalSize,
+    modalCallback,
+    hideLegacyModal,
 
     // wallet
 
