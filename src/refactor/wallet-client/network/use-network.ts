@@ -4,27 +4,27 @@ import {
   SupportedNetworks,
   getNetworkNameByChainId,
 } from '@masa-finance/masa-sdk';
-import type { Chain, Connector, GetNetworkResult, Provider } from '@wagmi/core';
+import type { Chain, Connector, GetNetworkResult } from '@wagmi/core';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   useSwitchNetwork,
   useNetwork as useNetworkWagmi,
-  useAccount,
   useConnect,
+  useAccount,
 } from 'wagmi';
 
 export const useNetwork = () => {
   const { switchNetwork: switchNetworkWagmi, error: networkError } =
     useSwitchNetwork();
-  const { connector: activeConnector } = useAccount();
   const { connectors, pendingConnector } = useConnect();
+  const { connector: activeConnector } = useAccount();
   const { chains, chain: activeChain } = useNetworkWagmi();
   const network = useNetworkWagmi();
   const [switchingToChain, setSwitchingToChain] = useState<number | null>();
 
   const availibleChains = useMemo(
-    () => connectors.flatMap((c) => c.chains),
+    () => connectors.flatMap((c: Connector) => c.chains),
     [connectors]
   );
 
@@ -81,33 +81,33 @@ export const useNetwork = () => {
     setSwitchingToChain(null);
   }, []);
 
-  useEffect(() => {
-    if (!activeConnector) {
-      return undefined;
-    }
+  // useEffect(() => {
+  //   if (!activeConnector) {
+  //     return undefined;
+  //   }
 
-    let provider: Provider;
+  //   let provider: Provider;
 
-    activeConnector
-      ?.getProvider?.()
-      .then((provider_: Provider) => {
-        provider = provider_;
-        provider.on('chainChanged', stopSwitching);
-      })
-      .catch((error: unknown) => {
-        console.log("error getting provider's chainChanged event", error);
-      });
+  //   activeConnector
+  //     ?.getProvider?.()
+  //     .then((provider_: Provider) => {
+  //       provider = provider_;
+  //       provider.on('chainChanged', stopSwitching);
+  //     })
+  //     .catch((error: unknown) => {
+  //       console.log("error getting provider's chainChanged event", error);
+  //     });
 
-    return () => {
-      provider?.removeListener('chainChanged', stopSwitching);
-    };
-  }, [activeConnector, stopSwitching]);
+  //   return () => {
+  //     provider?.removeListener('chainChanged', stopSwitching);
+  //   };
+  // }, [activeConnector, stopSwitching]);
 
-  useEffect(() => {
-    if (networkError && networkError.name === 'UserRejectedRequestError') {
-      stopSwitching();
-    }
-  }, [networkError, stopSwitching]);
+  // useEffect(() => {
+  //   if (networkError && networkError.name === 'UserRejectedRequestError') {
+  //     stopSwitching();
+  //   }
+  // }, [networkError, stopSwitching]);
 
   const canProgramaticallySwitchNetwork = useMemo(
     () => !!switchNetwork || activeConnector?.name === 'WalletConnect',
@@ -128,7 +128,8 @@ export const useNetwork = () => {
     availibleChains,
     pendingConnector,
     isActiveChainUnsupported,
-
+    stopSwitching,
+    networkError,
     // * old
     currentNetwork,
     currentNetworkByChainId,
@@ -149,10 +150,12 @@ export const useNetwork = () => {
     isSwitchingChain: boolean;
     chains: Chain[];
     availibleChains: Chain[];
-    pendingConnector?: Connector;
+    pendingConnector?: Connector<any, any, any> | undefined;
     isActiveChainUnsupported: boolean;
 
     currentNetwork: Network | undefined;
     currentNetworkNew: GetNetworkResult;
+    stopSwitching: () => void;
+    networkError: Error | null;
   };
 };

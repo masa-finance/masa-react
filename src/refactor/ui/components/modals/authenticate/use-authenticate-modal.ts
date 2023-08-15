@@ -8,12 +8,14 @@ export const useAuthenticateModal = ({
   onAuthenticateSuccess,
   onAuthenticateError,
 }: {
-  onAuthenticateSuccess?: () => void;
+  onAuthenticateSuccess?: (payload: {
+    address?: string;
+    walletType?: string;
+  }) => void;
   onAuthenticateError?: () => void;
   onClose?: () => void;
 }) => {
-  const { hasAddress, isConnected, signer } = useWallet();
-
+  const { hasAddress, isConnected, signer, connector } = useWallet();
   const { hasSession, loginSession } = useSession();
   const { company } = useConfig();
 
@@ -58,18 +60,20 @@ export const useAuthenticateModal = ({
   const [{ loading: isAuthenticating }, onAuthenticateStart] =
     useAsyncFn(async () => {
       const result = await loginSession?.();
-
       if (!result) {
         onAuthenticateError?.();
         return result;
       }
 
       if (result && result.address) {
-        onAuthenticateSuccess?.();
+        onAuthenticateSuccess?.({
+          address: result.address,
+          walletType: connector?.name,
+        });
       }
 
       return result;
-    }, [loginSession, onAuthenticateError, onAuthenticateSuccess]);
+    }, [loginSession, onAuthenticateError, onAuthenticateSuccess, connector]);
 
   const showSwitchWalletButton = useMemo(
     () => !hasSession && isConnected,

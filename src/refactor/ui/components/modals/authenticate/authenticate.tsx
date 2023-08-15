@@ -9,7 +9,10 @@ import { useAuthenticateModal } from './use-authenticate-modal';
 import { ModalLoading } from '../ModalLoading';
 
 export interface AuthenticateProps {
-  onAuthenticateSuccess?: () => void;
+  onAuthenticateSuccess?: (payload: {
+    address?: string;
+    walletType?: string;
+  }) => void;
   onAuthenticateError?: () => void;
   onAuthenticateFinish?: () => void;
 }
