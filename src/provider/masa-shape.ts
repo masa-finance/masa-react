@@ -13,7 +13,6 @@ import {
 } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
 import { GetNetworkResult } from '@wagmi/core';
-import { ModalName, WrapperModalProps } from '../components';
 import { CustomGallerySBT } from '../components/masa-interface/pages/gallery/gallery';
 
 export interface MasaShape {
@@ -157,18 +156,6 @@ export interface MasaShape {
   >;
   isConnected?: boolean;
   isDisconnected?: boolean;
-  // new-modal
-  openModal?: ({
-    name,
-    title,
-    wrapperProps,
-    contentProps,
-  }: {
-    name: ModalName;
-    title?: React.ReactNode;
-    wrapperProps?: WrapperModalProps | undefined;
-    contentProps: any;
-  }) => void;
 
   openAuthenticateModal?: () => void;
   openConnectedModal?: () => void;
