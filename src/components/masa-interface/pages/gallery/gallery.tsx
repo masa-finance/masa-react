@@ -17,13 +17,13 @@ export const types = {
   ],
 };
 
-interface Greens {
+export interface Greens {
   tokenId: BigNumber;
   tokenUri: string;
   metadata?: IGreen | undefined;
 }
 
-interface CreditScores {
+export interface CreditScores {
   tokenId: BigNumber;
   tokenUri: string;
   metadata?: ICreditScore | undefined;

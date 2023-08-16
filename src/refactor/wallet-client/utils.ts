@@ -119,9 +119,11 @@ export const getRainbowkitChains = (networkList?: NetworkName[]) => {
       )
   );
 
-  const userNetworksMasa = userNetworksFiltered.map((un) => masaNetworks[un]);
+  const userNetworksMasa = userNetworksFiltered.map(
+    (un: NetworkName) => masaNetworks[un]
+  );
   const userNetworksRainbowkit = new Set(
-    userNetworksMasa.map((unm) => unm?.chainId)
+    userNetworksMasa.map((unm?: Network) => unm?.chainId)
   );
   const userChainsRainbowkit = rainbowkitChains.filter(
     (rainbowkitChain: Chain) => userNetworksRainbowkit.has(rainbowkitChain.id)

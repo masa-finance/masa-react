@@ -72,7 +72,7 @@ export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
         };
       }
     }
-  }, [company]);
+  }, [company, soulnames]);
 
   const createIdentity = useCallback(async () => {
     setIsLoading(true);
