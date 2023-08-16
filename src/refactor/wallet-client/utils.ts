@@ -149,12 +149,7 @@ export const getWagmiNetworkName = (masaNetworkName?: NetworkName) => {
 };
 
 export const getMasaNetworkName = (
-  wagmiNetworkName:
-    | NetworkName
-    | 'homestead'
-    | 'celo-alfajores'
-    | undefined
-    | string
+  wagmiNetworkName: NetworkName | 'homestead' | 'celo-alfajores' | undefined
 ) => {
   if (wagmiNetworkName === 'homestead') return 'ethereum';
   if (wagmiNetworkName === 'celo-alfajores') return 'alfajores';

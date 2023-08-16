@@ -4,6 +4,7 @@ dist
 stories
 typedoc.js
 test
+src/components/masa-interface/pages/
 # src/refactor/ui/components/modals/
 src/refactor/masanew.stories.tsx
 src/provider/modules/custom-sbts

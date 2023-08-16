@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { ISession, Masa } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
+import type { Signer } from 'ethers';
 import { queryClient } from '../../masa-query-client';
 
 export const getSessionQueryKey = ({
@@ -9,7 +10,7 @@ export const getSessionQueryKey = ({
 }: {
   walletAddress?: string;
   masa?: Masa;
-  signer?: any; // unused here
+  signer?: Signer; // unused here
 }) => ['session', walletAddress];
 
 export const getSessionDataQueryKey = ({
@@ -17,7 +18,7 @@ export const getSessionDataQueryKey = ({
 }: {
   walletAddress?: string;
   masa?: Masa;
-  signer?: any; // unused here
+  signer?: Signer; // unused here
 }) => ['session', 'data', walletAddress];
 
 export const useSessionQuery = ({

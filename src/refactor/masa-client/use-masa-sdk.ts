@@ -99,7 +99,7 @@ export const useMasaSDK = (
       protocol: arweaveConfig?.protocol || 'https',
       logging: !!arweaveConfig?.logging || true,
     };
-    
+
     return new Masa({
       signer,
       apiUrl: apiUrl ?? environment.apiUrl,

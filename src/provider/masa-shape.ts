@@ -126,8 +126,8 @@ export interface MasaShape {
   fullScreenGallery?: boolean;
 
   // customSBTs
-  customSBTs?: any[];
-  badges?: any[];
+  customSBTs?: unknown[];
+  badges?: unknown[];
   handleAddSBT?: (isCollection: boolean, name: string, address: string) => void;
   refetchContracts?: () => void;
   isLoadingCustomSBTs?: boolean;
