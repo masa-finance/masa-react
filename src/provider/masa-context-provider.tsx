@@ -11,7 +11,7 @@ import {
 } from '@masa-finance/masa-sdk';
 import React, { useCallback, useMemo } from 'react';
 import type { BigNumber } from 'ethers';
-import { CustomGallerySBT } from 'components/masa-interface/pages/gallery/gallery';
+
 // import { createNewMasa } from '../helpers';
 import {
   // useCreditScores,
@@ -46,6 +46,7 @@ import { useMasaClient } from '../refactor/masa-client/use-masa-client';
 import { useIdentityPurchase } from '../refactor/masa/use-identity-purchase';
 import { useCreditScoreCreate } from '../refactor/masa/use-credit-scores-create';
 import { useSoulNamesPurchase } from '../refactor/masa/use-soulnames-purchase';
+import type { CustomGallerySBT } from '../components/masa-interface/pages/gallery/gallery';
 // import { useSoulNamesPurchase } from '../refactor/masa/use-soulnames-purchase';
 
 export interface ArweaveConfig {
