@@ -12,7 +12,7 @@
   },
   "author": "hide-on-bush",
   "scripts": {
-    "prepare": "husky install && yarn build",
+    "prepare": "husky install",
     "clean": "rimraf ./dist",
     "build": "mkdir -p dist && yarn clean && yarn transpile && cross-env NODE_ENV=production yarn build:webpack",
     "transpile": "tsc",
