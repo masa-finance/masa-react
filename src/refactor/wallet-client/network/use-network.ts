@@ -67,6 +67,7 @@ export const useNetwork = () => {
     //   nw = 'alfajores';
     // }
 
+    if (!nw) return undefined;
     const newNetwork = getNetworkNameByChainId(nw ?? 0);
 
     return SupportedNetworks[newNetwork];
