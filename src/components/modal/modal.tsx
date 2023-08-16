@@ -67,7 +67,7 @@ export const ModalComponent = ({
       visible={open}
       onClose={(): void => close()}
       className="masa-rodal-container"
-      customStyles={{maxWidth: '100%'}}
+      customStyles={{ maxWidth: '100%' }}
     >
       <div className="masa-modal">
         <div className="masa-modal-container">{children}</div>
