@@ -1,5 +1,5 @@
 import ReactCodeInput from '@acusti/react-code-input';
-import { SubflowPage } from 'components/masa-interface/interface-subflow';
+
 import React, {
   useCallback,
   useEffect,
@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { useLocalStorage, useMasa } from '../../../../provider';
+import type { SubflowPage } from '../../interface-subflow';
 
 const errorMsgs = {
   expired: 'The code is expired. Please click Resend and try again!',

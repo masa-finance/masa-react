@@ -1,4 +1,4 @@
-import { SubflowPage } from 'components/masa-interface/interface-subflow';
+import type { SubflowPage } from '../../interface-subflow';
 import React from 'react';
 import { useMasa } from '../../../../provider';
 

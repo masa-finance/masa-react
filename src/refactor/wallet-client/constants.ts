@@ -34,8 +34,7 @@ export const walletConnectorsList: Record<
   walletconnect: (
     chains: Chain[]
     // networkName?: NetworkName
-  ) => {
-    console.log('x');
+  ) => 
     // const singleChain = chains.filter(
     //   (ch: Chain) => ch.network === getWagmiNetworkName(networkName)
     // );
@@ -52,7 +51,7 @@ export const walletConnectorsList: Record<
     //   sortedChains,
     //   networkName,
     // });
-    return {
+     ({
       groupName: 'WalletConnect',
       wallets: [
         walletConnectWallet({
@@ -64,6 +63,6 @@ export const walletConnectorsList: Record<
           },
         }),
       ],
-    };
-  },
+    })
+  ,
 };
