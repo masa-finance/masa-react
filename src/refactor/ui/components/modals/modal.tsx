@@ -23,6 +23,7 @@ export const Modal = ({
       closeOnEsc
       width={550}
       height={615}
+      customStyles={{maxWidth: '100%'}}
     >
       <div className="masa-modal">
         <div className="masa-modal-container">{children}</div>
