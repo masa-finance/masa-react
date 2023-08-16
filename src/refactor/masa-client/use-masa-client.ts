@@ -60,12 +60,14 @@ export const useMasaClient = () => {
     useAsync(async () => {
       if (!masa) return undefined;
       if (masaChainId !== activeChainId) return undefined;
-
       const network = await masa.config.signer?.provider?.getNetwork();
+
+      if (!network) return undefined;
 
       if (network?.name === 'unknown') {
         return getMasaNetworkName(currentNetwork?.networkName);
       }
+
       return getMasaNetworkName(network?.name);
     }, [masa, currentNetwork, activeChainId, masaChainId]);
 
@@ -78,6 +80,16 @@ export const useMasaClient = () => {
         masa: undefined,
       };
     }
+
+    if (!currentNetwork) {
+      return {
+        masaAddress,
+        masaChainId,
+        sdk: undefined,
+        masa: undefined,
+      };
+    }
+
     return {
       masaAddress,
       masaNetwork,
@@ -94,6 +106,7 @@ export const useMasaClient = () => {
     address,
     isLoadingMasaAddress,
     isLoadingMasaNetwork,
+    currentNetwork,
   ]);
 
   return masaClient;
