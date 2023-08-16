@@ -1,11 +1,7 @@
 import { useQuery } from 'react-query';
-import {
-  Masa,
-  NetworkName,
-  PaymentMethod,
-  SoulNameDetails,
-} from '@masa-finance/masa-sdk';
+import { Masa, PaymentMethod, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useCallback, useMemo } from 'react';
+import type { Signer } from 'ethers';
 import { queryClient } from '../../masa-query-client';
 
 export const getSoulnamesQueryKey = ({
@@ -14,7 +10,7 @@ export const getSoulnamesQueryKey = ({
 }: {
   walletAddress?: string;
   masa?: Masa;
-  signer?: any; // unused here
+  signer?: Signer; // unused here
 }) => ['soulnames', walletAddress, masa?.config.networkName];
 
 export const useSoulnamesQuery = ({
@@ -24,7 +20,7 @@ export const useSoulnamesQuery = ({
   masa?: Masa;
   walletAddress?: string;
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+  const queryKey: (string | undefined)[] = useMemo(
     () => ['soulnames', walletAddress, masa?.config.networkName],
     [walletAddress, masa]
   );

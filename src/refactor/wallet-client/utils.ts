@@ -119,9 +119,11 @@ export const getRainbowkitChains = (networkList?: NetworkName[]) => {
       )
   );
 
-  const userNetworksMasa = userNetworksFiltered.map((un) => masaNetworks[un]);
+  const userNetworksMasa = userNetworksFiltered.map(
+    (un: NetworkName) => masaNetworks[un]
+  );
   const userNetworksRainbowkit = new Set(
-    userNetworksMasa.map((unm) => unm?.chainId)
+    userNetworksMasa.map((unm?: Network) => unm?.chainId)
   );
   const userChainsRainbowkit = rainbowkitChains.filter(
     (rainbowkitChain: Chain) => userNetworksRainbowkit.has(rainbowkitChain.id)
@@ -149,12 +151,7 @@ export const getWagmiNetworkName = (masaNetworkName?: NetworkName) => {
 };
 
 export const getMasaNetworkName = (
-  wagmiNetworkName:
-    | NetworkName
-    | 'homestead'
-    | 'celo-alfajores'
-    | undefined
-    | string
+  wagmiNetworkName: NetworkName | 'homestead' | 'celo-alfajores' | undefined
 ) => {
   if (wagmiNetworkName === 'homestead') return 'ethereum';
   if (wagmiNetworkName === 'celo-alfajores') return 'alfajores';

@@ -80,7 +80,7 @@ export const useMasaSDK = (
     if (verbose) {
       signer
         .getAddress()
-        .then((s) => {
+        .then((s: string) => {
           console.log('DEBUG: creating new masa', {
             signerAddress: s,
             signer,
@@ -99,7 +99,7 @@ export const useMasaSDK = (
       protocol: arweaveConfig?.protocol || 'https',
       logging: !!arweaveConfig?.logging || true,
     };
-    
+
     return new Masa({
       signer,
       apiUrl: apiUrl ?? environment.apiUrl,

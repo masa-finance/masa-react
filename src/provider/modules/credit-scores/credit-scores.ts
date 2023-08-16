@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
-import { ICreditScore, Masa, NetworkName } from '@masa-finance/masa-sdk';
+import { ICreditScore, Masa } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
 import { queryClient } from '../../masa-query-client';
 
@@ -33,7 +33,7 @@ export const useCreditScoresQuery = ({
     address?: string;
   };
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+  const queryKey: (string | undefined)[] = useMemo(
     () => ['credit-scores', walletAddress, masa?.config.networkName],
     [walletAddress, masa]
   );
@@ -88,12 +88,11 @@ export const useCreditScoresQuery = ({
 };
 
 export type UseCreditScoresReturnType = {
-  creditScores?:
-    | {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata?: ICreditScore;
-      }[];
+  creditScores?: {
+    tokenId: BigNumber;
+    tokenUri: string;
+    metadata?: ICreditScore;
+  }[];
   handleCreateCreditScore: () => Promise<boolean | undefined>;
   status: string;
   isCreditScoresLoading: boolean;

@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { Masa, NetworkName } from '@masa-finance/masa-sdk';
+import type { Masa } from '@masa-finance/masa-sdk';
 import { Signer } from 'ethers';
 import { useCallback, useMemo } from 'react';
 import { useAsync } from 'react-use';
@@ -21,7 +21,7 @@ export const useWalletQuery = ({
   signer?: Signer;
   walletAddress?: string; // unused
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+  const queryKey: (string | undefined)[] = useMemo(
     () => ['wallet', masa?.config.networkName],
     [masa]
   );

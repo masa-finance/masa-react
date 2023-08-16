@@ -4,10 +4,9 @@ import {
   GenerateGreenResult,
   IGreen,
   Masa,
-  NetworkName,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
-import { BigNumber } from 'ethers';
+import type { BigNumber, Signer } from 'ethers';
 import { queryClient } from '../../masa-query-client';
 
 export const getGreenQueryKey = ({
@@ -16,7 +15,7 @@ export const getGreenQueryKey = ({
 }: {
   masa?: Masa;
   walletAddress?: string;
-  signer?: any; // unused here
+  signer?: Signer; // unused here
 }) => ['green', walletAddress, masa?.config.networkName];
 
 export const useGreenQuery = ({
@@ -26,7 +25,7 @@ export const useGreenQuery = ({
   masa?: Masa;
   walletAddress?: string;
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+  const queryKey: (string | undefined)[] = useMemo(
     () => ['green', walletAddress, masa?.config.networkName],
     [masa, walletAddress]
   );

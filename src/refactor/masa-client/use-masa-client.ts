@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useAsync } from 'react-use';
+import type { NetworkName } from '@masa-finance/masa-sdk';
 import { useConfig } from '../base-provider';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaSDK } from './use-masa-sdk';
@@ -68,7 +69,13 @@ export const useMasaClient = () => {
         return getMasaNetworkName(currentNetwork?.networkName);
       }
 
-      return getMasaNetworkName(network?.name);
+      return getMasaNetworkName(
+        network?.name as unknown as
+          | NetworkName
+          | 'homestead'
+          | 'celo-alfajores'
+          | undefined
+      );
     }, [masa, currentNetwork, activeChainId, masaChainId]);
 
   const masaClient = useMemo(() => {

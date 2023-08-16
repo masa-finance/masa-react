@@ -5,6 +5,7 @@ import {
   ICreditScore,
   IGreen,
   Masa,
+  MasaSBTWrapper,
   Network,
   NetworkName,
   PaymentMethod,
@@ -13,6 +14,7 @@ import {
 } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
 import { GetNetworkResult } from '@wagmi/core';
+import { MasaSBT } from '@masa-finance/masa-contracts-identity';
 import { CustomGallerySBT } from '../components/masa-interface/pages/gallery/gallery';
 
 export interface MasaShape {
@@ -126,8 +128,14 @@ export interface MasaShape {
   fullScreenGallery?: boolean;
 
   // customSBTs
-  customSBTs?: any[];
-  badges?: any[];
+  customSBTs?: (CustomGallerySBT &
+    MasaSBTWrapper<MasaSBT> & {
+      tokens: {
+        tokenId: BigNumber;
+        tokenUri: string;
+      }[];
+    })[];
+  badges?: unknown[];
   handleAddSBT?: (isCollection: boolean, name: string, address: string) => void;
   refetchContracts?: () => void;
   isLoadingCustomSBTs?: boolean;

@@ -52,7 +52,7 @@ export const useAuthenticate = ({
         disable,
         disablePurchase: config?.disableSoulnamePurchase,
       });
-      
+
       if (isDisconnected) {
         openConnectModal?.();
       }
