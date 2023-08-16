@@ -1,11 +1,17 @@
 import { NetworkName, SupportedNetworks } from '@masa-finance/masa-sdk';
+import type { SwitchNetworkArgs } from '@wagmi/core';
 import { useCallback, useMemo } from 'react';
-import { useNetwork, useSwitchNetwork } from 'wagmi';
+import { type Chain, useNetwork, useSwitchNetwork } from 'wagmi';
 
 export const useNetworkSwitch = () => {
   const currentNetwork = useNetwork();
   const { switchNetwork: switchNetworkWagmi } = useSwitchNetwork({
-    onSettled(data, error, variables, context) {
+    onSettled(
+      data: Chain | undefined,
+      error: Error | null,
+      variables: SwitchNetworkArgs,
+      context: unknown
+    ) {
       console.log('switchnetwork wagmi in useNetxworkswitch ( onSettled)', {
         data,
         error,
@@ -13,7 +19,7 @@ export const useNetworkSwitch = () => {
         context,
       });
     },
-    onError: (err) => console.error('Wagmi Network switch failed', err),
+    onError: (err: Error) => console.error('Wagmi Network switch failed', err),
   });
 
   const switchNetwork = useCallback(

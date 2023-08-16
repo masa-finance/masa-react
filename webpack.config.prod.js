@@ -1,7 +1,6 @@
 const path = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
@@ -154,7 +153,6 @@ module.exports =
                       path.resolve('node_modules'),
                       path.resolve('node_modules/@rainbow-me/rainbowkit'),
                       path.resolve('node_modules/react-phone-number-input'),
-                      path.resolve('node_modules/normalize.css'),
                     ],
                   },
                 },

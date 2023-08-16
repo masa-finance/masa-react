@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useQuery } from 'react-query';
-import { Masa, NetworkName } from '@masa-finance/masa-sdk';
+import { Masa } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
 export const useSBT = ({
@@ -21,7 +21,7 @@ export const useSBT = ({
   reloadSBTs: () => void;
   error: unknown;
 } => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+  const queryKey: (string | undefined)[] = useMemo(
     () => ['sbt', tokenAddress, walletAddress, masa?.config.networkName],
     [masa, tokenAddress, walletAddress]
   );

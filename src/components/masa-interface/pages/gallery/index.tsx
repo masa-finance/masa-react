@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useMasa } from '../../../../provider';
 import { InterfaceSubflow } from '../../interface-subflow';
 import { AddSBT } from './add-sbt';
-import { Gallery, TabsInterface } from './gallery';
+import { CreditScores, Gallery, Greens, TabsInterface } from './gallery';
 import { GalleryItem } from './galleryItem';
+import { SoulNameDetails } from '@masa-finance/masa-sdk';
+import { BigNumber } from 'ethers';
 
 const handleRender = (SBT: any) => {
   const getMetadata = () => {
@@ -42,7 +44,15 @@ const useTabs = () => {
       if (customSBT.tokens && customSBT.tokens.length === 0) continue; // Skip when no tokens
 
       const { tokens } = customSBT;
-      const hidratatedTokens: any[] = [];
+      const hidratatedTokens: {
+        tokenId: BigNumber;
+        tokenUri: string;
+        metadata: {
+          image: string;
+          name: string;
+          description: string;
+        };
+      }[] = [];
       for (const token of tokens) {
         try {
           const metadata = await customSBT.getMetadata(token);
@@ -76,7 +86,8 @@ const useTabs = () => {
     if (masa && badges?.length) {
       (async () => {
         setSavedBadges({
-          items: badges ?? [],
+          items:
+            (badges as SoulNameDetails[] | Greens[] | CreditScores[]) ?? [],
           render: (item) => handleRender(item),
           content() {
             // @ts-ignore

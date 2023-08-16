@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useQuery } from 'react-query';
-import { Masa, NetworkName, PaymentMethod } from '@masa-finance/masa-sdk';
-import { BigNumber } from 'ethers';
+import { Masa, PaymentMethod } from '@masa-finance/masa-sdk';
+import type { BigNumber, Signer } from 'ethers';
 import { useAsync } from 'react-use';
 import { queryClient } from '../../masa-query-client';
 
@@ -11,7 +11,7 @@ export const getIdentityQueryKey = ({
 }: {
   walletAddress?: string;
   masa?: Masa;
-  signer?: any; // unused here
+  signer?: Signer; // unused here
 }) => ['identity', walletAddress, masa?.config.networkName];
 
 export const useIdentityQuery = ({
@@ -21,7 +21,7 @@ export const useIdentityQuery = ({
   masa?: Masa;
   walletAddress?: string;
 }) => {
-  const queryKey: (string | NetworkName | undefined)[] = useMemo(
+  const queryKey: (string | undefined)[] = useMemo(
     () => ['identity', walletAddress, masa?.config.networkName],
     [walletAddress, masa]
   );

@@ -19,7 +19,7 @@ export const CreateCreditScoreModal = NiceModal.create((): JSX.Element => {
 
     if (!minted)
       setError('There is not enough data for generating a credit score');
-  }, []);
+  }, [handleCreateCreditScore]);
 
   /* if (isLoading) return <MasaLoading />; */
 
