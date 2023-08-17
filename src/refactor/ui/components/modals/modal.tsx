@@ -4,14 +4,12 @@ import { useModal } from '@ebay/nice-modal-react';
 
 export const Modal = ({
   children,
-  onClose,
-  width,
-  height,
+  onClose, // width, // height,
 }: {
   children: ReactNode;
   onClose?: () => unknown;
-  width?: number;
-  height?: number;
+  // width?: number;
+  // height?: number;
 }) => {
   const modal = useModal();
   const modalRef = useRef(null);
@@ -26,8 +24,9 @@ export const Modal = ({
       visible={modal.visible}
       onClose={handleClose}
       closeOnEsc
-      width={width || 550}
-      height={height || 615}
+      width={550}
+      height={615}
+      customStyles={{ maxWidth: '100%' }}
     >
       <div ref={modalRef} className="masa-modal">
         <div className="masa-modal-container">{children}</div>
