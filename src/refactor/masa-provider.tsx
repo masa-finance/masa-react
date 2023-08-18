@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 
 import NiceModal from '@ebay/nice-modal-react';
+import type { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental';
 import MasaBaseProvider from './base-provider';
 import { MasaReactConfig } from './config';
-
 import { MasaStateProvider } from './provider/masa-state-provider';
 import { MasaWalletProvider } from './provider/masa-wallet-provider';
 
@@ -15,16 +15,18 @@ export const MasaProvider = ({
   children,
   config,
   verbose,
+  HydrationRQ,
 }: {
   children: ReactNode;
   config: MasaReactConfig;
   verbose?: boolean;
+  HydrationRQ?: typeof ReactQueryStreamedHydration;
 }) => (
   <MasaBaseProvider
     config={{ ...config, masaConfig: { ...config.masaConfig, verbose } }}
   >
     <MasaWalletProvider>
-      <MasaStateProvider>
+      <MasaStateProvider HydrationRQ={HydrationRQ}>
         <NiceModal.Provider>{children}</NiceModal.Provider>
       </MasaStateProvider>
     </MasaWalletProvider>
