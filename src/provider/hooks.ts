@@ -3,7 +3,7 @@ import { useAsyncFn } from 'react-use';
 import { DependencyList } from 'react';
 import { Masa } from '@masa-finance/masa-sdk';
 import { Signer } from 'ethers';
-import { InvalidateQueryFilters } from 'react-query';
+import { InvalidateQueryFilters } from '@tanstack/react-query';
 import {
   getCreditScoresQueryKey,
   getGreenQueryKey,

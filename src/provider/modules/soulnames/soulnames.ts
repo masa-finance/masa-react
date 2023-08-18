@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Masa, PaymentMethod, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useCallback, useMemo } from 'react';
 import type { Signer } from 'ethers';

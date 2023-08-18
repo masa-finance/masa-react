@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Masa, NetworkName } from '@masa-finance/masa-sdk';
 import { Signer } from 'ethers';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useLocalStorage } from '../../use-local-storage';
 import { queryClient } from '../../masa-query-client';
 import type { CustomGallerySBT } from '../../../components/masa-interface/pages/gallery/gallery';

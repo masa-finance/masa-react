@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { ISession, Masa } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
 import type { Signer } from 'ethers';
