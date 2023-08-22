@@ -26,13 +26,14 @@ const Gallery = () => {
   return (
     <Modal>
       <article className="masa-gallery-container">
-        {masa && tabs && tabs.length > 0 ? (
+        {masa && tabs && tabs.length > 0 && (
           <Tabs
             tabs={tabs}
             wrapperClassName="masa-gallery"
             onAdd={() => console.log('Add sbt')}
           />
-        ) : (
+        )}
+        {(!masa || !tabs?.length) && (
           <div className="not-connected-message">
             <h2>It looks like you are not connected to Masa</h2>
             {/* <button className="masa-button" onClick={() => connect?.()}>

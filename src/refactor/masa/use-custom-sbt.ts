@@ -1,13 +1,17 @@
 import { useCallback, useMemo } from 'react';
 import { Masa, MasaSBTWrapper } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
+
 import { MasaSBT } from '@masa-finance/masa-contracts-identity';
+import { useAsyncFn } from 'react-use';
 import { queryClient } from '../../provider';
-import { useMasaClient } from '../masa-client';
+import { MasaQueryClientContext, useMasaClient } from '../masa-client';
 import { useWallet } from '../wallet-client';
 import { useConfig } from '../base-provider';
 import { CustomGallerySBT } from '../../components/masa-interface/pages/gallery/gallery';
+import { useCanQuery } from '../hooks/use-can-query';
+import { useSession } from './use-session';
 
 export const getCustomSBTsContractsQueryKey = ({
   masa,
@@ -150,14 +154,20 @@ export const fetchCustomSBTs = async (
 };
 
 export const useCustomSBTsQuery = () => {
-  const { sdk: masa } = useMasaClient();
-  const { address: walletAddress } = useWallet();
+  const { masaAddress, masaNetwork } = useMasaClient();
+  const canQuery = useCanQuery();
   const { customContracts } = useCustomGallerySBT();
 
-  const queryKey: (string | undefined)[] = useMemo(
-    () => getCustomSBTsQueryKey({ masa, walletAddress }),
-    [walletAddress, masa]
-  );
+  const { hasSession, sessionAddress } = useSession();
+
+  const [, getCustomContracts] = useAsyncFn(async () => {
+    if (!canQuery) return null;
+
+    const result = await fetchCustomSBTs(customContracts);
+    if (!result) return null;
+
+    return result;
+  }, [canQuery, customContracts]);
 
   const {
     data: customSBTs,
@@ -166,14 +176,14 @@ export const useCustomSBTsQuery = () => {
     isFetching,
     refetch: reloadCustomSBTs,
     error,
-  } = useQuery(queryKey, () => fetchCustomSBTs(customContracts), {
-    enabled: !!masa && !!walletAddress && !!customContracts?.length,
-    retry: false,
-    onSuccess: (SBTs) => {
-      if (masa?.config.verbose) {
-        console.info('fetchCustomSBTs', SBTs);
-      }
-    },
+  } = useQuery({
+    queryKey: [
+      'custom-sbt',
+      { sessionAddress, masaAddress, masaNetwork, persist: false },
+    ],
+    enabled: !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
+    context: MasaQueryClientContext,
+    queryFn: getCustomContracts,
   });
 
   const invalidateCustomSBTs = useCallback(
@@ -185,28 +195,6 @@ export const useCustomSBTsQuery = () => {
     customSBTs,
     status,
     isLoading,
-    isFetching,
-    reloadCustomSBTs,
-    invalidateCustomSBTs,
-    error,
-  };
-};
-
-export const useCustomSBT = () => {
-  const {
-    customSBTs,
-    status,
-    isLoading,
-    isFetching,
-    reloadCustomSBTs,
-    invalidateCustomSBTs,
-    error,
-  } = useCustomSBTsQuery();
-
-  return {
-    customSBTs,
-    status,
-    isLoading: isLoading || isFetching,
     isFetching,
     reloadCustomSBTs,
     invalidateCustomSBTs,
