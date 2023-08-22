@@ -26,11 +26,15 @@ import { MasaQueryClientContext } from './masa-client/masa-query-client-context'
 import {
   CreateCreditScoreModal,
   CreateIdentityModal,
+  OpenGalleryModal,
 } from './ui/components/modals';
 import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
+import { QueryClientProvider } from 'react-query';
+import { queryClient } from '../provider';
+import { CustomGallerySBT } from '../components/masa-interface/pages/gallery/gallery';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -552,6 +556,11 @@ const ModalFlow = () => {
           Create Masa Green
         </Button>
       </li>
+      <li>
+        <Button type="button" onClick={OpenGalleryModal}>
+          Gallery
+        </Button>
+      </li>
     </ul>
   );
 };
@@ -616,32 +625,46 @@ const Component = (): JSX.Element => {
   );
 };
 
+const GoodDollarSBT: CustomGallerySBT = {
+  name: 'Good Dollar SBT',
+  address: '0x814846364714bD2d66aD9433B34AE67754115963',
+  network: 'alfajores',
+  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
+    name: 'Good Dollar SBT',
+    image: sbt.tokenUri,
+    description: 'Good Dollar Token',
+  }),
+};
+
 const TemplateNewMasaState = (props: Args) => (
-  <MasaProvider
-    config={{
-      allowedWallets: ['metamask', 'walletconnect'],
-      forceChain: 'base',
-      // contractAddressOverrides: {},
-      allowedNetworkNames: [
-        'goerli',
-        'ethereum',
-        'alfajores',
-        'celo',
-        'mumbai',
-        'polygon',
-        'bsctest',
-        'bsc',
-        'base',
-        'basegoerli',
-        'unknown',
-      ],
-      masaConfig: {
-        networkName: 'base',
-      },
-    }}
-  >
-    <Component {...props} />
-  </MasaProvider>
+  <QueryClientProvider contextSharing client={queryClient}>
+    <MasaProvider
+      config={{
+        allowedWallets: ['metamask', 'walletconnect'],
+        forceChain: 'base',
+        // contractAddressOverrides: {},
+        allowedNetworkNames: [
+          'goerli',
+          'ethereum',
+          'alfajores',
+          'celo',
+          'mumbai',
+          'polygon',
+          'bsctest',
+          'bsc',
+          'base',
+          'basegoerli',
+          'unknown',
+        ],
+        masaConfig: {
+          networkName: 'base',
+        },
+        customSBTs: [GoodDollarSBT],
+      }}
+    >
+      <Component {...props} />
+    </MasaProvider>
+  </QueryClientProvider>
 );
 
 export const NewMasaState = TemplateNewMasaState.bind({

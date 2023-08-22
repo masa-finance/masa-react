@@ -2,9 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useMasa } from '../../../../provider';
 import { InterfaceSubflow } from '../../interface-subflow';
 import { AddSBT } from './add-sbt';
-import { CreditScores, Gallery, Greens, TabsInterface } from './gallery';
+import { Gallery, TabsInterface } from './gallery';
 import { GalleryItem } from './galleryItem';
-import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 
 const handleRender = (SBT: any) => {
@@ -31,9 +30,8 @@ const handleRender = (SBT: any) => {
 };
 
 const useTabs = () => {
-  const { masa, badges, customSBTs } = useMasa();
+  const { masa, customSBTs } = useMasa();
 
-  const [savedBadges, setSavedBadges] = useState<TabsInterface>();
   const [savedTabs, setSavedTabs] = useState<TabsInterface[]>();
 
   const getTabs = useCallback(async () => {
@@ -70,7 +68,7 @@ const useTabs = () => {
         },
         title: customSBT.name,
       };
-      newTabs.push(tabContent);
+      newTabs.push(tabContent as any);
     }
 
     setSavedTabs(newTabs as any);
@@ -82,24 +80,7 @@ const useTabs = () => {
     }
   }, [masa, getTabs]);
 
-  useEffect(() => {
-    if (masa && badges?.length) {
-      (async () => {
-        setSavedBadges({
-          items:
-            (badges as SoulNameDetails[] | Greens[] | CreditScores[]) ?? [],
-          render: (item) => handleRender(item),
-          content() {
-            // @ts-ignore
-            return this?.items?.map((item) => this?.render(item));
-          },
-          title: 'Badges',
-        });
-      })();
-    }
-  }, [masa, badges]);
-
-  return { sbts: savedTabs, badges: savedBadges };
+  return { sbts: savedTabs };
 };
 
 const GalleryContainer = () => {
