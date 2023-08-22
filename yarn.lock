@@ -3118,19 +3118,19 @@
     "@storybook/global" "^5.0.0"
     "@storybook/preview-api" "7.3.1"
 
-"@storybook/addon-links@^7.3.1":
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-7.3.1.tgz#5a1581afb0d54b77aa9a48c3a96816317d883663"
-  integrity sha512-JL3zdC1GWwRU+F4CslHVfjAB0ciSNS6+si/KvXOy2Y9S4uRgYkp2IWnuOFmZGpifgSdQbjGvLnj0fuw/hO+IcA==
+"@storybook/addon-links@^7.3.2":
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-7.3.2.tgz#c6e1c2b35d9b9c3b8986355dc4b6ba01c2f6d29c"
+  integrity sha512-xpOpb33KscvmM2Sl9nFqU3DCk3tGaoqtFKkDOzf/QlZsMq9CCn4zPNGMfOFqifBEnDGDADHbp+Uxst5i535vdQ==
   dependencies:
-    "@storybook/client-logger" "7.3.1"
-    "@storybook/core-events" "7.3.1"
+    "@storybook/client-logger" "7.3.2"
+    "@storybook/core-events" "7.3.2"
     "@storybook/csf" "^0.1.0"
     "@storybook/global" "^5.0.0"
-    "@storybook/manager-api" "7.3.1"
-    "@storybook/preview-api" "7.3.1"
-    "@storybook/router" "7.3.1"
-    "@storybook/types" "7.3.1"
+    "@storybook/manager-api" "7.3.2"
+    "@storybook/preview-api" "7.3.2"
+    "@storybook/router" "7.3.2"
+    "@storybook/types" "7.3.2"
     prop-types "^15.7.2"
     ts-dedent "^2.0.0"
 
@@ -3540,12 +3540,12 @@
     resolve-from "^5.0.0"
     ts-dedent "^2.0.0"
 
-"@storybook/core-events@7.3.1", "@storybook/core-events@^7.0.12":
+"@storybook/core-events@7.3.1":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.3.1.tgz#ebc6b1fc21a50b3d293678c00199d01a01a30b8b"
   integrity sha512-7Pkgwmj/9B7Z3NNSn2swnviBrg9L1VeYSFw6JJKxtQskt8QoY8LxAsPzVMlHjqRmO6sO7lHo9FgpzIFxdmFaAA==
 
-"@storybook/core-events@7.3.2":
+"@storybook/core-events@7.3.2", "@storybook/core-events@^7.0.12":
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.3.2.tgz#9d18df7ceb6901225218e538a3d1d720a2f49b46"
   integrity sha512-DCrM3s+sxLKS8vl0zB+1tZEtcl5XQTOGl46XgRRV/SIBabFbsC0l5pQPswWkTUsIqdREtiT0YUHcXB1+YDyFvA==
@@ -3678,7 +3678,7 @@
   resolved "https://registry.yarnpkg.com/@storybook/icons/-/icons-1.1.6.tgz#22536cde6dd85fa259608fa8bd7b9eeca2a8e688"
   integrity sha512-co5gDCYPojRAc5lRMnWxbjrR1V37/rTmAo9Vok4a1hDpHZIwkGTWesdzvYivSQXYFxZTpxdM1b5K3W87brnahw==
 
-"@storybook/manager-api@7.3.1", "@storybook/manager-api@^7.0.12":
+"@storybook/manager-api@7.3.1":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@storybook/manager-api/-/manager-api-7.3.1.tgz#a755295c22322288897f3d4ee54336b93de8c281"
   integrity sha512-jFH0EfWasdwHW8X5DUzTbH5mpdCZBHU7lIEUj6lVMBcBxbTniqBiG7mkwbW9VLocqEbBZimLCb/2RtTpK1Ue3Q==
@@ -3699,7 +3699,7 @@
     telejson "^7.0.3"
     ts-dedent "^2.0.0"
 
-"@storybook/manager-api@7.3.2":
+"@storybook/manager-api@7.3.2", "@storybook/manager-api@^7.0.12":
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/@storybook/manager-api/-/manager-api-7.3.2.tgz#8228ce35cfc0f304e3a1c51bec3d3e0d01427a1a"
   integrity sha512-EEosLcc+CPLjorLf2+rGLBW0sH0SHVcB1yClLIzKM5Wt8Cl/0l19wNtGMooE/28SDLA4DPIl4WDnP83wRE1hsg==
@@ -3767,7 +3767,7 @@
     semver "^7.3.7"
     webpack "5"
 
-"@storybook/preview-api@7.3.1", "@storybook/preview-api@^7.0.12":
+"@storybook/preview-api@7.3.1":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@storybook/preview-api/-/preview-api-7.3.1.tgz#0a976397310478597551e056ca5e508657329b3c"
   integrity sha512-otFvUJBFxhg11O5XLiyqddTS1ge/tjIs4gA4Uli6M+a6PV+SdNuTE8OjpvvgjsFTFdhyciHKTimKSLAqvopcuw==
@@ -3787,7 +3787,7 @@
     ts-dedent "^2.0.0"
     util-deprecate "^1.0.2"
 
-"@storybook/preview-api@7.3.2":
+"@storybook/preview-api@7.3.2", "@storybook/preview-api@^7.0.12":
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/@storybook/preview-api/-/preview-api-7.3.2.tgz#75701e7d27cb804c2e30403ce9d001ea8cb2022a"
   integrity sha512-exQrWQQLwf/nXB6OEuQScygN5iO914iNQAvicaJ7mrX9L1ypIq1PpXgJR3mSezBd9dhOMBP/BMy1Zck/wBEL9A==
@@ -3932,7 +3932,7 @@
     "@storybook/global" "^5.0.0"
     memoizerific "^1.11.3"
 
-"@storybook/types@7.3.1", "@storybook/types@^7.0.12":
+"@storybook/types@7.3.1":
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/@storybook/types/-/types-7.3.1.tgz#51548d0b6e12969c06de2712b48d153c7c499d1c"
   integrity sha512-QR714i/Stus/RYqJ8chTCfWNt3RY6/64xRXxaMLqkx75OIq5+rtsmes9I5iUqM4FuupvE7YdlZ5xKvxLYLYgJQ==
@@ -3942,7 +3942,7 @@
     "@types/express" "^4.7.0"
     file-system-cache "2.3.0"
 
-"@storybook/types@7.3.2":
+"@storybook/types@7.3.2", "@storybook/types@^7.0.12":
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/@storybook/types/-/types-7.3.2.tgz#81ca5cf87dcaeb06d99e17e91d7852677a0676b9"
   integrity sha512-1UHC1r2J6H9dEpj4pp9a16P1rTL87V9Yc6TtYBpp7m+cxzyIZBRvu1wZFKmRB51RXE/uDaxGRKzfNRfgTALcIQ==
