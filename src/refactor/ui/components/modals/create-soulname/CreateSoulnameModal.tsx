@@ -1,5 +1,7 @@
+import 'rc-tooltip/assets/bootstrap_white.css';
 import React, { useCallback, useMemo, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
+import Tooltip from 'rc-tooltip';
 import { CreateSoulNameResult } from '@masa-finance/masa-sdk';
 import { Connector } from 'wagmi';
 import { useConfig } from '../../../../base-provider';
@@ -34,7 +36,7 @@ const SoulnameModal = ({
 }) => {
   const { company } = useConfig();
   const { isLoadingSigner } = useWalletClient();
-  const { extension, soulname } = useCreateSoulnameModal();
+  const { extension, soulname, soulNameError } = useCreateSoulnameModal();
   const { connector } = useWalletClient();
 
   const [shouldRestart, setShouldRestart] = useState(false);
@@ -187,19 +189,26 @@ const SoulnameModal = ({
           <p id="slippage-disclaimer">
             Prices may vary slightly due to market price and slippage.
           </p>
-          <button
-            type="button"
-            id="gtm_register_domain"
-            className="masa-button"
-            onClick={handleRegisterSoulname}
+
+          <Tooltip
+            placement="bottom"
+            trigger={['hover']}
+            overlay={
+              <p className="m-0">
+                {soulNameError || 'This requires a signature'}
+              </p>
+            }
           >
-            Register your domain
-          </button>
-          {/* {showError && soulNameError && (
-            <p style={{ color: 'red', width: '100%', textAlign: 'center' }}>
-              {errorRegisterSoulname}
-            </p>
-          )} */}
+            <button
+              type="button"
+              id="gtm_register_domain"
+              className="masa-button"
+              onClick={handleRegisterSoulname}
+              disabled={Boolean(soulNameError)}
+            >
+              Register your domain
+            </button>
+          </Tooltip>
         </div>
       </article>
     </Modal>
