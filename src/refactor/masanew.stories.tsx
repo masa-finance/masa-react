@@ -1,4 +1,4 @@
-import buffer from 'buffer';
+// import buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
@@ -19,7 +19,7 @@ import { useSoulNames } from './masa/use-soulnames';
 import { useCreditScores } from './masa/use-credit-scores';
 import { useGreen } from './masa/use-green';
 import { useSBT } from './masa/use-sbt';
-import MasaProvider from './masa-provider';
+import { MasaRefactorProvider } from '../../src/index';
 import { useSession } from './masa/use-session';
 import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
@@ -32,11 +32,11 @@ import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
 
-// * nextjs fix
-// * TODO: move this to index.ts file at some point
-if (typeof window !== 'undefined') {
-  window.Buffer = buffer.Buffer;
-}
+// // * nextjs fix
+// // * TODO: move this to index.ts file at some point
+// if (typeof window !== 'undefined') {
+//   window.Buffer = buffer.Buffer;
+// }
 
 const meta: Meta = {
   title: 'Refactor Test',
@@ -617,7 +617,7 @@ const Component = (): JSX.Element => {
 };
 
 const TemplateNewMasaState = (props: Args) => (
-  <MasaProvider
+  <MasaRefactorProvider
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
       forceChain: 'base',
@@ -641,7 +641,7 @@ const TemplateNewMasaState = (props: Args) => (
     }}
   >
     <Component {...props} />
-  </MasaProvider>
+  </MasaRefactorProvider>
 );
 
 export const NewMasaState = TemplateNewMasaState.bind({
