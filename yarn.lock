@@ -2075,13 +2075,6 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@masa-finance/masa-contracts-identity@^1.8.0":
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.8.4.tgz#d50913b5455870c806f971478604319c7ac81066"
-  integrity sha512-OPSeEjYZnsZ3J6iIV0hXNAmV6WKjTKFtdqcReXJpQfRUTfsJzZCswuxRD+GxjUVEpL2fGDW++i9f+A07BFd28Q==
-  dependencies:
-    ethers "~5.7.2"
-
 "@masa-finance/masa-contracts-identity@^1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.9.0.tgz#2e36078ae69af07633148749653353f667870ce4"
