@@ -56,7 +56,18 @@ const useTabs = () => {
       for (const token of tokens) {
         try {
           const metadata = await customSBT.getMetadata(token);
-          hidratatedTokens.push({ metadata, ...token });
+
+          const hydratedToken = {
+            tokenId: token.tokenId,
+            tokenUri: token.tokenUri,
+            metadata: {
+              image: metadata.image,
+              name: metadata.name,
+              description: metadata.description,
+            },
+          };
+
+          hidratatedTokens.push(hydratedToken);
         } catch (error) {
           console.log('METADTA ERROR', error);
         }

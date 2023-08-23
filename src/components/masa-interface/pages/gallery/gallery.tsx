@@ -23,6 +23,12 @@ export interface Greens {
   metadata?: IGreen | undefined;
 }
 
+export interface CustomSBTs {
+  tokenId: BigNumber;
+  tokenUri: string;
+  metadata?: { name: string; description: string; image: string } | undefined;
+}
+
 export interface CreditScores {
   tokenId: BigNumber;
   tokenUri: string;
@@ -30,7 +36,7 @@ export interface CreditScores {
 }
 
 export interface TabsInterface {
-  items: SoulNameDetails[] | Greens[] | CreditScores[];
+  items: CustomSBTs[] | SoulNameDetails[] | Greens[] | CreditScores[];
   render: (SBT: any) => JSX.Element;
   content: () => JSX.Element[];
   title: string;
