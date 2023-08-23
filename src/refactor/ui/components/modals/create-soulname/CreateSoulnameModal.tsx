@@ -39,7 +39,7 @@ const SoulnameModal = ({
 
   const [shouldRestart, setShouldRestart] = useState(false);
   const handleError = useCallback(() => {
-    setSoulname('')
+    setSoulname('');
     setShouldRestart(true);
     onError?.();
   }, [onError]);
