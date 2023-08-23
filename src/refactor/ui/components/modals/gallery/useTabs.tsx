@@ -1,5 +1,6 @@
 import { BigNumber } from 'ethers';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAsyncFn } from 'react-use';
 import {
   GalleryMetadata,
   TabsInterface,
@@ -31,7 +32,7 @@ export const useTabs = () => {
 
   const [savedTabs, setSavedTabs] = useState<TabsInterface[]>();
 
-  const getTabs = useCallback(async () => {
+  const [, getTabs] = useAsyncFn(async () => {
     if (!customSBTs || (customSBTs && customSBTs.length === 0)) return;
 
     const newTabs: TabsInterface[] = [];
