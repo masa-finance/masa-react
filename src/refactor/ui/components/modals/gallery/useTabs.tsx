@@ -13,20 +13,7 @@ export const handleRender = (SBT: {
   tokenId: BigNumber;
   tokenUri: string;
 }) => {
-  const getMetadata = (): GalleryMetadata => {
-    if (SBT.metadata) {
-      return SBT.metadata;
-    }
-    if (SBT.tokenId) {
-      return {
-        image: SBT.tokenUri,
-      };
-    }
-
-    return {};
-  };
-
-  const metadata = getMetadata();
+  const metadata = SBT?.metadata ?? SBT?.tokenUri ?? {};
 
   return (
     <GalleryItem
