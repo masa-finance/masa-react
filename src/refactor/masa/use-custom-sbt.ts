@@ -187,7 +187,7 @@ export const useCustomSBTs = () => {
 
   const invalidateCustomSBTs = useCallback(
     async () => queryClient.invalidateQueries(['custom-sbt']),
-    []
+    [queryClient]
   );
 
   return {

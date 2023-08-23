@@ -35,29 +35,16 @@ export const useTabs = () => {
     if (!customSBTs || (customSBTs && customSBTs.length === 0)) return;
 
     const newTabs: TabsInterface[] = [];
-    for (const customSBT of customSBTs) {
-      // eslint-disable-next-line no-continue
-      if (customSBT.tokens && customSBT?.tokens.length === 0) continue; // Skip when no tokens
 
+    const customSBTsWithTokens = customSBTs.filter(
+      (contract) => contract.tokens && contract.tokens.length > 0
+    );
+
+    for (const customSBT of customSBTsWithTokens) {
       const { tokens } = customSBT;
-      const hidratatedTokens: {
-        tokenId: BigNumber;
-        tokenUri: string;
-        metadata: GalleryMetadata;
-      }[] = [];
-      for (const token of tokens) {
-        try {
-          // eslint-disable-next-line no-await-in-loop
-          // const metadata = await customSBT.getMetadata(token);
-          const hidratatedToken = { ...token };
-          hidratatedTokens.push(hidratatedToken);
-        } catch (error) {
-          console.log('METADTA ERROR', error);
-        }
-      }
 
       const tabContent = {
-        items: hidratatedTokens.length > 0 ? hidratatedTokens : [],
+        items: tokens.length > 0 ? tokens : [],
         render: (item: {
           metadata: GalleryMetadata;
           tokenId: BigNumber;
