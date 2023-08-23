@@ -636,6 +636,50 @@ const GoodDollarSBT: CustomGallerySBT = {
   }),
 };
 
+const SoulCircleSBT: CustomGallerySBT = {
+  name: 'Masa Soul Circle',
+  address: '0xeB05dca1A7e0E37E364B938d989fc0273Ff3bFCa',
+  network: 'bsc',
+  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
+    name: 'Masa Soul Circle',
+    image: sbt.tokenUri,
+    description: 'Masa Soul Circle',
+  }),
+};
+
+const FearlessBoundTokenSBT: CustomGallerySBT = {
+  name: 'Fearless Bound',
+  address: '0xa3B54cAF1465dee624Df8F014d0adDd748e1B0bA',
+  network: 'basegoerli',
+  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
+    name: 'Fearless Bound',
+    image: sbt.tokenUri,
+    description: 'Fearless bound token',
+  }),
+};
+
+const VaisselVoyageSBT: CustomGallerySBT = {
+  name: 'Double Protocol SBT',
+  address: '0x395E89F13656C7CaeB61574C83444EA055f2F924',
+  network: 'basegoerli',
+  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
+    name: 'Vaissel Voyage-Bound Token',
+    image: sbt.tokenUri,
+    description: 'Vaissel Voyage-Bound Token',
+  }),
+};
+
+const CloudBaseSBT: CustomGallerySBT = {
+  name: 'Cloud Base SBT',
+  address: '0x4b97BeEEF092E0c76339E9E8A566823797ad80D3',
+  network: 'basegoerli',
+  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
+    name: 'Cloud Base SBT',
+    image: sbt.tokenUri,
+    description: 'Cloud Base Token',
+  }),
+};
+
 const TemplateNewMasaState = (props: Args) => (
   <QueryClientProvider contextSharing client={queryClient}>
     <MasaProvider
@@ -659,7 +703,13 @@ const TemplateNewMasaState = (props: Args) => (
         masaConfig: {
           networkName: 'base',
         },
-        customSBTs: [GoodDollarSBT],
+        customSBTs: [
+          GoodDollarSBT,
+          SoulCircleSBT,
+          VaisselVoyageSBT,
+          CloudBaseSBT,
+          FearlessBoundTokenSBT,
+        ],
       }}
     >
       <Component {...props} />

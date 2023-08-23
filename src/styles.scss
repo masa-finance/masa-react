@@ -901,7 +901,7 @@
       height: 100%;
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-start; /* Change from 'center' to 'flex-start' */
+      justify-content: center; 
       gap: 12px 20px;
       padding-left: 12px;
       margin-top: 12px;
@@ -913,7 +913,7 @@
         box-sizing: border-box;
         background-color: black;
 
-        width: calc((100% - 80px) / 4);
+        width: 100%;
         max-width: 250px;
         max-height: 340px;
 
@@ -953,10 +953,12 @@
             margin: 0;
             word-wrap: break-word;
             font-size: 18px;
+            color: white;
           }
 
           .gallery-item-description {
             margin: 0;
+            color: white;
           }
         }
       }
@@ -989,9 +991,11 @@
     display: flex;
     flex-direction: row;
     flex-grow: 1;
+    border: none;
   }
   .tabs {
     display: flex;
+    flex-direction: row;
     list-style-type: none;
     padding: 0;
     margin-bottom: 16px;

@@ -145,7 +145,7 @@ export const fetchCustomSBTs = async (
   return hydratatedContracts;
 };
 
-export const useCustomSBTsQuery = () => {
+export const useCustomSBTs = () => {
   const { masaAddress, masaNetwork } = useMasaClient();
   const canQuery = useCanQuery();
   const { customContracts } = useCustomGallerySBT();
@@ -156,6 +156,7 @@ export const useCustomSBTsQuery = () => {
     if (!canQuery) return null;
 
     const result = await fetchCustomSBTs(customContracts);
+
     if (!result) return null;
 
     return result;
@@ -171,7 +172,13 @@ export const useCustomSBTsQuery = () => {
   } = useQuery({
     queryKey: [
       'custom-sbt',
-      { sessionAddress, masaAddress, masaNetwork, persist: false },
+      {
+        sessionAddress,
+        masaAddress,
+        masaNetwork,
+        customContracts: customContracts?.length ?? 0,
+        persist: false,
+      },
     ],
     enabled: !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
     context: MasaQueryClientContext,

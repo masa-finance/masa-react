@@ -6,7 +6,7 @@ import {
 } from '../../../../../components/masa-interface/pages/gallery/gallery';
 import { GalleryItem } from '../../../../../components/masa-interface/pages/gallery/galleryItem';
 import { useMasaClient } from '../../../../masa-client';
-import { useCustomSBT } from '../../../../masa/use-custom-sbt';
+import { useCustomSBTs } from '../../../../masa/use-custom-sbt';
 
 export const handleRender = (SBT: {
   metadata: GalleryMetadata;
@@ -39,11 +39,8 @@ export const handleRender = (SBT: {
 };
 
 export const useTabs = () => {
-  // const { customSBTs } = useMasa();
-  const { customSBTs } = useCustomSBT();
+  const { customSBTs, isLoading } = useCustomSBTs();
   const { sdk: masa } = useMasaClient();
-
-  console.log('CUSTOM SBT', { customSBTs });
 
   const [savedTabs, setSavedTabs] = useState<TabsInterface[]>();
 
@@ -97,5 +94,5 @@ export const useTabs = () => {
     }
   }, [masa, getTabs]);
 
-  return { sbts: savedTabs };
+  return { sbts: savedTabs, isLoading };
 };

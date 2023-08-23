@@ -13,9 +13,9 @@ const Gallery = () => {
   const { isLoadingSigner } = useWalletClient();
   const { sdk: masa } = useMasaClient();
 
-  const { sbts: tabs } = useTabs();
+  const { sbts: tabs, isLoading } = useTabs();
 
-  if (isLoadingSigner) {
+  if (isLoadingSigner || isLoading) {
     return (
       <Modal>
         <MasaLoading />
@@ -27,18 +27,17 @@ const Gallery = () => {
     <Modal>
       <article className="masa-gallery-container">
         {masa && tabs && tabs.length > 0 && (
-          <Tabs
-            tabs={tabs}
-            wrapperClassName="masa-gallery"
-            onAdd={() => console.log('Add sbt')}
-          />
+          <Tabs tabs={tabs} wrapperClassName="masa-gallery" />
         )}
-        {(!masa || !tabs?.length) && (
+        {!masa && (
           <div className="not-connected-message">
             <h2>It looks like you are not connected to Masa</h2>
-            {/* <button className="masa-button" onClick={() => connect?.()}>
-              Connect
-            </button> */}
+          </div>
+        )}
+
+        {!tabs?.length && (
+          <div className="not-connected-message">
+            <h2>It looks like you do not have any SBTs</h2>
           </div>
         )}
       </article>

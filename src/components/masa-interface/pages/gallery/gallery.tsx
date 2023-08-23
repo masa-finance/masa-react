@@ -61,7 +61,7 @@ export interface CustomGallerySBT {
   }>;
 }
 
-export const Gallery = ({ setIndex, context }) => {
+export const Gallery = ({ context }) => {
   const { masa, connect } = useMasa();
   return (
     <div className="masa-gallery-container">
@@ -69,7 +69,6 @@ export const Gallery = ({ setIndex, context }) => {
         <Tabs
           tabs={context.tabs}
           wrapperClassName="masa-gallery"
-          onAdd={() => setIndex('addSbt')}
         />
       ) : (
         <div className="not-connected-message">
