@@ -153,6 +153,7 @@ module.exports =
                       path.resolve('node_modules'),
                       path.resolve('node_modules/@rainbow-me/rainbowkit'),
                       path.resolve('node_modules/react-phone-number-input'),
+                      path.resolve('node_modules/rc-tooltip'),
                     ],
                   },
                 },
