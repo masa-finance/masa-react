@@ -64,7 +64,6 @@ export const useTabs = () => {
           tokenUri: string;
         }) => handleRender(item),
         content(): React.JSX.Element[] {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
           return this?.items?.map((item) => this.render(item));
         },
         title: customSBT.name,
