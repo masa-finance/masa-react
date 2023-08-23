@@ -34,11 +34,12 @@ const SoulnameModal = ({
 }) => {
   const { company } = useConfig();
   const { isLoadingSigner } = useWalletClient();
-  const { extension, soulname } = useCreateSoulnameModal();
+  const { extension, soulname, setSoulname } = useCreateSoulnameModal();
   const { connector } = useWalletClient();
 
   const [shouldRestart, setShouldRestart] = useState(false);
   const handleError = useCallback(() => {
+    setSoulname('')
     setShouldRestart(true);
     onError?.();
   }, [onError]);
