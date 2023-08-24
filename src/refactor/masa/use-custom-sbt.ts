@@ -104,12 +104,9 @@ export const useCustomSBTs = () => {
               })
             : [];
 
-          let tokensWithMetadata = await Promise.all(
-            tokensWithMetadataPromises
-          );
-          tokensWithMetadata = tokensWithMetadata.filter(
-            Boolean
-          ) as TokenWithMetadata[];
+          const tokensWithMetadata = (
+            await Promise.all(tokensWithMetadataPromises)
+          ).filter(Boolean) as TokenWithMetadata[];
 
           return {
             ...contract,
