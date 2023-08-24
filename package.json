@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "3.0.27",
+  "version": "3.0.30",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
@@ -46,6 +46,7 @@
     "@wagmi/core": "~0.10.17",
     "@walletconnect/modal": "^2.6.1",
     "ethers": "~5.7.2",
+    "rc-tooltip": "^6.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-phone-number-input": "^3.3.0",
