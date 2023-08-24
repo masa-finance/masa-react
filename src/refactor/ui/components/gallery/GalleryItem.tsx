@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { GalleryMetadata } from '../../../masa';
 
 export const GalleryItem = ({ image, name, description }: GalleryMetadata) => {
-
   const fixImage = useMemo(() => {
     let newImage = image;
 
@@ -10,7 +9,7 @@ export const GalleryItem = ({ image, name, description }: GalleryMetadata) => {
       newImage = image.replace('ar://', 'https://arweave.net/');
     }
     return newImage;
-  }, [image])
+  }, [image]);
 
   return (
     <figure className="gallery-item">
