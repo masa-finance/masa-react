@@ -32,8 +32,6 @@ import { useGreenModal } from './ui/components/modals/create-green/use-green-mod
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
-import { QueryClientProvider } from 'react-query';
-import { queryClient } from '../provider';
 import { CustomGallerySBT } from './masa/interfaces';
 
 // * nextjs fix
@@ -196,8 +194,8 @@ const WalletInfo = () => {
               disabled={isDisconnected}
               onClick={
                 disconnect as unknown as
-                  | MouseEventHandler<HTMLButtonElement>
-                  | undefined
+                | MouseEventHandler<HTMLButtonElement>
+                | undefined
               }
             >
               Disconnect
@@ -417,8 +415,8 @@ const SessionButtons = () => {
           type="button"
           onClick={
             checkLogin as unknown as
-              | MouseEventHandler<HTMLButtonElement>
-              | undefined
+            | MouseEventHandler<HTMLButtonElement>
+            | undefined
           }
         >
           Check Login
@@ -681,40 +679,38 @@ const CloudBaseSBT: CustomGallerySBT = {
 };
 
 const TemplateNewMasaState = (props: Args) => (
-  <QueryClientProvider contextSharing client={queryClient}>
-    <MasaProvider
-      config={{
-        allowedWallets: ['metamask', 'walletconnect'],
-        forceChain: 'base',
-        // contractAddressOverrides: {},
-        allowedNetworkNames: [
-          'goerli',
-          'ethereum',
-          'alfajores',
-          'celo',
-          'mumbai',
-          'polygon',
-          'bsctest',
-          'bsc',
-          'base',
-          'basegoerli',
-          'unknown',
-        ],
-        masaConfig: {
-          networkName: 'base',
-        },
-        customSBTs: [
-          GoodDollarSBT,
-          SoulCircleSBT,
-          VaisselVoyageSBT,
-          CloudBaseSBT,
-          FearlessBoundTokenSBT,
-        ],
-      }}
-    >
-      <Component {...props} />
-    </MasaProvider>
-  </QueryClientProvider>
+  <MasaProvider
+    config={{
+      allowedWallets: ['metamask', 'walletconnect'],
+      forceChain: 'base',
+      // contractAddressOverrides: {},
+      allowedNetworkNames: [
+        'goerli',
+        'ethereum',
+        'alfajores',
+        'celo',
+        'mumbai',
+        'polygon',
+        'bsctest',
+        'bsc',
+        'base',
+        'basegoerli',
+        'unknown',
+      ],
+      masaConfig: {
+        networkName: 'base',
+      },
+      customSBTs: [
+        GoodDollarSBT,
+        SoulCircleSBT,
+        VaisselVoyageSBT,
+        CloudBaseSBT,
+        FearlessBoundTokenSBT,
+      ],
+    }}
+  >
+    <Component {...props} />
+  </MasaProvider>
 );
 
 export const NewMasaState = TemplateNewMasaState.bind({
