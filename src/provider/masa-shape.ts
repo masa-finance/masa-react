@@ -133,6 +133,11 @@ export interface MasaShape {
       tokens: {
         tokenId: BigNumber;
         tokenUri: string;
+        metadata?: {
+          image: string;
+          name: string;
+          description: string;
+        };
       }[];
     })[];
   badges?: unknown[];

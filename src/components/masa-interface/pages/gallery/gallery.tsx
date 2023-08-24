@@ -21,6 +21,12 @@ export interface Greens {
   metadata?: IGreen | undefined;
 }
 
+export interface CustomSBTs {
+  tokenId: BigNumber;
+  tokenUri: string;
+  metadata?: { name: string; description: string; image: string } | undefined;
+}
+
 export interface CreditScores {
   tokenId: BigNumber;
   tokenUri: string;
