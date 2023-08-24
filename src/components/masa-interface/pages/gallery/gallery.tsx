@@ -1,8 +1,5 @@
 import React from 'react';
-import type {
-  ICreditScore,
-  IGreen,
-} from '@masa-finance/masa-sdk';
+import type { ICreditScore, IGreen } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 import { Tabs } from './tabs';
 import { useMasa } from '../../../../provider';
@@ -38,10 +35,7 @@ export const Gallery = ({ context }) => {
   return (
     <div className="masa-gallery-container">
       {masa && context.tabs && context.tabs.length > 0 ? (
-        <Tabs
-          tabs={context.tabs}
-          wrapperClassName="masa-gallery"
-        />
+        <Tabs tabs={context.tabs} wrapperClassName="masa-gallery" />
       ) : (
         <div className="not-connected-message">
           <h2>It looks like you are not connected to Masa</h2>
