@@ -194,8 +194,8 @@ const WalletInfo = () => {
               disabled={isDisconnected}
               onClick={
                 disconnect as unknown as
-                | MouseEventHandler<HTMLButtonElement>
-                | undefined
+                  | MouseEventHandler<HTMLButtonElement>
+                  | undefined
               }
             >
               Disconnect
@@ -415,8 +415,8 @@ const SessionButtons = () => {
           type="button"
           onClick={
             checkLogin as unknown as
-            | MouseEventHandler<HTMLButtonElement>
-            | undefined
+              | MouseEventHandler<HTMLButtonElement>
+              | undefined
           }
         >
           Check Login
