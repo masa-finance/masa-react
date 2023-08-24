@@ -1,36 +1,18 @@
-import { useCallback } from 'react';
-import { Masa, MasaSBTWrapper } from '@masa-finance/masa-sdk';
-import { BigNumber } from 'ethers';
+import { Masa } from '@masa-finance/masa-sdk';
 import { useQuery } from '@tanstack/react-query';
 
-import { MasaSBT } from '@masa-finance/masa-contracts-identity';
 import { useAsyncFn } from 'react-use';
-import { queryClient } from '../../provider';
 import { MasaQueryClientContext, useMasaClient } from '../masa-client';
 import { useConfig } from '../base-provider';
-import { CustomGallerySBT } from '../../components/masa-interface/pages/gallery/gallery';
 import { useCanQuery } from '../hooks/use-can-query';
 import { useSession } from './use-session';
-
-export interface Token {
-  tokenId: BigNumber;
-  tokenUri: string;
-}
-export interface Metadata {
-  image: string;
-  name: string;
-  description: string;
-}
-export interface TokenWithMetadata extends Token {
-  metadata: Metadata;
-}
-export interface HydratatedContracts extends FullContract {
-  tokens: TokenWithMetadata[];
-}
-
-export interface FullContract
-  extends CustomGallerySBT,
-    MasaSBTWrapper<MasaSBT> {}
+import {
+  CustomGallerySBT,
+  FullContract,
+  HydratatedContracts,
+  Token,
+  TokenWithMetadata,
+} from './interfaces';
 
 const fetchContracts = async (
   masa?: Masa,
@@ -185,18 +167,12 @@ export const useCustomSBTs = () => {
     queryFn: getCustomContracts,
   });
 
-  const invalidateCustomSBTs = useCallback(
-    async () => queryClient.invalidateQueries(['custom-sbt']),
-    [queryClient]
-  );
-
   return {
     customSBTs,
     status,
     isLoading,
     isFetching,
     reloadCustomSBTs,
-    invalidateCustomSBTs,
     error,
   };
 };

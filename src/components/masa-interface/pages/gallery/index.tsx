@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useMasa } from '../../../../provider';
 import { InterfaceSubflow } from '../../interface-subflow';
 import { AddSBT } from './add-sbt';
-import { Gallery, TabsInterface } from './gallery';
+import { Gallery } from './gallery';
 import { GalleryItem } from './galleryItem';
 import { BigNumber } from 'ethers';
+import { TabsInterface } from '../../../../refactor';
 
 const handleRender = (SBT: any) => {
   const getMetadata = () => {

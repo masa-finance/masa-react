@@ -7,13 +7,13 @@ import { Modal } from '../modal';
 import { useWalletClient } from '../../../../wallet-client/wallet-client-provider';
 import { useMasaClient } from '../../../../masa-client';
 import { useTabs } from './useTabs';
-import { Tabs } from '../../../../../components/masa-interface/pages/gallery/tabs';
+import { Gallery } from '../../gallery';
 
-const Gallery = () => {
+const GalleryModal = () => {
   const { isLoadingSigner } = useWalletClient();
   const { sdk: masa } = useMasaClient();
 
-  const { sbts: tabs, isLoading } = useTabs();
+  const { tabs, isLoading } = useTabs();
 
   if (isLoadingSigner || isLoading) {
     return (
@@ -25,28 +25,28 @@ const Gallery = () => {
 
   return (
     <Modal>
-      <article className="masa-gallery-container">
-        {masa && tabs && tabs.length > 0 && (
-          <Tabs tabs={tabs} wrapperClassName="masa-gallery" />
+      <section className="masa-gallery-container">
+        {masa && tabs && tabs?.length > 0 && (
+          <Gallery tabs={tabs} wrapperClassName="masa-gallery" />
         )}
         {!masa && (
-          <div className="not-connected-message">
+          <aside className="not-connected-message">
             <h2>It looks like you are not connected to Masa</h2>
-          </div>
+          </aside>
         )}
 
         {!tabs?.length && (
-          <div className="not-connected-message">
+          <aside className="not-connected-message">
             <h2>It looks like you do not have any SBTs</h2>
-          </div>
+          </aside>
         )}
-      </article>
+      </section>
     </Modal>
   );
 };
 
-export const GalleryModal = NiceModal.create(() => <Gallery />);
+export const GalleryModalWrapper = NiceModal.create(() => <GalleryModal />);
 
-export const OpenGalleryModal = () => NiceModal.show(GalleryModal, {});
+export const OpenGalleryModal = () => NiceModal.show(GalleryModalWrapper, {});
 
 export default OpenGalleryModal;

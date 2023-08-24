@@ -34,7 +34,7 @@ import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from '../provider';
-import { CustomGallerySBT } from '../components/masa-interface/pages/gallery/gallery';
+import { CustomGallerySBT } from './masa/interfaces';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point

@@ -4,7 +4,17 @@ import type {
   NetworkName,
 } from '@masa-finance/masa-sdk';
 import type { WagmiConfigProps } from 'wagmi';
-import { CustomGallerySBT } from '../components/masa-interface/pages/gallery/gallery';
+
+export interface CustomGallerySBT {
+  name: string;
+  address: string;
+  network: NetworkName;
+  getMetadata: (item: { tokenId; tokenUri }) => Promise<{
+    image: string;
+    name: string;
+    description: string;
+  }>;
+}
 
 export interface ArweaveConfig {
   port?: string;

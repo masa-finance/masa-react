@@ -1,13 +1,15 @@
 import { BigNumber } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import { useAsyncFn } from 'react-use';
-import {
-  GalleryMetadata,
-  TabsInterface,
-} from '../../../../../components/masa-interface/pages/gallery/gallery';
 import { GalleryItem } from '../../../../../components/masa-interface/pages/gallery/galleryItem';
 import { useMasaClient } from '../../../../masa-client';
 import { useCustomSBTs } from '../../../../masa/use-custom-sbt';
+import {
+  GalleryMetadata,
+  HydratatedContracts,
+  TabsInterface,
+  TokenWithMetadata,
+} from '../../../../masa';
 
 export const handleRender = (SBT: {
   metadata: GalleryMetadata;
@@ -35,29 +37,34 @@ export const useTabs = () => {
   const [, getTabs] = useAsyncFn(async () => {
     if (!customSBTs || (customSBTs && customSBTs.length === 0)) return;
 
-    const newTabs: TabsInterface[] = [];
-
     const customSBTsWithTokens = customSBTs.filter(
-      (contract) => contract.tokens && contract.tokens.length > 0
+      (contract: HydratatedContracts) =>
+        contract.tokens && contract.tokens.length > 0
     );
 
-    for (const customSBT of customSBTsWithTokens) {
-      const { tokens } = customSBT;
+    const newTabs: TabsInterface[] = customSBTsWithTokens.map(
+      (customSBT: HydratatedContracts) => {
+        const { tokens } = customSBT;
 
-      const tabContent = {
-        items: tokens.length > 0 ? tokens : [],
-        render: (item: {
-          metadata: GalleryMetadata;
-          tokenId: BigNumber;
-          tokenUri: string;
-        }) => handleRender(item),
-        content(): React.JSX.Element[] {
-          return this?.items?.map((item) => this.render(item));
-        },
-        title: customSBT.name,
-      };
-      newTabs.push(tabContent);
-    }
+        const items = tokens.map((token: TokenWithMetadata) => {
+          const metadata = (token?.metadata ?? {
+            image: token?.tokenUri,
+            name: '',
+            description: '',
+          }) as GalleryMetadata;
+          return {
+            image: metadata.image,
+            title: metadata.name,
+            description: metadata.description,
+          };
+        });
+
+        return {
+          title: customSBT.name,
+          items,
+        };
+      }
+    );
 
     setSavedTabs(newTabs);
   }, [customSBTs]);
@@ -68,5 +75,5 @@ export const useTabs = () => {
     }
   }, [masa, getTabs]);
 
-  return { sbts: savedTabs, isLoading };
+  return { tabs: savedTabs, isLoading };
 };

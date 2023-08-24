@@ -2,7 +2,6 @@ import React from 'react';
 import type {
   ICreditScore,
   IGreen,
-  NetworkName,
 } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 import { Tabs } from './tabs';
@@ -26,39 +25,6 @@ export interface CreditScores {
   tokenId: BigNumber;
   tokenUri: string;
   metadata?: ICreditScore | undefined;
-}
-
-export interface GalleryMetadata {
-  image?: string;
-  name?: string;
-  description?: string;
-  tokenURI?: string;
-}
-
-export interface TabsInterface {
-  items: {
-    tokenId: BigNumber;
-    tokenUri: string;
-    metadata: GalleryMetadata;
-  }[];
-  render: (item: {
-    metadata: GalleryMetadata;
-    tokenId: BigNumber;
-    tokenUri: string;
-  }) => React.JSX.Element;
-  content(): React.JSX.Element[];
-  title: string;
-}
-
-export interface CustomGallerySBT {
-  name: string;
-  address: string;
-  network: NetworkName;
-  getMetadata: (item: { tokenId; tokenUri }) => Promise<{
-    image: string;
-    name: string;
-    description: string;
-  }>;
 }
 
 export const Gallery = ({ context }) => {
