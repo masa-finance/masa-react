@@ -2,6 +2,7 @@ import type { Masa } from '@masa-finance/masa-sdk';
 import { useQuery } from '@tanstack/react-query';
 
 import { useAsyncFn } from 'react-use';
+import { useMemo } from 'react';
 import { MasaQueryClientContext, useMasaClient } from '../masa-client';
 import { useConfig } from '../base-provider';
 import { useCanQuery } from '../hooks/use-can-query';
@@ -127,6 +128,11 @@ export const useCustomSBTs = () => {
     return hydratedContracts;
   }, [canQuery, customContracts]);
 
+  const contracts = useMemo(
+    () => customContracts.map((contract: FullContract) => contract.address),
+    [customContracts]
+  );
+
   const {
     data: customSBTs,
     status,
@@ -141,7 +147,7 @@ export const useCustomSBTs = () => {
         sessionAddress,
         masaAddress,
         masaNetwork,
-        customContracts: customContracts?.length ?? 0,
+        contracts,
         persist: false,
       },
     ],
