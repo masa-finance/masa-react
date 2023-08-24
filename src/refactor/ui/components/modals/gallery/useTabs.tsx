@@ -1,7 +1,5 @@
-import { BigNumber } from 'ethers';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAsyncFn } from 'react-use';
-import { GalleryItem } from '../../../../../components/masa-interface/pages/gallery/galleryItem';
 import { useMasaClient } from '../../../../masa-client';
 import { useCustomSBTs } from '../../../../masa/use-custom-sbt';
 import {
@@ -10,23 +8,6 @@ import {
   TabsInterface,
   TokenWithMetadata,
 } from '../../../../masa';
-
-export const handleRender = (SBT: {
-  metadata: GalleryMetadata;
-  tokenId: BigNumber;
-  tokenUri: string;
-}) => {
-  const metadata = SBT?.metadata ?? SBT?.tokenUri ?? {};
-
-  return (
-    <GalleryItem
-      image={metadata.image}
-      title={metadata.name}
-      description={metadata.description}
-      key={metadata?.tokenURI ?? 'gallery-item'}
-    />
-  );
-};
 
 export const useTabs = () => {
   const { customSBTs, isLoading } = useCustomSBTs();
