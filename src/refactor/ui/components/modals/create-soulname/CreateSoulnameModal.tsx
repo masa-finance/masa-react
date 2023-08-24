@@ -1,4 +1,3 @@
-import 'rc-tooltip/assets/bootstrap_white.css';
 import React, { useCallback, useMemo, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
 import Tooltip from 'rc-tooltip';
