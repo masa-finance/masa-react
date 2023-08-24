@@ -5,7 +5,7 @@ import { AddSBT } from './add-sbt';
 import { Gallery } from './gallery';
 import { GalleryItem } from './galleryItem';
 import { BigNumber } from 'ethers';
-import { TabsInterface } from '../../../../refactor';
+import { TabsInterface } from '../../../../refactor/masa/interfaces';
 
 const handleRender = (SBT: any) => {
   const getMetadata = () => {

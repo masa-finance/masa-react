@@ -15,7 +15,7 @@ import {
 import { BigNumber, Signer } from 'ethers';
 import { GetNetworkResult } from '@wagmi/core';
 import { MasaSBT } from '@masa-finance/masa-contracts-identity';
-import { CustomGallerySBT } from '../refactor';
+import { CustomGallerySBT } from '../refactor/masa/interfaces';
 
 export interface MasaShape {
   children?: React.ReactNode;

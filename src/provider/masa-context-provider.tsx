@@ -46,7 +46,7 @@ import { useMasaClient } from '../refactor/masa-client/use-masa-client';
 import { useIdentityPurchase } from '../refactor/masa/use-identity-purchase';
 import { useCreditScoreCreate } from '../refactor/masa/use-credit-scores-create';
 import { useSoulNamesPurchase } from '../refactor/masa/use-soulnames-purchase';
-import { CustomGallerySBT } from '../refactor';
+import { CustomGallerySBT } from '../refactor/masa/interfaces';
 // import { useSoulNamesPurchase } from '../refactor/masa/use-soulnames-purchase';
 
 export interface ArweaveConfig {

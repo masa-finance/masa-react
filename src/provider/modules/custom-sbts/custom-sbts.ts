@@ -4,7 +4,7 @@ import { Signer } from 'ethers';
 import { useQuery } from 'react-query';
 import { useLocalStorage } from '../../use-local-storage';
 import { queryClient } from '../../masa-query-client';
-import { CustomGallerySBT } from '../../../refactor';
+import { CustomGallerySBT } from '../../../refactor/masa/interfaces';
 
 function getLocalStorageRecordsByPrefix(
   prefix: string
