@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { GalleryMetadata } from '../../../masa';
 
 export const GalleryItem = ({ image, name, description }: GalleryMetadata) => {
-  let fixImage = image;
 
-  if (image && image?.includes('ar://')) {
-    fixImage = image.replace('ar://', 'https://arweave.net/');
-  }
+  const fixImage = useMemo(() => {
+    let newImage = image;
+
+    if (image && image?.includes('ar://')) {
+      newImage = image.replace('ar://', 'https://arweave.net/');
+    }
+    return newImage;
+  }, [image])
 
   return (
     <figure className="gallery-item">
