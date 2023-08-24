@@ -12,7 +12,7 @@ export const Gallery = ({ tabs, wrapperClassName }: GalleryProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section className="tabs-container">
+    <article className="tabs-container">
       <header className="tabs-header">
         <nav className="tabs-wrapper">
           <ul className="tabs" data-active-tab={activeTab}>
@@ -34,6 +34,6 @@ export const Gallery = ({ tabs, wrapperClassName }: GalleryProps) => {
           return <GalleryItem {...tab} />;
         })}
       </article>
-    </section>
+    </article>
   );
 };
