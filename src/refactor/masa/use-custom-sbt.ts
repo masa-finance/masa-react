@@ -9,7 +9,7 @@ import { useSession } from './use-session';
 import {
   CustomGallerySBT,
   FullContract,
-  HydratatedContracts,
+  HydratedContracts,
   Token,
   TokenWithMetadata,
 } from './interfaces';
@@ -84,8 +84,8 @@ export const useCustomGallerySBT = () => {
 // NEXT: refactor this function
 export const fetchCustomSBTs = async (
   customContracts: FullContract[]
-): Promise<HydratatedContracts[]> => {
-  const hydratatedContractsPromises = customContracts.map(
+): Promise<HydratedContracts[]> => {
+  const hydratedContractsPromises = customContracts.map(
     async (contract: FullContract) => {
       if (!contract.contract) return null;
 
@@ -113,7 +113,7 @@ export const fetchCustomSBTs = async (
         return {
           ...contract,
           tokens: tokensWithMetadata,
-        } as HydratatedContracts;
+        } as HydratedContracts;
       } catch (error) {
         console.log('LIST TOKENS ERROR', error);
         return null;
@@ -121,10 +121,10 @@ export const fetchCustomSBTs = async (
     }
   );
 
-  const hydratatedContracts = (
-    await Promise.all(hydratatedContractsPromises)
-  ).filter(Boolean) as HydratatedContracts[];
-  return hydratatedContracts;
+  const hydratedContracts = (
+    await Promise.all(hydratedContractsPromises)
+  ).filter(Boolean) as HydratedContracts[];
+  return hydratedContracts;
 };
 
 export const useCustomSBTs = () => {

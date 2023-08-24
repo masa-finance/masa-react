@@ -6,7 +6,7 @@ import { useMasaClient } from '../../../../masa-client';
 import { useCustomSBTs } from '../../../../masa/use-custom-sbt';
 import {
   GalleryMetadata,
-  HydratatedContracts,
+  HydratedContracts,
   TabsInterface,
   TokenWithMetadata,
 } from '../../../../masa';
@@ -38,12 +38,12 @@ export const useTabs = () => {
     if (!customSBTs || (customSBTs && customSBTs.length === 0)) return;
 
     const customSBTsWithTokens = customSBTs.filter(
-      (contract: HydratatedContracts) =>
+      (contract: HydratedContracts) =>
         contract.tokens && contract.tokens.length > 0
     );
 
     const newTabs: TabsInterface[] = customSBTsWithTokens.map(
-      (customSBT: HydratatedContracts) => {
+      (customSBT: HydratedContracts) => {
         const { tokens } = customSBT;
 
         const items = tokens.map((token: TokenWithMetadata) => {

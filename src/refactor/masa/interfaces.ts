@@ -15,7 +15,7 @@ export interface Metadata {
 export interface TokenWithMetadata extends Token {
   metadata: Metadata;
 }
-export interface HydratatedContracts extends FullContract {
+export interface HydratedContracts extends FullContract {
   tokens: TokenWithMetadata[];
 }
 
