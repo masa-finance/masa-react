@@ -1,4 +1,4 @@
-import { Masa } from '@masa-finance/masa-sdk';
+import type { Masa } from '@masa-finance/masa-sdk';
 import { useQuery } from '@tanstack/react-query';
 
 import { useAsyncFn } from 'react-use';
