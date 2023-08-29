@@ -15,13 +15,19 @@ import {
 } from 'wagmi';
 
 export const useNetwork = () => {
-  const { switchNetwork: switchNetworkWagmi, error: networkError } =
-    useSwitchNetwork();
+  const {
+    switchNetwork: switchNetworkWagmi,
+    error: networkError,
+    switchNetworkAsync,
+  } = useSwitchNetwork();
   const { connectors, pendingConnector } = useConnect();
   const { connector: activeConnector } = useAccount();
   const { chains, chain: activeChain } = useNetworkWagmi();
   const network = useNetworkWagmi();
   const [switchingToChain, setSwitchingToChain] = useState<number | null>();
+  const stopSwitching = useCallback(() => {
+    setSwitchingToChain(null);
+  }, []);
 
   const availibleChains = useMemo(
     () => connectors.flatMap((c: Connector) => c.chains),
@@ -37,25 +43,37 @@ export const useNetwork = () => {
 
   const switchNetwork = useCallback(
     (chainId?: number) => {
-      setSwitchingToChain(chainId);
-      if (!chainId) return;
-      switchNetworkWagmi?.(chainId);
+      try {
+        if (!chainId) return;
+        setSwitchingToChain(chainId);
+        switchNetworkWagmi?.(chainId);
+      } catch (error: unknown) {
+        throw error as Error;
+      }
     },
     [switchNetworkWagmi]
   );
 
   const switchNetworkByName = useCallback(
     (forcedNetworkParam: NetworkName) => {
-      const networkToSwitchTo = SupportedNetworks[forcedNetworkParam];
-      setSwitchingToChain(networkToSwitchTo?.chainId);
-      if (networkToSwitchTo) {
-        if (networkToSwitchTo.chainId === activeChain?.id) {
-          return;
+      try {
+        const networkToSwitchTo = SupportedNetworks[forcedNetworkParam];
+        setSwitchingToChain(networkToSwitchTo?.chainId);
+
+        if (networkToSwitchTo) {
+          if (networkToSwitchTo.chainId === activeChain?.id) {
+            if (switchNetworkWagmi) stopSwitching();
+            return;
+          }
+          switchNetworkWagmi?.(networkToSwitchTo.chainId);
+          if (switchNetworkWagmi) stopSwitching();
         }
-        switchNetworkWagmi?.(networkToSwitchTo.chainId);
+      } catch (error: unknown) {
+        if (switchNetworkWagmi) stopSwitching();
+        throw error as Error;
       }
     },
-    [activeChain?.id, switchNetworkWagmi]
+    [activeChain?.id, switchNetworkWagmi, stopSwitching]
   );
 
   const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
@@ -74,13 +92,9 @@ export const useNetwork = () => {
   }, [activeChain]);
 
   const currentNetworkByChainId = useMemo(() => {
-    if (!activeChainId) return 0;
+    if (!activeChainId) return undefined;
     return getNetworkNameByChainId(activeChainId);
   }, [activeChainId]);
-
-  const stopSwitching = useCallback(() => {
-    setSwitchingToChain(null);
-  }, []);
 
   // useEffect(() => {
   //   if (!activeConnector) {
@@ -118,6 +132,7 @@ export const useNetwork = () => {
   return {
     connectors: connectors as unknown,
     switchNetwork,
+    switchNetworkAsync,
     switchNetworkByName,
     switchingToChain,
     canProgramaticallySwitchNetwork,
@@ -138,6 +153,9 @@ export const useNetwork = () => {
   } as {
     connectors?: Connector[];
     switchNetwork?: (chainId?: number) => void;
+    switchNetworkAsync?:
+      | ((chainId_?: number | undefined) => Promise<Chain>)
+      | undefined;
     switchNetworkByName: (forcedNetworkParam: NetworkName) => void;
     switchingToChain: number | null | undefined;
     canProgramaticallySwitchNetwork: boolean;
