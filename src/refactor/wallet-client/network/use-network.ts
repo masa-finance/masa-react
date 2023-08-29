@@ -15,8 +15,11 @@ import {
 } from 'wagmi';
 
 export const useNetwork = () => {
-  const { switchNetwork: switchNetworkWagmi, error: networkError } =
-    useSwitchNetwork();
+  const {
+    switchNetwork: switchNetworkWagmi,
+    error: networkError,
+    switchNetworkAsync,
+  } = useSwitchNetwork();
   const { connectors, pendingConnector } = useConnect();
   const { connector: activeConnector } = useAccount();
   const { chains, chain: activeChain } = useNetworkWagmi();
@@ -42,9 +45,11 @@ export const useNetwork = () => {
         if (!chainId) return;
         switchNetworkWagmi?.(chainId);
       } catch (error: unknown) {
-        setSwitchingToChain(null);
+        // setSwitchingToChain(null);
         console.log('ERROR IN HOOK 2', error);
         throw error as Error;
+      } finally {
+        setSwitchingToChain(null);
       }
     },
     [switchNetworkWagmi]
@@ -62,9 +67,11 @@ export const useNetwork = () => {
           switchNetworkWagmi?.(networkToSwitchTo.chainId);
         }
       } catch (error: unknown) {
-        setSwitchingToChain(null);
+        // setSwitchingToChain(null);
         console.log('ERROR IN HOOK 1', error);
         throw error as Error;
+      } finally {
+        setSwitchingToChain(null);
       }
     },
     [activeChain?.id, switchNetworkWagmi]
