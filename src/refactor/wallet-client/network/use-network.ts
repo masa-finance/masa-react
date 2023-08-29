@@ -42,6 +42,8 @@ export const useNetwork = () => {
         if (!chainId) return;
         switchNetworkWagmi?.(chainId);
       } catch (error: unknown) {
+        setSwitchingToChain(null);
+        console.log('ERROR IN HOOK 2', error);
         throw error as Error;
       }
     },
@@ -60,6 +62,8 @@ export const useNetwork = () => {
           switchNetworkWagmi?.(networkToSwitchTo.chainId);
         }
       } catch (error: unknown) {
+        setSwitchingToChain(null);
+        console.log('ERROR IN HOOK 1', error);
         throw error as Error;
       }
     },
