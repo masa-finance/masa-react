@@ -37,22 +37,30 @@ export const useNetwork = () => {
 
   const switchNetwork = useCallback(
     (chainId?: number) => {
-      setSwitchingToChain(chainId);
-      if (!chainId) return;
-      switchNetworkWagmi?.(chainId);
+      try {
+        setSwitchingToChain(chainId);
+        if (!chainId) return;
+        switchNetworkWagmi?.(chainId);
+      } catch (error: unknown) {
+        throw error as Error;
+      }
     },
     [switchNetworkWagmi]
   );
 
   const switchNetworkByName = useCallback(
     (forcedNetworkParam: NetworkName) => {
-      const networkToSwitchTo = SupportedNetworks[forcedNetworkParam];
-      setSwitchingToChain(networkToSwitchTo?.chainId);
-      if (networkToSwitchTo) {
-        if (networkToSwitchTo.chainId === activeChain?.id) {
-          return;
+      try {
+        const networkToSwitchTo = SupportedNetworks[forcedNetworkParam];
+        setSwitchingToChain(networkToSwitchTo?.chainId);
+        if (networkToSwitchTo) {
+          if (networkToSwitchTo.chainId === activeChain?.id) {
+            return;
+          }
+          switchNetworkWagmi?.(networkToSwitchTo.chainId);
         }
-        switchNetworkWagmi?.(networkToSwitchTo.chainId);
+      } catch (error: unknown) {
+        throw error as Error;
       }
     },
     [activeChain?.id, switchNetworkWagmi]
@@ -74,7 +82,7 @@ export const useNetwork = () => {
   }, [activeChain]);
 
   const currentNetworkByChainId = useMemo(() => {
-    if (!activeChainId) return 0;
+    if (!activeChainId) return undefined;
     return getNetworkNameByChainId(activeChainId);
   }, [activeChainId]);
 
