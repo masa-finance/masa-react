@@ -137,6 +137,7 @@ export const useNetwork = () => {
   return {
     connectors: connectors as unknown,
     switchNetwork,
+    switchNetworkAsync,
     switchNetworkByName,
     switchingToChain,
     canProgramaticallySwitchNetwork,
@@ -157,6 +158,9 @@ export const useNetwork = () => {
   } as {
     connectors?: Connector[];
     switchNetwork?: (chainId?: number) => void;
+    switchNetworkAsync?:
+      | ((chainId_?: number | undefined) => Promise<Chain>)
+      | undefined;
     switchNetworkByName: (forcedNetworkParam: NetworkName) => void;
     switchingToChain: number | null | undefined;
     canProgramaticallySwitchNetwork: boolean;
