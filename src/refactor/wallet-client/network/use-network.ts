@@ -47,13 +47,11 @@ export const useNetwork = () => {
         if (!chainId) return;
         setSwitchingToChain(chainId);
         switchNetworkWagmi?.(chainId);
-        if (switchNetworkWagmi) stopSwitching();
       } catch (error: unknown) {
-        if (switchNetworkWagmi) stopSwitching();
         throw error as Error;
       }
     },
-    [switchNetworkWagmi, stopSwitching]
+    [switchNetworkWagmi]
   );
 
   const switchNetworkByName = useCallback(
