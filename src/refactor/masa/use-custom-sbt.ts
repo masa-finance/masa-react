@@ -6,7 +6,7 @@ import { MasaQueryClientContext, useMasaClient } from '../masa-client';
 import { useConfig } from '../base-provider';
 import { useCanQuery } from '../hooks/use-can-query';
 import { useSession } from './use-session';
-import {
+import type {
   CustomGallerySBT,
   FullContract,
   HydratedContracts,
