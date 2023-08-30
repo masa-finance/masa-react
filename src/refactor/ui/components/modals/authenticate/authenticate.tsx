@@ -67,14 +67,6 @@ export const Authenticate = ({
     }
   }, [needsWalletConnection, modal, openConnectModal]);
 
-  if (needsWalletConnection) {
-    return (
-      <Modal>
-        <ModalLoading titleText="Please connect your wallet" />
-      </Modal>
-    );
-  }
-
   if (isAuthenticating) {
     return (
       <Modal>
