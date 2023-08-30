@@ -13,7 +13,8 @@ export const useTabs = () => {
   const { sdk: masa } = useMasaClient();
 
   const savedTabs = useMemo((): TabsInterface[] => {
-    if (!masa || !customSBTs || (customSBTs && customSBTs.length === 0)) return [];
+    if (!masa || !customSBTs || (customSBTs && customSBTs.length === 0))
+      return [];
 
     const customSBTsWithTokens = customSBTs.filter(
       (contract: HydratedContracts) =>
