@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useAsyncFn } from 'react-use';
+import { useMemo } from 'react';
 import { useMasaClient } from '../../../../masa-client';
 import { useCustomSBTs } from '../../../../masa/use-custom-sbt';
 import {
@@ -13,10 +12,8 @@ export const useTabs = () => {
   const { customSBTs, isLoading } = useCustomSBTs();
   const { sdk: masa } = useMasaClient();
 
-  const [savedTabs, setSavedTabs] = useState<TabsInterface[]>();
-
-  const [, getTabs] = useAsyncFn(async () => {
-    if (!customSBTs || (customSBTs && customSBTs.length === 0)) return;
+  const savedTabs = useMemo((): TabsInterface[] => {
+    if (!masa || !customSBTs || (customSBTs && customSBTs.length === 0)) return [];
 
     const customSBTsWithTokens = customSBTs.filter(
       (contract: HydratedContracts) =>
@@ -47,14 +44,8 @@ export const useTabs = () => {
       }
     );
 
-    setSavedTabs(newTabs);
-  }, [customSBTs]);
-
-  useEffect(() => {
-    if (masa) {
-      void getTabs();
-    }
-  }, [masa, getTabs]);
+    return newTabs;
+  }, [masa, customSBTs]);
 
   return { tabs: savedTabs, isLoading };
 };
