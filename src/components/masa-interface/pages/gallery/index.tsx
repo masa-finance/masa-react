@@ -5,7 +5,17 @@ import { AddSBT } from './add-sbt';
 import { Gallery } from './gallery';
 import { GalleryItem } from './galleryItem';
 import { BigNumber } from 'ethers';
-import { TabsInterface } from '../../../../refactor/masa/interfaces';
+interface GalleryMetadata {
+  image?: string;
+  name?: string;
+  description?: string;
+  tokenURI?: string;
+}
+
+interface TabsInterface {
+  items: GalleryMetadata[];
+  title: string;
+}
 
 const handleRender = (SBT: any) => {
   const getMetadata = () => {
@@ -102,9 +112,9 @@ const GalleryContainer = () => {
   useModalSize?.(
     typeof window !== 'undefined' && fullScreenGallery
       ? {
-          width: window.innerWidth * 0.95,
-          height: window.innerHeight * 0.95,
-        }
+        width: window.innerWidth * 0.95,
+        height: window.innerHeight * 0.95,
+      }
       : { width: 1100, height: 800 }
   );
 
