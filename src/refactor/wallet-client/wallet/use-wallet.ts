@@ -3,7 +3,7 @@ import {
   useChainModal,
   useAccountModal,
 } from '@rainbow-me/rainbowkit';
-import type { Connector } from '@wagmi/core';
+import type { Connector, Provider } from '@wagmi/core';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -15,6 +15,9 @@ import {
   PublicClient,
   WalletClient,
 } from 'wagmi';
+import { Signer } from 'ethers';
+
+import { useEthersProvider, useEthersSigner } from '../../helpers/ethers';
 
 export interface UseWalletReturn {
   address?: `0x${string}`;
@@ -25,6 +28,8 @@ export interface UseWalletReturn {
   shortAddress?: `0x${string}`;
   publicClient?: PublicClient;
   walletClient?: WalletClient;
+  signer?: Signer;
+  provider?: Provider;
   connector?: Connector;
   isConnected?: boolean;
   isConnecting?: boolean;
@@ -58,8 +63,13 @@ const useWallet = (): UseWalletReturn => {
   const [compareAddress, setCompareAddress] = useState(address);
   const { data: walletClient, isLoading: isLoadingWalletClient } =
     useWalletClient();
-  const { disconnect, disconnectAsync } = useDisconnect();
+
+  const signer = useEthersSigner();
+
   const publicClient = usePublicClient();
+  const provider = useEthersProvider();
+
+  const { disconnect, disconnectAsync } = useDisconnect();
   const {
     data: balanceResult,
     // isError: isErrorBalance,
@@ -121,6 +131,8 @@ const useWallet = (): UseWalletReturn => {
       compareAddress,
       publicClient,
       walletClient,
+      signer,
+      provider,
       connector,
       isConnected,
       isConnecting,
@@ -145,6 +157,8 @@ const useWallet = (): UseWalletReturn => {
       compareAddress,
       publicClient,
       walletClient,
+      signer,
+      provider,
       connector,
       isConnected,
       isConnecting,
