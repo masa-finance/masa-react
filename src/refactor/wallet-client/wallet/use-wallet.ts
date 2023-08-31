@@ -28,8 +28,8 @@ export interface UseWalletReturn {
   shortAddress?: `0x${string}`;
   publicClient?: PublicClient;
   walletClient?: WalletClient;
-  signer?: Signer;
-  provider?: Provider;
+  signer: Signer;
+  provider: Provider;
   connector?: Connector;
   isConnected?: boolean;
   isConnecting?: boolean;
