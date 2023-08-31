@@ -15,6 +15,7 @@ export const Input = ({ label, required, className, ...rest }: InputProps) => (
       className={`masa-input ${className ?? ''}`}
       {...rest}
       id={`masa-input-${label ?? ''}`}
+      autoComplete="off"
     />
   </div>
 );

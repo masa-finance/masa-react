@@ -6,7 +6,7 @@ const Tab = ({ title, active, onClick }) => (
   </li>
 );
 
-export const Tabs = ({ tabs, wrapperClassName, onAdd }) => {
+export const Tabs = ({ tabs, wrapperClassName }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
@@ -23,9 +23,6 @@ export const Tabs = ({ tabs, wrapperClassName, onAdd }) => {
               />
             ))}
           </ul>
-        </div>
-        <div className="plus-button" onClick={onAdd}>
-          +
         </div>
       </div>
       <div className={`tab-content ${wrapperClassName}`}>

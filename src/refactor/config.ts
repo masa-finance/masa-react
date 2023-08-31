@@ -4,6 +4,7 @@ import type {
   NetworkName,
 } from '@masa-finance/masa-sdk';
 import type { WagmiConfigProps } from 'wagmi';
+import { CustomGallerySBT } from './masa/interfaces';
 
 export interface ArweaveConfig {
   port?: string;
@@ -21,6 +22,7 @@ export interface MasaReactConfig {
   soulNameStyle?: string;
   verbose?: boolean;
   wagmiConfig?: WagmiConfigProps;
+  customSBTs?: CustomGallerySBT[];
   contractAddressOverrides?: {
     SoulNameAddress: string;
     SoulStoreAddress: string;
