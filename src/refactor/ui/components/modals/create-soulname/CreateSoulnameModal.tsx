@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
 import Tooltip from 'rc-tooltip';
 import { CreateSoulNameResult } from '@masa-finance/masa-sdk';
-import { Connector } from 'wagmi';
+import { Connector, useConnect } from 'wagmi';
 import { useConfig } from '../../../../base-provider';
 import CreateSoulnameForm from './CreateSoulnameForm';
 import { useRegisterSoulname } from './use-register-soulname';
@@ -37,7 +37,7 @@ const SoulnameModal = ({
   const { isLoadingSigner } = useWalletClient();
   const { extension, soulname, soulNameError, setSoulname } =
     useCreateSoulnameModal();
-  const { connector } = useWalletClient();
+  const { data: connect } = useConnect();
 
   const [shouldRestart, setShouldRestart] = useState(false);
   const handleError = useCallback(() => {
@@ -54,7 +54,7 @@ const SoulnameModal = ({
   // const handleErrorConfirmed = useCallback(() => setError(null), []);
 
   const handleMintSuccess = async (result: CreateSoulNameResult) => {
-    onMintSuccess?.({ ...result, soulname, connector });
+    onMintSuccess?.({ ...result, soulname, connector: connect?.connector });
   };
 
   const {

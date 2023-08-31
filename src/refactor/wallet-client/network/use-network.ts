@@ -4,7 +4,8 @@ import {
   SupportedNetworks,
   getNetworkNameByChainId,
 } from '@masa-finance/masa-sdk';
-import type { Chain, Connector, GetNetworkResult } from '@wagmi/core';
+import type { Chain, GetNetworkResult } from '@wagmi/core';
+import type { Connector } from 'wagmi';
 
 import { useCallback, useMemo, useState } from 'react';
 import {

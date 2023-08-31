@@ -64,7 +64,7 @@ const useWallet = (): UseWalletReturn => {
   const { data: walletClient, isLoading: isLoadingWalletClient } =
     useWalletClient();
 
-  const signer = useEthersSigner();
+  const { data: signer, isLoading: isLoadingSigner } = useEthersSigner();
 
   const publicClient = usePublicClient();
   const provider = useEthersProvider();
@@ -132,6 +132,7 @@ const useWallet = (): UseWalletReturn => {
       publicClient,
       walletClient,
       signer,
+      isLoadingSigner,
       provider,
       connector,
       isConnected,
@@ -158,6 +159,7 @@ const useWallet = (): UseWalletReturn => {
       publicClient,
       walletClient,
       signer,
+      isLoadingSigner,
       provider,
       connector,
       isConnected,
