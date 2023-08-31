@@ -6,7 +6,7 @@ import {
   HydratedContracts,
   TabsInterface,
   TokenWithMetadata,
-} from '../../../../masa';
+} from '../../../../masa/interfaces';
 
 export const useTabs = () => {
   const { customSBTs, isLoading } = useCustomSBTs();
