@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { GalleryItem } from './GalleryItem';
 import { Tab } from './Tab';
-import { TabsInterface } from '../../../masa';
+import { GalleryMetadata, TabsInterface } from '../../../masa';
 
 export interface GalleryProps {
   tabs: TabsInterface[];
@@ -20,7 +20,7 @@ export const Gallery = ({ tabs, wrapperClassName }: GalleryProps) => {
       <header className="tabs-header">
         <nav className="tabs-wrapper">
           <ul className="tabs" data-active-tab={activeTab}>
-            {tabs.map((tab, index) => (
+            {tabs.map((tab: TabsInterface, index: number) => (
               <li key={`list-header-tab-${tab.title}`}>
                 <Tab
                   title={tab.title}
@@ -33,7 +33,7 @@ export const Gallery = ({ tabs, wrapperClassName }: GalleryProps) => {
         </nav>
       </header>
       <section className={`tab-content ${wrapperClassName}`}>
-        {tabs[activeTab].items.map((tab) => {
+        {tabs[activeTab].items.map((tab: GalleryMetadata) => {
           return <GalleryItem {...tab} key={tab.name} />;
         })}
       </section>
