@@ -26,7 +26,7 @@ import { MasaQueryClientContext } from './masa-client/masa-query-client-context'
 import {
   CreateCreditScoreModal,
   CreateIdentityModal,
-  OpenGalleryModal,
+  openGalleryModal,
 } from './ui/components/modals';
 import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
@@ -555,7 +555,7 @@ const ModalFlow = () => {
         </Button>
       </li>
       <li>
-        <Button type="button" onClick={OpenGalleryModal}>
+        <Button type="button" onClick={openGalleryModal}>
           Gallery
         </Button>
       </li>

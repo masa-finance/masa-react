@@ -47,6 +47,6 @@ const GalleryModal = () => {
 
 export const GalleryModalWrapper = NiceModal.create(() => <GalleryModal />);
 
-export const OpenGalleryModal = () => NiceModal.show(GalleryModalWrapper, {});
+export const openGalleryModal = () => NiceModal.show(GalleryModalWrapper, {});
 
-export default OpenGalleryModal;
+export default openGalleryModal;

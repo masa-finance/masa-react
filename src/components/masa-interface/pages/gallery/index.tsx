@@ -112,9 +112,9 @@ const GalleryContainer = () => {
   useModalSize?.(
     typeof window !== 'undefined' && fullScreenGallery
       ? {
-        width: window.innerWidth * 0.95,
-        height: window.innerHeight * 0.95,
-      }
+          width: window.innerWidth * 0.95,
+          height: window.innerHeight * 0.95,
+        }
       : { width: 1100, height: 800 }
   );
 
