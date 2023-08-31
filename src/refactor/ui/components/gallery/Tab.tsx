@@ -6,12 +6,7 @@ interface TabProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Tab = ({ title, active, ...props }: TabProps) => (
-  <button
-    type="button"
-    className={`tab ${active ? 'active' : ''}`}
-    {...props}
-    key={`tab-${title}`}
-  >
+  <button type="button" className={`tab ${active ? 'active' : ''}`} {...props}>
     {title}
   </button>
 );
