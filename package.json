@@ -38,7 +38,7 @@
     "@masa-finance/masa-contracts-identity": "^1.9.0",
     "@masa-finance/masa-sdk": "^3.7.0",
     "@metamask/providers": "^11.1.1",
-    "@rainbow-me/rainbowkit": "~0.12.17",
+    "@rainbow-me/rainbowkit": "^1",
     "@tanstack/query-sync-storage-persister": "^4.32.6",
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-persist-client": "^4.28.0",
