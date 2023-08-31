@@ -29,11 +29,11 @@ export const Gallery = ({ tabs, wrapperClassName }: GalleryProps) => {
           </ul>
         </nav>
       </header>
-      <article className={`tab-content ${wrapperClassName}`}>
+      <section className={`tab-content ${wrapperClassName}`}>
         {tabs[activeTab].items.map((tab) => {
           return <GalleryItem {...tab} />;
         })}
-      </article>
+      </section>
     </article>
   );
 };
