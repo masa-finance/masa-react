@@ -9,7 +9,8 @@ import { useSession } from './use-session';
 import type {
   CustomGallerySBT,
   FullContract,
-  HydratedContracts,
+  FullContractWithTokens,
+  HydratedContract,
   Token,
   TokenWithMetadata,
 } from './interfaces';
@@ -73,6 +74,63 @@ export const useCustomGallerySBT = () => {
   };
 };
 
+export const fetchContractsAndTokens = async (
+  customContracts: FullContract[]
+): Promise<FullContractWithTokens[]> => {
+  const contractPromises = customContracts.map(
+    async (contract: FullContract) => {
+      if (contract.contract) {
+        try {
+          const tokens: Token[] = await contract.list();
+          return {
+            ...contract,
+            tokens,
+          } as FullContractWithTokens;
+        } catch (error) {
+          console.log('LIST TOKENS ERROR', error);
+        }
+      }
+      return null;
+    }
+  );
+  const contractsAndTokens = await Promise.all(contractPromises);
+
+  return contractsAndTokens.filter(Boolean) as FullContractWithTokens[];
+};
+
+export const hydrateTokensWithMetadata = async (
+  contractsAndTokens: FullContractWithTokens[]
+): Promise<HydratedContract[]> => {
+  const contractPromises = contractsAndTokens.map(
+    async (contract: FullContractWithTokens) => {
+      if (!contract.getMetadata) {
+        return { ...contract, tokens: [] };
+      }
+
+      const tokenPromises = contract.tokens.map(async (token: Token) => {
+        try {
+          const metadata = await contract.getMetadata(token);
+          return { metadata, ...token };
+        } catch (error) {
+          console.log('METADATA ERROR', error);
+          return null;
+        }
+      });
+
+      const hydratedTokens = (await Promise.all(tokenPromises)).filter(
+        Boolean
+      ) as TokenWithMetadata[];
+      return { ...contract, tokens: hydratedTokens } as HydratedContract;
+    }
+  );
+
+  const hydratedContracts = (await Promise.all(
+    contractPromises
+  )) as HydratedContract[];
+
+  return hydratedContracts;
+};
+
 export const useCustomSBTs = () => {
   const { masaAddress, masaNetwork } = useMasaClient();
   const canQuery = useCanQuery();
@@ -83,44 +141,10 @@ export const useCustomSBTs = () => {
   const [, getCustomContracts] = useAsyncFn(async () => {
     if (!canQuery) return null;
 
-    const hydratedContractsPromises = customContracts.map(
-      async (contract: FullContract) => {
-        if (!contract.contract) return null;
+    const contractsAndTokens = await fetchContractsAndTokens(customContracts);
+    const hydratedContracts =
+      await hydrateTokensWithMetadata(contractsAndTokens);
 
-        try {
-          const tokens: Token[] = await contract.list();
-
-          // Fetch metadata for all tokens concurrently if the getMetadata method exists
-          const tokensWithMetadataPromises = contract.getMetadata
-            ? tokens.map(async (token: Token) => {
-                try {
-                  const metadata = await contract.getMetadata(token);
-                  return { metadata, ...token } as TokenWithMetadata;
-                } catch (error) {
-                  console.log('METADATA ERROR', error);
-                  return null;
-                }
-              })
-            : [];
-
-          const tokensWithMetadata = (
-            await Promise.all(tokensWithMetadataPromises)
-          ).filter(Boolean) as TokenWithMetadata[];
-
-          return {
-            ...contract,
-            tokens: tokensWithMetadata,
-          } as HydratedContracts;
-        } catch (error) {
-          console.log('LIST TOKENS ERROR', error);
-          return null;
-        }
-      }
-    );
-
-    const hydratedContracts = (
-      await Promise.all(hydratedContractsPromises)
-    ).filter(Boolean) as HydratedContracts[];
     return hydratedContracts;
   }, [canQuery, customContracts]);
 
