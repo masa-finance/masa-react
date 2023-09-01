@@ -1,10 +1,5 @@
 import React from 'react';
-import type {
-  ICreditScore,
-  IGreen,
-  NetworkName,
-  SoulNameDetails,
-} from '@masa-finance/masa-sdk';
+import type { ICreditScore, IGreen } from '@masa-finance/masa-sdk';
 import { BigNumber } from 'ethers';
 import { Tabs } from './tabs';
 import { useMasa } from '../../../../provider';
@@ -23,40 +18,24 @@ export interface Greens {
   metadata?: IGreen | undefined;
 }
 
+export interface CustomSBTs {
+  tokenId: BigNumber;
+  tokenUri: string;
+  metadata?: { name: string; description: string; image: string } | undefined;
+}
+
 export interface CreditScores {
   tokenId: BigNumber;
   tokenUri: string;
   metadata?: ICreditScore | undefined;
 }
 
-export interface TabsInterface {
-  items: SoulNameDetails[] | Greens[] | CreditScores[];
-  render: (SBT: any) => JSX.Element;
-  content: () => JSX.Element[];
-  title: string;
-}
-
-export interface CustomGallerySBT {
-  name: string;
-  address: string;
-  network: NetworkName;
-  getMetadata: (item: { tokenId; tokenUri }) => Promise<{
-    image: string;
-    name: string;
-    description: string;
-  }>;
-}
-
-export const Gallery = ({ setIndex, context }) => {
+export const Gallery = ({ context }) => {
   const { masa, connect } = useMasa();
   return (
     <div className="masa-gallery-container">
       {masa && context.tabs && context.tabs.length > 0 ? (
-        <Tabs
-          tabs={context.tabs}
-          wrapperClassName="masa-gallery"
-          onAdd={() => setIndex('addSbt')}
-        />
+        <Tabs tabs={context.tabs} wrapperClassName="masa-gallery" />
       ) : (
         <div className="not-connected-message">
           <h2>It looks like you are not connected to Masa</h2>

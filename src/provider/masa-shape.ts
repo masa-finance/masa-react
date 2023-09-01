@@ -15,7 +15,7 @@ import {
 import { BigNumber, Signer } from 'ethers';
 import { GetNetworkResult } from '@wagmi/core';
 import { MasaSBT } from '@masa-finance/masa-contracts-identity';
-import { CustomGallerySBT } from '../components/masa-interface/pages/gallery/gallery';
+import { CustomGallerySBT } from '../refactor/masa/interfaces';
 
 export interface MasaShape {
   children?: React.ReactNode;
@@ -133,6 +133,11 @@ export interface MasaShape {
       tokens: {
         tokenId: BigNumber;
         tokenUri: string;
+        metadata?: {
+          image: string;
+          name: string;
+          description: string;
+        };
       }[];
     })[];
   badges?: unknown[];

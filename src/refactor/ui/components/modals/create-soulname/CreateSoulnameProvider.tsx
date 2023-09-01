@@ -113,20 +113,15 @@ export const CreateSoulnameProvider = ({
     }, [masa, debounceSearch]);
 
   const soulNameError = useMemo((): string | undefined => {
-    if (masa) {
-      const { isValid, message } = masa.soulName.validate(soulname);
+    if (isLoadingAvailability || !masa) return undefined;
+    if (!isAvailable) return 'Soulname not available';
 
-      if (!isValid) {
-        return message;
-      }
-    }
+    const { isValid, message } = masa.soulName.validate(soulname);
 
-    if (!isAvailable) {
-      return 'Soulname not available';
-    }
+    if (!isValid) return message;
 
     return undefined;
-  }, [masa, soulname, isAvailable]);
+  }, [masa, soulname, isAvailable, isLoadingAvailability]);
 
   const { value: registrationPrice, loading: isLoadingRegistrationPrice } =
     useAsync(async () => {

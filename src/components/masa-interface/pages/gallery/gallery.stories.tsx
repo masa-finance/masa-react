@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { MasaProvider } from '../../../../provider';
 import { Gallery } from '.';
 import { GalleryItem } from './galleryItem';
-import { CustomGallerySBT } from './gallery';
+import { CustomGallerySBT } from '../../../../refactor/masa/interfaces';
 
 const customRenderWhaleSBT: CustomGallerySBT = {
   name: 'Solid World Whale SBT',

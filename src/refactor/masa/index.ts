@@ -13,3 +13,5 @@ export * from './use-session';
 export * from './use-soulnames-purchase';
 export * from './use-soulnames';
 export * from './utils';
+
+export * from './interfaces';

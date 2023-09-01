@@ -9,7 +9,6 @@ const CreateSoulnameForm = () => {
     extension,
     paymentMethods,
     soulname,
-    paymentMethod,
     handleChangeSoulname,
     isLoadingAvailability,
     isAvailable,
@@ -110,15 +109,15 @@ const CreateSoulnameForm = () => {
           </div>
           <Select
             label="Payment asset"
+            style={{ textAlign: 'center' }}
             values={paymentMethods}
             onChange={updatePaymentMethod}
             readOnly
           />
           <Input
+            style={{ textAlign: 'center' }}
             label="Registration price"
-            value={`${
-              registrationPrice ? registrationPrice.slice(0, 7) : '-.-'
-            } ${paymentMethod}`}
+            value={registrationPrice ? registrationPrice.slice(0, 7) : '-.-'}
             readOnly
           />
         </div>
