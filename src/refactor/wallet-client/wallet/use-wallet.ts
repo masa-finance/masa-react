@@ -10,7 +10,7 @@ import {
   useAccount,
   useBalance,
   useDisconnect,
-  useWalletClient,
+  useWalletClient as useWalletClientWagmi,
   usePublicClient,
   PublicClient,
   WalletClient,
@@ -28,8 +28,8 @@ export interface UseWalletReturn {
   shortAddress?: `0x${string}`;
   publicClient?: PublicClient;
   walletClient?: WalletClient;
-  signer: Signer;
-  provider: Provider;
+  signer?: Signer;
+  provider?: Provider;
   connector?: Connector;
   isConnected?: boolean;
   isConnecting?: boolean;
@@ -62,7 +62,7 @@ const useWallet = (): UseWalletReturn => {
   // * NOTE: internal state to compare addresses
   const [compareAddress, setCompareAddress] = useState(address);
   const { data: walletClient, isLoading: isLoadingWalletClient } =
-    useWalletClient();
+    useWalletClientWagmi();
 
   const { data: signer, isLoading: isLoadingSigner } = useEthersSigner();
 

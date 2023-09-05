@@ -3,7 +3,7 @@ import { type PublicClient, type WalletClient } from 'wagmi';
 import { providers } from 'ethers';
 import { type HttpTransport } from 'viem';
 
-export function publicClientToProvider(publicClient: PublicClient) {
+export const publicClientToProvider = (publicClient: PublicClient) => {
   const { chain, transport } = publicClient;
   const network = {
     chainId: chain.id,
@@ -17,9 +17,9 @@ export function publicClientToProvider(publicClient: PublicClient) {
       )
     );
   return new providers.JsonRpcProvider(transport.url as string, network);
-}
+};
 
-export function walletClientToSigner(walletClient: WalletClient) {
+export const walletClientToSigner = (walletClient: WalletClient) => {
   const { account, chain, transport } = walletClient;
   const network = {
     chainId: chain.id,

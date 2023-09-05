@@ -14,16 +14,16 @@ export const useEthersProvider = (): Provider | undefined => {
   return provider;
 };
 
-export const useEthersSigner = (): {
-  data: Signer | undefined;
-  isLoading: boolean;
-  error: Error | null;
-} => {
+export const useEthersSigner = () => {
   const { data: walletClient, isLoading, error } = useWalletClient();
   const signer = useMemo(() => {
     if (walletClient) walletClientToSigner(walletClient);
     return undefined;
   }, [walletClient]);
 
-  return { data: signer, isLoading, error };
+  return { data: signer, isLoading, error } as {
+    data?: Signer;
+    isLoading?: boolean;
+    error?: Error | null;
+  };
 };
