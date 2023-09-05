@@ -3,7 +3,6 @@ import {
   useChainModal,
   useAccountModal,
 } from '@rainbow-me/rainbowkit';
-import type { Connector, Provider } from '@wagmi/core';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
@@ -14,9 +13,11 @@ import {
   usePublicClient,
   PublicClient,
   WalletClient,
+  Connector,
 } from 'wagmi';
 import { Signer } from 'ethers';
 
+import { Provider } from '@wagmi/core';
 import { useEthersProvider, useEthersSigner } from '../../helpers/ethers';
 
 export interface UseWalletReturn {
