@@ -7,7 +7,7 @@ import { publicClientToProvider, walletClientToSigner } from './wagmi';
 export const useEthersProvider = (): Provider | undefined => {
   const publicClient = usePublicClient();
   const provider = useMemo(() => {
-    if (publicClient) publicClientToProvider(publicClient);
+    if (publicClient) return publicClientToProvider(publicClient);
     return undefined;
   }, [publicClient]);
 
@@ -17,7 +17,7 @@ export const useEthersProvider = (): Provider | undefined => {
 export const useEthersSigner = () => {
   const { data: walletClient, isLoading, error } = useWalletClient();
   const signer = useMemo(() => {
-    if (walletClient) walletClientToSigner(walletClient);
+    if (walletClient) return walletClientToSigner(walletClient);
     return undefined;
   }, [walletClient]);
 
