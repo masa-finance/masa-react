@@ -13,13 +13,14 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 
 import type { Chain } from 'wagmi';
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import type { ReactNode } from 'react';
 import React, { createContext, useContext, useMemo } from 'react';
 
 import { NetworkName, SupportedNetworks } from '@masa-finance/masa-sdk';
+
 import { getRainbowkitChains, MasaNetworks } from './utils';
 
 type ConfiguredRainbowKitProviderValue = Record<string, never>;
@@ -92,7 +93,7 @@ export const ConfiguredRainbowKitProvider = ({
   forceNetwork,
 }: ConfiguredRainbowKitProviderProps) => {
   const rainbowkitChains = getRainbowkitChains(chainsToUse);
-  const { chains, provider, webSocketProvider } = configureChains(
+  const { chains, publicClient, webSocketPublicClient } = configureChains(
     rainbowkitChains,
     [
       // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
@@ -118,17 +119,17 @@ export const ConfiguredRainbowKitProvider = ({
     walletConnectors as unknown as WalletList
   );
 
-  const wagmiClient = createClient({
+  const wagmiClient = createConfig({
     autoConnect: true,
     connectors: celoConnectors,
-    provider,
-    webSocketProvider,
+    publicClient,
+    webSocketPublicClient,
   });
 
   const contextValue = useMemo(() => ({}), []);
 
   return (
-    <WagmiConfig client={wagmiClient}>
+    <WagmiConfig config={wagmiClient}>
       <RainbowKitProvider
         modalSize={rainbowKitModalSize}
         chains={rainbowkitChains}

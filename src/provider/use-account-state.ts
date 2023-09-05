@@ -4,7 +4,7 @@
 
 import { Masa, SoulNameDetails } from '@masa-finance/masa-sdk';
 import { BigNumber, Signer } from 'ethers';
-import { ConnectorData, useAccount, useProvider } from 'wagmi';
+import { ConnectorData, useAccount } from 'wagmi';
 import { useMemo, useState } from 'react';
 import { useAsync } from 'react-use';
 import {
@@ -18,6 +18,7 @@ import {
   invalidateCustomSBTs,
   invalidateCustomSBTContracts,
 } from './hooks';
+import { useEthersProvider } from '../refactor/helpers/ethers';
 
 export const useAccountState = ({
   masa,
@@ -58,7 +59,7 @@ export const useAccountState = ({
 
   const walletName = useMemo(() => activeConnector?.name, [activeConnector]);
 
-  const provider = useProvider();
+  const provider = useEthersProvider();
 
   const { isLoggingOut, hasLoggedOut } = useLogout({
     masa,
@@ -106,25 +107,25 @@ export const useAccountState = ({
     // * walletconnect
 
     // Subscribe to accounts change
-    provider.on('accountsChanged', (accounts: string[]) => {
+    provider?.on('accountsChanged', (accounts: string[]) => {
       console.log('for wc acc changed', accounts);
     });
 
     // Subscribe to chainId change
-    provider.on('chainChanged', (chainId: number) => {
+    provider?.on('chainChanged', (chainId: number) => {
       console.log('for wc chainid changed', chainId);
     });
 
     // Subscribe to session disconnection
-    provider.on('disconnect', (code: number, reason: string) => {
+    provider?.on('disconnect', (code: number, reason: string) => {
       console.log('for wc disc', code, reason);
     });
 
     return () => {
       activeConnector?.off('change', handleConnectorUpdate);
-      provider.off('accountsChanged', () => {});
-      provider.off('chainChanged', () => {});
-      provider.off('disconnect', () => {});
+      provider?.off('accountsChanged', () => {});
+      provider?.off('chainChanged', () => {});
+      provider?.off('disconnect', () => {});
     };
   }, [activeConnector, reloadWallet, masa, signer, walletAddress, provider]);
 
