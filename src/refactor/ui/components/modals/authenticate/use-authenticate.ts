@@ -14,6 +14,7 @@ export const useAuthenticate = ({
   onRegisterFinish,
   onSuccess,
   onError,
+  showCreateSoulnameModal = true,
 }: {
   onAuthenticateSuccess?: (payload: {
     address?: string;
@@ -25,7 +26,8 @@ export const useAuthenticate = ({
   onRegisterFinish?: () => void;
   onSuccess?: () => void;
   onError?: () => void;
-}) => {
+  showCreateSoulnameModal?: boolean;
+} = {}) => {
   const { openConnectModal, isDisconnected } = useWallet();
   const { checkLogin, getSession } = useSession();
   const { pendingConnector } = useNetwork();
@@ -73,7 +75,11 @@ export const useAuthenticate = ({
             });
           }
 
-          if (!disable && (!identityRefetched || !identityRefetched.identityId))
+          if (
+            showCreateSoulnameModal &&
+            !disable &&
+            (!identityRefetched || !identityRefetched.identityId)
+          )
             await openSoulnameModal();
         },
       });
