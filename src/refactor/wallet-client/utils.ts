@@ -34,26 +34,13 @@ const rainbowkitChains = [
   polygonMumbai,
 ];
 
-export type MasaNetworks = Partial<{
-  // eth
-  goerli: Network;
-  ethereum: Network;
-  homestead: Network;
-  // celo
-  alfajores: Network;
-  celo: Network;
-  // polygon
-  mumbai: Network;
-  polygon: Network;
-  // bsc
-  bsctest: Network;
-  bsc: Network;
-  // base
-  base: Network;
-  basegoerli: Network;
-  // fallback
-  unknown: Network;
-}>;
+export type MasaNetworks = Partial<
+  { [key in NetworkName]: Network } & {
+    // todo: remove this hack! we dont know any network that is called this way.
+    // this is wagmi terminology
+    homestead: Network;
+  }
+>;
 
 type NetworkNameWithHomestead = NetworkName | 'homestead';
 
@@ -90,7 +77,7 @@ export const getRainbowkitChains = (networkList?: NetworkName[]) => {
   //   console.log('BRUDER', nw);
   // }
 
-  const masaNetworks = Object.keys(SupportedNetworks)
+  const masaNetworks: MasaNetworks = Object.keys(SupportedNetworks)
     .filter((x: string) => x !== 'unknown') // remove unused network
     .reduce(
       (acc: MasaNetworks, val: string) => {
@@ -120,6 +107,7 @@ export const getRainbowkitChains = (networkList?: NetworkName[]) => {
   );
 
   const userNetworksMasa = userNetworksFiltered.map(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     (un: NetworkName) => masaNetworks[un]
   );
   const userNetworksRainbowkit = new Set(
