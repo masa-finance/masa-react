@@ -12,6 +12,7 @@ export * from './use-session-listen';
 export * from './use-session';
 export * from './use-soulnames-purchase';
 export * from './use-soulnames';
+export * from './use-custom-sbt';
 export * from './utils';
 
 export * from './interfaces';

@@ -15,6 +15,7 @@ import {
 import { ModalError } from '../ModalError';
 import { useWalletClient } from '../../../../wallet-client/wallet-client-provider';
 import { ModalSuccess } from './ModalSuccess';
+import { useWallet } from '../../../../wallet-client';
 
 const SoulnameModal = ({
   onMintError,
@@ -37,7 +38,7 @@ const SoulnameModal = ({
   const { isLoadingSigner } = useWalletClient();
   const { extension, soulname, soulNameError, setSoulname } =
     useCreateSoulnameModal();
-  const { connector } = useWalletClient();
+  const { connector } = useWallet();
 
   const [shouldRestart, setShouldRestart] = useState(false);
   const handleError = useCallback(() => {

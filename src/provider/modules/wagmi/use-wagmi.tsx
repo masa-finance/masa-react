@@ -19,11 +19,13 @@ import {
   useAccount,
   useDisconnect,
   useNetwork,
-  useProvider,
-  useSigner,
   useSwitchNetwork,
 } from 'wagmi';
 import { useEffect } from 'react';
+import {
+  useEthersProvider,
+  useEthersSigner,
+} from '../../../refactor/helpers/ethers';
 
 // type WebSocketProvider = providers.WebSocketProvider & {
 //   chains?: Chain[];
@@ -40,15 +42,14 @@ export const useWagmi = ({
   setSigner: (signer?: Signer) => void;
   logout: () => void;
 }) => {
-  const provider = useProvider();
+  const provider = useEthersProvider();
   const { chain, chains } = useNetwork();
   const { isLoading: isLoadingNetwork, status } = useSwitchNetwork();
-
   const {
     data: signer,
-    isError: isSignerError,
+    error: isSignerError,
     isLoading: isSignerLoading,
-  } = useSigner<Wallet>();
+  } = useEthersSigner();
 
   const { isConnecting, isDisconnected, isReconnecting } = useAccount({
     onDisconnect: () => logout(),
@@ -74,7 +75,7 @@ export const useWagmi = ({
 
   return {
     isLoading: isSignerLoading,
-    isError: isSignerError,
+    isError: isSignerError !== null,
     isConnecting,
     isDisconnected,
     provider,
@@ -86,7 +87,7 @@ export const useWagmi = ({
     isLoading: boolean;
     isError: boolean;
     isConnecting: boolean;
-    signer: Signer;
+    signer?: Signer;
     chain: Chain;
     chains: Chain[];
     disconnect: () => void;

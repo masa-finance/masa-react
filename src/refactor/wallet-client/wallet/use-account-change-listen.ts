@@ -1,5 +1,6 @@
 import { useAsync } from 'react-use';
-import { ConnectorData, useAccount, useProvider } from 'wagmi';
+import { ConnectorData, useAccount } from 'wagmi';
+import { useEthersProvider } from '../../helpers/ethers';
 
 export const useAccountChangeListen = ({
   onAccountChange,
@@ -8,7 +9,7 @@ export const useAccountChangeListen = ({
   onAccountChange?: (account: `0x${string}`) => void;
   onChainChange?: () => void;
 }>) => {
-  const provider = useProvider();
+  const provider = useEthersProvider();
   const { connector } = useAccount();
 
   useAsync(async () => {
@@ -62,22 +63,22 @@ export const useAccountChangeListen = ({
       console.log('for wc disc', code, reason);
     };
     // Subscribe to accounts change
-    provider.on('accountsChanged', onAccountsChanged);
+    provider?.on('accountsChanged', onAccountsChanged);
 
     // Subscribe to chainId change
-    provider.on('chainChanged', onChainChanged);
+    provider?.on('chainChanged', onChainChanged);
 
     // Subscribe to session disconnection
-    provider.on('disconnect', onDisconnect);
+    provider?.on('disconnect', onDisconnect);
 
     await Promise.resolve();
 
     return () => {
       connector?.off('change', onChangeConnector);
       connector?.off('disconnect', onDisconnectConnector);
-      provider.off('accountsChanged', onAccountsChanged);
-      provider.off('chainChanged', onChainChanged);
-      provider.off('disconnect', onDisconnect);
+      provider?.off('accountsChanged', onAccountsChanged);
+      provider?.off('chainChanged', onChainChanged);
+      provider?.off('disconnect', onDisconnect);
     };
   }, [onAccountChange, onChainChange, connector, provider]);
 };

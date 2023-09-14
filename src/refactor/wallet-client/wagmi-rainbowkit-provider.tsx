@@ -4,7 +4,8 @@ import {
   WalletList,
 } from '@rainbow-me/rainbowkit';
 
-import { Chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import { Chain, configureChains, createConfig, WagmiConfig } from 'wagmi';
+
 import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import type { ReactNode } from 'react';
@@ -32,7 +33,7 @@ export const WagmiRainbowkitProvider = ({
     [allowedNetworkNames, forceChain]
   );
 
-  const { chains, provider, webSocketProvider } = configureChains(
+  const { chains, publicClient, webSocketPublicClient } = configureChains(
     rainbowkitChains,
     [
       // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
@@ -62,15 +63,15 @@ export const WagmiRainbowkitProvider = ({
     walletConnectors as unknown as WalletList
   );
 
-  const wagmiClient = createClient({
+  const wagmiClient = createConfig({
     autoConnect: true,
     connectors: celoConnectors,
-    provider,
-    webSocketProvider,
+    publicClient,
+    webSocketPublicClient,
   });
 
   return (
-    <WagmiConfig client={wagmiClient}>
+    <WagmiConfig config={wagmiClient}>
       <RainbowKitProvider
         modalSize={rainbowkitConfig?.modalSize}
         chains={rainbowkitChains}

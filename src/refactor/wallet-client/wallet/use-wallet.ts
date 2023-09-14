@@ -3,18 +3,55 @@ import {
   useChainModal,
   useAccountModal,
 } from '@rainbow-me/rainbowkit';
-import type { Connector, Provider, Signer } from '@wagmi/core';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
   useAccount,
   useBalance,
   useDisconnect,
-  useProvider,
-  useSigner,
+  useWalletClient as useWalletClientWagmi,
+  usePublicClient,
+  PublicClient,
+  WalletClient,
+  Connector,
 } from 'wagmi';
+import { Signer } from 'ethers';
 
-const useWallet = () => {
+import { Provider } from '@wagmi/core';
+import { useEthersProvider, useEthersSigner } from '../../helpers/ethers';
+
+export interface UseWalletReturn {
+  address?: `0x${string}`;
+  hasAddress: boolean;
+  walletName?: string;
+  previousAddress?: `0x${string}`;
+  compareAddress?: `0x${string}`;
+  shortAddress?: `0x${string}`;
+  publicClient?: PublicClient;
+  walletClient?: WalletClient;
+  signer?: Signer;
+  provider?: Provider;
+  connector?: Connector;
+  isConnected?: boolean;
+  isConnecting?: boolean;
+  isDisconnected?: boolean;
+  openConnectModal?: () => void;
+  openChainModal?: () => void;
+  openAccountModal?: () => void;
+  disconnect?: () => void;
+  disconnectAsync?: () => void;
+  isLoadingSigner?: boolean;
+  isLoadingBalance?: boolean;
+  balance?: string;
+  setPreviousAddress: React.Dispatch<
+    React.SetStateAction<`0x${string}` | undefined>
+  >;
+  setCompareAddress: React.Dispatch<
+    React.SetStateAction<`0x${string}` | undefined>
+  >;
+}
+
+const useWallet = (): UseWalletReturn => {
   const { openConnectModal } = useConnectModal();
   const { openChainModal } = useChainModal();
   const { openAccountModal } = useAccountModal();
@@ -25,9 +62,15 @@ const useWallet = () => {
   >();
   // * NOTE: internal state to compare addresses
   const [compareAddress, setCompareAddress] = useState(address);
-  const { data: signer, isLoading: isLoadingSigner } = useSigner();
+  const { data: walletClient, isLoading: isLoadingWalletClient } =
+    useWalletClientWagmi();
+
+  const { data: signer, isLoading: isLoadingSigner } = useEthersSigner();
+
+  const publicClient = usePublicClient();
+  const provider = useEthersProvider();
+
   const { disconnect, disconnectAsync } = useDisconnect();
-  const provider = useProvider();
   const {
     data: balanceResult,
     // isError: isErrorBalance,
@@ -87,8 +130,11 @@ const useWallet = () => {
       walletName,
       previousAddress,
       compareAddress,
-      provider,
+      publicClient,
+      walletClient,
       signer,
+      isLoadingSigner,
+      provider,
       connector,
       isConnected,
       isConnecting,
@@ -98,7 +144,7 @@ const useWallet = () => {
       openAccountModal,
       disconnect,
       disconnectAsync,
-      isLoadingSigner,
+      isLoadingWalletClient,
       isLoadingBalance,
       balance,
       setPreviousAddress,
@@ -111,8 +157,11 @@ const useWallet = () => {
       walletName,
       previousAddress,
       compareAddress,
-      provider,
+      publicClient,
+      walletClient,
       signer,
+      isLoadingSigner,
+      provider,
       connector,
       isConnected,
       isConnecting,
@@ -122,7 +171,7 @@ const useWallet = () => {
       openAccountModal,
       disconnect,
       disconnectAsync,
-      isLoadingSigner,
+      isLoadingWalletClient,
       isLoadingBalance,
       balance,
       setPreviousAddress,
@@ -130,34 +179,7 @@ const useWallet = () => {
     ]
   );
 
-  return useWalletValue as {
-    address?: `0x${string}`;
-    hasAddress: boolean;
-    walletName?: string;
-    previousAddress?: `0x${string}`;
-    compareAddress?: `0x${string}`;
-    shortAddress?: `0x${string}`;
-    provider?: Provider;
-    signer?: Signer;
-    connector?: Connector;
-    isConnected?: boolean;
-    isConnecting?: boolean;
-    isDisconnected?: boolean;
-    openConnectModal?: () => void;
-    openChainModal?: () => void;
-    openAccountModal?: () => void;
-    disconnect?: () => void;
-    disconnectAsync?: () => void;
-    isLoadingSigner?: boolean;
-    isLoadingBalance?: boolean;
-    balance?: string;
-    setPreviousAddress: React.Dispatch<
-      React.SetStateAction<`0x${string}` | undefined>
-    >;
-    setCompareAddress: React.Dispatch<
-      React.SetStateAction<`0x${string}` | undefined>
-    >;
-  };
+  return useWalletValue as UseWalletReturn;
 };
 
 export { useWallet };
