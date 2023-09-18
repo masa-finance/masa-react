@@ -56,7 +56,7 @@
     "reaptcha": "^1.12.1",
     "rodal": "^2.0.0",
     "viem": "^1.10.13",
-    "wagmi": "^1.4.1"
+    "wagmi": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.22.17",
