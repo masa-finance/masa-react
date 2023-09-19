@@ -107,9 +107,8 @@ export const useSoulnames = (
   );
 
   const loadSoulnameDetails = useCallback(
-    async (soulName: string): Promise<SoulNameDetails | undefined> => {
-      return masa?.soulName.loadSoulNameByName(soulName);
-    },
+    async (soulName: string): Promise<SoulNameDetails | undefined> =>
+      masa?.soulName.loadSoulNameByName(soulName),
     [masa?.soulName]
   );
 
