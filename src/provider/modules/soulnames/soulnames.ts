@@ -35,11 +35,11 @@ export const useSoulnamesQuery = ({
   } = useQuery<string[] | undefined>(
     queryKey,
     async () => {
-      let sns: string[] | undefined = [];
+      let soulnameResults: string[] | undefined = [];
       if (walletAddress) {
-        sns = await masa?.soulName.loadSoulNames(walletAddress);
+        soulnameResults = await masa?.soulName.loadSoulNames(walletAddress);
       }
-      return sns ?? [];
+      return soulnameResults ?? [];
     },
     {
       enabled: true, // !!masa && !!walletAddress,
