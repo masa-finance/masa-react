@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { Masa, PaymentMethod, SoulNameDetails } from '@masa-finance/masa-sdk';
+import { Masa, PaymentMethod } from '@masa-finance/masa-sdk';
 import { useCallback, useMemo } from 'react';
 import type { Signer } from 'ethers';
 import { queryClient } from '../../masa-query-client';
@@ -76,9 +76,6 @@ export const useSoulnames = (
     paymentMethod: PaymentMethod,
     style?: string
   ) => Promise<boolean>;
-  loadSoulnameDetails: (
-    soulname: string
-  ) => Promise<SoulNameDetails | undefined>;
   error: unknown;
 } => {
   const { soulnames, status, isLoading, isFetching, reloadSoulnames, error } =
@@ -106,18 +103,11 @@ export const useSoulnames = (
     [masa]
   );
 
-  const loadSoulnameDetails = useCallback(
-    async (soulName: string): Promise<SoulNameDetails | undefined> =>
-      masa?.soulName.loadSoulNameByName(soulName),
-    [masa?.soulName]
-  );
-
   return {
     soulnames,
     isSoulnamesLoading: isLoading || isFetching,
     reloadSoulnames,
     handlePurchaseSoulname,
-    loadSoulnameDetails,
     status,
     error,
   };

@@ -93,8 +93,8 @@ export const useAuthenticate = ({
       onAuthenticateError,
       checkLogin,
       getSession,
-      pendingConnector,
-      // disableSoulnamePurchase,
+      pendingConnector?.name,
+      showCreateSoulnameModal,
     ]
   );
 

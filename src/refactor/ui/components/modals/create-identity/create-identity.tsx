@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { useAsync } from 'react-use';
+import { useMasa } from 'provider/use-masa';
 import { MasaLoading } from '../../masa-loading';
 import { useConfig } from '../../../../base-provider';
 import { useSoulNames } from '../../../../masa/use-soulnames';
@@ -18,7 +19,8 @@ interface Copy {
 export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
   const modal = useModal();
   const { company } = useConfig();
-  const { soulnames, loadSoulnameDetails } = useSoulNames();
+  const { soulnames } = useSoulNames();
+  const { masa } = useMasa();
 
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +42,7 @@ export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
       case 'Celo': {
         let tweetContentLink = '';
         if (soulnames?.[0]) {
-          const details = await loadSoulnameDetails(soulnames[0]);
+          const details = await masa?.soulName.loadSoulNameByName(soulnames[0]);
           const tweetLink = details?.tokenDetails.tokenId.toString();
           tweetContentLink = `https://raregems.io/celo/celo-domain-names/${
             tweetLink ?? ''
@@ -85,7 +87,7 @@ export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
     }
 
     setCopy(cpy);
-  }, [company, loadSoulnameDetails, soulnames]);
+  }, [company, masa?.soulName, soulnames]);
 
   const createIdentity = useCallback(async () => {
     setIsLoading(true);

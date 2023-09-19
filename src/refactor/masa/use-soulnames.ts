@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 
-import { SoulNameDetails } from '@masa-finance/masa-sdk';
-import { useCallback } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
@@ -31,17 +29,10 @@ export const useSoulNames = () => {
     queryFn: getSoulnamesAsync,
   });
 
-  const loadSoulnameDetails = useCallback(
-    async (soulName: string): Promise<SoulNameDetails | undefined> =>
-      masa?.soulName.loadSoulNameByName(soulName),
-    [masa?.soulName]
-  );
-
   return {
     soulnames,
     isLoadingSoulnames,
     getSoulnames,
-    loadSoulnameDetails,
 
     isSoulnamesLoading: isLoadingSoulnames,
     reloadSoulnames: getSoulnames,

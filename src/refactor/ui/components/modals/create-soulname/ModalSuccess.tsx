@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { useModal } from '@ebay/nice-modal-react';
 import { useAsync } from 'react-use';
+import { useMasa } from 'provider/use-masa';
 import { twitterLogo } from '../../../../../assets/twitterLogo';
 
 import { useSoulNames } from '../../../../masa/use-soulnames';
@@ -19,7 +20,8 @@ export const ModalSuccess = ({
 }) => {
   const modal = useModal();
   const { company } = useConfig();
-  const { soulnames, loadSoulnameDetails } = useSoulNames();
+  const { soulnames } = useSoulNames();
+  const { masa } = useMasa();
 
   const handleComplete = useCallback(() => {
     onFinish?.();
@@ -64,7 +66,7 @@ export const ModalSuccess = ({
       }
       case 'Celo': {
         if (soulnames?.[0]) {
-          const details = await loadSoulnameDetails(soulnames[0]);
+          const details = await masa?.soulName.loadSoulNameByName(soulnames[0]);
           tl = `https://raregems.io/celo/celo-domain-names/${
             details?.tokenDetails.tokenId.toString() ?? ''
           }`;
@@ -90,7 +92,7 @@ export const ModalSuccess = ({
     }
 
     setTweetContentLink(tl);
-  }, [company, soulnames, loadSoulnameDetails]);
+  }, [company, soulnames, masa?.soulName]);
 
   const baseTwitterUrl = 'https://twitter.com/intent/tweet?text=';
 

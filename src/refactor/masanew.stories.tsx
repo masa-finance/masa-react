@@ -35,6 +35,7 @@ import { useAuthenticate } from './ui/components/modals/authenticate/use-authent
 import { CustomGallerySBT } from './masa/interfaces';
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
+import { useMasa } from '../provider';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -296,7 +297,8 @@ const IdentityInfo = () => {
 };
 
 const SoulnameCreditScoreInfo = () => {
-  const { soulnames, isLoadingSoulnames, loadSoulnameDetails } = useSoulNames();
+  const { soulnames, isLoadingSoulnames } = useSoulNames();
+  const { masa } = useMasa();
   const { creditScores, isLoadingCreditScores } = useCreditScores();
 
   const [soulnameDetails, setSoulnameDetails] = useState<SoulNameDetails[]>([]);
@@ -304,7 +306,7 @@ const SoulnameCreditScoreInfo = () => {
   useAsync(async () => {
     if (soulnames) {
       const snd = await Promise.all(
-        soulnames.map((soulname) => loadSoulnameDetails(soulname))
+        soulnames.map((soulname) => masa?.soulName.loadSoulNameByName(soulname))
       );
       setSoulnameDetails(snd.filter((sn) => Boolean(sn)) as SoulNameDetails[]);
     }
