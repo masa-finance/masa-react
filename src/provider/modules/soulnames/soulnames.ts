@@ -32,13 +32,19 @@ export const useSoulnamesQuery = ({
     isFetching,
     refetch: reloadSoulnames,
     error,
-  } = useQuery<SoulNameDetails[] | undefined>(
+  } = useQuery<string[] | undefined>(
     queryKey,
-    () => masa?.soulName.list(),
+    async () => {
+      let sns: string[] | undefined = [];
+      if (walletAddress) {
+        sns = await masa?.soulName.loadSoulNames(walletAddress);
+      }
+      return sns ?? [];
+    },
     {
       enabled: true, // !!masa && !!walletAddress,
       retry: false,
-      onSuccess: (soulNames?: SoulNameDetails[]) => {
+      onSuccess: (soulNames?: string[]) => {
         if (masa?.config.verbose) {
           console.info({ soulNames, network: masa?.config.networkName });
         }
@@ -60,7 +66,7 @@ export const useSoulnames = (
   masa?: Masa,
   walletAddress?: string
 ): {
-  soulnames?: SoulNameDetails[];
+  soulnames?: string[];
   status: string;
   isSoulnamesLoading: boolean;
   reloadSoulnames: () => void;
@@ -70,6 +76,9 @@ export const useSoulnames = (
     paymentMethod: PaymentMethod,
     style?: string
   ) => Promise<boolean>;
+  loadSoulnameDetails: (
+    soulname: string
+  ) => Promise<SoulNameDetails | undefined>;
   error: unknown;
 } => {
   const { soulnames, status, isLoading, isFetching, reloadSoulnames, error } =
@@ -97,11 +106,19 @@ export const useSoulnames = (
     [masa]
   );
 
+  const loadSoulnameDetails = useCallback(
+    async (soulName: string): Promise<SoulNameDetails | undefined> => {
+      return masa?.soulName.loadSoulNameByName(soulName);
+    },
+    [masa?.soulName]
+  );
+
   return {
     soulnames,
     isSoulnamesLoading: isLoading || isFetching,
     reloadSoulnames,
     handlePurchaseSoulname,
+    loadSoulnameDetails,
     status,
     error,
   };
