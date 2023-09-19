@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { Masa, PaymentMethod, SoulNameDetails } from '@masa-finance/masa-sdk';
+import { Masa, PaymentMethod } from '@masa-finance/masa-sdk';
 import { useCallback, useMemo } from 'react';
 import type { Signer } from 'ethers';
 import { queryClient } from '../../masa-query-client';
@@ -32,13 +32,19 @@ export const useSoulnamesQuery = ({
     isFetching,
     refetch: reloadSoulnames,
     error,
-  } = useQuery<SoulNameDetails[] | undefined>(
+  } = useQuery<string[] | undefined>(
     queryKey,
-    () => masa?.soulName.list(),
+    async () => {
+      let soulnameResults: string[] | undefined = [];
+      if (walletAddress) {
+        soulnameResults = await masa?.soulName.loadSoulNames(walletAddress);
+      }
+      return soulnameResults ?? [];
+    },
     {
       enabled: true, // !!masa && !!walletAddress,
       retry: false,
-      onSuccess: (soulNames?: SoulNameDetails[]) => {
+      onSuccess: (soulNames?: string[]) => {
         if (masa?.config.verbose) {
           console.info({ soulNames, network: masa?.config.networkName });
         }
@@ -60,7 +66,7 @@ export const useSoulnames = (
   masa?: Masa,
   walletAddress?: string
 ): {
-  soulnames?: SoulNameDetails[];
+  soulnames?: string[];
   status: string;
   isSoulnamesLoading: boolean;
   reloadSoulnames: () => void;

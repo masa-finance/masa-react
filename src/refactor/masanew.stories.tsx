@@ -2,13 +2,13 @@ import buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import React, { MouseEventHandler, useCallback } from 'react';
+import React, { MouseEventHandler, useCallback, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
 import { Button } from './ui';
 import './ui/styles.scss';
 import '../styles.scss';
 import { useConfig } from './base-provider';
-import { JsonView, darkStyles } from 'react-json-view-lite';
+import { darkStyles, JsonView } from 'react-json-view-lite';
 import 'react-json-view-lite/dist/index.css';
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
@@ -33,6 +33,9 @@ import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
 import { CustomGallerySBT } from './masa/interfaces';
+import { SoulNameDetails } from '@masa-finance/masa-sdk';
+import { useAsync } from 'react-use';
+import { useMasa } from '../provider';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -295,7 +298,20 @@ const IdentityInfo = () => {
 
 const SoulnameCreditScoreInfo = () => {
   const { soulnames, isLoadingSoulnames } = useSoulNames();
+  const { masa } = useMasa();
   const { creditScores, isLoadingCreditScores } = useCreditScores();
+
+  const [soulnameDetails, setSoulnameDetails] = useState<SoulNameDetails[]>([]);
+
+  useAsync(async () => {
+    if (soulnames) {
+      const snd = await Promise.all(
+        soulnames.map((soulname) => masa?.soulName.loadSoulNameByName(soulname))
+      );
+      setSoulnameDetails(snd.filter((sn) => Boolean(sn)) as SoulNameDetails[]);
+    }
+  }, [soulnames]);
+
   return (
     // skipcq: JS-0415
     <>
@@ -304,7 +320,7 @@ const SoulnameCreditScoreInfo = () => {
         <li>
           <ul>
             <li>isLoadingSoulnames: {String(isLoadingSoulnames)}</li>
-            {soulnames?.map((sn) => {
+            {soulnameDetails?.map((sn) => {
               const randomColor = `#${Math.floor(
                 Math.random() * 16_777_215
               ).toString(16)}`;

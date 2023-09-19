@@ -45,7 +45,7 @@ const SoulnameModal = ({
     setSoulname('');
     setShouldRestart(true);
     onError?.();
-  }, [onError]);
+  }, [onError, setSoulname]);
 
   // const [error, setError] = useState<null | {
   //   title: string;

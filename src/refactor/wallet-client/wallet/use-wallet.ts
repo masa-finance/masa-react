@@ -1,19 +1,19 @@
 import {
-  useConnectModal,
-  useChainModal,
   useAccountModal,
+  useChainModal,
+  useConnectModal,
 } from '@rainbow-me/rainbowkit';
 import { useEffect, useMemo, useState } from 'react';
 
 import {
+  Connector,
+  PublicClient,
   useAccount,
   useBalance,
   useDisconnect,
-  useWalletClient as useWalletClientWagmi,
   usePublicClient,
-  PublicClient,
+  useWalletClient as useWalletClientWagmi,
   WalletClient,
-  Connector,
 } from 'wagmi';
 import { Signer } from 'ethers';
 
@@ -83,7 +83,7 @@ const useWallet = (): UseWalletReturn => {
     if (!address) return '';
 
     // eslint-disable-next-line unicorn/prefer-string-slice
-    return `${address?.slice(0, 2) ?? ''}...${address.substring(
+    return `${address.slice(0, 6)}...${address.substring(
       address.length - 4,
       address.length
     )}`;

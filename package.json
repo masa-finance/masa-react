@@ -1,6 +1,6 @@
 {
   "name": "@masa-finance/masa-react",
-  "version": "3.1.4",
+  "version": "3.2.0",
   "license": "MIT",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
@@ -37,11 +37,11 @@
     "@ebay/nice-modal-react": "^1.2.10",
     "@masa-finance/masa-contracts-identity": "^1.10.1",
     "@masa-finance/masa-sdk": "^3.8.2",
-    "@metamask/providers": "^11.1.2",
+    "@metamask/providers": "^13.0.0",
     "@rainbow-me/rainbowkit": "^1.0.11",
     "@tanstack/query-sync-storage-persister": "^4.35.3",
     "@tanstack/react-query": "^4.35.3",
-    "@tanstack/react-query-persist-client": "^4.35.3",
+    "@tanstack/react-query-persist-client": "^4.35.5",
     "@wagmi/chains": "^1.8.0",
     "@wagmi/core": "~0.10.17",
     "@walletconnect/modal": "^2.6.2",
@@ -55,12 +55,12 @@
     "react-use": "^17.4.0",
     "reaptcha": "^1.12.1",
     "rodal": "^2.0.0",
-    "viem": "^1.10.13",
-    "wagmi": "^1.4.1"
+    "viem": "^1.10.14",
+    "wagmi": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.22.17",
-    "@babel/preset-env": "^7.22.15",
+    "@babel/preset-env": "^7.22.20",
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.22.15",
     "@size-limit/file": "^8.2.6",
