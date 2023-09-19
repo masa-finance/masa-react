@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { useAsync } from 'react-use';
 import { MasaLoading } from '../../masa-loading';
 import { useConfig } from '../../../../base-provider';
 import { useSoulNames } from '../../../../masa/use-soulnames';
@@ -23,71 +24,67 @@ export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [copy, setCopy] = useState<Copy>();
 
-  useEffect(() => {
-    const loadCopy = async () => {
-      let c: Copy;
-      switch (company) {
-        case 'Masa': {
-          c = {
-            titleText:
-              'You have claimed your .soul domain and your Soulbound Identity has been minted.',
-            twitterText: 'Tweet your .soul domain',
-            tweetContentLink: 'https://app.masa.finance',
-          };
+  useAsync(async () => {
+    let cpy: Copy;
+    switch (company) {
+      case 'Masa': {
+        cpy = {
+          titleText:
+            'You have claimed your .soul domain and your Soulbound Identity has been minted.',
+          twitterText: 'Tweet your .soul domain',
+          tweetContentLink: 'https://app.masa.finance',
+        };
 
-          break;
-        }
-        case 'Celo': {
-          let tweetContentLink = '';
-          if (soulnames && soulnames[0]) {
-            const details = await loadSoulnameDetails(soulnames[0]);
-            const tweetLink = details?.tokenDetails.tokenId.toString();
-            tweetContentLink = `https://raregems.io/celo/celo-domain-names/${
-              tweetLink ?? ''
-            }`;
-          }
-
-          c = {
-            titleText:
-              'You have claimed your .celo domain and your Prosperity Passport has been minted.',
-            twitterText: 'Tweet your .celo domain',
-            tweetContentLink,
-          };
-          break;
-        }
-        case 'Base': {
-          c = {
-            titleText:
-              'You have claimed your .base domain name. Welcome to Base Camp ⛺️',
-            twitterText: 'Tweet your .base domain',
-            tweetContentLink: 'https://app.basecamp.global',
-          };
-          break;
-        }
-        case 'Base Universe': {
-          c = {
-            titleText:
-              'You have claimed your Base Universe .bu domain name. Welcome to Base Universe.',
-            twitterText: 'Tweet your .bu domain',
-            tweetContentLink:
-              'https://masa.finance/sbts/base-universe-soulname-token',
-          };
-          break;
-        }
-        default: {
-          c = {
-            titleText:
-              'You have claimed your Base Universe .bu domain name. Welcome to Base Universe.',
-            twitterText: 'Tweet your .soul domain',
-            tweetContentLink: 'https://app.masa.finance',
-          };
-        }
+        break;
       }
+      case 'Celo': {
+        let tweetContentLink = '';
+        if (soulnames && soulnames[0]) {
+          const details = await loadSoulnameDetails(soulnames[0]);
+          const tweetLink = details?.tokenDetails.tokenId.toString();
+          tweetContentLink = `https://raregems.io/celo/celo-domain-names/${
+            tweetLink ?? ''
+          }`;
+        }
 
-      setCopy(c);
-    };
+        cpy = {
+          titleText:
+            'You have claimed your .celo domain and your Prosperity Passport has been minted.',
+          twitterText: 'Tweet your .celo domain',
+          tweetContentLink,
+        };
+        break;
+      }
+      case 'Base': {
+        cpy = {
+          titleText:
+            'You have claimed your .base domain name. Welcome to Base Camp ⛺️',
+          twitterText: 'Tweet your .base domain',
+          tweetContentLink: 'https://app.basecamp.global',
+        };
+        break;
+      }
+      case 'Base Universe': {
+        cpy = {
+          titleText:
+            'You have claimed your Base Universe .bu domain name. Welcome to Base Universe.',
+          twitterText: 'Tweet your .bu domain',
+          tweetContentLink:
+            'https://masa.finance/sbts/base-universe-soulname-token',
+        };
+        break;
+      }
+      default: {
+        cpy = {
+          titleText:
+            'You have claimed your Base Universe .bu domain name. Welcome to Base Universe.',
+          twitterText: 'Tweet your .soul domain',
+          tweetContentLink: 'https://app.masa.finance',
+        };
+      }
+    }
 
-    void loadCopy();
+    setCopy(cpy);
   }, [company, loadSoulnameDetails, soulnames]);
 
   const createIdentity = useCallback(async () => {

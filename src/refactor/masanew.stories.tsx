@@ -2,12 +2,7 @@ import buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import React, {
-  MouseEventHandler,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { MouseEventHandler, useCallback, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
 import { Button } from './ui';
 import './ui/styles.scss';
@@ -39,6 +34,7 @@ import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
 import { CustomGallerySBT } from './masa/interfaces';
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
+import { useAsync } from 'react-use';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -304,19 +300,14 @@ const SoulnameCreditScoreInfo = () => {
   const { creditScores, isLoadingCreditScores } = useCreditScores();
 
   const [soulnameDetails, setSoulnameDetails] = useState<SoulNameDetails[]>([]);
-  useEffect(() => {
-    const loadSN = async () => {
-      if (soulnames) {
-        const snd = await Promise.all(
-          soulnames.map((soulname) => loadSoulnameDetails(soulname))
-        );
-        setSoulnameDetails(
-          snd.filter((sn) => Boolean(sn)) as SoulNameDetails[]
-        );
-      }
-    };
 
-    void loadSN();
+  useAsync(async () => {
+    if (soulnames) {
+      const snd = await Promise.all(
+        soulnames.map((soulname) => loadSoulnameDetails(soulname))
+      );
+      setSoulnameDetails(snd.filter((sn) => Boolean(sn)) as SoulNameDetails[]);
+    }
   }, [soulnames]);
 
   return (
