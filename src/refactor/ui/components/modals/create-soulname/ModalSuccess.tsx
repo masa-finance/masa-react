@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useModal } from '@ebay/nice-modal-react';
 import { twitterLogo } from '../../../../../assets/twitterLogo';
@@ -18,7 +18,7 @@ export const ModalSuccess = ({
 }) => {
   const modal = useModal();
   const { company } = useConfig();
-  const { soulnames } = useSoulNames();
+  const { soulnames, loadSoulnameDetails } = useSoulNames();
 
   const handleComplete = useCallback(() => {
     onFinish?.();
@@ -48,36 +48,52 @@ export const ModalSuccess = ({
     }
   }, [company]);
 
-  const tweetContentLink = useMemo(() => {
-    const companyUrlFormatted = company?.toLowerCase().replaceAll(' ', '-');
+  const [tweetContentLink, setTweetContentLink] = useState<
+    string | undefined
+  >();
 
-    switch (company) {
-      case 'Masa': {
-        return 'https://app.masa.finance';
-      }
-      case 'Celo': {
-        if (soulnames && soulnames.length > 0) {
-          return `https://raregems.io/celo/celo-domain-names/${
-            soulnames?.at(-1)?.tokenDetails.tokenId.toString() ?? ''
-          }`;
+  useEffect(() => {
+    const loadTwitterLink = async () => {
+      const companyUrlFormatted = company?.toLowerCase().replaceAll(' ', '-');
+
+      let tl: string;
+      switch (company) {
+        case 'Masa': {
+          tl = 'https://app.masa.finance';
+          break;
         }
+        case 'Celo': {
+          if (soulnames && soulnames[0]) {
+            const details = await loadSoulnameDetails(soulnames[0]);
+            tl = `https://raregems.io/celo/celo-domain-names/${
+              details?.tokenDetails.tokenId.toString() ?? ''
+            }`;
+          }
 
-        return 'https://app.masa.finance';
+          tl = 'https://app.masa.finance';
+          break;
+        }
+        case 'Base': {
+          tl = 'https://app.basecamp.global';
+          break;
+        }
+        case 'Base Universe':
+        case 'Brozo': {
+          tl = `https://masa.finance/sbts/${
+            companyUrlFormatted ?? ''
+          }-soulname-token`;
+          break;
+        }
+        default: {
+          tl = 'https://app.masa.finance';
+        }
       }
-      case 'Base': {
-        return 'https://app.basecamp.global';
-      }
-      case 'Base Universe':
-      case 'Brozo': {
-        return `https://masa.finance/sbts/${
-          companyUrlFormatted ?? ''
-        }-soulname-token`;
-      }
-      default: {
-        return 'https://app.masa.finance';
-      }
-    }
-  }, [soulnames, company]);
+
+      setTweetContentLink(tl);
+    };
+
+    void loadTwitterLink();
+  }, [company, soulnames, loadSoulnameDetails]);
 
   const baseTwitterUrl = 'https://twitter.com/intent/tweet?text=';
 

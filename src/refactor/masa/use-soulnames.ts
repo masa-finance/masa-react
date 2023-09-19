@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 
+import { SoulNameDetails } from '@masa-finance/masa-sdk';
+import { useCallback } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
@@ -8,10 +10,17 @@ import { MasaQueryClientContext } from '../masa-client/masa-query-client-context
 export const useSoulNames = () => {
   const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
   const { hasSession, sessionAddress } = useSession();
-  const [, getSoulnamesAsync] = useAsyncFn(async () => {
-    const snResult = await masa?.soulName.list();
-    return snResult ?? null;
-  }, [masa]);
+  const [, getSoulnamesAsync] = useAsyncFn(async (): Promise<
+    string[] | undefined
+  > => {
+    let soulnameResults: string[] | undefined;
+
+    if (masaAddress) {
+      soulnameResults = await masa?.soulName.loadSoulNames(masaAddress);
+    }
+
+    return soulnameResults;
+  }, [masa, masaAddress]);
 
   const {
     data: soulnames,
@@ -27,10 +36,18 @@ export const useSoulNames = () => {
     queryFn: getSoulnamesAsync,
   });
 
+  const loadSoulnameDetails = useCallback(
+    async (soulName: string): Promise<SoulNameDetails | undefined> => {
+      return masa?.soulName.loadSoulNameByName(soulName);
+    },
+    [masa?.soulName]
+  );
+
   return {
     soulnames,
     isLoadingSoulnames,
     getSoulnames,
+    loadSoulnameDetails,
 
     isSoulnamesLoading: isLoadingSoulnames,
     reloadSoulnames: getSoulnames,
