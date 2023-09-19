@@ -1,70 +1,83 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { useAsync } from 'react-use';
 import { MasaLoading } from '../../masa-loading';
 import { useConfig } from '../../../../base-provider';
 import { useSoulNames } from '../../../../masa/use-soulnames';
-/* import { useIdentityPurchase } from '../../../../masa/use-identity-purchase'; */
-
 import { Modal } from '../modal';
 
 import SuccessView from './success-view';
 import HurrayView from './hurray-view';
-// import { useIdentityPurchase } from '../../../../masa/use-identity-purchase';
+import { useMasaClient } from '../../../../masa-client';
+
+interface Copy {
+  titleText: string;
+  twitterText: string;
+  tweetContentLink: string;
+}
 
 export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
   const modal = useModal();
   const { company } = useConfig();
   const { soulnames } = useSoulNames();
+  const { sdk: masa } = useMasaClient();
 
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [copy, setCopy] = useState<Copy>();
 
-  const copy = useMemo(() => {
+  useAsync(async () => {
+    let cpy: Copy;
     switch (company) {
       case 'Masa': {
-        return {
+        cpy = {
           titleText:
             'You have claimed your .soul domain and your Soulbound Identity has been minted.',
           twitterText: 'Tweet your .soul domain',
           tweetContentLink: 'https://app.masa.finance',
         };
+
+        break;
       }
       case 'Celo': {
         let tweetContentLink = '';
-        if (soulnames && soulnames.length > 0) {
-          const lastElement = soulnames.at(-1);
-          const tweetLink = lastElement?.tokenDetails.tokenId.toString();
+        if (soulnames?.[0]) {
+          const details = await masa?.soulName.loadSoulNameByName(soulnames[0]);
+          const tweetLink = details?.tokenDetails.tokenId.toString();
           tweetContentLink = `https://raregems.io/celo/celo-domain-names/${
             tweetLink ?? ''
           }`;
         }
 
-        return {
+        cpy = {
           titleText:
             'You have claimed your .celo domain and your Prosperity Passport has been minted.',
           twitterText: 'Tweet your .celo domain',
           tweetContentLink,
         };
+        break;
       }
       case 'Base': {
-        return {
+        cpy = {
           titleText:
             'You have claimed your .base domain name. Welcome to Base Camp ⛺️',
           twitterText: 'Tweet your .base domain',
           tweetContentLink: 'https://app.basecamp.global',
         };
+        break;
       }
       case 'Base Universe': {
-        return {
+        cpy = {
           titleText:
             'You have claimed your Base Universe .bu domain name. Welcome to Base Universe.',
-          twitter: 'Tweet your .bu domain',
+          twitterText: 'Tweet your .bu domain',
           tweetContentLink:
             'https://masa.finance/sbts/base-universe-soulname-token',
         };
+        break;
       }
       default: {
-        return {
+        cpy = {
           titleText:
             'You have claimed your Base Universe .bu domain name. Welcome to Base Universe.',
           twitterText: 'Tweet your .soul domain',
@@ -72,7 +85,9 @@ export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
         };
       }
     }
-  }, [company, soulnames]);
+
+    setCopy(cpy);
+  }, [company, masa?.soulName, soulnames]);
 
   const createIdentity = useCallback(async () => {
     setIsLoading(true);
@@ -95,8 +110,8 @@ export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
     <Modal>
       {isSuccessful && (
         <SuccessView
-          titleText={copy.titleText}
-          twitterText={copy.twitterText}
+          titleText={copy?.titleText ?? ''}
+          twitterText={copy?.twitterText}
           modal={modal}
         />
       )}
