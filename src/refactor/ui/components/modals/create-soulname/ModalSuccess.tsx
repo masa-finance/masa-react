@@ -2,12 +2,12 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { useModal } from '@ebay/nice-modal-react';
 import { useAsync } from 'react-use';
-import { useMasa } from 'provider/use-masa';
 import { twitterLogo } from '../../../../../assets/twitterLogo';
 
 import { useSoulNames } from '../../../../masa/use-soulnames';
 import { useConfig } from '../../../../base-provider';
 import { Modal } from '../modal';
+import { useMasaClient } from '../../../../masa-client';
 
 export const ModalSuccess = ({
   onFinish,
@@ -21,7 +21,7 @@ export const ModalSuccess = ({
   const modal = useModal();
   const { company } = useConfig();
   const { soulnames } = useSoulNames();
-  const { masa } = useMasa();
+  const { sdk: masa } = useMasaClient();
 
   const handleComplete = useCallback(() => {
     onFinish?.();

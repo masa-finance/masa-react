@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { useAsync } from 'react-use';
-import { useMasa } from 'provider/use-masa';
 import { MasaLoading } from '../../masa-loading';
 import { useConfig } from '../../../../base-provider';
 import { useSoulNames } from '../../../../masa/use-soulnames';
@@ -9,6 +8,7 @@ import { Modal } from '../modal';
 
 import SuccessView from './success-view';
 import HurrayView from './hurray-view';
+import { useMasaClient } from '../../../../masa-client';
 
 interface Copy {
   titleText: string;
@@ -20,7 +20,7 @@ export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
   const modal = useModal();
   const { company } = useConfig();
   const { soulnames } = useSoulNames();
-  const { masa } = useMasa();
+  const { sdk: masa } = useMasaClient();
 
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
