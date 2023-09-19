@@ -63,7 +63,7 @@ export const ModalSuccess = ({
         break;
       }
       case 'Celo': {
-        if (soulnames && soulnames[0]) {
+        if (soulnames?.[0]) {
           const details = await loadSoulnameDetails(soulnames[0]);
           tl = `https://raregems.io/celo/celo-domain-names/${
             details?.tokenDetails.tokenId.toString() ?? ''

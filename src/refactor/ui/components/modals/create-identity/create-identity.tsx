@@ -39,7 +39,7 @@ export const CreateIdentityModal = NiceModal.create((): JSX.Element => {
       }
       case 'Celo': {
         let tweetContentLink = '';
-        if (soulnames && soulnames[0]) {
+        if (soulnames?.[0]) {
           const details = await loadSoulnameDetails(soulnames[0]);
           const tweetLink = details?.tokenDetails.tokenId.toString();
           tweetContentLink = `https://raregems.io/celo/celo-domain-names/${
