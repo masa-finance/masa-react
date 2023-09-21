@@ -1,11 +1,9 @@
 import {
-  // CreditScoreDetails,
   EnvironmentName,
   GenerateGreenResult,
   ICreditScore,
   IGreen,
   SoulNameDetails,
-  // Masa,
   SupportedNetworks,
   VerifyGreenResult,
 } from '@masa-finance/masa-sdk';
@@ -13,16 +11,7 @@ import React, { useCallback, useMemo } from 'react';
 import type { BigNumber } from 'ethers';
 
 // import { createNewMasa } from '../helpers';
-import {
-  // useCreditScores,
-  // useGreen,
-  // useIdentity,
-  useModal,
-  // useNetwork,
-  // useSession,
-  // useSoulnames,
-  // useWallet,
-} from './modules';
+import { useModal } from './modules';
 import { MasaContext } from './masa-context';
 import { MasaShape } from './masa-shape';
 import { useScopes } from './modules/scopes/scopes';
@@ -30,7 +19,6 @@ import { useCustomGallerySBT, useCustomSBT } from './modules/custom-sbts';
 import { useRainbowKit } from './use-rainbowkit';
 // import { useWagmi } from './modules/wagmi';
 // import { useNetworkSwitch } from './use-network-switch';
-
 import { useLogout } from './hooks';
 // import { useAccountState } from './use-account-state';
 import { useSession as useSessionNew } from '../refactor/masa/use-session';
@@ -47,6 +35,7 @@ import { useIdentityPurchase } from '../refactor/masa/use-identity-purchase';
 import { useCreditScoreCreate } from '../refactor/masa/use-credit-scores-create';
 import { useSoulNamesPurchase } from '../refactor/masa/use-soulnames-purchase';
 import { CustomGallerySBT } from '../refactor/masa/interfaces';
+
 // import { useSoulNamesPurchase } from '../refactor/masa/use-soulnames-purchase';
 
 export interface ArweaveConfig {
@@ -407,7 +396,7 @@ export const MasaContextProvider = ({
       reloadCreditScores,
 
       // soul names
-      soulnames: soulnames as SoulNameDetails[] | undefined,
+      soulnames,
       isSoulnamesLoading,
       reloadSoulnames,
       soulNameStyle,

@@ -40,35 +40,47 @@ export const InterfaceSuccessCreateIdentity = (): JSX.Element => {
     }
   }, [company]);
 
-  const tweetContentLink = useMemo(() => {
+  const [tweetContentLink, setTweetContentLink] = useState<string>();
+
+  useAsync(async () => {
     const companyUrlFormatted = company?.toLowerCase().replaceAll(' ', '-');
 
+    let tl: string;
     switch (company) {
       case 'Masa': {
-        return 'https://app.masa.finance';
+        tl = 'https://app.masa.finance';
+        break;
       }
       case 'Celo': {
-        if (soulnames && soulnames.length > 0) {
-          return `https://raregems.io/celo/celo-domain-names/${
-            soulnames?.at(-1)?.tokenDetails.tokenId.toString() ?? ''
+        if (soulnames?.[0]) {
+          const tokenDetails = await masa?.soulName.loadSoulNameByName(
+            soulnames[0]
+          );
+          tl = `https://raregems.io/celo/celo-domain-names/${
+            tokenDetails?.tokenDetails.tokenId.toString() ?? ''
           }`;
         }
 
-        return 'https://app.masa.finance';
+        tl = 'https://app.masa.finance';
+        break;
       }
       case 'Base': {
-        return 'https://app.basecamp.global';
+        tl = 'https://app.basecamp.global';
+        break;
       }
       case 'Base Universe':
       case 'Brozo': {
-        return `https://masa.finance/sbts/${
+        tl = `https://masa.finance/sbts/${
           companyUrlFormatted ?? ''
         }-soulname-token`;
+        break;
       }
       default: {
-        return 'https://app.masa.finance';
+        tl = 'https://app.masa.finance';
+        break;
       }
     }
+    setTweetContentLink(tl);
   }, [soulnames, company]);
 
   const baseTwitterUrl = 'https://twitter.com/intent/tweet?text=';
