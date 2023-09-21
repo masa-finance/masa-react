@@ -6,7 +6,8 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-
+// const BundleAnalyzerPlugin =
+//   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
 /* 
@@ -92,6 +93,7 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
         'url',
       ],
     }),
+    // new BundleAnalyzerPlugin(),
   ],
   optimization: {
     minimize: false,

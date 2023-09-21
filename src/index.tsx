@@ -10,7 +10,3 @@ export {
   openAuthenticateModal,
   MasaProvider as MasaRefactorProvider,
 } from './refactor';
-
-export * from './components';
-export * from './helpers';
-export * from './provider';

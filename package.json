@@ -106,6 +106,7 @@
     "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "^5.1.6",
     "webpack": "^5.88.1",
+    "webpack-bundle-analyzer": "^4.9.1",
     "webpack-cli": "^5.1.4",
     "webpack-remove-empty-scripts": "^1.0.4"
   }

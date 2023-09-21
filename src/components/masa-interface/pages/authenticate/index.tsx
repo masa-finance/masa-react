@@ -1,1 +1,0 @@
-export { InterfaceAuthenticate } from './authenticate';

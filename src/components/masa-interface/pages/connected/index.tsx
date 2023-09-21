@@ -1,1 +1,0 @@
-export { InterfaceConnected } from './connected';
