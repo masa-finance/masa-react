@@ -44,8 +44,8 @@ if (typeof window !== 'undefined') {
 }
 
 const meta: Meta = {
-  title: 'Refactor Test',
-  component: () => <div />,
+  title: 'Masa Complete',
+  // component: () => <div />,
   argTypes: {
     children: {
       control: {
@@ -729,6 +729,6 @@ const TemplateNewMasaState = (props: Args) => (
   </MasaProvider>
 );
 
-export const NewMasaState = TemplateNewMasaState.bind({
+export const MasaComplete = TemplateNewMasaState.bind({
   options: { scope: [] },
 });
