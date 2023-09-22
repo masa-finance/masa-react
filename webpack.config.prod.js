@@ -6,8 +6,6 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-// const BundleAnalyzerPlugin =
-//   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
 /* 
@@ -69,10 +67,8 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
       patterns: [
         { from: 'src/fonts', to: './fonts' },
         { from: 'src/styles.scss', to: 'src/styles.scss' },
-        // {}
       ],
     }),
-    // new CleanWebpackPlugin(),
     new ProvidePlugin({
       React: 'react',
     }),
@@ -93,7 +89,6 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
         'url',
       ],
     }),
-    // new BundleAnalyzerPlugin(),
   ],
   optimization: {
     minimize: false,
