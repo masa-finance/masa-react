@@ -94,10 +94,10 @@ export const useMasaSDK = (
     }
 
     const arweaveConfigToPass = {
-      host: arweaveConfig?.host || 'arweave.net',
-      port: Number.parseInt(arweaveConfig?.port || '443', 10),
-      protocol: arweaveConfig?.protocol || 'https',
-      logging: !!arweaveConfig?.logging || true,
+      host: arweaveConfig?.host ?? 'arweave.net',
+      port: Number.parseInt(arweaveConfig?.port ?? '443', 10),
+      protocol: arweaveConfig?.protocol ?? 'https',
+      logging: !!arweaveConfig?.logging ?? true,
     };
 
     return new Masa({
