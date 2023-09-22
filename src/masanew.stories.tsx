@@ -3,7 +3,6 @@ import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // esl
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React, { MouseEventHandler, useCallback, useState } from 'react';
-import NiceModal from '@ebay/nice-modal-react';
 import { darkStyles, JsonView } from 'react-json-view-lite'; // eslint-disable-line import/no-extraneous-dependencies
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
@@ -25,12 +24,7 @@ import MasaProvider from './masa-provider';
 import { useSession } from './masa/use-session';
 import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
-import {
-  CreateCreditScoreModal,
-  CreateIdentityModal,
-  openGalleryModal,
-} from './ui/components/modals';
-import { useGreenModal } from './ui/components/modals/create-green/use-green-modal';
+import { openGalleryModal } from './ui/components/modals';
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
@@ -499,7 +493,6 @@ const GreenInfo = () => {
 const ModalFlow = () => {
   const { isDisconnected, disconnect } = useWallet();
   const { hasSession, logoutSession } = useSession();
-  const { showChainingModal } = useGreenModal();
   const { identity } = useIdentity();
   const onLogout = useCallback(() => {
     if (hasSession) logoutSession().catch(() => {});
@@ -546,27 +539,6 @@ const ModalFlow = () => {
       <li>
         <Button type="button" onClick={onClickSoulname}>
           Create Soul Name
-        </Button>
-      </li>
-      <li>
-        <Button
-          type="button"
-          onClick={() => NiceModal.show(CreateIdentityModal)}
-        >
-          Create Identity
-        </Button>
-      </li>
-      <li>
-        <Button
-          type="button"
-          onClick={() => NiceModal.show(CreateCreditScoreModal)}
-        >
-          Create Credit Score
-        </Button>
-      </li>
-      <li>
-        <Button type="button" onClick={showChainingModal}>
-          Create Masa Green
         </Button>
       </li>
       <li>
