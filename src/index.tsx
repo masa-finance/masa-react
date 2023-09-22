@@ -9,4 +9,5 @@ export {
   openCreateSoulnameModal,
   openAuthenticateModal,
   MasaProvider as MasaRefactorProvider,
+  MasaProvider,
 } from './refactor';

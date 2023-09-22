@@ -3,8 +3,9 @@ import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React, { MouseEventHandler } from 'react';
 import { Button } from './ui';
-import './ui/styles.scss';
+
 import '../styles.scss';
+import '../stories.scss';
 import 'react-json-view-lite/dist/index.css'; // eslint-disable-line import/no-extraneous-dependencies
 
 import { useWallet } from './wallet-client/wallet/use-wallet';

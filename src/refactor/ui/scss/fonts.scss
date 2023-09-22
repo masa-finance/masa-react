@@ -15,14 +15,6 @@
 
 @font-face {
   font-family: 'Ezra';
-  src: url('../../../fonts/Ezra-Bold.otf');
-
-  font-weight: 700;
-  font-style: bold;
-}
-
-@font-face {
-  font-family: 'Ezra';
   src: url('../../../fonts/Ezra-Medium.otf');
 
   font-weight: 500;
@@ -31,8 +23,15 @@
 
 @font-face {
   font-family: 'Ezra';
-  src: url('../../../fonts/Ezra-Italic.otf');
+  src: url('../../../fonts/Ezra-Bold.otf');
 
+  font-weight: 700;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: 'Ezra';
+  src: url('../../../fonts/Ezra-Italic.otf');
   font-style: italic;
 }
 
