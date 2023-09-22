@@ -95,6 +95,7 @@
     font-family: Ezra;
     font-size: 30px;
     word-wrap: break-word;
+    padding: 10px;
   }
 
   .masa-spinner {
@@ -799,6 +800,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      line-height: 24px;
       font-size: 18px;
       color: rgba(0, 0, 0, 0.6);
       &.with-wallet {
