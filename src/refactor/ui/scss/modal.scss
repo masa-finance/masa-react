@@ -9,7 +9,8 @@
 
 .masa-modal {
   display: flex;
-  color: black;
+  font-family: 'Inter';
+  color: white;
   height: 100%;
   margin: auto;
   justify-content: center;
@@ -193,6 +194,7 @@
   }
 
   .authenticate-button {
+    font-family: 'Inter';
     margin: 20px 4px;
     font-weight: 500;
     &:hover {

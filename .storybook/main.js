@@ -1,7 +1,7 @@
 module.exports = {
   stories: ['../src/**/*.stories.@(ts|tsx|js|jsx)'],
+
   addons: [
-    '@storybook/addon-links',
     '@storybook/addon-essentials',
     {
       name: '@storybook/addon-styling',
@@ -19,11 +19,15 @@ module.exports = {
     check: true, // type-check stories during Storybook build
   },
 
+  // docs: {
+  //   autodocs: true,
+  // },
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
   },
-  // docs: {
-  //   autodocs: true,
-  // },
+
+  docs: {
+    autodocs: false,
+  },
 };
