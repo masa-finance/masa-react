@@ -1,6 +1,6 @@
 import { useAsync } from 'react-use';
 import { ConnectorData, useAccount } from 'wagmi';
-import { useEthersProvider } from '../../helpers/ethers';
+import { useEthersProvider } from '../helpers/ethers';
 
 export const useAccountChangeListen = ({
   onAccountChange,

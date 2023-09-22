@@ -18,7 +18,7 @@ import {
 import { Signer } from 'ethers';
 
 import { Provider } from '@wagmi/core';
-import { useEthersProvider, useEthersSigner } from '../../helpers/ethers';
+import { useEthersProvider, useEthersSigner } from '../helpers/ethers';
 
 export interface UseWalletReturn {
   address?: `0x${string}`;
