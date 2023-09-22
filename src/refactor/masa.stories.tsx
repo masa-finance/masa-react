@@ -111,7 +111,7 @@ const NetworkInfo = () => {
                     chain.id === activeChain?.id
                   }
                   type="button"
-                  onClick={onClick} // skipcq: JS-
+                  onClick={onClick} // skipcq: JS-0417
                 >
                   Switch to {chain.testnet ? 'Testnet' : ''} {chain.name}
                 </Button>
