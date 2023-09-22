@@ -67,7 +67,7 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: 'src/fonts', to: 'src/fonts' },
+        { from: 'src/fonts', to: './fonts' },
         { from: 'src/styles.scss', to: 'src/styles.scss' },
         // {}
       ],
@@ -98,6 +98,9 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
   optimization: {
     minimize: false,
     emitOnErrors: false,
+  },
+  stats: {
+    errorDetails: true,
   },
 };
 

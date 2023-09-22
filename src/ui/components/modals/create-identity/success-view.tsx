@@ -1,6 +1,6 @@
 import React from 'react';
 import { NiceModalHandler } from '@ebay/nice-modal-react';
-import { twitterLogo } from '../../../../../assets/twitterLogo';
+import { twitterLogo } from '../../../../assets/twitterLogo';
 
 interface SuccessViewProps {
   titleText: string;

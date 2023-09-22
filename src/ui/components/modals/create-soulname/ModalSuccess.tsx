@@ -2,12 +2,12 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import { useModal } from '@ebay/nice-modal-react';
 import { useAsync } from 'react-use';
-import { twitterLogo } from '../../../../../assets/twitterLogo';
 
 import { useSoulNames } from '../../../../masa/use-soulnames';
 import { useConfig } from '../../../../base-provider';
 import { Modal } from '../modal';
 import { useMasaClient } from '../../../../masa-client';
+import { twitterLogo } from '../../../../assets/twitterLogo';
 
 export const ModalSuccess = ({
   onFinish,

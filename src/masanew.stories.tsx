@@ -4,12 +4,14 @@ import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React, { MouseEventHandler, useCallback, useState } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
+import { darkStyles, JsonView } from 'react-json-view-lite'; // eslint-disable-line import/no-extraneous-dependencies
+import { SoulNameDetails } from '@masa-finance/masa-sdk';
+import { useAsync } from 'react-use';
 import { Button } from './ui';
 import '../styles.scss';
 import '../stories.scss';
 import { useConfig } from './base-provider';
-import { darkStyles, JsonView } from 'react-json-view-lite';
-import 'react-json-view-lite/dist/index.css';
+import 'react-json-view-lite/dist/index.css'; // eslint-disable-line import/no-extraneous-dependencies
 
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
@@ -33,8 +35,6 @@ import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
 import { CustomGallerySBT } from './masa/interfaces';
-import { SoulNameDetails } from '@masa-finance/masa-sdk';
-import { useAsync } from 'react-use';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -307,7 +307,7 @@ const SoulnameCreditScoreInfo = () => {
       const snd = await Promise.all(
         soulnames.map((soulname) => masa?.soulName.loadSoulNameByName(soulname))
       );
-      setSoulnameDetails(snd.filter((sn) => Boolean(sn)) as SoulNameDetails[]);
+      setSoulnameDetails(snd.filter(Boolean) as SoulNameDetails[]);
     }
   }, [soulnames]);
 
@@ -502,7 +502,7 @@ const ModalFlow = () => {
   const { showChainingModal } = useGreenModal();
   const { identity } = useIdentity();
   const onLogout = useCallback(() => {
-    if (hasSession) logoutSession();
+    if (hasSession) logoutSession().catch(() => {});
     disconnect?.();
   }, [logoutSession, hasSession, disconnect]);
 
@@ -523,7 +523,7 @@ const ModalFlow = () => {
       onSuccess: () => console.log('EVERYTHING WAS SUCCESSFUL'),
       onError: () => console.log('CREATE SOULNAME ERROR'),
       closeOnSuccess: true,
-    });
+    }).catch(() => {});
   }, []);
 
   return (
@@ -614,7 +614,7 @@ const Component = (): JSX.Element => {
             <JsonView
               data={config}
               shouldInitiallyExpand={(number) => number <= 0 && true}
-              style={{ ...darkStyles, ...{ alignItems: 'flex-start' } }}
+              style={{ ...darkStyles }}
             />
           </div>
         </li>
@@ -629,7 +629,7 @@ const Component = (): JSX.Element => {
             <JsonView
               data={masa ?? {}}
               shouldInitiallyExpand={(number) => number <= 0 && true}
-              style={{ ...darkStyles, ...{ alignItems: 'flex-start' } }}
+              style={{ ...darkStyles }}
             />
           </div>
         </li>
