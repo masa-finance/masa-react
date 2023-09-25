@@ -3440,19 +3440,19 @@
     "@storybook/global" "^5.0.0"
     "@storybook/preview-api" "7.4.2"
 
-"@storybook/addon-links@^7.4.2":
-  version "7.4.2"
-  resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-7.4.2.tgz#55271b4c1aaa8de630c919592d957e2a65891799"
-  integrity sha512-XAspek8kkfiGq3NVt8SD108m54/dJWo+iDSmW3t/BQj2+sDPW8EpOg93X08YGoGMD8FSLOToeVC2Qi+kmAV0iw==
+"@storybook/addon-links@^7.4.5":
+  version "7.4.5"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-links/-/addon-links-7.4.5.tgz#8f1a02c3839964ec73f4140431f49d98d743c3bd"
+  integrity sha512-eKczq3U5KfPLaxMUzzVQQrGVtzDshUmrSEEuWKf9ZbK3mh5yVuagIBb88edgUX58vZ3TJMvqQzq1+BtUoPHQ6Q==
   dependencies:
-    "@storybook/client-logger" "7.4.2"
-    "@storybook/core-events" "7.4.2"
+    "@storybook/client-logger" "7.4.5"
+    "@storybook/core-events" "7.4.5"
     "@storybook/csf" "^0.1.0"
     "@storybook/global" "^5.0.0"
-    "@storybook/manager-api" "7.4.2"
-    "@storybook/preview-api" "7.4.2"
-    "@storybook/router" "7.4.2"
-    "@storybook/types" "7.4.2"
+    "@storybook/manager-api" "7.4.5"
+    "@storybook/preview-api" "7.4.5"
+    "@storybook/router" "7.4.5"
+    "@storybook/types" "7.4.5"
     prop-types "^15.7.2"
     ts-dedent "^2.0.0"
 
@@ -3943,7 +3943,7 @@
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.3.2.tgz#9d18df7ceb6901225218e538a3d1d720a2f49b46"
   integrity sha512-DCrM3s+sxLKS8vl0zB+1tZEtcl5XQTOGl46XgRRV/SIBabFbsC0l5pQPswWkTUsIqdREtiT0YUHcXB1+YDyFvA==
 
-"@storybook/core-events@7.4.0", "@storybook/core-events@^7.0.12":
+"@storybook/core-events@7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.4.0.tgz#0d50d254d65a678065d5906ac1dcab64396f2f6a"
   integrity sha512-JavEo4dw7TQdF5pSKjk4RtqLgsG2R/eWRI8vZ3ANKa0ploGAnQR/eMTfSxf6TUH3ElBWLJhi+lvUCkKXPQD+dw==
@@ -3957,7 +3957,7 @@
   dependencies:
     ts-dedent "^2.0.0"
 
-"@storybook/core-events@7.4.5":
+"@storybook/core-events@7.4.5", "@storybook/core-events@^7.0.12":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.4.5.tgz#993b3afba83a0de55e02b55daf9e9c6830a11392"
   integrity sha512-Jzy/adSC95saYCZlgXE5j7jmiMLAXYpnBFBxEtBdXwSWEBb0zt21n1nyWBEAv9s/k2gqDXlPHKHeL5Mn6y40zA==
@@ -4134,19 +4134,19 @@
     telejson "^7.2.0"
     ts-dedent "^2.0.0"
 
-"@storybook/manager-api@^7.0.12":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@storybook/manager-api/-/manager-api-7.4.0.tgz#aee0153df1583459b7e1e64e1d8c46fb49a584c8"
-  integrity sha512-sBfkkt0eZGTozeKrbzMtWLEOQrgqdk24OUJlkc2IDaucR1CBNjoCMjNeYg7cLDw0rXE8W3W3AdWtJnfsUbLMAQ==
+"@storybook/manager-api@7.4.5", "@storybook/manager-api@^7.0.12":
+  version "7.4.5"
+  resolved "https://registry.yarnpkg.com/@storybook/manager-api/-/manager-api-7.4.5.tgz#23acaf71f46ddae9dbde8f8ec2811000ea38280e"
+  integrity sha512-8Hdh5Tutet8xRy2fAknczfvpshz09eVnLd8m34vcFceUOYvEnvDbWerufhlEzovsF4v7U32uqbDHKdKTamWEQQ==
   dependencies:
-    "@storybook/channels" "7.4.0"
-    "@storybook/client-logger" "7.4.0"
-    "@storybook/core-events" "7.4.0"
+    "@storybook/channels" "7.4.5"
+    "@storybook/client-logger" "7.4.5"
+    "@storybook/core-events" "7.4.5"
     "@storybook/csf" "^0.1.0"
     "@storybook/global" "^5.0.0"
-    "@storybook/router" "7.4.0"
-    "@storybook/theming" "7.4.0"
-    "@storybook/types" "7.4.0"
+    "@storybook/router" "7.4.5"
+    "@storybook/theming" "7.4.5"
+    "@storybook/types" "7.4.5"
     dequal "^2.0.2"
     lodash "^4.17.21"
     memoizerific "^1.11.3"
@@ -4348,21 +4348,21 @@
     memoizerific "^1.11.3"
     qs "^6.10.0"
 
-"@storybook/router@7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@storybook/router/-/router-7.4.0.tgz#627f824bfd9cc4653ee84581fc09373ab1463336"
-  integrity sha512-IATdtFL5C3ryjNQSwaQfrmiOZiVFoVNMevMoBGDC++g0laSW40TGiNK6fUjUDBKuOgbuDt4Svfbl29k21GefEg==
-  dependencies:
-    "@storybook/client-logger" "7.4.0"
-    memoizerific "^1.11.3"
-    qs "^6.10.0"
-
 "@storybook/router@7.4.2":
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/@storybook/router/-/router-7.4.2.tgz#04644705bf0703a5c65163dff0f11d42c8727b93"
   integrity sha512-TFpMrmliklWNSrF84kGnh3WcLZciqIvaAjhxahqD+kx070KLqjxrsiny7UC6PUUYZdjLkbR9m8n3SFdXAVKgLw==
   dependencies:
     "@storybook/client-logger" "7.4.2"
+    memoizerific "^1.11.3"
+    qs "^6.10.0"
+
+"@storybook/router@7.4.5":
+  version "7.4.5"
+  resolved "https://registry.yarnpkg.com/@storybook/router/-/router-7.4.5.tgz#837c82cdecd8ce5e081770b50a2a70169105f8fd"
+  integrity sha512-IM4IhiPiXsx3FAUeUOAB47uiuUS8Yd37VQcNlXLBO28GgHoTSYOrjS+VTGLIV5cAGKr8+H5pFB+q35BnlFUpkQ==
+  dependencies:
+    "@storybook/client-logger" "7.4.5"
     memoizerific "^1.11.3"
     qs "^6.10.0"
 
@@ -4398,16 +4398,6 @@
     "@storybook/global" "^5.0.0"
     memoizerific "^1.11.3"
 
-"@storybook/theming@7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-7.4.0.tgz#f5d9f8f55c41e08c0f50b57d9fb0e159ed595274"
-  integrity sha512-eLjEf6G3cqlegfutF/iUrec9LrUjKDj7K4ZhGdACWrf7bQcODs99EK62e9/d8GNKr4b+QMSEuM6XNGaqdPnuzQ==
-  dependencies:
-    "@emotion/use-insertion-effect-with-fallbacks" "^1.0.0"
-    "@storybook/client-logger" "7.4.0"
-    "@storybook/global" "^5.0.0"
-    memoizerific "^1.11.3"
-
 "@storybook/theming@7.4.2":
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-7.4.2.tgz#57396b3c520187103ce99168b8473e2138311194"
@@ -4415,6 +4405,16 @@
   dependencies:
     "@emotion/use-insertion-effect-with-fallbacks" "^1.0.0"
     "@storybook/client-logger" "7.4.2"
+    "@storybook/global" "^5.0.0"
+    memoizerific "^1.11.3"
+
+"@storybook/theming@7.4.5":
+  version "7.4.5"
+  resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-7.4.5.tgz#6a48defac9e59f5f0e973cc36dec7300887276f0"
+  integrity sha512-QSIJDIMzOegzlhubIBaYIovf4mlf+AVL0SmQOskPS8GZ6s9t77yUUI6gZTEjO+S4eB3djXRsfTTijQ8+z4XmRA==
+  dependencies:
+    "@emotion/use-insertion-effect-with-fallbacks" "^1.0.0"
+    "@storybook/client-logger" "7.4.5"
     "@storybook/global" "^5.0.0"
     memoizerific "^1.11.3"
 
