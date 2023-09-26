@@ -6,7 +6,6 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
 /* 
@@ -22,8 +21,8 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
   entry: path.resolve(__dirname, './dist/src/index.js'),
   resolve: {
     extensions: ['.js', '.ts', '.tsx'],
-    modules: ['node_modules'],
-    plugins: [new TsconfigPathsPlugin()],
+    // modules: ['node_modules'],
+    // plugins: [new TsconfigPathsPlugin()],
   },
 
   module: {
@@ -34,7 +33,6 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
         use: [
           {
             loader: 'babel-loader',
-
             options: {
               presets: [
                 ['@babel/preset-env', { targets: 'defaults' }],
@@ -64,14 +62,6 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
   },
 
   plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: 'src/fonts', to: 'src/fonts' },
-        { from: 'src/styles.scss', to: 'src/styles.scss' },
-        // {}
-      ],
-    }),
-    // new CleanWebpackPlugin(),
     new ProvidePlugin({
       React: 'react',
     }),
@@ -97,6 +87,9 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
     minimize: false,
     emitOnErrors: false,
   },
+  stats: {
+    errorDetails: true,
+  },
 };
 
 module.exports =
@@ -113,6 +106,12 @@ module.exports =
         // minimizer: [new CssMinimizerPlugin()],
       },
       plugins: [
+        new CopyPlugin({
+          patterns: [
+            { from: 'src/fonts', to: '../fonts' },
+            // { from: 'src/styles.scss', to: '../styles.scss' },
+          ],
+        }),
         new RemoveEmptyScriptsPlugin(),
         new MiniCssExtractPlugin({
           filename: 'styles.css',
