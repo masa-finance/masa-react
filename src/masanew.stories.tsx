@@ -7,8 +7,8 @@ import { darkStyles, JsonView } from 'react-json-view-lite'; // eslint-disable-l
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
 import { Button } from './ui';
-import '../styles.scss';
-import '../stories.scss';
+import './styles.scss';
+import './stories.scss';
 import { useConfig } from './base-provider';
 import 'react-json-view-lite/dist/index.css'; // eslint-disable-line import/no-extraneous-dependencies
 
