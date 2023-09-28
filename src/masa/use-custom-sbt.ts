@@ -15,11 +15,23 @@ import type {
   TokenWithMetadata,
 } from './interfaces';
 
-export const useCustomGallerySBT = () => {
+export const useCustomGallerySBT = ({
+  overrideCustomSBTs,
+}: {
+  overrideCustomSBTs?: CustomGallerySBT[];
+}) => {
   const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
   const canQuery = useCanQuery();
 
-  const { customSBTs } = useConfig();
+  const { customSBTs: configCustomSBTs } = useConfig();
+
+  const customSBTs = useMemo(
+    () =>
+      overrideCustomSBTs && overrideCustomSBTs.length > 0
+        ? overrideCustomSBTs
+        : configCustomSBTs,
+    [overrideCustomSBTs, configCustomSBTs]
+  );
 
   const { hasSession, sessionAddress } = useSession();
   const [, getContractsAsync] = useAsyncFn(async () => {
@@ -131,10 +143,10 @@ export const hydrateTokensWithMetadata = async (
   return hydratedContracts;
 };
 
-export const useCustomSBTs = () => {
+export const useCustomSBTs = (overrideCustomSBTs?: CustomGallerySBT[]) => {
   const { masaAddress, masaNetwork } = useMasaClient();
   const canQuery = useCanQuery();
-  const { customContracts } = useCustomGallerySBT();
+  const { customContracts } = useCustomGallerySBT({ overrideCustomSBTs });
 
   const { hasSession, sessionAddress } = useSession();
 
