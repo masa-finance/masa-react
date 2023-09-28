@@ -22,20 +22,23 @@ export interface MasaClientProviderValue {
 export const MasaClientContext = createContext({} as MasaClientProviderValue);
 
 export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
-  const { masa, masaAddress } = useMasaClient();
+  const {
+    // masa,
+    masaAddress,
+  } = useMasaClient();
   const queryClient = useMasaQueryClient();
   const {
-    session,
+    // session,
+    // loginSession,
     hasSession,
     checkLogin,
-    loginSession,
     logoutSession,
     sessionAddress,
   } = useSession();
   const { identity, getIdentity } = useIdentity();
-  const { creditScores } = useCreditScores();
-  const { soulnames } = useSoulNames();
-  const { greens } = useGreen();
+  // const { creditScores } = useCreditScores();
+  // const { soulnames } = useSoulNames();
+  // const { greens } = useGreen();
 
   useIdentityListen({ identity, getIdentity, sessionAddress });
   // useSessionListen();
@@ -65,26 +68,26 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
   const masaClientProviderValue: MasaClientProviderValue = useMemo(
     () =>
       ({
-        masa,
-        session,
-        sessionAddress,
-        loginSession,
-        logoutSession,
-        identity,
-        soulnames,
-        creditScores,
-        greens,
+        // masa,
+        // session,
+        // sessionAddress,
+        // loginSession,
+        // logoutSession,
+        // identity,
+        // soulnames,
+        // creditScores,
+        // greens,
       }) as MasaClientProviderValue,
     [
-      masa,
-      identity,
-      session,
-      sessionAddress,
-      loginSession,
-      logoutSession,
-      soulnames,
-      creditScores,
-      greens,
+      // masa,
+      // identity,
+      // session,
+      // sessionAddress,
+      // loginSession,
+      // logoutSession,
+      // soulnames,
+      // creditScores,
+      // greens,
     ]
   );
   return (
