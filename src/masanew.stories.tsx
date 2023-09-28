@@ -291,9 +291,18 @@ const IdentityInfo = () => {
 
 const SoulnameCreditScoreInfo = () => {
   const { soulnames, isLoadingSoulnames } = useSoulNames();
+  const { hasSession } = useSession();
   const { sdk: masa } = useMasaClient();
-  const { creditScores, isLoadingCreditScores } = useCreditScores();
+  const { creditScores, isLoadingCreditScores, getCreditScores } =
+    useCreditScores();
 
+  useAsync(async () => {
+    console.log({ creditScores });
+    if (creditScores || !hasSession || isLoadingCreditScores) return;
+
+    await getCreditScores();
+    console.log('ABO', { creditScores });
+  }, [creditScores, isLoadingCreditScores, hasSession, getCreditScores]);
   const [soulnameDetails, setSoulnameDetails] = useState<SoulNameDetails[]>([]);
 
   useAsync(async () => {
@@ -343,11 +352,15 @@ const SoulnameCreditScoreInfo = () => {
         <li>
           <ul>
             <li>isLoadingCreditScores: {String(isLoadingCreditScores)}</li>
-            {creditScores?.map((cs) => (
-              <li key={cs.metadata?.properties.lastUpdated}>
-                <code>{String(JSON.stringify(cs, null, 4))}</code>
-              </li>
-            ))}
+            <li>Credit Scores Amount: {String(creditScores?.length)}</li>
+            CreditScores:{' '}
+            {creditScores?.length === 0
+              ? 'No Credit Scores'
+              : creditScores?.map((cs) => (
+                  <li key={cs.metadata?.properties.lastUpdated}>
+                    <code>{String(JSON.stringify(cs, null, 4))}</code>
+                  </li>
+                ))}
           </ul>
         </li>
       </ul>
