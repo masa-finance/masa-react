@@ -42,6 +42,8 @@ export interface UseWalletReturn {
   disconnectAsync?: () => void;
   isLoadingSigner?: boolean;
   isLoadingBalance?: boolean;
+  isLoadingWallet?: boolean;
+  isLoadingOrConnectingWallet?: boolean;
   balance?: string;
   setPreviousAddress: React.Dispatch<
     React.SetStateAction<`0x${string}` | undefined>
@@ -122,6 +124,16 @@ const useWallet = (): UseWalletReturn => {
   const hasAddress = useMemo(() => !!address, [address]);
   const walletName = useMemo(() => connector?.name, [connector]);
 
+  const isLoadingWallet = useMemo(
+    () => isLoadingSigner || isLoadingWalletClient,
+    [isLoadingSigner, isLoadingWalletClient]
+  );
+
+  const isLoadingOrConnectingWallet = useMemo(
+    () => isLoadingWallet || isConnecting,
+    [isLoadingWallet, isConnecting]
+  );
+
   const useWalletValue = useMemo(
     () => ({
       address,
@@ -149,6 +161,9 @@ const useWallet = (): UseWalletReturn => {
       balance,
       setPreviousAddress,
       setCompareAddress,
+
+      isLoadingWallet,
+      isLoadingOrConnectingWallet,
     }),
     [
       address,
@@ -176,6 +191,8 @@ const useWallet = (): UseWalletReturn => {
       balance,
       setPreviousAddress,
       setCompareAddress,
+      isLoadingWallet,
+      isLoadingOrConnectingWallet,
     ]
   );
 
