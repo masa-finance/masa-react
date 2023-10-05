@@ -40,6 +40,7 @@
     font-family: Ezra;
     font-size: 30px;
     word-wrap: break-word;
+    line-height: 1.5;
   }
 
   .masa-spinner {
@@ -534,6 +535,10 @@
 
     .dont-have-a-wallet {
       padding-top: 0;
+    }
+
+    .loading {
+      height: 70%;
     }
   }
 
