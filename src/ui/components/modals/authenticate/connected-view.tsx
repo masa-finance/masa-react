@@ -36,7 +36,7 @@ const ConnectedView = ({
   return (
     <Modal>
       <section className="interface-connected">
-        <section>
+        <section className="loading">
           <h3 className="title">{titleText}</h3>
           <Spinner />
         </section>
