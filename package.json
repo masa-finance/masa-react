@@ -84,7 +84,7 @@
     "css-loader": "^6.8.1",
     "eslint": "^8.49.0",
     "eslint-config-masa": "0.0.13",
-    "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "fork-ts-checker-webpack-plugin": "^9.0.0",
     "https-browserify": "^1.0.0",
     "husky": "^8.0.2",
     "jest": "^29.7.0",
