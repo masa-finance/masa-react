@@ -8632,6 +8632,24 @@ fork-ts-checker-webpack-plugin@^8.0.0:
     semver "^7.3.5"
     tapable "^2.2.1"
 
+fork-ts-checker-webpack-plugin@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/fork-ts-checker-webpack-plugin/-/fork-ts-checker-webpack-plugin-9.0.0.tgz#e12b9e6116d32b07a2dbc0ea08f62b1cea24d35a"
+  integrity sha512-Kw3JjsfGs0piB0V2Em8gCuo51O3p4KyCOK0Tn8X57oq2mSNBrMmONALRBw5frcmWsOVU7iELXXsJ+FVxJeQuhA==
+  dependencies:
+    "@babel/code-frame" "^7.16.7"
+    chalk "^4.1.2"
+    chokidar "^3.5.3"
+    cosmiconfig "^7.0.1"
+    deepmerge "^4.2.2"
+    fs-extra "^10.0.0"
+    memfs "^3.4.1"
+    minimatch "^3.0.4"
+    node-abort-controller "^3.0.1"
+    schema-utils "^3.1.1"
+    semver "^7.3.5"
+    tapable "^2.2.1"
+
 form-data@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
