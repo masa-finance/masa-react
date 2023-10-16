@@ -1,5 +1,4 @@
 import { useAsyncFn } from 'react-use';
-import type { ISession } from '@masa-finance/masa-sdk';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
@@ -39,10 +38,7 @@ export const useSessionConnect = () => {
       { persist: false, masaAddress },
     ]);
 
-    return loginObj as unknown as ISession & {
-      userId: string;
-      address: string;
-    };
+    return loginObj;
   }, [queryClient, masa, address, masaAddress, isDisconnected]);
 
   const [{ loading: isLoggingOut }, logoutSession] = useAsyncFn(async () => {
