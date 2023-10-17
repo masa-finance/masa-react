@@ -1,10 +1,10 @@
 import React, {
+  createContext,
   ReactNode,
   useCallback,
-  createContext,
   useContext,
-  useMemo,
   useEffect,
+  useMemo,
 } from 'react';
 
 import type { Chain } from 'wagmi';
@@ -57,7 +57,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     isSwitchingChain,
     chains,
     isActiveChainUnsupported,
-    availibleChains,
+    availableChains,
     pendingConnector,
     networkError,
   } = useNetwork();
@@ -127,7 +127,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         isSwitchingChain,
         chains,
         isActiveChainUnsupported,
-        availibleChains,
+        availableChains,
         pendingConnector,
       }) as WalletClientValue,
     [
@@ -159,7 +159,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       isSwitchingChain,
       chains,
       isActiveChainUnsupported,
-      availibleChains,
+      availableChains,
       pendingConnector,
     ]
   );
