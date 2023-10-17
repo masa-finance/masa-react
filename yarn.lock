@@ -4889,10 +4889,10 @@
     abitype "0.8.7"
     eventemitter3 "^4.0.7"
 
-"@wagmi/core@1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-1.4.2.tgz#facf21c06d236b651782cfdd20005f02a3afcb9b"
-  integrity sha512-szgNs2DCbBXKsq3wdm/YD8FWkg7lfmTRAv25b2nJYJUTQN59pVXznlWfq8VCJLamhKOYjeYHlTQxXkAeUAJdhw==
+"@wagmi/core@1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-1.4.4.tgz#86d7ada727a6976eb4924e898a482106a3611bbc"
+  integrity sha512-38Pa5iH9/2zHX837vYm6M+c//BBikt6vKJqUiEgkIzSqFvlfzbxaNmwybpIxl98N5r+X22C3yHv5bboO9eP0vQ==
   dependencies:
     "@wagmi/connectors" "3.1.2"
     abitype "0.8.7"
@@ -9831,6 +9831,11 @@ isows@1.0.2:
   resolved "https://registry.yarnpkg.com/isows/-/isows-1.0.2.tgz#6bd3fcf1bda471777c46a9ebe9a6683e2c8fccde"
   integrity sha512-ohHPFvRjcGLLA7uqHjIcGf5M3OrzN/k9QVYMGOvCppV/HY2GZdz7oFsJHT70ZXEL7ImrOGE1F9M0SovDGSfT6Q==
 
+isows@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/isows/-/isows-1.0.3.tgz#93c1cf0575daf56e7120bab5c8c448b0809d0d74"
+  integrity sha512-2cKei4vlmg2cxEjm3wVSqn8pcoRF/LX/wpifuuNquFO4SQmPwarClT+SUCA2lt+l581tTeZIPIZuIDo2jWN1fg==
+
 istanbul-lib-coverage@^3.0.0, istanbul-lib-coverage@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-3.2.0.tgz#189e7909d0a39fa5a3dfad5b03f71947770191d3"
@@ -14277,7 +14282,7 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-viem@^1.0.0, viem@^1.16.0:
+viem@^1.0.0:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/viem/-/viem-1.16.0.tgz#448eee07485ec14ecdd05b06d5f943a5feaf0594"
   integrity sha512-noRMxaMubiLbVrZ0tXKxUKNwle0QtF0wO6kBOWnm6wg6XIqptSW7xhFzrFdDRp8Jduu5rwwkCB4Tokd5MtFRtw==
@@ -14289,6 +14294,20 @@ viem@^1.0.0, viem@^1.16.0:
     "@scure/bip39" "1.2.1"
     abitype "0.9.8"
     isows "1.0.2"
+    ws "8.13.0"
+
+viem@^1.16.6:
+  version "1.16.6"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-1.16.6.tgz#78118c9269506a59e2bc4deab13f1646e113d3fc"
+  integrity sha512-jcWcFQ+xzIfDwexwPJRvCuCRJKEkK9iHTStG7mpU5MmuSBpACs4nATBDyXNFtUiyYTFzLlVEwWkt68K0nCSImg==
+  dependencies:
+    "@adraffy/ens-normalize" "1.9.4"
+    "@noble/curves" "1.2.0"
+    "@noble/hashes" "1.3.2"
+    "@scure/bip32" "1.3.2"
+    "@scure/bip39" "1.2.1"
+    abitype "0.9.8"
+    isows "1.0.3"
     ws "8.13.0"
 
 vm-browserify@^1.1.2:
@@ -14306,15 +14325,15 @@ vscode-textmate@^8.0.0:
   resolved "https://registry.yarnpkg.com/vscode-textmate/-/vscode-textmate-8.0.0.tgz#2c7a3b1163ef0441097e0b5d6389cd5504b59e5d"
   integrity sha512-AFbieoL7a5LMqcnOF04ji+rpXadgOXnZsxQr//r83kLPr7biP7am3g9zbaZIaBGwBRWeSvoMD4mgPdX3e4NWBg==
 
-wagmi@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-1.4.2.tgz#cd681b1d35cf36613a11852cf25c2c39ce456f9f"
-  integrity sha512-Cxu0LatB44stqHoqdc6dgsTb9woYH1bEquJFq9PbTkePmnRCvceAD4aFUREUTaBWzIBcouhFlanWweDzEnb3mg==
+wagmi@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-1.4.4.tgz#745f8513dff826d7b234a646fb17e66515078c11"
+  integrity sha512-uT6GRNrw3WTrdVRQ7wAHiQL2/gaqaUjcEeHRwsbiqrAT9ZfVtZw7uhl+ZueLpem2zFxlR2zhnRMNbAOKD0IcEA==
   dependencies:
     "@tanstack/query-sync-storage-persister" "^4.27.1"
     "@tanstack/react-query" "^4.28.0"
     "@tanstack/react-query-persist-client" "^4.28.0"
-    "@wagmi/core" "1.4.2"
+    "@wagmi/core" "1.4.4"
     abitype "0.8.7"
     use-sync-external-store "^1.2.0"
 

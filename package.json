@@ -24,8 +24,8 @@
     "size": "size-limit",
     "lint": "eslint --config .eslintrc --ignore-path .eslintignore .",
     "lint:fix": "eslint --config .eslintrc --fix --ignore-path .eslintignore .",
-    "prettier": "prettier --config ./.prettierrc --write \"**/*.{js,json,ts,yml}\"",
-    "prettier:check": "prettier --check --config ./.prettierrc --ignore-path .prettierignore \"**/*.{js,json,ts,yml}\"",
+    "prettier": "prettier --config ./.prettierrc --write \"**/*.{js,json,ts,tsx,yml}\"",
+    "prettier:check": "prettier --check --config ./.prettierrc --ignore-path .prettierignore \"**/*.{js,json,ts,tsx,yml}\"",
     "test": "echo 'No Tests'",
     "doc": "typedoc"
   },
@@ -53,8 +53,8 @@
     "react-use": "^17.4.0",
     "reaptcha": "^1.12.1",
     "rodal": "^2.0.0",
-    "viem": "^1.16.0",
-    "wagmi": "^1.4.2"
+    "viem": "^1.16.6",
+    "wagmi": "^1.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",
