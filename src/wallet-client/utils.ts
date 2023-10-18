@@ -5,15 +5,13 @@ import {
 } from '@masa-finance/masa-sdk';
 import { Chain } from '@wagmi/chains';
 
-export const getWagmiNetworkName = (masaNetworkName?: NetworkName): string => {
+export const getWagmiNetworkName = (masaNetworkName: NetworkName): string => {
   if (masaNetworkName === 'ethereum') return 'homestead';
   if (masaNetworkName === 'alfajores') return 'celo-alfajores';
-  return masaNetworkName as string;
+  return masaNetworkName;
 };
 
-export const getMasaNetworkName = (
-  wagmiNetworkName: NetworkName | 'homestead' | 'celo-alfajores' | undefined
-): NetworkName => {
+export const getMasaNetworkName = (wagmiNetworkName: string): NetworkName => {
   if (wagmiNetworkName === 'homestead') return 'ethereum';
   if (wagmiNetworkName === 'celo-alfajores') return 'alfajores';
 
