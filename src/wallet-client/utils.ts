@@ -14,6 +14,7 @@ import {
   mainnet as ethereum,
   polygon,
   polygonMumbai,
+  scrollSepolia,
 } from '@wagmi/chains';
 
 const rainbowkitChains = [
@@ -32,6 +33,8 @@ const rainbowkitChains = [
   // polygon
   polygon,
   polygonMumbai,
+  // scroll
+  scrollSepolia,
 ];
 
 export type MasaNetworks = Partial<
