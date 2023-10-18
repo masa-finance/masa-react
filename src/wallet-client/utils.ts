@@ -21,7 +21,7 @@ export const getMasaNetworkName = (
 };
 
 const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
-  .filter((x: string) => x !== 'unknown') // remove unused network
+  .filter((networkName: string) => networkName !== 'unknown') // remove unused network
   .map((networkName: string) => {
     const network: Network = SupportedNetworks[networkName] as Network;
     return {
@@ -56,7 +56,6 @@ export const getRainbowkitChains = (networkNames?: NetworkName[]): Chain[] => {
     .map((networkName: NetworkName) => {
       const network = SupportedNetworks[networkName];
 
-      console.log({ networkName });
       if (network) {
         return rainbowkitChains.find(
           (chain: Chain) => chain.id === network.chainId
