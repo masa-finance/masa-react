@@ -31,12 +31,12 @@ export const useNetwork = () => {
     setSwitchingToChain(null);
   }, []);
 
-  const availableChains = useMemo(
+  const availableChains: Chain[] = useMemo(
     () => connectors.flatMap((connector: Connector) => connector.chains),
     [connectors]
   );
 
-  const isSwitchingChain = useMemo(
+  const isSwitchingChain: boolean = useMemo(
     () => !!switchingToChain || isSwitchingWagmi,
     [switchingToChain, isSwitchingWagmi]
   );
@@ -57,9 +57,9 @@ export const useNetwork = () => {
   );
 
   const switchNetworkByName = useCallback(
-    (forcedNetworkParam: NetworkName) => {
+    (networkName: NetworkName) => {
       try {
-        const networkToSwitchTo = SupportedNetworks[forcedNetworkParam];
+        const networkToSwitchTo = SupportedNetworks[networkName];
         setSwitchingToChain(networkToSwitchTo?.chainId);
 
         if (networkToSwitchTo) {
@@ -72,7 +72,7 @@ export const useNetwork = () => {
         }
       } catch (error: unknown) {
         if (switchNetworkWagmi) stopSwitching();
-        throw error as Error;
+        throw error;
       }
     },
     [activeChain?.id, switchNetworkWagmi, stopSwitching]

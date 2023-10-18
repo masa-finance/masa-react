@@ -37,16 +37,27 @@ export interface MasaReactConfig {
 export const defaultConfig: Partial<MasaReactConfig> = {
   company: 'Masa',
   allowedNetworkNames: [
-    'ethereum',
+    // eth
     'goerli',
+    'ethereum',
+    // celo
     'alfajores',
     'celo',
+    // polygon
     'mumbai',
     'polygon',
+    // bsc
     'bsctest',
     'bsc',
+    // opbnb
+    'opbnbtest',
+    'opbnb',
+    // base
     'basegoerli',
     'base',
+    // scroll
+    'scrollsepolia',
+    'scroll',
   ],
   allowedWallets: ['metamask', 'valora', 'walletconnect'],
   masaConfig: {
