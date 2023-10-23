@@ -47,7 +47,7 @@
     "rc-tooltip": "^6.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-phone-number-input": "^3.3.6",
+    "react-phone-number-input": "^3.3.7",
     "react-query": "^3.39.3",
     "react-spinners": "^0.13.8",
     "react-use": "^17.4.0",
