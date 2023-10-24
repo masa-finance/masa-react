@@ -8,18 +8,8 @@ import { getMasaNetworkName } from '../wallet-client/utils';
 
 export const useMasaClient = () => {
   const { masaConfig, contractAddressOverrides } = useConfig();
-
   const { signer, isDisconnected, address } = useWallet();
-
   const { activeChainId, currentNetwork } = useNetwork();
-
-  const networkName = useMemo(
-    () =>
-      currentNetwork?.networkName
-        ? getMasaNetworkName(currentNetwork.networkName)
-        : 'unknown',
-    [currentNetwork?.networkName]
-  );
 
   const masa = useMasaSDK(
     {
@@ -28,7 +18,7 @@ export const useMasaClient = () => {
       ...masaConfig,
       environmentName: masaConfig.environment,
       contractAddressOverrides,
-      networkName,
+      networkName: currentNetwork?.networkName ?? 'unknown',
     },
     [
       address,
@@ -73,17 +63,8 @@ export const useMasaClient = () => {
       return getMasaNetworkName(network.name);
     }, [masa, activeChainId, masaChainId]);
 
-  const masaClient = useMemo(() => {
+  return useMemo(() => {
     if (address !== masaAddress) {
-      return {
-        masaAddress,
-        masaChainId,
-        sdk: undefined,
-        masa: undefined,
-      };
-    }
-
-    if (!currentNetwork) {
       return {
         masaAddress,
         masaChainId,
@@ -101,15 +82,12 @@ export const useMasaClient = () => {
       isLoadingMasa: isLoadingMasaAddress || isLoadingMasaNetwork,
     };
   }, [
-    masa,
-    masaAddress,
-    masaChainId,
-    masaNetwork,
     address,
+    masaAddress,
+    masaNetwork,
+    masaChainId,
+    masa,
     isLoadingMasaAddress,
     isLoadingMasaNetwork,
-    currentNetwork,
   ]);
-
-  return masaClient;
 };

@@ -32,7 +32,7 @@ export const useMasaSDK = (
   {
     signer,
     environmentName,
-    networkName = 'unknown',
+    networkName,
     arweaveConfig,
     verbose,
     apiUrl,
@@ -77,6 +77,7 @@ export const useMasaSDK = (
       );
       contractOverrides.SoulNameContract.hasAddress = true;
     }
+
     if (verbose) {
       signer
         .getAddress()
