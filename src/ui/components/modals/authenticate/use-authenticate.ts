@@ -14,7 +14,6 @@ export const useAuthenticate = ({
   onRegisterFinish,
   onSuccess,
   onError,
-  showCreateSoulnameModal = true,
 }: {
   onAuthenticateSuccess?: (payload: {
     address?: string;
@@ -26,7 +25,6 @@ export const useAuthenticate = ({
   onRegisterFinish?: () => void;
   onSuccess?: () => void;
   onError?: () => void;
-  showCreateSoulnameModal?: boolean;
 } = {}) => {
   const { openConnectModal, isDisconnected } = useWallet();
   const { checkLogin, getSession } = useSession();
@@ -62,26 +60,6 @@ export const useAuthenticate = ({
       await openAuthenticateModal({
         onAuthenticateSuccess,
         onAuthenticateError,
-        onAuthenticateFinish: async () => {
-          const { data: identityRefetched } = await reloadIdentity();
-
-          // TODO: this is a quick fix that shoudl be removed soon
-          const { data: hasSessionCheck } = await checkLogin();
-          if (hasSessionCheck) {
-            const { data: session } = await getSession();
-            onAuthenticateSuccess?.({
-              address: session?.user.address,
-              walletType: pendingConnector?.name,
-            });
-          }
-
-          if (
-            showCreateSoulnameModal &&
-            !disable &&
-            (!identityRefetched || !identityRefetched.identityId)
-          )
-            await openSoulnameModal();
-        },
       });
     },
     [
@@ -94,7 +72,6 @@ export const useAuthenticate = ({
       checkLogin,
       getSession,
       pendingConnector?.name,
-      showCreateSoulnameModal,
     ]
   );
 

@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { useWallet } from '../../../../wallet-client/wallet/use-wallet';
-import { useSession } from '../../../../masa/use-session';
 
 import { Modal } from '../modal';
-import ConnectedView from './connected-view';
 import { useAuthenticateModal } from './use-authenticate-modal';
 import { ModalLoading } from '../ModalLoading';
 
@@ -14,13 +12,11 @@ export interface AuthenticateProps {
     walletType?: string;
   }) => void;
   onAuthenticateError?: () => void;
-  onAuthenticateFinish?: () => void;
 }
 
 export const Authenticate = ({
   onAuthenticateSuccess,
   onAuthenticateError,
-  onAuthenticateFinish,
 }: AuthenticateProps): JSX.Element => {
   const modal = useModal();
 
@@ -32,7 +28,6 @@ export const Authenticate = ({
     isLoadingSigner,
   } = useWallet();
 
-  const { isLoadingSession } = useSession();
   const [copied, setCopied] = useState(false);
 
   const switchWallet = useCallback(async () => {
@@ -54,7 +49,6 @@ export const Authenticate = ({
     successMessage,
     needsWalletConnection,
     showAuthenticateView,
-    showConnectedView,
     showSwitchWalletButton,
   } = useAuthenticateModal({
     onAuthenticateError,
@@ -72,18 +66,6 @@ export const Authenticate = ({
       <Modal>
         <ModalLoading titleText="Signing you in..." />
       </Modal>
-    );
-  }
-
-  if (showConnectedView) {
-    return (
-      <ConnectedView
-        titleText="Starting your soulbound journey"
-        modal={modal}
-        loading={isLoadingSession}
-        closeTimeoutMS={3000}
-        onClose={onAuthenticateFinish}
-      />
     );
   }
 
@@ -146,15 +128,10 @@ export const Authenticate = ({
 };
 
 export const AuthenticateModal = NiceModal.create(
-  ({
-    onAuthenticateSuccess,
-    onAuthenticateFinish,
-    onAuthenticateError,
-  }: AuthenticateProps) => (
+  ({ onAuthenticateSuccess, onAuthenticateError }: AuthenticateProps) => (
     <Authenticate
       onAuthenticateSuccess={onAuthenticateSuccess}
       onAuthenticateError={onAuthenticateError}
-      onAuthenticateFinish={onAuthenticateFinish}
     />
   )
 );
@@ -162,11 +139,9 @@ export const AuthenticateModal = NiceModal.create(
 export const openAuthenticateModal = ({
   onAuthenticateSuccess,
   onAuthenticateError,
-  onAuthenticateFinish,
 }: AuthenticateProps) =>
   NiceModal.show(AuthenticateModal, {
     onAuthenticateSuccess,
-    onAuthenticateFinish,
     onAuthenticateError,
   });
 
