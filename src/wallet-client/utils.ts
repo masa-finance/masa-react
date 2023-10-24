@@ -3,124 +3,66 @@ import {
   NetworkName,
   SupportedNetworks,
 } from '@masa-finance/masa-sdk';
-import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
-import {
-  base,
-  baseGoerli,
-  bsc,
-  bscTestnet,
-  Chain,
-  goerli,
-  mainnet as ethereum,
-  polygon,
-  polygonMumbai,
-  scrollSepolia,
-} from '@wagmi/chains';
+import { Chain } from '@wagmi/chains';
 
-const rainbowkitChains = [
-  // eth
-  ethereum,
-  goerli,
-  // celo
-  Alfajores,
-  Celo,
-  // base
-  base,
-  baseGoerli,
-  // bsc
-  bsc,
-  bscTestnet,
-  // polygon
-  polygon,
-  polygonMumbai,
-  // scroll
-  scrollSepolia,
-];
+export const getWagmiNetworkName = (masaNetworkName: NetworkName): string => {
+  if (masaNetworkName === 'ethereum') return 'homestead';
+  if (masaNetworkName === 'alfajores') return 'celo-alfajores';
+  return masaNetworkName;
+};
 
-export type MasaNetworks = Partial<
-  { [key in NetworkName]: Network } & {
-    // todo: remove this hack! we dont know any network that is called this way.
-    // this is wagmi terminology
-    homestead: Network;
-  }
->;
+export const getMasaNetworkName = (wagmiNetworkName: string): NetworkName => {
+  if (wagmiNetworkName === 'homestead') return 'ethereum';
+  if (wagmiNetworkName === 'celo-alfajores') return 'alfajores';
 
-type NetworkNameWithHomestead = NetworkName | 'homestead';
+  return wagmiNetworkName as NetworkName;
+};
 
-export const correctNetworkListForWagmi = (networkList: NetworkName[]) => {
-  const networkListCorrectedForWagmi:
-    | Array<NetworkName | 'homestead'>
-    | undefined = networkList?.map((nl: NetworkName) => {
-    if (nl === 'ethereum') return 'homestead';
-    return nl;
+const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
+  .filter((networkName: string) => networkName !== 'unknown') // remove unused network
+  .map((networkName: string) => {
+    const network: Network = SupportedNetworks[networkName] as Network;
+    return {
+      id: network.chainId,
+      name: network.chainName,
+      network: getWagmiNetworkName(network.networkName),
+      nativeCurrency: {
+        name: network.nativeCurrency?.symbol ?? 'ETH',
+        symbol: network.nativeCurrency?.symbol ?? 'ETH',
+        decimals: network.nativeCurrency?.decimals ?? 18,
+      },
+      rpcUrls: {
+        default: {
+          http: [network.rpcUrls[0] ?? ''],
+          webSocket: network.rpcUrls[2] ? [network.rpcUrls[2]] : undefined,
+        },
+        public: {
+          http: [network.rpcUrls[0] ?? ''],
+          webSocket: network.rpcUrls[2] ? [network.rpcUrls[2]] : undefined,
+        },
+      },
+      testnet: network.isTestnet,
+    };
   });
 
-  return networkListCorrectedForWagmi;
-};
-export const getRainbowkitChains = (networkList?: NetworkName[]) => {
-  if (!networkList || (networkList && networkList.length === 0)) {
+export const getRainbowkitChains = (networkNames?: NetworkName[]): Chain[] => {
+  if (!networkNames || (networkNames && networkNames.length === 0)) {
     return rainbowkitChains;
   }
 
-  const masaNetworksNew: MasaNetworks = {};
+  return networkNames
+    .map((networkName: NetworkName) => {
+      const network = SupportedNetworks[networkName];
 
-  for (const networkName of Object.keys(SupportedNetworks)) {
-    if (networkName !== 'unknown' && networkName !== 'ethereum') {
-      masaNetworksNew[networkName] = SupportedNetworks[networkName] as Network;
-    }
-
-    if (networkName === 'ethereum') {
-      masaNetworksNew.homestead = SupportedNetworks.ethereum as Network;
-    }
-  }
-
-  // const supportedNetworkKeys = Object.keys(SupportedNetworks);
-  // for (const supportedNetworkKey of supportedNetworkKeys) {
-  //   const nw = SupportedNetworks[supportedNetworkKey];
-  //   console.log('BRUDER', nw);
-  // }
-
-  const masaNetworks: MasaNetworks = Object.keys(SupportedNetworks)
-    .filter((x: string) => x !== 'unknown') // remove unused network
-    .reduce(
-      (acc: MasaNetworks, val: string) => {
-        acc[val] = SupportedNetworks[val] as Network;
-        if (val === 'ethereum') {
-          // NOTE: ethereum is called homestead in wagmi so we have to adjust our networks a bit
-          acc.homestead = { ...(SupportedNetworks.ethereum as Network) };
-          acc.homestead.networkName = 'homestead' as NetworkName;
-        }
-        return acc;
-      },
-      {
-        homestead: SupportedNetworks.ethereum as Network & {
-          networkName: NetworkName | 'homestead';
-        },
+      if (network) {
+        return rainbowkitChains.find(
+          (chain: Chain) => chain.id === network.chainId
+        );
       }
-    );
 
-  const masaNetworkNames = Object.keys(masaNetworksNew);
-
-  const userNetworksFiltered = networkList.filter(
-    (networkName: NetworkNameWithHomestead) =>
-      masaNetworkNames.includes(
-        // NOTE: this is a hack to make sure we can use wagmi's homestead network
-        networkName === 'ethereum' ? 'homestead' : networkName
-      )
-  );
-
-  const userNetworksMasa = userNetworksFiltered.map(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    (un: NetworkName) => masaNetworks[un]
-  );
-  const userNetworksRainbowkit = new Set(
-    userNetworksMasa.map((unm?: Network) => unm?.chainId)
-  );
-  const userChainsRainbowkit = rainbowkitChains.filter(
-    (rainbowkitChain: Chain) => userNetworksRainbowkit.has(rainbowkitChain.id)
-  );
-
-  return userChainsRainbowkit;
+      return undefined;
+    })
+    .filter((chain: Chain | undefined) => !!chain) as Chain[];
 };
 
 export const getChainIdNetworkMap = (chains?: Chain[]) => {
@@ -135,33 +77,20 @@ export const getChainIdNetworkMap = (chains?: Chain[]) => {
   return chainIdNetworkMap;
 };
 
-export const getWagmiNetworkName = (masaNetworkName?: NetworkName) => {
-  if (masaNetworkName === 'ethereum') return 'homestead';
-  if (masaNetworkName === 'alfajores') return 'celo-alfajores';
-  return masaNetworkName;
-};
-
-export const getMasaNetworkName = (
-  wagmiNetworkName: NetworkName | 'homestead' | 'celo-alfajores' | undefined
-) => {
-  if (wagmiNetworkName === 'homestead') return 'ethereum';
-  if (wagmiNetworkName === 'celo-alfajores') return 'alfajores';
-
-  return wagmiNetworkName as NetworkName;
-};
-
 export const getChainsSortedByForcedNetwork = (
   chains: Chain[],
   forceChain?: NetworkName
 ) => {
   if (!forceChain) return chains;
+
   const singleChain = chains.filter(
-    (ch: Chain) => ch.network === getWagmiNetworkName(forceChain)
+    (chain: Chain) => chain.network === getWagmiNetworkName(forceChain)
   );
+
   const sortedChains = [
     ...singleChain,
     ...chains.filter(
-      (ch: Chain) => ch.network !== getWagmiNetworkName(forceChain)
+      (chain: Chain) => chain.network !== getWagmiNetworkName(forceChain)
     ),
   ];
 

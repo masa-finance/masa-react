@@ -7,7 +7,6 @@ import { Button } from './ui';
 import './styles.scss';
 import './stories.scss';
 import 'react-json-view-lite/dist/index.css'; // eslint-disable-line import/no-extraneous-dependencies
-
 import { useWallet } from './wallet-client/wallet/use-wallet';
 import { useNetwork } from './wallet-client/network/use-network';
 import MasaProvider from './masa-provider';
@@ -235,17 +234,27 @@ const TemplateNewMasaState = (props: Args) => (
       forceChain: 'base',
       // contractAddressOverrides: {},
       allowedNetworkNames: [
+        // eth
         'goerli',
         'ethereum',
+        // celo
         'alfajores',
         'celo',
+        // polygon
         'mumbai',
         'polygon',
+        // bsc
         'bsctest',
         'bsc',
-        'base',
+        // opbnb
+        'opbnbtest',
+        'opbnb',
+        // base
         'basegoerli',
-        'unknown',
+        'base',
+        // scroll
+        'scrollsepolia',
+        'scroll',
       ],
       masaConfig: {
         networkName: 'base',

@@ -26,6 +26,7 @@ export const walletConnectorsList: Record<
       metaMaskWallet({ chains, projectId: PROJECT_ID }),
     ],
   }),
+
   valora: (chains: Chain[]) => ({
     groupName: 'Celo',
     wallets: [Valora({ chains, projectId: PROJECT_ID })],

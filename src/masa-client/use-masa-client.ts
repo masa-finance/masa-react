@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useAsync } from 'react-use';
-import type { NetworkName } from '@masa-finance/masa-sdk';
 import { useConfig } from '../base-provider';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaSDK } from './use-masa-sdk';
@@ -9,12 +8,19 @@ import { getMasaNetworkName } from '../wallet-client/utils';
 
 export const useMasaClient = () => {
   const { masaConfig, contractAddressOverrides } = useConfig();
+
   const { signer, isDisconnected, address } = useWallet();
 
   const { activeChainId, currentNetwork } = useNetwork();
 
-  const networkName = getMasaNetworkName(currentNetwork?.networkName);
-  // console.log({ contractAddressOverrides });
+  const networkName = useMemo(
+    () =>
+      currentNetwork?.networkName
+        ? getMasaNetworkName(currentNetwork.networkName)
+        : 'unknown',
+    [currentNetwork?.networkName]
+  );
+
   const masa = useMasaSDK(
     {
       address,
@@ -22,7 +28,6 @@ export const useMasaClient = () => {
       ...masaConfig,
       environmentName: masaConfig.environment,
       contractAddressOverrides,
-      // NOTE: mismatch of homestead (wagmi) vs ethereum (masa)
       networkName,
     },
     [
@@ -61,22 +66,12 @@ export const useMasaClient = () => {
     useAsync(async () => {
       if (!masa) return undefined;
       if (masaChainId !== activeChainId) return undefined;
-      const network = await masa.config.signer?.provider?.getNetwork();
 
+      const network = await masa.config.signer?.provider?.getNetwork();
       if (!network) return undefined;
 
-      if (network?.name === 'unknown') {
-        return getMasaNetworkName(currentNetwork?.networkName);
-      }
-
-      return getMasaNetworkName(
-        network?.name as unknown as
-          | NetworkName
-          | 'homestead'
-          | 'celo-alfajores'
-          | undefined
-      );
-    }, [masa, currentNetwork, activeChainId, masaChainId]);
+      return getMasaNetworkName(network.name);
+    }, [masa, activeChainId, masaChainId]);
 
   const masaClient = useMemo(() => {
     if (address !== masaAddress) {
