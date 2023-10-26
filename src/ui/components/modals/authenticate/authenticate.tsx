@@ -26,6 +26,7 @@ export const Authenticate = ({
     disconnect,
     openConnectModal,
     isLoadingSigner,
+    hasAddress,
   } = useWallet();
 
   const [copied, setCopied] = useState(false);
@@ -59,7 +60,25 @@ export const Authenticate = ({
     if (needsWalletConnection && modal.visible) {
       openConnectModal?.();
     }
-  }, [needsWalletConnection, modal, openConnectModal]);
+
+    let timeout: NodeJS.Timeout;
+    if (modal.visible && !isAuthenticating && hasAddress) {
+      timeout = setTimeout(() => {
+        modal.remove();
+        // onClose?.();
+      }, 2000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [
+    needsWalletConnection,
+    modal,
+    hasAddress,
+    isAuthenticating,
+    openConnectModal,
+  ]);
 
   if (isAuthenticating) {
     return (
