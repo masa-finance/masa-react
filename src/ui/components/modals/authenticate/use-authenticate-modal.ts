@@ -27,10 +27,6 @@ export const useAuthenticateModal = ({
     () => isConnected && !hasSession && signer && hasAddress,
     [isConnected, hasSession, signer, hasAddress]
   );
-  const showConnectedView = useMemo(
-    () => hasSession && hasAddress,
-    [hasSession, hasAddress]
-  );
 
   const successMessage = useMemo(() => {
     switch (company) {
@@ -82,7 +78,6 @@ export const useAuthenticateModal = ({
   return {
     needsWalletConnection,
     showAuthenticateView,
-    showConnectedView,
     successMessage,
 
     isAuthenticating,
