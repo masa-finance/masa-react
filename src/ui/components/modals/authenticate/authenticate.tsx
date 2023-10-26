@@ -50,6 +50,7 @@ export const Authenticate = ({
     needsWalletConnection,
     showAuthenticateView,
     showSwitchWalletButton,
+    showConnectedView,
   } = useAuthenticateModal({
     onAuthenticateError,
     onAuthenticateSuccess,
@@ -59,7 +60,25 @@ export const Authenticate = ({
     if (needsWalletConnection && modal.visible) {
       openConnectModal?.();
     }
-  }, [needsWalletConnection, modal, openConnectModal]);
+
+    let timeout: NodeJS.Timeout;
+    if (modal.visible && !isAuthenticating && showConnectedView) {
+      timeout = setTimeout(() => {
+        modal.remove();
+        // onClose?.();
+      }, 2000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [
+    needsWalletConnection,
+    modal,
+    showConnectedView,
+    isAuthenticating,
+    openConnectModal,
+  ]);
 
   if (isAuthenticating) {
     return (

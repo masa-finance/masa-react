@@ -16,7 +16,7 @@ export const useAuthenticateModal = ({
   onClose?: () => void;
 }) => {
   const { hasAddress, isConnected, signer, connector } = useWallet();
-  const { hasSession, loginSession } = useSession();
+  const { hasSession, loginSession, isLoadingSession } = useSession();
   const { company } = useConfig();
 
   const needsWalletConnection = useMemo(
@@ -24,9 +24,11 @@ export const useAuthenticateModal = ({
     [hasSession, isConnected, hasAddress]
   );
   const showAuthenticateView = useMemo(
-    () => isConnected && !hasSession && signer && hasAddress,
-    [isConnected, hasSession, signer, hasAddress]
+    () =>
+      isConnected && !hasSession && signer && hasAddress && !isLoadingSession,
+    [isConnected, hasSession, signer, hasAddress, isLoadingSession]
   );
+
   const showConnectedView = useMemo(
     () => hasSession && hasAddress,
     [hasSession, hasAddress]
@@ -82,9 +84,8 @@ export const useAuthenticateModal = ({
   return {
     needsWalletConnection,
     showAuthenticateView,
-    showConnectedView,
     successMessage,
-
+    showConnectedView,
     isAuthenticating,
     onAuthenticateStart,
     showSwitchWalletButton,

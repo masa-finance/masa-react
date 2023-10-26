@@ -515,8 +515,6 @@ const ModalFlow = () => {
     onAuthenticateSuccess: () => console.log('SUCCESS IN USEAUTH'),
     onAuthenticateError: () => console.log('AUTHENTICATE ERROR'),
     onRegisterFinish: () => console.log('FINISH FROM OUTSIDE ?????'),
-    onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
-    onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
     onError: () => console.log('CREATE SOULNAME ERROR'),
   });
 
