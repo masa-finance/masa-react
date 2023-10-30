@@ -45,7 +45,7 @@
     "@wagmi/core": "~0.10.17",
     "@walletconnect/modal": "^2.6.2",
     "ethers": "~5.7.2",
-    "rc-tooltip": "^6.1.1",
+    "rc-tooltip": "^6.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-phone-number-input": "^3.3.7",
