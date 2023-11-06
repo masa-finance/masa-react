@@ -12872,10 +12872,10 @@ react-is@^18.0.0, react-is@^18.2.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-json-view-lite@^0.9.8:
-  version "0.9.8"
-  resolved "https://registry.yarnpkg.com/react-json-view-lite/-/react-json-view-lite-0.9.8.tgz#d3d91bc16d62ef774a7b5c4ad95ccaaa623362d6"
-  integrity sha512-4D0UgQ5SjanNi2KzgEsEKOb9kj0L9HQz/3IshwIZN5reZsSU62t6sp8c+vskV42lXjGQCi7qGfoXIpNRsON7LA==
+react-json-view-lite@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-json-view-lite/-/react-json-view-lite-1.2.0.tgz#2fced1da474ae6e71ccd2352931033f3133311b4"
+  integrity sha512-Z5KSFNDjw3oYr6a2ZZ6SxAiU5OlXrlTbvEUshYeEn9eCEgrfb+DaJRK+6ZG+x7nLVl5RtOOBsfzD5iseUgLMRQ==
 
 react-phone-number-input@^3.3.7:
   version "3.3.7"
