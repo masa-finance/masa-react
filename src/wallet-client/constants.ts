@@ -35,34 +35,17 @@ export const walletConnectorsList: Record<
   walletconnect: (
     chains: Chain[]
     // networkName?: NetworkName
-  ) =>
-    // const singleChain = chains.filter(
-    //   (ch: Chain) => ch.network === getWagmiNetworkName(networkName)
-    // );
-    // const sortedChains = [
-    //   ...singleChain,
-    //   ...chains.filter(
-    //     (ch: Chain) => ch.network !== getWagmiNetworkName(networkName)
-    //   ),
-    // ];
-    // console.log('CHAINS', {
-    //   SupportedNetworks,
-
-    //   singleChain,
-    //   sortedChains,
-    //   networkName,
-    // });
-    ({
-      groupName: 'WalletConnect',
-      wallets: [
-        walletConnectWallet({
+  ) => ({
+    groupName: 'WalletConnect',
+    wallets: [
+      walletConnectWallet({
+        projectId: PROJECT_ID,
+        chains,
+        options: {
+          qrcode: true,
           projectId: PROJECT_ID,
-          chains,
-          options: {
-            qrcode: true,
-            projectId: PROJECT_ID,
-          },
-        }),
-      ],
-    }),
+        },
+      }),
+    ],
+  }),
 };

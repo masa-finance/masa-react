@@ -26,13 +26,6 @@ export const useAccountChangeListen = ({
         if (typeof window !== 'undefined') {
           window.localStorage.removeItem('walletconnect');
         }
-        await Promise.all([
-          //   invalidateIdentity({ masa, signer, walletAddress }),
-          //   invalidateCreditScores({ masa, signer, walletAddress }),
-          //   invalidateGreen({ masa, signer, walletAddress }),
-          //   invalidateCustomSBTs(),
-          //   invalidateCustomSBTContracts(),
-        ]);
         onChainChange?.();
       }
     };
