@@ -1,8 +1,8 @@
-import buffer from 'buffer';
+import * as buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import React, { MouseEventHandler, useCallback, useState } from 'react';
+import { MouseEventHandler, useCallback, useState } from 'react';
 import { darkStyles, JsonView } from 'react-json-view-lite'; // eslint-disable-line import/no-extraneous-dependencies
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
@@ -23,7 +23,6 @@ import MasaProvider from './masa-provider';
 import { useSession } from './masa/use-session';
 import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
-import { openGalleryModal } from './ui/components/modals';
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
@@ -551,11 +550,6 @@ const ModalFlow = () => {
           Create Soul Name
         </Button>
       </li>
-      <li>
-        <Button type="button" onClick={openGalleryModal}>
-          Gallery
-        </Button>
-      </li>
     </ul>
   );
 };
@@ -595,7 +589,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={config}
-              shouldInitiallyExpand={(number) => number <= 0 && true}
+              shouldExpandNode={(number) => number <= 0 && true}
               style={{ ...darkStyles }}
             />
           </div>
@@ -610,7 +604,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={masa ?? {}}
-              shouldInitiallyExpand={(number) => number <= 0 && true}
+              shouldExpandNode={(number) => number <= 0 && true}
               style={{ ...darkStyles }}
             />
           </div>

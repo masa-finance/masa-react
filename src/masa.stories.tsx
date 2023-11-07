@@ -1,7 +1,7 @@
-import buffer from 'buffer';
+import * as buffer from 'buffer';
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import React, { MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 import { Button } from './ui';
 
 import './styles.scss';
