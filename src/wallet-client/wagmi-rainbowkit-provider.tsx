@@ -36,7 +36,6 @@ export const WagmiRainbowkitProvider = ({
   const { chains, publicClient, webSocketPublicClient } = configureChains(
     rainbowkitChains,
     [
-      // alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
       publicProvider(),
       jsonRpcProvider({
         rpc: (chain: Chain) => ({ http: chain.rpcUrls.default.http[0] }),
@@ -47,12 +46,6 @@ export const WagmiRainbowkitProvider = ({
   const walletConnectors =
     allowedWallets?.map((wallet: 'metamask' | 'valora' | 'walletconnect') => {
       if (walletConnectorsList[wallet]) {
-        // if (wallet === 'walletconnect') {
-        //   return walletConnectorsList.walletconnect(
-        //     chains,
-        //     forceChain
-        //   ) as unknown as WalletList;
-        // }
         const walletListFunc = walletConnectorsList[wallet];
         return walletListFunc(chains) as unknown as WalletList;
       }

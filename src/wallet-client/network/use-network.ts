@@ -82,10 +82,6 @@ export const useNetwork = () => {
   const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
   const currentNetwork = useMemo(() => {
     const nw = activeChain?.id;
-    // // * NOTE: name mismatch from masa & wagmi
-    // if (nw === 'celo-alfajores') {
-    //   nw = 'alfajores';
-    // }
 
     if (!nw) return undefined;
     const newNetwork = getNetworkNameByChainId(nw ?? 0);
@@ -98,35 +94,7 @@ export const useNetwork = () => {
     return getNetworkNameByChainId(activeChainId);
   }, [activeChainId]);
 
-  // useEffect(() => {
-  //   if (!activeConnector) {
-  //     return undefined;
-  //   }
-
-  //   let provider: Provider;
-
-  //   activeConnector
-  //     ?.getProvider?.()
-  //     .then((provider_: Provider) => {
-  //       provider = provider_;
-  //       provider.on('chainChanged', stopSwitching);
-  //     })
-  //     .catch((error: unknown) => {
-  //       console.log("error getting provider's chainChanged event", error);
-  //     });
-
-  //   return () => {
-  //     provider?.removeListener('chainChanged', stopSwitching);
-  //   };
-  // }, [activeConnector, stopSwitching]);
-
-  // useEffect(() => {
-  //   if (networkError && networkError.name === 'UserRejectedRequestError') {
-  //     stopSwitching();
-  //   }
-  // }, [networkError, stopSwitching]);
-
-  const canProgramaticallySwitchNetwork = useMemo(
+  const canProgrammaticallySwitchNetwork = useMemo(
     () => !!switchNetwork || activeConnector?.name === 'WalletConnect',
     [switchNetwork, activeConnector]
   );
@@ -137,7 +105,7 @@ export const useNetwork = () => {
     switchNetworkAsync,
     switchNetworkByName,
     switchingToChain,
-    canProgramaticallySwitchNetwork,
+    canProgrammaticallySwitchNetwork,
     activeChain,
     activeNetwork,
     activeChainId,
@@ -160,7 +128,7 @@ export const useNetwork = () => {
       | undefined;
     switchNetworkByName: (forcedNetworkParam: NetworkName) => void;
     switchingToChain: number | null | undefined;
-    canProgramaticallySwitchNetwork: boolean;
+    canProgrammaticallySwitchNetwork: boolean;
     activeChain:
       | (Chain & {
           unsupported?: boolean | undefined;

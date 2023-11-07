@@ -42,11 +42,6 @@ export const useSessionConnect = () => {
   }, [queryClient, masa, address, masaAddress, isDisconnected]);
 
   const [{ loading: isLoggingOut }, logoutSession] = useAsyncFn(async () => {
-    // if (!masa) return null;
-    // if (!masaAddress) return null;
-    // if (masaAddress !== address) return null;
-    // if (isDisconnected) return null;
-
     const result = await masa?.session.logout();
     await Promise.all([
       queryClient.invalidateQueries([

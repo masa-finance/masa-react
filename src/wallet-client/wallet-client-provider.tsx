@@ -52,7 +52,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     switchNetwork,
     switchingToChain,
     stopSwitching,
-    canProgramaticallySwitchNetwork,
+    canProgrammaticallySwitchNetwork,
     activeChain,
     isSwitchingChain,
     chains,
@@ -85,12 +85,12 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
   useEffect(() => {
     if (!forceChain) return;
     // * NOTE: comment the following 3 lines out to disable automatic network switching for forced network
-    if (canProgramaticallySwitchNetwork) {
+    if (canProgrammaticallySwitchNetwork) {
       // switchNetwork?.(chainIdsByNetwork[forceChain] as number);
     }
   }, [
     forceChain,
-    canProgramaticallySwitchNetwork,
+    canProgrammaticallySwitchNetwork,
     // switchNetwork,
     chainIdsByNetwork,
     chains,
@@ -122,7 +122,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         connectors,
         switchNetwork,
         switchingToChain,
-        canProgramaticallySwitchNetwork,
+        canProgrammaticallySwitchNetwork,
         activeChain,
         isSwitchingChain,
         chains,
@@ -154,7 +154,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       connectors,
       switchNetwork,
       switchingToChain,
-      canProgramaticallySwitchNetwork,
+      canProgrammaticallySwitchNetwork,
       activeChain,
       isSwitchingChain,
       chains,

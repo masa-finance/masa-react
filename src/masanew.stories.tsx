@@ -1,8 +1,8 @@
-import buffer from 'buffer';
+import * as buffer from 'buffer';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import React, { MouseEventHandler, useCallback, useState } from 'react';
+import { MouseEventHandler, useCallback, useState } from 'react';
 import { darkStyles, JsonView } from 'react-json-view-lite'; // eslint-disable-line import/no-extraneous-dependencies
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
@@ -23,7 +23,6 @@ import MasaProvider from './masa-provider';
 import { useSession } from './masa/use-session';
 import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
-import { openGalleryModal } from './ui/components/modals';
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
 import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
@@ -53,7 +52,7 @@ const NetworkInfo = () => {
   const {
     switchNetwork,
     switchingToChain,
-    canProgramaticallySwitchNetwork,
+    canProgrammaticallySwitchNetwork,
     activeChain,
     activeNetwork,
     isSwitchingChain,
@@ -70,14 +69,14 @@ const NetworkInfo = () => {
       <li>isSwitchingChain: {String(isSwitchingChain)}</li>
       <li>switchingToChain: {String(switchingToChain)}</li>
       <li>
-        canProgramaticallySwitchNetwork:{' '}
-        {String(canProgramaticallySwitchNetwork)}
+        canProgrammaticallySwitchNetwork:{' '}
+        {String(canProgrammaticallySwitchNetwork)}
       </li>
       <li>isActiveChainUnsupported: {String(isActiveChainUnsupported)}</li>
 
       <li style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
         <ul style={{ flexBasis: '30%' }}>
-          <h3>Availible Chains</h3>
+          <h3>Available Chains</h3>
           {chains.map((chain) => (
             <li key={chain.name}>
               <span>{chain.name}</span>
@@ -124,7 +123,7 @@ const NetworkInfo = () => {
                     fontSize: '16px',
                   }}
                   disabled={
-                    !canProgramaticallySwitchNetwork ||
+                    !canProgrammaticallySwitchNetwork ||
                     chain.id === activeChain?.id
                   }
                   type="button"
@@ -274,13 +273,13 @@ const SessionInfo = () => {
 };
 
 const IdentityInfo = () => {
-  const { isIdentityAvailibleInNetwork, isLoadingIdentity, identity } =
+  const { isIdentityAvailableInNetwork, isLoadingIdentity, identity } =
     useIdentity();
   return (
     <ul>
       <h3>Identity</h3>
       <li>
-        isIdentityAvailibleInNetwork: {String(isIdentityAvailibleInNetwork)}
+        isIdentityAvailableInNetwork: {String(isIdentityAvailableInNetwork)}
       </li>
       <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
       <li>Identity: {String(JSON.stringify(identity, null, 4))}</li>
@@ -551,11 +550,6 @@ const ModalFlow = () => {
           Create Soul Name
         </Button>
       </li>
-      <li>
-        <Button type="button" onClick={openGalleryModal}>
-          Gallery
-        </Button>
-      </li>
     </ul>
   );
 };
@@ -595,7 +589,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={config}
-              shouldInitiallyExpand={(number) => number <= 0 && true}
+              shouldExpandNode={(number) => number <= 0 && true}
               style={{ ...darkStyles }}
             />
           </div>
@@ -610,7 +604,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={masa ?? {}}
-              shouldInitiallyExpand={(number) => number <= 0 && true}
+              shouldExpandNode={(number) => number <= 0 && true}
               style={{ ...darkStyles }}
             />
           </div>

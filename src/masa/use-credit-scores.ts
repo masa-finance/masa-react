@@ -2,15 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useCanQuery } from '../hooks/use-can-query';
-// import { useIdentity } from './use-identity';
-// import { useSession } from './use-session';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useCreditScores = () => {
   const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
   const canQuery = useCanQuery();
-  // const { identity } = useIdentity();
-  // const { hasSession, sessionAddress } = useSession();
   const [, getCreditScoresAsync] = useAsyncFn(async () => {
     if (!canQuery) return null;
     const csResult = await masa?.creditScore.list();
@@ -34,11 +30,6 @@ export const useCreditScores = () => {
       },
     ],
     enabled: false,
-    // !!hasSession &&
-    // !!sessionAddress &&
-    // !!masaAddress &&
-    // !!masaNetwork &&
-    // !!identity?.identityId,
     context: MasaQueryClientContext,
     queryFn: getCreditScoresAsync,
   });

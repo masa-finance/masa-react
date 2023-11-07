@@ -6,10 +6,6 @@ import { MasaQueryClientContext } from '../masa-client/masa-query-client-context
 
 export const useGreen = () => {
   const { sdk: masa, masaAddress, masaNetwork } = useMasaClient();
-  // const {
-  //   // hasSession,
-  //   sessionAddress,
-  // } = useSession();
   const [, getGreensAsync] = useAsyncFn(async () => {
     const greensResult = await masa?.green.list();
     return greensResult ?? null;
@@ -22,7 +18,6 @@ export const useGreen = () => {
     context: MasaQueryClientContext,
     queryKey: ['green', { masaAddress, masaNetwork, persist: false }],
     enabled: false,
-    // !!sessionAddress && !!hasSession && !!masaAddress && !!masaNetwork,
     queryFn: getGreensAsync,
   });
 

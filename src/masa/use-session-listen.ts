@@ -29,10 +29,6 @@ export const useSessionListen = ({
 
     if (!!sessionAddress && sessionAddress !== masaAddress && hasSession) {
       await Promise.all([
-        // queryClient.setQueryData(
-        //   ['session-new', { masaAddress, persist: false }],
-        //   null
-        // ),
         queryClient.setQueryData(
           ['session-new-check', { masaAddress, persist: true }],
           false

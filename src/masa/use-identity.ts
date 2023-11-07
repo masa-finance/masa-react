@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
-import { isIdentityContractAvailible } from './utils';
+import { isIdentityContractAvailable } from './utils';
 import { useIdentityListen } from './use-identity-listen';
 import { useCanQuery } from '../hooks/use-can-query';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
@@ -42,8 +42,8 @@ export const useIdentity = () => {
     [identity]
   );
 
-  const isIdentityAvailibleInNetwork = useMemo(
-    () => isIdentityContractAvailible(masa),
+  const isIdentityAvailableInNetwork = useMemo(
+    () => isIdentityContractAvailable(masa),
     [masa]
   );
 
@@ -54,7 +54,7 @@ export const useIdentity = () => {
     hasIdentity,
     isLoadingIdentity,
     isFetchingIdentity,
-    isIdentityAvailibleInNetwork,
+    isIdentityAvailableInNetwork,
     getIdentity,
 
     isIdentityLoading: isLoadingIdentity,

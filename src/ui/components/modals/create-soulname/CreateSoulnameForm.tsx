@@ -18,7 +18,7 @@ const CreateSoulnameForm = () => {
     updatePeriod,
   } = useCreateSoulnameModal();
 
-  const LoadingSoulnameAvailible = useMemo(() => {
+  const LoadingSoulnameAvailable = useMemo(() => {
     if (soulname !== '' && soulname.length > 0) {
       if (isLoadingAvailability) {
         return (
@@ -74,7 +74,7 @@ const CreateSoulnameForm = () => {
             </>
           )}
         </p>
-        {LoadingSoulnameAvailible}
+        {LoadingSoulnameAvailable}
       </div>
 
       <div style={{ width: '100%' }}>

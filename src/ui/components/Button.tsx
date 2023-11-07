@@ -1,11 +1,12 @@
-import React, { ReactNode, Ref } from 'react';
+import React, { CSSProperties, MouseEventHandler, ReactNode, Ref } from 'react';
 
 interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
   children?: ReactNode;
-  //   onClick?: any;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   type: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   className?: string;
+  style?: CSSProperties;
   ref?: Ref<HTMLButtonElement>;
 }
 export const Button = ({
