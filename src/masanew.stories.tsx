@@ -53,7 +53,7 @@ const NetworkInfo = () => {
   const {
     switchNetwork,
     switchingToChain,
-    canProgramaticallySwitchNetwork,
+    canProgrammaticallySwitchNetwork,
     activeChain,
     activeNetwork,
     isSwitchingChain,
@@ -70,14 +70,14 @@ const NetworkInfo = () => {
       <li>isSwitchingChain: {String(isSwitchingChain)}</li>
       <li>switchingToChain: {String(switchingToChain)}</li>
       <li>
-        canProgramaticallySwitchNetwork:{' '}
-        {String(canProgramaticallySwitchNetwork)}
+        canProgrammaticallySwitchNetwork:{' '}
+        {String(canProgrammaticallySwitchNetwork)}
       </li>
       <li>isActiveChainUnsupported: {String(isActiveChainUnsupported)}</li>
 
       <li style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
         <ul style={{ flexBasis: '30%' }}>
-          <h3>Availible Chains</h3>
+          <h3>Available Chains</h3>
           {chains.map((chain) => (
             <li key={chain.name}>
               <span>{chain.name}</span>
@@ -124,7 +124,7 @@ const NetworkInfo = () => {
                     fontSize: '16px',
                   }}
                   disabled={
-                    !canProgramaticallySwitchNetwork ||
+                    !canProgrammaticallySwitchNetwork ||
                     chain.id === activeChain?.id
                   }
                   type="button"
@@ -274,13 +274,13 @@ const SessionInfo = () => {
 };
 
 const IdentityInfo = () => {
-  const { isIdentityAvailibleInNetwork, isLoadingIdentity, identity } =
+  const { isIdentityAvailableInNetwork, isLoadingIdentity, identity } =
     useIdentity();
   return (
     <ul>
       <h3>Identity</h3>
       <li>
-        isIdentityAvailibleInNetwork: {String(isIdentityAvailibleInNetwork)}
+        isIdentityAvailableInNetwork: {String(isIdentityAvailableInNetwork)}
       </li>
       <li>isLoadingIdentity: {String(isLoadingIdentity)}</li>
       <li>Identity: {String(JSON.stringify(identity, null, 4))}</li>
