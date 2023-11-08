@@ -33,7 +33,7 @@
     "@acusti/react-code-input": "^3.11.0",
     "@celo/rainbowkit-celo": "^1.1.0",
     "@ebay/nice-modal-react": "^1.2.13",
-    "@masa-finance/masa-contracts-identity": "^1.11.0",
+    "@masa-finance/masa-contracts-identity": "^1.12.0-alpha.1",
     "@masa-finance/masa-react": "^3.4.5",
     "@masa-finance/masa-sdk": "^3.12.0-alpha.1",
     "@metamask/providers": "^13.1.0",
