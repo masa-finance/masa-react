@@ -2240,6 +2240,13 @@
   dependencies:
     ethers "~5.7.2"
 
+"@masa-finance/masa-contracts-identity@^1.12.0-alpha.1":
+  version "1.12.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.12.0-alpha.1.tgz#dfb3c6c0041f4fea504cc78780ccd129a93bb760"
+  integrity sha512-4FFzjoCw6nHY/Xmzv75UIKjpjcjvPZ4UTVoJ/b4ckh/UFlT3ItCwFf9QAq4RFKW+4jCKARSFp1jGQOL5voyo0A==
+  dependencies:
+    ethers "~5.7.2"
+
 "@masa-finance/masa-react@^3.4.5":
   version "3.4.5"
   resolved "https://registry.yarnpkg.com/@masa-finance/masa-react/-/masa-react-3.4.5.tgz#80562c0d7ef9ca72c9b3eaa533f9b0e84ba7e137"
@@ -2277,6 +2284,19 @@
   integrity sha512-h4PVRlxT6U63t+1RR32WOyMwxGoM0suL4+jz70SteGT7NKzPFO/qdlm6aSg6eqmYxI6AszhoHr3WaL9i1xvycg==
   dependencies:
     "@masa-finance/masa-contracts-identity" "^1.11.0"
+    "@masa-finance/masa-token" "^2.0.0"
+    arweave "1.11.8"
+    axios "^1.3.2"
+    ethers "~5.7.2"
+    grapheme-splitter "^1.0.4"
+    typescript "^5.0.2"
+
+"@masa-finance/masa-sdk@^3.12.0-alpha.1":
+  version "3.12.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.12.0-alpha.1.tgz#264ea749a394b16cdc04b6d3b298c675f6a640aa"
+  integrity sha512-u4CBWxvVtYpvxrEjYt4Te1uq45VVMBP1pHR7lvAl1OcHupvMhLD2QC7arOHDkiCqSlF3sOQoC40Ux2lDqdLKxQ==
+  dependencies:
+    "@masa-finance/masa-contracts-identity" "^1.12.0-alpha.1"
     "@masa-finance/masa-token" "^2.0.0"
     arweave "1.11.8"
     axios "^1.3.2"
