@@ -50,8 +50,8 @@ export const useMasaSDK = (
     }
 
     const environment: Environment | undefined = environments.find(
-      (singleEnvironment: Environment) =>
-        singleEnvironment.name === environmentName
+      ({ environment: singleEnvironment }: Environment) =>
+        singleEnvironment === environmentName
     );
 
     if (!environment) {
