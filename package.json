@@ -87,7 +87,7 @@
     "mini-css-extract-plugin": "^2.7.6",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "prettier": "^3.1.0",
-    "react-json-view-lite": "^1.2.0",
+    "react-json-view-lite": "^1.2.1",
     "rimraf": "^5.0.5",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
