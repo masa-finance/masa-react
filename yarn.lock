@@ -2744,10 +2744,10 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.12.1":
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.12.1.tgz#7a6171bbc8b4309593795ca101bdda5c05ecec34"
-  integrity sha512-4aR8fK4QxL9phy+BloWzx9J4VRJi7CfUCAymCBJ7OmfM75kmV+Qio9pBe04BEu/rjC4q/bN1E6X7/kt/X/u0kg==
+"@masa-finance/masa-sdk@^3.13.0-alpha.2":
+  version "3.13.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.13.0-alpha.2.tgz#61b0ef295ed6f3e1948e957256f2e36c028f93f0"
+  integrity sha512-yjOo+Vgq193RAlAW/Q8lFuW9WrevflIY3/AHPnHjVBG3lIpqGMJKQPg2rlFIwzRfUh1JsT+ZdR3/LWMQ1O3QUg==
   dependencies:
     "@masa-finance/masa-contracts-identity" "^1.12.0-alpha.2"
     "@masa-finance/masa-token" "^2.0.0"
@@ -2755,7 +2755,7 @@
     axios "^1.3.2"
     ethers "~5.7.2"
     grapheme-splitter "^1.0.4"
-    typescript "^5.0.2"
+    typescript "^5.3.2"
 
 "@masa-finance/masa-token@^2.0.0":
   version "2.0.0"
@@ -14780,10 +14780,15 @@ typedoc@^0.25.3:
     minimatch "^9.0.3"
     shiki "^0.14.1"
 
-typescript@^5.0.2, typescript@^5.1.6:
+typescript@^5.1.6:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
   integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
+
+typescript@^5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.3.2.tgz#00d1c7c1c46928c5845c1ee8d0cc2791031d4c43"
+  integrity sha512-6l+RyNy7oAHDfxC4FzSJcz9vnjTKxrLpDG5M2Vu4SHRVNg6xzqZp6LYSR9zjqQTu8DU/f5xwxUdADOkbrIX2gQ==
 
 ua-parser-js@^1.0.35:
   version "1.0.37"
