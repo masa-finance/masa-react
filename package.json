@@ -77,7 +77,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
-    "eslint": "^8.53.0",
+    "eslint": "^8.54.0",
     "eslint-config-masa": "0.0.13",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "https-browserify": "^1.0.0",
