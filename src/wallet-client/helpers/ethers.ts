@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { usePublicClient, useWalletClient } from 'wagmi';
-import type { Provider } from '@wagmi/core';
 import { Signer } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
 import { publicClientToProvider, walletClientToSigner } from './wagmi';
 
 export const useEthersProvider = (): Provider | undefined => {
