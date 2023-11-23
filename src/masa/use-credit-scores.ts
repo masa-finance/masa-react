@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useCanQuery } from '../hooks/use-can-query';
-import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
+import { queryClient } from '../masa-client/query-client';
 
 export const useCreditScores = () => {
   const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
@@ -19,20 +19,22 @@ export const useCreditScores = () => {
     isFetching: isLoadingCreditScores,
     data: creditScores,
     refetch: getCreditScores,
-  } = useQuery({
-    queryKey: [
-      'credit-scores',
-      {
-        // sessionAddress,
-        masaAddress,
-        masaNetwork,
-        persist: false,
-      },
-    ],
-    enabled: false,
-    context: MasaQueryClientContext,
-    queryFn: getCreditScoresAsync,
-  });
+  } = useQuery(
+    {
+      queryKey: [
+        'credit-scores',
+        {
+          // sessionAddress,
+          masaAddress,
+          masaNetwork,
+          persist: false,
+        },
+      ],
+      enabled: false,
+      queryFn: getCreditScoresAsync,
+    },
+    queryClient
+  );
 
   return {
     getCreditScores,

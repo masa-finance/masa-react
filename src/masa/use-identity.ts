@@ -6,7 +6,7 @@ import { useSession } from './use-session';
 import { isIdentityContractAvailable } from './utils';
 import { useIdentityListen } from './use-identity-listen';
 import { useCanQuery } from '../hooks/use-can-query';
-import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
+import { queryClient } from '../masa-client/query-client';
 
 export const useIdentity = () => {
   const { masaAddress, sdk: masa, masaNetwork } = useMasaClient();
@@ -27,15 +27,18 @@ export const useIdentity = () => {
     data: identity,
     isFetching: isFetchingIdentity,
     refetch: getIdentity,
-  } = useQuery({
-    context: MasaQueryClientContext,
-    enabled: !!hasSession && !!masaAddress && !!masaNetwork && !!sessionAddress,
-    queryKey: [
-      'identity',
-      { masaAddress, sessionAddress, masaNetwork, persist: false },
-    ],
-    queryFn: loadIdentity,
-  });
+  } = useQuery(
+    {
+      enabled:
+        !!hasSession && !!masaAddress && !!masaNetwork && !!sessionAddress,
+      queryKey: [
+        'identity',
+        { masaAddress, sessionAddress, masaNetwork, persist: false },
+      ],
+      queryFn: loadIdentity,
+    },
+    queryClient
+  );
 
   const hasIdentity = useMemo(
     () => !!identity && identity?.identityId,

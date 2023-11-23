@@ -35,14 +35,18 @@ export const useSessionListen = ({
         ),
       ]);
 
-      await queryClient.invalidateQueries([
-        'session-new-check',
-        { masaAddress: sessionAddress, persist: true },
-      ]);
-      await queryClient.invalidateQueries([
-        'session-new',
-        { masaAddress: sessionAddress, persist: false },
-      ]);
+      await queryClient.invalidateQueries({
+        queryKey: [
+          'session-new-check',
+          { masaAddress: sessionAddress, persist: true },
+        ],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: [
+          'session-new',
+          { masaAddress: sessionAddress, persist: false },
+        ],
+      });
 
       await logoutSession();
 

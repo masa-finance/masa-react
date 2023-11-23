@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
-// import { useSession } from './use-session';
-import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
+import { queryClient } from '../masa-client/query-client';
 
 export const useGreen = () => {
   const { sdk: masa, masaAddress, masaNetwork } = useMasaClient();
@@ -14,12 +13,14 @@ export const useGreen = () => {
     data: greens,
     isFetching: isLoadingGreens,
     refetch: reloadGreens,
-  } = useQuery({
-    context: MasaQueryClientContext,
-    queryKey: ['green', { masaAddress, masaNetwork, persist: false }],
-    enabled: false,
-    queryFn: getGreensAsync,
-  });
+  } = useQuery(
+    {
+      queryKey: ['green', { masaAddress, masaNetwork, persist: false }],
+      enabled: false,
+      queryFn: getGreensAsync,
+    },
+    queryClient
+  );
 
   return {
     greens,

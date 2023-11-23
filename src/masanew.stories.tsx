@@ -1,5 +1,5 @@
 import * as buffer from 'buffer';
-import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import { MouseEventHandler, useCallback, useState } from 'react';
@@ -21,7 +21,6 @@ import { useGreen } from './masa/use-green';
 import { useSBT } from './masa/use-sbt';
 import MasaProvider from './masa-provider';
 import { useSession } from './masa/use-session';
-import { MasaQueryClientContext } from './masa-client/masa-query-client-context';
 
 import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from './wallet-client/wallet-client-provider';
@@ -449,21 +448,11 @@ const SessionButtons = () => {
 const MasaInfo = () => {
   const { activeNetwork, activeChainId } = useNetwork();
   const { masaAddress, masaNetwork } = useMasaClient();
-  const noop = useCallback(() => {
-    // noop
-  }, []);
 
   return (
     // skipcq: JS-0415
     <>
-      <ReactQueryDevtoolsPanel
-        context={MasaQueryClientContext}
-        setIsOpen={noop}
-        onDragStart={noop}
-        isOpen
-        className="rq-debug"
-        style={{ color: 'white' }}
-      />
+      <ReactQueryDevtools initialIsOpen={false} styleNonce={'rq-debug'} />
       <ul>
         <h3>Masa</h3>
         <li>

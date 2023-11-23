@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useSessionConnect } from './use-session-connect';
-import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
+import { queryClient } from '../masa-client/query-client';
 
 export const useSession = () => {
   const { address } = useWallet();
@@ -27,43 +27,47 @@ export const useSession = () => {
     data: hasSession,
     refetch: checkLogin,
     isFetching: isCheckingLogin,
-  } = useQuery({
-    queryKey: ['session-new-check', { masaAddress, persist: true }],
-    enabled: !!masaAddress,
-    context: MasaQueryClientContext,
-    cacheTime: 0,
-    queryFn: async () => {
-      if (!checkSessionAsync) {
-        return null;
-      }
+  } = useQuery(
+    {
+      queryKey: ['session-new-check', { masaAddress, persist: true }],
+      enabled: !!masaAddress,
+      gcTime: 0,
+      queryFn: async () => {
+        if (!checkSessionAsync) {
+          return null;
+        }
 
-      const hasSesh = await checkSessionAsync();
+        const hasSesh = await checkSessionAsync();
 
-      return hasSesh ?? false;
+        return hasSesh ?? false;
+      },
     },
-  });
+    queryClient
+  );
 
   const {
     data: session,
     isFetching: isFetchingSession,
     refetch: getSession,
-  } = useQuery({
-    queryKey: ['session-new', { masaAddress, persist: false }],
-    enabled:
-      !!hasSession &&
-      masaAddress === address &&
-      !isLoggingOut &&
-      !!getSessionAsync,
-    cacheTime: 0,
-    context: MasaQueryClientContext,
-    queryFn: async () => {
-      const sesh = await getSessionAsync();
+  } = useQuery(
+    {
+      queryKey: ['session-new', { masaAddress, persist: false }],
+      enabled:
+        !!hasSession &&
+        masaAddress === address &&
+        !isLoggingOut &&
+        !!getSessionAsync,
+      gcTime: 0,
+      queryFn: async () => {
+        const sesh = await getSessionAsync();
 
-      return sesh ?? null;
+        return sesh ?? null;
+      },
     },
-  });
+    queryClient
+  );
 
-  const sessionAddress = useMemo(() => {
+  const sessionAddress: string | undefined = useMemo(() => {
     if (address === masaAddress && session?.user.address) {
       return session.user.address;
     }

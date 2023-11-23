@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useSession } from './use-session';
-import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
+import { queryClient } from '../masa-client/query-client';
 
 export const useSBT = ({ tokenAddress }: { tokenAddress: string }) => {
   const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
@@ -27,15 +27,18 @@ export const useSBT = ({ tokenAddress }: { tokenAddress: string }) => {
     data: SBTs,
     isFetching: isLoadingSBTs,
     refetch: getSBTs,
-  } = useQuery({
-    context: MasaQueryClientContext,
-    queryKey: [
-      'sbt',
-      { masaAddress, sessionAddress, masaNetwork, persist: false },
-    ],
-    enabled: !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
-    queryFn: getSBTsAsync,
-  });
+  } = useQuery(
+    {
+      queryKey: [
+        'sbt',
+        { masaAddress, sessionAddress, masaNetwork, persist: false },
+      ],
+      enabled:
+        !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
+      queryFn: getSBTsAsync,
+    },
+    queryClient
+  );
 
   return {
     SBTs,
