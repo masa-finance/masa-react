@@ -1,6 +1,6 @@
-import { Provider } from '@wagmi/core';
 import { useEffect } from 'react';
-import { Connector } from 'wagmi';
+import type { Connector } from 'wagmi';
+import type { Provider } from '@ethersproject/providers';
 
 export const useNetworkSwitchListen = ({
   activeConnector,
