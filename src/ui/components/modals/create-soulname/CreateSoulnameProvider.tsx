@@ -50,7 +50,7 @@ export const CreateSoulnameProvider = ({
   children: ReactNode;
 }) => {
   // * sdk derivatives
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
 
   const { value: enabledMethods, loading: isLoadingEnabledMethods } =
     useAsync(async () => {

@@ -8,7 +8,7 @@ import { MasaQueryClientContext } from '../masa-client/masa-query-client-context
 
 export const useSession = () => {
   const { address } = useWallet();
-  const { sdk: masa, masaAddress } = useMasaClient();
+  const { masa, masaAddress } = useMasaClient();
   const { isLoggingIn, isLoggingOut, loginSessionAsync, logoutSession } =
     useSessionConnect();
   const [, getSessionAsync] = useAsyncFn(async () => {

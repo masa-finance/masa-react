@@ -5,7 +5,7 @@ import { useCanQuery } from '../hooks/use-can-query';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useCreditScores = () => {
-  const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
+  const { masaAddress, masaNetwork, masa } = useMasaClient();
   const canQuery = useCanQuery();
   const [, getCreditScoresAsync] = useAsyncFn(async () => {
     if (!canQuery) return null;

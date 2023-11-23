@@ -10,7 +10,7 @@ const errorMessages = {
 };
 
 export const useIdentityPurchase = () => {
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
   const queryClient = useMasaQueryClient();
   const [
     { loading: isPurchasingIdentity, value: hasPurchasedIdentity },

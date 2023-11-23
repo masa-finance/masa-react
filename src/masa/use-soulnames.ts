@@ -5,7 +5,7 @@ import { useMasaClient } from '../masa-client/use-masa-client';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useSoulNames = () => {
-  const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
+  const { masaAddress, masaNetwork, masa } = useMasaClient();
   const [, getSoulnamesAsync] = useAsyncFn(async (): Promise<
     string[] | undefined
   > => {

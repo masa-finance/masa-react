@@ -6,7 +6,7 @@ import { useSession } from './use-session';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useSBT = ({ tokenAddress }: { tokenAddress: string }) => {
-  const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
+  const { masaAddress, masaNetwork, masa } = useMasaClient();
 
   const { hasSession, sessionAddress } = useSession();
   const currentTokenAddress = useMemo(() => tokenAddress, [tokenAddress]);
