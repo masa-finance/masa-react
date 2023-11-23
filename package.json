@@ -48,7 +48,7 @@
     "react-spinners": "^0.13.8",
     "react-use": "^17.4.0",
     "rodal": "^2.0.0",
-    "viem": "^1.19.6",
+    "viem": "^1.19.8",
     "wagmi": "^1.4.7"
   },
   "devDependencies": {
