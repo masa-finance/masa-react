@@ -2246,7 +2246,7 @@
   dependencies:
     "@ethersproject/logger" "^5.7.0"
 
-"@ethersproject/providers@5.7.2":
+"@ethersproject/providers@5.7.2", "@ethersproject/providers@^5.7.2":
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.7.2.tgz#f8b1a4f275d7ce58cf0a2eec222269a08beb18cb"
   integrity sha512-g34EWZ1WWAVgr4aptGlVBF8mhl3VWjv+8hoAnzStu8Ah22VHBsuGzP17eb6xDVRzw895G4W7vvx60lFFur/1Rg==
@@ -2744,11 +2744,16 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.13.0-alpha.5":
-  version "3.13.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.13.0-alpha.5.tgz#894d0de362d955673fa96313d823e810a3aa94e5"
-  integrity sha512-6r8cUfj6r039ac+0INiG2emXjqcVTpYkivoBG3O8DwnGnANwJOyTZnxUQ9pggy9VQOMHZ0xOOabhgJZwWR4xLg==
+"@masa-finance/masa-sdk@^3.13.0-alpha.6":
+  version "3.13.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.13.0-alpha.6.tgz#34fadb14dbb9143f83b0f21dec7c6fc67f368233"
+  integrity sha512-wDU88CWwkHF+PohoGEQqeE0He8rSOC46gVCvCsBB9gubUjVKFdw8/N3wWiaonWX/o/KgbPnUHSVYAPa0ZPScLA==
   dependencies:
+    "@ethersproject/abi" "^5.7.0"
+    "@ethersproject/abstract-provider" "^5.7.0"
+    "@ethersproject/abstract-signer" "^5.7.0"
+    "@ethersproject/bignumber" "^5.7.0"
+    "@ethersproject/providers" "^5.7.2"
     "@masa-finance/masa-contracts-identity" "^1.12.0-alpha.2"
     "@masa-finance/masa-token" "^2.0.0"
     arweave "1.11.8"
@@ -5152,10 +5157,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.18.6.tgz#26da694f75cdb057750f49d099da5e3f3824cb3e"
   integrity sha512-wf3Vz+jCmOQ2HV1YUJuCWdL64adYxumkrxtc+H1VUQlnQI04+5HtH+qZCOE21lBE7gIrt+CwX2Wv8Acrw5Ak6w==
 
-"@types/node@^20.9.4":
-  version "20.9.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.9.4.tgz#cc8f970e869c26834bdb7ed480b30ede622d74c7"
-  integrity sha512-wmyg8HUhcn6ACjsn8oKYjkN/zUzQeNtMy44weTJSM6p4MMzEOuKbA3OjJ267uPCOW7Xex9dyrNTful8XTQYoDA==
+"@types/node@^20.10.0":
+  version "20.10.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.0.tgz#16ddf9c0a72b832ec4fcce35b8249cf149214617"
+  integrity sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==
   dependencies:
     undici-types "~5.26.4"
 

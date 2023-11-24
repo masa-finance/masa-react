@@ -28,7 +28,11 @@ export const useSession = () => {
     refetch: checkLogin,
     isFetching: isCheckingLogin,
   } = useQuery({
-    queryKey: ['session-new-check', { masaAddress, persist: true }],
+    queryKey: [
+      'session-new-check',
+      { masaAddress, persist: true },
+      checkSessionAsync,
+    ],
     enabled: !!masaAddress,
     context: MasaQueryClientContext,
     cacheTime: 0,
