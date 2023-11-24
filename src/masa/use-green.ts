@@ -5,7 +5,7 @@ import { useMasaClient } from '../masa-client/use-masa-client';
 import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
 
 export const useGreen = () => {
-  const { sdk: masa, masaAddress, masaNetwork } = useMasaClient();
+  const { masa, masaAddress, masaNetwork } = useMasaClient();
   const [, getGreensAsync] = useAsyncFn(async () => {
     const greensResult = await masa?.green.list();
     return greensResult ?? null;

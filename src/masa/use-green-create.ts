@@ -3,7 +3,7 @@ import { useMasaClient } from '../masa-client/use-masa-client';
 import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 
 export const useGreenGenerate = () => {
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
   const queryClient = useMasaQueryClient();
 
   const [{ loading: isCreatingGreen }, createGreen] = useAsyncFn(

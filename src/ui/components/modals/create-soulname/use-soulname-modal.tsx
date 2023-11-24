@@ -5,7 +5,7 @@ import { useMasaClient } from '../../../../masa-client/use-masa-client';
 import { useDebounce } from '../../../../hooks/use-debounce';
 
 export const useSoulnameModal = () => {
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
 
   const { value: enabledMethods, loading: isLoadingEnabledMethods } =
     useAsync(async () => {
@@ -58,7 +58,7 @@ export const useSoulnameModal = () => {
 
 export const useSoulnameInterface = () => {
   const { paymentMethods } = useSoulnameModal();
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
 
   // * UI Inputs
   const [registrationPeriod, setRegistrationPeriod] = useState<number>(1);

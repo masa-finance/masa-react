@@ -20,7 +20,7 @@ export const useCustomGallerySBT = ({
 }: {
   overrideCustomSBTs?: CustomGallerySBT[];
 }) => {
-  const { masaAddress, masaNetwork, sdk: masa } = useMasaClient();
+  const { masaAddress, masaNetwork, masa } = useMasaClient();
   const canQuery = useCanQuery();
 
   const { customSBTs: configCustomSBTs } = useConfig();

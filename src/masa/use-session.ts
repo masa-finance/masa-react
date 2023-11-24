@@ -8,7 +8,7 @@ import { MasaQueryClientContext } from '../masa-client/masa-query-client-context
 
 export const useSession = () => {
   const { address } = useWallet();
-  const { sdk: masa, masaAddress } = useMasaClient();
+  const { masa, masaAddress } = useMasaClient();
   const { isLoggingIn, isLoggingOut, loginSessionAsync, logoutSession } =
     useSessionConnect();
   const [, getSessionAsync] = useAsyncFn(async () => {
@@ -28,7 +28,11 @@ export const useSession = () => {
     refetch: checkLogin,
     isFetching: isCheckingLogin,
   } = useQuery({
-    queryKey: ['session-new-check', { masaAddress, persist: true }],
+    queryKey: [
+      'session-new-check',
+      { masaAddress, persist: true },
+      checkSessionAsync,
+    ],
     enabled: !!masaAddress,
     context: MasaQueryClientContext,
     cacheTime: 0,

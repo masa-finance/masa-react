@@ -4,7 +4,7 @@ import { useNetwork } from '../wallet-client/network';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 
 export const useCanQuery = () => {
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
   const { isDisconnected } = useWallet();
   const { activeNetwork } = useNetwork();
 
