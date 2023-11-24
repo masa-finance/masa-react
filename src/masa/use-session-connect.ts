@@ -5,7 +5,7 @@ import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 
 export const useSessionConnect = () => {
   const { address, isDisconnected } = useWallet();
-  const { sdk: masa, masaAddress } = useMasaClient();
+  const { masa, masaAddress } = useMasaClient();
   const queryClient = useMasaQueryClient();
 
   const [{ loading: isLoggingIn }, loginSessionAsync] = useAsyncFn(async () => {

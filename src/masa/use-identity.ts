@@ -9,7 +9,7 @@ import { useCanQuery } from '../hooks/use-can-query';
 import { queryClient } from '../masa-client/query-client';
 
 export const useIdentity = () => {
-  const { masaAddress, sdk: masa, masaNetwork } = useMasaClient();
+  const { masaAddress, masa, masaNetwork } = useMasaClient();
   const { sessionAddress, hasSession } = useSession();
   const canQuery = useCanQuery();
   const [{ loading: isLoadingIdentity }, loadIdentity] =

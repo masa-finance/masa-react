@@ -1,13 +1,28 @@
 {
   "root": true,
-  "extends": ["masa"],
+  "extends": [
+    "masa",
+    "plugin:@tanstack/eslint-plugin-query/recommended"
+  ],
+  "plugins": [
+    "@tanstack/query"
+  ],
+  "rules": {
+    "no-console": "off"
+  },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js"],
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js"
+      ],
       "parser": "@typescript-eslint/parser"
     },
     {
-      "files": ["**/*.stories.*"],
+      "files": [
+        "**/*.stories.*"
+      ],
       "rules": {
         "import/no-anonymous-default-export": "off"
       }

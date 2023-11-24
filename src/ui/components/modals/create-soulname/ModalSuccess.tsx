@@ -21,7 +21,7 @@ export const ModalSuccess = ({
   const modal = useModal();
   const { company } = useConfig();
   const { soulnames } = useSoulNames();
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
 
   const handleComplete = useCallback(() => {
     onFinish?.();

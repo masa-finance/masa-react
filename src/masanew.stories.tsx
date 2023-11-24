@@ -289,7 +289,7 @@ const IdentityInfo = () => {
 const SoulnameCreditScoreInfo = () => {
   const { soulnames, isLoadingSoulnames } = useSoulNames();
   const { hasSession } = useSession();
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
   const { creditScores, isLoadingCreditScores, getCreditScores } =
     useCreditScores();
 
@@ -545,7 +545,7 @@ const ModalFlow = () => {
 
 const Component = (): JSX.Element => {
   const config = useConfig();
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
   // SupportedNetworks
   return (
     // skipcq: JS-0415

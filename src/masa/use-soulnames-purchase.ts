@@ -10,7 +10,7 @@ const errorMessages = {
 };
 
 export const useSoulNamesPurchase = () => {
-  const { sdk: masa } = useMasaClient();
+  const { masa } = useMasaClient();
   const queryClient = useMasaQueryClient();
 
   const [

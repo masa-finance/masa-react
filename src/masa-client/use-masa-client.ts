@@ -68,7 +68,6 @@ export const useMasaClient = () => {
       return {
         masaAddress,
         masaChainId,
-        sdk: undefined,
         masa: undefined,
       };
     }
@@ -77,7 +76,6 @@ export const useMasaClient = () => {
       masaAddress,
       masaNetwork,
       masaChainId,
-      sdk: masa,
       masa,
       isLoadingMasa: isLoadingMasaAddress || isLoadingMasaNetwork,
     };
