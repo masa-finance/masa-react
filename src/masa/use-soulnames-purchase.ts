@@ -3,12 +3,6 @@ import { useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 
-const errorMessages = {
-  UNPREDICTABLE_GAS_LIMIT:
-    'You do not have sufficient funds in you wallet. Please add funds to your wallet and try again',
-  ACTION_REJECTED: 'Transaction rejected by the user.',
-};
-
 export const useSoulNamesPurchase = () => {
   const { masa } = useMasaClient();
   const queryClient = useMasaQueryClient();
@@ -38,14 +32,12 @@ export const useSoulNamesPurchase = () => {
         await queryClient.invalidateQueries(['soulnames']);
         return result;
       } catch (error: unknown) {
-        const returnError = error as Error & {
-          code?: string;
-        };
-        if (returnError.code && errorMessages[returnError.code]) {
-          returnError.message = errorMessages[returnError.code] as string;
+        if (error instanceof Error) {
+          console.error(error.message);
+          throw error;
         }
-        console.log('ERROR purchaseSoulName', { returnError });
-        return returnError;
+
+        throw new Error('Unknown error while purchasing a soulname');
       }
     },
     [masa, queryClient]

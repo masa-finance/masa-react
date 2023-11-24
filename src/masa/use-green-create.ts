@@ -6,18 +6,40 @@ export const useGreenGenerate = () => {
   const { masa } = useMasaClient();
   const queryClient = useMasaQueryClient();
 
-  const [{ loading: isCreatingGreen }, createGreen] = useAsyncFn(
-    async (phoneNumber: string, code: string) => {
-      const response = await masa?.green.create('ETH', phoneNumber, code);
-      await queryClient.invalidateQueries(['green']);
-      return response ?? null;
-    },
-    [masa, queryClient]
-  );
-  const [{ loading: isGeneratingGreen }, generateGreen] = useAsyncFn(
+  const [{ loading: isCreatingGreen, error: createGreenError }, createGreen] =
+    useAsyncFn(
+      async (phoneNumber: string, code: string) => {
+        try {
+          const response = await masa?.green.create('ETH', phoneNumber, code);
+          await queryClient.invalidateQueries(['green']);
+          return response ?? null;
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            console.error(error.message);
+            throw error;
+          }
+
+          throw new Error('Unknown error while creating a green');
+        }
+      },
+      [masa, queryClient]
+    );
+  const [
+    { loading: isGeneratingGreen, error: generateGreenError },
+    generateGreen,
+  ] = useAsyncFn(
     async (phoneNumber: string) => {
-      const response = await masa?.green.generate(phoneNumber);
-      return response ?? null;
+      try {
+        const response = await masa?.green.generate(phoneNumber);
+        return response ?? null;
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error(error.message);
+          throw error;
+        }
+
+        throw new Error('Unknown error while generating a green');
+      }
     },
     [masa]
   );
@@ -25,10 +47,13 @@ export const useGreenGenerate = () => {
   return {
     isCreatingGreen,
 
-    handleCreateGreen: createGreen,
-    handleGenerateGreen: generateGreen,
     createGreen,
+    handleCreateGreen: createGreen,
+    createGreenError,
+
+    handleGenerateGreen: generateGreen,
     isGeneratingGreen,
+    generateGreenError,
     generateGreen,
   };
 };
