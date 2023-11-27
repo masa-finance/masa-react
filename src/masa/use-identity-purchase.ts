@@ -13,7 +13,11 @@ export const useIdentityPurchase = () => {
   const { masa } = useMasaClient();
   const queryClient = useMasaQueryClient();
   const [
-    { loading: isPurchasingIdentity, value: hasPurchasedIdentity },
+    {
+      loading: isPurchasingIdentity,
+      value: hasPurchasedIdentity,
+      error: purchaseIdentityError,
+    },
     purchaseIdentity,
   ] = useAsyncFn(async () => {
     try {
@@ -30,7 +34,7 @@ export const useIdentityPurchase = () => {
         returnError.message = errorMessages[returnError.code] as string;
       }
       console.log('ERROR purchaseIdentity', { returnError });
-      return returnError;
+      throw returnError;
     }
   }, [queryClient, masa]);
 
@@ -38,7 +42,7 @@ export const useIdentityPurchase = () => {
     {
       value: hasPurchasedIdentityWithSoulName,
       loading: isPurchasingIdentityWithSoulName,
-      error: purchaseIdentityError,
+      error: purchaseIdentityWithSoulnameError,
     },
     purchaseIdentityWithSoulName,
   ] = useAsyncFn(
@@ -81,10 +85,12 @@ export const useIdentityPurchase = () => {
     purchaseIdentity,
     isPurchasingIdentity,
     hasPurchasedIdentity,
+    purchaseIdentityError,
+
     purchaseIdentityWithSoulName,
     isPurchasingIdentityWithSoulName,
     hasPurchasedIdentityWithSoulName,
-    purchaseIdentityError,
+    purchaseIdentityWithSoulnameError,
     // * old version
     handlePurchaseIdentity: purchaseIdentity,
     handlePurchaseIdentityWithSoulname: purchaseIdentityWithSoulName,
