@@ -81,14 +81,10 @@ const useWallet = (): UseWalletReturn => {
     address,
   });
 
-  const shortAddress = useMemo(() => {
-    if (!address) return '';
+  const shortAddress = useMemo((): string | undefined => {
+    if (!address) return undefined;
 
-    // eslint-disable-next-line unicorn/prefer-string-slice
-    return `${address.slice(0, 6)}...${address.substring(
-      address.length - 4,
-      address.length
-    )}`;
+    return `${address.slice(0, 6)}...${address.slice(-4, address.length)}`;
   }, [address]);
 
   // useEffect(() => console.log({ provider, signer }), [provider, signer]);
@@ -116,8 +112,8 @@ const useWallet = (): UseWalletReturn => {
     setCompareAddress,
   ]);
 
-  const balance = useMemo(() => {
-    if (!balanceResult) return '';
+  const balance = useMemo((): string | undefined => {
+    if (!balanceResult) return undefined;
     return `${balanceResult?.formatted} ${balanceResult?.symbol}`;
   }, [balanceResult]);
 

@@ -41,7 +41,7 @@ export const useMasaSDK = (
   }: UseMasaSdkArgs & { address: `0x${string}` | undefined },
   deps: Array<unknown>
 ): Masa | undefined => {
-  const masa = useMemo(() => {
+  const masa = useMemo((): Masa | undefined => {
     if (!address) return undefined;
     if (!signer) {
       if (verbose)

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { GalleryMetadata } from '../../../masa';
+import { GalleryMetadata } from './interfaces';
 
 export const GalleryItem = ({ image, name, description }: GalleryMetadata) => {
   const fixImage = useMemo(() => {

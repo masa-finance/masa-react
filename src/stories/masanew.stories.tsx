@@ -1,37 +1,30 @@
-import * as buffer from 'buffer';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'; // eslint-disable-line import/no-extraneous-dependencies
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import { MouseEventHandler, useCallback, useState } from 'react';
-import { darkStyles, JsonView } from 'react-json-view-lite'; // eslint-disable-line import/no-extraneous-dependencies
+import React, { MouseEventHandler, useCallback, useState } from 'react';
+import { darkStyles, JsonView } from 'react-json-view-lite';
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
-import { Button } from './ui';
-import './styles.scss';
+import { Button } from '../ui';
+import '../styles.scss';
 import './stories.scss';
-import { useConfig } from './base-provider';
-import 'react-json-view-lite/dist/index.css'; // eslint-disable-line import/no-extraneous-dependencies
-import { useWallet } from './wallet-client/wallet/use-wallet';
-import { useNetwork } from './wallet-client/network/use-network';
-import { useMasaClient } from './masa-client/use-masa-client';
-import { useIdentity } from './masa/use-identity';
-import { useSoulNames } from './masa/use-soulnames';
-import { useCreditScores } from './masa/use-credit-scores';
-import { useGreen } from './masa/use-green';
-import { useSBT } from './masa/use-sbt';
-import MasaProvider from './masa-provider';
-import { useSession } from './masa/use-session';
+import { useConfig } from '../base-provider';
+import 'react-json-view-lite/dist/index.css';
+import { useWallet } from '../wallet-client/wallet/use-wallet';
+import { useNetwork } from '../wallet-client/network/use-network';
+import { useMasaClient } from '../masa-client/use-masa-client';
+import { useIdentity } from '../masa/use-identity';
+import { useSoulNames } from '../masa/use-soulnames';
+import { useCreditScores } from '../masa/use-credit-scores';
+import { useGreen } from '../masa/use-green';
+import { useSBT } from '../masa/use-sbt';
+import MasaProvider from '../masa-provider';
+import { useSession } from '../masa/use-session';
 
-import { openCreateSoulnameModal } from './ui/components/modals/create-soulname/CreateSoulnameModal';
-import { useWalletClient } from './wallet-client/wallet-client-provider';
-import { useAuthenticate } from './ui/components/modals/authenticate/use-authenticate';
-import { CustomGallerySBT } from './masa/interfaces';
-
-// * nextjs fix
-// * TODO: move this to index.ts file at some point
-if (typeof window !== 'undefined') {
-  window.Buffer = buffer.Buffer;
-}
+import { openCreateSoulnameModal } from '../ui/components/modals/create-soulname/CreateSoulnameModal';
+import { useWalletClient } from '../wallet-client/wallet-client-provider';
+import { useAuthenticate } from '../ui/components/modals/authenticate/use-authenticate';
+import { AllNetworks } from '../config';
 
 const meta: Meta = {
   title: 'Masa Complete',
@@ -99,7 +92,7 @@ const NetworkInfo = () => {
               try {
                 switchNetwork?.(chain.id);
               } catch (error: unknown) {
-                console.log({ e: error });
+                console.error({ error });
               }
             };
 
@@ -126,7 +119,7 @@ const NetworkInfo = () => {
                     chain.id === activeChain?.id
                   }
                   type="button"
-                  onClick={onClick} // skipcq: JS-
+                  onClick={onClick} // skipcq: JS-0417
                 >
                   Switch to {chain.testnet ? 'Testnet' : ''} {chain.name}
                 </Button>
@@ -495,26 +488,26 @@ const ModalFlow = () => {
   const { hasSession, logoutSession } = useSession();
   const { identity } = useIdentity();
   const onLogout = useCallback(() => {
-    if (hasSession) logoutSession().catch(() => {});
+    if (hasSession) void logoutSession();
     disconnect?.();
   }, [logoutSession, hasSession, disconnect]);
 
   const { openAuthModal } = useAuthenticate({
     onAuthenticateSuccess: () => console.log('SUCCESS IN USEAUTH'),
-    onAuthenticateError: () => console.log('AUTHENTICATE ERROR'),
+    onAuthenticateError: () => console.error('AUTHENTICATE ERROR'),
     onRegisterFinish: () => console.log('FINISH FROM OUTSIDE ?????'),
-    onError: () => console.log('CREATE SOULNAME ERROR'),
+    onError: () => console.error('CREATE SOULNAME ERROR'),
   });
 
   const onClickSoulname = useCallback(() => {
-    openCreateSoulnameModal({
+    void openCreateSoulnameModal({
       onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
-      onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
+      onMintError: () => console.error('MINT ERROR FROM OUTSIDE'),
       onRegisterFinish: () => console.log('REGISTER SOULNAME FINISHED OUTSIDE'),
       onSuccess: () => console.log('EVERYTHING WAS SUCCESSFUL'),
-      onError: () => console.log('CREATE SOULNAME ERROR'),
+      onError: () => console.error('CREATE SOULNAME ERROR'),
       closeOnSuccess: true,
-    }).catch(() => {});
+    });
   }, []);
 
   return (
@@ -522,7 +515,7 @@ const ModalFlow = () => {
       <h3>Modal Flows</h3>
       <li>
         <Button
-          onClick={() => openAuthModal()}
+          onClick={openAuthModal}
           type="button"
           disabled={!!hasSession && !!identity?.identityId}
         >
@@ -546,6 +539,12 @@ const ModalFlow = () => {
 const Component = (): JSX.Element => {
   const config = useConfig();
   const { masa } = useMasaClient();
+
+  const shouldExpandNode = useCallback(
+    (level: number): boolean => level <= 0,
+    []
+  );
+
   // SupportedNetworks
   return (
     // skipcq: JS-0415
@@ -578,7 +577,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={config}
-              shouldExpandNode={(number) => number <= 0 && true}
+              shouldExpandNode={shouldExpandNode}
               style={{ ...darkStyles }}
             />
           </div>
@@ -593,7 +592,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={masa ?? {}}
-              shouldExpandNode={(number) => number <= 0 && true}
+              shouldExpandNode={shouldExpandNode}
               style={{ ...darkStyles }}
             />
           </div>
@@ -603,100 +602,15 @@ const Component = (): JSX.Element => {
   );
 };
 
-const GoodDollarSBT: CustomGallerySBT = {
-  name: 'Good Dollar SBT',
-  address: '0x814846364714bD2d66aD9433B34AE67754115963',
-  network: 'alfajores',
-  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
-    name: 'Good Dollar SBT',
-    image: sbt.tokenUri,
-    description: 'Good Dollar Token',
-  }),
-};
-
-const SoulCircleSBT: CustomGallerySBT = {
-  name: 'Masa Soul Circle',
-  address: '0xeB05dca1A7e0E37E364B938d989fc0273Ff3bFCa',
-  network: 'bsc',
-  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
-    name: 'Masa Soul Circle',
-    image: sbt.tokenUri,
-    description: 'Masa Soul Circle',
-  }),
-};
-
-const FearlessBoundTokenSBT: CustomGallerySBT = {
-  name: 'Fearless Bound',
-  address: '0xa3B54cAF1465dee624Df8F014d0adDd748e1B0bA',
-  network: 'basegoerli',
-  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
-    name: 'Fearless Bound',
-    image: sbt.tokenUri,
-    description: 'Fearless bound token',
-  }),
-};
-
-const VaisselVoyageSBT: CustomGallerySBT = {
-  name: 'Double Protocol SBT',
-  address: '0x395E89F13656C7CaeB61574C83444EA055f2F924',
-  network: 'basegoerli',
-  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
-    name: 'Vaissel Voyage-Bound Token',
-    image: sbt.tokenUri,
-    description: 'Vaissel Voyage-Bound Token',
-  }),
-};
-
-const CloudBaseSBT: CustomGallerySBT = {
-  name: 'Cloud Base SBT',
-  address: '0x4b97BeEEF092E0c76339E9E8A566823797ad80D3',
-  network: 'basegoerli',
-  getMetadata: async (sbt: { tokenId: string; tokenUri: string }) => ({
-    name: 'Cloud Base SBT',
-    image: sbt.tokenUri,
-    description: 'Cloud Base Token',
-  }),
-};
-
 const TemplateNewMasaState = (props: Args) => (
   <MasaProvider
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
       forceChain: 'base',
-      // contractAddressOverrides: {},
-      allowedNetworkNames: [
-        // eth
-        'goerli',
-        'ethereum',
-        // celo
-        'alfajores',
-        'celo',
-        // polygon
-        'mumbai',
-        'polygon',
-        // bsc
-        'bsctest',
-        'bsc',
-        // opbnb
-        'opbnbtest',
-        'opbnb',
-        // base
-        'basegoerli',
-        'base',
-        // scroll
-        'scrollsepolia',
-        'scroll',
-      ],
+      allowedNetworkNames: AllNetworks,
       masaConfig: {
         networkName: 'base',
       },
-      customSBTs: [
-        GoodDollarSBT,
-        SoulCircleSBT,
-        VaisselVoyageSBT,
-        CloudBaseSBT,
-        FearlessBoundTokenSBT,
-      ],
     }}
   >
     <Component {...props} />

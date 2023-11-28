@@ -17,7 +17,7 @@ export const useIdentity = () => {
       try {
         if (!canQuery) return null;
         return await masa?.identity.load(masaAddress);
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('ERROR loading identity', error);
         return null;
       }

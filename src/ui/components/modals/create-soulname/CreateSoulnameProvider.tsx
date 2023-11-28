@@ -1,11 +1,11 @@
 import React, {
-  ReactNode,
   createContext,
-  useContext,
+  ReactNode,
   useCallback,
+  useContext,
+  useEffect,
   useMemo,
   useState,
-  useEffect,
 } from 'react';
 import { useAsync } from 'react-use';
 import type { PaymentMethod } from '@masa-finance/masa-sdk';
@@ -124,11 +124,11 @@ export const CreateSoulnameProvider = ({
   }, [masa, soulname, isAvailable, isLoadingAvailability]);
 
   const { value: registrationPrice, loading: isLoadingRegistrationPrice } =
-    useAsync(async () => {
+    useAsync(async (): Promise<string | undefined> => {
+      let formattedPrice: string | undefined;
+
       if (masa && debounceSearch) {
         const { length } = masa.soulName.validate(debounceSearch as string);
-
-        let formattedPrice = '';
 
         try {
           const formattedPriceResult = await masa.contracts.soulName.getPrice(
@@ -137,13 +137,14 @@ export const CreateSoulnameProvider = ({
             registrationPeriod
           );
           formattedPrice = formattedPriceResult.formattedPrice;
-          return formattedPrice;
-        } catch {
-          return '';
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            console.error(error.message);
+          }
         }
       }
 
-      return '';
+      return formattedPrice;
     }, [masa, debounceSearch, paymentMethod, registrationPeriod]);
 
   // * make sure we do not get an undefined currency

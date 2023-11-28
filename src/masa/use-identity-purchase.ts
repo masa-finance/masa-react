@@ -3,12 +3,6 @@ import type { PaymentMethod } from '@masa-finance/masa-sdk';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 
-const errorMessages = {
-  UNPREDICTABLE_GAS_LIMIT:
-    'You do not have sufficient funds in you wallet. Please add funds to your wallet and try again',
-  ACTION_REJECTED: 'Transaction rejected by the user.',
-};
-
 export const useIdentityPurchase = () => {
   const { masa } = useMasaClient();
   const queryClient = useMasaQueryClient();
@@ -27,14 +21,8 @@ export const useIdentityPurchase = () => {
       });
       return purchasedIdentity?.success;
     } catch (error: unknown) {
-      const returnError = error as Error & {
-        code?: string;
-      };
-      if (returnError.code && errorMessages[returnError.code]) {
-        returnError.message = errorMessages[returnError.code] as string;
-      }
-      console.log('ERROR purchaseIdentity', { returnError });
-      throw returnError;
+      console.error('ERROR purchaseIdentity', { error });
+      throw error;
     }
   }, [queryClient, masa]);
 
@@ -66,16 +54,11 @@ export const useIdentityPurchase = () => {
         await queryClient.invalidateQueries({
           queryKey: ['soulnames'],
         });
+
         return result;
       } catch (error: unknown) {
-        const returnError = error as Error & {
-          code?: string;
-        };
-        if (returnError.code && errorMessages[returnError.code]) {
-          returnError.message = errorMessages[returnError.code] as string;
-        }
-        console.log('ERROR purchaseIdentityWithSoulName', { returnError });
-        return returnError;
+        console.error('ERROR purchaseIdentityWithSoulName', { error });
+        throw error;
       }
     },
     [queryClient, masa]

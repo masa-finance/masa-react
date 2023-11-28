@@ -98,10 +98,10 @@ export const useSoulnameInterface = () => {
 
   const { value: registrationPrice, loading: isLoadingRegistrationPrice } =
     useAsync(async () => {
+      let formattedPrice: string | undefined;
+
       if (masa && debounceSearch) {
         const { length } = masa.soulName.validate(debounceSearch as string);
-
-        let formattedPrice = '';
 
         try {
           const formattedPriceResult = await masa.contracts.soulName.getPrice(
@@ -110,14 +110,14 @@ export const useSoulnameInterface = () => {
             registrationPeriod
           );
           formattedPrice = formattedPriceResult.formattedPrice;
-          return formattedPrice;
-        } catch (error) {
-          console.log(error);
-          return '';
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            console.error(error.message);
+          }
         }
       }
 
-      return '';
+      return formattedPrice;
     }, [masa, debounceSearch, paymentMethod, registrationPeriod]);
 
   // * onChange handlers

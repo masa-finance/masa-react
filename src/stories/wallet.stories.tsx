@@ -1,24 +1,17 @@
-import * as buffer from 'buffer';
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import { MouseEventHandler } from 'react';
-import { Button } from './ui';
-
-import './styles.scss';
+import React, { MouseEventHandler } from 'react';
+import { Button } from '../ui';
+import '../ui/styles.scss';
 import './stories.scss';
-import 'react-json-view-lite/dist/index.css'; // eslint-disable-line import/no-extraneous-dependencies
-import { useWallet } from './wallet-client/wallet/use-wallet';
-import { useNetwork } from './wallet-client/network/use-network';
-import MasaProvider from './masa-provider';
-
-// * nextjs fix
-// * TODO: move this to index.ts file at some point
-if (typeof window !== 'undefined') {
-  window.Buffer = buffer.Buffer;
-}
+import 'react-json-view-lite/dist/index.css';
+import { useWallet } from '../wallet-client/wallet/use-wallet';
+import { useNetwork } from '../wallet-client/network/use-network';
+import MasaProvider from '../masa-provider';
+import { AllNetworks } from '../config';
 
 const meta: Meta = {
-  title: 'Masa Entities',
+  title: 'Wallet And Network',
   component: () => <div />,
   argTypes: {
     children: {
@@ -83,7 +76,7 @@ const NetworkInfo = () => {
               try {
                 switchNetwork?.(chain.id);
               } catch (error: unknown) {
-                console.log({ e: error });
+                console.error({ error });
               }
             };
 
@@ -232,30 +225,7 @@ const TemplateNewMasaState = (props: Args) => (
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
       forceChain: 'base',
-      // contractAddressOverrides: {},
-      allowedNetworkNames: [
-        // eth
-        'goerli',
-        'ethereum',
-        // celo
-        'alfajores',
-        'celo',
-        // polygon
-        'mumbai',
-        'polygon',
-        // bsc
-        'bsctest',
-        'bsc',
-        // opbnb
-        'opbnbtest',
-        'opbnb',
-        // base
-        'basegoerli',
-        'base',
-        // scroll
-        'scrollsepolia',
-        'scroll',
-      ],
+      allowedNetworkNames: AllNetworks,
       masaConfig: {
         networkName: 'base',
       },
@@ -265,6 +235,6 @@ const TemplateNewMasaState = (props: Args) => (
   </MasaProvider>
 );
 
-export const MasaEntities = TemplateNewMasaState.bind({
+export const WalletAndNetwork = TemplateNewMasaState.bind({
   options: { scope: [] },
 });

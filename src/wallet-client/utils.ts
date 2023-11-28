@@ -5,19 +5,6 @@ import {
 } from '@masa-finance/masa-sdk';
 import { Chain } from '@wagmi/chains';
 
-export const getWagmiNetworkName = (masaNetworkName: NetworkName): string => {
-  if (masaNetworkName === 'ethereum') return 'homestead';
-  if (masaNetworkName === 'alfajores') return 'celo-alfajores';
-  return masaNetworkName;
-};
-
-export const getMasaNetworkName = (wagmiNetworkName: string): NetworkName => {
-  if (wagmiNetworkName === 'homestead') return 'ethereum';
-  if (wagmiNetworkName === 'celo-alfajores') return 'alfajores';
-
-  return wagmiNetworkName as NetworkName;
-};
-
 const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
   .filter((networkName: string) => networkName !== 'unknown') // remove unused network
   .map((networkName: string) => {
@@ -25,7 +12,7 @@ const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
     return {
       id: network.chainId,
       name: network.chainName,
-      network: getWagmiNetworkName(network.networkName),
+      network: network.networkName,
       nativeCurrency: {
         name: network.nativeCurrency?.symbol ?? 'ETH',
         symbol: network.nativeCurrency?.symbol ?? 'ETH',
@@ -80,19 +67,15 @@ export const getChainIdNetworkMap = (chains?: Chain[]) => {
 export const getChainsSortedByForcedNetwork = (
   chains: Chain[],
   forceChain?: NetworkName
-) => {
+): Chain[] => {
   if (!forceChain) return chains;
 
   const singleChain = chains.filter(
-    (chain: Chain) => chain.network === getWagmiNetworkName(forceChain)
+    (chain: Chain) => chain.network === forceChain
   );
 
-  const sortedChains = [
+  return [
     ...singleChain,
-    ...chains.filter(
-      (chain: Chain) => chain.network !== getWagmiNetworkName(forceChain)
-    ),
+    ...chains.filter((chain: Chain) => chain.network !== forceChain),
   ];
-
-  return sortedChains;
 };
