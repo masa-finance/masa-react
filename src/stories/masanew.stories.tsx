@@ -488,7 +488,7 @@ const ModalFlow = () => {
   const { hasSession, logoutSession } = useSession();
   const { identity } = useIdentity();
   const onLogout = useCallback(() => {
-    if (hasSession) logoutSession().catch(() => {});
+    if (hasSession) void logoutSession();
     disconnect?.();
   }, [logoutSession, hasSession, disconnect]);
 
@@ -500,14 +500,14 @@ const ModalFlow = () => {
   });
 
   const onClickSoulname = useCallback(() => {
-    openCreateSoulnameModal({
+    void openCreateSoulnameModal({
       onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
       onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
       onRegisterFinish: () => console.log('REGISTER SOULNAME FINISHED OUTSIDE'),
       onSuccess: () => console.log('EVERYTHING WAS SUCCESSFUL'),
       onError: () => console.log('CREATE SOULNAME ERROR'),
       closeOnSuccess: true,
-    }).catch(() => {});
+    });
   }, []);
 
   return (

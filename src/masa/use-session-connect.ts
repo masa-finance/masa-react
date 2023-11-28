@@ -39,6 +39,7 @@ export const useSessionConnect = () => {
 
   const [{ loading: isLoggingOut }, logoutSession] = useAsyncFn(async () => {
     const result = await masa?.session.logout();
+
     await Promise.all([
       queryClient.invalidateQueries({
         queryKey: ['session-new-check', { masaAddress, persist: true }],
