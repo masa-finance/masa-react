@@ -1,4 +1,3 @@
-import * as buffer from 'buffer';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
@@ -26,12 +25,6 @@ import { openCreateSoulnameModal } from '../ui/components/modals/create-soulname
 import { useWalletClient } from '../wallet-client/wallet-client-provider';
 import { useAuthenticate } from '../ui/components/modals/authenticate/use-authenticate';
 import { AllNetworks } from '../config';
-
-// * nextjs fix
-// * TODO: move this to index.ts file at some point
-if (typeof window !== 'undefined') {
-  window.Buffer = buffer.Buffer;
-}
 
 const meta: Meta = {
   title: 'Masa Complete',
@@ -578,7 +571,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={config}
-              shouldExpandNode={(number) => number <= 0 && true}
+              shouldExpandNode={(number) => number <= 0}
               style={{ ...darkStyles }}
             />
           </div>
@@ -593,7 +586,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={masa ?? {}}
-              shouldExpandNode={(number) => number <= 0 && true}
+              shouldExpandNode={(number) => number <= 0}
               style={{ ...darkStyles }}
             />
           </div>

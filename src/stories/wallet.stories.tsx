@@ -1,4 +1,3 @@
-import * as buffer from 'buffer';
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React, { MouseEventHandler } from 'react';
@@ -10,12 +9,6 @@ import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useNetwork } from '../wallet-client/network/use-network';
 import MasaProvider from '../masa-provider';
 import { AllNetworks } from '../config';
-
-// * nextjs fix
-// * TODO: move this to index.ts file at some point
-if (typeof window !== 'undefined') {
-  window.Buffer = buffer.Buffer;
-}
 
 const meta: Meta = {
   title: 'Wallet And Network',

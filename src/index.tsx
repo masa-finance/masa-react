@@ -1,8 +1,8 @@
-import * as buffer from 'buffer';
+import { Buffer } from 'buffer';
 
 // * nextjs fix
 if (typeof window !== 'undefined') {
-  window.Buffer = buffer.Buffer;
+  window.Buffer = Buffer;
 }
 
 export * from './masa-provider';
