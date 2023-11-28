@@ -539,6 +539,12 @@ const ModalFlow = () => {
 const Component = (): JSX.Element => {
   const config = useConfig();
   const { masa } = useMasaClient();
+
+  const shouldExpandNode = useCallback(
+    (level: number): boolean => level <= 0,
+    []
+  );
+
   // SupportedNetworks
   return (
     // skipcq: JS-0415
@@ -571,7 +577,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={config}
-              shouldExpandNode={(level) => level <= 0}
+              shouldExpandNode={shouldExpandNode}
               style={{ ...darkStyles }}
             />
           </div>
@@ -586,7 +592,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={masa ?? {}}
-              shouldExpandNode={(level) => level <= 0}
+              shouldExpandNode={shouldExpandNode}
               style={{ ...darkStyles }}
             />
           </div>
