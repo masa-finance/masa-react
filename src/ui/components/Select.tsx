@@ -5,6 +5,7 @@ interface InputProps extends React.HTMLProps<HTMLSelectElement> {
   required?: boolean;
   values?: { name: string; value: string }[];
 }
+
 export const Select = ({
   label,
   required,
@@ -23,12 +24,11 @@ export const Select = ({
       {...rest}
       id={`masa-input-${label ?? ''}`}
     >
-      {values &&
-        values.map((v: { name: string }) => (
-          <option key={v.name ?? Math.random().toString()} value={v.name}>
-            {v.name}
-          </option>
-        ))}
+      {values?.map((v: { name: string }) => (
+        <option key={v.name ?? Math.random().toString()} value={v.name}>
+          {v.name}
+        </option>
+      ))}
     </select>
   </div>
 );

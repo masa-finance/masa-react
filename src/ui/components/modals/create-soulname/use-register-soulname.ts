@@ -32,7 +32,7 @@ export const useRegisterSoulname = ({
     onRegisterSoulname,
   ] = useAsyncFn(async () => {
     try {
-      if (identity && identity.identityId) {
+      if (identity?.identityId) {
         const result = await purchaseSoulName(
           soulname,
           registrationPeriod,
@@ -47,7 +47,7 @@ export const useRegisterSoulname = ({
           throw new Error('Unexpected error');
         }
 
-        if (result && result.success) {
+        if (result?.success) {
           console.log({ result });
           onMintSuccess?.(result);
         }
@@ -78,7 +78,7 @@ export const useRegisterSoulname = ({
         throw new Error('Unexpected error');
       }
 
-      if (result && result.success) {
+      if (result?.success) {
         onMintSuccess?.(result);
       }
 
