@@ -1,5 +1,6 @@
 [# Masa React
- - v3.7.0](../README.md) / [Exports](../modules.md) / FullContract
+
+- v3.7.0](../README.md) / [Exports](../modules.md) / FullContract
 
 # Interface: FullContract
 
@@ -41,7 +42,7 @@
 
 [CustomGallerySBT](CustomGallerySBT.md).[address](CustomGallerySBT.md#address)
 
-___
+---
 
 ### burn
 
@@ -53,8 +54,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type        |
+| :------ | :---------- |
 | `SBTId` | `BigNumber` |
 
 ##### Returns
@@ -65,7 +66,7 @@ ___
 
 MasaSBTWrapper.burn
 
-___
+---
 
 ### contract
 
@@ -75,33 +76,33 @@ ___
 
 MasaSBTWrapper.contract
 
-___
+---
 
 ### getMetadata
 
-• **getMetadata**: (`item`: \{ `tokenId`: `any` ; `tokenUri`: `any`  }) => `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+• **getMetadata**: (`item`: \{ `tokenId`: `any` ; `tokenUri`: `any` }) => `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
 #### Type declaration
 
-▸ (`item`): `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+▸ (`item`): `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `item` | `Object` |
-| `item.tokenId` | `any` |
-| `item.tokenUri` | `any` |
+| Name            | Type     |
+| :-------------- | :------- |
+| `item`          | `Object` |
+| `item.tokenId`  | `any`    |
+| `item.tokenUri` | `any`    |
 
 ##### Returns
 
-`Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+`Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
 #### Inherited from
 
 [CustomGallerySBT](CustomGallerySBT.md).[getMetadata](CustomGallerySBT.md#getmetadata)
 
-___
+---
 
 ### links
 
@@ -111,79 +112,79 @@ ___
 
 MasaSBTWrapper.links
 
-___
+---
 
 ### list
 
-• **list**: (`address?`: `string`) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+• **list**: (`address?`: `string`) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Type declaration
 
-▸ (`address?`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+▸ (`address?`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type     |
+| :--------- | :------- |
 | `address?` | `string` |
 
 ##### Returns
 
-`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Inherited from
 
 MasaSBTWrapper.list
 
-___
+---
 
 ### loadSBTIDs
 
-• `Protected` **loadSBTIDs**: (`sbtIDs`: `BigNumber`[]) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+• `Protected` **loadSBTIDs**: (`sbtIDs`: `BigNumber`[]) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Type declaration
 
-▸ (`sbtIDs`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+▸ (`sbtIDs`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type          |
+| :------- | :------------ |
 | `sbtIDs` | `BigNumber`[] |
 
 ##### Returns
 
-`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Inherited from
 
 MasaSBTWrapper.loadSBTIDs
 
-___
+---
 
 ### loadSBTs
 
-• `Protected` **loadSBTs**: (`identityIdOrAddress`: `string` \| `BigNumber`) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+• `Protected` **loadSBTs**: (`identityIdOrAddress`: `string` \| `BigNumber`) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Type declaration
 
-▸ (`identityIdOrAddress`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+▸ (`identityIdOrAddress`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                  | Type                    |
+| :-------------------- | :---------------------- |
 | `identityIdOrAddress` | `string` \| `BigNumber` |
 
 ##### Returns
 
-`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Inherited from
 
 MasaSBTWrapper.loadSBTs
 
-___
+---
 
 ### masa
 
@@ -193,7 +194,7 @@ ___
 
 MasaSBTWrapper.masa
 
-___
+---
 
 ### name
 
@@ -203,7 +204,7 @@ ___
 
 [CustomGallerySBT](CustomGallerySBT.md).[name](CustomGallerySBT.md#name)
 
-___
+---
 
 ### network
 

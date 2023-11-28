@@ -1,5 +1,6 @@
 [# Masa React
- - v3.7.0](../README.md) / [Exports](../modules.md) / Token
+
+- v3.7.0](../README.md) / [Exports](../modules.md) / Token
 
 # Interface: Token
 
@@ -22,7 +23,7 @@
 
 • **tokenId**: `BigNumber`
 
-___
+---
 
 ### tokenUri
 

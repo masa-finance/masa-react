@@ -1,5 +1,6 @@
 [# Masa React
- - v3.7.0](../README.md) / [Exports](../modules.md) / Metadata
+
+- v3.7.0](../README.md) / [Exports](../modules.md) / Metadata
 
 # Interface: Metadata
 
@@ -17,13 +18,13 @@
 
 • **description**: `string`
 
-___
+---
 
 ### image
 
 • **image**: `string`
 
-___
+---
 
 ### name
 

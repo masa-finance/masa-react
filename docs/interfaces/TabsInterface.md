@@ -1,5 +1,6 @@
 [# Masa React
- - v3.7.0](../README.md) / [Exports](../modules.md) / TabsInterface
+
+- v3.7.0](../README.md) / [Exports](../modules.md) / TabsInterface
 
 # Interface: TabsInterface
 
@@ -16,7 +17,7 @@
 
 • **items**: [`GalleryMetadata`](GalleryMetadata.md)[]
 
-___
+---
 
 ### title
 

@@ -1,5 +1,6 @@
 [# Masa React
- - v3.7.0](../README.md) / [Exports](../modules.md) / AuthenticateModal
+
+- v3.7.0](../README.md) / [Exports](../modules.md) / AuthenticateModal
 
 # Namespace: AuthenticateModal
 
@@ -18,19 +19,19 @@
 
 • `Optional` **contextTypes**: `undefined` \| `ValidationMap`\<`any`\>
 
-___
+---
 
 ### defaultProps
 
 • `Optional` **defaultProps**: `undefined` \| `Partial`\<`AuthenticateProps` & `NiceModalHocProps`\>
 
-___
+---
 
 ### displayName
 
 • `Optional` **displayName**: `undefined` \| `string`
 
-___
+---
 
 ### propTypes
 

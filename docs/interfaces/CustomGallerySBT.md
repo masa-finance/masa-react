@@ -1,5 +1,6 @@
 [# Masa React
- - v3.7.0](../README.md) / [Exports](../modules.md) / CustomGallerySBT
+
+- v3.7.0](../README.md) / [Exports](../modules.md) / CustomGallerySBT
 
 # Interface: CustomGallerySBT
 
@@ -24,35 +25,35 @@
 
 • **address**: `string`
 
-___
+---
 
 ### getMetadata
 
-• **getMetadata**: (`item`: \{ `tokenId`: `any` ; `tokenUri`: `any`  }) => `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+• **getMetadata**: (`item`: \{ `tokenId`: `any` ; `tokenUri`: `any` }) => `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
 #### Type declaration
 
-▸ (`item`): `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+▸ (`item`): `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `item` | `Object` |
-| `item.tokenId` | `any` |
-| `item.tokenUri` | `any` |
+| Name            | Type     |
+| :-------------- | :------- |
+| `item`          | `Object` |
+| `item.tokenId`  | `any`    |
+| `item.tokenUri` | `any`    |
 
 ##### Returns
 
-`Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+`Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
-___
+---
 
 ### name
 
 • **name**: `string`
 
-___
+---
 
 ### network
 

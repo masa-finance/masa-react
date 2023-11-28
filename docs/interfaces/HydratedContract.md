@@ -1,5 +1,6 @@
 [# Masa React
- - v3.7.0](../README.md) / [Exports](../modules.md) / HydratedContract
+
+- v3.7.0](../README.md) / [Exports](../modules.md) / HydratedContract
 
 # Interface: HydratedContract
 
@@ -36,7 +37,7 @@
 
 [FullContract](FullContract.md).[address](FullContract.md#address)
 
-___
+---
 
 ### burn
 
@@ -48,8 +49,8 @@ ___
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name    | Type        |
+| :------ | :---------- |
 | `SBTId` | `BigNumber` |
 
 ##### Returns
@@ -60,7 +61,7 @@ ___
 
 [FullContract](FullContract.md).[burn](FullContract.md#burn)
 
-___
+---
 
 ### contract
 
@@ -70,33 +71,33 @@ ___
 
 [FullContract](FullContract.md).[contract](FullContract.md#contract)
 
-___
+---
 
 ### getMetadata
 
-• **getMetadata**: (`item`: \{ `tokenId`: `any` ; `tokenUri`: `any`  }) => `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+• **getMetadata**: (`item`: \{ `tokenId`: `any` ; `tokenUri`: `any` }) => `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
 #### Type declaration
 
-▸ (`item`): `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+▸ (`item`): `Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `item` | `Object` |
-| `item.tokenId` | `any` |
-| `item.tokenUri` | `any` |
+| Name            | Type     |
+| :-------------- | :------- |
+| `item`          | `Object` |
+| `item.tokenId`  | `any`    |
+| `item.tokenUri` | `any`    |
 
 ##### Returns
 
-`Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string`  }\>
+`Promise`\<\{ `description`: `string` ; `image`: `string` ; `name`: `string` }\>
 
 #### Inherited from
 
 [FullContract](FullContract.md).[getMetadata](FullContract.md#getmetadata)
 
-___
+---
 
 ### links
 
@@ -106,79 +107,79 @@ ___
 
 [FullContract](FullContract.md).[links](FullContract.md#links)
 
-___
+---
 
 ### list
 
-• **list**: (`address?`: `string`) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+• **list**: (`address?`: `string`) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Type declaration
 
-▸ (`address?`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+▸ (`address?`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name       | Type     |
+| :--------- | :------- |
 | `address?` | `string` |
 
 ##### Returns
 
-`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Inherited from
 
 [FullContract](FullContract.md).[list](FullContract.md#list)
 
-___
+---
 
 ### loadSBTIDs
 
-• `Protected` **loadSBTIDs**: (`sbtIDs`: `BigNumber`[]) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+• `Protected` **loadSBTIDs**: (`sbtIDs`: `BigNumber`[]) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Type declaration
 
-▸ (`sbtIDs`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+▸ (`sbtIDs`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type          |
+| :------- | :------------ |
 | `sbtIDs` | `BigNumber`[] |
 
 ##### Returns
 
-`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Inherited from
 
 [FullContract](FullContract.md).[loadSBTIDs](FullContract.md#loadsbtids)
 
-___
+---
 
 ### loadSBTs
 
-• `Protected` **loadSBTs**: (`identityIdOrAddress`: `string` \| `BigNumber`) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+• `Protected` **loadSBTs**: (`identityIdOrAddress`: `string` \| `BigNumber`) => `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Type declaration
 
-▸ (`identityIdOrAddress`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+▸ (`identityIdOrAddress`): `Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name                  | Type                    |
+| :-------------------- | :---------------------- |
 | `identityIdOrAddress` | `string` \| `BigNumber` |
 
 ##### Returns
 
-`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string`  }[]\>
+`Promise`\<\{ `tokenId`: `BigNumber` ; `tokenUri`: `string` }[]\>
 
 #### Inherited from
 
 [FullContract](FullContract.md).[loadSBTs](FullContract.md#loadsbts)
 
-___
+---
 
 ### masa
 
@@ -188,7 +189,7 @@ ___
 
 [FullContract](FullContract.md).[masa](FullContract.md#masa)
 
-___
+---
 
 ### name
 
@@ -198,7 +199,7 @@ ___
 
 [FullContract](FullContract.md).[name](FullContract.md#name)
 
-___
+---
 
 ### network
 
@@ -208,7 +209,7 @@ ___
 
 [FullContract](FullContract.md).[network](FullContract.md#network)
 
-___
+---
 
 ### tokens
 

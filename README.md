@@ -1,13 +1,14 @@
 <!-- TOC -->
-  * [Getting Started with masa-react](#getting-started-with-masa-react)
-    * [Installation](#installation)
-    * [Styles](#styles)
-    * [Setup Storybook](#setup-storybook)
-  * [Usage ( inside MasaProvider )](#usage--inside-masaprovider-)
-    * [Example for useMasa ( Connect users wallet )](#example-for-usemasa--connect-users-wallet-)
-    * [Example for masa object ( Wallet is already connected here )](#example-for-masa-object--wallet-is-already-connected-here-)
-    * [For some contracts you will need some pre requisites ( Scopes )](#for-some-contracts-you-will-need-some-pre-requisites--scopes-)
-  * [Current useMasa shape](#current-usemasa-shape)
+
+- [Getting Started with masa-react](#getting-started-with-masa-react)
+  - [Installation](#installation)
+  - [Styles](#styles)
+  - [Setup Storybook](#setup-storybook)
+- [Usage ( inside MasaProvider )](#usage--inside-masaprovider-)
+  - [Example for useMasa ( Connect users wallet )](#example-for-usemasa--connect-users-wallet-)
+  - [Example for masa object ( Wallet is already connected here )](#example-for-masa-object--wallet-is-already-connected-here-)
+  - [For some contracts you will need some pre requisites ( Scopes )](#for-some-contracts-you-will-need-some-pre-requisites--scopes-)
+- [Current useMasa shape](#current-usemasa-shape)
 <!-- TOC -->
 
 ## Getting Started with masa-react
@@ -43,7 +44,7 @@ If you want to add our styles to your project just include this line at the very
 ```bash
 git clone https://github.com/masa-finance/masa-react.git
 
-yarn 
+yarn
 yarn storybook
 ```
 
@@ -136,10 +137,7 @@ export interface MasaShape {
   isLoading?: boolean;
 
   // global connect
-  connect?: (options?: {
-    scope?: string[];
-    callback?: () => void
-  }) => void;
+  connect?: (options?: { scope?: string[]; callback?: () => void }) => void;
 
   // general config
   scope?: string[];
@@ -160,12 +158,9 @@ export interface MasaShape {
   openMintMasaGreen?: (callback?: () => void) => void;
   modalSize?: {
     width: number;
-    height: number
+    height: number;
   } | null;
-  useModalSize?: (size: {
-    width: number;
-    height: number
-  }) => void;
+  useModalSize?: (size: { width: number; height: number }) => void;
 
   // wallet
   walletAddress?: string;

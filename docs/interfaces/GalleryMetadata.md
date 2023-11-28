@@ -1,5 +1,6 @@
 [# Masa React
- - v3.7.0](../README.md) / [Exports](../modules.md) / GalleryMetadata
+
+- v3.7.0](../README.md) / [Exports](../modules.md) / GalleryMetadata
 
 # Interface: GalleryMetadata
 
@@ -18,19 +19,19 @@
 
 • `Optional` **description**: `string`
 
-___
+---
 
 ### image
 
 • `Optional` **image**: `string`
 
-___
+---
 
 ### name
 
 • `Optional` **name**: `string`
 
-___
+---
 
 ### tokenURI
 
