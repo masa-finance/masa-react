@@ -41,7 +41,7 @@ export const useAuthenticateModal = ({
     a Masa Soulbound Identity and claiming a unique Masa Soul Name.`;
       }
       case 'Celo': {
-        return `Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.`;
+        return 'Your wallet is now connected. Start your journey by minting a Prosperity Passport and claiming a unique .celo domain name.';
       }
       case 'Base': {
         return 'Your wallet is now connected. Start your Base Camp journey by claiming a unique .base domain name.';
@@ -67,7 +67,7 @@ export const useAuthenticateModal = ({
         return result;
       }
 
-      if (result && result.address) {
+      if (result.address) {
         onAuthenticateSuccess?.({
           address: result.address,
           walletType: connector?.name,
