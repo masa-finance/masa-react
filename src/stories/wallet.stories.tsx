@@ -76,7 +76,7 @@ const NetworkInfo = () => {
               try {
                 switchNetwork?.(chain.id);
               } catch (error: unknown) {
-                console.log({ e: error });
+                console.error({ error });
               }
             };
 

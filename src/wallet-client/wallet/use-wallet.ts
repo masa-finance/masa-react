@@ -81,8 +81,8 @@ const useWallet = (): UseWalletReturn => {
     address,
   });
 
-  const shortAddress = useMemo(() => {
-    if (!address) return '';
+  const shortAddress = useMemo((): string | undefined => {
+    if (!address) return undefined;
 
     return `${address.slice(0, 6)}...${address.slice(-4, address.length)}`;
   }, [address]);
@@ -112,8 +112,8 @@ const useWallet = (): UseWalletReturn => {
     setCompareAddress,
   ]);
 
-  const balance = useMemo(() => {
-    if (!balanceResult) return '';
+  const balance = useMemo((): string | undefined => {
+    if (!balanceResult) return undefined;
     return `${balanceResult?.formatted} ${balanceResult?.symbol}`;
   }, [balanceResult]);
 

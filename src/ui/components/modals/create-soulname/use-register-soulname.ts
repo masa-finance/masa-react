@@ -6,12 +6,6 @@ import { useConfig } from '../../../../base-provider';
 import { useIdentity } from '../../../../masa/use-identity';
 import { useCreateSoulnameModal } from './CreateSoulnameProvider';
 
-// const errorMessages = {
-//   UNPREDICTABLE_GAS_LIMIT:
-//     'You do not have sufficient funds in you wallet. Please add funds to your wallet and try again',
-//   ACTION_REJECTED: 'Transaction rejected by the user.',
-// };
-
 export const useRegisterSoulname = ({
   onMintSuccess,
   onMintError,
@@ -26,13 +20,8 @@ export const useRegisterSoulname = ({
   const { identity } = useIdentity();
   const { purchaseSoulName } = useSoulNamesPurchase();
   const { purchaseIdentityWithSoulName } = useIdentityPurchase();
-  const {
-    soulname,
-    registrationPeriod,
-    paymentMethod,
-    // soulNameError,
-    // registrationPrice,
-  } = useCreateSoulnameModal();
+  const { soulname, registrationPeriod, paymentMethod } =
+    useCreateSoulnameModal();
 
   const [
     {
@@ -67,11 +56,11 @@ export const useRegisterSoulname = ({
 
         return result;
       }
-    } catch (error_: unknown) {
-      console.log('ERROR registerSoulname', error_);
+    } catch (error: unknown) {
+      console.error('ERROR registerSoulname', error);
       onMintError?.();
 
-      throw error_ as Error;
+      throw error;
     }
 
     try {
@@ -97,25 +86,10 @@ export const useRegisterSoulname = ({
 
       return result;
     } catch (error: unknown) {
-      // const errorObject = error as {
-      //   code: string;
-      //   message: string;
-      // };
-
-      // const subtitle =
-      //   (errorMessages?.[errorObject.code] as string | undefined) ??
-      //   ('Unknown error' as string);
-
-      // console.error(`Minting failed! ${errorObject.message}`);
-
-      console.log('ERROR registerSoulname catch2', error);
+      console.error('ERROR registerSoulname catch2', error);
       onMintError?.();
 
-      throw error as Error;
-      // return {
-      //   title: '',
-      //   subtitle,
-      // };
+      throw error;
     }
   }, [
     onRegisterFinish,

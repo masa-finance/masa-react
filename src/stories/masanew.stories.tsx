@@ -92,7 +92,7 @@ const NetworkInfo = () => {
               try {
                 switchNetwork?.(chain.id);
               } catch (error: unknown) {
-                console.log({ e: error });
+                console.error({ error });
               }
             };
 
@@ -494,18 +494,18 @@ const ModalFlow = () => {
 
   const { openAuthModal } = useAuthenticate({
     onAuthenticateSuccess: () => console.log('SUCCESS IN USEAUTH'),
-    onAuthenticateError: () => console.log('AUTHENTICATE ERROR'),
+    onAuthenticateError: () => console.error('AUTHENTICATE ERROR'),
     onRegisterFinish: () => console.log('FINISH FROM OUTSIDE ?????'),
-    onError: () => console.log('CREATE SOULNAME ERROR'),
+    onError: () => console.error('CREATE SOULNAME ERROR'),
   });
 
   const onClickSoulname = useCallback(() => {
     void openCreateSoulnameModal({
       onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
-      onMintError: () => console.log('MINT ERROR FROM OUTSIDE'),
+      onMintError: () => console.error('MINT ERROR FROM OUTSIDE'),
       onRegisterFinish: () => console.log('REGISTER SOULNAME FINISHED OUTSIDE'),
       onSuccess: () => console.log('EVERYTHING WAS SUCCESSFUL'),
-      onError: () => console.log('CREATE SOULNAME ERROR'),
+      onError: () => console.error('CREATE SOULNAME ERROR'),
       closeOnSuccess: true,
     });
   }, []);

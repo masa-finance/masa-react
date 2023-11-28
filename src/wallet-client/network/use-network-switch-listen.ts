@@ -25,7 +25,7 @@ export const useNetworkSwitchListen = ({
         provider.on('chainChanged', stopSwitching);
       })
       .catch((error: unknown) => {
-        console.log("error getting provider's chainChanged event", error);
+        console.error("error getting provider's chainChanged event", error);
       });
 
     return () => {

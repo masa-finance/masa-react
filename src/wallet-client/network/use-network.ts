@@ -50,7 +50,11 @@ export const useNetwork = () => {
         setSwitchingToChain(chainId);
         switchNetworkWagmi?.(chainId);
       } catch (error: unknown) {
-        throw error as Error;
+        if (error instanceof Error) {
+          console.error(`switching networks failed! ${error.message}`);
+        }
+
+        throw error;
       }
     },
     [switchNetworkWagmi]
