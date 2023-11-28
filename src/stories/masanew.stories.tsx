@@ -571,7 +571,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={config}
-              shouldExpandNode={(number) => number <= 0}
+              shouldExpandNode={(level) => level <= 0}
               style={{ ...darkStyles }}
             />
           </div>
@@ -586,7 +586,7 @@ const Component = (): JSX.Element => {
           >
             <JsonView
               data={masa ?? {}}
-              shouldExpandNode={(number) => number <= 0}
+              shouldExpandNode={(level) => level <= 0}
               style={{ ...darkStyles }}
             />
           </div>
