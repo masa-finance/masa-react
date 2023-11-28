@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { useAsync } from 'react-use';
+import { getNetworkNameByChainId, NetworkName } from '@masa-finance/masa-sdk';
 import { useConfig } from '../base-provider';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useMasaSDK } from './use-masa-sdk';
 import { useNetwork } from '../wallet-client/network';
-import { getMasaNetworkName } from '../wallet-client/utils';
 
 export const useMasaClient = () => {
   const { masaConfig, contractAddressOverrides } = useConfig();
@@ -31,36 +31,34 @@ export const useMasaClient = () => {
   );
 
   const { value: masaAddress, loading: isLoadingMasaAddress } =
-    useAsync(async () => {
-      if (masa) {
-        const masaAddr = await masa.config.signer.getAddress();
-        return masaAddr as `0x${string}`;
-      }
+    useAsync(async (): Promise<`0x${string}` | undefined> => {
+      if (!masa) return undefined;
 
-      return undefined;
+      const masaAddr = await masa.config.signer.getAddress();
+      return masaAddr as `0x${string}`;
     }, [masa]);
 
-  const { value: masaChainId } = useAsync(async () => {
-    if (masa) {
-      const mChainId = await masa.config.signer?.getChainId();
+  const { value: masaChainId } = useAsync(async (): Promise<
+    number | undefined
+  > => {
+    if (!masa) return undefined;
 
-      if (mChainId !== activeChainId) return undefined;
+    const mChainId = await masa.config.signer?.getChainId();
 
-      return mChainId;
-    }
+    if (mChainId !== activeChainId) return undefined;
 
-    return undefined;
+    return mChainId;
   }, [masa, activeChainId]);
 
   const { value: masaNetwork, loading: isLoadingMasaNetwork } =
-    useAsync(async () => {
+    useAsync(async (): Promise<NetworkName | undefined> => {
       if (!masa) return undefined;
       if (masaChainId !== activeChainId) return undefined;
 
       const network = await masa.config.signer?.provider?.getNetwork();
       if (!network) return undefined;
 
-      return getMasaNetworkName(network.name);
+      return getNetworkNameByChainId(network.chainId);
     }, [masa, activeChainId, masaChainId]);
 
   return useMemo(() => {

@@ -4,7 +4,32 @@ import type {
   NetworkName,
 } from '@masa-finance/masa-sdk';
 import type { WagmiConfigProps } from 'wagmi';
-import { CustomGallerySBT } from './masa/interfaces';
+
+export const AllNetworks: NetworkName[] = [
+  // eth
+  'goerli',
+  'sepolia',
+  'ethereum',
+  // celo
+  'alfajores',
+  'celo',
+  // polygon
+  'mumbai',
+  'polygon',
+  // bsc
+  'bsctest',
+  'bsc',
+  // opbnb
+  'opbnbtest',
+  'opbnb',
+  // base
+  'basegoerli',
+  'basesepolia',
+  'base',
+  // scroll
+  'scrollsepolia',
+  'scroll',
+];
 
 export interface ArweaveConfig {
   port?: string;
@@ -22,7 +47,6 @@ export interface MasaReactConfig {
   soulNameStyle?: string;
   verbose?: boolean;
   wagmiConfig?: WagmiConfigProps;
-  customSBTs?: CustomGallerySBT[];
   contractAddressOverrides?: {
     SoulNameAddress: string;
     SoulStoreAddress: string;
@@ -36,29 +60,7 @@ export interface MasaReactConfig {
 
 export const defaultConfig: Partial<MasaReactConfig> = {
   company: 'Masa',
-  allowedNetworkNames: [
-    // eth
-    'goerli',
-    'ethereum',
-    // celo
-    'alfajores',
-    'celo',
-    // polygon
-    'mumbai',
-    'polygon',
-    // bsc
-    'bsctest',
-    'bsc',
-    // opbnb
-    'opbnbtest',
-    'opbnb',
-    // base
-    'basegoerli',
-    'base',
-    // scroll
-    'scrollsepolia',
-    'scroll',
-  ],
+  allowedNetworkNames: AllNetworks,
   allowedWallets: ['metamask', 'valora', 'walletconnect'],
   masaConfig: {
     environment: 'production' as EnvironmentName,

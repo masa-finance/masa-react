@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { GalleryItem } from './GalleryItem';
 import { Tab } from './Tab';
-import { GalleryMetadata, TabsInterface } from '../../../masa';
+import { GalleryMetadata, TabsInterface } from './interfaces';
 
 export interface GalleryProps {
   tabs: TabsInterface[];

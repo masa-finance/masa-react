@@ -61,4 +61,4 @@ export const createQueryClient = () => {
   return queryClient;
 };
 
-export const queryClient = createQueryClient();
+export const queryClient: QueryClient = createQueryClient();

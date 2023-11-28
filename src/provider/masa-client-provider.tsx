@@ -1,4 +1,10 @@
-import React, { ReactNode, createContext, useContext, useMemo } from 'react';
+import React, {
+  Context,
+  createContext,
+  ReactNode,
+  useContext,
+  useMemo,
+} from 'react';
 import { useAsync } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
 
@@ -7,9 +13,8 @@ import { useSession } from '../masa/use-session';
 import { useIdentityListen } from '../masa';
 import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
 
-export interface MasaClientProviderValue {}
-
-export const MasaClientContext = createContext({} as MasaClientProviderValue);
+export const MasaClientContext: Context<boolean> =
+  createContext<boolean>(false);
 
 export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
   const {
@@ -45,10 +50,8 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
     checkLogin,
   ]);
 
-  const masaClientProviderValue: MasaClientProviderValue = useMemo(
-    () => ({}) as MasaClientProviderValue,
-    []
-  );
+  const masaClientProviderValue: boolean = useMemo(() => true, []);
+
   return (
     <MasaClientContext.Provider value={masaClientProviderValue}>
       {children}
@@ -56,6 +59,7 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useMasaClientProvider = (): MasaClientProviderValue =>
+export const useMasaClientProvider = (): boolean =>
   useContext(MasaClientContext);
+
 export default MasaClientProvider;

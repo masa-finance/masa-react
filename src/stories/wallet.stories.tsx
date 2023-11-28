@@ -1,14 +1,15 @@
 import * as buffer from 'buffer';
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
-import { MouseEventHandler } from 'react';
-import { Button } from './ui';
-import './ui/styles.scss';
+import React, { MouseEventHandler } from 'react';
+import { Button } from '../ui';
+import '../ui/styles.scss';
 import './stories.scss';
-import 'react-json-view-lite/dist/index.css'; // eslint-disable-line import/no-extraneous-dependencies
-import { useWallet } from './wallet-client/wallet/use-wallet';
-import { useNetwork } from './wallet-client/network/use-network';
-import MasaProvider from './masa-provider';
+import 'react-json-view-lite/dist/index.css';
+import { useWallet } from '../wallet-client/wallet/use-wallet';
+import { useNetwork } from '../wallet-client/network/use-network';
+import MasaProvider from '../masa-provider';
+import { AllNetworks } from '../config';
 
 // * nextjs fix
 // * TODO: move this to index.ts file at some point
@@ -231,30 +232,7 @@ const TemplateNewMasaState = (props: Args) => (
     config={{
       allowedWallets: ['metamask', 'walletconnect'],
       forceChain: 'base',
-      // contractAddressOverrides: {},
-      allowedNetworkNames: [
-        // eth
-        'goerli',
-        'ethereum',
-        // celo
-        'alfajores',
-        'celo',
-        // polygon
-        'mumbai',
-        'polygon',
-        // bsc
-        'bsctest',
-        'bsc',
-        // opbnb
-        'opbnbtest',
-        'opbnb',
-        // base
-        'basegoerli',
-        'base',
-        // scroll
-        'scrollsepolia',
-        'scroll',
-      ],
+      allowedNetworkNames: AllNetworks,
       masaConfig: {
         networkName: 'base',
       },

@@ -84,11 +84,7 @@ const useWallet = (): UseWalletReturn => {
   const shortAddress = useMemo(() => {
     if (!address) return '';
 
-    // eslint-disable-next-line unicorn/prefer-string-slice
-    return `${address.slice(0, 6)}...${address.substring(
-      address.length - 4,
-      address.length
-    )}`;
+    return `${address.slice(0, 6)}...${address.slice(-4, address.length)}`;
   }, [address]);
 
   // useEffect(() => console.log({ provider, signer }), [provider, signer]);

@@ -9,6 +9,7 @@ interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
   style?: CSSProperties;
   ref?: Ref<HTMLButtonElement>;
 }
+
 export const Button = ({
   children,
   className = '',
