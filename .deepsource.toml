@@ -7,6 +7,3 @@ name = "javascript"
 plugins = ["react"]
 environment = ["browser"]
 style_guide = "airbnb"
-
-[[transformers]]
-name = "prettier"
