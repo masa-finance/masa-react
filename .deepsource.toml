@@ -2,8 +2,10 @@ version = 1
 
 [[analyzers]]
 name = "javascript"
-enabled = true
 
-[analyzers.meta]
-plugins = ["react"]
-style_guide = "airbnb"
+  [analyzers.meta]
+  plugins = ["react"]
+  environment = ["browser"]
+
+[[transformers]]
+name = "prettier"
