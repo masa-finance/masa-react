@@ -22,7 +22,9 @@ export const useIdentityPurchase = () => {
   ] = useAsyncFn(async () => {
     try {
       const purchasedIdentity = await masa?.identity.create();
-      await queryClient.invalidateQueries(['identity']);
+      await queryClient.invalidateQueries({
+        queryKey: ['identity'],
+      });
       return purchasedIdentity?.success;
     } catch (error: unknown) {
       const returnError = error as Error & {
@@ -58,8 +60,12 @@ export const useIdentityPurchase = () => {
           style
         );
 
-        await queryClient.invalidateQueries(['identity']);
-        await queryClient.invalidateQueries(['soulnames']);
+        await queryClient.invalidateQueries({
+          queryKey: ['identity'],
+        });
+        await queryClient.invalidateQueries({
+          queryKey: ['soulnames'],
+        });
         return result;
       } catch (error: unknown) {
         const returnError = error as Error & {

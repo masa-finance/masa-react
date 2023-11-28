@@ -1,6 +1,6 @@
 import { useAsyncFn } from 'react-use';
 import { useMasaClient } from '../masa-client/use-masa-client';
-import { useMasaQueryClient } from '../masa-client/use-masa-query-client';
+import { useMasaQueryClient } from '../masa-client';
 
 export const useCreditScoreCreate = () => {
   const { masa } = useMasaClient();
@@ -12,7 +12,9 @@ export const useCreditScoreCreate = () => {
   ] = useAsyncFn(async () => {
     try {
       const response = await masa?.creditScore.create();
-      await queryClient.invalidateQueries(['credit-scores']);
+      await queryClient.invalidateQueries({
+        queryKey: ['credit-scores'],
+      });
       return response?.success;
     } catch (error: unknown) {
       if (error instanceof Error) {

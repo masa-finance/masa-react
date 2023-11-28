@@ -11,7 +11,9 @@ export const useGreenGenerate = () => {
       async (phoneNumber: string, code: string) => {
         try {
           const response = await masa?.green.create('ETH', phoneNumber, code);
-          await queryClient.invalidateQueries(['green']);
+          await queryClient.invalidateQueries({
+            queryKey: ['green'],
+          });
           return response ?? null;
         } catch (error: unknown) {
           if (error instanceof Error) {

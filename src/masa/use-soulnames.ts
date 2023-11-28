@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
 
 import { useMasaClient } from '../masa-client/use-masa-client';
-import { MasaQueryClientContext } from '../masa-client/masa-query-client-context';
+import { queryClient } from '../masa-client/query-client';
 
 export const useSoulNames = () => {
   const { masaAddress, masaNetwork, masa } = useMasaClient();
@@ -22,12 +22,14 @@ export const useSoulNames = () => {
     data: soulnames,
     isFetching: isLoadingSoulnames,
     refetch: getSoulnames,
-  } = useQuery({
-    enabled: !!masaAddress && !!masaNetwork,
-    context: MasaQueryClientContext,
-    queryKey: ['soulnames', { masaAddress, masaNetwork, persist: false }],
-    queryFn: getSoulnamesAsync,
-  });
+  } = useQuery(
+    {
+      enabled: !!masaAddress && !!masaNetwork,
+      queryKey: ['soulnames', { masaAddress, masaNetwork, persist: false }],
+      queryFn: getSoulnamesAsync,
+    },
+    queryClient
+  );
 
   return {
     soulnames,

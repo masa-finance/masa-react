@@ -29,7 +29,7 @@ export const useSoulNamesPurchase = () => {
           undefined,
           style
         );
-        await queryClient.invalidateQueries(['soulnames']);
+        await queryClient.invalidateQueries({ queryKey: ['soulnames'] });
         return result;
       } catch (error: unknown) {
         if (error instanceof Error) {

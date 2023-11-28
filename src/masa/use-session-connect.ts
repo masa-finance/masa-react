@@ -16,27 +16,23 @@ export const useSessionConnect = () => {
 
     const loginObj = await masa.session.login();
 
-    await queryClient.invalidateQueries([
-      'session-new-check',
-      { masaAddress, persist: true },
-    ]);
-    await queryClient.invalidateQueries([
-      'session-new',
-      { masaAddress, persist: false },
-    ]);
+    await queryClient.invalidateQueries({
+      queryKey: ['session-new-check', { masaAddress, persist: true }],
+    });
+    await queryClient.invalidateQueries({
+      queryKey: ['session-new', { masaAddress, persist: false }],
+    });
 
     if (!loginObj) {
       return null;
     }
 
-    await queryClient.fetchQuery([
-      'session-new-check',
-      { persist: true, masaAddress },
-    ]);
-    await queryClient.fetchQuery([
-      'session-new',
-      { persist: false, masaAddress },
-    ]);
+    await queryClient.fetchQuery({
+      queryKey: ['session-new-check', { persist: true, masaAddress }],
+    });
+    await queryClient.fetchQuery({
+      queryKey: ['session-new', { persist: false, masaAddress }],
+    });
 
     return loginObj;
   }, [queryClient, masa, address, masaAddress, isDisconnected]);
@@ -44,14 +40,12 @@ export const useSessionConnect = () => {
   const [{ loading: isLoggingOut }, logoutSession] = useAsyncFn(async () => {
     const result = await masa?.session.logout();
     await Promise.all([
-      queryClient.invalidateQueries([
-        'session-new-check',
-        { masaAddress, persist: true },
-      ]),
-      queryClient.invalidateQueries([
-        'session-new',
-        { masaAddress, persist: false },
-      ]),
+      queryClient.invalidateQueries({
+        queryKey: ['session-new-check', { masaAddress, persist: true }],
+      }),
+      queryClient.invalidateQueries({
+        queryKey: ['session-new', { masaAddress, persist: false }],
+      }),
     ]);
 
     queryClient.setQueryData(['session-new-check', { masaAddress }], false);

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useAsyncFn } from 'react-use';
 import { useMemo } from 'react';
-import { MasaQueryClientContext, useMasaClient } from '../masa-client';
+import { useMasaClient } from '../masa-client';
 import { useConfig } from '../base-provider';
 import { useCanQuery } from '../hooks/use-can-query';
 import { useSession } from './use-session';
@@ -14,6 +14,7 @@ import type {
   Token,
   TokenWithMetadata,
 } from './interfaces';
+import { queryClient } from '../masa-client/query-client';
 
 export const useCustomGallerySBT = ({
   overrideCustomSBTs,
@@ -66,15 +67,18 @@ export const useCustomGallerySBT = ({
     isFetching,
     refetch: refetchContracts,
     error,
-  } = useQuery({
-    queryKey: [
-      'custom-sbt-contracts',
-      { sessionAddress, masaAddress, masaNetwork, persist: false },
-    ],
-    enabled: !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
-    context: MasaQueryClientContext,
-    queryFn: getContractsAsync,
-  });
+  } = useQuery(
+    {
+      queryKey: [
+        'custom-sbt-contracts',
+        { sessionAddress, masaAddress, masaNetwork, persist: false },
+      ],
+      enabled:
+        !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
+      queryFn: getContractsAsync,
+    },
+    queryClient
+  );
 
   return {
     customContracts: contracts ?? [],
@@ -172,21 +176,24 @@ export const useCustomSBTs = (overrideCustomSBTs?: CustomGallerySBT[]) => {
     isFetching,
     refetch: reloadCustomSBTs,
     error,
-  } = useQuery({
-    queryKey: [
-      'custom-sbt',
-      {
-        sessionAddress,
-        masaAddress,
-        masaNetwork,
-        contracts,
-        persist: false,
-      },
-    ],
-    enabled: !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
-    context: MasaQueryClientContext,
-    queryFn: getCustomContracts,
-  });
+  } = useQuery(
+    {
+      queryKey: [
+        'custom-sbt',
+        {
+          sessionAddress,
+          masaAddress,
+          masaNetwork,
+          contracts,
+          persist: false,
+        },
+      ],
+      enabled:
+        !!hasSession && !!sessionAddress && !!masaAddress && !!masaNetwork,
+      queryFn: getCustomContracts,
+    },
+    queryClient
+  );
 
   return {
     customSBTs,
