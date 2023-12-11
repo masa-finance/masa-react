@@ -1,5 +1,4 @@
 const path = require('path');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
@@ -15,7 +14,7 @@ const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 2. Build css with first config export
 3. Build libraries with entry-mapped object config 
  */
-const commonConfig = /** @type { import('webpack').Configuration } */ {
+const commonConfig = /** @type { import("webpack").Configuration } */ {
   mode: 'none',
   devtool: undefined,
   entry: path.resolve(__dirname, './dist/src/index.js'),
@@ -66,22 +65,7 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
       React: 'react',
     }),
     new ForkTsCheckerWebpackPlugin(),
-    new NodePolyfillPlugin({
-      includeAliases: [
-        // 'fs',
-        // 'path',
-        // 'zlib',
-        'buffer',
-        'process',
-        'assert',
-        'crypto',
-        'http',
-        'https',
-        'os',
-        'stream',
-        'url',
-      ],
-    }),
+    new NodePolyfillPlugin(),
   ],
   optimization: {
     minimize: false,
@@ -93,7 +77,7 @@ const commonConfig = /** @type { import('webpack').Configuration } */ {
 };
 
 module.exports =
-  /** @type { import('webpack').Configuration } */
+  /** @type { import("webpack").Configuration } */
   [
     {
       ...commonConfig,
