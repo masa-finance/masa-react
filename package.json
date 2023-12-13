@@ -40,7 +40,7 @@
     "@tanstack/react-query": "^5.13.4",
     "@tanstack/react-query-persist-client": "^5.13.4",
     "@wagmi/chains": "^1.8.0",
-    "@wagmi/core": "^1.4.10",
+    "@wagmi/core": "^1.4.11",
     "ethers": "~5.7.2",
     "rc-tooltip": "^6.1.2",
     "react": "^18.2.0",
@@ -50,7 +50,7 @@
     "react-use": "^17.4.2",
     "rodal": "^2.0.0",
     "viem": "^1.19.13",
-    "wagmi": "^1.4.10"
+    "wagmi": "^1.4.11"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",
@@ -71,7 +71,7 @@
     "@tanstack/react-query-devtools": "^5.13.5",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.4",
-    "@types/react": "^18.2.43",
+    "@types/react": "^18.2.45",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "babel-loader": "^9.1.3",
