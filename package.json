@@ -30,7 +30,7 @@
     "doc": "typedoc"
   },
   "dependencies": {
-    "@celo/rainbowkit-celo": "^1.1.0",
+    "@celo/rainbowkit-celo": "^1.1.1",
     "@ebay/nice-modal-react": "^1.2.13",
     "@ethersproject/providers": "^5.7.2",
     "@masa-finance/masa-contracts-identity": "^1.12.0",
