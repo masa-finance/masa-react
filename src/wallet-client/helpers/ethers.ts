@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { usePublicClient, useWalletClient } from 'wagmi';
-import type { Provider } from '@wagmi/core';
+import type { Provider } from '@ethersproject/providers';
 import { Signer } from 'ethers';
 import { publicClientToProvider, walletClientToSigner } from './wagmi';
 

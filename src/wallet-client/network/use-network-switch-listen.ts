@@ -1,4 +1,4 @@
-import { Provider } from '@wagmi/core';
+import type { Provider } from '@ethersproject/providers';
 import { useEffect } from 'react';
 import { Connector } from 'wagmi';
 
