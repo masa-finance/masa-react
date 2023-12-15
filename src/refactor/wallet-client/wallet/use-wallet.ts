@@ -17,7 +17,7 @@ import {
 } from 'wagmi';
 import { Signer } from 'ethers';
 
-import { Provider } from '@wagmi/core';
+import type { Provider } from '@ethersproject/providers';
 import { useEthersProvider, useEthersSigner } from '../../helpers/ethers';
 
 export interface UseWalletReturn {
