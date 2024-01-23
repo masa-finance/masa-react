@@ -43,7 +43,7 @@ export const createQueryClient = () => {
   }
 
   if (persister)
-    persistQueryClient({
+    void persistQueryClient({
       queryClient,
       persister,
       dehydrateOptions: {

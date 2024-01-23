@@ -8116,10 +8116,10 @@ eslint-config-airbnb@^19.0.4:
     object.assign "^4.1.2"
     object.entries "^1.1.5"
 
-eslint-config-masa@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/eslint-config-masa/-/eslint-config-masa-0.0.18.tgz#470572e49d444f512b3b07c6dabc8d4112db8e62"
-  integrity sha512-sbXlbz1d+8yY76ybhHCYUw7CT4llcJLM6Et4/pXLBcJwZwIjmD0Yap4ewSwl6TP/Q7Hs49eUk51YeeXeh7gM2w==
+eslint-config-masa@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/eslint-config-masa/-/eslint-config-masa-0.0.22.tgz#ce8950b3476043c87f278ebefe2024aaf6067731"
+  integrity sha512-NnKXLC4PyTcD1uflv27v6nK5ucg//nOqwWVBPMyN27foiaA2rZ+JidcJz4Z1GhYXEgjMRiBNYIE+L3PU5BInVQ==
   dependencies:
     "@tanstack/eslint-plugin-query" "^5.12.1"
     "@typescript-eslint/eslint-plugin" "^6.19.1"
