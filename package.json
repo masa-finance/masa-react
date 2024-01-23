@@ -47,7 +47,7 @@
     "react-dom": "^18.2.0",
     "react-phone-number-input": "^3.3.7",
     "react-spinners": "^0.13.8",
-    "react-use": "^17.4.2",
+    "react-use": "^17.5.0",
     "rodal": "^2.0.0",
     "viem": "^1.21.4",
     "wagmi": "^1.4.12"
