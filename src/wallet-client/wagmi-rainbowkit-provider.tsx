@@ -1,18 +1,22 @@
+// import {
+//   // connectorsForWallets,
+//   // WalletList,
+//   RainbowKitProvider,
+// } from '@rainbow-me/rainbowkit';
+
 import {
-  connectorsForWallets,
-  RainbowKitProvider,
-  WalletList,
-} from '@rainbow-me/rainbowkit';
+  createConfig,
+  http,
+  CreateConfigParameters,
+  WagmiProvider,
+} from 'wagmi';
 
-import { Chain, configureChains, createConfig, WagmiConfig } from 'wagmi';
-
-import { publicProvider } from 'wagmi/providers/public';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+import { type Chain } from 'viem';
 import type { ReactNode } from 'react';
 import React, { useMemo } from 'react';
 
+import { Transport } from 'viem';
 import { getChainsSortedByForcedNetwork, getRainbowkitChains } from './utils';
-import { walletConnectorsList } from './constants';
 import { useConfig } from '../base-provider';
 
 export interface WagmiRainbowkitProviderProps {
@@ -22,8 +26,7 @@ export interface WagmiRainbowkitProviderProps {
 export const WagmiRainbowkitProvider = ({
   children,
 }: WagmiRainbowkitProviderProps) => {
-  const { allowedNetworkNames, allowedWallets, rainbowkitConfig, forceChain } =
-    useConfig();
+  const { allowedNetworkNames, rainbowkitConfig, forceChain } = useConfig();
   const rainbowkitChains = useMemo(
     () =>
       getChainsSortedByForcedNetwork(
@@ -33,45 +36,30 @@ export const WagmiRainbowkitProvider = ({
     [allowedNetworkNames, forceChain]
   );
 
-  const { chains, publicClient, webSocketPublicClient } = configureChains(
-    rainbowkitChains,
-    [
-      publicProvider(),
-      jsonRpcProvider({
-        rpc: (chain: Chain) => ({ http: chain.rpcUrls.default.http[0] }),
-      }),
-    ]
-  );
+  console.log({ rainbowkitChains });
 
-  const walletConnectors =
-    allowedWallets?.map((wallet: 'metamask' | 'valora' | 'walletconnect') => {
-      if (walletConnectorsList[wallet]) {
-        const walletListFunc = walletConnectorsList[wallet];
-        return walletListFunc(chains) as unknown as WalletList;
-      }
-      return undefined;
-    }) ?? [];
+  const newConfig: CreateConfigParameters = {
+    chains: rainbowkitChains,
+    transports: rainbowkitChains.reduce(
+      (acc: Record<Chain['id'], Transport>, val: Chain) => {
+        const { id } = val;
+        acc[id] = http();
+        return acc;
+      },
+      {} as Record<Chain['id'], Transport>
+    ),
+  };
 
-  const celoConnectors = connectorsForWallets(
-    walletConnectors as unknown as WalletList
-  );
+  console.log({ newConfig });
 
-  const wagmiClient = createConfig({
-    autoConnect: true,
-    connectors: celoConnectors,
-    publicClient,
-    webSocketPublicClient,
-  });
+  const wagmiConfig = createConfig(newConfig);
 
   return (
-    <WagmiConfig config={wagmiClient}>
-      <RainbowKitProvider
-        modalSize={rainbowkitConfig?.modalSize}
-        chains={rainbowkitChains}
-      >
-        {children}
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <WagmiProvider config={wagmiConfig}>
+      {/* <RainbowKitProvider modalSize={rainbowkitConfig?.modalSize}>
+      </RainbowKitProvider> */}
+      {children}
+    </WagmiProvider>
   );
 };
 

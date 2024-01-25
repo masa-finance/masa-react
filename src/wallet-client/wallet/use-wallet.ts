@@ -7,16 +7,17 @@ import { useEffect, useMemo, useState } from 'react';
 
 import {
   Connector,
-  PublicClient,
   useAccount,
   useBalance,
   useDisconnect,
   usePublicClient,
   useWalletClient as useWalletClientWagmi,
-  WalletClient,
 } from 'wagmi';
 import { Signer } from 'ethers';
-
+import {
+  GetPublicClientReturnType,
+  type GetWalletClientReturnType,
+} from '@wagmi/core';
 import type { Provider } from '@ethersproject/providers';
 import { useEthersProvider, useEthersSigner } from '../helpers/ethers';
 
@@ -27,8 +28,8 @@ export interface UseWalletReturn {
   previousAddress?: `0x${string}`;
   compareAddress?: `0x${string}`;
   shortAddress?: `0x${string}`;
-  publicClient?: PublicClient;
-  walletClient?: WalletClient;
+  publicClient?: GetPublicClientReturnType;
+  walletClient?: GetWalletClientReturnType;
   signer?: Signer;
   provider?: Provider;
   connector?: Connector;

@@ -7,7 +7,8 @@ import React, {
   useMemo,
 } from 'react';
 
-import type { Chain } from 'wagmi';
+// import type { Chain } from '@wagmi/core';
+import type { Chain } from 'viem';
 import { useWallet } from './wallet/use-wallet';
 import { useNetwork } from './network/use-network';
 import { useAccountChangeListen } from './wallet/use-account-change-listen';

@@ -10,21 +10,23 @@ import {
   useAccount,
   useConnect,
   useNetwork as useNetworkWagmi,
-  useSwitchNetwork,
+  useChainId,
+  useSwitchChain,
+  useSwitchChain as useSwitchNetworkWagmi,
 } from 'wagmi';
 
 import { useCallback, useMemo, useState } from 'react';
 
 export const useNetwork = () => {
   const {
-    switchNetwork: switchNetworkWagmi,
+    switchChain: switchNetworkWagmi,
     error: networkError,
-    switchNetworkAsync,
-    isLoading: isSwitchingWagmi,
-  } = useSwitchNetwork();
+    switchChainAsync: switchNetworkAsync,
+    isPending: isSwitchingWagmi,
+  } = useSwitchChain();
   const { connectors, pendingConnector } = useConnect();
-  const { connector: activeConnector } = useAccount();
-  const { chains, chain: activeChain } = useNetworkWagmi();
+  const { connector: activeConnector, chain: activeChain } = useAccount();
+  const { chains } = useNetworkWagmi();
   const network = useNetworkWagmi();
   const [switchingToChain, setSwitchingToChain] = useState<number | null>();
   const stopSwitching = useCallback(() => {
@@ -48,7 +50,7 @@ export const useNetwork = () => {
       try {
         if (!chainId) return;
         setSwitchingToChain(chainId);
-        switchNetworkWagmi?.(chainId);
+        switchNetworkWagmi?.({ chainId });
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.error(`switching networks failed! ${error.message}`);
@@ -82,8 +84,8 @@ export const useNetwork = () => {
     [activeChain?.id, switchNetworkWagmi, stopSwitching]
   );
 
-  const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
-  const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
+  // const activeChainId = useMemo(() => activeChain?.id, [activeChain]);
+  // const activeNetwork = useMemo(() => activeChain?.network, [activeChain]);
   const currentNetwork = useMemo(() => {
     const nw = activeChain?.id;
 

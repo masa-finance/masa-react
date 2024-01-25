@@ -4,7 +4,7 @@ import {
   SupportedNetworks,
 } from '@masa-finance/masa-sdk';
 import { Chain } from '@wagmi/chains';
-
+// import { type Chain } from 'viem';
 const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
   .filter((networkName: string) => networkName !== 'unknown') // remove unused network
   .map((networkName: string) => {
@@ -32,7 +32,9 @@ const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
     };
   });
 
-export const getRainbowkitChains = (networkNames?: NetworkName[]): Chain[] => {
+export const getRainbowkitChains = (
+  networkNames?: NetworkName[]
+): readonly Chain[] => {
   if (!networkNames || (networkNames && networkNames.length === 0)) {
     return rainbowkitChains;
   }
@@ -49,7 +51,7 @@ export const getRainbowkitChains = (networkNames?: NetworkName[]): Chain[] => {
 
       return undefined;
     })
-    .filter((chain: Chain | undefined) => !!chain) as Chain[];
+    .filter((chain: Chain | undefined) => !!chain) as readonly Chain[];
 };
 
 export const getChainIdNetworkMap = (chains?: Chain[]) => {
@@ -65,10 +67,10 @@ export const getChainIdNetworkMap = (chains?: Chain[]) => {
 };
 
 export const getChainsSortedByForcedNetwork = (
-  chains: Chain[],
+  chains: readonly Chain[],
   forceChain?: NetworkName
-): Chain[] => {
-  if (!forceChain) return chains;
+): readonly [Chain, ...Chain[]] => {
+  if (!forceChain) return chains as readonly [Chain, ...Chain[]];
 
   const singleChain = chains.filter(
     (chain: Chain) => chain.network === forceChain
@@ -77,5 +79,5 @@ export const getChainsSortedByForcedNetwork = (
   return [
     ...singleChain,
     ...chains.filter((chain: Chain) => chain.network !== forceChain),
-  ];
+  ] as unknown as readonly [Chain, ...Chain[]];
 };

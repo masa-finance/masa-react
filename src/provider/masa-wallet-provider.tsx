@@ -3,7 +3,7 @@ import WagmiRainbowkitProvider from '../wallet-client/wagmi-rainbowkit-provider'
 import WalletClientProvider from '../wallet-client/wallet-client-provider';
 
 export const MasaWalletProvider = ({ children }: { children: ReactNode }) => (
-  <WagmiRainbowkitProvider>
+  // <WagmiRainbowkitProvider>
     <WalletClientProvider>{children}</WalletClientProvider>
-  </WagmiRainbowkitProvider>
+  // </WagmiRainbowkitProvider>
 );
