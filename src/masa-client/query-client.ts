@@ -43,20 +43,26 @@ export const createQueryClient = () => {
   }
 
   if (persister)
-    persistQueryClient({
-      queryClient,
-      persister,
-      dehydrateOptions: {
-        shouldDehydrateQuery: (
-          query: Query<unknown, Error, unknown, QueryKey>
-        ) =>
-          query.gcTime !== 0 &&
-          // Note: adding a `persist` flag to a query key will instruct the
-          // persister whether or not to persist the response of the query.
-          (query.queryKey[1] as { persist?: boolean } & Record<string, unknown>)
-            .persist !== false,
-      },
-    });
+    void Promise.all(
+      persistQueryClient({
+        queryClient,
+        persister,
+        dehydrateOptions: {
+          shouldDehydrateQuery: (
+            query: Query<unknown, Error, unknown, QueryKey>
+          ) =>
+            query.gcTime !== 0 &&
+            // Note: adding a `persist` flag to a query key will instruct the
+            // persister whether or not to persist the response of the query.
+            (
+              query.queryKey[1] as { persist?: boolean } & Record<
+                string,
+                unknown
+              >
+            ).persist !== false,
+        },
+      })
+    );
 
   return queryClient;
 };
