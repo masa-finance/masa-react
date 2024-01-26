@@ -1,14 +1,14 @@
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { Query, QueryClient, QueryKey } from '@tanstack/react-query';
-import type {
-  PersistedClient,
-  Persister,
-} from '@tanstack/react-query-persist-client';
+import type { Persister } from '@tanstack/react-query-persist-client';
 import { persistQueryClient } from '@tanstack/react-query-persist-client';
-import { noopStorage } from '@wagmi/core';
-import { createStorage } from 'wagmi';
 
-export const createQueryClient = () => {
+// import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+// import { QueryClient } from '@tanstack/react-query'
+
+import { deserialize, serialize } from 'wagmi';
+
+export const createQueryClientAndPersister = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -16,6 +16,9 @@ export const createQueryClient = () => {
         networkMode: 'offlineFirst',
         refetchOnWindowFocus: false,
         retry: 0,
+        // With SSR, we usually want to set some default staleTime
+        // above 0 to avoid refetching immediately on the client
+        staleTime: 60 * 1000,
       },
       mutations: {
         networkMode: 'offlineFirst',
@@ -23,12 +26,13 @@ export const createQueryClient = () => {
     },
   });
 
-  const storage = createStorage({
-    storage:
-      typeof window !== 'undefined' && window.localStorage
-        ? window.localStorage
-        : noopStorage,
-  });
+  const storage = window.localStorage;
+  //  createStorage({
+  //   storage:
+  //     typeof window !== 'undefined' && window.localStorage
+  //       ? window.localStorage
+  //       : null,
+  // });
   let persister: Persister | undefined;
 
   if (typeof window !== 'undefined') {
@@ -36,29 +40,37 @@ export const createQueryClient = () => {
       key: 'masa-cache',
       storage,
       // Serialization is handled in `storage`.
-      serialize: (x: unknown) => x as string,
+      serialize,
       // Deserialization is handled in `storage`.
-      deserialize: (x: unknown) => x as PersistedClient,
+      deserialize,
     });
   }
 
   if (persister)
-    void persistQueryClient({
-      queryClient,
-      persister,
-      dehydrateOptions: {
-        shouldDehydrateQuery: (
-          query: Query<unknown, Error, unknown, QueryKey>
-        ) =>
-          query.gcTime !== 0 &&
-          // Note: adding a `persist` flag to a query key will instruct the
-          // persister whether or not to persist the response of the query.
-          (query.queryKey[1] as { persist?: boolean } & Record<string, unknown>)
-            .persist !== false,
-      },
-    });
+    void Promise.all(
+      persistQueryClient({
+        queryClient,
+        persister,
+        dehydrateOptions: {
+          shouldDehydrateQuery: (
+            query: Query<unknown, Error, unknown, QueryKey>
+          ) =>
+            query.gcTime !== 0 &&
+            // Note: adding a `persist` flag to a query key will instruct the
+            // persister whether or not to persist the response of the query.
+            (
+              query.queryKey[1] as { persist?: boolean } & Record<
+                string,
+                unknown
+              >
+            ).persist !== false,
+        },
+      })
+    );
 
-  return queryClient;
+  return { queryClient, persister };
 };
 
-export const queryClient: QueryClient = createQueryClient();
+const { queryClient, persister } = createQueryClientAndPersister();
+
+export { queryClient, persister };

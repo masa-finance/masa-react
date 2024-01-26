@@ -1,6 +1,6 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { Args, Meta } from '@storybook/react';
-import type { Chain } from 'wagmi';
+import type { Chain } from 'viem';
 import React, { MouseEventHandler, useCallback, useState } from 'react';
 import { darkStyles, JsonView } from 'react-json-view-lite';
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
@@ -46,7 +46,7 @@ const NetworkInfo = () => {
     switchingToChain,
     canProgrammaticallySwitchNetwork,
     activeChain,
-    activeNetwork,
+    // activeNetwork,
     isSwitchingChain,
     chains,
     isActiveChainUnsupported,
@@ -57,7 +57,7 @@ const NetworkInfo = () => {
       <h3>Chain / Network</h3>
       <li>Chain: {activeChain?.name}</li>
       <li>chain-id: {activeChain?.id}</li>
-      <li>activeNetwork: {String(activeNetwork)}</li>
+      {/* <li>activeNetwork: {String(activeChain.)}</li> */}
       <li>isSwitchingChain: {String(isSwitchingChain)}</li>
       <li>switchingToChain: {String(switchingToChain)}</li>
       <li>
@@ -439,7 +439,7 @@ const SessionButtons = () => {
 };
 
 const MasaInfo = () => {
-  const { activeNetwork, activeChainId } = useNetwork();
+  const { activeChain, activeChainId } = useNetwork();
   const { masaAddress, masaNetwork } = useMasaClient();
 
   return (
@@ -454,7 +454,7 @@ const MasaInfo = () => {
             <li>masaAddress: {masaAddress}</li>
 
             <li>masaNetwork: {masaNetwork}</li>
-            <li>activeNetwork: {activeNetwork}</li>
+            <li>activeNetwork: {activeChain?.name}</li>
             <li>activeChainId: {activeChainId}</li>
           </ul>
         </li>

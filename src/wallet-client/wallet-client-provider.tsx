@@ -59,7 +59,6 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     chains,
     isActiveChainUnsupported,
     availableChains,
-    pendingConnector,
     networkError,
   } = useNetwork();
 
@@ -129,7 +128,6 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         chains,
         isActiveChainUnsupported,
         availableChains,
-        pendingConnector,
       }) as WalletClientValue,
     [
       // wallet
@@ -161,7 +159,6 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       chains,
       isActiveChainUnsupported,
       availableChains,
-      pendingConnector,
     ]
   );
 

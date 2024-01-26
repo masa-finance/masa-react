@@ -26,7 +26,7 @@ export interface WagmiRainbowkitProviderProps {
 export const WagmiRainbowkitProvider = ({
   children,
 }: WagmiRainbowkitProviderProps) => {
-  const { allowedNetworkNames, rainbowkitConfig, forceChain } = useConfig();
+  const { allowedNetworkNames, forceChain } = useConfig();
   const rainbowkitChains = useMemo(
     () =>
       getChainsSortedByForcedNetwork(

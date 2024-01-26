@@ -6,11 +6,11 @@ import { useWallet } from '../wallet-client/wallet/use-wallet';
 export const useCanQuery = () => {
   const { masa } = useMasaClient();
   const { isDisconnected } = useWallet();
-  const { activeNetwork } = useNetwork();
+  const { activeChain } = useNetwork();
 
   const canQuery = useMemo(
-    () => Boolean(masa && activeNetwork && !isDisconnected),
-    [masa, activeNetwork, isDisconnected]
+    () => Boolean(masa && activeChain && !isDisconnected),
+    [masa, activeChain, isDisconnected]
   );
 
   return canQuery;

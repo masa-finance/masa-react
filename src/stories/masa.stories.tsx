@@ -1,5 +1,5 @@
 import type { Args, Meta } from '@storybook/react';
-import type { Chain } from 'wagmi';
+import type { Chain } from 'viem';
 import React, { MouseEventHandler } from 'react';
 import { Button } from '../ui';
 
@@ -31,7 +31,7 @@ const NetworkInfo = () => {
     switchingToChain,
     canProgrammaticallySwitchNetwork,
     activeChain,
-    activeNetwork,
+    // activeNetwork,
     isSwitchingChain,
     chains,
     isActiveChainUnsupported,
@@ -42,7 +42,7 @@ const NetworkInfo = () => {
       <h3>Chain / Network</h3>
       <li>Chain: {activeChain?.name}</li>
       <li>chain-id: {activeChain?.id}</li>
-      <li>activeNetwork: {String(activeNetwork)}</li>
+      {/* <li>activeNetwork: {String(activeNetwork)}</li> */}
       <li>isSwitchingChain: {String(isSwitchingChain)}</li>
       <li>switchingToChain: {String(switchingToChain)}</li>
       <li>
