@@ -14,6 +14,7 @@ import {
 } from 'wagmi';
 import { useCallback, useMemo, useState } from 'react';
 import { SwitchChainMutateAsync } from 'wagmi/query';
+import { SwitchChainErrorType } from '@wagmi/core';
 
 export const useNetwork = (): {
   connectors: unknown;
@@ -30,7 +31,7 @@ export const useNetwork = (): {
 
   isActiveChainUnsupported: boolean;
   stopSwitching: () => void;
-  networkError;
+  networkError: SwitchChainErrorType | null;
   // * old
   currentNetwork: Network | undefined;
   currentNetworkByChainId: NetworkName | undefined;
@@ -135,7 +136,7 @@ export const useNetwork = (): {
 
     isActiveChainUnsupported,
     stopSwitching,
-    networkError,
+    networkError: networkError as SwitchChainErrorType | null,
 
     // * old
     currentNetwork,
