@@ -2207,10 +2207,10 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.15.0":
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.15.0.tgz#b98441142b21d8035085f12a1272550de77625b2"
-  integrity sha512-58Qf5Nu+1sV4/Yz6/0oJFhRrU29qXPBle//WZcBFzQVNBt+kvpcZQI946YkgOzKQl5MzkuFzvti05S9qNninMg==
+"@masa-finance/masa-sdk@^3.16.1":
+  version "3.16.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.16.1.tgz#5fe79224cb7410612fafbf46d5747e55d3dcba9a"
+  integrity sha512-Ur7OIHxHjomBCMsvEiC2raFfoTPYCx80KXGCd1ew9EQX1jyZSSwTlUayn4cc0R/d+ysVPGUUW4AhFGEhR2xBdw==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/abstract-provider" "^5.7.0"
@@ -2220,7 +2220,7 @@
     "@masa-finance/masa-contracts-identity" "^1.12.0"
     "@masa-finance/masa-token" "^2.0.0"
     arweave "1.11.8"
-    axios "^1.6.5"
+    axios "^1.6.7"
     ethers "~5.7.2"
     grapheme-splitter "^1.0.4"
     typescript "^5.3.3"
@@ -6181,7 +6181,7 @@ axios@^0.27.2:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
 
-axios@^1.6.5:
+axios@^1.6.7:
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.7.tgz#7b48c2e27c96f9c68a2f8f31e2ab19f59b06b0a7"
   integrity sha512-/hDJGff6/c7u0hDkvkGxR/oy6CbCs8ziCsC7SqmhjfozqiJGc8Z11wrv9z9lYfY4K8l+H9TpjcMDX0xOZmx+RA==
