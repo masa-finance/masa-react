@@ -4286,17 +4286,10 @@
   resolved "https://registry.yarnpkg.com/@swc/types/-/types-0.1.5.tgz#043b731d4f56a79b4897a3de1af35e75d56bc63a"
   integrity sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==
 
-"@tanstack/eslint-plugin-query@^5.12.1":
-  version "5.17.20"
-  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.17.20.tgz#c6060fe4e1d8efddf72d8e0893eaaf511a07f3b1"
-  integrity sha512-Jxu/GV7JqDgI6HMP8wQqc5a8efe0GaXoc0qCI+YjVBWEaWh8+T+wF5Ywha44gVraaEGlqkEhYmZrykg6dUG3OA==
-  dependencies:
-    "@typescript-eslint/utils" "^5.62.0"
-
-"@tanstack/eslint-plugin-query@^5.17.7":
-  version "5.17.7"
-  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.17.7.tgz#7fc4863b4a38b37c8dd9877e020bd43d91d1338e"
-  integrity sha512-RpKZXIuplRrUZLqqh+jTM1yJP8/Ck21FpaSB5uGyc9LY8LNwxC8AwgaRAXVOZzKVeQMunnt3HrK83HME+7jnGw==
+"@tanstack/eslint-plugin-query@^5.12.1", "@tanstack/eslint-plugin-query@^5.17.22":
+  version "5.17.22"
+  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.17.22.tgz#a2ceb5d69226c56373b5f8bf713ef276a1602a30"
+  integrity sha512-9y85gtYcU60M4zW5/CNSxNygbil2jairs4DbtNvGKxQHi4LYUs30sLRcsuXDhu1cPGCY/yRN7LTjWFQCrWFGbQ==
   dependencies:
     "@typescript-eslint/utils" "^5.62.0"
 
