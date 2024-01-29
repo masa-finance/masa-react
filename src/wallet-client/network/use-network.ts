@@ -1,22 +1,47 @@
 import {
   getNetworkNameByChainId,
+  Network,
   NetworkName,
   SupportedNetworks,
 } from '@masa-finance/masa-sdk';
-// import type { GetNetworkResult } from '@wagmi/core';
 import type { Chain } from 'viem';
-
-import { useAccount, useConnect, useSwitchChain, useConfig } from 'wagmi';
-
+import {
+  Config,
+  useAccount,
+  useConfig,
+  useConnect,
+  useSwitchChain,
+} from 'wagmi';
 import { useCallback, useMemo, useState } from 'react';
+import { SwitchChainMutateAsync } from 'wagmi/query';
 
-export const useNetwork = () => {
+export const useNetwork = (): {
+  connectors: unknown;
+  switchNetwork: (chainId?: number) => void;
+  switchNetworkAsync: SwitchChainMutateAsync<Config, unknown>;
+  switchNetworkByName: (networkName: NetworkName) => void;
+  switchingToChain: number | null | undefined;
+  canProgrammaticallySwitchNetwork: boolean;
+  activeChain: Chain | undefined;
+  activeChainId: number | undefined;
+  isSwitchingChain: boolean;
+  chains: readonly [Chain, ...Chain[]];
+  availableChains: Chain[];
+
+  isActiveChainUnsupported: boolean;
+  stopSwitching: () => void;
+  networkError;
+  // * old
+  currentNetwork: Network | undefined;
+  currentNetworkByChainId: NetworkName | undefined;
+} => {
   const {
     switchChain: switchNetworkWagmi,
     error: networkError,
     switchChainAsync: switchNetworkAsync,
     isPending: isSwitchingWagmi,
   } = useSwitchChain();
+
   const { connectors } = useConnect();
   const { connector: activeConnector, chain: activeChain } = useAccount();
   const { chains } = useConfig();
@@ -103,7 +128,6 @@ export const useNetwork = () => {
     switchingToChain,
     canProgrammaticallySwitchNetwork,
     activeChain,
-    // activeNetwork,
     activeChainId,
     isSwitchingChain,
     chains,
@@ -112,36 +136,9 @@ export const useNetwork = () => {
     isActiveChainUnsupported,
     stopSwitching,
     networkError,
+
     // * old
     currentNetwork,
     currentNetworkByChainId,
-    // currentNetworkNew: network,
   };
-  //  as {
-  //   connectors?: Connector[];
-  //   switchNetwork?: (chainId?: number) => void;
-  //   switchNetworkAsync?:
-  //     | ((chainId_?: number | undefined) => Promise<Chain>)
-  //     | undefined;
-  //   switchNetworkByName: (forcedNetworkParam: NetworkName) => void;
-  //   switchingToChain: number | null | undefined;
-  //   canProgrammaticallySwitchNetwork: boolean;
-  //   activeChain:
-  //     | (Chain & {
-  //         unsupported?: boolean | undefined;
-  //       })
-  //     | undefined;
-  //   activeNetwork: string;
-  //   activeChainId: number;
-  //   isSwitchingChain: boolean;
-  //   chains: Chain[];
-  //   availableChains: Chain[];
-  //   pendingConnector?: Connector;
-  //   isActiveChainUnsupported: boolean;
-
-  //   currentNetwork: Network | undefined;
-  //   currentNetworkNew: GetNetworkResult;
-  //   stopSwitching: () => void;
-  //   networkError: Error | null;
-  // }
 };
