@@ -2120,10 +2120,10 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.15.0":
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.15.0.tgz#b98441142b21d8035085f12a1272550de77625b2"
-  integrity sha512-58Qf5Nu+1sV4/Yz6/0oJFhRrU29qXPBle//WZcBFzQVNBt+kvpcZQI946YkgOzKQl5MzkuFzvti05S9qNninMg==
+"@masa-finance/masa-sdk@^3.16.1":
+  version "3.16.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.16.1.tgz#5fe79224cb7410612fafbf46d5747e55d3dcba9a"
+  integrity sha512-Ur7OIHxHjomBCMsvEiC2raFfoTPYCx80KXGCd1ew9EQX1jyZSSwTlUayn4cc0R/d+ysVPGUUW4AhFGEhR2xBdw==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/abstract-provider" "^5.7.0"
@@ -2133,7 +2133,7 @@
     "@masa-finance/masa-contracts-identity" "^1.12.0"
     "@masa-finance/masa-token" "^2.0.0"
     arweave "1.11.8"
-    axios "^1.6.5"
+    axios "^1.6.7"
     ethers "~5.7.2"
     grapheme-splitter "^1.0.4"
     typescript "^5.3.3"
@@ -4165,10 +4165,17 @@
   resolved "https://registry.yarnpkg.com/@swc/types/-/types-0.1.5.tgz#043b731d4f56a79b4897a3de1af35e75d56bc63a"
   integrity sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==
 
-"@tanstack/eslint-plugin-query@^5.12.1", "@tanstack/eslint-plugin-query@^5.17.20":
+"@tanstack/eslint-plugin-query@^5.12.1":
   version "5.17.20"
   resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.17.20.tgz#c6060fe4e1d8efddf72d8e0893eaaf511a07f3b1"
   integrity sha512-Jxu/GV7JqDgI6HMP8wQqc5a8efe0GaXoc0qCI+YjVBWEaWh8+T+wF5Ywha44gVraaEGlqkEhYmZrykg6dUG3OA==
+  dependencies:
+    "@typescript-eslint/utils" "^5.62.0"
+
+"@tanstack/eslint-plugin-query@^5.17.22":
+  version "5.17.22"
+  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.17.22.tgz#a2ceb5d69226c56373b5f8bf713ef276a1602a30"
+  integrity sha512-9y85gtYcU60M4zW5/CNSxNygbil2jairs4DbtNvGKxQHi4LYUs30sLRcsuXDhu1cPGCY/yRN7LTjWFQCrWFGbQ==
   dependencies:
     "@typescript-eslint/utils" "^5.62.0"
 
@@ -4508,7 +4515,7 @@
     "@types/node" "*"
     form-data "^4.0.0"
 
-"@types/node@*", "@types/node@^20.11.7":
+"@types/node@*":
   version "20.11.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.7.tgz#cb49aedd758c978c30806d0c38b520ed2a3df6e0"
   integrity sha512-GPmeN1C3XAyV5uybAf4cMLWT9fDWcmQhZVtMFu7OR32WjrqGG+Wnk2V1d0bmtUyE/Zy1QJ9BxyiTih9z8Oks8A==
@@ -4524,6 +4531,13 @@
   version "18.19.10"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.10.tgz#4de314ab66faf6bc8ba691021a091ddcdf13a158"
   integrity sha512-IZD8kAM02AW1HRDTPOlz3npFava678pr8Ie9Vp8uRhBROXAv8MXT2pCnGZZAKYdromsNQLHQcfWQ6EOatVLtqA==
+  dependencies:
+    undici-types "~5.26.4"
+
+"@types/node@^20.11.10":
+  version "20.11.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.10.tgz#6c3de8974d65c362f82ee29db6b5adf4205462f9"
+  integrity sha512-rZEfe/hJSGYmdfX9tvcPMYeYPW2sNl50nsw4jZmRcaG0HIAb0WYEpsB05GOb53vjqpyE9GUhlDQ4jLSoB5q9kg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -4843,10 +4857,10 @@
   resolved "https://registry.yarnpkg.com/@wagmi/chains/-/chains-1.8.0.tgz#70e5fd0d50c8f9b8e63585eaf8544481e71707d3"
   integrity sha512-UXo0GF0Cl0+neKC2KAmVAahv8L/5rACbFRRqkDvHMefzY6Fh7yzJd8F4GaGNNG3w4hj8eUB/E3+dEpaTYDN62w==
 
-"@wagmi/connectors@4.1.10", "@wagmi/connectors@^4.1.10":
-  version "4.1.10"
-  resolved "https://registry.yarnpkg.com/@wagmi/connectors/-/connectors-4.1.10.tgz#1f36d05211f30ac5d84ecc30acb86c53f5f9b813"
-  integrity sha512-sevgZl9aTmFUb/IZcy9Jou+e/QM3LPjV+rm31aMFa8b5aRnQQoZ1KmDmy+v4rBR5jzfVErPDjh1/VdcMO5bmXA==
+"@wagmi/connectors@4.1.11":
+  version "4.1.11"
+  resolved "https://registry.yarnpkg.com/@wagmi/connectors/-/connectors-4.1.11.tgz#e3880ef50ebc3fd9cdead6c0d100ffcb7564cf91"
+  integrity sha512-bZgv1a63+SC+uv9zUMFTUWNIzKrTlcfvQriEugybeol2ufAQLAKuREXhAA/PdC7eBt4NrlaaoxTu0AZvdEpZsw==
   dependencies:
     "@coinbase/wallet-sdk" "3.9.1"
     "@metamask/sdk" "0.14.1"
@@ -4870,7 +4884,28 @@
     abitype "0.8.7"
     eventemitter3 "^4.0.7"
 
-"@wagmi/core@2.6.1", "@wagmi/core@^2.6.1":
+"@wagmi/connectors@^4.1.10":
+  version "4.1.10"
+  resolved "https://registry.yarnpkg.com/@wagmi/connectors/-/connectors-4.1.10.tgz#1f36d05211f30ac5d84ecc30acb86c53f5f9b813"
+  integrity sha512-sevgZl9aTmFUb/IZcy9Jou+e/QM3LPjV+rm31aMFa8b5aRnQQoZ1KmDmy+v4rBR5jzfVErPDjh1/VdcMO5bmXA==
+  dependencies:
+    "@coinbase/wallet-sdk" "3.9.1"
+    "@metamask/sdk" "0.14.1"
+    "@safe-global/safe-apps-provider" "0.18.1"
+    "@safe-global/safe-apps-sdk" "8.1.0"
+    "@walletconnect/ethereum-provider" "2.11.0"
+    "@walletconnect/modal" "2.6.2"
+
+"@wagmi/core@2.6.2":
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.6.2.tgz#d74ff8d33daa5e7ff0d793536248d43e541c2787"
+  integrity sha512-03lIYh+LRGMeriCTc17me+Hq3BbPZE5qtbIY7VBRnuBVy0q5qdTqzHXiT/btN5fmrmF9m992smW2k0ow5P6QyA==
+  dependencies:
+    eventemitter3 "5.0.1"
+    mipd "0.0.5"
+    zustand "4.4.1"
+
+"@wagmi/core@^2.6.1":
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/@wagmi/core/-/core-2.6.1.tgz#f378b0c4df3831616f6e8428a4511c4ffe8fad14"
   integrity sha512-8uE4cpkGqHObjFcDUU6ZGqn9KiOO2wsJOKZ+bXevLOXe2a6M268vOUKJUM2d6/Whn4aBFEyMcX8ESdLuySS78w==
@@ -5870,7 +5905,7 @@ axios@^0.27.2:
     follow-redirects "^1.14.9"
     form-data "^4.0.0"
 
-axios@^1.6.5:
+axios@^1.6.7:
   version "1.6.7"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.7.tgz#7b48c2e27c96f9c68a2f8f31e2ab19f59b06b0a7"
   integrity sha512-/hDJGff6/c7u0hDkvkGxR/oy6CbCs8ziCsC7SqmhjfozqiJGc8Z11wrv9z9lYfY4K8l+H9TpjcMDX0xOZmx+RA==
@@ -14621,13 +14656,13 @@ vscode-textmate@^8.0.0:
   resolved "https://registry.yarnpkg.com/vscode-textmate/-/vscode-textmate-8.0.0.tgz#2c7a3b1163ef0441097e0b5d6389cd5504b59e5d"
   integrity sha512-AFbieoL7a5LMqcnOF04ji+rpXadgOXnZsxQr//r83kLPr7biP7am3g9zbaZIaBGwBRWeSvoMD4mgPdX3e4NWBg==
 
-wagmi@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-2.5.2.tgz#db4c7f629dc4f6ae1bc006d853543fd2d1baab0c"
-  integrity sha512-epc0OmQYBWJfJGcitqE5CfpvlP/Ka79T8UPsRj6jsdE1qgoMoPAVYRdGbgOXB2/+KjeQJVVsD4wp3bTIh7p5tw==
+wagmi@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/wagmi/-/wagmi-2.5.4.tgz#de4e586bd4e3023b8d55c4a8d54eacf82b740451"
+  integrity sha512-fAHHiTf6Mb+dB29KYMTJHLtooyGzfOv2iWlyMfaAVDIQK0NF4o2NlPmU8gJne9gSA85BOTxmNJam3xQmkVMcRA==
   dependencies:
-    "@wagmi/connectors" "4.1.10"
-    "@wagmi/core" "2.6.1"
+    "@wagmi/connectors" "4.1.11"
+    "@wagmi/core" "2.6.2"
     use-sync-external-store "1.2.0"
 
 walker@^1.0.8:
