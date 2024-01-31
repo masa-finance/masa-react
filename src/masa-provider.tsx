@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 import NiceModal from '@ebay/nice-modal-react';
 import {
@@ -11,7 +11,10 @@ import { MasaReactConfig } from './config';
 import { MasaStateProvider } from './provider/masa-state-provider';
 import { MasaWalletProvider } from './provider/masa-wallet-provider';
 import WagmiRainbowkitProvider from './wallet-client/wagmi-rainbowkit-provider';
-import { persister, queryClient } from './masa-client/query-client';
+import {
+  persister,
+  queryClient as queryClientSingleton,
+} from './masa-client/query-client';
 
 export interface MasaProviderValue {
   children?: ReactNode;
@@ -25,23 +28,27 @@ export const MasaProvider = ({
   children: ReactNode;
   config: MasaReactConfig;
   verbose?: boolean;
-}) => (
-  <WagmiRainbowkitProvider>
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{ persister: persister as Persister }}
-    >
-      <MasaBaseProvider
-        config={{ ...config, masaConfig: { ...config.masaConfig, verbose } }}
+}) => {
+  const [queryClient] = useState(queryClientSingleton);
+
+  return (
+    <WagmiRainbowkitProvider>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister: persister as Persister }}
       >
-        <MasaWalletProvider>
-          <MasaStateProvider>
-            <NiceModal.Provider>{children}</NiceModal.Provider>
-          </MasaStateProvider>
-        </MasaWalletProvider>
-      </MasaBaseProvider>
-    </PersistQueryClientProvider>
-  </WagmiRainbowkitProvider>
-);
+        <MasaBaseProvider
+          config={{ ...config, masaConfig: { ...config.masaConfig, verbose } }}
+        >
+          <MasaWalletProvider>
+            <MasaStateProvider>
+              <NiceModal.Provider>{children}</NiceModal.Provider>
+            </MasaStateProvider>
+          </MasaWalletProvider>
+        </MasaBaseProvider>
+      </PersistQueryClientProvider>
+    </WagmiRainbowkitProvider>
+  );
+};
 
 export default MasaProvider;
