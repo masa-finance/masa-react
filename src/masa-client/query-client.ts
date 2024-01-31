@@ -2,6 +2,7 @@ import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persist
 import { Query, QueryClient, QueryKey } from '@tanstack/react-query';
 import type { Persister } from '@tanstack/react-query-persist-client';
 import { persistQueryClient } from '@tanstack/react-query-persist-client';
+import { noopStorage } from '@wagmi/core';
 
 // import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 // import { QueryClient } from '@tanstack/react-query'
@@ -26,7 +27,11 @@ export const createQueryClientAndPersister = () => {
     },
   });
 
-  const storage = window.localStorage;
+  const storage =
+    typeof window !== 'undefined' && window.localStorage
+      ? window.localStorage
+      : noopStorage;
+
   //  createStorage({
   //   storage:
   //     typeof window !== 'undefined' && window.localStorage
