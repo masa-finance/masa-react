@@ -19,9 +19,9 @@ export const useNetworkSwitchListen = ({
     let provider: Provider;
 
     activeConnector
-      ?.getProvider?.()
-      .then((provider_: Provider) => {
-        provider = provider_;
+      .getProvider?.()
+      .then((provider_: unknown) => {
+        provider = provider_ as Provider;
         provider.on('chainChanged', stopSwitching);
       })
       .catch((error: unknown) => {

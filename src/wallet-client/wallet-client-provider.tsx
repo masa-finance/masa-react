@@ -7,7 +7,8 @@ import React, {
   useMemo,
 } from 'react';
 
-import type { Chain } from 'wagmi';
+// import type { Chain } from '@wagmi/core';
+import type { Chain } from 'viem';
 import { useWallet } from './wallet/use-wallet';
 import { useNetwork } from './network/use-network';
 import { useAccountChangeListen } from './wallet/use-account-change-listen';
@@ -58,7 +59,6 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
     chains,
     isActiveChainUnsupported,
     availableChains,
-    pendingConnector,
     networkError,
   } = useNetwork();
 
@@ -128,7 +128,6 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
         chains,
         isActiveChainUnsupported,
         availableChains,
-        pendingConnector,
       }) as WalletClientValue,
     [
       // wallet
@@ -160,7 +159,6 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
       chains,
       isActiveChainUnsupported,
       availableChains,
-      pendingConnector,
     ]
   );
 

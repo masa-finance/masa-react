@@ -1,5 +1,6 @@
 import { useAsync } from 'react-use';
-import { ConnectorData, useAccount } from 'wagmi';
+import { useAccount } from 'wagmi';
+
 import { useEthersProvider } from '../helpers/ethers';
 
 export const useAccountChangeListen = ({
@@ -13,15 +14,22 @@ export const useAccountChangeListen = ({
   const { connector } = useAccount();
 
   useAsync(async () => {
-    const onChangeConnector = async ({ chain, account }: ConnectorData) => {
-      if (account) {
+    const onChangeConnector = async ({
+      chainId,
+      accounts,
+    }: {
+      accounts?: readonly `0x${string}`[] | undefined;
+      chainId?: number | undefined;
+    } & { uid: string }) => {
+      if (accounts && accounts.length > 0) {
         // NOTE: this is a hack to fix the walletconnect issue
         if (typeof window !== 'undefined') {
           window.localStorage.removeItem('walletconnect');
         }
 
-        onAccountChange?.(account);
-      } else if (chain) {
+        console.log('accchange', { accounts });
+        onAccountChange?.(accounts[0]);
+      } else if (chainId) {
         // NOTE: this is a hack to fix the walletconnect issue
         if (typeof window !== 'undefined') {
           window.localStorage.removeItem('walletconnect');
@@ -37,8 +45,8 @@ export const useAccountChangeListen = ({
       await Promise.resolve();
     };
 
-    connector?.on('change', onChangeConnector);
-    connector?.on('disconnect', onDisconnectConnector);
+    connector?.emitter.on('change', onChangeConnector);
+    connector?.emitter.on('disconnect', onDisconnectConnector);
     // * walletconnect
 
     const onAccountsChanged = async (accounts: string[]) => {
@@ -67,8 +75,8 @@ export const useAccountChangeListen = ({
     await Promise.resolve();
 
     return () => {
-      connector?.off('change', onChangeConnector);
-      connector?.off('disconnect', onDisconnectConnector);
+      connector?.emitter.off('change', onChangeConnector);
+      connector?.emitter.off('disconnect', onDisconnectConnector);
       provider?.off('accountsChanged', onAccountsChanged);
       provider?.off('chainChanged', onChainChanged);
       provider?.off('disconnect', onDisconnect);

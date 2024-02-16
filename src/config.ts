@@ -3,7 +3,7 @@ import type {
   MasaArgs,
   NetworkName,
 } from '@masa-finance/masa-sdk';
-import type { WagmiConfigProps } from 'wagmi';
+import type { CreateConfigParameters } from 'wagmi';
 
 export const AllNetworks: NetworkName[] = [
   // eth
@@ -46,7 +46,7 @@ export interface MasaReactConfig {
   forceChain?: NetworkName;
   soulNameStyle?: string;
   verbose?: boolean;
-  wagmiConfig?: WagmiConfigProps;
+  wagmiConfig?: CreateConfigParameters;
   contractAddressOverrides?: {
     SoulNameAddress: string;
     SoulStoreAddress: string;

@@ -2,8 +2,10 @@ import {
   Network,
   NetworkName,
   SupportedNetworks,
+  getNetworkNameByChainId,
 } from '@masa-finance/masa-sdk';
-import { Chain } from '@wagmi/chains';
+// import type { Chain } from '@wagmi/chains';
+import { type Chain } from 'viem';
 
 const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
   .filter((networkName: string) => networkName !== 'unknown') // remove unused network
@@ -32,7 +34,9 @@ const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
     };
   });
 
-export const getRainbowkitChains = (networkNames?: NetworkName[]): Chain[] => {
+export const getRainbowkitChains = (
+  networkNames?: NetworkName[]
+): readonly Chain[] => {
   if (!networkNames || (networkNames && networkNames.length === 0)) {
     return rainbowkitChains;
   }
@@ -49,33 +53,37 @@ export const getRainbowkitChains = (networkNames?: NetworkName[]): Chain[] => {
 
       return undefined;
     })
-    .filter((chain: Chain | undefined) => !!chain) as Chain[];
+    .filter((chain: Chain | undefined) => !!chain) as readonly Chain[];
 };
 
 export const getChainIdNetworkMap = (chains?: Chain[]) => {
   const chainIdNetworkMap = {};
 
+  console.log({ chains });
   if (!chains) return chainIdNetworkMap;
 
   for (const chain of chains) {
-    if (chain) chainIdNetworkMap[chain.network] = chain.id;
+    if (chain) chainIdNetworkMap[getNetworkNameByChainId(chain.id)] = chain.id;
   }
 
   return chainIdNetworkMap;
 };
 
 export const getChainsSortedByForcedNetwork = (
-  chains: Chain[],
+  chains: readonly Chain[],
   forceChain?: NetworkName
-): Chain[] => {
-  if (!forceChain) return chains;
+): readonly [Chain, ...Chain[]] => {
+  if (!forceChain) return chains as readonly [Chain, ...Chain[]];
 
   const singleChain = chains.filter(
-    (chain: Chain) => chain.network === forceChain
+    (chain: Chain) => getNetworkNameByChainId(chain.id) === forceChain
   );
 
+  // chains[0].name;
   return [
     ...singleChain,
-    ...chains.filter((chain: Chain) => chain.network !== forceChain),
-  ];
+    ...chains.filter(
+      (chain: Chain) => getNetworkNameByChainId(chain.id) !== forceChain
+    ),
+  ] as unknown as readonly [Chain, ...Chain[]];
 };

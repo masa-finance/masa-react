@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import MasaClientProvider from './masa-client-provider';
-import { queryClient } from '../masa-client/query-client';
+import { useConfig } from '../base-provider';
 
 export const MasaStateProvider = ({ children }: { children: ReactNode }) => {
+  const { rainbowkitConfig } = useConfig();
   return (
-    <QueryClientProvider client={queryClient}>
+    <RainbowKitProvider modalSize={rainbowkitConfig?.modalSize}>
       <MasaClientProvider>{children}</MasaClientProvider>
-    </QueryClientProvider>
+    </RainbowKitProvider>
   );
 };

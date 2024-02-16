@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { usePublicClient, useWalletClient } from 'wagmi';
 import { Signer } from 'ethers';
-import type { Provider } from '@ethersproject/providers';
+// import type { Provider } from '@ethersproject/providers';
 import { publicClientToProvider, walletClientToSigner } from './wagmi';
 
-export const useEthersProvider = (): Provider | undefined => {
+export const useEthersProvider = () => {
   const publicClient = usePublicClient();
   const provider = useMemo(() => {
     if (publicClient) return publicClientToProvider(publicClient);
