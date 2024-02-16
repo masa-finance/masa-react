@@ -136,7 +136,7 @@ export const useNetwork = (): {
 
     isActiveChainUnsupported,
     stopSwitching,
-    networkError: networkError as SwitchChainErrorType | null,
+    networkError,
 
     // * old
     currentNetwork,
