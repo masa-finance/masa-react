@@ -3013,10 +3013,10 @@
     css-minimizer-webpack-plugin "^5.0.1"
     style-loader "^3.3.3"
 
-"@size-limit/webpack-why@^11.0.1":
-  version "11.0.1"
-  resolved "https://registry.yarnpkg.com/@size-limit/webpack-why/-/webpack-why-11.0.1.tgz#ba91019896da5a96352c363a2441bb1a60a97a8f"
-  integrity sha512-BiZTc6BET/ZjTJLBg2shk1kTuW/uFFksZWrJl7D39W3FedWSYHLi/1k48h6C51r6WBhE58blE3WXivlUCQR3FQ==
+"@size-limit/webpack-why@^11.0.3":
+  version "11.0.3"
+  resolved "https://registry.yarnpkg.com/@size-limit/webpack-why/-/webpack-why-11.0.3.tgz#4119b283e3be71ea1d15211760b76166d3c3b953"
+  integrity sha512-aV0mK//2d8TO9AZAMcAlA6WeIeFEDVRe8e9EkrmIA0hBp/ETPHUqEGW4NpdmLXNXVQzA7KBaOHVXzamnNlpTkA==
   dependencies:
     "@statoscope/webpack-plugin" "^5.28.2"
 
