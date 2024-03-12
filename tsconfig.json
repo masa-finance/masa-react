@@ -38,6 +38,6 @@
     // don't fail on any all the time
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "noEmit": false,
-  },
+    "noEmit": false
+  }
 }
