@@ -36,6 +36,7 @@ export interface UseWalletReturn {
   isConnecting?: boolean;
   isDisconnected?: boolean;
   openConnectModal?: () => void;
+  connectModalOpen?: boolean;
   openChainModal?: () => void;
   openAccountModal?: () => void;
   disconnect?: () => void;
