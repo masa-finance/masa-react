@@ -54,7 +54,7 @@ export interface UseWalletReturn {
 }
 
 const useWallet = (): UseWalletReturn => {
-  const { openConnectModal } = useConnectModal();
+  const { openConnectModal, connectModalOpen } = useConnectModal();
   const { openChainModal } = useChainModal();
   const { openAccountModal } = useAccountModal();
   const { isConnected, isConnecting, isDisconnected, connector, address } =
@@ -148,6 +148,7 @@ const useWallet = (): UseWalletReturn => {
       isConnecting,
       isDisconnected,
       openConnectModal,
+      connectModalOpen,
       openChainModal,
       openAccountModal,
       disconnect,
@@ -178,6 +179,7 @@ const useWallet = (): UseWalletReturn => {
       isConnecting,
       isDisconnected,
       openConnectModal,
+      connectModalOpen,
       openChainModal,
       openAccountModal,
       disconnect,
