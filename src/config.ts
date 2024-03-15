@@ -1,35 +1,14 @@
-import type {
+import {
   EnvironmentName,
   MasaArgs,
   NetworkName,
+  SupportedNetworks,
 } from '@masa-finance/masa-sdk';
 import type { WagmiConfigProps } from 'wagmi';
 
-export const AllNetworks: NetworkName[] = [
-  // eth
-  'goerli',
-  'sepolia',
-  'ethereum',
-  // celo
-  'alfajores',
-  'celo',
-  // polygon
-  'mumbai',
-  'polygon',
-  // bsc
-  'bsctest',
-  'bsc',
-  // opbnb
-  'opbnbtest',
-  'opbnb',
-  // base
-  'basegoerli',
-  'basesepolia',
-  'base',
-  // scroll
-  'scrollsepolia',
-  'scroll',
-];
+export const AllNetworks: NetworkName[] = Object.keys(SupportedNetworks).filter(
+  (networkName: string) => networkName === 'unknown'
+) as NetworkName[];
 
 export interface ArweaveConfig {
   port?: string;
