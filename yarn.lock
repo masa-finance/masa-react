@@ -2390,17 +2390,17 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-contracts-marketplace@^2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-marketplace/-/masa-contracts-marketplace-2.1.5.tgz#103cccbd1b8f7182d99fb7b4ff3c7c4979f4a8fc"
-  integrity sha512-PdDR/e8zeUojsVTDjwY6VLSBwrT+qumey5f3UCrGv3UgRLZ2fNnIJL/krWt0NuHhvjI/F6JyG9E6xiQO6r3MFw==
+"@masa-finance/masa-contracts-marketplace@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-marketplace/-/masa-contracts-marketplace-2.1.6.tgz#9ab8b444c0e67fd29c1123ce15a070a25a1d77eb"
+  integrity sha512-0/CiDpd+oO/XBJ12e8WXRblG9psri/rBHXweFuZb4tjg4P2TdKWr/efpXEQbiolidGNsMEsPN8Z+2xNHiuaVgQ==
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.22.5":
-  version "3.22.5"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.22.5.tgz#25a846ade71892961b60f4df86a7dc6b2a19ab34"
-  integrity sha512-i6TIrr+rbEL4l76mAq4+nYhWCmcIDGUnbOGsiz0WtAdOcJ7eVje5wiZzYMmaXL7enA+1Ema4bGi8vbtb7158XA==
+"@masa-finance/masa-sdk@^3.22.6":
+  version "3.22.6"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.22.6.tgz#caf57f1e0ddfd34cac9a3ff48412922c63678f7c"
+  integrity sha512-XyhdZKXUEhJHmtDsCUElmY18IaRanAtU65C3b8vVG5EQHAGZUdHIpdYyIvN0LwP7nfp7+wgkHmkQUGwIVRLDlg==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/abstract-provider" "^5.7.0"
@@ -2410,7 +2410,7 @@
     "@layerzerolabs/lz-definitions" "^2.0.25"
     "@layerzerolabs/lz-v2-utilities" "^2.0.25"
     "@masa-finance/masa-contracts-identity" "^1.12.0"
-    "@masa-finance/masa-contracts-marketplace" "^2.1.5"
+    "@masa-finance/masa-contracts-marketplace" "^2.1.6"
     "@masa-finance/masa-token" "^2.1.1"
     arweave "1.11.8"
     axios "^1.6.8"
@@ -15687,6 +15687,7 @@ wordwrap@^1.0.0:
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
