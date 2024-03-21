@@ -2397,10 +2397,10 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.24.0":
-  version "3.24.0"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.24.0.tgz#d91bee6a4840091be8d4a93e2250ca7b7cee7555"
-  integrity sha512-l4JWL8b6qSJq+dlYWLB6mFlKFB9MAUXDo78lh/n/aqdPHq4H1BsGqx2Tb9EGhF9KPxhl08joJBYyDi/hXKIdyg==
+"@masa-finance/masa-sdk@^3.23.2":
+  version "3.23.2"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.23.2.tgz#ceb4b400b39c5125dbbbb6e4b621ae0aa251db72"
+  integrity sha512-wNnOxUCr3fQZE0LTPV5u6gTbbMOG1Pi97SXBAh67Sr+3511JmRSMvhYUfzhmDy13hl+2J4yYuO/P3ctbIsi13Q==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/abstract-provider" "^5.7.0"
@@ -15692,6 +15692,7 @@ wordwrap@^1.0.0:
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
