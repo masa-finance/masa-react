@@ -2334,32 +2334,32 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
-"@layerzerolabs/evm-sdks-core@^2.1.13":
-  version "2.1.13"
-  resolved "https://registry.yarnpkg.com/@layerzerolabs/evm-sdks-core/-/evm-sdks-core-2.1.13.tgz#fbf1e99c6b506966f8bd82c845dd63154fd25d35"
-  integrity sha512-vvie6LtJnfRL//Hj1s/WCzxHeTscJaDZp4V+O+mzlNc3llNP4kz2+6XFjzoFq3MFJbb78MYqyNbXmAfy46f2wg==
+"@layerzerolabs/evm-sdks-core@^2.1.23":
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/@layerzerolabs/evm-sdks-core/-/evm-sdks-core-2.1.23.tgz#dc2d6742f42e28eb4f48d32bf2a3ae1006970150"
+  integrity sha512-eeXJn6LYVdoDLFXxCuEpS9YfD0SiPiA1AeSpvvbb/YsRfms2LnrWDR2pHgd4cYlSBrimBM84RIrDbL8oVbEmTw==
   dependencies:
     ethers "^5.7.2"
 
-"@layerzerolabs/lz-definitions@^2.0.25":
-  version "2.1.13"
-  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-definitions/-/lz-definitions-2.1.13.tgz#71035def4aa96a604f3204160f25cacc681b766d"
-  integrity sha512-rIPJ4OpD1lZwroicYUaSclGrCSgHQA45ubbqd4US206YGfbbdfLQNb1AzVB0eNLwhIyNBFGteXn3PaDuuXLx1A==
+"@layerzerolabs/lz-definitions@^2.1.23":
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-definitions/-/lz-definitions-2.1.23.tgz#1111a0d39a8a1321e48308e87ef36911ec51cb10"
+  integrity sha512-m+VJy72IIb3p32Z/7KRV84KDRqjo2LLuH/cxtUi75EJKofSVRsCNJmAI+7GJK5ZMfTCqe3M3Z2tDf2XTwRO0ew==
   dependencies:
     tiny-invariant "^1.3.1"
 
-"@layerzerolabs/lz-evm-sdk-v2@^2.1.13":
-  version "2.1.13"
-  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-evm-sdk-v2/-/lz-evm-sdk-v2-2.1.13.tgz#9eeb816d4cc797c8bbeb5df422be143b6d5bb3d4"
-  integrity sha512-UavJj0cbIgLErllrL+wWR1LGqS3ABgVQf3Xg8+QPelIdBKXVws/Wd5ITWuA+R9NNaJK8l5FxxoO3zTh1IJEPTw==
+"@layerzerolabs/lz-evm-sdk-v2@^2.1.23":
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-evm-sdk-v2/-/lz-evm-sdk-v2-2.1.23.tgz#edc5b32a3419c1f2576a22ce41b40b8479250d4e"
+  integrity sha512-bcwvcwGOu/PrUgm9IGqeiBhDfpO/Ek7YZDNy+A4ey961fWRHhPwaAqqeuscSTOVgqIR8UDBK/mNkAxX7VckJmA==
   dependencies:
-    "@layerzerolabs/evm-sdks-core" "^2.1.13"
+    "@layerzerolabs/evm-sdks-core" "^2.1.23"
     ethers "^5.7.2"
 
-"@layerzerolabs/lz-v2-utilities@^2.0.25":
-  version "2.1.13"
-  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-v2-utilities/-/lz-v2-utilities-2.1.13.tgz#670e28ec95dd2c79505a91f1ec6432d56fb7fa94"
-  integrity sha512-hoc94zjM8ePCQTLubsIASNkBLFpY+YlbX2HIKmORLuZ4thCV+PlQSHZBsgjDLp799Lc71zBFzODRu4XCHay3Tg==
+"@layerzerolabs/lz-v2-utilities@^2.1.23":
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-v2-utilities/-/lz-v2-utilities-2.1.23.tgz#4a0d3b58b71f9b18cdd55b0e10f4e114f4c8f296"
+  integrity sha512-1qcXGMY75B3xHdpt3K6BYHPqHwadxt3hlRRErmiKZwOMfn8WoFnAKnhEDO+9Cxz8GzS7Tm2t7H7aiEZAb/HxxQ==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/address" "^5.7.0"
@@ -2367,7 +2367,7 @@
     "@ethersproject/bytes" "^5.7.0"
     "@ethersproject/keccak256" "^5.7.0"
     "@ethersproject/solidity" "^5.7.0"
-    "@layerzerolabs/lz-evm-sdk-v2" "^2.1.13"
+    "@layerzerolabs/lz-evm-sdk-v2" "^2.1.23"
     "@solana/web3.js" "^1.87.6"
     tiny-invariant "^1.3.1"
 
@@ -2397,31 +2397,31 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.22.6":
-  version "3.22.6"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.22.6.tgz#caf57f1e0ddfd34cac9a3ff48412922c63678f7c"
-  integrity sha512-XyhdZKXUEhJHmtDsCUElmY18IaRanAtU65C3b8vVG5EQHAGZUdHIpdYyIvN0LwP7nfp7+wgkHmkQUGwIVRLDlg==
+"@masa-finance/masa-sdk@^3.23.1":
+  version "3.23.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.23.1.tgz#4ed3b3ca09aa39e9d7a9adb98cced5cb396a5fd0"
+  integrity sha512-JeAhNVt0qynU7e/4ofgpdIwNMus7SXUoJNnofoFNf3yRO+gbmOiyUMgmtF9IlO9U9+B/Y9K/gKsRiHYs2WPhfQ==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/abstract-provider" "^5.7.0"
     "@ethersproject/abstract-signer" "^5.7.0"
     "@ethersproject/bignumber" "^5.7.0"
     "@ethersproject/providers" "^5.7.2"
-    "@layerzerolabs/lz-definitions" "^2.0.25"
-    "@layerzerolabs/lz-v2-utilities" "^2.0.25"
+    "@layerzerolabs/lz-definitions" "^2.1.23"
+    "@layerzerolabs/lz-v2-utilities" "^2.1.23"
     "@masa-finance/masa-contracts-identity" "^1.12.0"
     "@masa-finance/masa-contracts-marketplace" "^2.1.6"
-    "@masa-finance/masa-token" "^2.1.1"
+    "@masa-finance/masa-token" "^2.2.1"
     arweave "1.11.8"
     axios "^1.6.8"
     ethers "~5.7.2"
     grapheme-splitter "^1.0.4"
-    typescript "^5.4.2"
+    typescript "^5.4.3"
 
-"@masa-finance/masa-token@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-token/-/masa-token-2.1.1.tgz#134c12ebe8c66e6fa75ee6e6a8b3ff80a2a98596"
-  integrity sha512-pVBS+mtT8R90SdDl7av8LqNarhlHr5KR5QT0o51RKoRSKq5/3yCR0jMbEF0AaWRspohBWElctQBmEUkVQiaLUA==
+"@masa-finance/masa-token@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-token/-/masa-token-2.2.1.tgz#55d177868fb246284493a1a8ca46bec32d13e9c9"
+  integrity sha512-9xAYzCF5x1V07KUCd79z/3/+hq4H/hlU6CE6/th8f8OESGBDpZL0oPOlGJkHwRtM1sYUa04jbeaHIdjZ6Y2Kig==
 
 "@mdx-js/react@^2.1.5":
   version "2.3.0"
@@ -14397,7 +14397,16 @@ string-length@^4.0.1:
     char-regex "^1.0.2"
     strip-ansi "^6.0.0"
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -14480,7 +14489,14 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -15065,6 +15081,11 @@ typescript@^5.4.2:
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.2.tgz#0ae9cebcfae970718474fe0da2c090cad6577372"
   integrity sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==
+
+typescript@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.3.tgz#5c6fedd4c87bee01cd7a528a30145521f8e0feff"
+  integrity sha512-KrPd3PKaCLr78MalgiwJnA25Nm8HAmdwN3mYUYZgG/wizIo9EainNVQI9/yDavtVFRN2h3k8uf3GLHuhDMgEHg==
 
 ua-parser-js@^1.0.37:
   version "1.0.37"
@@ -15686,8 +15707,7 @@ wordwrap@^1.0.0:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
-  name wrap-ansi-cjs
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -15700,6 +15720,15 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
+  dependencies:
+    ansi-styles "^4.0.0"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
+
+wrap-ansi@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
+  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"
