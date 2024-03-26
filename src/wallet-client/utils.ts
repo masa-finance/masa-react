@@ -29,6 +29,12 @@ const rainbowkitChains: Chain[] = Object.keys(SupportedNetworks)
         },
       },
       testnet: network.isTestnet,
+      blockExplorers: {
+        default: {
+          name: network.chainName,
+          url: network.blockExplorerUrls?.[0] ?? '',
+        },
+      },
     };
   });
 
