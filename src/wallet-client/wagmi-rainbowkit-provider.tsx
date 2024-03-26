@@ -14,6 +14,7 @@ import React, { useMemo } from 'react';
 import { getChainsSortedByForcedNetwork, getRainbowkitChains } from './utils';
 import { walletConnectorsList } from './constants';
 import { useConfig } from '../base-provider';
+import { AllowedWallets } from '../config';
 
 export interface WagmiRainbowkitProviderProps {
   children: ReactNode;
@@ -44,7 +45,7 @@ export const WagmiRainbowkitProvider = ({
   );
 
   const walletConnectors =
-    allowedWallets?.map((wallet: 'metamask' | 'valora' | 'walletconnect') => {
+    allowedWallets?.map((wallet: AllowedWallets) => {
       if (walletConnectorsList[wallet]) {
         const walletListFunc = walletConnectorsList[wallet];
         return walletListFunc(chains) as unknown as WalletList;
