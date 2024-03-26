@@ -17,10 +17,19 @@ export interface ArweaveConfig {
   logging?: boolean;
 }
 
+export type AllowedWallets =
+  // recommended
+  | 'metamask'
+  | 'core'
+  // celo
+  | 'valora'
+  // wallet connect
+  | 'walletconnect';
+
 export interface MasaReactConfig {
   company?: string;
   allowedNetworkNames?: NetworkName[];
-  allowedWallets?: Array<'metamask' | 'valora' | 'walletconnect'>;
+  allowedWallets?: Array<AllowedWallets>;
   arweaveConfig?: ArweaveConfig;
   forceChain?: NetworkName;
   soulNameStyle?: string;
@@ -33,14 +42,13 @@ export interface MasaReactConfig {
   rainbowkitConfig?: {
     modalSize: 'compact' | 'wide';
   };
-
   masaConfig: Omit<MasaArgs, 'signer'>;
 }
 
 export const defaultConfig: Partial<MasaReactConfig> = {
   company: 'Masa',
   allowedNetworkNames: AllNetworks,
-  allowedWallets: ['metamask', 'valora', 'walletconnect'],
+  allowedWallets: ['metamask', 'valora', 'walletconnect', 'core'],
   masaConfig: {
     environment: 'production' as EnvironmentName,
     networkName: 'ethereum' as NetworkName,
