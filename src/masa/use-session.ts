@@ -1,6 +1,7 @@
 import { useAsyncFn } from 'react-use';
 import { useQuery } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { ISession } from '@masa-finance/masa-sdk';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useWallet } from '../wallet-client/wallet/use-wallet';
 import { useSessionConnect } from './use-session-connect';
@@ -11,15 +12,17 @@ export const useSession = () => {
   const { masa, masaAddress } = useMasaClient();
   const { isLoggingIn, isLoggingOut, loginSessionAsync, logoutSession } =
     useSessionConnect();
-  const [, getSessionAsync] = useAsyncFn(async () => {
-    const seshFromGet = await masa?.session.getSession();
-    return seshFromGet ?? null;
+  const [, getSessionAsync] = useAsyncFn(async (): Promise<
+    ISession | undefined
+  > => {
+    const sessFromGet = await masa?.session.getSession();
+    return sessFromGet ?? undefined;
   }, [masa]);
 
-  const [, checkSessionAsync] = useAsyncFn(async () => {
-    const hasSesh = await masa?.session.checkLogin();
+  const [, checkSessionAsync] = useAsyncFn(async (): Promise<boolean> => {
+    const hasSess = await masa?.session.checkLogin();
 
-    return hasSesh ?? null;
+    return hasSess ?? false;
   }, [masa]);
 
   // * queries
@@ -63,9 +66,9 @@ export const useSession = () => {
         !!getSessionAsync,
       gcTime: 0,
       queryFn: async () => {
-        const sesh = await getSessionAsync();
+        const sess = await getSessionAsync();
 
-        return sesh ?? null;
+        return sess ?? undefined;
       },
     },
     queryClient
