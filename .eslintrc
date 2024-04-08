@@ -15,7 +15,8 @@
       "files": [
         "*.ts",
         "*.tsx",
-        "*.js"
+        "*.js",
+        "*.jsx"
       ],
       "parser": "@typescript-eslint/parser"
     },

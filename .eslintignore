@@ -1,4 +1,4 @@
-webpack.config.prod.js
+webpack.config.js
 node_modules
 dist
 stories
@@ -7,5 +7,3 @@ test
 
 jest.config.js
 scripts/buildUtils.js
-
-src/*.stories.tsx

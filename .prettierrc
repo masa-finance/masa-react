@@ -6,7 +6,15 @@
   "endOfLine": "auto",
   "overrides": [
     {
-      "files": ["*.json", ".yml", ".yaml"],
+      "files": [
+        "*.js",
+        "*.jsx",
+        "*.ts",
+        "*.tsx",
+        "*.json",
+        ".yml",
+        ".yaml"
+      ],
       "options": {
         "tabWidth": 2
       }

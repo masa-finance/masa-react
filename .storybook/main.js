@@ -1,15 +1,36 @@
-module.exports = {
+const { dirname, join } = require('path');
+
+function getAbsolutePath(value) {
+  return dirname(require.resolve(join(value, 'package.json')));
+}
+
+const config = {
   stories: ['../src/**/*.stories.@(ts|tsx|js|jsx)'],
 
   addons: [
-    '@storybook/addon-essentials',
+    getAbsolutePath('@storybook/addon-essentials'),
+    getAbsolutePath('@storybook/addon-webpack5-compiler-babel'),
     {
-      name: '@storybook/addon-styling',
+      name: getAbsolutePath('@storybook/addon-styling-webpack'),
       options: {
-        sass: {
-          // Require your preprocessor
-          implementation: require('sass'),
-        },
+        rules: [
+          // Replaces any existing Sass rules with given rules
+          {
+            test: /\.s[ac]ss$/i,
+            use: [
+              'style-loader',
+              'css-loader',
+              {
+                loader: 'sass-loader',
+                options: { implementation: require.resolve('sass') },
+              },
+            ],
+          },
+          {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader'],
+          },
+        ],
       },
     },
   ],
@@ -19,15 +40,14 @@ module.exports = {
     check: true, // type-check stories during Storybook build
   },
 
-  // docs: {
-  //   autodocs: true,
-  // },
+  docs: {
+    autodocs: true,
+  },
+
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
   },
-
-  docs: {
-    autodocs: false,
-  },
 };
+
+export default config;
