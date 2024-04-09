@@ -1,14 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAsyncFn } from 'react-use';
+import { useMemo } from 'react';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { queryClient } from '../masa-client/query-client';
+import { useCanQuery } from '../hooks';
 
 export const useGreen = () => {
   const { masa, masaAddress, masaNetwork } = useMasaClient();
+  const canQuery = useCanQuery();
+
+  const isGreenAvailableInNetwork = useMemo(
+    () => masa?.green.isContractAvailable ?? false,
+    [masa]
+  );
+
   const [, getGreensAsync] = useAsyncFn(async () => {
+    if (!canQuery) return null;
+
+    if (!isGreenAvailableInNetwork) {
+      return null;
+    }
+
     const greensResult = await masa?.green.list();
     return greensResult ?? null;
-  }, [masa]);
+  }, [canQuery, isGreenAvailableInNetwork, masa?.green]);
+
   const {
     data: greens,
     isFetching: isLoadingGreens,
@@ -26,6 +42,8 @@ export const useGreen = () => {
     greens,
     isLoadingGreens,
     isGreensLoading: isLoadingGreens,
+    isGreenAvailableInNetwork,
+
     reloadGreens,
     getGreens: reloadGreens,
   };

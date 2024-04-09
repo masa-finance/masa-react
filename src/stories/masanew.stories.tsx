@@ -17,8 +17,7 @@ import { useIdentity } from '../masa/use-identity';
 import { useSoulNames } from '../masa/use-soulnames';
 import { useCreditScores } from '../masa/use-credit-scores';
 import { useGreen } from '../masa/use-green';
-import { useSBT } from '../masa/use-sbt';
-import MasaProvider from '../masa-provider';
+import { MasaProvider } from '../masa-provider';
 import { useSession } from '../masa/use-session';
 
 import { openCreateSoulnameModal } from '../ui/components/modals/create-soulname/CreateSoulnameModal';
@@ -280,18 +279,21 @@ const IdentityInfo = () => {
 };
 
 const SoulnameCreditScoreInfo = () => {
-  const { soulnames, isLoadingSoulnames } = useSoulNames();
+  const { soulnames, isLoadingSoulnames, isSoulnameAvailableInNetwork } =
+    useSoulNames();
   const { hasSession } = useSession();
   const { masa } = useMasaClient();
-  const { creditScores, isLoadingCreditScores, getCreditScores } =
-    useCreditScores();
+  const {
+    creditScores,
+    isLoadingCreditScores,
+    isCreditScoreAvailableInNetwork,
+    getCreditScores,
+  } = useCreditScores();
 
   useAsync(async () => {
-    console.log({ creditScores });
     if (creditScores || !hasSession || isLoadingCreditScores) return;
 
     await getCreditScores();
-    console.log('ABO', { creditScores });
   }, [creditScores, isLoadingCreditScores, hasSession, getCreditScores]);
   const [soulnameDetails, setSoulnameDetails] = useState<SoulNameDetails[]>([]);
 
@@ -311,6 +313,10 @@ const SoulnameCreditScoreInfo = () => {
         <h3>Soulnames</h3>
         <li>
           <ul>
+            <li>
+              isSoulnameAvailableInNetwork:
+              {String(isSoulnameAvailableInNetwork)}
+            </li>
             <li>isLoadingSoulnames: {String(isLoadingSoulnames)}</li>
             {soulnameDetails?.map((sn) => {
               const randomColor = `#${Math.floor(
@@ -341,6 +347,10 @@ const SoulnameCreditScoreInfo = () => {
         <h3>Credit Scores</h3>
         <li>
           <ul>
+            <li>
+              isCreditScoreAvailableInNetwork:
+              {String(isCreditScoreAvailableInNetwork)}
+            </li>
             <li>isLoadingCreditScores: {String(isLoadingCreditScores)}</li>
             <li>Credit Scores Amount: {String(creditScores?.length)}</li>
             CreditScores:{' '}
@@ -355,29 +365,6 @@ const SoulnameCreditScoreInfo = () => {
         </li>
       </ul>
     </>
-  );
-};
-
-const SBTInfo = () => {
-  const { SBTs, isLoadingSBTs } = useSBT({
-    tokenAddress: '0x1fCE0Ae50a8900f09E4A437F33E95313225Bb4b7',
-  });
-
-  return (
-    // skipcq: JS-0415
-    <ul>
-      <h3>SBTs</h3>
-      <li>isLoadingSBTs: {String(isLoadingSBTs)}</li>
-      <li>
-        <ul>
-          {(SBTs ?? []).map((sbt: unknown) => (
-            <li key={String(sbt)}>
-              <code>{JSON.stringify(sbt ?? null, null, 4)}</code>
-            </li>
-          ))}
-        </ul>
-      </li>
-    </ul>
   );
 };
 
@@ -464,11 +451,12 @@ const MasaInfo = () => {
 };
 
 const GreenInfo = () => {
-  const { greens, isLoadingGreens } = useGreen();
+  const { greens, isLoadingGreens, isGreenAvailableInNetwork } = useGreen();
 
   return (
     <ul>
       <h3>Greens</h3>
+      <li>isGreenAvailableInNetwork: {String(isGreenAvailableInNetwork)}</li>
       <li>isLoadingGreens: {String(isLoadingGreens)}</li>
       <li>
         <ul>
@@ -557,7 +545,6 @@ const Component = (): JSX.Element => {
       <SessionInfo />
       <IdentityInfo />
 
-      <SBTInfo />
       <SoulnameCreditScoreInfo />
       <GreenInfo />
       <ModalFlow />
