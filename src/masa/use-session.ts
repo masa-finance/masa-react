@@ -12,11 +12,9 @@ export const useSession = () => {
   const { masa, masaAddress } = useMasaClient();
   const { isLoggingIn, isLoggingOut, loginSessionAsync, logoutSession } =
     useSessionConnect();
-  const [, getSessionAsync] = useAsyncFn(async (): Promise<
-    ISession | undefined
-  > => {
+  const [, getSessionAsync] = useAsyncFn(async (): Promise<ISession | null> => {
     const sessFromGet = await masa?.session.getSession();
-    return sessFromGet ?? undefined;
+    return sessFromGet ?? null;
   }, [masa]);
 
   const [, checkSessionAsync] = useAsyncFn(async (): Promise<boolean> => {
@@ -68,7 +66,7 @@ export const useSession = () => {
       queryFn: async () => {
         const sess = await getSessionAsync();
 
-        return sess ?? undefined;
+        return sess ?? null;
       },
     },
     queryClient
