@@ -27,9 +27,14 @@ export const useSessionConnect = () => {
       return null;
     }
 
-    await queryClient.fetchQuery({
-      queryKey: ['session-new-check', { persist: true, masaAddress }],
-    });
+    // Wrap in try/catch to prevent errors from breaking the login flow
+    try {
+      await queryClient.fetchQuery({
+        queryKey: ['session-new-check', { persist: true, masaAddress }],
+      });
+    } catch (error) {
+      console.error(error);
+    }
     await queryClient.fetchQuery({
       queryKey: ['session-new', { persist: false, masaAddress }],
     });
