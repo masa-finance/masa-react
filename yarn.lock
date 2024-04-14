@@ -2770,32 +2770,32 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@layerzerolabs/evm-sdks-core@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@layerzerolabs/evm-sdks-core/-/evm-sdks-core-2.2.2.tgz#e8a20789da0eff291bb22d1f4261b24a321248a2"
-  integrity sha512-9IjWGqqSOZ7AsZJZwxBFCeoJRzieBuy+tWDhLpE1T3AeKXFZP7HrYvd5BM0YwTrxubhYmjC6t+3fwsAjfXVPSQ==
+"@layerzerolabs/evm-sdks-core@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@layerzerolabs/evm-sdks-core/-/evm-sdks-core-2.2.4.tgz#13d3ca12a0b92615be0e9a1a441fa8128ba17482"
+  integrity sha512-LAjv2HUy227l3hLfXIPdflSUEOQ37RNXsDM5uOUlHQXie/VOLf9r0EHRDdentuaPfjS245y3pwKseffEKNrh+w==
   dependencies:
     ethers "^5.7.2"
 
-"@layerzerolabs/lz-definitions@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-definitions/-/lz-definitions-2.2.2.tgz#80c7c92436e0538453901ba42ab32e6890fbe01a"
-  integrity sha512-JUuOkbPVgZn7lbzFRCotKiGjOe6w05vXCpb0Fpx+Q+DY82ib1GATV6DMAIYmlk24lsmzOILjUmMa+nsnaGjbyQ==
+"@layerzerolabs/lz-definitions@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-definitions/-/lz-definitions-2.2.4.tgz#716a679f0ae7ba429350974ec94c9459fa259ba1"
+  integrity sha512-c0aM5/W7xNOrhekuxZIyQXk183pjCxqzFBGxrTTiSBt61lZcSzfJSD6SUG/6lIkvjY9O+1ffT7SZy6/1hBCsiQ==
   dependencies:
     tiny-invariant "^1.3.1"
 
-"@layerzerolabs/lz-evm-sdk-v2@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-evm-sdk-v2/-/lz-evm-sdk-v2-2.2.2.tgz#1f0aeed386add7b0783194bfad2355746adcf038"
-  integrity sha512-ye5Y9lV6h0T0pb+V40hEQdB3kECHReVl7MSjruDGk0NEenmvMsgI2H3MnjAeCG5LQ6QIHlBn2LGjjQnTpdsobw==
+"@layerzerolabs/lz-evm-sdk-v2@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-evm-sdk-v2/-/lz-evm-sdk-v2-2.2.4.tgz#0af0234f4fe606aebdbe642ac6e290f43a685b70"
+  integrity sha512-VH13iAolSxC9f4qOC5/wmimMqHzlf/WoPyTuGJKLDgDragDjnfYfRAAl3PKsurXuVw+C+h0Ev7syvzjFdoyvyg==
   dependencies:
-    "@layerzerolabs/evm-sdks-core" "^2.2.2"
+    "@layerzerolabs/evm-sdks-core" "^2.2.4"
     ethers "^5.7.2"
 
-"@layerzerolabs/lz-v2-utilities@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-v2-utilities/-/lz-v2-utilities-2.2.2.tgz#6391481724a5ec8236dea24745b6c6c2437b4283"
-  integrity sha512-0RIENoMwKpAJfaNELlzBrjki3iwJO9TR94ozFD0WETJw8UYzvJkozb/dri5yVtlcA0RSoJZpzNipf6sKWTyATA==
+"@layerzerolabs/lz-v2-utilities@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@layerzerolabs/lz-v2-utilities/-/lz-v2-utilities-2.2.4.tgz#cfd37b2d424908862e4c213b702f2732f3e5e56b"
+  integrity sha512-bqjB74iVbRoxhqbpAXDfWUw8/2+c3w9JzxS02lQ77c0lm2gUAtPj774YYQ+dOf8zViceVRIQSS/LGC8q0J1iPw==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/address" "^5.7.0"
@@ -2803,7 +2803,7 @@
     "@ethersproject/bytes" "^5.7.0"
     "@ethersproject/keccak256" "^5.7.0"
     "@ethersproject/solidity" "^5.7.0"
-    "@layerzerolabs/lz-evm-sdk-v2" "^2.2.2"
+    "@layerzerolabs/lz-evm-sdk-v2" "^2.2.4"
     "@solana/web3.js" "^1.87.6"
     tiny-invariant "^1.3.1"
 
@@ -2833,31 +2833,31 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.30.6":
-  version "3.30.6"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.30.6.tgz#1be2179549713329cf77227d2ddf416e2a813eca"
-  integrity sha512-5kBj1UFIZr7+5SKOiUmg77RuWzaCiXcjtU3ee3+9vwWmpHo0T2iGSYJw4oDW09CBp8iZu15Z16kfWaCI8OfuWA==
+"@masa-finance/masa-sdk@^3.31.0":
+  version "3.31.0"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.31.0.tgz#ba15abaa4d646f635c3751446a336f9ad0c14496"
+  integrity sha512-BnXQHo1ejtE3HCpcrK8RHnMGlvcivlwFTLE9SY0xaj9OuQlM5kNvy5Ah6ymCmP3dhD6y/Kkc30CMtJ5cSQECyA==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/abstract-provider" "^5.7.0"
     "@ethersproject/abstract-signer" "^5.7.0"
     "@ethersproject/bignumber" "^5.7.0"
     "@ethersproject/providers" "^5.7.2"
-    "@layerzerolabs/lz-definitions" "^2.2.2"
-    "@layerzerolabs/lz-v2-utilities" "^2.2.2"
+    "@layerzerolabs/lz-definitions" "^2.2.4"
+    "@layerzerolabs/lz-v2-utilities" "^2.2.4"
     "@masa-finance/masa-contracts-identity" "^1.15.0"
     "@masa-finance/masa-contracts-marketplace" "^2.1.22"
-    "@masa-finance/masa-token" "^2.6.1"
+    "@masa-finance/masa-token" "^2.7.1"
     arweave "1.11.8"
     axios "^1.6.8"
     ethers "~5.7.2"
     grapheme-splitter "^1.0.4"
     typescript "^5.4.5"
 
-"@masa-finance/masa-token@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-token/-/masa-token-2.6.1.tgz#7b28ba29b496daa8e3a6252431afcc69834bab0c"
-  integrity sha512-pO4WY5hf0fUW+r6MR1f1L5hIYptLKj0lpwIlusaO2KO9mOY909nKae7xEpaNSjM2dgPTqNRVmB7XUxMKx/c8vA==
+"@masa-finance/masa-token@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-token/-/masa-token-2.7.1.tgz#0ed1835bfbb551add0637baf7ec457b1c1d971fd"
+  integrity sha512-2/ElTvpNqFM+JYxcLx6wRljmWM3Y3wGpq6/BkV7BwT3GEMJlSmLHT6fgTDOyy1h0aBgcnz7ZDnRvGbqgjygLng==
 
 "@mdx-js/react@^3.0.0":
   version "3.0.1"
