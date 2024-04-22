@@ -63,7 +63,7 @@
     "@size-limit/webpack": "^11.1.2",
     "@size-limit/webpack-css": "^11.1.2",
     "@size-limit/webpack-why": "^11.1.2",
-    "@storybook/addon-essentials": "^8.0.8",
+    "@storybook/addon-essentials": "^8.0.9",
     "@storybook/addon-links": "^8.0.8",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
     "@storybook/react": "^8.0.8",
