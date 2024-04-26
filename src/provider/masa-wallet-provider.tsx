@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
-import WagmiRainbowkitProvider from '../wallet-client/wagmi-rainbowkit-provider';
+
 import WalletClientProvider from '../wallet-client/wallet-client-provider';
+import MasaUpdatedProvider from '../MasaUpdatedProvider';
 
 export const MasaWalletProvider = ({ children }: { children: ReactNode }) => (
-  <WagmiRainbowkitProvider>
+  <MasaUpdatedProvider>
     <WalletClientProvider>{children}</WalletClientProvider>
-  </WagmiRainbowkitProvider>
+  </MasaUpdatedProvider>
 );

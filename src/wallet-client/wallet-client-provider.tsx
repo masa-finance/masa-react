@@ -7,7 +7,6 @@ import React, {
   useMemo,
 } from 'react';
 
-import type { Chain } from 'wagmi';
 import { useWallet } from './wallet/use-wallet';
 import { useNetwork } from './network/use-network';
 import { useAccountChangeListen } from './wallet/use-account-change-listen';
@@ -79,7 +78,7 @@ export const WalletClientProvider = ({ children }: WalletClientProps) => {
   const chainIdsByNetwork = useMemo(() => {
     if (!chains || chains.length === 0) return {};
 
-    return getChainIdNetworkMap([...chains, activeChain as Chain]);
+    return getChainIdNetworkMap([...chains, activeChain]);
   }, [chains, activeChain]);
 
   useEffect(() => {

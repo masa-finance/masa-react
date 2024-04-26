@@ -5,8 +5,8 @@ import { queryClient } from '../masa-client/query-client';
 
 export const MasaStateProvider = ({ children }: { children: ReactNode }) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <MasaClientProvider>{children}</MasaClientProvider>
-    </QueryClientProvider>
+    // <QueryClientProvider client={queryClient}>
+    <MasaClientProvider>{children}</MasaClientProvider>
+    // </QueryClientProvider>
   );
 };
