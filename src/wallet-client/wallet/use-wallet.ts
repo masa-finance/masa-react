@@ -7,18 +7,18 @@ import { useEffect, useMemo, useState } from 'react';
 
 import {
   Connector,
-  PublicClient,
   useAccount,
   useBalance,
   useDisconnect,
-  usePublicClient,
   useWalletClient as useWalletClientWagmi,
-  WalletClient,
 } from 'wagmi';
 import { Signer } from 'ethers';
 
 import type { Provider } from '@ethersproject/providers';
-import { useEthersProvider, useEthersSigner } from '../helpers/ethers';
+import {
+  useEthersProvider,
+  useEthersSigner,
+} from '../helpers/wagmi-ethers-adapters';
 
 export interface UseWalletReturn {
   address?: `0x${string}`;
@@ -27,8 +27,8 @@ export interface UseWalletReturn {
   previousAddress?: `0x${string}`;
   compareAddress?: `0x${string}`;
   shortAddress?: `0x${string}`;
-  publicClient?: PublicClient;
-  walletClient?: WalletClient;
+  // publicClient?: PublicClient;
+  // walletClient?: WalletClient;
   signer?: Signer;
   provider?: Provider;
   connector?: Connector;
@@ -65,12 +65,10 @@ const useWallet = (): UseWalletReturn => {
   >();
   // * NOTE: internal state to compare addresses
   const [compareAddress, setCompareAddress] = useState(address);
-  const { data: walletClient, isLoading: isLoadingWalletClient } =
-    useWalletClientWagmi();
+  const { isLoading: isLoadingWalletClient } = useWalletClientWagmi();
 
   const { data: signer, isLoading: isLoadingSigner } = useEthersSigner();
 
-  const publicClient = usePublicClient();
   const provider = useEthersProvider();
 
   const { disconnect, disconnectAsync } = useDisconnect();
@@ -139,8 +137,8 @@ const useWallet = (): UseWalletReturn => {
       walletName,
       previousAddress,
       compareAddress,
-      publicClient,
-      walletClient,
+      // publicClient,
+      // walletClient,
       signer,
       isLoadingSigner,
       provider,
@@ -154,7 +152,7 @@ const useWallet = (): UseWalletReturn => {
       openAccountModal,
       disconnect,
       disconnectAsync,
-      isLoadingWalletClient,
+
       isLoadingBalance,
       balance,
       setPreviousAddress,
@@ -170,8 +168,8 @@ const useWallet = (): UseWalletReturn => {
       walletName,
       previousAddress,
       compareAddress,
-      publicClient,
-      walletClient,
+      // publicClient,
+      // walletClient,
       signer,
       isLoadingSigner,
       provider,
