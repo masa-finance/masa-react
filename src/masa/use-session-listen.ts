@@ -28,12 +28,10 @@ export const useSessionListen = ({
     }
 
     if (!!sessionAddress && sessionAddress !== masaAddress && hasSession) {
-      await Promise.all([
-        queryClient.setQueryData(
-          ['session-new-check', { masaAddress, persist: true }],
-          false
-        ),
-      ]);
+      await queryClient.setQueryData(
+        ['session-new-check', { masaAddress, persist: true }],
+        false
+      );
 
       await queryClient.invalidateQueries({
         queryKey: [

@@ -31,12 +31,10 @@ export const MasaClientProvider = ({ children }: { children: ReactNode }) => {
   // session-listen
   useAsync(async () => {
     if (!!sessionAddress && sessionAddress !== masaAddress && hasSession) {
-      await Promise.all([
-        queryClient.setQueryData(
-          ['session-new-check', { masaAddress, persist: true }],
-          false
-        ),
-      ]);
+      await queryClient.setQueryData(
+        ['session-new-check', { masaAddress, persist: true }],
+        false
+      );
 
       await logoutSession();
       await checkLogin();
