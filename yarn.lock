@@ -1992,15 +1992,15 @@
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-contracts-staking@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-staking/-/masa-contracts-staking-0.3.2.tgz#9d4be6b9d11638158f9c2d5bca2de0ec5eb96f6d"
-  integrity sha512-kC7CTEe2MLI9DqNmCGW1y59cx8IzTu0LPMH/IE2FMieolZcE1B6fCpPiuh592zAVt3bzYqPOiAOEeA7xVaLB1A==
+"@masa-finance/masa-contracts-staking@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-staking/-/masa-contracts-staking-0.3.3.tgz#5135a34b379d06fb39ba5b86f65ffdbbc785aba9"
+  integrity sha512-GJHYEwj2C6pec90Wg/mgmeOha2DYu71mdtQgkfyXtVu05T6RC1TXcuW4y6+6aZnKvst1z5qu0sHEtpZJylEBVQ==
 
-"@masa-finance/masa-sdk@^3.38.4":
-  version "3.38.4"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.38.4.tgz#a69bfd36324fdec2e97f93fcb4c00c815dec89f7"
-  integrity sha512-u6NYTsxygJLszMY+Cm0uorhfVQhbntpoPV7OBOumtAx0kXqebKPNcglGG35d6Dl57vPzik5JQgvFABAChB7Z+w==
+"@masa-finance/masa-sdk@^3.38.5":
+  version "3.38.5"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.38.5.tgz#716e6cd074b120033eadc1d62c68497d552ef887"
+  integrity sha512-PgG0iJLZyiuM8Z+4QshLwCH9m36GOXzX0s18mJN+p0HsJf/LcOyepNwv5X9CjC5vw3NiiZJ3e15fJLgdDWUSSg==
   dependencies:
     "@ethersproject/abi" "^5.7.0"
     "@ethersproject/abstract-provider" "^5.7.0"
@@ -2011,7 +2011,7 @@
     "@layerzerolabs/lz-v2-utilities" "^2.3.6"
     "@masa-finance/masa-contracts-identity" "^1.15.0"
     "@masa-finance/masa-contracts-marketplace" "^2.1.26"
-    "@masa-finance/masa-contracts-staking" "^0.3.2"
+    "@masa-finance/masa-contracts-staking" "^0.3.3"
     "@masa-finance/masa-token" "^2.9.2"
     arweave "1.11.8"
     axios "^1.6.8"
