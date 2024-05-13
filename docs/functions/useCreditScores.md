@@ -1,8 +1,8 @@
-[**# Masa React v3.20.0**](../README.md) • **Docs**
+[**# Masa React v3.20.1**](../README.md) • **Docs**
 
 ***
 
-[# Masa React v3.20.0](../globals.md) / useCreditScores
+[# Masa React v3.20.1](../globals.md) / useCreditScores
 
 # Function: useCreditScores()
 
