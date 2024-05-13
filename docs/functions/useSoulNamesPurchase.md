@@ -1,8 +1,8 @@
-[**# Masa React v3.20.1**](../README.md) • **Docs**
+[**# Masa React v3.20.2**](../README.md) • **Docs**
 
 ***
 
-[# Masa React v3.20.1](../globals.md) / useSoulNamesPurchase
+[# Masa React v3.20.2](../globals.md) / useSoulNamesPurchase
 
 # Function: useSoulNamesPurchase()
 
