@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
-const CopyPlugin = require('copy-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 
@@ -90,12 +89,6 @@ module.exports =
         // minimizer: [new CssMinimizerPlugin()],
       },
       plugins: [
-        new CopyPlugin({
-          patterns: [
-            { from: 'src/fonts', to: '../fonts' },
-            // { from: 'src/styles.scss', to: '../styles.scss' },
-          ],
-        }),
         new RemoveEmptyScriptsPlugin(),
         new MiniCssExtractPlugin({
           filename: 'styles.css',
