@@ -5,7 +5,6 @@ import React, { MouseEventHandler, useCallback, useState } from 'react';
 import { darkStyles, JsonView } from 'react-json-view-lite';
 import { SoulNameDetails } from '@masa-finance/masa-sdk';
 import { useAsync } from 'react-use';
-import { Button } from '../ui';
 import '../styles.scss';
 import './stories.scss';
 import { useConfig } from '../base-provider';
@@ -20,9 +19,7 @@ import { useGreen } from '../masa/use-green';
 import { MasaProvider } from '../masa-provider';
 import { useSession } from '../masa/use-session';
 
-import { openCreateSoulnameModal } from '../ui/components/modals/create-soulname/CreateSoulnameModal';
 import { useWalletClient } from '../wallet-client/wallet-client-provider';
-import { useAuthenticate } from '../ui/components/modals/authenticate/use-authenticate';
 import { AllNetworks } from '../config';
 
 const meta: Meta = {
@@ -105,7 +102,7 @@ const NetworkInfo = () => {
                 }}
                 key={chain.name}
               >
-                <Button
+                <button
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -121,7 +118,7 @@ const NetworkInfo = () => {
                   onClick={onClick} // skipcq: JS-0417
                 >
                   Switch to {chain.testnet ? 'Testnet' : ''} {chain.name}
-                </Button>
+                </button>
               </li>
             );
           })}
@@ -174,7 +171,7 @@ const WalletInfo = () => {
         <ul>
           <h3>Wagmi Functions</h3>
           <li>
-            <Button
+            <button
               type="button"
               disabled={isDisconnected}
               onClick={
@@ -184,7 +181,7 @@ const WalletInfo = () => {
               }
             >
               Disconnect
-            </Button>
+            </button>
           </li>
         </ul>
       </li>
@@ -193,31 +190,31 @@ const WalletInfo = () => {
         <ul>
           <h3>RainbowKit</h3>
           <li>
-            <Button
+            <button
               type="button"
               disabled={!openConnectModal}
               onClick={openConnectModal}
             >
               Open ConnectModal
-            </Button>
+            </button>
           </li>
           <li>
-            <Button
+            <button
               type="button"
               disabled={!openAccountModal}
               onClick={openAccountModal}
             >
               Open AccountModal
-            </Button>
+            </button>
           </li>
           <li>
-            <Button
+            <button
               type="button"
               disabled={!openChainModal}
               onClick={openChainModal}
             >
               Open ChainModal
-            </Button>
+            </button>
           </li>
         </ul>
       </li>
@@ -382,34 +379,25 @@ const SessionButtons = () => {
     <ul>
       <h3>Session</h3>
       <li>
-        <Button
+        <button
           disabled={!!hasSession || isDisconnected || isLoadingSession}
           type="button"
           onClick={loginSessionAsync}
         >
           Login Session RQ
-        </Button>
+        </button>
       </li>
-      {/* <li>
-      <Button
-        disabled={!!hasSession}
-        type="button"
-        onClick={() => loginSession() as unknown as () => void}
-      >
-        Login Session
-      </Button>
-    </li> */}
       <li>
-        <Button
+        <button
           disabled={!hasSession || isLoadingSession}
           type="button"
           onClick={logoutSession}
         >
           Logout Session
-        </Button>
+        </button>
       </li>
       <li>
-        <Button
+        <button
           disabled={isDisconnected || isLoadingSession}
           type="button"
           onClick={
@@ -419,7 +407,7 @@ const SessionButtons = () => {
           }
         >
           Check Login
-        </Button>
+        </button>
       </li>
     </ul>
   );
@@ -456,69 +444,19 @@ const GreenInfo = () => {
   return (
     <ul>
       <h3>Greens</h3>
-      <li>isGreenAvailableInNetwork: {String(isGreenAvailableInNetwork)}</li>
-      <li>isLoadingGreens: {String(isLoadingGreens)}</li>
       <li>
         <ul>
+          <li>
+            isGreenAvailableInNetwork: {String(isGreenAvailableInNetwork)}
+          </li>
+          <li>isLoadingGreens: {String(isLoadingGreens)}</li>
+          <li>Greens:</li>
           {greens?.map((green) => (
             <li key={green.metadata?.properties.tokenId}>
               <code>{JSON.stringify(green, null, 4)}</code>
             </li>
           ))}
         </ul>
-      </li>
-    </ul>
-  );
-};
-
-const ModalFlow = () => {
-  const { isDisconnected, disconnect } = useWallet();
-  const { hasSession, logoutSession } = useSession();
-  const { identity } = useIdentity();
-  const onLogout = useCallback(() => {
-    if (hasSession) void logoutSession();
-    disconnect?.();
-  }, [logoutSession, hasSession, disconnect]);
-
-  const { openAuthModal } = useAuthenticate({
-    onAuthenticateSuccess: () => console.log('SUCCESS IN USEAUTH'),
-    onAuthenticateError: () => console.error('AUTHENTICATE ERROR'),
-    onRegisterFinish: () => console.log('FINISH FROM OUTSIDE ?????'),
-    onError: () => console.error('CREATE SOULNAME ERROR'),
-  });
-
-  const onClickSoulname = useCallback(() => {
-    void openCreateSoulnameModal({
-      onMintSuccess: () => console.log('MINT SUCCESS FROM OUTSIDE'),
-      onMintError: () => console.error('MINT ERROR FROM OUTSIDE'),
-      onRegisterFinish: () => console.log('REGISTER SOULNAME FINISHED OUTSIDE'),
-      onSuccess: () => console.log('EVERYTHING WAS SUCCESSFUL'),
-      onError: () => console.error('CREATE SOULNAME ERROR'),
-      closeOnSuccess: true,
-    });
-  }, []);
-
-  return (
-    <ul>
-      <h3>Modal Flows</h3>
-      <li>
-        <Button
-          onClick={openAuthModal}
-          type="button"
-          disabled={!!hasSession && !!identity?.identityId}
-        >
-          {isDisconnected ? 'Connect' : 'Authenticate'}
-        </Button>
-      </li>
-      <li>
-        <Button type="button" disabled={isDisconnected} onClick={onLogout}>
-          Disconnect
-        </Button>
-      </li>
-      <li>
-        <Button type="button" onClick={onClickSoulname}>
-          Create Soul Name
-        </Button>
       </li>
     </ul>
   );
@@ -547,7 +485,6 @@ const Component = (): JSX.Element => {
 
       <SoulnameCreditScoreInfo />
       <GreenInfo />
-      <ModalFlow />
       <h3>Config</h3>
       <ul
         style={{

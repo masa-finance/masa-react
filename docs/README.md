@@ -1,5 +1,6 @@
-# Masa React
- / [Exports](modules.md)
+**# Masa React v3.20.2** • [**Docs**](globals.md)
+
+***
 
 <!-- TOC -->
   * [Getting Started with masa-react](#getting-started-with-masa-react)

@@ -1,7 +1,6 @@
 import type { Args, Meta } from '@storybook/react';
 import type { Chain } from 'wagmi';
 import React, { MouseEventHandler } from 'react';
-import { Button } from '../ui';
 
 import '../styles.scss';
 import './stories.scss';
@@ -91,7 +90,7 @@ const NetworkInfo = () => {
                 }}
                 key={chain.name}
               >
-                <Button
+                <button
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -107,7 +106,7 @@ const NetworkInfo = () => {
                   onClick={onClick} // skipcq: JS-0417
                 >
                   Switch to {chain.testnet ? 'Testnet' : ''} {chain.name}
-                </Button>
+                </button>
               </li>
             );
           })}
@@ -160,7 +159,7 @@ const WalletInfo = () => {
         <ul>
           <h3>Wagmi Functions</h3>
           <li>
-            <Button
+            <button
               type="button"
               disabled={isDisconnected}
               onClick={
@@ -170,7 +169,7 @@ const WalletInfo = () => {
               }
             >
               Disconnect
-            </Button>
+            </button>
           </li>
         </ul>
       </li>
@@ -179,31 +178,31 @@ const WalletInfo = () => {
         <ul>
           <h3>RainbowKit</h3>
           <li>
-            <Button
+            <button
               type="button"
               disabled={!openConnectModal}
               onClick={openConnectModal}
             >
               Open ConnectModal
-            </Button>
+            </button>
           </li>
           <li>
-            <Button
+            <button
               type="button"
               disabled={!openAccountModal}
               onClick={openAccountModal}
             >
               Open AccountModal
-            </Button>
+            </button>
           </li>
           <li>
-            <Button
+            <button
               type="button"
               disabled={!openChainModal}
               onClick={openChainModal}
             >
               Open ChainModal
-            </Button>
+            </button>
           </li>
         </ul>
       </li>
