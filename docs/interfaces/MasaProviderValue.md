@@ -1,16 +1,13 @@
-[# Masa React
- - v3.15.3](../README.md) / [Exports](../modules.md) / MasaProviderValue
+[**# Masa React v3.20.0**](../README.md) • **Docs**
+
+***
+
+[# Masa React v3.20.0](../globals.md) / MasaProviderValue
 
 # Interface: MasaProviderValue
 
-## Table of contents
-
-### Properties
-
-- [children](MasaProviderValue.md#children)
-
 ## Properties
 
-### children
+### children?
 
-• `Optional` **children**: `ReactNode`
+> `optional` **children**: `ReactNode`
