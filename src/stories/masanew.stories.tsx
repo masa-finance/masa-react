@@ -387,15 +387,6 @@ const SessionButtons = () => {
           Login Session RQ
         </button>
       </li>
-      {/* <li>
-      <Button
-        disabled={!!hasSession}
-        type="button"
-        onClick={() => loginSession() as unknown as () => void}
-      >
-        Login Session
-      </Button>
-    </li> */}
       <li>
         <button
           disabled={!hasSession || isLoadingSession}
@@ -453,10 +444,13 @@ const GreenInfo = () => {
   return (
     <ul>
       <h3>Greens</h3>
-      <li>isGreenAvailableInNetwork: {String(isGreenAvailableInNetwork)}</li>
-      <li>isLoadingGreens: {String(isLoadingGreens)}</li>
       <li>
         <ul>
+          <li>
+            isGreenAvailableInNetwork: {String(isGreenAvailableInNetwork)}
+          </li>
+          <li>isLoadingGreens: {String(isLoadingGreens)}</li>
+          <li>Greens:</li>
           {greens?.map((green) => (
             <li key={green.metadata?.properties.tokenId}>
               <code>{JSON.stringify(green, null, 4)}</code>
