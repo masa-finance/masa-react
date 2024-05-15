@@ -174,8 +174,8 @@ const WalletInfo = () => {
               disabled={isDisconnected}
               onClick={
                 disconnect as unknown as
-                  | MouseEventHandler<HTMLButtonElement>
-                  | undefined
+                | MouseEventHandler<HTMLButtonElement>
+                | undefined
               }
             >
               Disconnect
@@ -291,42 +291,40 @@ const SoulnameCreditScoreInfo = () => {
 
   return (
     // skipcq: JS-0415
-    <>
-      <ul>
-        <h3>Soulnames</h3>
-        <li>
-          <ul>
-            <li>
-              isSoulnameAvailableInNetwork:
-              {String(isSoulnameAvailableInNetwork)}
-            </li>
-            <li>isLoadingSoulnames: {String(isLoadingSoulnames)}</li>
-            {soulnameDetails?.map((sn) => {
-              const randomColor = `#${Math.floor(
-                Math.random() * 16_777_215
-              ).toString(16)}`;
-              return (
-                <li
-                  key={sn.metadata.name}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'start',
-                  }}
-                >
-                  <code style={{ color: randomColor }}>
-                    Soulname: {JSON.stringify(sn.metadata.name, null, 4)}
-                  </code>
-                  <code style={{ color: randomColor }}>
-                    Owner: {JSON.stringify(sn.owner, null, 4)}
-                  </code>
-                </li>
-              );
-            })}
-          </ul>
-        </li>
-      </ul>
-    </>
+    <ul>
+      <h3>Soulnames</h3>
+      <li>
+        <ul>
+          <li>
+            isSoulnameAvailableInNetwork:
+            {String(isSoulnameAvailableInNetwork)}
+          </li>
+          <li>isLoadingSoulnames: {String(isLoadingSoulnames)}</li>
+          {soulnameDetails?.map((sn) => {
+            const randomColor = `#${Math.floor(
+              Math.random() * 16_777_215
+            ).toString(16)}`;
+            return (
+              <li
+                key={sn.metadata.name}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'start',
+                }}
+              >
+                <code style={{ color: randomColor }}>
+                  Soulname: {JSON.stringify(sn.metadata.name, null, 4)}
+                </code>
+                <code style={{ color: randomColor }}>
+                  Owner: {JSON.stringify(sn.owner, null, 4)}
+                </code>
+              </li>
+            );
+          })}
+        </ul>
+      </li>
+    </ul>
   );
 };
 
@@ -367,8 +365,8 @@ const SessionButtons = () => {
           type="button"
           onClick={
             checkLogin as unknown as
-              | MouseEventHandler<HTMLButtonElement>
-              | undefined
+            | MouseEventHandler<HTMLButtonElement>
+            | undefined
           }
         >
           Check Login
