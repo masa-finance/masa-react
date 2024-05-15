@@ -14,8 +14,6 @@ import { useNetwork } from '../wallet-client/network/use-network';
 import { useMasaClient } from '../masa-client/use-masa-client';
 import { useIdentity } from '../masa/use-identity';
 import { useSoulNames } from '../masa/use-soulnames';
-import { useCreditScores } from '../masa/use-credit-scores';
-import { useGreen } from '../masa/use-green';
 import { MasaProvider } from '../masa-provider';
 import { useSession } from '../masa/use-session';
 
@@ -278,20 +276,8 @@ const IdentityInfo = () => {
 const SoulnameCreditScoreInfo = () => {
   const { soulnames, isLoadingSoulnames, isSoulnameAvailableInNetwork } =
     useSoulNames();
-  const { hasSession } = useSession();
   const { masa } = useMasaClient();
-  const {
-    creditScores,
-    isLoadingCreditScores,
-    isCreditScoreAvailableInNetwork,
-    getCreditScores,
-  } = useCreditScores();
 
-  useAsync(async () => {
-    if (creditScores || !hasSession || isLoadingCreditScores) return;
-
-    await getCreditScores();
-  }, [creditScores, isLoadingCreditScores, hasSession, getCreditScores]);
   const [soulnameDetails, setSoulnameDetails] = useState<SoulNameDetails[]>([]);
 
   useAsync(async () => {
@@ -337,27 +323,6 @@ const SoulnameCreditScoreInfo = () => {
                 </li>
               );
             })}
-          </ul>
-        </li>
-      </ul>
-      <ul>
-        <h3>Credit Scores</h3>
-        <li>
-          <ul>
-            <li>
-              isCreditScoreAvailableInNetwork:
-              {String(isCreditScoreAvailableInNetwork)}
-            </li>
-            <li>isLoadingCreditScores: {String(isLoadingCreditScores)}</li>
-            <li>Credit Scores Amount: {String(creditScores?.length)}</li>
-            CreditScores:{' '}
-            {creditScores?.length === 0
-              ? 'No Credit Scores'
-              : creditScores?.map((cs) => (
-                  <li key={cs.metadata?.properties.lastUpdated}>
-                    <code>{String(JSON.stringify(cs, null, 4))}</code>
-                  </li>
-                ))}
           </ul>
         </li>
       </ul>
@@ -438,29 +403,6 @@ const MasaInfo = () => {
   );
 };
 
-const GreenInfo = () => {
-  const { greens, isLoadingGreens, isGreenAvailableInNetwork } = useGreen();
-
-  return (
-    <ul>
-      <h3>Greens</h3>
-      <li>
-        <ul>
-          <li>
-            isGreenAvailableInNetwork: {String(isGreenAvailableInNetwork)}
-          </li>
-          <li>isLoadingGreens: {String(isLoadingGreens)}</li>
-          <li>Greens:</li>
-          {greens?.map((green) => (
-            <li key={green.metadata?.properties.tokenId}>
-              <code>{JSON.stringify(green, null, 4)}</code>
-            </li>
-          ))}
-        </ul>
-      </li>
-    </ul>
-  );
-};
 
 const Component = (): JSX.Element => {
   const config = useConfig();
@@ -484,7 +426,6 @@ const Component = (): JSX.Element => {
       <IdentityInfo />
 
       <SoulnameCreditScoreInfo />
-      <GreenInfo />
       <h3>Config</h3>
       <ul
         style={{
