@@ -403,7 +403,6 @@ const MasaInfo = () => {
   );
 };
 
-
 const Component = (): JSX.Element => {
   const config = useConfig();
   const { masa } = useMasaClient();
