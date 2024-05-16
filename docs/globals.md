@@ -1,8 +1,8 @@
-[**# Masa React v3.20.2**](README.md) • **Docs**
+[**# Masa React v3.21.1**](README.md) • **Docs**
 
 ***
 
-# # Masa React v3.20.2
+# # Masa React v3.21.1
 
 ## Interfaces
 
@@ -12,13 +12,9 @@
 
 - [MasaProvider](functions/MasaProvider.md)
 - [useCanQuery](functions/useCanQuery.md)
-- [useCreditScoreCreate](functions/useCreditScoreCreate.md)
-- [useCreditScores](functions/useCreditScores.md)
 - [useDebounce](functions/useDebounce.md)
 - [useDebounceIfValue](functions/useDebounceIfValue.md)
 - [useDebug](functions/useDebug.md)
-- [useGreen](functions/useGreen.md)
-- [useGreenGenerate](functions/useGreenGenerate.md)
 - [useIdentity](functions/useIdentity.md)
 - [useIdentityListen](functions/useIdentityListen.md)
 - [useIdentityPurchase](functions/useIdentityPurchase.md)

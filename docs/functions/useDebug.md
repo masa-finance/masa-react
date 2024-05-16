@@ -1,8 +1,8 @@
-[**# Masa React v3.20.2**](../README.md) • **Docs**
+[**# Masa React v3.21.1**](../README.md) • **Docs**
 
 ***
 
-[# Masa React v3.20.2](../globals.md) / useDebug
+[# Masa React v3.21.1](../globals.md) / useDebug
 
 # Function: useDebug()
 
