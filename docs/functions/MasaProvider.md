@@ -1,8 +1,8 @@
-[**# Masa React v3.21.1**](../README.md) • **Docs**
+[**# Masa React v2.22.0-alpha.0**](../README.md) • **Docs**
 
 ***
 
-[# Masa React v3.21.1](../globals.md) / MasaProvider
+[# Masa React v2.22.0-alpha.0](../globals.md) / MasaProvider
 
 # Function: MasaProvider()
 
