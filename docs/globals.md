@@ -1,8 +1,8 @@
-[**# Masa React v2.22.0-alpha.0**](README.md) • **Docs**
+[**# Masa React v2.22.0**](README.md) • **Docs**
 
 ***
 
-# # Masa React v2.22.0-alpha.0
+# # Masa React v2.22.0
 
 ## Interfaces
 
