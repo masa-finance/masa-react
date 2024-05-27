@@ -75,7 +75,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.1",
     "eslint": "^8.57.0",
-    "eslint-config-masa": "^0.1.6",
+    "eslint-config-masa": "^0.1.8",
     "fork-ts-checker-webpack-plugin": "^9.0.2",
     "https-browserify": "^1.0.0",
     "husky": "^9.0.11",
