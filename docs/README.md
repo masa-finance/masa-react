@@ -1,4 +1,4 @@
-**# Masa React v3.21.1** • [**Docs**](globals.md)
+**# Masa React v2.22.0** • [**Docs**](globals.md)
 
 ***
 
