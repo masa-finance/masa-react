@@ -3589,6 +3589,11 @@
   resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.38.0.tgz#36e0cd309cdbd75b4ff3fa81cdb3839befc7d6f6"
   integrity sha512-QtkoxvFcu52mNpp3+qOo9H265m3rt83Dgbw5WnNyJvr83cegrQ7zT8haHhL4Rul6ZQkeovxyWbXVW9zI0WYx6g==
 
+"@tanstack/query-core@5.40.0":
+  version "5.40.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.40.0.tgz#c74ae8303752ed4b5a0ab848ec71a0e6e8179f83"
+  integrity sha512-eD8K8jsOIq0Z5u/QbvOmfvKKE/XC39jA7yv4hgpl/1SRiU+J8QCIwgM/mEHuunQsL87dcvnHqSVLmf9pD4CiaA==
+
 "@tanstack/query-devtools@5.37.1":
   version "5.37.1"
   resolved "https://registry.yarnpkg.com/@tanstack/query-devtools/-/query-devtools-5.37.1.tgz#8dcfa1488b4f2e353be7eede6691b0ad9197183b"
@@ -3652,12 +3657,12 @@
     "@tanstack/query-core" "4.36.1"
     use-sync-external-store "^1.2.0"
 
-"@tanstack/react-query@^5.37.1":
-  version "5.39.0"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.39.0.tgz#a5d8d72c12f8d4f036c62b6f829c76b37af53f08"
-  integrity sha512-zc0WnyEffyTgG+myLv8cY2tJOUT6jOprCiprpbMqylCaCFipSDUPCYCt2AC+qxgk2CFuqiI/fjb1u5/HhLkrPg==
+"@tanstack/react-query@^5.40.0":
+  version "5.40.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-5.40.0.tgz#654afa2d9ab328c22be7e1f025ec9b6267c6baa9"
+  integrity sha512-iv/W0Axc4aXhFzkrByToE1JQqayxTPNotCoSCnarR/A1vDIHaoKpg7FTIfP3Ev2mbKn1yrxq0ZKYUdLEJxs6Tg==
   dependencies:
-    "@tanstack/query-core" "5.38.0"
+    "@tanstack/query-core" "5.40.0"
 
 "@tootallnate/quickjs-emscripten@^0.23.0":
   version "0.23.0"
