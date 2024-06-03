@@ -88,7 +88,7 @@
     "sass": "^1.75.0",
     "sass-loader": "^14.2.1",
     "size-limit": "^11.1.2",
-    "storybook": "^8.0.9",
+    "storybook": "^8.1.5",
     "typedoc": "^0.25.13",
     "typedoc-plugin-markdown": "^4.0.1",
     "typescript": "^5.4.5",
