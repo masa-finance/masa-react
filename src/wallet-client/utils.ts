@@ -55,7 +55,7 @@ export const getRainbowkitChains = (networkNames?: NetworkName[]): Chain[] => {
 
       return undefined;
     })
-    .filter((chain: Chain | undefined) => !!chain) as Chain[];
+    .filter((chain: Chain | undefined): chain is Chain => !!chain);
 };
 
 export const getChainIdNetworkMap = (chains?: Chain[]) => {
