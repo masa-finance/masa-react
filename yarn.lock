@@ -3586,10 +3586,10 @@
     "@types/express" "^4.7.0"
     file-system-cache "2.3.0"
 
-"@tanstack/eslint-plugin-query@^5.28.11", "@tanstack/eslint-plugin-query@^5.49.1":
-  version "5.49.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.49.1.tgz#2130466ca3dd0b145d0db698add3575b15469fbe"
-  integrity sha512-pTaEvG3HC1y7BOsFJtZmi8dhWwML97zEBq4qLM6BaUSzZ4WlFyhmtG2sBVO0H+lP1WgnLpQclRQ+nFikTqoUfQ==
+"@tanstack/eslint-plugin-query@^5.28.11", "@tanstack/eslint-plugin-query@^5.51.1":
+  version "5.51.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/eslint-plugin-query/-/eslint-plugin-query-5.51.1.tgz#c0fb1b58e544c6c25cc655ea2441d3c9b5980f09"
+  integrity sha512-M1IBJTtD9V69Zf4Efnkizg+DKdn4yTt+OfD0my5hZRok4wPZ44+Y8XNUFpwy6nsEV/Qt+KsS8IWPjd+eERQUSA==
   dependencies:
     "@typescript-eslint/utils" "8.0.0-alpha.30"
 
