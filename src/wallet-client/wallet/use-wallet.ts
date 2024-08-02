@@ -82,10 +82,10 @@ const useWallet = (): UseWalletReturn => {
     address,
   });
 
-  const shortAddress = useMemo((): string | undefined => {
+  const shortAddress = useMemo((): `0x${string}` | undefined => {
     if (!address) return undefined;
 
-    return `${address.slice(0, 6)}...${address.slice(-4, address.length)}`;
+    return `0x${address.slice(2, 6)}...${address.slice(-4, address.length)}`;
   }, [address]);
 
   // useEffect(() => console.log({ provider, signer }), [provider, signer]);
@@ -131,7 +131,7 @@ const useWallet = (): UseWalletReturn => {
     [isLoadingWallet, isConnecting]
   );
 
-  const useWalletValue = useMemo(
+  const useWalletValue: UseWalletReturn = useMemo(
     () => ({
       address,
       shortAddress,
@@ -195,7 +195,7 @@ const useWallet = (): UseWalletReturn => {
     ]
   );
 
-  return useWalletValue as UseWalletReturn;
+  return useWalletValue;
 };
 
 export { useWallet };
