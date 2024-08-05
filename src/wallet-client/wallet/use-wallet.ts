@@ -7,13 +7,10 @@ import { useEffect, useMemo, useState } from 'react';
 
 import {
   Connector,
-  PublicClient,
   useAccount,
   useBalance,
   useDisconnect,
-  usePublicClient,
   useWalletClient as useWalletClientWagmi,
-  WalletClient,
 } from 'wagmi';
 import { Signer } from 'ethers';
 
@@ -27,8 +24,6 @@ export interface UseWalletReturn {
   previousAddress?: `0x${string}`;
   compareAddress?: `0x${string}`;
   shortAddress?: `0x${string}`;
-  publicClient?: PublicClient;
-  walletClient?: WalletClient;
   signer?: Signer;
   provider?: Provider;
   connector?: Connector;
@@ -65,12 +60,10 @@ const useWallet = (): UseWalletReturn => {
   >();
   // * NOTE: internal state to compare addresses
   const [compareAddress, setCompareAddress] = useState(address);
-  const { data: walletClient, isLoading: isLoadingWalletClient } =
-    useWalletClientWagmi();
+  const { isLoading: isLoadingWalletClient } = useWalletClientWagmi();
 
   const { data: signer, isLoading: isLoadingSigner } = useEthersSigner();
 
-  const publicClient = usePublicClient();
   const provider = useEthersProvider();
 
   const { disconnect, disconnectAsync } = useDisconnect();
@@ -139,8 +132,6 @@ const useWallet = (): UseWalletReturn => {
       walletName,
       previousAddress,
       compareAddress,
-      publicClient,
-      walletClient,
       signer,
       isLoadingSigner,
       provider,
@@ -159,7 +150,6 @@ const useWallet = (): UseWalletReturn => {
       balance,
       setPreviousAddress,
       setCompareAddress,
-
       isLoadingWallet,
       isLoadingOrConnectingWallet,
     }),
@@ -170,8 +160,6 @@ const useWallet = (): UseWalletReturn => {
       walletName,
       previousAddress,
       compareAddress,
-      publicClient,
-      walletClient,
       signer,
       isLoadingSigner,
       provider,
