@@ -1,8 +1,8 @@
-[**# Masa React v2.22.0**](../README.md) • **Docs**
+[**# Masa React v4.2.0**](../README.md) • **Docs**
 
 ***
 
-[# Masa React v2.22.0](../globals.md) / useIdentityListen
+[# Masa React v4.2.0](../globals.md) / useIdentityListen
 
 # Function: useIdentityListen()
 

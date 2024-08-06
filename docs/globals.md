@@ -1,8 +1,8 @@
-[**# Masa React v2.22.0**](README.md) • **Docs**
+[**# Masa React v4.2.0**](README.md) • **Docs**
 
 ***
 
-# # Masa React v2.22.0
+# # Masa React v4.2.0
 
 ## Interfaces
 
@@ -17,7 +17,6 @@
 - [useDebug](functions/useDebug.md)
 - [useIdentity](functions/useIdentity.md)
 - [useIdentityListen](functions/useIdentityListen.md)
-- [useIdentityPurchase](functions/useIdentityPurchase.md)
 - [useMasaClient](functions/useMasaClient.md)
 - [useMasaLoading](functions/useMasaLoading.md)
 - [useMasaQueryClient](functions/useMasaQueryClient.md)
@@ -28,5 +27,4 @@
 - [useSessionConnect](functions/useSessionConnect.md)
 - [useSessionListen](functions/useSessionListen.md)
 - [useSoulNames](functions/useSoulNames.md)
-- [useSoulNamesPurchase](functions/useSoulNamesPurchase.md)
 - [useWallet](functions/useWallet.md)

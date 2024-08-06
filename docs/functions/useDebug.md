@@ -1,8 +1,8 @@
-[**# Masa React v2.22.0**](../README.md) • **Docs**
+[**# Masa React v4.2.0**](../README.md) • **Docs**
 
 ***
 
-[# Masa React v2.22.0](../globals.md) / useDebug
+[# Masa React v4.2.0](../globals.md) / useDebug
 
 # Function: useDebug()
 
@@ -16,7 +16,7 @@
 
 • **values.value**: `unknown`
 
-• **deps**: `DependencyList`= `[]`
+• **deps**: `DependencyList` = `[]`
 
 ## Returns
 
