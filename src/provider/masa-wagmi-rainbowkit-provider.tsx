@@ -4,6 +4,10 @@ import React, { PropsWithChildren } from 'react';
 import { Config, WagmiProvider } from 'wagmi';
 import * as allChains from 'wagmi/chains';
 import { PROJECT_ID } from '../wallet-client/constants';
+import {
+  masaChain,
+  masaTestnetChain,
+} from '../wallet-client/helpers/get-masa-chains';
 
 // TODO: Consider importing the client from `masa-client/query-client`
 const client = new QueryClient();
@@ -48,6 +52,8 @@ const config: Config = getDefaultConfig({
     baseSepolia,
     scroll,
     scrollSepolia,
+    ...(masaChain ? [masaChain] : []),
+    ...(masaTestnetChain ? [masaTestnetChain] : []),
   ],
   ssr: true,
 });
