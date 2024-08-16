@@ -15,7 +15,7 @@ const client = new QueryClient();
 // Init with some sample chains
 const {
   mainnet: ethereum,
-  goerli,
+  sepolia,
   polygon,
   bsc,
   bscTestnet,
@@ -37,7 +37,7 @@ const config: Config = getDefaultConfig({
   projectId: PROJECT_ID,
   chains: [
     ethereum,
-    goerli,
+    sepolia,
     polygon,
     bsc,
     bscTestnet,
