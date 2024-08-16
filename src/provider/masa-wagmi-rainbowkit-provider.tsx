@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { PropsWithChildren } from 'react';
 import { Config, WagmiProvider } from 'wagmi';
 import * as allChains from 'wagmi/chains';
+import { PROJECT_ID } from '../wallet-client/constants';
 
 // TODO: Consider importing the client from `masa-client/query-client`
 const client = new QueryClient();
@@ -29,7 +30,7 @@ const {
 
 const config: Config = getDefaultConfig({
   appName: 'Masa App',
-  projectId: 'masa-app',
+  projectId: PROJECT_ID,
   chains: [
     ethereum,
     goerli,
