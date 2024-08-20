@@ -1,3 +1,5 @@
+import { webpackFinal } from '@storybook/addon-styling-webpack/preset';
+
 const { dirname, join } = require('path');
 
 function getAbsolutePath(value) {
@@ -34,6 +36,24 @@ const config = {
       },
     },
   ],
+
+  core: {
+    builder: '@storybook/builder-webpack5',
+  },
+
+  webpackFinal: async (config) => {
+    config.resolve = {
+      ...config.resolve,
+      fallback: {
+        ...(config.resolve || {}).fallback,
+        zlib: false,
+        https: false,
+        http: false,
+      },
+    };
+
+    return config;
+  },
 
   // https://storybook.js.org/docs/react/configure/typescript#mainjs-configuration
   typescript: {

@@ -94,6 +94,12 @@ module.exports =
           filename: 'styles.css',
         }),
       ],
+      resolve: {
+        fallback: {
+          https: false,
+          zlib: false,
+        },
+      },
       module: {
         rules: [
           {
